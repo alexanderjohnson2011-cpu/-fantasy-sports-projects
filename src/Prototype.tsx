@@ -141,10 +141,8 @@ const macSaladStandings = Object.values(
 type Team = {
   rosterId: number;
   rank: number;
-  powerRank: number;
   name: string;
   manager: string;
-  pickGrade: string;
   headline: string;
   commentary: string;
   bestPick: string;
@@ -156,9 +154,6 @@ type Team = {
   marketCapture?: number;
   originalPicks: number;
   acquiredPicks: number;
-  window: string;
-  strength: string;
-  weakness: string;
   scores: { execution: number; capital: number; fit: number };
   picks: Pick[];
 };
@@ -167,10 +162,8 @@ const teams: Team[] = [
   {
     rosterId: 6,
     rank: 1,
-    powerRank: 12,
     name: "Final Boss",
     manager: "OldManBacala",
-    pickGrade: "A",
     headline: "Great selections, weaker capital management",
     commentary: "Final Boss landed the consensus rookie No. 2 at 1.03, then spent discounted late picks on the roster's weakest room. Tate gives the rebuild a true centerpiece; Allen and McGowan are the right kind of low-cost RB bets.",
     bestPick: "Carnell Tate at 1.03",
@@ -182,9 +175,6 @@ const teams: Team[] = [
     marketCapture: 118.5,
     originalPicks: 2,
     acquiredPicks: 1,
-    window: "Rebuild",
-    strength: "WR direction",
-    weakness: "RB depth",
     scores: { execution: 94, capital: 77, fit: 91 },
     picks: [
       { slot: "1.03", player: "Carnell Tate", position: "WR", expertRank: 2, marketRank: 2 },
@@ -195,10 +185,8 @@ const teams: Team[] = [
   {
     rosterId: 11,
     rank: 2,
-    powerRank: 10,
     name: "Terry Tate’s Pain Train",
     manager: "mannyrsox24",
-    pickGrade: "A",
     headline: "Excellent picks; the full trade ledger lands near neutral",
     commentary: "Price was a defensible need pick, Lemon was a clean first-round value, and the board then turned into a hunt for asymmetric upside. Hurst and Delp fell well beyond expert consensus, while Washington is the class's defining experts-versus-market disagreement.",
     bestPick: "Ted Hurst at 3.06",
@@ -210,9 +198,6 @@ const teams: Team[] = [
     marketCapture: 113.8,
     originalPicks: 3,
     acquiredPicks: 2,
-    window: "Retool / bubble",
-    strength: "TE room (#5)",
-    weakness: "RB room (#9)",
     scores: { execution: 92, capital: 82, fit: 89 },
     picks: [
       { slot: "1.04", player: "Jadarian Price", position: "RB", expertRank: 5, marketRank: 4, acquired: true },
@@ -225,10 +210,8 @@ const teams: Team[] = [
   {
     rosterId: 2,
     rank: 3,
-    powerRank: 5,
     name: "2 Dagos and A Dream",
     manager: "TGamby",
-    pickGrade: "A−",
     headline: "Value everywhere, with every pick aimed at a weakness",
     commentary: "Boston came off the board a little early, but Simpson and Thompson were excellent Day 3 values. Every selection attacked a bottom-two position room, and the separate 2.08-for-Harold Fannin result gives this class the league's strongest capital backdrop.",
     bestPick: "Ty Simpson at 3.08",
@@ -240,9 +223,6 @@ const teams: Team[] = [
     marketCapture: 104.7,
     originalPicks: 3,
     acquiredPicks: 0,
-    window: "Needs a direction",
-    strength: "RB room (#1)",
-    weakness: "QB / WR (#11)",
     scores: { execution: 88, capital: 97, fit: 93 },
     picks: [
       { slot: "1.08", player: "Denzel Boston", position: "WR", expertRank: 10, marketRank: 8 },
@@ -253,10 +233,8 @@ const teams: Team[] = [
   {
     rosterId: 4,
     rank: 4,
-    powerRank: 11,
     name: "Bub’s Club",
     manager: "bubberdubber",
-    pickGrade: "B",
     headline: "Strong acquisition economics lift an uneven nine-pick haul",
     commentary: "Love was automatic, Sadiq was fair, and Cooper was one of the board's clearest wins. The class got far more volatile after that: Williams and Lance beat consensus, while Douglas, Benson, and now Klubnik required conviction well ahead of the expert board.",
     bestPick: "Omar Cooper at 2.01",
@@ -268,9 +246,6 @@ const teams: Team[] = [
     marketCapture: 99.6,
     originalPicks: 4,
     acquiredPicks: 5,
-    window: "Retool / bubble",
-    strength: "Youth (#1)",
-    weakness: "QB room (#12)",
     scores: { execution: 79, capital: 92, fit: 84 },
     picks: [
       { slot: "1.01", player: "Jeremiyah Love", position: "RB", expertRank: 1, marketRank: 1 },
@@ -287,10 +262,8 @@ const teams: Team[] = [
   {
     rosterId: 1,
     rank: 5,
-    powerRank: 3,
     name: "Ertz & Krafts",
     manager: "jccbraves99",
-    pickGrade: "B",
     headline: "Ordinary picks, excellent contender consolidation",
     commentary: "Bell, Claiborne, and Klare all met or beat the expert board, although the live market is cooler on the trio. The sharper move came away from the clock, where surplus TE depth and bridge capital became Chris Olave without a meaningful market premium.",
     bestPick: "Chris Bell at 2.06",
@@ -302,9 +275,6 @@ const teams: Team[] = [
     marketCapture: 83.3,
     originalPicks: 1,
     acquiredPicks: 2,
-    window: "Deep playoff mix",
-    strength: "TE room (#2)",
-    weakness: "QB room (#8)",
     scores: { execution: 78, capital: 86, fit: 83 },
     picks: [
       { slot: "2.06", player: "Chris Bell", position: "WR", expertRank: 16, marketRank: 25, acquired: true },
@@ -315,10 +285,8 @@ const teams: Team[] = [
   {
     rosterId: 10,
     rank: 6,
-    powerRank: 2,
     name: "Bijan And The Maye-ssiah",
     manager: "jcflash59",
-    pickGrade: "C+",
     headline: "Capital wins rescue inefficient selections",
     commentary: "The positional thesis was correct—receiver was the roster's weakest starting room—but three straight WR selections came ahead of consensus. Heidenreich and Joly improved the finish, while an excellent trade ledger prevented inefficient picks from defining the cycle.",
     bestPick: "Justin Joly at 4.07",
@@ -330,9 +298,6 @@ const teams: Team[] = [
     marketCapture: 84.2,
     originalPicks: 3,
     acquiredPicks: 2,
-    window: "Contender",
-    strength: "QB room (#2)",
-    weakness: "WR room (#7)",
     scores: { execution: 68, capital: 94, fit: 76 },
     picks: [
       { slot: "1.07", player: "De'Zhaun Stribling", position: "WR", expertRank: 13, marketRank: 10 },
@@ -345,10 +310,8 @@ const teams: Team[] = [
   {
     rosterId: 5,
     rank: 7,
-    powerRank: 9,
     name: "My Nabers Tetties",
     manager: "DRockefeller",
-    pickGrade: "C+",
     headline: "Efficiently acquired capital, uneven execution",
     commentary: "The first-round foundation was sound, then Cyrus Allen introduced the draft's widest expert-market disagreement. Stowers and Black delivered a strong recovery, and the five acquired picks were assembled efficiently enough to keep one aggressive reach from sinking the whole cycle.",
     bestPick: "Eli Stowers at 3.02",
@@ -360,9 +323,6 @@ const teams: Team[] = [
     marketCapture: 95.7,
     originalPicks: 2,
     acquiredPicks: 5,
-    window: "Needs a direction",
-    strength: "WR room (#3)",
-    weakness: "RB room (#12)",
     scores: { execution: 67, capital: 85, fit: 75 },
     picks: [
       { slot: "1.02", player: "Jordyn Tyson", position: "WR", expertRank: 3, marketRank: 3 },
@@ -377,10 +337,8 @@ const teams: Team[] = [
   {
     rosterId: 7,
     rank: 8,
-    powerRank: 8,
     name: "Gridiron geezers",
     manager: "kong58",
-    pickGrade: "B−",
     headline: "Correct positions, expensive capital path",
     commentary: "No roster needed receivers more, and both selections went directly at that problem. Bernard was slightly early and Branch slightly late, so the board value nearly cancels out; the expensive acquisition path is what keeps the class from climbing.",
     bestPick: "Zachariah Branch at 2.11",
@@ -392,9 +350,6 @@ const teams: Team[] = [
     marketCapture: 90.5,
     originalPicks: 1,
     acquiredPicks: 1,
-    window: "Needs a direction",
-    strength: "RB room (#3)",
-    weakness: "WR room (#12)",
     scores: { execution: 74, capital: 67, fit: 90 },
     picks: [
       { slot: "2.02", player: "Germie Bernard", position: "WR", expertRank: 18, marketRank: 22, acquired: true },
@@ -404,10 +359,8 @@ const teams: Team[] = [
   {
     rosterId: 8,
     rank: 9,
-    powerRank: 6,
     name: "arkinsjt",
     manager: "arkinsjt",
-    pickGrade: "B−",
     headline: "Near-neutral capital and sensible need picks",
     commentary: "Singleton was almost exactly consensus value and directly repaired a weak RB room. Hibner is the swing: in a no-TE-premium league, athletic promise is not enough—he must become a credible weekly starter to repay the opportunity cost.",
     bestPick: "Nicholas Singleton at 2.04",
@@ -419,9 +372,6 @@ const teams: Team[] = [
     marketCapture: 96.3,
     originalPicks: 2,
     acquiredPicks: 0,
-    window: "Needs a direction",
-    strength: "QB room (#4)",
-    weakness: "TE room (#12)",
     scores: { execution: 73, capital: 79, fit: 82 },
     picks: [
       { slot: "2.04", player: "Nicholas Singleton", position: "RB", expertRank: 15, marketRank: 16 },
@@ -431,10 +381,8 @@ const teams: Team[] = [
   {
     rosterId: 9,
     rank: 10,
-    powerRank: 7,
     name: "Max’s Shadynasty",
     manager: "maxjabb",
-    pickGrade: "B−",
     headline: "One value pick cannot cover capital leakage",
     commentary: "Bell was a clean third-round value, but Allar was taken ahead of the expert median at a position where this roster was already strong. In 1QB with four-point passing touchdowns, the quarterback bet needs a real value spike or an active trade market.",
     bestPick: "Skyler Bell at 3.09",
@@ -446,9 +394,6 @@ const teams: Team[] = [
     marketCapture: 100.5,
     originalPicks: 1,
     acquiredPicks: 1,
-    window: "Needs a direction",
-    strength: "QB room (#3)",
-    weakness: "TE room (#11)",
     scores: { execution: 74, capital: 65, fit: 63 },
     picks: [
       { slot: "3.09", player: "Skyler Bell", position: "WR", expertRank: 27, marketRank: 35, acquired: true },
@@ -458,10 +403,8 @@ const teams: Team[] = [
   {
     rosterId: 3,
     rank: 11,
-    powerRank: 4,
     name: "The Ape",
     manager: "sduda351",
-    pickGrade: "C−",
     headline: "Acquired picks magnify four below-market selections",
     commentary: "Every selection came ahead of expert consensus, and three of the four picks carried an acquisition cost. Lane or Randall can still make the conviction look sharp, but adding again to already-strong WR and TE rooms demanded better prices than the board supplied.",
     bestPick: "Eli Raridon at 3.03",
@@ -473,9 +416,6 @@ const teams: Team[] = [
     marketCapture: 77.5,
     originalPicks: 1,
     acquiredPicks: 3,
-    window: "Contender",
-    strength: "TE room (#1)",
-    weakness: "QB room (#6)",
     scores: { execution: 51, capital: 62, fit: 54 },
     picks: [
       { slot: "1.12", player: "Ja'Kobi Lane", position: "WR", expertRank: 22, marketRank: 12, acquired: true },
@@ -487,10 +427,8 @@ const teams: Team[] = [
   {
     rosterId: 12,
     rank: 12,
-    powerRank: 1,
     name: "Bronco Stampede",
     manager: "5FinkleRay",
-    pickGrade: "INC",
     headline: "The league favorite chose liquidity over a rookie class",
     commentary: "Bronco Stampede moved every original selection and made no pick through 4.09. That cannot weaken the league's best current roster by itself, but the 83.8% capital return means the no-pick strategy did not preserve full market value.",
     bestPick: "Not yet made",
@@ -500,9 +438,6 @@ const teams: Team[] = [
     capitalOutcome: 83.8,
     originalPicks: 0,
     acquiredPicks: 0,
-    window: "Contender",
-    strength: "QB / WR (#1)",
-    weakness: "TE room (#10)",
     scores: { execution: 0, capital: 64, fit: 88 },
     picks: [],
   },
