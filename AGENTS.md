@@ -6,6 +6,8 @@ The shipped product is a responsive website, not a device simulator. Never wrap 
 
 The public editorial brand is **Ape's Mac Salad**. The draft product is called **Draft Analysis**, never Draft Almanac. Ape's Mac Salad is also the league's recurring weekly honor: the top draft grade earns the inaugural bowl, and a new manager earns it from the Tuesday matchup review each week.
 
+Treat supporting copy and data labels as readable content, never decorative microprint. Keep visible UI text at 12px or larger, with longer editorial copy at 14px or larger, on both desktop and mobile. The Mac Salad trophy must show a clear plastic to-go container of extra-creamy, mayonnaise-forward elbow macaroni salad with no red or green ingredients or garnish.
+
 The Teams destination is a league-wide power-rankings product, not a duplicate draft board. It should compare 2026 lineup strength, dynasty quality, depth, market-implied redraft position, prior-season results, and current-year versus three-year outlook. Draft and roster opinions should always reflect the actual 1QB, half-PPR, no-TE-premium, three-FLEX league rules.
 
 In ChatGPT Work Mode, run `sites-preview start "$PWD"`, open `http://terminal.local:4173/` in the cloud browser, and verify the rendered app and its primary interactions. Keep that preview open and tell the user to inspect it in the cloud browser; do not present the local URL as a user-facing chat link. In Codex Desktop, run the local server yourself, open the preview in the in-app browser, and provide the clickable local URL. Do not deploy to Sites unless the user explicitly asks to share, publish, or deploy. Do not give the user server-start instructions when you can run it.

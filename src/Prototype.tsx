@@ -3,7 +3,6 @@ import {
   ArrowLeft,
   ArrowRight,
   BookOpenText,
-  BowlFood,
   ChartBar,
   ChartLineUp,
   ClockCounterClockwise,
@@ -702,7 +701,7 @@ function AnalysisScreen({
         </div>
         <button className="lead-story" type="button" onClick={() => onTeam(featured)}>
           <div className="mac-salad-ribbon">
-            <BowlFood size={24} weight="duotone" aria-hidden="true" />
+            <img className="mac-salad-trophy" src="./assets/app/mac-salad-trophy.webp" alt="" />
             <span><small>Inaugural draft bowl</small><strong>{featured.manager} gets to eat Ape’s Mac Salad</strong></span>
           </div>
           <div className="lead-story__teamline">
@@ -800,7 +799,7 @@ function TeamScreen({ team }: { team: Team }) {
         <section className="team-hero">
           <p className="eyebrow">{team.manager} · Power #{team.powerRank} · Dynasty {dynastyGrade(insight.metrics.dynastyCoreRank)}</p>
           {team.rank === 1 ? (
-            <div className="team-award"><BowlFood size={20} weight="duotone" /><span>2026 Draft Mac Salad winner</span></div>
+            <div className="team-award"><img src="./assets/app/mac-salad-trophy.webp" alt="" /><span>2026 Draft Mac Salad winner</span></div>
           ) : null}
           <span className="team-hero__label">Draft-cycle grade</span>
           <div className="team-hero__grade">{team.grade}</div>
@@ -1001,7 +1000,7 @@ function MatchupsScreen() {
         <p className="section-deck">Matchup stories will explain what happened—not just repeat the final score.</p>
         <div className="issue-rule"><span>Begins Week 1</span><span>Tuesday AM</span></div>
         <section className="weekly-award">
-          <BowlFood size={42} weight="duotone" aria-hidden="true" />
+          <img src="./assets/app/mac-salad-trophy.webp" alt="" />
           <div>
             <span>The weekly honor</span>
             <h2>Who gets to eat Ape’s Mac Salad?</h2>

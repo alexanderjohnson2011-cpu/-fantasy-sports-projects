@@ -1540,6 +1540,14 @@ body {
   background: var(--ink);
 }
 
+.mac-salad-trophy {
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+  mix-blend-mode: screen;
+  object-fit: contain;
+}
+
 .mac-salad-ribbon > span,
 .mac-salad-ribbon small,
 .mac-salad-ribbon strong {
@@ -1614,6 +1622,14 @@ body {
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
+}
+
+.team-award img {
+  width: 30px;
+  height: 30px;
+  margin: -4px 0;
+  mix-blend-mode: screen;
+  object-fit: contain;
 }
 
 .team-hero__label {
@@ -2135,7 +2151,7 @@ body {
 
 .weekly-award {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
+  grid-template-columns: 84px minmax(0, 1fr);
   gap: 14px;
   margin-top: 22px;
   padding: 19px;
@@ -2143,8 +2159,12 @@ body {
   background: var(--ink);
 }
 
-.weekly-award > svg {
-  color: #e5b95c;
+.weekly-award > img {
+  width: 84px;
+  height: 84px;
+  align-self: center;
+  mix-blend-mode: screen;
+  object-fit: contain;
 }
 
 .weekly-award span {
@@ -2220,5 +2240,146 @@ body {
 
   .power-list > .power-card {
     min-height: 355px;
+  }
+}
+
+/* Readable editorial type scale. Supporting data is content, not microprint. */
+.app-screen {
+  font-size: 16px;
+}
+
+.app-screen small {
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.eyebrow,
+.issue-rule,
+.lead-scores span,
+.detail-header div span,
+.detail-title > span,
+.grade-compare span,
+.pick-player small,
+.pick-ranks small,
+.roster-grid span,
+.verdict-block > div span,
+.power-list div small,
+.forecast-preview span,
+.forecast-preview small,
+.mac-salad-ribbon small,
+.notebook-row span,
+.team-award,
+.team-hero__label,
+.power-metric-grid span,
+.power-metric-grid small,
+.horizon-read span,
+.history-receipt span,
+.history-receipt small,
+.pick-call span,
+.asset-list > span,
+.asset-list small,
+.asset-list em,
+.redraft-row small,
+.redraft-row em,
+.champion-receipt small,
+.champion-receipt em,
+.power-card__header div small,
+.power-card__metrics span,
+.power-card__metrics small,
+.power-card__horizon span,
+.power-card__horizon strong,
+.power-card__history,
+.weekly-award span,
+.future-feature > span {
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.method-note,
+.source-note {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.score-bar__label,
+.capture-readout span,
+.pick-summary,
+.capital-number span {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.bottom-nav__item {
+  font-size: 13px;
+}
+
+.section-heading button,
+.full-redraft-board summary {
+  font-size: 12px;
+}
+
+.metric-toggle button {
+  font-size: 14px;
+}
+
+.detail-title h2,
+.section-heading h2,
+.trend-explainer h2 {
+  font-size: 14px;
+}
+
+.lead-story__main p,
+.board-row__copy em,
+.notebook-row p {
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.power-card > p,
+.horizon-read p,
+.pick-call p,
+.weekly-award p {
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.redraft-row > span:nth-child(2) strong,
+.asset-list strong {
+  font-size: 18px;
+}
+
+.trend-explainer li p,
+.rules-box p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.pick-row {
+  min-height: 68px;
+}
+
+.history-receipt {
+  padding: 16px;
+}
+
+.power-card__metrics > div {
+  padding: 12px 5px;
+}
+
+.redraft-row {
+  min-height: 56px;
+}
+
+@media (max-width: 430px) {
+  .power-card__metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .power-card__metrics > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .power-card__metrics > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--hairline);
   }
 }
