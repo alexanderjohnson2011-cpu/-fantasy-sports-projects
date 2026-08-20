@@ -1,6 +1,6 @@
-# Ape Invitational Draft Almanac
+# Ape's Mac Salad — Draft Analysis
 
-A mobile-first React app for the Ape Invitational Dynasty league. The first release turns the 2026 draft analysis into an editorial league magazine with a ranked report card and tap-through team dossiers.
+A responsive React editorial app for the Ape Invitational Dynasty league. The current release combines 2026 draft-cycle grades, complete pick commentary, league power rankings, prior-season results, and the recurring **Ape's Mac Salad** award.
 
 ## What is built
 
@@ -10,7 +10,11 @@ A mobile-first React app for the Ape Invitational Dynasty league. The first rele
 - Original-versus-acquired pick accounting
 - Trade-capital outcomes and roster context
 - Team-specific headlines, verdicts, best picks, and biggest questions
-- League power board
+- CBS-style commentary on every recorded pick
+- Ape's Mac Salad draft winner and planned weekly award
+- 2026 power rankings with dynasty, current-lineup, depth, and three-year views
+- Market-implied redraft slots for every rostered QB, RB, WR, and TE
+- 2025 records, points, playoff finish, and defending-champion context from Sleeper
 - Working future-state screens for Tuesday matchup stories and season forecasts
 - Full-viewport responsive layouts for phone, tablet, and desktop
 
@@ -27,6 +31,12 @@ Build checks:
 npm run check:runtime
 npm run build
 npm run test:sites
+```
+
+Refresh the generated roster, redraft, and prior-season snapshot after running the Sleeper analyzer:
+
+```bash
+node scripts/build-league-insights.mjs
 ```
 
 ## Publish with GitHub Pages
@@ -84,6 +94,6 @@ The first useful model should be a weekly Monte Carlo season simulation using:
 
 Publish playoff odds, expected final record, median finish, finish-position distribution, and the change in each metric from the prior week. Preserve every weekly prediction so the app can show whether each team's outlook is rising or falling over time.
 
-## Current prototype note
+## Current data note
 
-The selected 2026 snapshot is embedded in `src/Prototype.tsx` so the prototype is self-contained. The next engineering pass should move those objects to generated `public/data/*.json` files and connect the existing Sleeper analysis scripts without changing the UI.
+Draft editorial and trade-adjusted grades remain in `src/Prototype.tsx`. Generated roster metrics, full redraft boards, draft status, and the linked 2025 league results live in `src/generated/league-insights.json`. The next engineering pass should merge both into a single versioned pipeline artifact so Tuesday refreshes require no hand-edited frontend data.
