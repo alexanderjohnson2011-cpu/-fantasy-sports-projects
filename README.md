@@ -13,7 +13,10 @@ A responsive React editorial app for the Ape Invitational Dynasty league. The cu
 - CBS-style commentary on every recorded pick
 - Ape's Mac Salad draft winner and planned weekly award
 - Permanent Hall of Mac serving ledger and annual Kong Mac Salad race
-- 2026 power rankings with dynasty, current-lineup, depth, and three-year views
+- A dedicated 2026 Power Rankings product, separate from Draft Analysis
+- Current-year viability grades built from lineup strength, usable depth, format-adjusted positional balance, and 2025 scoring
+- Team-level scoring, construction, concentration, and player-volatility dossiers
+- Dynasty quality and three-year runway reported separately so they cannot inflate a 2026 roster grade
 - Market-implied redraft slots for every rostered QB, RB, WR, and TE
 - 2025 records, points, playoff finish, and defending-champion context from Sleeper
 - Working future-state screens for Tuesday matchup stories and season forecasts
@@ -97,4 +100,4 @@ Publish playoff odds, expected final record, median finish, finish-position dist
 
 ## Current data note
 
-Draft editorial and trade-adjusted grades remain in `src/Prototype.tsx`. Generated roster metrics, full redraft boards, draft status, and the linked 2025 league results live in `src/generated/league-insights.json`; confirmed Mac Salad recipients live in `src/generated/mac-salad-awards.json`. The next engineering pass should merge these into a single versioned pipeline artifact so Tuesday refreshes require no hand-edited frontend data.
+Draft editorial and trade-adjusted inputs remain in `src/Prototype.tsx`, while the displayed cycle letters are computed from the published 60/30/10 formula. Generated roster metrics, position-room ranks, full redraft boards, draft-audit value curves, draft status, and linked 2025 results live in `src/generated/league-insights.json`; confirmed Mac Salad recipients live in `src/generated/mac-salad-awards.json`. The next engineering pass should merge the remaining editorial inputs into a single versioned pipeline artifact so Tuesday refreshes require no hand-edited frontend data.

@@ -115,9 +115,12 @@ for (const row of rosterCsv) {
     player: row.player,
     position: row.position,
     nflTeam: row.nfl_team || "FA",
+    age: row.age ? Number(row.age) : null,
     rosterStatus: row.status,
+    dynastyValue: Number(row.dynasty_value || 0),
     redraftRank: rank,
     redraftValue: Number(row.redraft_value || 0),
+    trend30Day: Number(row.trend_30_day || 0),
     marketSlot: marketSlot(rank),
   };
   if (!rosterPlayers.has(rosterId)) rosterPlayers.set(rosterId, []);
@@ -175,6 +178,14 @@ const teams = Object.fromEntries(
           strongestRoom: analysis.strongest_room,
           weakestRoom: analysis.weakest_room,
           window: analysis.window,
+          qbRoomRank: analysis.qb_room_rank,
+          rbRoomRank: analysis.rb_room_rank,
+          wrRoomRank: analysis.wr_room_rank,
+          teRoomRank: analysis.te_room_rank,
+          dynastyCoreValue: analysis.dynasty_core_value,
+          redraftLineupValue: analysis.redraft_lineup_value,
+          depthValue: analysis.depth_value,
+          totalRosterValue: analysis.total_roster_value,
         },
         topAssets: team.top_assets.map((asset) => ({
           player: asset.name,
@@ -183,6 +194,19 @@ const teams = Object.fromEntries(
           dynastyValue: asset.dynasty_value,
         })),
         redraftBoard: rosterPlayers.get(rosterId) ?? [],
+        draftAudit: {
+          executionGrade: team.draft_grade?.execution_grade ?? "INC",
+          blendedValueCapture: Number(team.draft_grade?.blended_value_capture ?? 0),
+          leagueAdjustedCapture: Number(team.draft_grade?.league_adjusted_capture ?? 0),
+          picks: (team.draft_picks ?? []).map((pick) => ({
+            slot: pick.pick,
+            marketValueRatio: Number(pick.value_ratio ?? 0),
+            expertValueRatio: Number(pick.expert_value_ratio ?? 0),
+            marketLabel: pick.pick_label,
+            expertLabel: pick.expert_pick_label,
+            expectedSlotValue: Number(pick.expected_slot_value ?? 0),
+          })),
+        },
         previousSeason: historyByRoster[rosterId] ?? null,
       },
     ];

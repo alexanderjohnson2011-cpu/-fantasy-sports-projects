@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -36,9 +36,12 @@ type RedraftPlayer = {
   player: string;
   position: string;
   nflTeam: string;
+  age: number | null;
   rosterStatus: string;
+  dynastyValue: number;
   redraftRank: number | null;
   redraftValue: number;
+  trend30Day: number;
   marketSlot: { label: string; round: number | null; pick: number | null };
 };
 
@@ -57,9 +60,30 @@ type TeamInsight = {
     strongestRoom: string;
     weakestRoom: string;
     window: string;
+    qbRoomRank: number;
+    rbRoomRank: number;
+    wrRoomRank: number;
+    teRoomRank: number;
+    dynastyCoreValue: number;
+    redraftLineupValue: number;
+    depthValue: number;
+    totalRosterValue: number;
   };
   topAssets: Array<{ player: string; position: string; nflTeam: string; dynastyValue: number }>;
   redraftBoard: RedraftPlayer[];
+  draftAudit: {
+    executionGrade: string;
+    blendedValueCapture: number;
+    leagueAdjustedCapture: number;
+    picks: Array<{
+      slot: string;
+      marketValueRatio: number;
+      expertValueRatio: number;
+      marketLabel: string;
+      expertLabel: string;
+      expectedSlotValue: number;
+    }>;
+  };
   previousSeason: {
     wins: number;
     losses: number;
@@ -120,7 +144,6 @@ type Team = {
   powerRank: number;
   name: string;
   manager: string;
-  grade: string;
   pickGrade: string;
   headline: string;
   commentary: string;
@@ -147,7 +170,6 @@ const teams: Team[] = [
     powerRank: 12,
     name: "Final Boss",
     manager: "OldManBacala",
-    grade: "A−",
     pickGrade: "A",
     headline: "Great selections, weaker capital management",
     commentary: "Final Boss landed the consensus rookie No. 2 at 1.03, then spent discounted late picks on the roster's weakest room. Tate gives the rebuild a true centerpiece; Allen and McGowan are the right kind of low-cost RB bets.",
@@ -176,7 +198,6 @@ const teams: Team[] = [
     powerRank: 10,
     name: "Terry Tate’s Pain Train",
     manager: "mannyrsox24",
-    grade: "A−",
     pickGrade: "A",
     headline: "Excellent picks; the full trade ledger lands near neutral",
     commentary: "Price was a defensible need pick, Lemon was a clean first-round value, and the board then turned into a hunt for asymmetric upside. Hurst and Delp fell well beyond expert consensus, while Washington is the class's defining experts-versus-market disagreement.",
@@ -207,7 +228,6 @@ const teams: Team[] = [
     powerRank: 5,
     name: "2 Dagos and A Dream",
     manager: "TGamby",
-    grade: "A−",
     pickGrade: "A−",
     headline: "Value everywhere, with every pick aimed at a weakness",
     commentary: "Boston came off the board a little early, but Simpson and Thompson were excellent Day 3 values. Every selection attacked a bottom-two position room, and the separate 2.08-for-Harold Fannin result gives this class the league's strongest capital backdrop.",
@@ -236,7 +256,6 @@ const teams: Team[] = [
     powerRank: 11,
     name: "Bub’s Club",
     manager: "bubberdubber",
-    grade: "B+",
     pickGrade: "B",
     headline: "Strong acquisition economics lift an uneven nine-pick haul",
     commentary: "Love was automatic, Sadiq was fair, and Cooper was one of the board's clearest wins. The class got far more volatile after that: Williams and Lance beat consensus, while Douglas, Benson, and now Klubnik required conviction well ahead of the expert board.",
@@ -271,7 +290,6 @@ const teams: Team[] = [
     powerRank: 3,
     name: "Ertz & Krafts",
     manager: "jccbraves99",
-    grade: "B+",
     pickGrade: "B",
     headline: "Ordinary picks, excellent contender consolidation",
     commentary: "Bell, Claiborne, and Klare all met or beat the expert board, although the live market is cooler on the trio. The sharper move came away from the clock, where surplus TE depth and bridge capital became Chris Olave without a meaningful market premium.",
@@ -300,7 +318,6 @@ const teams: Team[] = [
     powerRank: 2,
     name: "Bijan And The Maye-ssiah",
     manager: "jcflash59",
-    grade: "B",
     pickGrade: "C+",
     headline: "Capital wins rescue inefficient selections",
     commentary: "The positional thesis was correct—receiver was the roster's weakest starting room—but three straight WR selections came ahead of consensus. Heidenreich and Joly improved the finish, while an excellent trade ledger prevented inefficient picks from defining the cycle.",
@@ -331,7 +348,6 @@ const teams: Team[] = [
     powerRank: 9,
     name: "My Nabers Tetties",
     manager: "DRockefeller",
-    grade: "B−",
     pickGrade: "C+",
     headline: "Efficiently acquired capital, uneven execution",
     commentary: "The first-round foundation was sound, then Cyrus Allen introduced the draft's widest expert-market disagreement. Stowers and Black delivered a strong recovery, and the five acquired picks were assembled efficiently enough to keep one aggressive reach from sinking the whole cycle.",
@@ -364,7 +380,6 @@ const teams: Team[] = [
     powerRank: 8,
     name: "Gridiron geezers",
     manager: "kong58",
-    grade: "B−",
     pickGrade: "B−",
     headline: "Correct positions, expensive capital path",
     commentary: "No roster needed receivers more, and both selections went directly at that problem. Bernard was slightly early and Branch slightly late, so the board value nearly cancels out; the expensive acquisition path is what keeps the class from climbing.",
@@ -392,7 +407,6 @@ const teams: Team[] = [
     powerRank: 6,
     name: "arkinsjt",
     manager: "arkinsjt",
-    grade: "B−",
     pickGrade: "B−",
     headline: "Near-neutral capital and sensible need picks",
     commentary: "Singleton was almost exactly consensus value and directly repaired a weak RB room. Hibner is the swing: in a no-TE-premium league, athletic promise is not enough—he must become a credible weekly starter to repay the opportunity cost.",
@@ -420,7 +434,6 @@ const teams: Team[] = [
     powerRank: 7,
     name: "Max’s Shadynasty",
     manager: "maxjabb",
-    grade: "C+",
     pickGrade: "B−",
     headline: "One value pick cannot cover capital leakage",
     commentary: "Bell was a clean third-round value, but Allar was taken ahead of the expert median at a position where this roster was already strong. In 1QB with four-point passing touchdowns, the quarterback bet needs a real value spike or an active trade market.",
@@ -448,7 +461,6 @@ const teams: Team[] = [
     powerRank: 4,
     name: "The Ape",
     manager: "sduda351",
-    grade: "C−",
     pickGrade: "C−",
     headline: "Acquired picks magnify four below-market selections",
     commentary: "Every selection came ahead of expert consensus, and three of the four picks carried an acquisition cost. Lane or Randall can still make the conviction look sharp, but adding again to already-strong WR and TE rooms demanded better prices than the board supplied.",
@@ -478,7 +490,6 @@ const teams: Team[] = [
     powerRank: 1,
     name: "Bronco Stampede",
     manager: "5FinkleRay",
-    grade: "INC",
     pickGrade: "INC",
     headline: "The league favorite chose liquidity over a rookie class",
     commentary: "Bronco Stampede moved every original selection and made no pick through 4.09. That cannot weaken the league's best current roster by itself, but the 83.8% capital return means the no-pick strategy did not preserve full market value.",
@@ -567,16 +578,17 @@ const draftSuperlatives = [
   ["Largest conviction bet", "Cyrus Allen · 2.03", "Expert rank 40 versus live-market rank 17."],
 ] as const;
 
-type NavId = "analysis" | "teams" | "matchups" | "forecast";
+type NavId = "analysis" | "power" | "matchups" | "forecast";
 
 type Route =
   | { kind: "nav"; id: NavId }
   | { kind: "team"; rank: number }
+  | { kind: "powerTeam"; rosterId: number }
   | { kind: "methodology" };
 
 const navItems: Array<{ id: NavId; label: string; icon: typeof BookOpenText }> = [
   { id: "analysis", label: "Analysis", icon: BookOpenText },
-  { id: "teams", label: "Teams", icon: UsersThree },
+  { id: "power", label: "Power Rankings", icon: UsersThree },
   { id: "matchups", label: "Matchups", icon: Football },
   { id: "forecast", label: "Forecast", icon: ChartLineUp },
 ];
@@ -612,6 +624,183 @@ function rankBar(rank: number) {
   return `${Math.max(8, ((13 - rank) / 12) * 100)}%`;
 }
 
+function draftCycleScore(team: Team) {
+  return Number((team.scores.execution * 0.6 + team.scores.capital * 0.3 + team.scores.fit * 0.1).toFixed(1));
+}
+
+function gradeDraftScore(score: number, hasPicks = true) {
+  if (!hasPicks) return "INC";
+  if (score >= 95) return "A+";
+  if (score >= 92) return "A";
+  if (score >= 87) return "A−";
+  if (score >= 80) return "B+";
+  if (score >= 76.5) return "B";
+  if (score >= 73) return "B−";
+  if (score >= 68) return "C+";
+  if (score >= 60) return "C";
+  if (score >= 50) return "C−";
+  return "D";
+}
+
+function draftCycleGrade(team: Team) {
+  return gradeDraftScore(draftCycleScore(team), team.picks.length > 0);
+}
+
+function rankComponentScore(rank: number) {
+  return 100 - (rank - 1) * 5;
+}
+
+function viabilityGrade(score: number) {
+  if (score >= 92) return "A";
+  if (score >= 87) return "A−";
+  if (score >= 80) return "B+";
+  if (score >= 75) return "B";
+  if (score >= 70) return "B−";
+  if (score >= 65) return "C+";
+  if (score >= 60) return "C";
+  if (score >= 55) return "C−";
+  return "D";
+}
+
+function competitionTier(rank: number) {
+  if (rank === 1) return "Title favorite";
+  if (rank <= 3) return "Championship tier";
+  if (rank === 4) return "Contender";
+  if (rank <= 7) return "Playoff bubble";
+  if (rank <= 10) return "Outside looking in";
+  return "Development year";
+}
+
+function median(values: number[]) {
+  const ordered = [...values].sort((a, b) => a - b);
+  const middle = Math.floor(ordered.length / 2);
+  return ordered.length % 2 ? ordered[middle] : (ordered[middle - 1] + ordered[middle]) / 2;
+}
+
+type PowerProfile = {
+  rosterId: number;
+  rank: number;
+  grade: string;
+  tier: string;
+  score: number;
+  lineupScore: number;
+  depthScore: number;
+  balanceScore: number;
+  scoringScore: number;
+  scoringRank: number;
+  pointsPerGame: number;
+  potentialPointsPerGame: number;
+  lineupEfficiency: number;
+  lineupVsMedian: number;
+  depthVsMedian: number;
+  eliteCount: number;
+  startableCount: number;
+  topThreeShare: number;
+  rbShare: number;
+  volatilityScore: number;
+  volatilityLabel: string;
+};
+
+const priorScoringOrder = [...teams].sort(
+  (a, b) => (insightFor(b).previousSeason?.pointsFor ?? 0) - (insightFor(a).previousSeason?.pointsFor ?? 0),
+);
+const priorScoringRanks = new Map(priorScoringOrder.map((team, index) => [team.rosterId, index + 1]));
+const medianLineupValue = median(teams.map((team) => insightFor(team).metrics.redraftLineupValue));
+const medianDepthValue = median(teams.map((team) => insightFor(team).metrics.depthValue));
+
+const powerProfiles: PowerProfile[] = teams
+  .map((team) => {
+    const insight = insightFor(team);
+    const metrics = insight.metrics;
+    const history = insight.previousSeason;
+    const games = history ? history.wins + history.losses + history.ties : 0;
+    const scoringRank = priorScoringRanks.get(team.rosterId) ?? 12;
+    const lineupScore = rankComponentScore(metrics.redraftLineupRank);
+    const depthScore = rankComponentScore(metrics.depthRank);
+    const balanceScore =
+      rankComponentScore(metrics.qbRoomRank) * 0.1 +
+      rankComponentScore(metrics.rbRoomRank) * 0.3 +
+      rankComponentScore(metrics.wrRoomRank) * 0.45 +
+      rankComponentScore(metrics.teRoomRank) * 0.15;
+    const scoringScore = rankComponentScore(scoringRank);
+    const score = lineupScore * 0.55 + depthScore * 0.25 + balanceScore * 0.1 + scoringScore * 0.1;
+    const relevantPlayers = insight.redraftBoard.filter((player) => player.redraftValue > 0).slice(0, 10);
+    const relevantValue = relevantPlayers.reduce((total, player) => total + player.redraftValue, 0) || 1;
+    const topThreeShare = relevantPlayers.slice(0, 3).reduce((total, player) => total + player.redraftValue, 0) / relevantValue;
+    const rbShare = relevantPlayers.filter((player) => player.position === "RB").reduce((total, player) => total + player.redraftValue, 0) / relevantValue;
+    const concentrationRisk = Math.max(0, Math.min(100, ((topThreeShare - 0.35) / 0.3) * 100));
+    const depthRisk = ((metrics.depthRank - 1) / 11) * 100;
+    const volatilityScore = concentrationRisk * 0.4 + depthRisk * 0.35 + rbShare * 100 * 0.25;
+    return {
+      rosterId: team.rosterId,
+      rank: 0,
+      grade: "—",
+      tier: "",
+      score: Number(score.toFixed(1)),
+      lineupScore,
+      depthScore,
+      balanceScore: Number(balanceScore.toFixed(1)),
+      scoringScore,
+      scoringRank,
+      pointsPerGame: games ? Number((history!.pointsFor / games).toFixed(1)) : 0,
+      potentialPointsPerGame: games ? Number((history!.potentialPoints / games).toFixed(1)) : 0,
+      lineupEfficiency: history?.potentialPoints ? Number(((history.pointsFor / history.potentialPoints) * 100).toFixed(1)) : 0,
+      lineupVsMedian: Number((((metrics.redraftLineupValue / medianLineupValue) - 1) * 100).toFixed(1)),
+      depthVsMedian: Number((((metrics.depthValue / medianDepthValue) - 1) * 100).toFixed(1)),
+      eliteCount: insight.redraftBoard.filter((player) => player.redraftRank && player.redraftRank <= 36).length,
+      startableCount: insight.redraftBoard.filter((player) => player.redraftRank && player.redraftRank <= 120).length,
+      topThreeShare: Number((topThreeShare * 100).toFixed(1)),
+      rbShare: Number((rbShare * 100).toFixed(1)),
+      volatilityScore: Number(volatilityScore.toFixed(1)),
+      volatilityLabel: volatilityScore <= 35 ? "Stable" : volatilityScore <= 55 ? "Balanced" : volatilityScore <= 70 ? "Volatile" : "High variance",
+    };
+  })
+  .sort((a, b) => b.score - a.score)
+  .map((profile, index) => ({
+    ...profile,
+    rank: index + 1,
+    grade: viabilityGrade(profile.score),
+    tier: competitionTier(index + 1),
+  }));
+
+function powerProfileFor(team: Team) {
+  return powerProfiles.find((profile) => profile.rosterId === team.rosterId)!;
+}
+
+function signedPercent(value: number) {
+  return `${value >= 0 ? "+" : ""}${value.toFixed(1)}%`;
+}
+
+function playerVolatilityScore(player: RedraftPlayer) {
+  const trendRate = player.dynastyValue ? Math.abs(player.trend30Day) / player.dynastyValue : 0;
+  return (
+    (player.position === "RB" ? 28 : 0) +
+    (player.age && player.age >= 28 ? 24 : 0) +
+    (player.age && player.age <= 23.5 ? 16 : 0) +
+    (!player.redraftRank || player.redraftRank > 72 ? 18 : 0) +
+    (trendRate >= 0.06 ? 18 : 0) +
+    (player.rosterStatus !== "starter" ? 8 : 0)
+  );
+}
+
+function playerVolatilityLabel(player: RedraftPlayer) {
+  const trendRate = player.dynastyValue ? Math.abs(player.trend30Day) / player.dynastyValue : 0;
+  if (player.position === "RB" && player.age && player.age >= 28) return "Veteran RB exposure";
+  if (player.position === "RB") return "RB role / health swing";
+  if (player.age && player.age <= 23.5 && (!player.redraftRank || player.redraftRank > 72)) return "Young role still forming";
+  if (trendRate >= 0.06) return "Fast-moving market";
+  if (player.redraftRank && player.redraftRank <= 48) return "Weekly anchor";
+  return "Flex-role variance";
+}
+
+function volatilePlayersFor(team: Team) {
+  return insightFor(team).redraftBoard
+    .filter((player) => player.redraftValue > 0)
+    .slice(0, 12)
+    .sort((a, b) => playerVolatilityScore(b) - playerVolatilityScore(a) || (a.redraftRank ?? 999) - (b.redraftRank ?? 999))
+    .slice(0, 4);
+}
+
 function pickNumber(slot: string) {
   const [round, position] = slot.split(".").map(Number);
   return (round - 1) * 12 + position;
@@ -621,42 +810,49 @@ function pickAnalysis(team: Team, pick: Pick) {
   const overall = pickNumber(pick.slot);
   const expertGap = pick.expertRank ? overall - pick.expertRank : 0;
   const marketGap = pick.marketRank ? overall - pick.marketRank : 0;
-  let label = "Fair value";
+  const audit = insightFor(team).draftAudit.picks.find((entry) => entry.slot === pick.slot);
+  const marketRatio = audit?.marketValueRatio ?? 1;
+  const expertRatio = audit?.expertValueRatio ?? 1;
+  const blendedRatio = (marketRatio + expertRatio) / 2;
+  let label = "Defensible value";
   let tone = "neutral";
   let grade = "B";
-  let boardRead = `The price was close to both the expert and live-market boards, which makes this a clean bet on player development rather than a draft-room bargain.`;
+  let boardRead = `This pick returned ${(blendedRatio * 100).toFixed(1)}% of expected slot value across the expert and market curves—a reasonable price without a major surplus.`;
 
-  if (expertGap >= 7 && marketGap >= 4) {
-    label = "Steal";
+  if (blendedRatio >= 1.2) {
+    label = "Premium value";
     tone = "positive";
     grade = "A+";
-    boardRead = `This is the kind of value that changes a class: pick ${overall} landed a player ranked ${pick.expertRank} by experts and ${pick.marketRank} by the live market.`;
-  } else if (expertGap >= 5) {
-    label = "Expert value";
+    boardRead = `This is the pick that drives the class: it returned ${(blendedRatio * 100).toFixed(1)}% of expected slot value, with both curves pricing ${pick.player} above pick ${overall}.`;
+  } else if (blendedRatio >= 1.1) {
+    label = "Clear value";
     tone = "positive";
     grade = "A";
-    boardRead = `The expert board saw a clear bargain here—rank ${pick.expertRank} at pick ${overall}—even though the live market was ${marketGap >= 0 ? "also supportive" : "more cautious"}.`;
-  } else if (marketGap >= 5) {
-    label = "Market value";
+    boardRead = `The selection created a real cushion, returning ${(blendedRatio * 100).toFixed(1)}% of slot value across the two curves.`;
+  } else if (blendedRatio >= 1.03) {
+    label = "Positive value";
     tone = "positive";
     grade = "A−";
-    boardRead = `Live traders were well ahead of the room, valuing this player ${marketGap} spots above the selection. The expert board was less aggressive, so the upside comes with real disagreement.`;
-  } else if (expertGap <= -8) {
-    label = "Conviction pick";
-    tone = "warning";
-    grade = "C";
-    boardRead = `This was an aggressive departure from consensus: the selection came ${Math.abs(expertGap)} spots before the expert median. The player now has to separate from the tier to repay that opportunity cost.`;
-  } else if (expertGap <= -3 && marketGap <= -2) {
+    boardRead = `The pick beat its expected cost by ${(blendedRatio * 100 - 100).toFixed(1)}%, enough to create value without overstating a small rank gap.`;
+  } else if (blendedRatio >= 0.98) {
+    label = "Market price";
+    grade = "B+";
+    boardRead = `The player returned ${(blendedRatio * 100).toFixed(1)}% of expected value. That is disciplined slot execution, even if it is not a steal.`;
+  } else if (blendedRatio < 0.85) {
     label = "Reach";
     tone = "warning";
+    grade = blendedRatio < 0.75 ? "D" : "C";
+    boardRead = `The pick retained only ${(blendedRatio * 100).toFixed(1)}% of expected slot value. Both the nonlinear value curve and the rank board indicate that trading down was the cleaner process.`;
+  } else if (blendedRatio < 0.93) {
+    label = "Aggressive bet";
+    tone = "warning";
     grade = "C+";
-    boardRead = `Both signals suggested patience. The pick beat the expert board by ${Math.abs(expertGap)} spots and the market by ${Math.abs(marketGap)}, so trading down would have been the cleaner process.`;
-  } else if (expertGap >= 2 || marketGap >= 2) {
-    label = "Value";
-    tone = "positive";
-    grade = "B+";
-    boardRead = `The room let a little value fall: this selection beat at least one board without requiring the manager to bet far against the other.`;
+    boardRead = `The selection returned ${(blendedRatio * 100).toFixed(1)}% of expected slot value. The miss is survivable, but the player must outperform the tier.`;
   }
+
+  const rankRead = expertGap === 0 && marketGap === 0
+    ? " Both ordinal boards matched the slot exactly."
+    : ` Expert rank ${pick.expertRank}; market rank ${pick.marketRank}; selected ${overall}${expertGap >= 0 || marketGap >= 0 ? "." : "—ahead of both signals."}`;
 
   const formatRead = pick.position === "QB"
     ? "In this 1QB, four-point pass-TD format, the payoff requires starter-level value or a future trade market."
@@ -667,7 +863,7 @@ function pickAnalysis(team: Team, pick: Pick) {
     ? " Because the pick was acquired, its trade cost remains part of the permanent cycle grade."
     : " The selection came from original capital, so no volume bonus or acquisition penalty applies.";
 
-  return { grade, label, tone, copy: `${boardRead} ${formatRead}${capitalRead}`, team: team.name };
+  return { grade, label, tone, copy: `${boardRead}${rankRead} ${formatRead}${capitalRead}`, team: team.name, blendedRatio };
 }
 
 function SiteNav({ active, onNavigate }: { active: NavId; onNavigate: (id: NavId) => void }) {
@@ -745,7 +941,7 @@ function AnalysisScreen({
             <h2>{featured.name}</h2>
           </div>
           <div className="lead-story__main">
-            <span className="lead-grade">{featured.grade}</span>
+            <span className="lead-grade">{draftCycleGrade(featured)}</span>
             <div>
               <h3>{featured.headline}</h3>
               <p>{featured.commentary}</p>
@@ -760,7 +956,7 @@ function AnalysisScreen({
         <section className="board-section" aria-labelledby="board-title">
           <div className="section-heading">
             <h2 id="board-title">The Board</h2>
-            <button type="button" onClick={() => onNavigate("teams")}>Power ranks</button>
+            <button type="button" onClick={() => onNavigate("power")}>Power ranks</button>
           </div>
           {board.map((team, index) => (
             <div key={team.name}>
@@ -776,7 +972,7 @@ function AnalysisScreen({
                   <strong>{team.name}</strong>
                   <em>{team.headline}</em>
                 </span>
-                <span className="board-row__grade">{team.grade}</span>
+                <span className="board-row__grade">{draftCycleGrade(team)}</span>
                 <ArrowRight size={22} weight="regular" aria-hidden="true" />
               </button>
             </div>
@@ -801,12 +997,12 @@ function AnalysisScreen({
   );
 }
 
-function DetailHeader({ onBack, team }: { onBack: () => void; team: Team }) {
+function DetailHeader({ onBack, team, context, grade }: { onBack: () => void; team: Team; context: string; grade: string }) {
   return (
     <div className="detail-header">
       <button type="button" onClick={onBack} aria-label="Back"><ArrowLeft size={24} /></button>
-      <div><span>Team dossier</span><strong>{team.name}</strong></div>
-      <span className="detail-header__grade">{team.grade}</span>
+      <div><span>{context}</span><strong>{team.name}</strong></div>
+      <span className="detail-header__grade">{grade}</span>
     </div>
   );
 }
@@ -820,64 +1016,43 @@ function ScoreBar({ label, value }: { label: string; value: number }) {
   );
 }
 
-function TeamScreen({ team }: { team: Team }) {
+function DraftTeamScreen({ team }: { team: Team }) {
   const [metric, setMetric] = useState<"expert" | "market">("expert");
   const selectedCapture = metric === "expert" ? team.expertCapture : team.marketCapture;
   const insight = insightFor(team);
-  const powerRead = powerEditorial[team.rosterId];
-  const history = insight.previousSeason;
-  const featuredRedraft = insight.redraftBoard.slice(0, 9);
+  const expectedCapital = insight.draftAudit.picks.reduce((total, pick) => total + pick.expectedSlotValue, 0);
+  const heaviestPick = [...insight.draftAudit.picks].sort((a, b) => b.expectedSlotValue - a.expectedSlotValue)[0];
+  const heaviestPickWeight = heaviestPick && expectedCapital ? (heaviestPick.expectedSlotValue / expectedCapital) * 100 : 0;
 
   return (
     <div className="app-screen detail-screen web-screen">
       <main className="detail-page" data-testid={"team-" + team.rank}>
         <section className="team-hero">
-          <p className="eyebrow">{team.manager} · Power #{team.powerRank} · Dynasty {dynastyGrade(insight.metrics.dynastyCoreRank)}</p>
+          <p className="eyebrow">{team.manager} · Draft rank #{team.rank}</p>
           {team.rank === 1 ? (
             <div className="team-award"><img src="./assets/app/mac-salad-trophy.webp" alt="" /><span>2026 Draft Mac Salad winner</span></div>
           ) : null}
           <span className="team-hero__label">Draft-cycle grade</span>
-          <div className="team-hero__grade">{team.grade}</div>
+          <div className="team-hero__grade">{draftCycleGrade(team)}</div>
           <h1>{team.headline}</h1>
           <p>{team.commentary}</p>
         </section>
-        <section className="detail-block power-profile">
-          <div className="detail-title"><span>01</span><h2>2026 power profile</h2></div>
-          <p className="detail-explainer">{powerRead.headline}</p>
-          <div className="power-metric-grid">
-            <div><span>Power</span><strong>#{team.powerRank}</strong><small>overall</small></div>
-            <div><span>Dynasty</span><strong>{dynastyGrade(insight.metrics.dynastyCoreRank)}</strong><small>core #{insight.metrics.dynastyCoreRank}</small></div>
-            <div><span>Redraft</span><strong>#{insight.metrics.redraftLineupRank}</strong><small>best lineup</small></div>
-            <div><span>Depth</span><strong>#{insight.metrics.depthRank}</strong><small>bench value</small></div>
-          </div>
-          <div className="horizon-read">
-            <article><span>Win in 2026</span><p>{powerRead.now}</p></article>
-            <article><span>Build through 2028</span><p>{powerRead.future}</p></article>
-          </div>
-          {history ? (
-            <div className={history.finish === 1 ? "history-receipt is-champion" : "history-receipt"}>
-              <ClockCounterClockwise size={25} weight="duotone" aria-hidden="true" />
-              <div>
-                <span>2025 receipt</span>
-                <strong>{history.wins}–{history.losses}{history.ties ? `–${history.ties}` : ""} · {ordinal(history.finish)} finish</strong>
-                <small>{history.pointsFor.toLocaleString(undefined, { maximumFractionDigits: 1 })} regular-season points{history.finish === 1 ? " · defending champion" : ""}</small>
-              </div>
-            </div>
-          ) : null}
-        </section>
         <section className="detail-block grade-build">
-          <div className="detail-title"><span>02</span><h2>Grade build</h2></div>
+          <div className="detail-title"><span>01</span><h2>Grade build</h2></div>
           <p className="detail-explainer">Permanent grade: 60% pick execution, 30% capital management, 10% roster construction.</p>
           <ScoreBar label="Pick execution" value={team.scores.execution} />
           <ScoreBar label="Capital management" value={team.scores.capital} />
           <ScoreBar label="Roster construction" value={team.scores.fit} />
           <div className="grade-compare">
-            <div><span>Pick grade</span><strong>{team.pickGrade}</strong></div>
-            <div><span>Cycle grade</span><strong>{team.grade}</strong></div>
+            <div><span>Pick grade</span><strong>{insight.draftAudit.executionGrade}</strong></div>
+            <div><span>Cycle grade</span><strong>{draftCycleGrade(team)}</strong><small>{draftCycleScore(team)} / 100</small></div>
           </div>
+          {heaviestPick ? (
+            <p className="grade-audit-note"><strong>Why the pick letters do not average evenly:</strong> selections are weighted by nonlinear slot value. {heaviestPick.slot} represents {heaviestPickWeight.toFixed(0)}% of this class’s expected draft capital, so its result matters far more than a fourth-round pick.</p>
+          ) : null}
         </section>
         <section className="detail-block">
-          <div className="detail-title"><span>03</span><h2>Value captured</h2></div>
+          <div className="detail-title"><span>02</span><h2>Value captured</h2></div>
           <div className="metric-toggle" role="group" aria-label="Ranking source">
             <button className={metric === "expert" ? "is-active" : ""} onClick={() => setMetric("expert")} type="button">Expert board</button>
             <button className={metric === "market" ? "is-active" : ""} onClick={() => setMetric("market")} type="button">Live market</button>
@@ -889,8 +1064,8 @@ function TeamScreen({ team }: { team: Team }) {
           <p className="source-note">Expert board blends four current 1QB sources. Market capture uses current 12-team, 1QB, half-PPR trade values.</p>
         </section>
         <section className="detail-block">
-          <div className="detail-title"><span>04</span><h2>Pick-by-pick analysis</h2></div>
-          <p className="detail-explainer">Each call is graded against the exact slot, the disagreement between expert and market boards, this league's rules, and whether the pick was acquired.</p>
+          <div className="detail-title"><span>03</span><h2>Pick-by-pick analysis</h2></div>
+          <p className="detail-explainer">Each call uses the same nonlinear expert and market value curves as the aggregate pick grade, then adds league fit and acquisition context.</p>
           {team.picks.length ? (
             <div className="pick-list">
               {team.picks.map((pick) => {
@@ -914,55 +1089,12 @@ function TeamScreen({ team }: { team: Team }) {
           </div>
         </section>
         <section className="detail-block capital-block">
-          <div className="detail-title"><span>05</span><h2>Capital context</h2></div>
+          <div className="detail-title"><span>04</span><h2>Capital context</h2></div>
           <div className="capital-number">
             <strong>{team.capitalOutcome?.toFixed(1)}%</strong>
             <span>current value received vs. sent</span>
           </div>
           <p>{team.capitalNote}</p>
-        </section>
-        <section className="detail-block">
-          <div className="detail-title"><span>06</span><h2>Roster construction</h2></div>
-          <div className="roster-grid">
-            <div><span>Window</span><strong>{team.window}</strong></div>
-            <div><span>Youth</span><strong>#{insight.metrics.youthRank} · {insight.metrics.youthValueShare}</strong></div>
-            <div><span>Strength</span><strong>{team.strength}</strong></div>
-            <div><span>Pressure point</span><strong>{team.weakness}</strong></div>
-            <div><span>2027 firsts</span><strong>{insight.metrics.futureFirsts}</strong></div>
-            <div><span>2027–29 picks</span><strong>{insight.metrics.futurePicksThreeYear}</strong></div>
-          </div>
-          <div className="asset-list">
-            <span>Dynasty foundation</span>
-            {insight.topAssets.map((asset, index) => (
-              <div key={asset.player}><small>{String(index + 1).padStart(2, "0")}</small><strong>{asset.player}</strong><em>{asset.position} · {asset.nflTeam}</em></div>
-            ))}
-          </div>
-        </section>
-        <section className="detail-block redraft-block">
-          <div className="detail-title"><span>07</span><h2>If this were redraft</h2></div>
-          <p className="detail-explainer">Market-implied 12-team draft slots for the best 2026 lineup pieces. The full board below includes every rostered QB, RB, WR, and TE.</p>
-          <div className="redraft-list">
-            {featuredRedraft.map((player) => (
-              <div className="redraft-row" key={player.playerId}>
-                <span className="redraft-slot">{player.marketSlot.label === "Unranked" ? "—" : player.marketSlot.label}</span>
-                <span><strong>{player.player}</strong><small>{player.position} · {player.nflTeam}</small></span>
-                <em>{player.redraftRank ? `#${player.redraftRank}` : "stash"}</em>
-              </div>
-            ))}
-          </div>
-          <details className="full-redraft-board">
-            <summary>View all {insight.redraftBoard.length} skill-position players</summary>
-            <div className="redraft-list">
-              {insight.redraftBoard.map((player) => (
-                <div className="redraft-row" key={player.playerId}>
-                  <span className="redraft-slot">{player.marketSlot.label === "Unranked" ? "—" : player.marketSlot.label}</span>
-                  <span><strong>{player.player}</strong><small>{player.position} · {player.nflTeam} · {player.rosterStatus}</small></span>
-                  <em>{player.redraftRank ? `#${player.redraftRank}` : "stash"}</em>
-                </div>
-              ))}
-            </div>
-          </details>
-          <p className="source-note">{leagueInsights.redraftMethod} Kicker and team defense are excluded because the market feed does not value them on the same scale.</p>
         </section>
         <section className="verdict-block">
           <p className="eyebrow">The verdict</p>
@@ -975,15 +1107,167 @@ function TeamScreen({ team }: { team: Team }) {
   );
 }
 
-function TeamsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
-  const powerBoard = useMemo(() => [...teams].sort((a, b) => a.powerRank - b.powerRank), []);
+function PowerTeamScreen({ team }: { team: Team }) {
+  const insight = insightFor(team);
+  const metrics = insight.metrics;
+  const profile = powerProfileFor(team);
+  const powerRead = powerEditorial[team.rosterId];
+  const history = insight.previousSeason;
+  const featuredRedraft = insight.redraftBoard.slice(0, 10);
+  const volatilityPlayers = volatilePlayersFor(team);
+  const rooms = [
+    { position: "QB", rank: metrics.qbRoomRank },
+    { position: "RB", rank: metrics.rbRoomRank },
+    { position: "WR", rank: metrics.wrRoomRank },
+    { position: "TE", rank: metrics.teRoomRank },
+  ];
+  const strongestRoom = [...rooms].sort((a, b) => a.rank - b.rank)[0];
+  const weakestRoom = [...rooms].sort((a, b) => b.rank - a.rank)[0];
+  const gradeComponents = [
+    { label: "Optimal lineup", weight: "55%", score: profile.lineupScore, detail: `#${metrics.redraftLineupRank}` },
+    { label: "Usable depth", weight: "25%", score: profile.depthScore, detail: `#${metrics.depthRank}` },
+    { label: "Position balance", weight: "10%", score: profile.balanceScore, detail: `${profile.balanceScore.toFixed(0)}` },
+    { label: "2025 scoring", weight: "10%", score: profile.scoringScore, detail: `#${profile.scoringRank}` },
+  ];
+
+  return (
+    <div className="app-screen detail-screen web-screen">
+      <main className="detail-page power-detail-page" data-testid={`power-team-${team.rosterId}`}>
+        <section className="team-hero power-team-hero">
+          <p className="eyebrow">{team.manager} · {profile.tier}</p>
+          <span className="team-hero__label">2026 viability grade</span>
+          <div className="team-hero__grade">{profile.grade}</div>
+          <h1>{powerRead.headline}</h1>
+          <p>{powerRead.now}</p>
+          <div className="power-rank-stamp"><span>League rank</span><strong>#{profile.rank}</strong><em>{profile.score.toFixed(1)} / 100</em></div>
+        </section>
+
+        <section className="detail-block viability-build">
+          <div className="detail-title"><span>01</span><h2>Why this grade</h2></div>
+          <p className="detail-explainer">This is a current-year roster grade—not the team’s draft grade. It measures the lineup that can score now, the bench that can survive attrition, positional balance in this league, and last season’s scoring baseline.</p>
+          <div className="power-metric-grid viability-summary">
+            <div><span>2026 rank</span><strong>#{profile.rank}</strong><small>{profile.tier}</small></div>
+            <div><span>Roster grade</span><strong>{profile.grade}</strong><small>{profile.score.toFixed(1)} / 100</small></div>
+            <div><span>Lineup</span><strong>#{metrics.redraftLineupRank}</strong><small>current market</small></div>
+            <div><span>Depth</span><strong>#{metrics.depthRank}</strong><small>bench value</small></div>
+          </div>
+          <div className="viability-formula">
+            {gradeComponents.map((component) => (
+              <div key={component.label}>
+                <span><strong>{component.label}</strong><small>{component.weight} of grade</small></span>
+                <i><b style={{ width: `${component.score}%` }} /></i>
+                <em>{component.detail}</em>
+              </div>
+            ))}
+          </div>
+          <p className="source-note">The formula deliberately excludes 2026 draft execution. It uses 55% optimal-lineup strength, 25% depth, 10% league-adjusted positional balance, and 10% 2025 points scored.</p>
+        </section>
+
+        <section className="detail-block scoring-profile">
+          <div className="detail-title"><span>02</span><h2>Scoring profile</h2></div>
+          <div className="scoring-grid">
+            <div><span>2025 PPG</span><strong>{profile.pointsPerGame.toFixed(1)}</strong><small>#{profile.scoringRank} in league</small></div>
+            <div><span>Potential PPG</span><strong>{profile.potentialPointsPerGame.toFixed(1)}</strong><small>best-ball output</small></div>
+            <div><span>Lineup efficiency</span><strong>{profile.lineupEfficiency.toFixed(1)}%</strong><small>actual / potential</small></div>
+            <div><span>2026 lineup</span><strong>{signedPercent(profile.lineupVsMedian)}</strong><small>vs. league median</small></div>
+          </div>
+          <p className="detail-explainer">Last year’s team scored {profile.pointsPerGame.toFixed(1)} points per game and converted {profile.lineupEfficiency.toFixed(1)}% of its potential points. The current optimal-lineup market value sits {Math.abs(profile.lineupVsMedian).toFixed(1)}% {profile.lineupVsMedian >= 0 ? "above" : "below"} the league median, which is the stronger forward-looking signal.</p>
+          {history ? (
+            <div className={history.finish === 1 ? "history-receipt is-champion" : "history-receipt"}>
+              <ClockCounterClockwise size={25} weight="duotone" aria-hidden="true" />
+              <div><span>2025 receipt</span><strong>{history.wins}–{history.losses}{history.ties ? `–${history.ties}` : ""} · {ordinal(history.finish)} finish</strong><small>{history.pointsFor.toLocaleString(undefined, { maximumFractionDigits: 1 })} points · {history.potentialPoints.toLocaleString(undefined, { maximumFractionDigits: 1 })} potential</small></div>
+            </div>
+          ) : null}
+        </section>
+
+        <section className="detail-block construction-profile">
+          <div className="detail-title"><span>03</span><h2>Roster construction</h2></div>
+          <div className="room-rank-grid">
+            {rooms.map((room) => <div key={room.position}><span>{room.position}</span><strong>#{room.rank}</strong><small>{dynastyGrade(room.rank)}</small></div>)}
+          </div>
+          <p className="detail-explainer"><strong>{strongestRoom.position} is the clearest advantage at #{strongestRoom.rank}; {weakestRoom.position} is the pressure point at #{weakestRoom.rank}.</strong> With three FLEX spots, RB and WR depth carry more weekly leverage than surplus quarterback value, while tight end receives no scoring premium.</p>
+          <div className="construction-facts">
+            <div><span>Elite assets</span><strong>{profile.eliteCount}</strong><small>top-36 redraft players</small></div>
+            <div><span>Startable pool</span><strong>{profile.startableCount}</strong><small>top-120 skill players</small></div>
+            <div><span>Depth index</span><strong>{signedPercent(profile.depthVsMedian)}</strong><small>vs. league median</small></div>
+          </div>
+        </section>
+
+        <section className="detail-block volatility-profile">
+          <div className="detail-title"><span>04</span><h2>Stability & player volatility</h2></div>
+          <div className="volatility-readout">
+            <div><span>Volatility proxy</span><strong>{profile.volatilityLabel}</strong><em>{profile.volatilityScore.toFixed(0)} / 100 risk</em></div>
+            <i><b style={{ width: `${profile.volatilityScore}%` }} /></i>
+          </div>
+          <div className="volatility-factors">
+            <div><span>Top-three share</span><strong>{profile.topThreeShare.toFixed(1)}%</strong></div>
+            <div><span>RB exposure</span><strong>{profile.rbShare.toFixed(1)}%</strong></div>
+            <div><span>Depth rank</span><strong>#{metrics.depthRank}</strong></div>
+          </div>
+          <p className="detail-explainer">{profile.topThreeShare.toFixed(1)}% of the relevant redraft value sits in the top three players, while RBs account for {profile.rbShare.toFixed(1)}%. Combined with depth rank #{metrics.depthRank}, that produces a {profile.volatilityLabel.toLowerCase()} roster profile.</p>
+          <div className="volatility-list">
+            <span>Player watchlist</span>
+            {volatilityPlayers.map((player) => {
+              const trend = player.dynastyValue ? (player.trend30Day / player.dynastyValue) * 100 : 0;
+              return (
+                <div key={player.playerId}>
+                  <span><strong>{player.player}</strong><small>{player.position} · age {player.age?.toFixed(1) ?? "—"} · {player.marketSlot.label}</small></span>
+                  <em>{playerVolatilityLabel(player)}</em>
+                  <b>{trend >= 0 ? "+" : ""}{trend.toFixed(1)}% 30d</b>
+                </div>
+              );
+            })}
+          </div>
+          <p className="source-note">Volatility is a transparent proxy using top-player concentration, RB exposure, roster depth, age/role uncertainty, and 30-day dynasty-market movement. It is not observed weekly scoring standard deviation.</p>
+        </section>
+
+        <section className="detail-block redraft-block">
+          <div className="detail-title"><span>05</span><h2>2026 scoring spine</h2></div>
+          <p className="detail-explainer">Market-implied 12-team redraft slots show which players are expected to carry this lineup now—not what they may be worth in dynasty three years from today.</p>
+          <div className="redraft-list">
+            {featuredRedraft.map((player) => (
+              <div className="redraft-row" key={player.playerId}>
+                <span className="redraft-slot">{player.marketSlot.label === "Unranked" ? "—" : player.marketSlot.label}</span>
+                <span><strong>{player.player}</strong><small>{player.position} · {player.nflTeam} · {player.rosterStatus}</small></span>
+                <em>{player.redraftRank ? `#${player.redraftRank}` : "stash"}</em>
+              </div>
+            ))}
+          </div>
+          <details className="full-redraft-board"><summary>View all {insight.redraftBoard.length} skill-position players</summary><div className="redraft-list">{insight.redraftBoard.map((player) => <div className="redraft-row" key={player.playerId}><span className="redraft-slot">{player.marketSlot.label === "Unranked" ? "—" : player.marketSlot.label}</span><span><strong>{player.player}</strong><small>{player.position} · {player.nflTeam} · {player.rosterStatus}</small></span><em>{player.redraftRank ? `#${player.redraftRank}` : "stash"}</em></div>)}</div></details>
+          <p className="source-note">{leagueInsights.redraftMethod} Kicker and team defense are excluded because the market feed does not value them on the same scale.</p>
+        </section>
+
+        <section className="detail-block runway-profile">
+          <div className="detail-title"><span>06</span><h2>Three-year runway</h2></div>
+          <div className="power-metric-grid">
+            <div><span>Dynasty</span><strong>{dynastyGrade(metrics.dynastyCoreRank)}</strong><small>core #{metrics.dynastyCoreRank}</small></div>
+            <div><span>Youth</span><strong>#{metrics.youthRank}</strong><small>{metrics.youthValueShare} share</small></div>
+            <div><span>2027 firsts</span><strong>{metrics.futureFirsts}</strong><small>liquidity</small></div>
+            <div><span>2027–29</span><strong>{metrics.futurePicksThreeYear}</strong><small>total picks</small></div>
+          </div>
+          <div className="horizon-read"><article><span>Win in 2026</span><p>{powerRead.now}</p></article><article><span>Build through 2028</span><p>{powerRead.future}</p></article></div>
+          <div className="asset-list"><span>Dynasty foundation</span>{insight.topAssets.map((asset, index) => <div key={asset.player}><small>{String(index + 1).padStart(2, "0")}</small><strong>{asset.player}</strong><em>{asset.position} · {asset.nflTeam}</em></div>)}</div>
+        </section>
+
+        <section className="verdict-block power-verdict">
+          <p className="eyebrow">2026 bottom line</p>
+          <h2>{profile.tier}</h2>
+          <p>{powerRead.headline} The clearest path to moving up is improving the {weakestRoom.position} room without weakening the current scoring spine.</p>
+          <div><span>Ranking swing factor</span><strong>{profile.volatilityLabel} risk · {weakestRoom.position} room #{weakestRoom.rank}</strong></div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
   const defendingChampion = teams.find((team) => team.rosterId === leagueInsights.previousSeason.championRosterId);
   return (
     <div className="app-screen section-screen web-screen">
       <main className="section-page">
         <p className="eyebrow">2026 league outlook</p>
         <h1>Power Rankings</h1>
-        <p className="section-deck">Current-year lineup strength versus dynasty quality, depth, future capital, and the receipts from last season.</p>
+        <p className="section-deck">Who can actually win this year—graded on scoring strength, lineup depth, roster balance, and the receipts from last season.</p>
         <div className="issue-rule"><span>Aug 20 snapshot</span><span>Sleeper + market data</span></div>
         {defendingChampion ? (
           <button className="champion-receipt" type="button" onClick={() => onTeam(defendingChampion)}>
@@ -993,26 +1277,27 @@ function TeamsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
           </button>
         ) : null}
         <div className="power-list">
-          {powerBoard.map((team) => {
+          {powerProfiles.map((profile) => {
+            const team = teams.find((candidate) => candidate.rosterId === profile.rosterId)!;
             const insight = insightFor(team);
             const history = insight.previousSeason;
             const editorial = powerEditorial[team.rosterId];
             return (
               <button className="power-card" type="button" key={team.name} onClick={() => onTeam(team)}>
                 <div className="power-card__header">
-                  <span className="power-card__rank">{padRank(team.powerRank)}</span>
-                  <div><strong>{team.name}</strong><small>{team.manager} · {team.window}</small></div>
+                  <span className="power-card__rank">{padRank(profile.rank)}</span>
+                  <div><strong>{team.name}</strong><small>{team.manager} · {profile.tier}</small></div>
                   <ArrowRight size={22} aria-hidden="true" />
                 </div>
                 <p>{editorial.headline}</p>
                 <div className="power-card__metrics">
-                  <div><span>2026</span><strong>#{team.powerRank}</strong></div>
-                  <div><span>Dynasty</span><strong>{dynastyGrade(insight.metrics.dynastyCoreRank)}</strong><small>#{insight.metrics.dynastyCoreRank}</small></div>
-                  <div><span>Redraft</span><strong>#{insight.metrics.redraftLineupRank}</strong></div>
+                  <div><span>Grade</span><strong>{profile.grade}</strong><small>{profile.score.toFixed(1)}</small></div>
+                  <div><span>Lineup</span><strong>#{insight.metrics.redraftLineupRank}</strong></div>
                   <div><span>Depth</span><strong>#{insight.metrics.depthRank}</strong></div>
+                  <div><span>Volatility</span><strong>{profile.volatilityScore.toFixed(0)}</strong><small>{profile.volatilityLabel}</small></div>
                 </div>
                 <div className="power-card__horizon" aria-label="Current-year versus dynasty rank">
-                  <div><span>Win now</span><i><b style={{ width: rankBar(insight.metrics.redraftLineupRank) }} /></i><strong>#{insight.metrics.redraftLineupRank}</strong></div>
+                  <div><span>Viability</span><i><b style={{ width: `${profile.score}%` }} /></i><strong>{profile.score.toFixed(0)}</strong></div>
                   <div><span>3-year</span><i><b style={{ width: rankBar(insight.metrics.dynastyCoreRank) }} /></i><strong>#{insight.metrics.dynastyCoreRank}</strong></div>
                 </div>
                 {history ? <div className="power-card__history"><span>2025</span><strong>{history.wins}–{history.losses} · {ordinal(history.finish)}</strong><em>{history.pointsFor.toLocaleString(undefined, { maximumFractionDigits: 0 })} PF</em></div> : null}
@@ -1020,7 +1305,7 @@ function TeamsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
             );
           })}
         </div>
-        <p className="method-note">Power rank blends dynasty starting-core value (45%), current-season optimal lineup (35%), and dynasty depth (20%). The chart compares the current redraft-lineup rank with the dynasty-core rank; it is not a generic consensus list.</p>
+        <p className="method-note">The 2026 ranking is 55% current optimal-lineup strength, 25% usable depth, 10% positional balance calibrated to this three-FLEX format, and 10% prior-season scoring. Letters come from the resulting score—not a forced league distribution. Dynasty grade and three-year rank are reported separately and cannot inflate the current-year grade.</p>
       </main>
     </div>
   );
@@ -1150,6 +1435,10 @@ function MethodologyScreen() {
           <h2>Historical results</h2>
           <p>The app follows Sleeper's previous_league_id into the 2025 league, then combines regular-season roster records and points with the winners and consolation brackets to reconstruct final finish.</p>
         </div>
+        <div className="rules-box power-method">
+          <h2>Power Rankings are a separate grade</h2>
+          <p>The 2026 viability score is 55% current optimal-lineup strength, 25% usable depth, 10% positional balance calibrated to three FLEX spots, and 10% 2025 scoring. Letter grades come from score thresholds rather than a forced curve. Draft grades do not enter the calculation; dynasty strength and the three-year runway are shown alongside the grade, but cannot inflate it.</p>
+        </div>
         <p className="source-note">Sources: Sleeper league, roster, matchup, bracket, draft, and transaction data; FantasyCalc dynasty and redraft values; FantasyPros ECR; RotoBaller; Justin Boone; and DraftSharks. Snapshot: Aug 20, 2026.</p>
       </main>
     </div>
@@ -1159,11 +1448,18 @@ function MethodologyScreen() {
 function routeFromHash(): Route {
   const value = window.location.hash.replace(/^#\/?/, "");
   if (value === "methodology") return { kind: "methodology" };
+  if (value.startsWith("power-team-")) {
+    const rosterId = Number(value.slice("power-team-".length));
+    if (teams.some((team) => team.rosterId === rosterId)) return { kind: "powerTeam", rosterId };
+  }
   if (value.startsWith("team-")) {
     const rank = Number(value.slice(5));
     if (teams.some((team) => team.rank === rank)) return { kind: "team", rank };
   }
-  if (value === "analysis" || value === "teams" || value === "matchups" || value === "forecast") {
+  if (value === "teams" || value === "power-rankings" || value === "power") {
+    return { kind: "nav", id: "power" };
+  }
+  if (value === "analysis" || value === "matchups" || value === "forecast") {
     return { kind: "nav", id: value };
   }
   if (value === "almanac") return { kind: "nav", id: "analysis" };
@@ -1172,7 +1468,9 @@ function routeFromHash(): Route {
 
 function routeHash(route: Route) {
   if (route.kind === "team") return `#team-${route.rank}`;
+  if (route.kind === "powerTeam") return `#power-team-${route.rosterId}`;
   if (route.kind === "methodology") return "#methodology";
+  if (route.id === "power") return "#power-rankings";
   return route.id === "analysis" ? "#analysis" : `#${route.id}`;
 }
 
@@ -1180,7 +1478,8 @@ export default function Prototype() {
   const [route, setRoute] = useState<Route>(() => routeFromHash());
   const [activeNav, setActiveNav] = useState<NavId>(() => {
     const initial = routeFromHash();
-    return initial.kind === "nav" ? initial.id : "analysis";
+    if (initial.kind === "nav") return initial.id;
+    return initial.kind === "powerTeam" ? "power" : "analysis";
   });
 
   useEffect(() => {
@@ -1188,6 +1487,8 @@ export default function Prototype() {
       const next = routeFromHash();
       setRoute(next);
       if (next.kind === "nav") setActiveNav(next.id);
+      if (next.kind === "powerTeam") setActiveNav("power");
+      if (next.kind === "team" || next.kind === "methodology") setActiveNav("analysis");
       window.scrollTo({ top: 0, behavior: "auto" });
     };
     window.addEventListener("hashchange", handleHash);
@@ -1211,16 +1512,26 @@ export default function Prototype() {
   };
 
   const selectedTeam = route.kind === "team" ? teams.find((team) => team.rank === route.rank) : undefined;
+  const selectedPowerTeam = route.kind === "powerTeam" ? teams.find((team) => team.rosterId === route.rosterId) : undefined;
 
   return (
     <div className="site-shell">
       <SiteNav active={activeNav} onNavigate={(id) => go({ kind: "nav", id })} />
       <div className="site-content">
-        {route.kind === "team" ? (
+        {route.kind === "powerTeam" ? (
+          selectedPowerTeam ? (
+            <>
+              <DetailHeader onBack={goBack} team={selectedPowerTeam} context="Power Rankings" grade={powerProfileFor(selectedPowerTeam).grade} />
+              <PowerTeamScreen team={selectedPowerTeam} />
+            </>
+          ) : (
+            <PowerRankingsScreen onTeam={(team) => go({ kind: "powerTeam", rosterId: team.rosterId })} />
+          )
+        ) : route.kind === "team" ? (
           selectedTeam ? (
             <>
-              <DetailHeader onBack={goBack} team={selectedTeam} />
-              <TeamScreen team={selectedTeam} />
+              <DetailHeader onBack={goBack} team={selectedTeam} context="Draft Analysis" grade={draftCycleGrade(selectedTeam)} />
+              <DraftTeamScreen team={selectedTeam} />
             </>
           ) : (
             <AnalysisScreen
@@ -1237,8 +1548,8 @@ export default function Prototype() {
             </div>
             <MethodologyScreen />
           </>
-        ) : route.id === "teams" ? (
-          <TeamsScreen onTeam={(team) => go({ kind: "team", rank: team.rank })} />
+        ) : route.id === "power" ? (
+          <PowerRankingsScreen onTeam={(team) => go({ kind: "powerTeam", rosterId: team.rosterId })} />
         ) : route.id === "matchups" ? (
           <MatchupsScreen />
         ) : route.id === "forecast" ? (
