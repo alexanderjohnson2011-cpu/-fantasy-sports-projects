@@ -12,6 +12,7 @@ A responsive React editorial app for the Ape Invitational Dynasty league. The cu
 - Team-specific headlines, verdicts, best picks, and biggest questions
 - CBS-style commentary on every recorded pick
 - Ape's Mac Salad draft winner and planned weekly award
+- Permanent Hall of Mac serving ledger and annual Kong Mac Salad race
 - 2026 power rankings with dynasty, current-lineup, depth, and three-year views
 - Market-implied redraft slots for every rostered QB, RB, WR, and TE
 - 2025 records, points, playoff finish, and defending-champion context from Sleeper
@@ -96,4 +97,4 @@ Publish playoff odds, expected final record, median finish, finish-position dist
 
 ## Current data note
 
-Draft editorial and trade-adjusted grades remain in `src/Prototype.tsx`. Generated roster metrics, full redraft boards, draft status, and the linked 2025 league results live in `src/generated/league-insights.json`. The next engineering pass should merge both into a single versioned pipeline artifact so Tuesday refreshes require no hand-edited frontend data.
+Draft editorial and trade-adjusted grades remain in `src/Prototype.tsx`. Generated roster metrics, full redraft boards, draft status, and the linked 2025 league results live in `src/generated/league-insights.json`; confirmed Mac Salad recipients live in `src/generated/mac-salad-awards.json`. The next engineering pass should merge these into a single versioned pipeline artifact so Tuesday refreshes require no hand-edited frontend data.

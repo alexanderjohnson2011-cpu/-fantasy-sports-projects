@@ -6,7 +6,9 @@ The shipped product is a responsive website, not a device simulator. Never wrap 
 
 The public editorial brand is **Ape's Mac Salad**. The draft product is called **Draft Analysis**, never Draft Almanac. Ape's Mac Salad is also the league's recurring weekly honor: the top draft grade earns the inaugural bowl, and a new manager earns it from the Tuesday matchup review each week.
 
-Treat supporting copy and data labels as readable content, never decorative microprint. Keep visible UI text at 12px or larger, with longer editorial copy at 14px or larger, on both desktop and mobile. The Mac Salad trophy must show a clear plastic to-go container of extra-creamy, mayonnaise-forward elbow macaroni salad with no red or green ingredients or garnish.
+Treat supporting copy and data labels as readable content, never decorative microprint. Keep visible UI text at 12px or larger, with longer editorial copy at 14px or larger, on both desktop and mobile. The Mac Salad trophy must use a genuinely transparent asset and show a clear plastic to-go container of extra-creamy, mayonnaise-forward elbow macaroni salad with no red or green ingredients or garnish.
+
+The Matchups destination owns the **Hall of Mac**, a permanent dated ledger of every draft and weekly Ape's Mac Salad recipient. Never fabricate winners. Each serving counts once toward that season's standings, and the manager with the most servings earns the annual **Kong Mac Salad Award**. Until a season-ending tie rule is chosen, tied managers remain co-leaders.
 
 The Teams destination is a league-wide power-rankings product, not a duplicate draft board. It should compare 2026 lineup strength, dynasty quality, depth, market-implied redraft position, prior-season results, and current-year versus three-year outlook. Draft and roster opinions should always reflect the actual 1QB, half-PPR, no-TE-premium, three-FLEX league rules.
 

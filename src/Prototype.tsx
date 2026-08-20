@@ -20,6 +20,7 @@ import "@fontsource/ibm-plex-sans-condensed/400.css";
 import "@fontsource/ibm-plex-sans-condensed/500.css";
 import "@fontsource/ibm-plex-sans-condensed/600.css";
 import leagueInsightsJson from "./generated/league-insights.json";
+import macSaladAwardsJson from "./generated/mac-salad-awards.json";
 
 type Pick = {
   slot: string;
@@ -78,6 +79,40 @@ type LeagueInsights = {
 };
 
 const leagueInsights = leagueInsightsJson as LeagueInsights;
+
+type MacSaladAward = {
+  id: string;
+  season: string;
+  date: string;
+  displayDate: string;
+  occasion: string;
+  manager: string;
+  team: string;
+  reason: string;
+};
+
+type MacSaladHistory = {
+  currentSeason: string;
+  awards: MacSaladAward[];
+};
+
+const macSaladHistory = macSaladAwardsJson as MacSaladHistory;
+const currentMacSaladAwards = macSaladHistory.awards.filter(
+  (award) => award.season === macSaladHistory.currentSeason,
+);
+const macSaladSeasons = [...new Set(macSaladHistory.awards.map((award) => award.season))].sort(
+  (a, b) => Number(b) - Number(a),
+);
+const macSaladStandings = Object.values(
+  currentMacSaladAwards.reduce<Record<string, { manager: string; team: string; count: number }>>(
+    (standings, award) => {
+      const current = standings[award.manager] ?? { manager: award.manager, team: award.team, count: 0 };
+      standings[award.manager] = { ...current, team: award.team, count: current.count + 1 };
+      return standings;
+    },
+    {},
+  ),
+).sort((a, b) => b.count - a.count || a.manager.localeCompare(b.manager));
 
 type Team = {
   rosterId: number;
@@ -992,6 +1027,9 @@ function TeamsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
 }
 
 function MatchupsScreen() {
+  const topServingCount = macSaladStandings[0]?.count ?? 0;
+  const kongLeaders = macSaladStandings.filter((entry) => entry.count === topServingCount);
+
   return (
     <div className="app-screen section-screen web-screen">
       <main className="section-page future-page">
@@ -1005,6 +1043,49 @@ function MatchupsScreen() {
             <span>The weekly honor</span>
             <h2>Who gets to eat Ape’s Mac Salad?</h2>
             <p>Every Tuesday, one manager earns the bowl for the league's best performance—not automatically the highest score. Upset quality, lineup decisions, opponent strength, and how far the result beat expectation all matter.</p>
+          </div>
+        </section>
+        <section className="hall-of-mac" aria-labelledby="hall-of-mac-title">
+          <header className="hall-heading">
+            <div>
+              <span>Permanent league record</span>
+              <h2 id="hall-of-mac-title">Hall of Mac</h2>
+              <p>Every bowl gets a permanent receipt. Draft and weekly winners each add one serving to the annual race.</p>
+            </div>
+            <div className="hall-total"><strong>{String(macSaladHistory.awards.length).padStart(2, "0")}</strong><small>{macSaladHistory.awards.length === 1 ? "serving" : "servings"}</small></div>
+          </header>
+          <div className="hall-grid">
+            <article className="kong-card">
+              <img src="./assets/app/mac-salad-trophy.webp" alt="" />
+              <div className="kong-card__copy">
+                <span>Year-end crown · {macSaladHistory.currentSeason}</span>
+                <h3>Kong Mac Salad Award</h3>
+                <p>The manager who collects the most Ape’s Mac Salads across the draft and weekly awards takes home the annual Kong.</p>
+                <div className="kong-leader">
+                  <small>{kongLeaders.length > 1 ? "Current co-leaders" : "Current leader"}</small>
+                  <strong>{kongLeaders.map((leader) => leader.manager).join(" · ") || "Race opens Week 1"}</strong>
+                  <em>{topServingCount} {topServingCount === 1 ? "serving" : "servings"}</em>
+                </div>
+              </div>
+            </article>
+            <div className="hall-ledger">
+              {macSaladSeasons.map((season) => {
+                const seasonAwards = macSaladHistory.awards.filter((award) => award.season === season);
+                return (
+                  <section className="hall-season" key={season} aria-label={`${season} Mac Salad winners`}>
+                    <div className="hall-ledger__head"><span>{season} serving ledger</span><strong>{seasonAwards.length} {seasonAwards.length === 1 ? "award" : "awards"}</strong></div>
+                    {[...seasonAwards].reverse().map((award) => (
+                      <article className="hall-entry" key={award.id}>
+                        <time dateTime={award.date}>{award.displayDate}</time>
+                        <div><strong>{award.manager}</strong><small>{award.team} · {award.occasion}</small><p>{award.reason}</p></div>
+                        <span>+1</span>
+                      </article>
+                    ))}
+                  </section>
+                );
+              })}
+              <p className="hall-ledger__next">Weekly servings begin after Week 1. Every Tuesday winner will be added here.</p>
+            </div>
           </div>
         </section>
         <section className="future-feature">

@@ -1544,7 +1544,6 @@ body {
   width: 54px;
   height: 54px;
   flex: 0 0 auto;
-  mix-blend-mode: screen;
   object-fit: contain;
 }
 
@@ -1628,7 +1627,6 @@ body {
   width: 30px;
   height: 30px;
   margin: -4px 0;
-  mix-blend-mode: screen;
   object-fit: contain;
 }
 
@@ -2163,7 +2161,6 @@ body {
   width: 84px;
   height: 84px;
   align-self: center;
-  mix-blend-mode: screen;
   object-fit: contain;
 }
 
@@ -2381,5 +2378,268 @@ body {
 
   .power-card__metrics > div:nth-child(-n + 2) {
     border-bottom: 1px solid var(--hairline);
+  }
+}
+
+/* Hall of Mac */
+.hall-of-mac {
+  margin-top: 42px;
+}
+
+.hall-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.hall-heading span,
+.hall-total small,
+.kong-card__copy > span,
+.kong-leader small,
+.hall-ledger__head,
+.hall-entry time,
+.hall-entry small {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.hall-heading span,
+.hall-entry time {
+  color: var(--rust);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.hall-heading h2 {
+  margin-top: 5px;
+  font-family: var(--serif);
+  font-size: clamp(46px, 8vw, 68px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.86;
+}
+
+.hall-heading p {
+  max-width: 650px;
+  margin-top: 12px;
+  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.hall-total {
+  min-width: 66px;
+  padding-left: 16px;
+  text-align: right;
+  border-left: 1px solid var(--hairline);
+}
+
+.hall-total strong,
+.hall-total small {
+  display: block;
+}
+
+.hall-total strong {
+  color: var(--rust);
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 0.8;
+}
+
+.hall-total small {
+  margin-top: 9px;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+}
+
+.hall-grid {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.kong-card {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  padding: 20px;
+  color: var(--paper);
+  background: var(--ink);
+  box-shadow: inset 0 0 0 1px rgba(229, 185, 92, 0.38);
+}
+
+.kong-card > img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+}
+
+.kong-card__copy > span {
+  color: #e5b95c;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+}
+
+.kong-card h3 {
+  margin-top: 6px;
+  font-family: var(--serif);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 0.92;
+}
+
+.kong-card p {
+  margin-top: 10px;
+  color: #c8d2ce;
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.kong-leader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 3px 10px;
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid rgba(246, 242, 233, 0.28);
+}
+
+.kong-leader small,
+.kong-leader strong {
+  grid-column: 1;
+}
+
+.kong-leader small {
+  color: #a8bbb3;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.kong-leader strong {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.kong-leader em {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  color: #e5b95c;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: normal;
+}
+
+.hall-ledger {
+  padding: 18px;
+  border: 1px solid var(--hairline);
+}
+
+.hall-season + .hall-season {
+  margin-top: 24px;
+}
+
+.hall-ledger__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  color: var(--rust);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+}
+
+.hall-ledger__head strong {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.hall-entry {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+  padding: 15px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.hall-entry > div > strong,
+.hall-entry > div > small {
+  display: block;
+}
+
+.hall-entry > div > strong {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.hall-entry small {
+  margin-top: 4px;
+  color: var(--ink-soft);
+}
+
+.hall-entry p {
+  margin-top: 8px;
+  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.hall-entry > span {
+  color: var(--rust);
+  font-family: var(--serif);
+  font-size: 32px;
+  line-height: 0.9;
+}
+
+.hall-ledger__next {
+  padding-top: 12px;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.45;
+  border-top: 1px solid var(--hairline);
+}
+
+@media (min-width: 860px) {
+  .hall-grid {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .hall-heading {
+    gap: 12px;
+  }
+
+  .kong-card {
+    grid-template-columns: 72px minmax(0, 1fr);
+    padding: 16px;
+  }
+
+  .kong-card > img {
+    width: 72px;
+    height: 72px;
+  }
+
+  .kong-card h3 {
+    font-size: 29px;
+  }
+
+  .hall-entry {
+    grid-template-columns: 54px minmax(0, 1fr) auto;
   }
 }
