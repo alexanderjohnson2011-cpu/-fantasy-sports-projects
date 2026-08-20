@@ -165,7 +165,7 @@ const teams: Team[] = [
     name: "Final Boss",
     manager: "OldManBacala",
     headline: "Great selections, weaker capital management",
-    commentary: "Final Boss landed the consensus rookie No. 2 at 1.03, then spent discounted late picks on the roster's weakest room. Tate gives the rebuild a true centerpiece; Allen and McGowan are the right kind of low-cost RB bets.",
+    commentary: "Final Boss landed the consensus rookie No. 2 at 1.03, then spent discounted late picks on the roster's weakest room. Tate gives the rebuild a true centerpiece; Allen and McGowan are the right kind of low-cost RB bets, and Carson Beck closed the class as a genuine fourth-round value.",
     bestPick: "Carnell Tate at 1.03",
     question: "Did a rebuilding roster need Tucker Kraft more than the liquidity of 1.04?",
     verdict: "The selections were the league's cleanest marriage of value and team direction. The 1.04 trade trims the permanent grade one notch.",
@@ -180,6 +180,7 @@ const teams: Team[] = [
       { slot: "1.03", player: "Carnell Tate", position: "WR", expertRank: 2, marketRank: 2 },
       { slot: "3.05", player: "Kaytron Allen", position: "RB", expertRank: 28, marketRank: 29, acquired: true },
       { slot: "4.03", player: "Seth McGowan", position: "RB", expertRank: 41, marketRank: 43 },
+      { slot: "4.10", player: "Carson Beck", position: "QB", expertRank: 38, marketRank: 29 },
     ],
   },
   {
@@ -265,7 +266,7 @@ const teams: Team[] = [
     name: "Ertz & Krafts",
     manager: "jccbraves99",
     headline: "Ordinary picks, excellent contender consolidation",
-    commentary: "Bell, Claiborne, and Klare all met or beat the expert board, although the live market is cooler on the trio. The sharper move came away from the clock, where surplus TE depth and bridge capital became Chris Olave without a meaningful market premium.",
+    commentary: "Bell, Claiborne, and Klare all met or beat the expert board, although the live market is cooler on the trio. Barion Brown added a real market-value swing at 4.12, even if the expert board was much less enthusiastic. The sharper move came away from the clock, where surplus TE depth and bridge capital became Chris Olave without a meaningful market premium.",
     bestPick: "Chris Bell at 2.06",
     question: "Was Max Klare the best use of a pick for the league's No. 2 TE room?",
     verdict: "Solid, low-ceiling selections paired with smart roster-shape management. That is enough to raise the full-cycle grade.",
@@ -280,6 +281,7 @@ const teams: Team[] = [
       { slot: "2.06", player: "Chris Bell", position: "WR", expertRank: 16, marketRank: 25, acquired: true },
       { slot: "3.04", player: "Demond Claiborne", position: "RB", expertRank: 24, marketRank: 27, acquired: true },
       { slot: "3.12", player: "Max Klare", position: "TE", expertRank: 31, marketRank: 44 },
+      { slot: "4.12", player: "Barion Brown", position: "WR", expertRank: 64, marketRank: 39 },
     ],
   },
   {
@@ -340,7 +342,7 @@ const teams: Team[] = [
     name: "Gridiron geezers",
     manager: "kong58",
     headline: "Correct positions, expensive capital path",
-    commentary: "No roster needed receivers more, and both selections went directly at that problem. Bernard was slightly early and Branch slightly late, so the board value nearly cancels out; the expensive acquisition path is what keeps the class from climbing.",
+    commentary: "No roster needed receivers more, and every selection went directly at that problem. Bernard was slightly early and Branch slightly late, then Zavion Thomas supplied a clean fourth-round value swing; the expensive acquisition path is what keeps the class from climbing.",
     bestPick: "Zachariah Branch at 2.11",
     question: "Do two mid-tier receivers materially repair the league's weakest WR room?",
     verdict: "Need alignment keeps the grade afloat, but the acquisition ledger makes 2.02 more expensive than it first appears.",
@@ -354,6 +356,7 @@ const teams: Team[] = [
     picks: [
       { slot: "2.02", player: "Germie Bernard", position: "WR", expertRank: 18, marketRank: 22, acquired: true },
       { slot: "2.11", player: "Zachariah Branch", position: "WR", expertRank: 21, marketRank: 19 },
+      { slot: "4.11", player: "Zavion Thomas", position: "WR", expertRank: 43, marketRank: 44 },
     ],
   },
   {
@@ -430,11 +433,11 @@ const teams: Team[] = [
     name: "Bronco Stampede",
     manager: "5FinkleRay",
     headline: "The league favorite chose liquidity over a rookie class",
-    commentary: "Bronco Stampede moved every original selection and made no pick through 4.09. That cannot weaken the league's best current roster by itself, but the 83.8% capital return means the no-pick strategy did not preserve full market value.",
-    bestPick: "Not yet made",
+    commentary: "Bronco Stampede moved every original selection and finished the draft without making a pick. That cannot weaken the league's best current roster by itself, but the 83.8% capital return means the no-pick strategy did not preserve full market value.",
+    bestPick: "No rookie selection",
     question: "Did moving every 2026 selection create enough present value for a title favorite?",
     verdict: "The absence of rookies is not the concern; the price received is. A loaded roster can rationally sell picks, but this ledger currently returns only 83.8% of the value sent.",
-    capitalNote: "No selection through 4.09. Current capital retained is 83.8% of value sent, so the provisional capital-management mark is a C.",
+    capitalNote: "No selection was made. Current capital retained is 83.8% of value sent, so the final capital-management mark is a C.",
     capitalOutcome: 83.8,
     originalPicks: 0,
     acquiredPicks: 0,
@@ -522,7 +525,7 @@ type Route =
   | { kind: "methodology" };
 
 const navItems: Array<{ id: NavId; label: string; icon: typeof BookOpenText }> = [
-  { id: "analysis", label: "Analysis", icon: BookOpenText },
+  { id: "analysis", label: "Draft Recap", icon: BookOpenText },
   { id: "power", label: "Power Rankings", icon: UsersThree },
   { id: "matchups", label: "Matchups", icon: Football },
   { id: "forecast", label: "Forecast", icon: ChartLineUp },
@@ -858,7 +861,7 @@ function AnalysisScreen({
       <main className="almanac-page" data-testid="almanac-screen">
         <AppHeader onMenu={onMethodology} />
         <section className="issue-intro">
-          <h1>The 2026<br />Draft Analysis</h1>
+          <h1>The 2026<br />Draft Recap</h1>
           <p className="issue-deck">Every pick, trade, and roster fit—graded like a real draft desk, for this league.</p>
         </section>
         <div className="issue-rule" aria-label="Report status">
@@ -926,7 +929,7 @@ function AnalysisScreen({
             ))}
           </section>
         </section>
-        <p className="method-note">Provisional while the slow draft remains live. Grades use league-specific settings, four expert boards, current market values, and the full 2026-pick trade ledger.</p>
+        <p className="method-note">Final after all 48 Sleeper selections. Grades use league-specific settings, four expert boards, current market values, and the full 2026-pick trade ledger.</p>
       </main>
     </div>
   );
@@ -1017,7 +1020,7 @@ function DraftTeamScreen({ team }: { team: Team }) {
                 );
               })}
             </div>
-          ) : <p className="empty-state">No selection recorded through pick 4.09. The draft-cycle evaluation therefore rests on capital management rather than pick execution.</p>}
+          ) : <p className="empty-state">No rookie selection was made. The final draft-cycle evaluation therefore rests on capital management rather than pick execution.</p>}
           <div className="pick-summary">
             <span><strong>{team.originalPicks}</strong> original</span>
             <span><strong>{team.acquiredPicks}</strong> acquired</span>
@@ -1465,7 +1468,7 @@ export default function Prototype() {
         ) : route.kind === "team" ? (
           selectedTeam ? (
             <>
-              <DetailHeader onBack={goBack} team={selectedTeam} context="Draft Analysis" grade={draftCycleGrade(selectedTeam)} />
+              <DetailHeader onBack={goBack} team={selectedTeam} context="Draft Recap" grade={draftCycleGrade(selectedTeam)} />
               <DraftTeamScreen team={selectedTeam} />
             </>
           ) : (
@@ -1479,7 +1482,7 @@ export default function Prototype() {
           <>
             <div className="detail-header methodology-header">
               <button type="button" onClick={goBack} aria-label="Back"><ArrowLeft size={24} /></button>
-              <div><span>Draft Analysis</span><strong>Methodology</strong></div>
+              <div><span>Draft Recap</span><strong>Methodology</strong></div>
             </div>
             <MethodologyScreen />
           </>
