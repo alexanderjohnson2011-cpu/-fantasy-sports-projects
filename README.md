@@ -12,7 +12,7 @@ A mobile-first React app for the Ape Invitational Dynasty league. The first rele
 - Team-specific headlines, verdicts, best picks, and biggest questions
 - League power board
 - Working future-state screens for Tuesday matchup stories and season forecasts
-- iPhone and Pixel 10 responsive runtime
+- Full-viewport responsive layouts for phone, tablet, and desktop
 
 ## Run locally
 

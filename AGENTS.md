@@ -2,6 +2,8 @@
 
 ## Prototype Instructions
 
+The shipped product is a responsive website, not a device simulator. Never wrap the public experience in `MobileRuntime`, `PhoneFrame`, a phone bezel, a fake status bar, or a device picker. Mobile should use the full browser viewport, while tablet and desktop should progressively expand into purpose-built layouts.
+
 In ChatGPT Work Mode, run `sites-preview start "$PWD"`, open `http://terminal.local:4173/` in the cloud browser, and verify the rendered app and its primary interactions. Keep that preview open and tell the user to inspect it in the cloud browser; do not present the local URL as a user-facing chat link. In Codex Desktop, run the local server yourself, open the preview in the in-app browser, and provide the clickable local URL. Do not deploy to Sites unless the user explicitly asks to share, publish, or deploy. Do not give the user server-start instructions when you can run it.
 
 Before planning or implementing any mobile-app change, read this `AGENTS.md` in full. It is the source of truth for the template's runtime and component guidance.

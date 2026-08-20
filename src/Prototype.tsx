@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -16,7 +16,6 @@ import "@fontsource/cormorant-garamond/400-italic.css";
 import "@fontsource/ibm-plex-sans-condensed/400.css";
 import "@fontsource/ibm-plex-sans-condensed/500.css";
 import "@fontsource/ibm-plex-sans-condensed/600.css";
-import { FlowStack, MobileScroll, type FlowControls, type FlowScreen } from "./mobile";
 
 type Pick = {
   slot: string;
@@ -398,6 +397,11 @@ const teams: Team[] = [
 
 type NavId = "almanac" | "teams" | "matchups" | "forecast";
 
+type Route =
+  | { kind: "nav"; id: NavId }
+  | { kind: "team"; rank: number }
+  | { kind: "methodology" };
+
 const navItems: Array<{ id: NavId; label: string; icon: typeof BookOpenText }> = [
   { id: "almanac", label: "Almanac", icon: BookOpenText },
   { id: "teams", label: "Teams", icon: UsersThree },
@@ -417,9 +421,14 @@ function scoreLabel(value: number) {
   return "Concern";
 }
 
-function BottomNav({ flow, active }: { flow: FlowControls; active: NavId }) {
+function SiteNav({ active, onNavigate }: { active: NavId; onNavigate: (id: NavId) => void }) {
   return (
     <nav className="bottom-nav" aria-label="Primary">
+      <div className="site-nav__brand" aria-hidden="true">
+        <img src="./assets/app/league-seal.png" alt="" />
+        <span>Ape Invitational</span>
+      </div>
+      <div className="site-nav__links">
       {navItems.map((item) => {
         const Icon = item.icon;
         return (
@@ -428,16 +437,14 @@ function BottomNav({ flow, active }: { flow: FlowControls; active: NavId }) {
             className={active === item.id ? "bottom-nav__item is-active" : "bottom-nav__item"}
             key={item.id}
             aria-current={active === item.id ? "page" : undefined}
-            onClick={() => {
-              if (flow.current.id === item.id) return;
-              flow.replace(screenFor(item.id));
-            }}
+            onClick={() => onNavigate(item.id)}
           >
             <Icon size={25} weight={active === item.id ? "duotone" : "regular"} aria-hidden="true" />
             <span>{item.label}</span>
           </button>
         );
       })}
+      </div>
     </nav>
   );
 }
@@ -454,14 +461,22 @@ function AppHeader({ onMenu }: { onMenu: () => void }) {
   );
 }
 
-function AlmanacScreen({ flow }: { flow: FlowControls }) {
+function AlmanacScreen({
+  onTeam,
+  onNavigate,
+  onMethodology,
+}: {
+  onTeam: (team: Team) => void;
+  onNavigate: (id: NavId) => void;
+  onMethodology: () => void;
+}) {
   const featured = teams[0];
   const board = teams.slice(1);
 
   return (
-    <MobileScroll className="app-screen almanac-screen">
+    <div className="app-screen almanac-screen web-screen">
       <main className="almanac-page" data-testid="almanac-screen">
-        <AppHeader onMenu={() => flow.push(makeMethodologyScreen())} />
+        <AppHeader onMenu={onMethodology} />
         <section className="issue-intro">
           <h1>The 2026<br />Draft Almanac</h1>
           <p className="issue-deck">Every pick, trade and roster fit—graded for your league.</p>
@@ -470,7 +485,7 @@ function AlmanacScreen({ flow }: { flow: FlowControls }) {
           <span>Aug 20 edition</span>
           <span>44 / 48 picks</span>
         </div>
-        <button className="lead-story" type="button" onClick={() => flow.push(makeTeamScreen(featured))}>
+        <button className="lead-story" type="button" onClick={() => onTeam(featured)}>
           <div className="lead-story__teamline">
             <span className="story-rank">01</span>
             <span className="story-rule" aria-hidden="true" />
@@ -492,17 +507,17 @@ function AlmanacScreen({ flow }: { flow: FlowControls }) {
         <section className="board-section" aria-labelledby="board-title">
           <div className="section-heading">
             <h2 id="board-title">The Board</h2>
-            <button type="button" onClick={() => flow.replace(makeTeamsScreen())}>Power ranks</button>
+            <button type="button" onClick={() => onNavigate("teams")}>Power ranks</button>
           </div>
           {board.map((team, index) => (
             <div key={team.name}>
               {index === 3 ? (
-                <button className="editor-note" type="button" onClick={() => flow.push(makeMethodologyScreen())}>
+                <button className="editor-note" type="button" onClick={onMethodology}>
                   <Info size={20} weight="fill" aria-hidden="true" />
                   <em>Extra picks earn credit only after acquisition cost.</em>
                 </button>
               ) : null}
-              <button className="board-row" type="button" onClick={() => flow.push(makeTeamScreen(team))}>
+              <button className="board-row" type="button" onClick={() => onTeam(team)}>
                 <span className="board-row__rank">{padRank(team.rank)}</span>
                 <span className="board-row__copy">
                   <strong>{team.name}</strong>
@@ -516,14 +531,14 @@ function AlmanacScreen({ flow }: { flow: FlowControls }) {
         </section>
         <p className="method-note">Provisional while the slow draft remains live. Grades use league-specific settings and current source values.</p>
       </main>
-    </MobileScroll>
+    </div>
   );
 }
 
-function DetailHeader({ flow, team }: { flow: FlowControls; team: Team }) {
+function DetailHeader({ onBack, team }: { onBack: () => void; team: Team }) {
   return (
     <div className="detail-header">
-      <button type="button" onClick={flow.pop} aria-label="Back to the draft board"><ArrowLeft size={24} /></button>
+      <button type="button" onClick={onBack} aria-label="Back to the draft board"><ArrowLeft size={24} /></button>
       <div><span>Draft dossier</span><strong>{team.name}</strong></div>
       <span className="detail-header__grade">{team.grade}</span>
     </div>
@@ -544,7 +559,7 @@ function TeamScreen({ team }: { team: Team }) {
   const selectedCapture = metric === "expert" ? team.expertCapture : team.marketCapture;
 
   return (
-    <MobileScroll className="app-screen detail-screen">
+    <div className="app-screen detail-screen web-screen">
       <main className="detail-page" data-testid={"team-" + team.rank}>
         <section className="team-hero">
           <p className="eyebrow">{team.manager} · Power rank #{team.powerRank}</p>
@@ -617,14 +632,14 @@ function TeamScreen({ team }: { team: Team }) {
           <div><span>Biggest question</span><strong>{team.question}</strong></div>
         </section>
       </main>
-    </MobileScroll>
+    </div>
   );
 }
 
-function TeamsScreen({ flow }: { flow: FlowControls }) {
+function TeamsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
   const powerBoard = useMemo(() => [...teams].sort((a, b) => a.powerRank - b.powerRank), []);
   return (
-    <MobileScroll className="app-screen section-screen">
+    <div className="app-screen section-screen web-screen">
       <main className="section-page">
         <p className="eyebrow">Roster strength</p>
         <h1>League Power Board</h1>
@@ -632,7 +647,7 @@ function TeamsScreen({ flow }: { flow: FlowControls }) {
         <div className="issue-rule"><span>Aug 20 snapshot</span><span>12 teams</span></div>
         <div className="power-list">
           {powerBoard.map((team) => (
-            <button type="button" key={team.name} onClick={() => flow.push(makeTeamScreen(team))}>
+            <button type="button" key={team.name} onClick={() => onTeam(team)}>
               <span>{padRank(team.powerRank)}</span>
               <div><strong>{team.name}</strong><small>{team.window}</small></div>
               <div><small>Draft</small><strong>{team.grade}</strong></div>
@@ -641,13 +656,13 @@ function TeamsScreen({ flow }: { flow: FlowControls }) {
           ))}
         </div>
       </main>
-    </MobileScroll>
+    </div>
   );
 }
 
 function MatchupsScreen() {
   return (
-    <MobileScroll className="app-screen section-screen">
+    <div className="app-screen section-screen web-screen">
       <main className="section-page future-page">
         <p className="eyebrow">Every Tuesday</p>
         <h1>The Weekend<br />Review</h1>
@@ -666,13 +681,13 @@ function MatchupsScreen() {
         </div>
         <p className="method-note">Stories will use structured matchup data first; commentary is generated only after the underlying facts pass validation.</p>
       </main>
-    </MobileScroll>
+    </div>
   );
 }
 
 function ForecastScreen() {
   return (
-    <MobileScroll className="app-screen section-screen">
+    <div className="app-screen section-screen web-screen">
       <main className="section-page future-page">
         <p className="eyebrow">Weekly model</p>
         <h1>Season Forecast</h1>
@@ -693,13 +708,13 @@ function ForecastScreen() {
           </ol>
         </section>
       </main>
-    </MobileScroll>
+    </div>
   );
 }
 
 function MethodologyScreen() {
   return (
-    <MobileScroll className="app-screen methodology-screen">
+    <div className="app-screen methodology-screen web-screen">
       <main className="methodology-page">
         <p className="eyebrow">How to read this</p>
         <h1>League-specific by design</h1>
@@ -713,60 +728,104 @@ function MethodologyScreen() {
         </div>
         <p className="source-note">Sources: Sleeper league data, FantasyCalc trade values, FantasyPros ECR, RotoBaller, Justin Boone and DraftSharks. Snapshot: Aug 20, 2026.</p>
       </main>
-    </MobileScroll>
+    </div>
   );
 }
 
-function makeAlmanacScreen(): FlowScreen {
-  return { id: "almanac", footerHeight: 82, footer: (flow) => <BottomNav flow={flow} active="almanac" />, render: (flow) => <AlmanacScreen flow={flow} /> };
+function routeFromHash(): Route {
+  const value = window.location.hash.replace(/^#\/?/, "");
+  if (value === "methodology") return { kind: "methodology" };
+  if (value.startsWith("team-")) {
+    const rank = Number(value.slice(5));
+    if (teams.some((team) => team.rank === rank)) return { kind: "team", rank };
+  }
+  if (value === "teams" || value === "matchups" || value === "forecast") {
+    return { kind: "nav", id: value };
+  }
+  return { kind: "nav", id: "almanac" };
 }
 
-function makeTeamsScreen(): FlowScreen {
-  return { id: "teams", footerHeight: 82, footer: (flow) => <BottomNav flow={flow} active="teams" />, render: (flow) => <TeamsScreen flow={flow} /> };
-}
-
-function makeMatchupsScreen(): FlowScreen {
-  return { id: "matchups", footerHeight: 82, footer: (flow) => <BottomNav flow={flow} active="matchups" />, render: () => <MatchupsScreen /> };
-}
-
-function makeForecastScreen(): FlowScreen {
-  return { id: "forecast", footerHeight: 82, footer: (flow) => <BottomNav flow={flow} active="forecast" />, render: () => <ForecastScreen /> };
-}
-
-function makeTeamScreen(team: Team): FlowScreen {
-  return {
-    id: "team-" + team.rank,
-    headerHeight: 58,
-    header: (flow) => <DetailHeader flow={flow} team={team} />,
-    footerHeight: 82,
-    footer: (flow) => <BottomNav flow={flow} active="almanac" />,
-    render: () => <TeamScreen team={team} />,
-  };
-}
-
-function makeMethodologyScreen(): FlowScreen {
-  return {
-    id: "methodology",
-    headerHeight: 58,
-    header: (flow) => (
-      <div className="detail-header methodology-header">
-        <button type="button" onClick={flow.pop} aria-label="Back"><ArrowLeft size={24} /></button>
-        <div><span>Draft Almanac</span><strong>Methodology</strong></div>
-      </div>
-    ),
-    footerHeight: 82,
-    footer: (flow) => <BottomNav flow={flow} active="almanac" />,
-    render: () => <MethodologyScreen />,
-  };
-}
-
-function screenFor(id: NavId): FlowScreen {
-  if (id === "teams") return makeTeamsScreen();
-  if (id === "matchups") return makeMatchupsScreen();
-  if (id === "forecast") return makeForecastScreen();
-  return makeAlmanacScreen();
+function routeHash(route: Route) {
+  if (route.kind === "team") return `#team-${route.rank}`;
+  if (route.kind === "methodology") return "#methodology";
+  return route.id === "almanac" ? "#almanac" : `#${route.id}`;
 }
 
 export default function Prototype() {
-  return <FlowStack initial={makeAlmanacScreen()} />;
+  const [route, setRoute] = useState<Route>(() => routeFromHash());
+  const [activeNav, setActiveNav] = useState<NavId>(() => {
+    const initial = routeFromHash();
+    return initial.kind === "nav" ? initial.id : "almanac";
+  });
+
+  useEffect(() => {
+    const handleHash = () => {
+      const next = routeFromHash();
+      setRoute(next);
+      if (next.kind === "nav") setActiveNav(next.id);
+      window.scrollTo({ top: 0, behavior: "auto" });
+    };
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []);
+
+  const go = (next: Route) => {
+    if (next.kind === "nav") setActiveNav(next.id);
+    const nextHash = routeHash(next);
+    if (window.location.hash === nextHash) {
+      setRoute(next);
+      window.scrollTo({ top: 0, behavior: "auto" });
+    } else {
+      window.location.hash = nextHash;
+    }
+  };
+
+  const goBack = () => {
+    if (window.history.length > 1) window.history.back();
+    else go({ kind: "nav", id: activeNav });
+  };
+
+  const selectedTeam = route.kind === "team" ? teams.find((team) => team.rank === route.rank) : undefined;
+
+  return (
+    <div className="site-shell">
+      <SiteNav active={activeNav} onNavigate={(id) => go({ kind: "nav", id })} />
+      <div className="site-content">
+        {route.kind === "team" ? (
+          selectedTeam ? (
+            <>
+              <DetailHeader onBack={goBack} team={selectedTeam} />
+              <TeamScreen team={selectedTeam} />
+            </>
+          ) : (
+            <AlmanacScreen
+              onTeam={(team) => go({ kind: "team", rank: team.rank })}
+              onNavigate={(id) => go({ kind: "nav", id })}
+              onMethodology={() => go({ kind: "methodology" })}
+            />
+          )
+        ) : route.kind === "methodology" ? (
+          <>
+            <div className="detail-header methodology-header">
+              <button type="button" onClick={goBack} aria-label="Back"><ArrowLeft size={24} /></button>
+              <div><span>Draft Almanac</span><strong>Methodology</strong></div>
+            </div>
+            <MethodologyScreen />
+          </>
+        ) : route.id === "teams" ? (
+          <TeamsScreen onTeam={(team) => go({ kind: "team", rank: team.rank })} />
+        ) : route.id === "matchups" ? (
+          <MatchupsScreen />
+        ) : route.id === "forecast" ? (
+          <ForecastScreen />
+        ) : (
+          <AlmanacScreen
+            onTeam={(team) => go({ kind: "team", rank: team.rank })}
+            onNavigate={(id) => go({ kind: "nav", id })}
+            onMethodology={() => go({ kind: "methodology" })}
+          />
+        )}
+      </div>
+    </div>
+  );
 }
