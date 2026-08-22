@@ -24,6 +24,7 @@ import os
 import sys
 
 import bq_idempotent
+import raw_source
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "raw")
@@ -83,11 +84,23 @@ def sha(*parts):
 def collect():
     runs, objects, coverage = [], [], []
 
-    for path in sorted(glob.glob(os.path.join(RAW, "_runs", "*.json"))):
-        try:
-            r = json.load(open(path, encoding="utf-8"))
-        except Exception:
-            continue
+    run_reports = []
+    _bucket = os.environ.get("OUTPUT_BUCKET")
+    if _bucket:
+        from google.cloud import storage
+        for blob in storage.Client().list_blobs(_bucket, prefix="raw/_runs/"):
+            try:
+                run_reports.append(json.loads(blob.download_as_bytes().decode("utf-8")))
+            except Exception:
+                continue
+    else:
+        for path in sorted(glob.glob(os.path.join(RAW, "_runs", "*.json"))):
+            try:
+                run_reports.append(json.load(open(path, encoding="utf-8")))
+            except Exception:
+                continue
+
+    for r in run_reports:
         runs.append({
             "run_id": r.get("run_id"), "started_utc": r.get("started_utc"),
             "finished_utc": r.get("finished_utc"), "season_type": r.get("season_type"),
@@ -108,11 +121,28 @@ def collect():
                 "content_hash": sha("degraded", c.get("source"), c.get("week"), r.get("run_id")),
             })
 
-    for meta_path in glob.glob(os.path.join(RAW, "source=*", "**", "*.meta.json"), recursive=True):
-        try:
-            m = json.load(open(meta_path, encoding="utf-8"))
-        except Exception:
-            continue
+    bucket = os.environ.get("OUTPUT_BUCKET")
+    sidecars = []
+    if bucket:
+        from google.cloud import storage
+        client = storage.Client()
+        for blob in client.list_blobs(bucket, prefix="raw/source="):
+            if blob.name.endswith(".meta.json"):
+                try:
+                    sidecars.append(json.loads(blob.download_as_bytes().decode("utf-8")))
+                except Exception:
+                    continue
+        for blob in client.list_blobs(bucket, prefix="raw/_runs/"):
+            pass
+    else:
+        for meta_path in glob.glob(os.path.join(RAW, "source=*", "**", "*.meta.json"),
+                                   recursive=True):
+            try:
+                sidecars.append(json.load(open(meta_path, encoding="utf-8")))
+            except Exception:
+                continue
+
+    for m in sidecars:
         h = sha(m.get("content_sha256"), m.get("logical_source"), m.get("retrieval_utc"))
         objects.append({
             "run_id": m.get("run_id") or "unknown",

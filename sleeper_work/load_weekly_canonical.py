@@ -31,6 +31,7 @@ import re
 import sys
 
 import bq_idempotent
+import raw_source
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "raw")
@@ -45,28 +46,12 @@ def sha(*parts):
     return hashlib.sha256("|".join(str(p) for p in parts).encode("utf-8")).hexdigest()
 
 
+BUCKET = os.environ.get("OUTPUT_BUCKET")
+
+
 def iter_captures(source):
-    """Yield (payload, sidecar, path) for every capture of a logical source."""
-    root = os.path.join(RAW, "source=%s" % source)
-    if not os.path.isdir(root):
-        return
-    for dirpath, _, files in os.walk(root):
-        for name in files:
-            if not name.endswith(".json.gz"):
-                continue
-            path = os.path.join(dirpath, name)
-            meta_path = path + ".meta.json"
-            if not os.path.exists(meta_path):
-                continue
-            try:
-                with gzip.open(path, "rb") as fh:
-                    payload = json.loads(fh.read().decode("utf-8"))
-                with open(meta_path, encoding="utf-8") as fh:
-                    sidecar = json.load(fh)
-            except Exception as e:
-                print("  [skip] unreadable %s (%s)" % (name, str(e)[:80]))
-                continue
-            yield payload, sidecar, path
+    """Captures from Cloud Storage when OUTPUT_BUCKET is set, else local raw/."""
+    return raw_source.iter_captures(source, local_root=RAW, bucket=BUCKET)
 
 
 def phase_of(sidecar, path):
@@ -193,7 +178,13 @@ def build_transaction_rows():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--bucket", default=os.environ.get("OUTPUT_BUCKET"),
+                    help="read raw from this GCS bucket instead of local disk")
     args = ap.parse_args()
+
+    global BUCKET
+    BUCKET = args.bucket
+    print("reading raw from: %s" % ("gs://"+BUCKET if BUCKET else "local raw/"))
 
     matchups, skipped_pre = build_matchup_rows()
     transactions = build_transaction_rows()

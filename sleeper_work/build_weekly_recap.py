@@ -72,13 +72,13 @@ def team_names(_client=None, _league_id=None):
     """
     import glob, gzip
 
+    import raw_source
+
     def newest(source, entity):
-        hits = sorted(glob.glob(os.path.join(
-            RAW_DIR, "source=%s" % source, "**", "%s.json.gz" % entity), recursive=True))
-        if not hits:
-            return None
-        with gzip.open(hits[-1], "rb") as fh:
-            return json.loads(fh.read().decode("utf-8"))
+        payload, _ = raw_source.newest_capture(
+            source, entity, local_root=RAW_DIR,
+            bucket=os.environ.get("OUTPUT_BUCKET"))
+        return payload
 
     users = newest("sleeper_users", "users") or []
     rosters = newest("sleeper_rosters", "rosters") or []
@@ -98,14 +98,13 @@ def median(xs):
 
 
 def load_positions():
-    """player_id -> position, from the captured Sleeper player map."""
-    import glob, gzip
-    hits = sorted(glob.glob(os.path.join(
-        RAW_DIR, "source=sleeper_players", "**", "players_nfl.json.gz"), recursive=True))
-    if not hits:
+    """player_id -> position, from the most recent captured Sleeper player map."""
+    import raw_source
+    players, _ = raw_source.newest_capture(
+        "sleeper_players", "players_nfl",
+        local_root=RAW_DIR, bucket=os.environ.get("OUTPUT_BUCKET"))
+    if not players:
         return {}
-    with gzip.open(hits[-1], "rb") as fh:
-        players = json.loads(fh.read().decode("utf-8"))
     return {pid: (p or {}).get("position") for pid, p in players.items()}
 
 
