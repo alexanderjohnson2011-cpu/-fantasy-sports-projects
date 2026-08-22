@@ -3826,10 +3826,15 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   background: #faf8f5;
   user-select: none;
   list-style: none;
+  flex-wrap: wrap;
 }
 
 .forecast-methodology-accordion summary::-webkit-details-marker {
   display: none;
+}
+
+.summary-title-wrap {
+  flex: 1 1 280px;
 }
 
 .summary-title-wrap h3 {
@@ -3849,7 +3854,9 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
 }
 
 .summary-toggle-pill {
-  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: var(--ink, #0b3329);
   color: #fff;
   font-family: "IBM Plex Sans Condensed", sans-serif;
@@ -3857,8 +3864,37 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  padding: 8px 14px;
+  padding: 8px 16px;
   border-radius: 3px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .forecast-methodology-accordion summary {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .summary-title-wrap {
+    flex: 1 1 100%;
+  }
+
+  .summary-title-wrap h3 {
+    font-size: 22px;
+  }
+
+  .summary-title-wrap p {
+    font-size: 13px;
+  }
+
+  .summary-toggle-pill {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    text-align: center;
+  }
 }
 
 .methodology-details-content {
@@ -3870,6 +3906,13 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   gap: 28px;
 }
 
+@media (max-width: 640px) {
+  .methodology-details-content {
+    padding: 16px;
+    gap: 20px;
+  }
+}
+
 .method-benchmarks-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -3879,6 +3922,12 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
 @media (max-width: 860px) {
   .method-benchmarks-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .method-benchmarks-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -3934,6 +3983,13 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   align-items: flex-start;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
+}
+
+@media (max-width: 520px) {
+  .method-principle-item {
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+  }
 }
 
 .method-principle-item:last-child {
