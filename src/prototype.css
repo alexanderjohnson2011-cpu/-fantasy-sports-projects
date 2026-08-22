@@ -3444,3 +3444,120 @@ table.standings .luck-bad { color: #c44322; }
   background: #e8edea;
   color: var(--ink, #0b3329);
 }
+
+/* Power Rankings & Simulation Connection UI */
+.power-card__sim-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding: 6px 10px;
+  background: rgba(11, 51, 41, 0.05);
+  border-radius: 3px;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+}
+
+.power-card__sim-badge span {
+  color: rgba(11, 51, 41, 0.6);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.power-card__sim-badge strong {
+  color: var(--ink, #0b3329);
+  font-size: 12px;
+}
+
+.power-card__sim-badge em {
+  color: var(--rust, #b34b2c);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.power-connection-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  background: rgba(11, 51, 41, 0.06);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.power-connection-pill span {
+  color: rgba(11, 51, 41, 0.7);
+  font-weight: 500;
+}
+
+.power-connection-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1.3fr;
+  align-items: center;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  padding: 18px 20px;
+}
+
+@media (max-width: 640px) {
+  .power-connection-card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .power-conn-divider {
+    display: none;
+  }
+}
+
+.power-conn-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.power-conn-col .conn-label {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(11, 51, 41, 0.6);
+}
+
+.power-conn-col .conn-rank {
+  font-size: 28px;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink, #0b3329);
+}
+
+.power-conn-col small {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rust, #b34b2c);
+}
+
+.power-conn-col p {
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 6px 0 0;
+  color: rgba(11, 51, 41, 0.8);
+}
+
+.power-conn-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(11, 51, 41, 0.08);
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(11, 51, 41, 0.6);
+}

@@ -62,6 +62,11 @@ type FluctuationNarrative = {
 type TeamForecast = {
   rosterId: number;
   teamName: string;
+  powerRank?: number;
+  powerScore?: number;
+  powerRankDelta?: number;
+  powerDeltaLabel?: string;
+  powerConnectionNarrative?: string;
   expectedWins: number;
   expectedLosses: number;
   expectedPointsFor: number;
@@ -1060,6 +1065,13 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
                   <div><span>3-year</span><i><b style={{ width: rankBar(insight.metrics.dynastyCoreRank) }} /></i><strong>#{insight.metrics.dynastyCoreRank}</strong></div>
                 </div>
                 {history ? <div className="power-card__history"><span>2025</span><strong>{history.wins}–{history.losses} · {ordinal(history.finish)}</strong><em>{history.pointsFor.toLocaleString(undefined, { maximumFractionDigits: 0 })} PF</em></div> : null}
+                {forecastInsights.teams[String(team.rosterId)] ? (
+                  <div className="power-card__sim-badge">
+                    <span>Sim Outlook</span>
+                    <strong>Proj Seed #{forecastInsights.teams[String(team.rosterId)].medianSeed}</strong>
+                    <em>{forecastInsights.teams[String(team.rosterId)].playoffProbability}% Playoffs · {forecastInsights.teams[String(team.rosterId)].expectedWins}W</em>
+                  </div>
+                ) : null}
               </button>
             );
           })}
@@ -1098,11 +1110,10 @@ function StandingsTable({ rows }: { rows: StandingRow[] }) {
                 {row.allPlayWinPct != null ? `${Math.round(row.allPlayWinPct * 100)}%` : "—"}
               </td>
               <td className="num">{row.expectedWins ?? "—"}</td>
-              <td className={"num " + (
-                row.scheduleLuck == null ? "" : row.scheduleLuck > 0 ? "luck-good" : "luck-bad")}>
-                {row.scheduleLuck == null
-                  ? "—"
-                  : `${row.scheduleLuck > 0 ? "+" : ""}${row.scheduleLuck.toFixed(2)}`}
+              <td className={`num ${row.scheduleLuck != null ? (row.scheduleLuck > 0 ? "luck-good" : row.scheduleLuck < 0 ? "luck-bad" : "") : ""}`}>
+                {row.scheduleLuck != null
+                  ? `${row.scheduleLuck > 0 ? "+" : ""}${row.scheduleLuck.toFixed(1)}`
+                  : "—"}
               </td>
               <td className="num">{Math.round(row.totalLineupMiss)}</td>
             </tr>
@@ -1122,8 +1133,8 @@ function MatchupsScreen() {
   return (
     <div className="app-screen section-screen web-screen">
       <main className="section-page future-page">
-        <p className="eyebrow">Every Tuesday</p>
-        <h1>The Weekend<br />Review</h1>
+        <p className="eyebrow">Matchup & Award Ledger</p>
+        <h1>Matchups & Hall of Mac</h1>
         <p className="section-deck">Scores, all-play records, schedule luck and the points every manager left on the bench.</p>
         <div className="issue-rule"><span>Begins Week 1</span><span>Tuesday AM</span></div>
         <section className="weekly-award">
@@ -1258,6 +1269,12 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                   <div>
                     <strong>{fc.teamName}</strong>
                     <small>{team ? team.manager : `Team ${fc.rosterId}`} · Projected Seed {fc.medianSeed}</small>
+                    <div className="power-connection-pill">
+                      <span>Power Rank #{fc.powerRank ?? fc.medianSeed}</span>
+                      <b style={{ color: (fc.powerRankDelta ?? 0) > 0 ? "var(--ink)" : (fc.powerRankDelta ?? 0) < 0 ? "var(--rust)" : "var(--ink-soft)" }}>
+                        {fc.powerDeltaLabel ?? "Even with Power Rank"}
+                      </b>
+                    </div>
                   </div>
                   {team && onTeam ? <ArrowRight size={22} aria-hidden="true" /> : null}
                 </div>
@@ -1386,6 +1403,32 @@ function ForecastTeamScreen({ team }: { team: Team }) {
             <strong>Range of Outcomes:</strong>
             <span>Best-Case: <b>Seed #{fc.bestCaseSeed ?? 1}</b> · Worst-Case: <b>Seed #{fc.worstCaseSeed ?? 12}</b></span>
             <em>10,000 Monte Carlo Iterations</em>
+          </div>
+        </section>
+
+        {/* Dedicated Power vs Simulation Cross-Walk Card */}
+        <section className="forecast-power-connection-section">
+          <div className="forecast-section-header">
+            <p className="eyebrow">Model Methodology Bridge</p>
+            <h2>Power Ranking Baseline vs. Simulation Finish</h2>
+          </div>
+
+          <div className="power-connection-card">
+            <div className="power-conn-col">
+              <span className="conn-label">Power Rankings Baseline</span>
+              <strong className="conn-rank">#{fc.powerRank ?? fc.medianSeed}</strong>
+              <small>Viability Score: {fc.powerScore ?? 80.0}</small>
+              <p>360° Deterministic scorecard: 55% Lineup, 25% Depth, 10% Balance, 10% 2025 Scoring.</p>
+            </div>
+            <div className="power-conn-divider">
+              <span>VS</span>
+            </div>
+            <div className="power-conn-col">
+              <span className="conn-label">Simulated Finish</span>
+              <strong className="conn-rank">Seed #{fc.medianSeed}</strong>
+              <small>{fc.expectedWins}–{fc.expectedLosses} Exp Record</small>
+              <p>{fc.powerConnectionNarrative}</p>
+            </div>
           </div>
         </section>
 
