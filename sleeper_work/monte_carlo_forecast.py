@@ -2,10 +2,12 @@
 monte_carlo_forecast.py
 Implements P8-4: 10,000-Run Monte Carlo Season Simulation Engine.
 Simulates remaining regular season matchups and 6-team playoff bracket with official tiebreakers.
-Ties simulation scoring directly to Composite Power Viability Ratings (Lineup, Depth, Balance, History).
+Ties simulation scoring directly to Composite Power Viability Ratings (Lineup, Depth, Balance, History)
+and calibrates weekly score standard deviations from Roster Volatility (Concentration, RB Exposure, Depth Gap).
 Outputs forecast-insights.json with:
 - 14-week schedule & matchup win probabilities
 - 12-seed probability distribution histogram
+- Deep model factor breakdowns (Volatility impact, 4 Power Pillars, Ceiling/Floor ranges)
 - Power Rank vs Simulated Finish cross-walk & delta analysis
 - Projection history timeline
 - Key fluctuation narratives & injury volatility factor analysis
@@ -241,22 +243,27 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
     
     power_scores = {}
     team_ratings = {}
+    team_model_factors = {}
     
     for r_id_str, team_data in insights["teams"].items():
         r_id = int(r_id_str)
         metrics = team_data["metrics"]
+        redraft_board = team_data.get("redraftBoard", [])
         
         # Composite Power Score Formula (MASTER_PLAN / Prototype.tsx):
         # 55% Lineup, 25% Depth, 10% Balance (QB 10%, RB 30%, WR 45%, TE 15%), 10% Prior Scoring
-        lineup_score = rank_component_score(metrics.get("redraftLineupRank", 6))
-        depth_score = rank_component_score(metrics.get("depthRank", 6))
+        lineup_rank = int(metrics.get("redraftLineupRank", 6))
+        depth_rank = int(metrics.get("depthRank", 6))
+        lineup_score = rank_component_score(lineup_rank)
+        depth_score = rank_component_score(depth_rank)
         balance_score = (
             rank_component_score(metrics.get("qbRoomRank", 6)) * 0.10 +
             rank_component_score(metrics.get("rbRoomRank", 6)) * 0.30 +
             rank_component_score(metrics.get("wrRoomRank", 6)) * 0.45 +
             rank_component_score(metrics.get("teRoomRank", 6)) * 0.15
         )
-        scoring_score = rank_component_score(prior_scoring_ranks.get(r_id, 6))
+        scoring_rank = prior_scoring_ranks.get(r_id, 6)
+        scoring_score = rank_component_score(scoring_rank)
         
         composite_power_score = (
             lineup_score * 0.55 +
@@ -266,15 +273,63 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
         )
         power_scores[r_id] = composite_power_score
         
+        # 2. Detailed Roster Volatility Model (matches Prototype.tsx volatility math)
+        rel_players = [p for p in redraft_board if p.get("redraftValue", 0) > 0][:10]
+        rel_val = sum(p.get("redraftValue", 0) for p in rel_players) or 1.0
+        top3_val = sum(p.get("redraftValue", 0) for p in rel_players[:3])
+        top3_share = top3_val / rel_val
+        rb_val = sum(p.get("redraftValue", 0) for p in rel_players if p.get("position") == "RB")
+        rb_share = rb_val / rel_val
+        
+        concentration_risk = max(0.0, min(100.0, ((top3_share - 0.35) / 0.30) * 100.0))
+        depth_risk = ((float(depth_rank) - 1.0) / 11.0) * 100.0
+        volatility_score = concentration_risk * 0.40 + depth_risk * 0.35 + (rb_share * 100.0) * 0.25
+        
+        volatility_label = (
+            "Stable" if volatility_score <= 35
+            else "Balanced" if volatility_score <= 55
+            else "Volatile" if volatility_score <= 70
+            else "High variance"
+        )
+        
         # Mean weekly fantasy score mathematically derived from Composite Power Score
-        # Top power score ~ 95 maps to ~136 pts/game; bottom power score ~ 55 maps to ~112 pts/game
         mean_score = 108.0 + (composite_power_score / 100.0) * 28.0
         
-        # Team weekly volatility derived from depth cushion and concentration
-        depth_risk = (float(metrics.get("depthRank", 6)) - 1.0) / 11.0
-        std_dev = 12.0 + depth_risk * 4.0 # Range 12.0 to 16.0 pts
+        # Standard deviation derived directly from team's Volatility Score
+        # Stable teams have ~12.2 pts std_dev (high weekly consistency)
+        # High variance teams have ~16.8 pts std_dev (high ceiling / low floor boom-bust)
+        std_dev = 11.5 + (volatility_score / 100.0) * 6.5
         
         team_ratings[r_id] = (mean_score, std_dev)
+        
+        # Save model factors for UI inspection
+        p10_floor = mean_score - 1.282 * std_dev
+        p90_ceiling = mean_score + 1.282 * std_dev
+        
+        team_model_factors[r_id] = {
+            "compositePowerScore": round(composite_power_score, 1),
+            "projectedMeanScore": round(mean_score, 1),
+            "weeklyStdDev": round(std_dev, 1),
+            "p10WeeklyFloor": round(p10_floor, 1),
+            "p90WeeklyCeiling": round(p90_ceiling, 1),
+            "volatilityScore": round(volatility_score, 1),
+            "volatilityLabel": volatility_label,
+            "topThreeShare": round(top3_share * 100.0, 1),
+            "rbShare": round(rb_share * 100.0, 1),
+            "depthRisk": round(depth_risk, 1),
+            "concentrationRisk": round(concentration_risk, 1),
+            "pillars": {
+                "lineup": {"rank": lineup_rank, "score": round(lineup_score, 1), "weight": "55%", "label": "3-FLEX Starter Core"},
+                "depth": {"rank": depth_rank, "score": round(depth_score, 1), "weight": "25%", "label": "Bench Replacement Cushion"},
+                "balance": {"rank": round(12.0 - (balance_score - 50.0)/(50.0/11.0)), "score": round(balance_score, 1), "weight": "10%", "label": "Positional Fit (3 FLEX)"},
+                "history": {"rank": scoring_rank, "score": round(scoring_score, 1), "weight": "10%", "label": "2025 All-Play Receipts"}
+            },
+            "volatilityImpactNarrative": (
+                f"With a {volatility_label.lower()} profile ({volatility_score:.1f}/100), the model applies a weekly scoring standard deviation of ±{std_dev:.1f} pts. "
+                f"The top 3 starters account for {top3_share*100.0:.1f}% of starting redraft value and RBs represent {rb_share*100.0:.1f}%. "
+                f"In 10,000 simulations, this volatility models an expected weekly floor of {p10_floor:.1f} pts (10th percentile) and a shootout ceiling of {p90_ceiling:.1f} pts (90th percentile)."
+            )
+        }
         
     # Rank teams by power score
     sorted_by_power = sorted(power_scores.keys(), key=lambda t: -power_scores[t])
@@ -475,6 +530,7 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
             "powerRankDelta": rank_delta,
             "powerDeltaLabel": delta_label,
             "powerConnectionNarrative": conn_note,
+            "modelFactors": team_model_factors[t],
             "expectedWins": exp_wins,
             "expectedLosses": exp_losses,
             "expectedPointsFor": exp_pf,
@@ -522,7 +578,7 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
     os.makedirs(os.path.dirname(OUTPUT_JSON_PATH), exist_ok=True)
     with open(OUTPUT_JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
-    print(f"Generated forecast JSON with schedule, history & power rank connection at {OUTPUT_JSON_PATH}")
+    print(f"Generated forecast JSON with schedule, history, power connection & detailed model factors at {OUTPUT_JSON_PATH}")
     
     # Stream to BigQuery
     if BQ_AVAILABLE:

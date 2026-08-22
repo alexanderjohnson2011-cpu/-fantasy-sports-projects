@@ -3571,3 +3571,233 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
 .rank-move--down { color: #c44322; }
 .rank-move--flat { color: rgba(11, 51, 41, 0.4); }
 .rank-move--new { color: rgba(11, 51, 41, 0.55); }
+
+/* Simulation Engine Inputs & Model Factors Breakdown */
+.forecast-model-factors-section {
+  margin-top: 36px;
+}
+
+.model-factors-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+@media (max-width: 768px) {
+  .model-factors-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.model-factor-card {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.factor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+}
+
+.factor-header span {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink, #0b3329);
+}
+
+.factor-header small {
+  font-size: 11px;
+  color: rgba(11, 51, 41, 0.6);
+}
+
+.vol-tag {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.vol-tag-stable {
+  background: #e6f0eb;
+  color: #1e6b48;
+}
+
+.vol-tag-balanced {
+  background: #fdf3e3;
+  color: #a66a15;
+}
+
+.vol-tag-volatile,
+.vol-tag-high-variance {
+  background: #fbeae5;
+  color: var(--rust, #b34b2c);
+}
+
+.factor-score-spread {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  text-align: center;
+  background: rgba(11, 51, 41, 0.03);
+  padding: 12px 10px;
+  border-radius: 3px;
+}
+
+.spread-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.spread-item small {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: rgba(11, 51, 41, 0.6);
+  letter-spacing: 0.04em;
+}
+
+.spread-item strong {
+  font-size: 20px;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  line-height: 1;
+}
+
+.spread-item.main-mean strong {
+  font-size: 24px;
+  color: var(--rust, #b34b2c);
+}
+
+.spread-item span {
+  font-size: 10px;
+  color: rgba(11, 51, 41, 0.6);
+}
+
+.volatility-explainer-text {
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(11, 51, 41, 0.85);
+  margin: 0;
+}
+
+.vol-drivers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vol-driver-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: rgba(11, 51, 41, 0.03);
+  border-radius: 3px;
+}
+
+.vol-driver-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.vol-driver-item strong {
+  font-size: 12px;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  color: var(--ink, #0b3329);
+}
+
+.vol-driver-item small {
+  font-size: 10px;
+  color: rgba(11, 51, 41, 0.6);
+}
+
+.vol-driver-item .driver-val {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--rust, #b34b2c);
+}
+
+.viability-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+@media (max-width: 840px) {
+  .viability-pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.pillar-tile {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pillar-weight {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--rust, #b34b2c);
+}
+
+.pillar-tile h4 {
+  margin: 0;
+  font-size: 14px;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+}
+
+.pillar-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 4px 0 2px;
+}
+
+.pillar-metric strong {
+  font-size: 22px;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  line-height: 1;
+}
+
+.pillar-metric small {
+  font-size: 11px;
+  color: rgba(11, 51, 41, 0.6);
+}
+
+.pillar-tile p {
+  font-size: 11px;
+  line-height: 1.35;
+  color: rgba(11, 51, 41, 0.7);
+  margin: 0;
+}

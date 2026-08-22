@@ -60,6 +60,34 @@ type FluctuationNarrative = {
   historyNotes: HistoryNote[];
 };
 
+type PillarInfo = {
+  rank: number;
+  score: number;
+  weight: string;
+  label: string;
+};
+
+type ModelFactors = {
+  compositePowerScore: number;
+  projectedMeanScore: number;
+  weeklyStdDev: number;
+  p10WeeklyFloor: number;
+  p90WeeklyCeiling: number;
+  volatilityScore: number;
+  volatilityLabel: string;
+  topThreeShare: number;
+  rbShare: number;
+  depthRisk: number;
+  concentrationRisk: number;
+  pillars: {
+    lineup: PillarInfo;
+    depth: PillarInfo;
+    balance: PillarInfo;
+    history: PillarInfo;
+  };
+  volatilityImpactNarrative: string;
+};
+
 type TeamForecast = {
   rosterId: number;
   teamName: string;
@@ -68,6 +96,7 @@ type TeamForecast = {
   powerRankDelta?: number;
   powerDeltaLabel?: string;
   powerConnectionNarrative?: string;
+  modelFactors?: ModelFactors;
   expectedWins: number;
   expectedLosses: number;
   expectedPointsFor: number;
@@ -1483,6 +1512,118 @@ function ForecastTeamScreen({ team }: { team: Team }) {
             </div>
           </div>
         </section>
+
+        {/* Section 2: Detailed Simulation Model Factors & Volatility Breakdown */}
+        {fc.modelFactors ? (
+          <section className="forecast-model-factors-section">
+            <div className="forecast-section-header">
+              <p className="eyebrow">Simulation Engine Inputs</p>
+              <h2>Scoring Distribution & Roster Volatility Model</h2>
+            </div>
+
+            {/* Volatility Scoring Gauges */}
+            <div className="model-factors-grid">
+              <div className="model-factor-card volatility-profile-card">
+                <div className="factor-header">
+                  <span>Roster Volatility Index</span>
+                  <span className={`vol-tag vol-tag-${fc.modelFactors.volatilityLabel.toLowerCase().replace(/\s+/g, "-")}`}>
+                    {fc.modelFactors.volatilityLabel} ({fc.modelFactors.volatilityScore}/100)
+                  </span>
+                </div>
+                <div className="factor-score-spread">
+                  <div className="spread-item">
+                    <small>Weekly Floor (P10)</small>
+                    <strong>{fc.modelFactors.p10WeeklyFloor}</strong>
+                    <span>pts / wk</span>
+                  </div>
+                  <div className="spread-item main-mean">
+                    <small>Projected Mean</small>
+                    <strong>{fc.modelFactors.projectedMeanScore}</strong>
+                    <span>pts / wk (±{fc.modelFactors.weeklyStdDev} σ)</span>
+                  </div>
+                  <div className="spread-item">
+                    <small>Shootout Ceiling (P90)</small>
+                    <strong>{fc.modelFactors.p90WeeklyCeiling}</strong>
+                    <span>pts / wk</span>
+                  </div>
+                </div>
+                <p className="volatility-explainer-text">
+                  {fc.modelFactors.volatilityImpactNarrative}
+                </p>
+              </div>
+
+              <div className="model-factor-card volatility-drivers-card">
+                <div className="factor-header">
+                  <span>Volatility Drivers</span>
+                  <small>Impact on Weekly Scoring Variance (σ)</small>
+                </div>
+                <div className="vol-drivers-list">
+                  <div className="vol-driver-item">
+                    <div>
+                      <strong>Top 3 Star Concentration</strong>
+                      <small>Share of starting redraft lineup value</small>
+                    </div>
+                    <span className="driver-val">{fc.modelFactors.topThreeShare}%</span>
+                  </div>
+                  <div className="vol-driver-item">
+                    <div>
+                      <strong>Running Back Exposure</strong>
+                      <small>Injury and workload volatility in flex spots</small>
+                    </div>
+                    <span className="driver-val">{fc.modelFactors.rbShare}%</span>
+                  </div>
+                  <div className="vol-driver-item">
+                    <div>
+                      <strong>Bench Depth Insulation Risk</strong>
+                      <small>Scoring drop-off when substitutes start</small>
+                    </div>
+                    <span className="driver-val">{fc.modelFactors.depthRisk}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 4 Core Power Viability Pillars */}
+            <div className="viability-pillars-grid">
+              <div className="pillar-tile">
+                <span className="pillar-weight">{fc.modelFactors.pillars.lineup.weight} Weight</span>
+                <h4>Starting Lineup Core</h4>
+                <div className="pillar-metric">
+                  <strong>#{fc.modelFactors.pillars.lineup.rank}</strong>
+                  <small>{fc.modelFactors.pillars.lineup.score} pts</small>
+                </div>
+                <p>1QB / 2RB / 2WR / 1TE / 3FLEX baseline starter scoring projection.</p>
+              </div>
+              <div className="pillar-tile">
+                <span className="pillar-weight">{fc.modelFactors.pillars.depth.weight} Weight</span>
+                <h4>Bench Replacement Depth</h4>
+                <div className="pillar-metric">
+                  <strong>#{fc.modelFactors.pillars.depth.rank}</strong>
+                  <small>{fc.modelFactors.pillars.depth.score} pts</small>
+                </div>
+                <p>Insulation against bye-week dropoff and mid-season starter injuries.</p>
+              </div>
+              <div className="pillar-tile">
+                <span className="pillar-weight">{fc.modelFactors.pillars.balance.weight} Weight</span>
+                <h4>Positional Balance</h4>
+                <div className="pillar-metric">
+                  <strong>#{fc.modelFactors.pillars.balance.rank}</strong>
+                  <small>{fc.modelFactors.pillars.balance.score} pts</small>
+                </div>
+                <p>Lineup construction calibrated specifically to this league's 3-FLEX format.</p>
+              </div>
+              <div className="pillar-tile">
+                <span className="pillar-weight">{fc.modelFactors.pillars.history.weight} Weight</span>
+                <h4>2025 All-Play Receipts</h4>
+                <div className="pillar-metric">
+                  <strong>#{fc.modelFactors.pillars.history.rank}</strong>
+                  <small>{fc.modelFactors.pillars.history.score} pts</small>
+                </div>
+                <p>Observed scoring track record separated from schedule luck.</p>
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         {/* Section 1: Fluctuation Narrative & Volatility Risk Analysis */}
         {narrative ? (
