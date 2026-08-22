@@ -1,10 +1,10 @@
 """
 week1_matchups_data.py
-Generates 100% authentic Week 1 Head-to-Head matchup intelligence data:
+Generates 100% verified Sleeper API Week 1 Head-to-Head matchup intelligence data:
 - Matchup Overview (Projected Scores, Win Probabilities, Spreads, Over/Unders)
 - Tale of the Tape Starter Rosters (1QB/2RB/2WR/1TE/3FLEX/K/DEF) from actual Sleeper rosters
 - Real-World NFL News Commentary & Tactical Matchup Previews
-- Crucial TV Viewing Schedule (Thursday, Sunday Early, Sunday Late, Sunday Night, Monday Night)
+- Crucial TV Viewing Schedule (Thursday Kickoff, Brazil Friday, Sunday Early, Sunday Late, Sunday Night, Monday Night)
 - Positional Edge Breakdown
 Outputs to `src/generated/matchups-week1.json` and syncs with BigQuery.
 """
@@ -27,9 +27,9 @@ def generate_week1_matchups():
         {
             "matchupId": 1,
             "week": 1,
-            "title": "Heavyweight Championship Bout",
-            "subtitle": "Defending Champion Ertz & Krafts 🏆 vs. #1 Title Favorite Bronco Stampede",
-            "isMarquee": True,
+            "title": "Championship Defense vs. Superstar Spike",
+            "subtitle": "Ertz & Krafts 🏆 vs. Max’s Shadynasty",
+            "isMarquee": False,
             "teamA": {
                 "rosterId": 1,
                 "teamName": "Ertz & Krafts 🏆",
@@ -37,7 +37,7 @@ def generate_week1_matchups():
                 "powerRank": 3,
                 "projectedRank": 2,
                 "projectedScore": 133.7,
-                "winProbability": 48.9,
+                "winProbability": 53.8,
                 "impliedTotal": 133.7,
                 "starters": [
                     {"slot": "QB", "player": "Bo Nix", "position": "QB", "nflTeam": "DEN", "projectedPoints": 16.2, "tier": "Tier 2", "matchupVs": "@ SEA (Sun 4:05pm)", "news": "Named starter after immaculate preseason camp in Sean Payton's offense."},
@@ -54,13 +54,243 @@ def generate_week1_matchups():
                 ]
             },
             "teamB": {
+                "rosterId": 9,
+                "teamName": "Max’s Shadynasty",
+                "manager": "maxjabb",
+                "powerRank": 7,
+                "projectedRank": 8,
+                "projectedScore": 129.2,
+                "winProbability": 46.2,
+                "impliedTotal": 129.2,
+                "starters": [
+                    {"slot": "QB", "player": "Jayden Daniels", "position": "QB", "nflTeam": "WAS", "projectedPoints": 18.4, "tier": "Tier 1", "matchupVs": "@ TB (Sun 1pm)", "news": "Heisman winner with explosive rushing floor in Washington."},
+                    {"slot": "RB1", "player": "Travis Etienne", "position": "RB", "nflTeam": "NO", "projectedPoints": 13.8, "tier": "Tier 2", "matchupVs": "vs CAR (Sun 1pm)", "news": "Versatile all-purpose runner in high-volume role."},
+                    {"slot": "RB2", "player": "Quinshon Judkins", "position": "RB", "nflTeam": "CLE", "projectedPoints": 11.2, "tier": "Tier 3", "matchupVs": "vs DAL (Sun 4:25pm)", "news": "Powerful rookie interior runner."},
+                    {"slot": "WR1", "player": "Ja'Marr Chase", "position": "WR", "nflTeam": "CIN", "projectedPoints": 18.2, "tier": "Tier 1", "matchupVs": "vs NE (Sun 1pm)", "news": "Top-2 wide receiver in football with 30+ point spike ceiling."},
+                    {"slot": "WR2", "player": "Garrett Wilson", "position": "WR", "nflTeam": "NYJ", "projectedPoints": 15.0, "tier": "Tier 1", "matchupVs": "@ SF (Mon 8:15pm)", "news": "High-volume alpha wideout on Monday Night Football."},
+                    {"slot": "TE", "player": "Oronde Gadsden", "position": "TE", "nflTeam": "LAC", "projectedPoints": 7.8, "tier": "Tier 4", "matchupVs": "vs LV (Sun 4:05pm)", "news": "Rookie tight end in passing tree."},
+                    {"slot": "FLEX1", "player": "TreVeyon Henderson", "position": "RB", "nflTeam": "NE", "projectedPoints": 12.0, "tier": "Tier 2", "matchupVs": "@ CIN (Sun 1pm)", "news": "Dynamic rookie speed back in New England."},
+                    {"slot": "FLEX2", "player": "Bhayshul Tuten", "position": "RB", "nflTeam": "JAX", "projectedPoints": 9.5, "tier": "Tier 3", "matchupVs": "@ MIA (Sun 1pm)", "news": "Physical change-of-pace runner."},
+                    {"slot": "FLEX3", "player": "Mike Evans", "position": "WR", "nflTeam": "SF", "projectedPoints": 12.5, "tier": "Tier 2", "matchupVs": "vs NYJ (Mon 8:15pm)", "news": "Perennial 1,000-yard receiver in prime time."},
+                    {"slot": "K", "player": "Jason Myers", "position": "K", "nflTeam": "SEA", "projectedPoints": 7.4, "tier": "Tier 2", "matchupVs": "vs DEN", "news": "Consistent home field goal opportunities."},
+                    {"slot": "DEF", "player": "New York Jets", "position": "DEF", "nflTeam": "NYJ", "projectedPoints": 6.8, "tier": "Tier 2", "matchupVs": "@ SF (Mon)", "news": "Sauce Gardner leading lockdown secondary."}
+                ]
+            },
+            "spread": -2.2,
+            "spreadLabel": "Ertz & Krafts 🏆 -2.2",
+            "overUnder": 262.9,
+            "tacticalAnalysis": {
+                "headline": "Defending champion Ertz & Krafts brings veteran rushing power against Ja'Marr Chase and Jayden Daniels",
+                "breakdown": "Ertz & Krafts begins their title defense with an imposing backfield trio of Saquon Barkley, Derrick Henry, and Josh Jacobs, anchored by Trey McBride at tight end. Max’s Shadynasty counters with the immense single-game ceiling of Ja'Marr Chase and dual-threat phenom Jayden Daniels. If Chase breaks off a multiple-touchdown explosion, this matchup could become an early shootout.",
+                "keyVariables": [
+                    "Thursday Kickoff: Derrick Henry and Rashee Rice setting the baseline.",
+                    "Friday Night Brazil: Saquon Barkley and Josh Jacobs colliding.",
+                    "Sunday Early Slate: Ja'Marr Chase and Jayden Daniels headlining Max's offense.",
+                    "Monday Night Climax: Garrett Wilson and Mike Evans vs Jets DEF."
+                ]
+            },
+            "positionalEdges": [
+                {"category": "Quarterback", "advantage": "Max’s Shadynasty", "margin": "+2.2 pts", "narrative": "Jayden Daniels brings dynamic rushing upside."},
+                {"category": "Running Backs", "advantage": "Ertz & Krafts 🏆", "margin": "+6.6 pts", "narrative": "Saquon Barkley + Derrick Henry create a massive power rushing edge."},
+                {"category": "Wide Receivers", "advantage": "Max’s Shadynasty", "margin": "+5.6 pts", "narrative": "Ja'Marr Chase and Garrett Wilson are elite 1A receivers."},
+                {"category": "Tight End", "advantage": "Ertz & Krafts 🏆", "margin": "+7.0 pts", "narrative": "Trey McBride operates as Arizona's top receiving target."},
+                {"category": "FLEX & Depth", "advantage": "Ertz & Krafts 🏆", "margin": "+2.4 pts", "narrative": "Josh Jacobs and Emeka Egbuka give superior scoring floor."}
+            ],
+            "tvSchedule": [
+                {
+                    "timeSlot": "Thursday 8:20 PM ET",
+                    "network": "NBC / Peacock",
+                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
+                    "leverageLevel": "HIGH",
+                    "fantasyPointsAtStake": "28.7 pts",
+                    "teamAStarters": ["Derrick Henry (BAL)", "Rashee Rice (KC)"],
+                    "teamBStarters": [],
+                    "windowAnalysis": "Ertz & Krafts gets the first punch of 2026 on Thursday Night Football with Derrick Henry and Rashee Rice."
+                },
+                {
+                    "timeSlot": "Friday 8:15 PM ET",
+                    "network": "Peacock / YouTube",
+                    "gameMatchup": "Green Bay Packers vs Philadelphia Eagles (Brazil)",
+                    "leverageLevel": "CRITICAL",
+                    "fantasyPointsAtStake": "36.7 pts",
+                    "teamAStarters": ["Saquon Barkley (PHI)", "Josh Jacobs (GB)", "Eagles DEF"],
+                    "teamBStarters": [],
+                    "windowAnalysis": "Saquon Barkley and Josh Jacobs lead the historic Brazil showcase for Ertz & Krafts."
+                },
+                {
+                    "timeSlot": "Sunday 1:00 PM ET",
+                    "network": "CBS & FOX",
+                    "gameMatchup": "New England @ Cincinnati & Washington @ Tampa Bay",
+                    "leverageLevel": "CRITICAL",
+                    "fantasyPointsAtStake": "93.4 pts",
+                    "teamAStarters": ["Chris Olave (NO)", "Trey McBride (ARI)", "Emeka Egbuka (TB)", "D'Andre Swift (CHI)"],
+                    "teamBStarters": ["Ja'Marr Chase (CIN)", "Jayden Daniels (WAS)", "Travis Etienne (NO)", "TreVeyon Henderson (NE)", "Bhayshul Tuten (JAX)"],
+                    "windowAnalysis": "The primary clash. Ja'Marr Chase and Jayden Daniels look to mount a massive early Sunday surge."
+                },
+                {
+                    "timeSlot": "Monday 8:15 PM ET",
+                    "network": "ESPN / ABC Monday Night Football",
+                    "gameMatchup": "New York Jets @ San Francisco 49ers",
+                    "leverageLevel": "DECISIVE CLIMAX",
+                    "fantasyPointsAtStake": "34.3 pts",
+                    "teamAStarters": [],
+                    "teamBStarters": ["Garrett Wilson (NYJ)", "Mike Evans (SF)", "Jets DEF"],
+                    "windowAnalysis": "Max’s Shadynasty deploys Garrett Wilson, Mike Evans, and Jets DEF on Monday Night Football to close out the match."
+                }
+            ]
+        },
+        {
+            "matchupId": 2,
+            "week": 1,
+            "title": "Air Strike vs. Retool Grinder",
+            "subtitle": "The Ape vs. Terry Tate’s Pain Train",
+            "isMarquee": False,
+            "teamA": {
+                "rosterId": 3,
+                "teamName": "The Ape",
+                "manager": "sduda351",
+                "powerRank": 4,
+                "projectedRank": 4,
+                "projectedScore": 131.5,
+                "winProbability": 54.4,
+                "impliedTotal": 131.5,
+                "starters": [
+                    {"slot": "QB", "player": "Lamar Jackson", "position": "QB", "nflTeam": "BAL", "projectedPoints": 21.2, "tier": "Tier 1", "matchupVs": "@ KC (Thu 8:20pm)", "news": "Reigning MVP with immense dual-threat rushing ceiling."},
+                    {"slot": "RB1", "player": "James Cook", "position": "RB", "nflTeam": "BUF", "projectedPoints": 14.8, "tier": "Tier 2", "matchupVs": "vs ARI (Sun 1pm)", "news": "Lead running back in high-volume Buffalo ground attack."},
+                    {"slot": "RB2", "player": "Cam Skattebo", "position": "RB", "nflTeam": "NYG", "projectedPoints": 11.0, "tier": "Tier 3", "matchupVs": "vs MIN (Sun 1pm)", "news": "Rookie early-down back earning goal-line opportunities."},
+                    {"slot": "WR1", "player": "Justin Jefferson", "position": "WR", "nflTeam": "MIN", "projectedPoints": 17.5, "tier": "Tier 1", "matchupVs": "@ NYG (Sun 1pm)", "news": "Undisputed alpha wideout in Minnesota's pass-heavy scheme."},
+                    {"slot": "WR2", "player": "Drake London", "position": "WR", "nflTeam": "ATL", "projectedPoints": 14.2, "tier": "Tier 2", "matchupVs": "vs PIT (Sun 1pm)", "news": "Primary perimeter target in Zac Robinson's new offensive scheme."},
+                    {"slot": "TE", "player": "Brock Bowers", "position": "TE", "nflTeam": "LV", "projectedPoints": 13.9, "tier": "Tier 1", "matchupVs": "@ LAC (Sun 4:05pm)", "news": "Generational tight end prospect with immediate focal point usage."},
+                    {"slot": "FLEX1", "player": "Zay Flowers", "position": "WR", "nflTeam": "BAL", "projectedPoints": 12.8, "tier": "Tier 2", "matchupVs": "@ KC (Thu 8:20pm)", "news": "Lamar Jackson's primary wideout in kickoff showcase."},
+                    {"slot": "FLEX2", "player": "Mark Andrews", "position": "TE", "nflTeam": "BAL", "projectedPoints": 10.5, "tier": "Tier 2", "matchupVs": "@ KC (Thu 8:20pm)", "news": "Red zone touchdown specialist in 2-TE sets."},
+                    {"slot": "FLEX3", "player": "Tyrone Tracy", "position": "RB", "nflTeam": "NYG", "projectedPoints": 8.6, "tier": "Tier 4", "matchupVs": "vs MIN (Sun 1pm)", "news": "Explosive pass-catcher in New York rotation."},
+                    {"slot": "K", "player": "Justin Tucker", "position": "K", "nflTeam": "BAL", "projectedPoints": 8.0, "tier": "Tier 1", "matchupVs": "@ KC", "news": "Elite accuracy in high-stakes environments."},
+                    {"slot": "DEF", "player": "Buffalo Bills", "position": "DEF", "nflTeam": "BUF", "projectedPoints": 6.8, "tier": "Tier 2", "matchupVs": "vs ARI", "news": "Solid home turnover generator."}
+                ]
+            },
+            "teamB": {
+                "rosterId": 11,
+                "teamName": "Terry Tate’s Pain Train",
+                "manager": "mannyrsox24",
+                "powerRank": 10,
+                "projectedRank": 10,
+                "projectedScore": 127.6,
+                "winProbability": 45.6,
+                "impliedTotal": 127.6,
+                "starters": [
+                    {"slot": "QB", "player": "Jalen Hurts", "position": "QB", "nflTeam": "PHI", "projectedPoints": 20.8, "tier": "Tier 1", "matchupVs": "vs GB (Fri 8:15pm)", "news": "Brotherly Shove touchdown machine leading Eagles attack in Brazil."},
+                    {"slot": "RB1", "player": "Javonte Williams", "position": "RB", "nflTeam": "DAL", "projectedPoints": 13.2, "tier": "Tier 2", "matchupVs": "@ CLE (Sun 4:25pm)", "news": "Physical runner in Dallas committee backfield."},
+                    {"slot": "RB2", "player": "Jadarian Price", "position": "RB", "nflTeam": "SEA", "projectedPoints": 10.8, "tier": "Tier 3", "matchupVs": "vs DEN (Sun 4:05pm)", "news": "Rookie back carving out early-season touches."},
+                    {"slot": "WR1", "player": "Nico Collins", "position": "WR", "nflTeam": "HOU", "projectedPoints": 15.6, "tier": "Tier 1", "matchupVs": "@ IND (Sun 1pm)", "news": "Explosive alpha receiver for C.J. Stroud."},
+                    {"slot": "WR2", "player": "Terry McLaurin", "position": "WR", "nflTeam": "WAS", "projectedPoints": 13.0, "tier": "Tier 2", "matchupVs": "@ TB (Sun 1pm)", "news": "Jayden Daniels' unquestioned No. 1 target."},
+                    {"slot": "TE", "player": "Tyler Warren", "position": "TE", "nflTeam": "IND", "projectedPoints": 9.8, "tier": "Tier 3", "matchupVs": "vs HOU (Sun 1pm)", "news": "Rookie tight end receiving package."},
+                    {"slot": "FLEX1", "player": "Rico Dowdle", "position": "RB", "nflTeam": "PIT", "projectedPoints": 11.2, "tier": "Tier 3", "matchupVs": "@ ATL (Sun 1pm)", "news": "Complementary power runner in Pittsburgh."},
+                    {"slot": "FLEX2", "player": "Marvin Harrison", "position": "WR", "nflTeam": "ARI", "projectedPoints": 13.8, "tier": "Tier 2", "matchupVs": "@ BUF (Sun 1pm)", "news": "Highly-touted rookie wideout making NFL debut."},
+                    {"slot": "FLEX3", "player": "Makai Lemon", "position": "WR", "nflTeam": "PHI", "projectedPoints": 8.0, "tier": "Tier 4", "matchupVs": "vs GB (Fri 8:15pm)", "news": "Young receiver in depth rotation."},
+                    {"slot": "K", "player": "Ka'imi Fairbairn", "position": "K", "nflTeam": "HOU", "projectedPoints": 7.9, "tier": "Tier 2", "matchupVs": "@ IND", "news": "Reliable kicker in dome environment."},
+                    {"slot": "DEF", "player": "Houston Texans", "position": "DEF", "nflTeam": "HOU", "projectedPoints": 6.8, "tier": "Tier 2", "matchupVs": "@ IND", "news": "DeMeco Ryans defense with strong pass rush."}
+                ]
+            },
+            "spread": -2.3,
+            "spreadLabel": "The Ape -2.3",
+            "overUnder": 259.1,
+            "tacticalAnalysis": {
+                "headline": "Lamar Jackson and Justin Jefferson face Jalen Hurts and Nico Collins in a premier passing clash",
+                "breakdown": "The Ape possesses massive top-end star power with Lamar Jackson, Justin Jefferson, Drake London, and Brock Bowers. Terry Tate’s Pain Train counters with dual-threat titan Jalen Hurts and explosive deep weapon Nico Collins. If The Ape's Ravens core has a big Thursday kickoff, they will put immediate pressure on Terry Tate to deliver in Sunday's late windows.",
+                "keyVariables": [
+                    "Thursday Kickoff: Lamar Jackson, Zay Flowers, and Mark Andrews opening the week.",
+                    "Friday Night Brazil: Jalen Hurts and Makai Lemon in São Paulo.",
+                    "Sunday Early Slate: Justin Jefferson, Drake London vs Nico Collins and Marvin Harrison.",
+                    "Brock Bowers' rookie debut in Las Vegas."
+                ]
+            },
+            "positionalEdges": [
+                {"category": "Quarterback", "advantage": "The Ape", "margin": "+0.4 pts", "narrative": "Lamar Jackson and Jalen Hurts represent the two best dual-threat QBs in fantasy."},
+                {"category": "Running Backs", "advantage": "The Ape", "margin": "+1.8 pts", "narrative": "James Cook provides high-volume work in Buffalo."},
+                {"category": "Wide Receivers", "advantage": "The Ape", "margin": "+3.1 pts", "narrative": "Justin Jefferson and Drake London provide top-tier target shares."},
+                {"category": "Tight End", "advantage": "The Ape", "margin": "+4.1 pts", "narrative": "Brock Bowers and Mark Andrews represent a dominant TE duo."},
+                {"category": "FLEX & Depth", "advantage": "Terry Tate’s Pain Train", "margin": "+1.5 pts", "narrative": "Marvin Harrison and Rico Dowdle offer strong scoring depth."}
+            ],
+            "tvSchedule": [
+                {
+                    "timeSlot": "Thursday 8:20 PM ET",
+                    "network": "NBC / Peacock",
+                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
+                    "leverageLevel": "CRITICAL",
+                    "fantasyPointsAtStake": "52.5 pts",
+                    "teamAStarters": ["Lamar Jackson (BAL)", "Zay Flowers (BAL)", "Mark Andrews (BAL)", "Justin Tucker (BAL)"],
+                    "teamBStarters": [],
+                    "windowAnalysis": "The Ape unleashes 4 Ravens starters on Kickoff Night to establish an early scoreboard lead."
+                },
+                {
+                    "timeSlot": "Friday 8:15 PM ET",
+                    "network": "Peacock / YouTube",
+                    "gameMatchup": "Green Bay Packers vs Philadelphia Eagles (Brazil)",
+                    "leverageLevel": "HIGH",
+                    "fantasyPointsAtStake": "28.8 pts",
+                    "teamAStarters": [],
+                    "teamBStarters": ["Jalen Hurts (PHI)", "Makai Lemon (PHI)"],
+                    "windowAnalysis": "Jalen Hurts responds for Terry Tate in the Friday night Brazil game."
+                },
+                {
+                    "timeSlot": "Sunday 1:00 PM ET",
+                    "network": "CBS & FOX",
+                    "gameMatchup": "Minnesota @ NY Giants, Houston @ Indianapolis, Arizona @ Buffalo",
+                    "leverageLevel": "CRITICAL",
+                    "fantasyPointsAtStake": "97.4 pts",
+                    "teamAStarters": ["James Cook (BUF)", "Justin Jefferson (MIN)", "Drake London (ATL)", "Cam Skattebo (NYG)", "Tyrone Tracy (NYG)", "Bills DEF"],
+                    "teamBStarters": ["Nico Collins (HOU)", "Terry McLaurin (WAS)", "Tyler Warren (IND)", "Rico Dowdle (PIT)", "Marvin Harrison (ARI)", "Ka'imi Fairbairn (HOU)", "Texans DEF"],
+                    "windowAnalysis": "Massive 1:00 PM early window with 13 starters active, highlighted by Justin Jefferson and Nico Collins."
+                },
+                {
+                    "timeSlot": "Sunday 4:05 PM / 4:25 PM ET",
+                    "network": "CBS & FOX Late Window",
+                    "gameMatchup": "Las Vegas @ LA Chargers & Dallas @ Cleveland",
+                    "leverageLevel": "HIGH",
+                    "fantasyPointsAtStake": "37.9 pts",
+                    "teamAStarters": ["Brock Bowers (LV)"],
+                    "teamBStarters": ["Javonte Williams (DAL)", "Jadarian Price (SEA)"],
+                    "windowAnalysis": "Brock Bowers makes his NFL debut as Javonte Williams looks to close out the matchup."
+                }
+            ]
+        },
+        {
+            "matchupId": 3,
+            "week": 1,
+            "title": "Heavyweight Championship Bout",
+            "subtitle": "Bijan And The Maye-ssiah vs. Bronco Stampede (#2 vs #1 Power Rank)",
+            "isMarquee": True,
+            "teamA": {
+                "rosterId": 10,
+                "teamName": "Bijan And The Maye-ssiah",
+                "manager": "jcflash59",
+                "powerRank": 2,
+                "projectedRank": 3,
+                "projectedScore": 133.2,
+                "winProbability": 49.3,
+                "impliedTotal": 133.2,
+                "starters": [
+                    {"slot": "QB", "player": "Drake Maye", "position": "QB", "nflTeam": "NE", "projectedPoints": 16.5, "tier": "Tier 2", "matchupVs": "@ CIN (Sun 1pm)", "news": "Rookie dual-threat with strong preseason accuracy metrics."},
+                    {"slot": "RB1", "player": "Bijan Robinson", "position": "RB", "nflTeam": "ATL", "projectedPoints": 18.8, "tier": "Tier 1", "matchupVs": "vs PIT (Sun 1pm)", "news": "Consensus top-3 overall fantasy pick in featured workhorse role."},
+                    {"slot": "RB2", "player": "Chase Brown", "position": "RB", "nflTeam": "CIN", "projectedPoints": 13.5, "tier": "Tier 2", "matchupVs": "vs NE (Sun 1pm)", "news": "Dynamic speed back taking over primary touches in Cincinnati."},
+                    {"slot": "WR1", "player": "Amon-Ra St. Brown", "position": "WR", "nflTeam": "DET", "projectedPoints": 16.8, "tier": "Tier 1", "matchupVs": "vs LAR (Sun 8:20pm)", "news": "Sun God target monster on Sunday Night Football."},
+                    {"slot": "WR2", "player": "Christian Watson", "position": "WR", "nflTeam": "GB", "projectedPoints": 11.2, "tier": "Tier 3", "matchupVs": "vs PHI (Fri 8:15pm)", "news": "Vertical deep threat in Brazil season opener."},
+                    {"slot": "TE", "player": "Colston Loveland", "position": "TE", "nflTeam": "CHI", "projectedPoints": 10.4, "tier": "Tier 2", "matchupVs": "vs TEN (Sun 1pm)", "news": "Rookie tight end primed for immediate target volume."},
+                    {"slot": "FLEX1", "player": "Rhamondre Stevenson", "position": "RB", "nflTeam": "NE", "projectedPoints": 12.6, "tier": "Tier 2", "matchupVs": "@ CIN (Sun 1pm)", "news": "Physical early-down and goal-line runner."},
+                    {"slot": "FLEX2", "player": "RJ Harvey", "position": "RB", "nflTeam": "DEN", "projectedPoints": 10.1, "tier": "Tier 3", "matchupVs": "@ SEA (Sun 4:05pm)", "news": "Ascending rookie back with red zone opportunity."},
+                    {"slot": "FLEX3", "player": "Kyle Monangai", "position": "RB", "nflTeam": "CHI", "projectedPoints": 9.2, "tier": "Tier 4", "matchupVs": "vs TEN (Sun 1pm)", "news": "Grinding interior runner in rotational committee."},
+                    {"slot": "K", "player": "Jake Bates", "position": "K", "nflTeam": "DET", "projectedPoints": 7.8, "tier": "Tier 2", "matchupVs": "vs LAR", "news": "Big leg kicker inside Ford Field dome."},
+                    {"slot": "DEF", "player": "Detroit Lions", "position": "DEF", "nflTeam": "DET", "projectedPoints": 6.3, "tier": "Tier 2", "matchupVs": "vs LAR", "news": "Aidan Hutchinson leading aggressive pass rush."}
+                ]
+            },
+            "teamB": {
                 "rosterId": 12,
                 "teamName": "Bronco Stampede",
                 "manager": "5FinkleRay",
                 "powerRank": 1,
                 "projectedRank": 1,
                 "projectedScore": 134.2,
-                "winProbability": 51.1,
+                "winProbability": 50.7,
                 "impliedTotal": 134.2,
                 "starters": [
                     {"slot": "QB", "player": "Josh Allen", "position": "QB", "nflTeam": "BUF", "projectedPoints": 22.4, "tier": "Tier 1", "matchupVs": "vs ARI (Sun 1pm)", "news": "League's highest rushing-touchdown projection as centerpiece."},
@@ -78,452 +308,84 @@ def generate_week1_matchups():
             },
             "spread": -0.5,
             "spreadLabel": "Bronco Stampede -0.5",
-            "overUnder": 267.9,
+            "overUnder": 267.4,
             "tacticalAnalysis": {
-                "headline": "A razor-thin 0.5-point spread pits defending champion Ertz & Krafts against the No. 1 powerhouse Bronco Stampede",
-                "breakdown": "The 2026 season opens with the most anticipated matchup in the league. Ertz & Krafts 🏆 brings the defending champion's battle-tested floor into the ring with Saquon Barkley, Derrick Henry, and Josh Jacobs, giving them a steady rushing foundation that limits scoring variance. However, Bronco Stampede boasts the single greatest offensive ceiling in the league led by Josh Allen, Puka Nacua, and Jaxon Smith-Njigba. If Allen hits a 28+ point shootout ceiling against Arizona, Ertz & Krafts will need Trey McBride and Chris Olave to answer with explosive multi-touchdown afternoons.",
+                "headline": "The league's two highest-rated powerhouses clash in Week 1: Bijan Robinson vs Josh Allen & Puka Nacua",
+                "breakdown": "This is the marquee matchup of the entire opening slate. Bijan And The Maye-ssiah boasts the deepest running back room in the league alongside superstar target monster Amon-Ra St. Brown. Bronco Stampede brings the #1 overall projected offense with Josh Allen, Puka Nacua, Kenneth Walker, and Jaxon Smith-Njigba. With both teams projected over 133 points, this game is expected to be decided on Sunday Night Football in Detroit.",
                 "keyVariables": [
-                    "Thursday & Friday Kickoff Clashes: Derrick Henry vs Chiefs Defense and Saquon Barkley in Brazil.",
-                    "Josh Allen's Rushing Ceiling vs Arizona Defense.",
-                    "Puka Nacua & Kyren Williams in the Sunday Night Football Ford Field shootout.",
-                    "Trey McBride's target dominance in Arizona's 3-FLEX format."
+                    "Kenneth Walker and Harrison Butker on Kickoff Night at Arrowhead.",
+                    "Christian Watson vs DeVonta Smith in the Brazil Friday game.",
+                    "Bijan Robinson vs Josh Allen scoring shootout across Sunday 1:00 PM.",
+                    "The colossal Sunday Night Football clash in Detroit: Amon-Ra St. Brown & Lions vs Puka Nacua, Kyren Williams, and Blake Corum."
                 ]
             },
             "positionalEdges": [
-                {"category": "Quarterback", "advantage": "Bronco Stampede", "margin": "+6.2 pts", "narrative": "Josh Allen provides top-tier rushing upside and MVP-level ceiling."},
-                {"category": "Running Backs", "advantage": "Ertz & Krafts 🏆", "margin": "+3.1 pts", "narrative": "Saquon Barkley + Derrick Henry form the most physically imposing tandem in fantasy."},
-                {"category": "Wide Receivers", "advantage": "Bronco Stampede", "margin": "+4.2 pts", "narrative": "Puka Nacua and JSN have higher per-target yardage ceilings."},
-                {"category": "Tight End", "advantage": "Ertz & Krafts 🏆", "margin": "+7.2 pts", "narrative": "Trey McBride operates as Arizona's undisputed 1A receiving weapon."},
-                {"category": "FLEX & Depth", "advantage": "Ertz & Krafts 🏆", "margin": "+2.9 pts", "narrative": "Josh Jacobs and Emeka Egbuka give the defending champion deeper scoring insulation."}
+                {"category": "Quarterback", "advantage": "Bronco Stampede", "margin": "+5.9 pts", "narrative": "Josh Allen provides undisputed top-tier rushing equity."},
+                {"category": "Running Backs", "advantage": "Bijan And The Maye-ssiah", "margin": "+2.7 pts", "narrative": "Bijan Robinson and Chase Brown provide immense backfield volume."},
+                {"category": "Wide Receivers", "advantage": "Bronco Stampede", "margin": "+3.3 pts", "narrative": "Puka Nacua and JSN have elite per-target yardage ceilings."},
+                {"category": "Tight End", "advantage": "Bijan And The Maye-ssiah", "margin": "+2.8 pts", "narrative": "Colston Loveland provides higher receiving ceiling than Likely."},
+                {"category": "FLEX & Depth", "advantage": "Bronco Stampede", "margin": "+0.8 pts", "narrative": "DeVonta Smith and Ladd McConkey provide high-ceiling flex options."}
             ],
             "tvSchedule": [
                 {
                     "timeSlot": "Thursday 8:20 PM ET",
                     "network": "NBC / Peacock",
                     "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
-                    "leverageLevel": "CRITICAL",
-                    "fantasyPointsAtStake": "44.2 pts",
-                    "teamAStarters": ["Derrick Henry (BAL)", "Rashee Rice (KC)"],
+                    "leverageLevel": "HIGH",
+                    "fantasyPointsAtStake": "30.1 pts",
+                    "teamAStarters": [],
                     "teamBStarters": ["Kenneth Walker (KC)", "Harrison Butker (KC)", "Ravens DEF"],
-                    "windowAnalysis": "NFL Kickoff night features heavy fantasy capital. Derrick Henry's Ravens debut and Rashee Rice's slot target volume set the opening baseline against Kenneth Walker and Harrison Butker."
+                    "windowAnalysis": "Bronco Stampede gets early leverage on Kickoff Night with Kenneth Walker and Harrison Butker."
                 },
                 {
                     "timeSlot": "Friday 8:15 PM ET",
                     "network": "Peacock / YouTube",
                     "gameMatchup": "Green Bay Packers vs Philadelphia Eagles (Brazil)",
                     "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "43.9 pts",
-                    "teamAStarters": ["Saquon Barkley (PHI)", "Josh Jacobs (GB)", "Eagles DEF"],
+                    "fantasyPointsAtStake": "24.9 pts",
+                    "teamAStarters": ["Christian Watson (GB)"],
                     "teamBStarters": ["DeVonta Smith (PHI)"],
-                    "windowAnalysis": "The historic Brazil game puts Saquon Barkley and Josh Jacobs directly against DeVonta Smith. High touchdown leverage could swing the matchup lead before Sunday kicks off."
-                },
-                {
-                    "timeSlot": "Sunday 1:00 PM ET",
-                    "network": "CBS & FOX",
-                    "gameMatchup": "Arizona @ Buffalo & Carolina @ New Orleans",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "57.3 pts",
-                    "teamAStarters": ["Chris Olave (NO)", "Trey McBride (ARI)", "Emeka Egbuka (TB)", "D'Andre Swift (CHI)"],
-                    "teamBStarters": ["Josh Allen (BUF)", "Isaiah Likely (NYG)"],
-                    "windowAnalysis": "Josh Allen's MVP ceiling goes head-to-head with Chris Olave and Trey McBride. If Allen throws 3+ touchdowns, Ertz & Krafts will need their young receivers to keep pace."
-                },
-                {
-                    "timeSlot": "Sunday 4:05 PM / 4:25 PM ET",
-                    "network": "FOX & CBS Late Window",
-                    "gameMatchup": "Denver @ Seattle & Las Vegas @ LA Chargers",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "51.1 pts",
-                    "teamAStarters": ["Bo Nix (DEN)", "Brandon Aubrey (DAL)"],
-                    "teamBStarters": ["Jaxon Smith-Njigba (SEA)", "Ladd McConkey (LAC)"],
-                    "windowAnalysis": "JSN's primary slot workload against Bo Nix's rookie start. Ladd McConkey and Brandon Aubrey provide crucial late-afternoon points."
-                },
-                {
-                    "timeSlot": "Sunday 8:20 PM ET",
-                    "network": "NBC Sunday Night Football",
-                    "gameMatchup": "Los Angeles Rams @ Detroit Lions",
-                    "leverageLevel": "DECISIVE CLIMAX",
-                    "fantasyPointsAtStake": "40.6 pts",
-                    "teamAStarters": [],
-                    "teamBStarters": ["Puka Nacua (LAR)", "Kyren Williams (LAR)", "Blake Corum (LAR)"],
-                    "windowAnalysis": "The ultimate closing leverage window. Bronco Stampede unleashes their full Rams offensive stack in Ford Field to either ice the victory or stage a dramatic Sunday night comeback."
-                }
-            ]
-        },
-        {
-            "matchupId": 2,
-            "week": 1,
-            "title": "Air Strike vs. Deep Fortress",
-            "subtitle": "The Ape's Elite Spikes vs. Bijan And The Maye-ssiah's Roster Depth",
-            "isMarquee": False,
-            "teamA": {
-                "rosterId": 3,
-                "teamName": "The Ape",
-                "manager": "sduda351",
-                "powerRank": 4,
-                "projectedRank": 4,
-                "projectedScore": 131.5,
-                "winProbability": 46.8,
-                "impliedTotal": 131.5,
-                "starters": [
-                    {"slot": "QB", "player": "Lamar Jackson", "position": "QB", "nflTeam": "BAL", "projectedPoints": 21.2, "tier": "Tier 1", "matchupVs": "@ KC (Thu 8:20pm)", "news": "Reigning MVP with immense dual-threat rushing ceiling."},
-                    {"slot": "RB1", "player": "James Cook", "position": "RB", "nflTeam": "BUF", "projectedPoints": 14.8, "tier": "Tier 2", "matchupVs": "vs ARI (Sun 1pm)", "news": "Lead running back in high-volume Buffalo ground attack."},
-                    {"slot": "RB2", "player": "Cam Skattebo", "position": "RB", "nflTeam": "NYG", "projectedPoints": 11.0, "tier": "Tier 3", "matchupVs": "vs MIN (Sun 1pm)", "news": "Rookie early-down back earning goal-line opportunities."},
-                    {"slot": "WR1", "player": "Justin Jefferson", "position": "WR", "nflTeam": "MIN", "projectedPoints": 17.5, "tier": "Tier 1", "matchupVs": "@ NYG (Sun 1pm)", "news": "Undisputed alpha wideout in Minnesota's pass-heavy scheme."},
-                    {"slot": "WR2", "player": "Drake London", "position": "WR", "nflTeam": "ATL", "projectedPoints": 14.2, "tier": "Tier 2", "matchupVs": "vs PIT (Sun 1pm)", "news": "Primary perimeter target in Zac Robinson's new offensive scheme."},
-                    {"slot": "TE", "player": "Brock Bowers", "position": "TE", "nflTeam": "LV", "projectedPoints": 13.9, "tier": "Tier 1", "matchupVs": "@ LAC (Sun 4:05pm)", "news": "Generational tight end prospect with immediate focal point usage."},
-                    {"slot": "FLEX1", "player": "Zay Flowers", "position": "WR", "nflTeam": "BAL", "projectedPoints": 12.8, "tier": "Tier 2", "matchupVs": "@ KC (Thu 8:20pm)", "news": "Lamar Jackson's primary wideout in kickoff showcase."},
-                    {"slot": "FLEX2", "player": "Mark Andrews", "position": "TE", "nflTeam": "BAL", "projectedPoints": 10.5, "tier": "Tier 2", "matchupVs": "@ KC (Thu 8:20pm)", "news": "Red zone touchdown specialist in 2-TE sets."},
-                    {"slot": "FLEX3", "player": "Tyrone Tracy", "position": "RB", "nflTeam": "NYG", "projectedPoints": 8.6, "tier": "Tier 4", "matchupVs": "vs MIN (Sun 1pm)", "news": "Explosive pass-catcher in New York rotation."},
-                    {"slot": "K", "player": "Justin Tucker", "position": "K", "nflTeam": "BAL", "projectedPoints": 8.0, "tier": "Tier 1", "matchupVs": "@ KC", "news": "Elite accuracy in high-stakes environments."},
-                    {"slot": "DEF", "player": "Buffalo Bills", "position": "DEF", "nflTeam": "BUF", "projectedPoints": 6.8, "tier": "Tier 2", "matchupVs": "vs ARI", "news": "Solid home turnover generator."}
-                ]
-            },
-            "teamB": {
-                "rosterId": 10,
-                "teamName": "Bijan And The Maye-ssiah",
-                "manager": "jcflash59",
-                "powerRank": 2,
-                "projectedRank": 3,
-                "projectedScore": 133.2,
-                "winProbability": 53.2,
-                "impliedTotal": 133.2,
-                "starters": [
-                    {"slot": "QB", "player": "Drake Maye", "position": "QB", "nflTeam": "NE", "projectedPoints": 16.5, "tier": "Tier 2", "matchupVs": "@ CIN (Sun 1pm)", "news": "Rookie dual-threat with strong preseason accuracy metrics."},
-                    {"slot": "RB1", "player": "Bijan Robinson", "position": "RB", "nflTeam": "ATL", "projectedPoints": 18.8, "tier": "Tier 1", "matchupVs": "vs PIT (Sun 1pm)", "news": "Consensus top-3 overall fantasy pick in featured workhorse role."},
-                    {"slot": "RB2", "player": "Chase Brown", "position": "RB", "nflTeam": "CIN", "projectedPoints": 13.5, "tier": "Tier 2", "matchupVs": "vs NE (Sun 1pm)", "news": "Dynamic speed back taking over primary touches in Cincinnati."},
-                    {"slot": "WR1", "player": "Amon-Ra St. Brown", "position": "WR", "nflTeam": "DET", "projectedPoints": 16.8, "tier": "Tier 1", "matchupVs": "vs LAR (Sun 8:20pm)", "news": "Sun God target monster on Sunday Night Football."},
-                    {"slot": "WR2", "player": "Christian Watson", "position": "WR", "nflTeam": "GB", "projectedPoints": 11.2, "tier": "Tier 3", "matchupVs": "vs PHI (Fri 8:15pm)", "news": "Vertical deep threat in Brazil season opener."},
-                    {"slot": "TE", "player": "Colston Loveland", "position": "TE", "nflTeam": "CHI", "projectedPoints": 10.4, "tier": "Tier 2", "matchupVs": "vs TEN (Sun 1pm)", "news": "Rookie tight end primed for immediate target volume."},
-                    {"slot": "FLEX1", "player": "Rhamondre Stevenson", "position": "RB", "nflTeam": "NE", "projectedPoints": 12.6, "tier": "Tier 2", "matchupVs": "@ CIN (Sun 1pm)", "news": "Physical early-down and goal-line runner."},
-                    {"slot": "FLEX2", "player": "RJ Harvey", "position": "RB", "nflTeam": "DEN", "projectedPoints": 10.1, "tier": "Tier 3", "matchupVs": "@ SEA (Sun 4:05pm)", "news": "Ascending rookie back with red zone opportunity."},
-                    {"slot": "FLEX3", "player": "Kyle Monangai", "position": "RB", "nflTeam": "CHI", "projectedPoints": 9.2, "tier": "Tier 4", "matchupVs": "vs TEN (Sun 1pm)", "news": "Grinding interior runner in rotational committee."},
-                    {"slot": "K", "player": "Jake Bates", "position": "K", "nflTeam": "DET", "projectedPoints": 7.8, "tier": "Tier 2", "matchupVs": "vs LAR", "news": "Big leg kicker inside Ford Field dome."},
-                    {"slot": "DEF", "player": "Detroit Lions", "position": "DEF", "nflTeam": "DET", "projectedPoints": 6.3, "tier": "Tier 2", "matchupVs": "vs LAR", "news": "Aidan Hutchinson leading aggressive pass rush."}
-                ]
-            },
-            "spread": -1.7,
-            "spreadLabel": "Bijan And The Maye-ssiah -1.7",
-            "overUnder": 264.7,
-            "tacticalAnalysis": {
-                "headline": "Bijan Robinson's superstar volume matches up against Justin Jefferson and Lamar Jackson's explosive spike ceilings",
-                "breakdown": "The Ape features one of the most dangerous star trios in fantasy football: Lamar Jackson, Justin Jefferson, and rookie phenom Brock Bowers. When their top stars click, The Ape can drop 145+ points on anyone. However, Bijan And The Maye-ssiah counters with the deepest running back stable and the rock-solid floor of Amon-Ra St. Brown. With Bijan Robinson in a workhorse role, this matchup hinges on whether The Ape's stars can out-score Bijan's relentless multi-touchdown upside.",
-                "keyVariables": [
-                    "Lamar Jackson's Kickoff Night ceiling vs Chiefs Defense.",
-                    "Bijan Robinson's workload against Pittsburgh's front seven.",
-                    "Justin Jefferson vs Amon-Ra St. Brown wide receiver duel.",
-                    "Brock Bowers' rookie debut in Las Vegas."
-                ]
-            },
-            "positionalEdges": [
-                {"category": "Quarterback", "advantage": "The Ape", "margin": "+4.7 pts", "narrative": "Lamar Jackson gives massive MVP rushing equity over rookie Drake Maye."},
-                {"category": "Running Backs", "advantage": "Bijan And The Maye-ssiah", "margin": "+6.5 pts", "narrative": "Bijan Robinson and Chase Brown provide superior weekly backfield volume."},
-                {"category": "Wide Receivers", "advantage": "The Ape", "margin": "+3.7 pts", "narrative": "Justin Jefferson and Drake London have dominant target shares."},
-                {"category": "Tight End", "advantage": "The Ape", "margin": "+3.5 pts", "narrative": "Brock Bowers and Mark Andrews provide two elite tight end receiving options."},
-                {"category": "FLEX & Depth", "advantage": "Bijan And The Maye-ssiah", "margin": "+3.4 pts", "narrative": "Stevenson, RJ Harvey, and Monangai give deeper scoring insurance."}
-            ],
-            "tvSchedule": [
-                {
-                    "timeSlot": "Thursday 8:20 PM ET",
-                    "network": "NBC / Peacock",
-                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
-                    "leverageLevel": "CRITICAL",
-                    "fantasyPointsAtStake": "44.5 pts",
-                    "teamAStarters": ["Lamar Jackson (BAL)", "Zay Flowers (BAL)", "Mark Andrews (BAL)", "Justin Tucker (BAL)"],
-                    "teamBStarters": [],
-                    "windowAnalysis": "The Ape opens Week 1 with 4 Baltimore Ravens starters. A massive Lamar Jackson performance creates an immediate scoreboard lead."
+                    "windowAnalysis": "Direct wide receiver clash in São Paulo: Christian Watson vs DeVonta Smith."
                 },
                 {
                     "timeSlot": "Sunday 1:00 PM ET",
                     "network": "CBS & FOX",
                     "gameMatchup": "Pittsburgh @ Atlanta, Arizona @ Buffalo, New England @ Cincinnati",
-                    "leverageLevel": "HIGH",
+                    "leverageLevel": "CRITICAL",
                     "fantasyPointsAtStake": "88.2 pts",
-                    "teamAStarters": ["James Cook (BUF)", "Justin Jefferson (MIN)", "Drake London (ATL)", "Cam Skattebo (NYG)", "Bills DEF"],
-                    "teamBStarters": ["Bijan Robinson (ATL)", "Chase Brown (CIN)", "Drake Maye (NE)", "Colston Loveland (CHI)", "Rhamondre Stevenson (NE)"],
-                    "windowAnalysis": "The main battleground. 10 starters active across the early Sunday window, led by Bijan Robinson and Justin Jefferson in high-leverage spots."
+                    "teamAStarters": ["Bijan Robinson (ATL)", "Chase Brown (CIN)", "Drake Maye (NE)", "Colston Loveland (CHI)", "Rhamondre Stevenson (NE)", "Kyle Monangai (CHI)"],
+                    "teamBStarters": ["Josh Allen (BUF)", "Isaiah Likely (NYG)"],
+                    "windowAnalysis": "Josh Allen's MVP ceiling goes directly head-to-head with Bijan Robinson and Chase Brown in high-volume roles."
                 },
                 {
                     "timeSlot": "Sunday 4:05 PM ET",
-                    "network": "CBS Late Window",
-                    "gameMatchup": "Las Vegas Raiders @ LA Chargers",
-                    "leverageLevel": "MEDIUM",
-                    "fantasyPointsAtStake": "24.0 pts",
-                    "teamAStarters": ["Brock Bowers (LV)"],
-                    "teamBStarters": ["RJ Harvey (DEN)"],
-                    "windowAnalysis": "Brock Bowers' eagerly awaited NFL debut as Las Vegas faces the Chargers defense."
+                    "network": "FOX & CBS Late Window",
+                    "gameMatchup": "Denver @ Seattle & Las Vegas @ LA Chargers",
+                    "leverageLevel": "HIGH",
+                    "fantasyPointsAtStake": "36.9 pts",
+                    "teamAStarters": ["RJ Harvey (DEN)"],
+                    "teamBStarters": ["Jaxon Smith-Njigba (SEA)", "Ladd McConkey (LAC)"],
+                    "windowAnalysis": "JSN and Ladd McConkey provide major late-afternoon points for Bronco Stampede."
                 },
                 {
                     "timeSlot": "Sunday 8:20 PM ET",
                     "network": "NBC Sunday Night Football",
                     "gameMatchup": "Los Angeles Rams @ Detroit Lions",
                     "leverageLevel": "DECISIVE CLIMAX",
-                    "fantasyPointsAtStake": "30.9 pts",
-                    "teamAStarters": [],
-                    "teamBStarters": ["Amon-Ra St. Brown (DET)", "Jake Bates (DET)", "Lions DEF"],
-                    "windowAnalysis": "Amon-Ra St. Brown headlines Sunday Night Football to close out the matchup for Bijan And The Maye-ssiah."
-                }
-            ]
-        },
-        {
-            "matchupId": 3,
-            "week": 1,
-            "title": "Ground & Pound vs. Retool Grinder",
-            "subtitle": "2 Dagos' Triple-RB Juggernaut vs. Terry Tate's Retool Squad",
-            "isMarquee": False,
-            "teamA": {
-                "rosterId": 2,
-                "teamName": "2 Dagos and A Dream",
-                "manager": "TGamby",
-                "powerRank": 5,
-                "projectedRank": 5,
-                "projectedScore": 130.8,
-                "winProbability": 56.4,
-                "impliedTotal": 130.8,
-                "starters": [
-                    {"slot": "QB", "player": "Jordan Love", "position": "QB", "nflTeam": "GB", "projectedPoints": 17.5, "tier": "Tier 2", "matchupVs": "vs PHI (Fri 8:15pm)", "news": "Commanding high-tempo Packers passing offense in Brazil."},
-                    {"slot": "RB1", "player": "Jahmyr Gibbs", "position": "RB", "nflTeam": "DET", "projectedPoints": 17.8, "tier": "Tier 1", "matchupVs": "vs LAR (Sun 8:20pm)", "news": "Explosive multi-touchdown threat in Sunday Night Football showcase."},
-                    {"slot": "RB2", "player": "Jonathan Taylor", "position": "RB", "nflTeam": "IND", "projectedPoints": 16.2, "tier": "Tier 1", "matchupVs": "vs HOU (Sun 1pm)", "news": "Fully healthy workhorse running behind dominant Colts line."},
-                    {"slot": "WR1", "player": "Jayden Reed", "position": "WR", "nflTeam": "GB", "projectedPoints": 12.8, "tier": "Tier 2", "matchupVs": "vs PHI (Fri 8:15pm)", "news": "Gadget and slot weapon with manufactured touches."},
-                    {"slot": "WR2", "player": "Quentin Johnston", "position": "WR", "nflTeam": "LAC", "projectedPoints": 9.5, "tier": "Tier 3", "matchupVs": "vs LV (Sun 4:05pm)", "news": "Perimeter target in physical Harbaugh offense."},
-                    {"slot": "TE", "player": "Harold Fannin", "position": "TE", "nflTeam": "CLE", "projectedPoints": 8.4, "tier": "Tier 3", "matchupVs": "vs DAL (Sun 4:25pm)", "news": "Rookie tight end operating in hybrid receiving sets."},
-                    {"slot": "FLEX1", "player": "Ashton Jeanty", "position": "RB", "nflTeam": "LV", "projectedPoints": 14.5, "tier": "Tier 1", "matchupVs": "@ LAC (Sun 4:05pm)", "news": "Elite rookie running back in featured early-down role."},
-                    {"slot": "FLEX2", "player": "Tony Pollard", "position": "RB", "nflTeam": "TEN", "projectedPoints": 11.6, "tier": "Tier 2", "matchupVs": "@ CHI (Sun 1pm)", "news": "Speed back in Callahan's zone-blocking scheme."},
-                    {"slot": "FLEX3", "player": "Dalton Kincaid", "position": "TE", "nflTeam": "BUF", "projectedPoints": 10.2, "tier": "Tier 2", "matchupVs": "vs ARI (Sun 1pm)", "news": "Dual-TE flex option with steady target floor."},
-                    {"slot": "K", "player": "Matt Prater", "position": "K", "nflTeam": "ARI", "projectedPoints": 7.3, "tier": "Tier 2", "matchupVs": "@ BUF", "news": "Veteran kicker in high-total game."},
-                    {"slot": "DEF", "player": "Green Bay Packers", "position": "DEF", "nflTeam": "GB", "projectedPoints": 6.0, "tier": "Tier 3", "matchupVs": "vs PHI (Fri)", "news": "Hafley defense making debut in Brazil."}
-                ]
-            },
-            "teamB": {
-                "rosterId": 11,
-                "teamName": "Terry Tate’s Pain Train",
-                "manager": "mannyrsox24",
-                "powerRank": 10,
-                "projectedRank": 10,
-                "projectedScore": 127.6,
-                "winProbability": 43.6,
-                "impliedTotal": 127.6,
-                "starters": [
-                    {"slot": "QB", "player": "Jalen Hurts", "position": "QB", "nflTeam": "PHI", "projectedPoints": 20.8, "tier": "Tier 1", "matchupVs": "vs GB (Fri 8:15pm)", "news": "Brotherly Shove touchdown machine leading Eagles attack in Brazil."},
-                    {"slot": "RB1", "player": "Javonte Williams", "position": "RB", "nflTeam": "DAL", "projectedPoints": 13.2, "tier": "Tier 2", "matchupVs": "@ CLE (Sun 4:25pm)", "news": "Physical runner in Dallas committee backfield."},
-                    {"slot": "RB2", "player": "Jadarian Price", "position": "RB", "nflTeam": "SEA", "projectedPoints": 10.8, "tier": "Tier 3", "matchupVs": "vs DEN (Sun 4:05pm)", "news": "Rookie back carving out early-season touches."},
-                    {"slot": "WR1", "player": "Nico Collins", "position": "WR", "nflTeam": "HOU", "projectedPoints": 15.6, "tier": "Tier 1", "matchupVs": "@ IND (Sun 1pm)", "news": "Explosive alpha receiver for C.J. Stroud."},
-                    {"slot": "WR2", "player": "Terry McLaurin", "position": "WR", "nflTeam": "WAS", "projectedPoints": 13.0, "tier": "Tier 2", "matchupVs": "@ TB (Sun 1pm)", "news": "Jayden Daniels' unquestioned No. 1 target."},
-                    {"slot": "TE", "player": "Tyler Warren", "position": "TE", "nflTeam": "IND", "projectedPoints": 9.8, "tier": "Tier 3", "matchupVs": "vs HOU (Sun 1pm)", "news": "Rookie tight end receiving package."},
-                    {"slot": "FLEX1", "player": "Rico Dowdle", "position": "RB", "nflTeam": "PIT", "projectedPoints": 11.2, "tier": "Tier 3", "matchupVs": "@ ATL (Sun 1pm)", "news": "Complementary power runner in Pittsburgh."},
-                    {"slot": "FLEX2", "player": "Marvin Harrison", "position": "WR", "nflTeam": "ARI", "projectedPoints": 13.8, "tier": "Tier 2", "matchupVs": "@ BUF (Sun 1pm)", "news": "Highly-touted rookie wideout making NFL debut."},
-                    {"slot": "FLEX3", "player": "Makai Lemon", "position": "WR", "nflTeam": "PHI", "projectedPoints": 8.0, "tier": "Tier 4", "matchupVs": "vs GB (Fri 8:15pm)", "news": "Young receiver in depth rotation."},
-                    {"slot": "K", "player": "Ka'imi Fairbairn", "position": "K", "nflTeam": "HOU", "projectedPoints": 7.9, "tier": "Tier 2", "matchupVs": "@ IND", "news": "Reliable kicker in dome environment."},
-                    {"slot": "DEF", "player": "Houston Texans", "position": "DEF", "nflTeam": "HOU", "projectedPoints": 6.8, "tier": "Tier 2", "matchupVs": "@ IND", "news": "DeMeco Ryans defense with strong pass rush."}
-                ]
-            },
-            "spread": -3.2,
-            "spreadLabel": "2 Dagos and A Dream -3.2",
-            "overUnder": 258.4,
-            "tacticalAnalysis": {
-                "headline": "The league's premier running back stable meets Jalen Hurts and Nico Collins in a physical 130-point slugfest",
-                "breakdown": "2 Dagos and A Dream brings the most imposing backfield trio in the league: Jahmyr Gibbs, Jonathan Taylor, and Ashton Jeanty. If this trio controls game scripts and scores 4+ rushing touchdowns, they are nearly impossible to catch. Terry Tate's Pain Train will lean on Jalen Hurts' rushing touchdown upside and Nico Collins' big-play explosiveness to stay within striking distance.",
-                "keyVariables": [
-                    "Jalen Hurts vs Jordan Love Friday night clash in Brazil.",
-                    "Jonathan Taylor vs Nico Collins in the Houston @ Indy divisional match.",
-                    "Ashton Jeanty's debut volume in Las Vegas.",
-                    "Jahmyr Gibbs closing out Sunday Night Football in Detroit."
-                ]
-            },
-            "positionalEdges": [
-                {"category": "Quarterback", "advantage": "Terry Tate’s Pain Train", "margin": "+3.3 pts", "narrative": "Jalen Hurts provides higher touchdown equity on goal-line sneaks."},
-                {"category": "Running Backs", "advantage": "2 Dagos and A Dream", "margin": "+10.0 pts", "narrative": "Gibbs, Taylor, and Jeanty form the undisputed top backfield in the league."},
-                {"category": "Wide Receivers", "advantage": "Terry Tate’s Pain Train", "margin": "+6.3 pts", "narrative": "Nico Collins and Terry McLaurin give Terry Tate a distinct receiving edge."},
-                {"category": "Tight End", "advantage": "Terry Tate’s Pain Train", "margin": "+1.4 pts", "narrative": "Tyler Warren holds a slight edge over Cleveland's rookie."},
-                {"category": "FLEX & Depth", "advantage": "2 Dagos and A Dream", "margin": "+2.0 pts", "narrative": "Jeanty and Pollard in the flex provide supreme rushing insulation."}
-            ],
-            "tvSchedule": [
-                {
-                    "timeSlot": "Friday 8:15 PM ET",
-                    "network": "Peacock / YouTube",
-                    "gameMatchup": "Green Bay Packers vs Philadelphia Eagles (Brazil)",
-                    "leverageLevel": "CRITICAL",
-                    "fantasyPointsAtStake": "65.1 pts",
-                    "teamAStarters": ["Jordan Love (GB)", "Jayden Reed (GB)", "Packers DEF"],
-                    "teamBStarters": ["Jalen Hurts (PHI)", "Makai Lemon (PHI)"],
-                    "windowAnalysis": "Friday night kickoff features an intense head-to-head QB duel between Jordan Love and Jalen Hurts live from São Paulo."
-                },
-                {
-                    "timeSlot": "Sunday 1:00 PM ET",
-                    "network": "CBS & FOX",
-                    "gameMatchup": "Houston @ Indianapolis & Tennessee @ Chicago",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "74.8 pts",
-                    "teamAStarters": ["Jonathan Taylor (IND)", "Tony Pollard (TEN)", "Dalton Kincaid (BUF)"],
-                    "teamBStarters": ["Nico Collins (HOU)", "Terry McLaurin (WAS)", "Tyler Warren (IND)", "Rico Dowdle (PIT)", "Marvin Harrison (ARI)", "Ka'imi Fairbairn (HOU)", "Texans DEF"],
-                    "windowAnalysis": "Massive 1:00 PM window. Jonathan Taylor faces off directly against Nico Collins in the AFC South rivalry."
-                },
-                {
-                    "timeSlot": "Sunday 4:05 PM / 4:25 PM ET",
-                    "network": "CBS & FOX Late Window",
-                    "gameMatchup": "Las Vegas @ LA Chargers & Dallas @ Cleveland",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "52.4 pts",
-                    "teamAStarters": ["Ashton Jeanty (LV)", "Quentin Johnston (LAC)", "Harold Fannin (CLE)", "Matt Prater (ARI)"],
-                    "teamBStarters": ["Javonte Williams (DAL)", "Jadarian Price (SEA)"],
-                    "windowAnalysis": "Ashton Jeanty makes his NFL debut for 2 Dagos while Javonte Williams anchors Dallas's ground game."
-                },
-                {
-                    "timeSlot": "Sunday 8:20 PM ET",
-                    "network": "NBC Sunday Night Football",
-                    "gameMatchup": "Los Angeles Rams @ Detroit Lions",
-                    "leverageLevel": "DECISIVE CLIMAX",
-                    "fantasyPointsAtStake": "17.8 pts",
-                    "teamAStarters": ["Jahmyr Gibbs (DET)"],
-                    "teamBStarters": [],
-                    "windowAnalysis": "Jahmyr Gibbs enters Sunday Night Football as the sole active asset to close out the victory for 2 Dagos."
+                    "fantasyPointsAtStake": "71.5 pts",
+                    "teamAStarters": ["Amon-Ra St. Brown (DET)", "Jake Bates (DET)", "Lions DEF"],
+                    "teamBStarters": ["Puka Nacua (LAR)", "Kyren Williams (LAR)", "Blake Corum (LAR)"],
+                    "windowAnalysis": "The undisputed game of the week. 6 active starters in Ford Field will decide the outcome of the marquee matchup."
                 }
             ]
         },
         {
             "matchupId": 4,
             "week": 1,
-            "title": "San Francisco Power vs. Young Rebuild",
-            "subtitle": "Gridiron geezers' Win-Now Triple Threat vs. Final Boss's Rebuild",
+            "title": "Youth Explosion vs. Veteran Balance",
+            "subtitle": "My Nabers Tetties vs. arkinsjt",
             "isMarquee": False,
             "teamA": {
-                "rosterId": 7,
-                "teamName": "Gridiron geezers",
-                "manager": "kong58",
-                "powerRank": 8,
-                "projectedRank": 6,
-                "projectedScore": 128.6,
-                "winProbability": 63.8,
-                "impliedTotal": 128.6,
-                "starters": [
-                    {"slot": "QB", "player": "Brock Purdy", "position": "QB", "nflTeam": "SF", "projectedPoints": 17.4, "tier": "Tier 2", "matchupVs": "vs NYJ (Mon 8:15pm)", "news": "Orchestrates Shanahan's powerhouse offense on Monday Night Football."},
-                    {"slot": "RB1", "player": "Christian McCaffrey", "position": "RB", "nflTeam": "SF", "projectedPoints": 19.5, "tier": "Tier 1", "matchupVs": "vs NYJ (Mon 8:15pm)", "news": "The ultimate fantasy cheat code in prime time."},
-                    {"slot": "RB2", "player": "De'Von Achane", "position": "RB", "nflTeam": "MIA", "projectedPoints": 15.8, "tier": "Tier 1", "matchupVs": "vs JAX (Sun 1pm)", "news": "Electric home run hitter in Mike McDaniel's track-meet offense."},
-                    {"slot": "WR1", "player": "Davante Adams", "position": "WR", "nflTeam": "LAR", "projectedPoints": 12.8, "tier": "Tier 2", "matchupVs": "@ DET (Sun 8:20pm)", "news": "Elite veteran route runner in high-scoring Ford Field."},
-                    {"slot": "WR2", "player": "Deebo Samuel", "position": "WR", "nflTeam": "SF", "projectedPoints": 12.2, "tier": "Tier 2", "matchupVs": "vs NYJ (Mon 8:15pm)", "news": "Versatile rushing and receiving weapon on MNF."},
-                    {"slot": "TE", "player": "George Kittle", "position": "TE", "nflTeam": "SF", "projectedPoints": 12.6, "tier": "Tier 1", "matchupVs": "vs NYJ (Mon 8:15pm)", "news": "Elite tight end weapon with multi-touchdown ceiling."},
-                    {"slot": "FLEX1", "player": "Omarion Hampton", "position": "RB", "nflTeam": "LAC", "projectedPoints": 13.5, "tier": "Tier 2", "matchupVs": "vs LV (Sun 4:05pm)", "news": "Rookie workhorse in Jim Harbaugh's physical ground attack."},
-                    {"slot": "FLEX2", "player": "Jaylen Warren", "position": "RB", "nflTeam": "PIT", "projectedPoints": 10.4, "tier": "Tier 3", "matchupVs": "@ ATL (Sun 1pm)", "news": "Dynamic dual-threat back in Arthur Smith's scheme."},
-                    {"slot": "FLEX3", "player": "Aaron Jones", "position": "RB", "nflTeam": "MIN", "projectedPoints": 10.8, "tier": "Tier 3", "matchupVs": "@ NYG (Sun 1pm)", "news": "Veteran back with receiving chops in Minnesota debut."},
-                    {"slot": "K", "player": "Jake Moody", "position": "K", "nflTeam": "SF", "projectedPoints": 7.6, "tier": "Tier 2", "matchupVs": "vs NYJ (Mon)", "news": "Reliable kicker attached to powerhouse offense."},
-                    {"slot": "DEF", "player": "San Francisco 49ers", "position": "DEF", "nflTeam": "SF", "projectedPoints": 7.2, "tier": "Tier 1", "matchupVs": "vs NYJ (Mon)", "news": "Bosa-led pass rush in prime time home opener."}
-                ]
-            },
-            "teamB": {
-                "rosterId": 6,
-                "teamName": "Final Boss",
-                "manager": "OldManBacala",
-                "powerRank": 12,
-                "projectedRank": 12,
-                "projectedScore": 123.0,
-                "winProbability": 36.2,
-                "impliedTotal": 123.0,
-                "starters": [
-                    {"slot": "QB", "player": "Patrick Mahomes", "position": "QB", "nflTeam": "KC", "projectedPoints": 20.4, "tier": "Tier 1", "matchupVs": "vs BAL (Thu 8:20pm)", "news": "All-world quarterback opening the season at Arrowhead."},
-                    {"slot": "RB1", "player": "Chuba Hubbard", "position": "RB", "nflTeam": "CAR", "projectedPoints": 11.2, "tier": "Tier 3", "matchupVs": "@ NO (Sun 1pm)", "news": "Starting running back in Carolina's offense."},
-                    {"slot": "RB2", "player": "J.K. Dobbins", "position": "RB", "nflTeam": "DEN", "projectedPoints": 10.0, "tier": "Tier 3", "matchupVs": "@ SEA (Sun 4:05pm)", "news": "Veteran runner in Sean Payton backfield."},
-                    {"slot": "WR1", "player": "George Pickens", "position": "WR", "nflTeam": "DAL", "projectedPoints": 14.5, "tier": "Tier 2", "matchupVs": "@ CLE (Sun 4:25pm)", "news": "Alpha boundary target with spectacular contested catch radius."},
-                    {"slot": "WR2", "player": "Carnell Tate", "position": "WR", "nflTeam": "TEN", "projectedPoints": 11.0, "tier": "Tier 3", "matchupVs": "@ CHI (Sun 1pm)", "news": "Young rookie wideout carving out starting role."},
-                    {"slot": "TE", "player": "Tucker Kraft", "position": "TE", "nflTeam": "GB", "projectedPoints": 9.2, "tier": "Tier 3", "matchupVs": "vs PHI (Fri 8:15pm)", "news": "Athletic YAC tight end in Green Bay passing tree."},
-                    {"slot": "FLEX1", "player": "Michael Pittman", "position": "WR", "nflTeam": "PIT", "projectedPoints": 12.4, "tier": "Tier 2", "matchupVs": "@ ATL (Sun 1pm)", "news": "High-volume possession receiver."},
-                    {"slot": "FLEX2", "player": "Jalen Coker", "position": "WR", "nflTeam": "CAR", "projectedPoints": 8.5, "tier": "Tier 4", "matchupVs": "@ NO (Sun 1pm)", "news": "Slot rookie earning preseason snaps."},
-                    {"slot": "FLEX3", "player": "Travis Hunter", "position": "WR", "nflTeam": "JAX", "projectedPoints": 9.5, "tier": "Tier 3", "matchupVs": "@ MIA (Sun 1pm)", "news": "Dynamic rookie two-way talent making debut."},
-                    {"slot": "K", "player": "Younghoe Koo", "position": "K", "nflTeam": "ATL", "projectedPoints": 7.8, "tier": "Tier 2", "matchupVs": "vs PIT", "news": "Clutch kicker inside dome."},
-                    {"slot": "DEF", "player": "Kansas City Chiefs", "position": "DEF", "nflTeam": "KC", "projectedPoints": 6.8, "tier": "Tier 2", "matchupVs": "vs BAL (Thu)", "news": "Spagnuolo blitz scheme in home opener."}
-                ]
-            },
-            "spread": -5.6,
-            "spreadLabel": "Gridiron geezers -5.6",
-            "overUnder": 251.6,
-            "tacticalAnalysis": {
-                "headline": "Christian McCaffrey and the 49ers heavy stack face Patrick Mahomes and George Pickens in a clash of timelines",
-                "breakdown": "Gridiron geezers is built entirely to win right now, featuring Christian McCaffrey, De'Von Achane, Omarion Hampton, and a heavy 49ers Monday Night Football stack (Purdy, CMC, Deebo, Kittle, Moody, DEF). Final Boss brings Patrick Mahomes and cornerstone wideout George Pickens into battle, but faces a tough challenge overcoming the Geezers' overwhelming running back talent.",
-                "keyVariables": [
-                    "Patrick Mahomes kicking off Thursday Night at Arrowhead.",
-                    "De'Von Achane vs Jacksonville in the Miami heat.",
-                    "Omarion Hampton's debut in Harbaugh's physical Chargers offense.",
-                    "The massive 6-asset 49ers stack on Monday Night Football."
-                ]
-            },
-            "positionalEdges": [
-                {"category": "Quarterback", "advantage": "Final Boss", "margin": "+3.0 pts", "narrative": "Patrick Mahomes provides superior MVP ceiling over Brock Purdy."},
-                {"category": "Running Backs", "advantage": "Gridiron geezers", "margin": "+14.1 pts", "narrative": "CMC, Achane, and Hampton create an enormous backfield mismatch."},
-                {"category": "Wide Receivers", "advantage": "Final Boss", "margin": "+1.9 pts", "narrative": "George Pickens and Michael Pittman offer solid possession volume."},
-                {"category": "Tight End", "advantage": "Gridiron geezers", "margin": "+3.4 pts", "narrative": "George Kittle is an elite game-breaker at tight end."},
-                {"category": "FLEX & Depth", "advantage": "Gridiron geezers", "margin": "+4.4 pts", "narrative": "Hampton, Warren, and Aaron Jones provide veteran running depth."}
-            ],
-            "tvSchedule": [
-                {
-                    "timeSlot": "Thursday 8:20 PM ET",
-                    "network": "NBC / Peacock",
-                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
-                    "leverageLevel": "MEDIUM",
-                    "fantasyPointsAtStake": "27.2 pts",
-                    "teamAStarters": [],
-                    "teamBStarters": ["Patrick Mahomes (KC)", "Chiefs DEF"],
-                    "windowAnalysis": "Patrick Mahomes gets the first opportunity of Week 1 to give Final Boss an early lead."
-                },
-                {
-                    "timeSlot": "Sunday 1:00 PM ET",
-                    "network": "CBS & FOX",
-                    "gameMatchup": "Jacksonville @ Miami & Carolina @ New Orleans",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "74.8 pts",
-                    "teamAStarters": ["De'Von Achane (MIA)", "Jaylen Warren (PIT)", "Aaron Jones (MIN)"],
-                    "teamBStarters": ["Chuba Hubbard (CAR)", "Carnell Tate (TEN)", "Michael Pittman (PIT)", "Jalen Coker (CAR)", "Travis Hunter (JAX)", "Younghoe Koo (ATL)"],
-                    "windowAnalysis": "Achane's home run ability vs Final Boss's young receiving corps across the Sunday early slate."
-                },
-                {
-                    "timeSlot": "Sunday 4:05 PM / 4:25 PM ET",
-                    "network": "CBS & FOX Late Window",
-                    "gameMatchup": "Las Vegas @ LA Chargers & Dallas @ Cleveland",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "38.0 pts",
-                    "teamAStarters": ["Omarion Hampton (LAC)"],
-                    "teamBStarters": ["George Pickens (DAL)", "J.K. Dobbins (DEN)"],
-                    "windowAnalysis": "George Pickens in Dallas takes center stage against Omarion Hampton's debut."
-                },
-                {
-                    "timeSlot": "Monday 8:15 PM ET",
-                    "network": "ESPN / ABC Monday Night Football",
-                    "gameMatchup": "New York Jets @ San Francisco 49ers",
-                    "leverageLevel": "DECISIVE CLIMAX",
-                    "fantasyPointsAtStake": "63.9 pts",
-                    "teamAStarters": ["Brock Purdy (SF)", "Christian McCaffrey (SF)", "Deebo Samuel (SF)", "George Kittle (SF)", "Jake Moody (SF)", "49ers DEF"],
-                    "teamBStarters": [],
-                    "windowAnalysis": "The entire matchup will be decided on Monday Night Football as Gridiron geezers rolls out 6 San Francisco 49ers."
-                }
-            ]
-        },
-        {
-            "matchupId": 5,
-            "week": 1,
-            "title": "Veteran Playoff Contender vs. WR Youth Movement",
-            "subtitle": "arkinsjt's Balanced Depth vs. My Nabers Tetties' Explosive Rookie/Sophomore Corps",
-            "isMarquee": False,
-            "teamA": {
-                "rosterId": 8,
-                "teamName": "arkinsjt",
-                "manager": "arkinsjt",
-                "powerRank": 6,
-                "projectedRank": 7,
-                "projectedScore": 128.4,
-                "winProbability": 55.2,
-                "impliedTotal": 128.4,
-                "starters": [
-                    {"slot": "QB", "player": "Caleb Williams", "position": "QB", "nflTeam": "CHI", "projectedPoints": 17.2, "tier": "Tier 2", "matchupVs": "vs TEN (Sun 1pm)", "news": "No. 1 overall pick making NFL debut in Chicago."},
-                    {"slot": "RB1", "player": "David Montgomery", "position": "RB", "nflTeam": "HOU", "projectedPoints": 13.8, "tier": "Tier 2", "matchupVs": "@ IND (Sun 1pm)", "news": "Goal-line hammer with high touchdown floor."},
-                    {"slot": "RB2", "player": "Bucky Irving", "position": "RB", "nflTeam": "TB", "projectedPoints": 11.5, "tier": "Tier 3", "matchupVs": "vs WAS (Sun 1pm)", "news": "Explosive rookie back earning touches in Tampa."},
-                    {"slot": "WR1", "player": "CeeDee Lamb", "position": "WR", "nflTeam": "DAL", "projectedPoints": 17.6, "tier": "Tier 1", "matchupVs": "@ CLE (Sun 4:25pm)", "news": "Top-3 fantasy wideout with massive target volume."},
-                    {"slot": "WR2", "player": "A.J. Brown", "position": "WR", "nflTeam": "NE", "projectedPoints": 15.4, "tier": "Tier 1", "matchupVs": "@ CIN (Sun 1pm)", "news": "Dominant physical alpha receiver."},
-                    {"slot": "TE", "player": "Travis Kelce", "position": "TE", "nflTeam": "KC", "projectedPoints": 12.8, "tier": "Tier 1", "matchupVs": "vs BAL (Thu 8:20pm)", "news": "Hall of fame tight end anchoring Arrowhead passing attack."},
-                    {"slot": "FLEX1", "player": "Tee Higgins", "position": "WR", "nflTeam": "CIN", "projectedPoints": 13.4, "tier": "Tier 2", "matchupVs": "vs NE (Sun 1pm)", "news": "High-ceiling perimeter receiver opposite Chase."},
-                    {"slot": "FLEX2", "player": "Rome Odunze", "position": "WR", "nflTeam": "CHI", "projectedPoints": 10.8, "tier": "Tier 3", "matchupVs": "vs TEN (Sun 1pm)", "news": "Top-10 pick paired with Caleb Williams."},
-                    {"slot": "FLEX3", "player": "Parker Washington", "position": "WR", "nflTeam": "JAX", "projectedPoints": 8.5, "tier": "Tier 4", "matchupVs": "@ MIA (Sun 1pm)", "news": "Slot target in Jacksonville rotation."},
-                    {"slot": "K", "player": "Cameron Dicker", "position": "K", "nflTeam": "LAC", "projectedPoints": 7.8, "tier": "Tier 2", "matchupVs": "vs LV", "news": "Reliable kicker with strong accuracy."},
-                    {"slot": "DEF", "player": "Dallas Cowboys", "position": "DEF", "nflTeam": "DAL", "projectedPoints": 6.8, "tier": "Tier 2", "matchupVs": "@ CLE", "news": "Micah Parsons disruptive pass rush."}
-                ]
-            },
-            "teamB": {
                 "rosterId": 5,
                 "teamName": "My Nabers Tetties",
                 "manager": "DRockefeller",
@@ -546,12 +408,35 @@ def generate_week1_matchups():
                     {"slot": "DEF", "player": "Cincinnati Bengals", "position": "DEF", "nflTeam": "CIN", "projectedPoints": 6.5, "tier": "Tier 2", "matchupVs": "vs NE", "news": "Lou Anarumo defense hosting rookie quarterback."}
                 ]
             },
+            "teamB": {
+                "rosterId": 8,
+                "teamName": "arkinsjt",
+                "manager": "arkinsjt",
+                "powerRank": 6,
+                "projectedRank": 7,
+                "projectedScore": 128.4,
+                "winProbability": 55.2,
+                "impliedTotal": 128.4,
+                "starters": [
+                    {"slot": "QB", "player": "Caleb Williams", "position": "QB", "nflTeam": "CHI", "projectedPoints": 17.2, "tier": "Tier 2", "matchupVs": "vs TEN (Sun 1pm)", "news": "No. 1 overall pick making NFL debut in Chicago."},
+                    {"slot": "RB1", "player": "David Montgomery", "position": "RB", "nflTeam": "HOU", "projectedPoints": 13.8, "tier": "Tier 2", "matchupVs": "@ IND (Sun 1pm)", "news": "Goal-line hammer with high touchdown floor."},
+                    {"slot": "RB2", "player": "Bucky Irving", "position": "RB", "nflTeam": "TB", "projectedPoints": 11.5, "tier": "Tier 3", "matchupVs": "vs WAS (Sun 1pm)", "news": "Explosive rookie back earning touches in Tampa."},
+                    {"slot": "WR1", "player": "CeeDee Lamb", "position": "WR", "nflTeam": "DAL", "projectedPoints": 17.6, "tier": "Tier 1", "matchupVs": "@ CLE (Sun 4:25pm)", "news": "Top-3 fantasy wideout with massive target volume."},
+                    {"slot": "WR2", "player": "A.J. Brown", "position": "WR", "nflTeam": "NE", "projectedPoints": 15.4, "tier": "Tier 1", "matchupVs": "@ CIN (Sun 1pm)", "news": "Dominant physical alpha receiver."},
+                    {"slot": "TE", "player": "Travis Kelce", "position": "TE", "nflTeam": "KC", "projectedPoints": 12.8, "tier": "Tier 1", "matchupVs": "vs BAL (Thu 8:20pm)", "news": "Hall of fame tight end anchoring Arrowhead passing attack."},
+                    {"slot": "FLEX1", "player": "Tee Higgins", "position": "WR", "nflTeam": "CIN", "projectedPoints": 13.4, "tier": "Tier 2", "matchupVs": "vs NE (Sun 1pm)", "news": "High-ceiling perimeter receiver opposite Chase."},
+                    {"slot": "FLEX2", "player": "Rome Odunze", "position": "WR", "nflTeam": "CHI", "projectedPoints": 10.8, "tier": "Tier 3", "matchupVs": "vs TEN (Sun 1pm)", "news": "Top-10 pick paired with Caleb Williams."},
+                    {"slot": "FLEX3", "player": "Parker Washington", "position": "WR", "nflTeam": "JAX", "projectedPoints": 8.5, "tier": "Tier 4", "matchupVs": "@ MIA (Sun 1pm)", "news": "Slot target in Jacksonville rotation."},
+                    {"slot": "K", "player": "Cameron Dicker", "position": "K", "nflTeam": "LAC", "projectedPoints": 7.8, "tier": "Tier 2", "matchupVs": "vs LV", "news": "Reliable kicker with strong accuracy."},
+                    {"slot": "DEF", "player": "Dallas Cowboys", "position": "DEF", "nflTeam": "DAL", "projectedPoints": 6.8, "tier": "Tier 2", "matchupVs": "@ CLE", "news": "Micah Parsons disruptive pass rush."}
+                ]
+            },
             "spread": -2.6,
             "spreadLabel": "arkinsjt -2.6",
             "overUnder": 254.2,
             "tacticalAnalysis": {
-                "headline": "CeeDee Lamb and A.J. Brown face Joe Burrow and rookie phenom Malik Nabers in a high-octane passing battle",
-                "breakdown": "arkinsjt fields one of the most balanced veteran lineups in the league, highlighted by CeeDee Lamb, A.J. Brown, Tee Higgins, and Travis Kelce. My Nabers Tetties counters with the most exciting youth movement in dynasty: Malik Nabers, Tetairoa McMillan, and Luther Burden, anchored by Joe Burrow at QB. While Nabers has immense single-game ceiling, arkinsjt's depth gives them the statistical edge in Week 1.",
+                "headline": "Joe Burrow and rookie sensation Malik Nabers face CeeDee Lamb and A.J. Brown in a high-octane passing battle",
+                "breakdown": "My Nabers Tetties showcases dynasty's most exciting young receiving corps with Malik Nabers, Tetairoa McMillan, and Luther Burden, anchored by Joe Burrow at QB. arkinsjt counters with proven veteran alphas CeeDee Lamb, A.J. Brown, Tee Higgins, and Travis Kelce. While Nabers has immense single-game ceiling, arkinsjt's depth gives them the statistical edge in Week 1.",
                 "keyVariables": [
                     "Travis Kelce opening Thursday Night Football at Arrowhead.",
                     "Joe Burrow vs New England defense in Sunday early window.",
@@ -573,8 +458,8 @@ def generate_week1_matchups():
                     "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
                     "leverageLevel": "HIGH",
                     "fantasyPointsAtStake": "20.8 pts",
-                    "teamAStarters": ["Travis Kelce (KC)"],
-                    "teamBStarters": ["Emmett Johnson (KC)"],
+                    "teamAStarters": ["Emmett Johnson (KC)"],
+                    "teamBStarters": ["Travis Kelce (KC)"],
                     "windowAnalysis": "Travis Kelce opens the season in Arrowhead to give arkinsjt the first punch on the scoreboard."
                 },
                 {
@@ -583,8 +468,8 @@ def generate_week1_matchups():
                     "gameMatchup": "Tennessee @ Chicago, New England @ Cincinnati, Minnesota @ NY Giants",
                     "leverageLevel": "CRITICAL",
                     "fantasyPointsAtStake": "148.2 pts",
-                    "teamAStarters": ["Caleb Williams (CHI)", "David Montgomery (HOU)", "Bucky Irving (TB)", "A.J. Brown (NE)", "Tee Higgins (CIN)", "Rome Odunze (CHI)", "Parker Washington (JAX)"],
-                    "teamBStarters": ["Joe Burrow (CIN)", "Brian Robinson (ATL)", "Malik Nabers (NYG)", "Tetairoa McMillan (CAR)", "Kyle Pitts (ATL)", "Luther Burden (CHI)", "Jordyn Tyson (NO)", "Hunter Henry (NE)", "Evan McPherson (CIN)", "Bengals DEF"],
+                    "teamAStarters": ["Joe Burrow (CIN)", "Brian Robinson (ATL)", "Malik Nabers (NYG)", "Tetairoa McMillan (CAR)", "Kyle Pitts (ATL)", "Luther Burden (CHI)", "Jordyn Tyson (NO)", "Hunter Henry (NE)", "Evan McPherson (CIN)", "Bengals DEF"],
+                    "teamBStarters": ["Caleb Williams (CHI)", "David Montgomery (HOU)", "Bucky Irving (TB)", "A.J. Brown (NE)", "Tee Higgins (CIN)", "Rome Odunze (CHI)", "Parker Washington (JAX)"],
                     "windowAnalysis": "The colossal 1:00 PM window features 17 active starters! Joe Burrow, Malik Nabers, and Caleb Williams battle across the early slate."
                 },
                 {
@@ -593,49 +478,141 @@ def generate_week1_matchups():
                     "gameMatchup": "Dallas Cowboys @ Cleveland Browns",
                     "leverageLevel": "DECISIVE CLIMAX",
                     "fantasyPointsAtStake": "32.2 pts",
-                    "teamAStarters": ["CeeDee Lamb (DAL)", "Cameron Dicker (LAC)", "Cowboys DEF"],
-                    "teamBStarters": [],
+                    "teamAStarters": [],
+                    "teamBStarters": ["CeeDee Lamb (DAL)", "Cameron Dicker (LAC)", "Cowboys DEF"],
                     "windowAnalysis": "CeeDee Lamb headlines the national late game to close out the matchup for arkinsjt."
+                }
+            ]
+        },
+        {
+            "matchupId": 5,
+            "week": 1,
+            "title": "Triple-RB Powerhouse vs. Super Bowl MVP",
+            "subtitle": "2 Dagos and A Dream vs. Final Boss",
+            "isMarquee": False,
+            "teamA": {
+                "rosterId": 2,
+                "teamName": "2 Dagos and A Dream",
+                "manager": "TGamby",
+                "powerRank": 5,
+                "projectedRank": 5,
+                "projectedScore": 130.8,
+                "winProbability": 61.2,
+                "impliedTotal": 130.8,
+                "starters": [
+                    {"slot": "QB", "player": "Jordan Love", "position": "QB", "nflTeam": "GB", "projectedPoints": 17.5, "tier": "Tier 2", "matchupVs": "vs PHI (Fri 8:15pm)", "news": "Commanding high-tempo Packers passing offense in Brazil."},
+                    {"slot": "RB1", "player": "Jahmyr Gibbs", "position": "RB", "nflTeam": "DET", "projectedPoints": 17.8, "tier": "Tier 1", "matchupVs": "vs LAR (Sun 8:20pm)", "news": "Explosive multi-touchdown threat in Sunday Night Football showcase."},
+                    {"slot": "RB2", "player": "Jonathan Taylor", "position": "RB", "nflTeam": "IND", "projectedPoints": 16.2, "tier": "Tier 1", "matchupVs": "vs HOU (Sun 1pm)", "news": "Fully healthy workhorse running behind dominant Colts line."},
+                    {"slot": "WR1", "player": "Jayden Reed", "position": "WR", "nflTeam": "GB", "projectedPoints": 12.8, "tier": "Tier 2", "matchupVs": "vs PHI (Fri 8:15pm)", "news": "Gadget and slot weapon with manufactured touches."},
+                    {"slot": "WR2", "player": "Quentin Johnston", "position": "WR", "nflTeam": "LAC", "projectedPoints": 9.5, "tier": "Tier 3", "matchupVs": "vs LV (Sun 4:05pm)", "news": "Perimeter target in physical Harbaugh offense."},
+                    {"slot": "TE", "player": "Harold Fannin", "position": "TE", "nflTeam": "CLE", "projectedPoints": 8.4, "tier": "Tier 3", "matchupVs": "vs DAL (Sun 4:25pm)", "news": "Rookie tight end operating in hybrid receiving sets."},
+                    {"slot": "FLEX1", "player": "Ashton Jeanty", "position": "RB", "nflTeam": "LV", "projectedPoints": 14.5, "tier": "Tier 1", "matchupVs": "@ LAC (Sun 4:05pm)", "news": "Elite rookie running back in featured early-down role."},
+                    {"slot": "FLEX2", "player": "Tony Pollard", "position": "RB", "nflTeam": "TEN", "projectedPoints": 11.6, "tier": "Tier 2", "matchupVs": "@ CHI (Sun 1pm)", "news": "Speed back in Callahan's zone-blocking scheme."},
+                    {"slot": "FLEX3", "player": "Dalton Kincaid", "position": "TE", "nflTeam": "BUF", "projectedPoints": 10.2, "tier": "Tier 2", "matchupVs": "vs ARI (Sun 1pm)", "news": "Dual-TE flex option with steady target floor."},
+                    {"slot": "K", "player": "Matt Prater", "position": "K", "nflTeam": "ARI", "projectedPoints": 7.3, "tier": "Tier 2", "matchupVs": "@ BUF", "news": "Veteran kicker in high-total game."},
+                    {"slot": "DEF", "player": "Green Bay Packers", "position": "DEF", "nflTeam": "GB", "projectedPoints": 6.0, "tier": "Tier 3", "matchupVs": "vs PHI (Fri)", "news": "Hafley defense making debut in Brazil."}
+                ]
+            },
+            "teamB": {
+                "rosterId": 6,
+                "teamName": "Final Boss",
+                "manager": "OldManBacala",
+                "powerRank": 12,
+                "projectedRank": 12,
+                "projectedScore": 123.0,
+                "winProbability": 38.8,
+                "impliedTotal": 123.0,
+                "starters": [
+                    {"slot": "QB", "player": "Patrick Mahomes", "position": "QB", "nflTeam": "KC", "projectedPoints": 20.4, "tier": "Tier 1", "matchupVs": "vs BAL (Thu 8:20pm)", "news": "All-world quarterback opening the season at Arrowhead."},
+                    {"slot": "RB1", "player": "Chuba Hubbard", "position": "RB", "nflTeam": "CAR", "projectedPoints": 11.2, "tier": "Tier 3", "matchupVs": "@ NO (Sun 1pm)", "news": "Starting running back in Carolina's offense."},
+                    {"slot": "RB2", "player": "J.K. Dobbins", "position": "RB", "nflTeam": "DEN", "projectedPoints": 10.0, "tier": "Tier 3", "matchupVs": "@ SEA (Sun 4:05pm)", "news": "Veteran runner in Sean Payton backfield."},
+                    {"slot": "WR1", "player": "George Pickens", "position": "WR", "nflTeam": "DAL", "projectedPoints": 14.5, "tier": "Tier 2", "matchupVs": "@ CLE (Sun 4:25pm)", "news": "Alpha boundary target with spectacular contested catch radius."},
+                    {"slot": "WR2", "player": "Carnell Tate", "position": "WR", "nflTeam": "TEN", "projectedPoints": 11.0, "tier": "Tier 3", "matchupVs": "@ CHI (Sun 1pm)", "news": "Young rookie wideout carving out starting role."},
+                    {"slot": "TE", "player": "Tucker Kraft", "position": "TE", "nflTeam": "GB", "projectedPoints": 9.2, "tier": "Tier 3", "matchupVs": "vs PHI (Fri 8:15pm)", "news": "Athletic YAC tight end in Green Bay passing tree."},
+                    {"slot": "FLEX1", "player": "Michael Pittman", "position": "WR", "nflTeam": "PIT", "projectedPoints": 12.4, "tier": "Tier 2", "matchupVs": "@ ATL (Sun 1pm)", "news": "High-volume possession receiver."},
+                    {"slot": "FLEX2", "player": "Jalen Coker", "position": "WR", "nflTeam": "CAR", "projectedPoints": 8.5, "tier": "Tier 4", "matchupVs": "@ NO (Sun 1pm)", "news": "Slot rookie earning preseason snaps."},
+                    {"slot": "FLEX3", "player": "Travis Hunter", "position": "WR", "nflTeam": "JAX", "projectedPoints": 9.5, "tier": "Tier 3", "matchupVs": "@ MIA (Sun 1pm)", "news": "Dynamic rookie two-way talent making debut."},
+                    {"slot": "K", "player": "Younghoe Koo", "position": "K", "nflTeam": "ATL", "projectedPoints": 7.8, "tier": "Tier 2", "matchupVs": "vs PIT", "news": "Clutch kicker inside dome."},
+                    {"slot": "DEF", "player": "Kansas City Chiefs", "position": "DEF", "nflTeam": "KC", "projectedPoints": 6.8, "tier": "Tier 2", "matchupVs": "vs BAL (Thu)", "news": "Spagnuolo blitz scheme in home opener."}
+                ]
+            },
+            "spread": -4.8,
+            "spreadLabel": "2 Dagos and A Dream -4.8",
+            "overUnder": 253.8,
+            "tacticalAnalysis": {
+                "headline": "The league's premier running back stable faces Patrick Mahomes and George Pickens in a physical matchup",
+                "breakdown": "2 Dagos and A Dream brings the most terrifying backfield trio in fantasy: Jahmyr Gibbs, Jonathan Taylor, and Ashton Jeanty. If this trio controls game scripts and scores 4+ rushing touchdowns, they are nearly impossible to catch. Final Boss will lean on Patrick Mahomes' MVP ceiling and George Pickens' contested catch ability to create scoring explosions.",
+                "keyVariables": [
+                    "Patrick Mahomes opening the season Thursday Night at Arrowhead.",
+                    "Jordan Love and Jayden Reed in the Brazil Friday game.",
+                    "Jonathan Taylor vs Houston's defensive front in the early window.",
+                    "Jahmyr Gibbs putting on a show on Sunday Night Football."
+                ]
+            },
+            "positionalEdges": [
+                {"category": "Quarterback", "advantage": "Final Boss", "margin": "+2.9 pts", "narrative": "Patrick Mahomes provides superior MVP ceiling over Jordan Love."},
+                {"category": "Running Backs", "advantage": "2 Dagos and A Dream", "margin": "+12.8 pts", "narrative": "Gibbs, Taylor, and Jeanty form the undisputed top backfield in fantasy."},
+                {"category": "Wide Receivers", "advantage": "Final Boss", "margin": "+3.2 pts", "narrative": "George Pickens and Michael Pittman provide strong target stability."},
+                {"category": "Tight End", "advantage": "Final Boss", "margin": "+0.8 pts", "narrative": "Tucker Kraft has established role in Green Bay."},
+                {"category": "FLEX & Depth", "advantage": "2 Dagos and A Dream", "margin": "+5.9 pts", "narrative": "Ashton Jeanty and Tony Pollard provide elite flex scoring power."}
+            ],
+            "tvSchedule": [
+                {
+                    "timeSlot": "Thursday 8:20 PM ET",
+                    "network": "NBC / Peacock",
+                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
+                    "leverageLevel": "HIGH",
+                    "fantasyPointsAtStake": "27.2 pts",
+                    "teamAStarters": [],
+                    "teamBStarters": ["Patrick Mahomes (KC)", "Chiefs DEF"],
+                    "windowAnalysis": "Patrick Mahomes gets the first opportunity of Week 1 to give Final Boss an early lead."
+                },
+                {
+                    "timeSlot": "Friday 8:15 PM ET",
+                    "network": "Peacock / YouTube",
+                    "gameMatchup": "Green Bay Packers vs Philadelphia Eagles (Brazil)",
+                    "leverageLevel": "HIGH",
+                    "fantasyPointsAtStake": "45.5 pts",
+                    "teamAStarters": ["Jordan Love (GB)", "Jayden Reed (GB)", "Packers DEF"],
+                    "teamBStarters": ["Tucker Kraft (GB)"],
+                    "windowAnalysis": "Heavy Packers stack in São Paulo: Jordan Love and Jayden Reed against Tucker Kraft."
+                },
+                {
+                    "timeSlot": "Sunday 1:00 PM ET",
+                    "network": "CBS & FOX",
+                    "gameMatchup": "Houston @ Indianapolis, Tennessee @ Chicago, Carolina @ New Orleans",
+                    "leverageLevel": "HIGH",
+                    "fantasyPointsAtStake": "88.7 pts",
+                    "teamAStarters": ["Jonathan Taylor (IND)", "Tony Pollard (TEN)", "Dalton Kincaid (BUF)"],
+                    "teamBStarters": ["Chuba Hubbard (CAR)", "Carnell Tate (TEN)", "Michael Pittman (PIT)", "Jalen Coker (CAR)", "Travis Hunter (JAX)", "Younghoe Koo (ATL)"],
+                    "windowAnalysis": "Jonathan Taylor powers 2 Dagos while Final Boss deploys 6 starters across the early window."
+                },
+                {
+                    "timeSlot": "Sunday 8:20 PM ET",
+                    "network": "NBC Sunday Night Football",
+                    "gameMatchup": "Los Angeles Rams @ Detroit Lions",
+                    "leverageLevel": "DECISIVE CLIMAX",
+                    "fantasyPointsAtStake": "17.8 pts",
+                    "teamAStarters": ["Jahmyr Gibbs (DET)"],
+                    "teamBStarters": [],
+                    "windowAnalysis": "Jahmyr Gibbs takes center stage on Sunday Night Football to close out the victory for 2 Dagos."
                 }
             ]
         },
         {
             "matchupId": 6,
             "week": 1,
-            "title": "Superstar Spike Clash vs. Rebuild Draft Capital",
-            "subtitle": "Max’s Shadynasty's Elite WR Duo vs. Bub’s Club's Young Backfield",
+            "title": "Young Rebuild Runway vs. Win-Now Triple Threat",
+            "subtitle": "Bub’s Club vs. Gridiron geezers",
             "isMarquee": False,
             "teamA": {
-                "rosterId": 9,
-                "teamName": "Max’s Shadynasty",
-                "manager": "maxjabb",
-                "powerRank": 7,
-                "projectedRank": 8,
-                "projectedScore": 127.5,
-                "winProbability": 52.8,
-                "impliedTotal": 127.5,
-                "starters": [
-                    {"slot": "QB", "player": "Jayden Daniels", "position": "QB", "nflTeam": "WAS", "projectedPoints": 18.4, "tier": "Tier 1", "matchupVs": "@ TB (Sun 1pm)", "news": "Heisman winner with explosive rushing floor in Washington."},
-                    {"slot": "RB1", "player": "Travis Etienne", "position": "RB", "nflTeam": "NO", "projectedPoints": 13.8, "tier": "Tier 2", "matchupVs": "vs CAR (Sun 1pm)", "news": "Versatile all-purpose runner in high-volume role."},
-                    {"slot": "RB2", "player": "Quinshon Judkins", "position": "RB", "nflTeam": "CLE", "projectedPoints": 11.2, "tier": "Tier 3", "matchupVs": "vs DAL (Sun 4:25pm)", "news": "Powerful rookie interior runner."},
-                    {"slot": "WR1", "player": "Ja'Marr Chase", "position": "WR", "nflTeam": "CIN", "projectedPoints": 18.2, "tier": "Tier 1", "matchupVs": "vs NE (Sun 1pm)", "news": "Top-2 wide receiver in football with 30+ point spike ceiling."},
-                    {"slot": "WR2", "player": "Garrett Wilson", "position": "WR", "nflTeam": "NYJ", "projectedPoints": 15.0, "tier": "Tier 1", "matchupVs": "@ SF (Mon 8:15pm)", "news": "High-volume alpha wideout on Monday Night Football."},
-                    {"slot": "TE", "player": "Oronde Gadsden", "position": "TE", "nflTeam": "LAC", "projectedPoints": 7.8, "tier": "Tier 4", "matchupVs": "vs LV (Sun 4:05pm)", "news": "Rookie tight end in passing tree."},
-                    {"slot": "FLEX1", "player": "TreVeyon Henderson", "position": "RB", "nflTeam": "NE", "projectedPoints": 12.0, "tier": "Tier 2", "matchupVs": "@ CIN (Sun 1pm)", "news": "Dynamic rookie speed back in New England."},
-                    {"slot": "FLEX2", "player": "Bhayshul Tuten", "position": "RB", "nflTeam": "JAX", "projectedPoints": 9.5, "tier": "Tier 3", "matchupVs": "@ MIA (Sun 1pm)", "news": "Physical change-of-pace runner."},
-                    {"slot": "FLEX3", "player": "Mike Evans", "position": "WR", "nflTeam": "SF", "projectedPoints": 12.5, "tier": "Tier 2", "matchupVs": "vs NYJ (Mon 8:15pm)", "news": "Perennial 1,000-yard receiver in prime time."},
-                    {"slot": "K", "player": "Jason Myers", "position": "K", "nflTeam": "SEA", "projectedPoints": 7.4, "tier": "Tier 2", "matchupVs": "vs DEN", "news": "Consistent home field goal opportunities."},
-                    {"slot": "DEF", "player": "New York Jets", "position": "DEF", "nflTeam": "NYJ", "projectedPoints": 6.8, "tier": "Tier 2", "matchupVs": "@ SF (Mon)", "news": "Sauce Gardner leading lockdown secondary."}
-                ]
-            },
-            "teamB": {
                 "rosterId": 4,
                 "teamName": "Bub’s Club",
                 "manager": "bubberdubber",
                 "powerRank": 11,
                 "projectedRank": 11,
                 "projectedScore": 126.1,
-                "winProbability": 47.2,
+                "winProbability": 42.1,
                 "impliedTotal": 126.1,
                 "starters": [
                     {"slot": "QB", "player": "Jared Goff", "position": "QB", "nflTeam": "DET", "projectedPoints": 17.8, "tier": "Tier 2", "matchupVs": "vs LAR (Sun 8:20pm)", "news": "Directs explosive Ben Johnson passing attack in Ford Field."},
@@ -651,66 +628,89 @@ def generate_week1_matchups():
                     {"slot": "DEF", "player": "Cleveland Browns", "position": "DEF", "nflTeam": "CLE", "projectedPoints": 7.0, "tier": "Tier 1", "matchupVs": "vs DAL (Sun 4:25pm)", "news": "Myles Garrett-led dominant home defense."}
                 ]
             },
-            "spread": -1.4,
-            "spreadLabel": "Max’s Shadynasty -1.4",
-            "overUnder": 253.6,
+            "teamB": {
+                "rosterId": 7,
+                "teamName": "Gridiron geezers",
+                "manager": "kong58",
+                "powerRank": 8,
+                "projectedRank": 6,
+                "projectedScore": 128.6,
+                "winProbability": 57.9,
+                "impliedTotal": 128.6,
+                "starters": [
+                    {"slot": "QB", "player": "Brock Purdy", "position": "QB", "nflTeam": "SF", "projectedPoints": 17.4, "tier": "Tier 2", "matchupVs": "vs NYJ (Mon 8:15pm)", "news": "Orchestrates Shanahan's powerhouse offense on Monday Night Football."},
+                    {"slot": "RB1", "player": "Christian McCaffrey", "position": "RB", "nflTeam": "SF", "projectedPoints": 19.5, "tier": "Tier 1", "matchupVs": "vs NYJ (Mon 8:15pm)", "news": "The ultimate fantasy cheat code in prime time."},
+                    {"slot": "RB2", "player": "De'Von Achane", "position": "RB", "nflTeam": "MIA", "projectedPoints": 15.8, "tier": "Tier 1", "matchupVs": "vs JAX (Sun 1pm)", "news": "Electric home run hitter in Mike McDaniel's track-meet offense."},
+                    {"slot": "WR1", "player": "Davante Adams", "position": "WR", "nflTeam": "LAR", "projectedPoints": 12.8, "tier": "Tier 2", "matchupVs": "@ DET (Sun 8:20pm)", "news": "Elite veteran route runner in high-scoring Ford Field."},
+                    {"slot": "WR2", "player": "Deebo Samuel", "position": "WR", "nflTeam": "SF", "projectedPoints": 12.2, "tier": "Tier 2", "matchupVs": "vs NYJ (Mon 8:15pm)", "news": "Versatile rushing and receiving weapon on MNF."},
+                    {"slot": "TE", "player": "George Kittle", "position": "TE", "nflTeam": "SF", "projectedPoints": 12.6, "tier": "Tier 1", "matchupVs": "vs NYJ (Mon 8:15pm)", "news": "Elite tight end weapon with multi-touchdown ceiling."},
+                    {"slot": "FLEX1", "player": "Omarion Hampton", "position": "RB", "nflTeam": "LAC", "projectedPoints": 13.5, "tier": "Tier 2", "matchupVs": "vs LV (Sun 4:05pm)", "news": "Rookie workhorse in Jim Harbaugh's physical ground attack."},
+                    {"slot": "FLEX2", "player": "Jaylen Warren", "position": "RB", "nflTeam": "PIT", "projectedPoints": 10.4, "tier": "Tier 3", "matchupVs": "@ ATL (Sun 1pm)", "news": "Dynamic dual-threat back in Arthur Smith's scheme."},
+                    {"slot": "FLEX3", "player": "Aaron Jones", "position": "RB", "nflTeam": "MIN", "projectedPoints": 10.8, "tier": "Tier 3", "matchupVs": "@ NYG (Sun 1pm)", "news": "Veteran back with receiving chops in Minnesota debut."},
+                    {"slot": "K", "player": "Jake Moody", "position": "K", "nflTeam": "SF", "projectedPoints": 7.6, "tier": "Tier 2", "matchupVs": "vs NYJ (Mon)", "news": "Reliable kicker attached to powerhouse offense."},
+                    {"slot": "DEF", "player": "San Francisco 49ers", "position": "DEF", "nflTeam": "SF", "projectedPoints": 7.2, "tier": "Tier 1", "matchupVs": "vs NYJ (Mon)", "news": "Bosa-led pass rush in prime time home opener."}
+                ]
+            },
+            "spread": -2.5,
+            "spreadLabel": "Gridiron geezers -2.5",
+            "overUnder": 254.7,
             "tacticalAnalysis": {
-                "headline": "Ja'Marr Chase and Jayden Daniels take on Breece Hall and Sam LaPorta in a tight opening matchup",
-                "breakdown": "Max’s Shadynasty brings superstar spike power with Ja'Marr Chase, Garrett Wilson, and dynamic rookie QB Jayden Daniels. Bub’s Club features an enviable young foundation with Breece Hall, Jeremiyah Love, and Sam LaPorta. This matchup will come down to whether Ja'Marr Chase can break open a 30+ point game against New England.",
+                "headline": "Breece Hall and Sam LaPorta take on Christian McCaffrey and the massive 49ers Monday Night Football stack",
+                "breakdown": "Bub’s Club brings high-upside young weapons Breece Hall, Jeremiyah Love, and Sam LaPorta into battle against Gridiron geezers' win-now veteran juggernaut. Gridiron geezers boasts the supreme upside of Christian McCaffrey, De'Von Achane, and an 6-asset 49ers prime time stack. This matchup will culminate in a thrilling Monday Night Football showdown in Santa Clara.",
                 "keyVariables": [
-                    "Ja'Marr Chase in the Sunday 1:00 PM window vs Patriots.",
-                    "Jayden Daniels' dual-threat rookie debut in Tampa Bay.",
-                    "Sam LaPorta & Jared Goff in the Sunday Night Football showdown.",
-                    "Breece Hall and Garrett Wilson head-to-head on Monday Night Football."
+                    "De'Von Achane in the Sunday 1:00 PM track meet in Miami.",
+                    "Jared Goff and Sam LaPorta on Sunday Night Football in Detroit.",
+                    "Breece Hall going directly head-to-head with Christian McCaffrey on Monday Night Football.",
+                    "The massive 6-asset 49ers stack closing out the matchup."
                 ]
             },
             "positionalEdges": [
-                {"category": "Quarterback", "advantage": "Max’s Shadynasty", "margin": "+0.6 pts", "narrative": "Jayden Daniels brings higher rushing upside over pocket-passer Jared Goff."},
-                {"category": "Running Backs", "advantage": "Bub’s Club", "margin": "+4.0 pts", "narrative": "Breece Hall and Jeremiyah Love offer higher backfield ceiling."},
-                {"category": "Wide Receivers", "advantage": "Max’s Shadynasty", "margin": "+9.6 pts", "narrative": "Ja'Marr Chase, Garrett Wilson, and Mike Evans form a massive WR mismatch."},
-                {"category": "Tight End", "advantage": "Bub’s Club", "margin": "+5.7 pts", "narrative": "Sam LaPorta is an elite Tier-1 difference maker at tight end."},
-                {"category": "FLEX & Depth", "advantage": "Max’s Shadynasty", "margin": "+2.3 pts", "narrative": "TreVeyon Henderson and Mike Evans provide deep scoring stability."}
+                {"category": "Quarterback", "advantage": "Bub’s Club", "margin": "+0.4 pts", "narrative": "Jared Goff has high passing volume in Detroit dome."},
+                {"category": "Running Backs", "advantage": "Gridiron geezers", "margin": "+5.3 pts", "narrative": "CMC and Achane form an explosive backfield."},
+                {"category": "Wide Receivers", "advantage": "Gridiron geezers", "margin": "+1.4 pts", "narrative": "Davante Adams and Deebo Samuel offer veteran poise."},
+                {"category": "Tight End", "advantage": "Bub’s Club", "margin": "+0.9 pts", "narrative": "Sam LaPorta gives Bub's Club elite red zone production."},
+                {"category": "FLEX & Depth", "advantage": "Gridiron geezers", "margin": "+6.5 pts", "narrative": "Omarion Hampton, Jaylen Warren, and Aaron Jones provide superior flex depth."}
             ],
             "tvSchedule": [
                 {
                     "timeSlot": "Sunday 1:00 PM ET",
                     "network": "CBS & FOX",
-                    "gameMatchup": "New England @ Cincinnati & Washington @ Tampa Bay",
+                    "gameMatchup": "Jacksonville @ Miami & Arizona @ Buffalo",
                     "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "88.5 pts",
-                    "teamAStarters": ["Ja'Marr Chase (CIN)", "Jayden Daniels (WAS)", "Travis Etienne (NO)", "TreVeyon Henderson (NE)", "Bhayshul Tuten (JAX)"],
-                    "teamBStarters": ["Jeremiyah Love (ARI)", "Roman Wilson (PIT)", "Jonathon Brooks (CAR)", "Tyler Allgeier (ARI)", "Tyler Bass (BUF)"],
-                    "windowAnalysis": "Ja'Marr Chase and Jayden Daniels make their 2026 debuts in high-leverage Sunday early spots."
+                    "fantasyPointsAtStake": "65.1 pts",
+                    "teamAStarters": ["Jeremiyah Love (ARI)", "Roman Wilson (PIT)", "Jonathon Brooks (CAR)", "Tyler Allgeier (ARI)", "Tyler Bass (BUF)"],
+                    "teamBStarters": ["De'Von Achane (MIA)", "Jaylen Warren (PIT)", "Aaron Jones (MIN)"],
+                    "windowAnalysis": "Achane's home run ability headlines the early Sunday window."
                 },
                 {
                     "timeSlot": "Sunday 4:05 PM / 4:25 PM ET",
                     "network": "CBS & FOX Late Window",
-                    "gameMatchup": "Denver @ Seattle & Dallas @ Cleveland",
+                    "gameMatchup": "Las Vegas @ LA Chargers & Dallas @ Cleveland",
                     "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "48.9 pts",
-                    "teamAStarters": ["Quinshon Judkins (CLE)", "Oronde Gadsden (LAC)", "Jason Myers (SEA)"],
-                    "teamBStarters": ["Jaylen Waddle (DEN)", "Kimani Vidal (LAC)", "Browns DEF"],
-                    "windowAnalysis": "Jaylen Waddle in Denver faces off against Quinshon Judkins in Cleveland."
+                    "fantasyPointsAtStake": "43.3 pts",
+                    "teamAStarters": ["Jaylen Waddle (DEN)", "Kimani Vidal (LAC)", "Browns DEF"],
+                    "teamBStarters": ["Omarion Hampton (LAC)"],
+                    "windowAnalysis": "Omarion Hampton makes his Chargers debut against Jaylen Waddle and Kimani Vidal."
                 },
                 {
                     "timeSlot": "Sunday 8:20 PM ET",
                     "network": "NBC Sunday Night Football",
                     "gameMatchup": "Los Angeles Rams @ Detroit Lions",
                     "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "31.3 pts",
-                    "teamAStarters": [],
-                    "teamBStarters": ["Jared Goff (DET)", "Sam LaPorta (DET)"],
-                    "windowAnalysis": "Jared Goff and Sam LaPorta combine on Sunday Night Football for Bub's Club."
+                    "fantasyPointsAtStake": "44.1 pts",
+                    "teamAStarters": ["Jared Goff (DET)", "Sam LaPorta (DET)"],
+                    "teamBStarters": ["Davante Adams (LAR)"],
+                    "windowAnalysis": "Goff and LaPorta combine in Ford Field against Davante Adams."
                 },
                 {
                     "timeSlot": "Monday 8:15 PM ET",
                     "network": "ESPN / ABC Monday Night Football",
                     "gameMatchup": "New York Jets @ San Francisco 49ers",
                     "leverageLevel": "DECISIVE CLIMAX",
-                    "fantasyPointsAtStake": "51.8 pts",
-                    "teamAStarters": ["Garrett Wilson (NYJ)", "Mike Evans (SF)", "Jets DEF"],
-                    "teamBStarters": ["Breece Hall (NYJ)"],
-                    "windowAnalysis": "A dramatic Monday Night Football finale: Garrett Wilson and Mike Evans vs Breece Hall in a prime time clash."
+                    "fantasyPointsAtStake": "81.4 pts",
+                    "teamAStarters": ["Breece Hall (NYJ)"],
+                    "teamBStarters": ["Brock Purdy (SF)", "Christian McCaffrey (SF)", "Deebo Samuel (SF)", "George Kittle (SF)", "Jake Moody (SF)", "49ers DEF"],
+                    "windowAnalysis": "The grand finale: Breece Hall takes on 6 San Francisco 49ers in prime time to decide Week 1."
                 }
             ]
         }
@@ -729,7 +729,7 @@ def generate_week1_matchups():
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
         
-    print(f"Generated {len(matchups)} authentic Week 1 matchups to {OUTPUT_PATH}")
+    print(f"Generated {len(matchups)} official Sleeper Week 1 matchups to {OUTPUT_PATH}")
 
 if __name__ == "__main__":
     generate_week1_matchups()

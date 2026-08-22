@@ -1,6 +1,6 @@
 {
-  "forecastRunId": "fc_202608221730_42",
-  "generatedAt": "2026-08-22T17:30:40.384845+00:00",
+  "forecastRunId": "fc_202608221739_42",
+  "generatedAt": "2026-08-22T17:39:24.805407+00:00",
   "simulationsCount": 10000,
   "randomSeed": 42,
   "modelVersion": "v1.0-monte-carlo",
@@ -10,13 +10,13 @@
       "rosterId": 1,
       "teamName": "Ertz & Krafts \ud83c\udfc6",
       "projectedRank": 2,
-      "expectedSeed": 4.2,
+      "expectedSeed": 4.0,
       "medianSeed": 3,
       "powerRank": 2,
       "powerScore": 91.9,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Simulated finish (#2, Exp Seed 4.2) perfectly matches static Power Rank (#2), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
+      "powerConnectionNarrative": "Simulated finish (#2, Exp Seed 4.0) perfectly matches static Power Rank (#2), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
       "modelFactors": {
         "compositePowerScore": 91.9,
         "projectedMeanScore": 133.7,
@@ -57,31 +57,31 @@
         },
         "volatilityImpactNarrative": "With a stable profile (25.2/100), the model applies a weekly scoring standard deviation of \u00b113.1 pts. The top 3 starters account for 42.8% of starting redraft value and RBs represent 46.7%. In 10,000 simulations, this volatility models an expected weekly floor of 116.9 pts (10th percentile) and a shootout ceiling of 150.6 pts (90th percentile)."
       },
-      "expectedWins": 8.2,
-      "expectedLosses": 5.8,
+      "expectedWins": 8.4,
+      "expectedLosses": 5.6,
       "expectedPointsFor": 1871.8,
-      "playoffProbability": 78.9,
-      "byeProbability": 37.1,
-      "championshipProbability": 19.0,
-      "lastPlaceProbability": 1.0,
+      "playoffProbability": 81.7,
+      "byeProbability": 38.5,
+      "championshipProbability": 20.1,
+      "lastPlaceProbability": 0.7,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 20.8
+          "probability": 21.1
         },
         {
           "seed": 2,
-          "probability": 16.4
+          "probability": 17.4
         },
         {
           "seed": 3,
-          "probability": 13.8
+          "probability": 14.1
         },
         {
           "seed": 4,
-          "probability": 10.6
+          "probability": 11.6
         },
         {
           "seed": 5,
@@ -89,73 +89,73 @@
         },
         {
           "seed": 6,
-          "probability": 7.8
+          "probability": 7.9
         },
         {
           "seed": 7,
-          "probability": 5.9
+          "probability": 5.6
         },
         {
           "seed": 8,
-          "probability": 5.3
+          "probability": 4.8
         },
         {
           "seed": 9,
-          "probability": 3.7
+          "probability": 3.4
         },
         {
           "seed": 10,
-          "probability": 3.1
+          "probability": 2.3
         },
         {
           "seed": 11,
-          "probability": 2.1
+          "probability": 1.5
         },
         {
           "seed": 12,
-          "probability": 1.0
+          "probability": 0.7
         }
       ],
       "weeklySchedule": [
         {
           "week": 1,
+          "opponentRosterId": 9,
+          "opponentName": "Max\u2019s Shadynasty",
+          "winProbability": 61.9,
+          "projectedScore": 133.7,
+          "opponentProjectedScore": 127.5,
+          "spread": 6.2,
+          "spreadLabel": "+6.2 pts"
+        },
+        {
+          "week": 2,
           "opponentRosterId": 12,
           "opponentName": "Bronco Stampede",
-          "winProbability": 48.9,
+          "winProbability": 49.0,
           "projectedScore": 133.7,
           "opponentProjectedScore": 134.2,
           "spread": -0.5,
           "spreadLabel": "-0.5 pts"
         },
         {
-          "week": 2,
-          "opponentRosterId": 11,
-          "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 62.5,
-          "projectedScore": 133.7,
-          "opponentProjectedScore": 127.6,
-          "spread": 6.1,
-          "spreadLabel": "+6.1 pts"
-        },
-        {
           "week": 3,
-          "opponentRosterId": 10,
-          "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 51.4,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 70.5,
           "projectedScore": 133.7,
-          "opponentProjectedScore": 133.2,
-          "spread": 0.5,
-          "spreadLabel": "+0.5 pts"
+          "opponentProjectedScore": 123.0,
+          "spread": 10.7,
+          "spreadLabel": "+10.7 pts"
         },
         {
           "week": 4,
-          "opponentRosterId": 9,
-          "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 62.9,
+          "opponentRosterId": 4,
+          "opponentName": "Bub\u2019s Club",
+          "winProbability": 64.5,
           "projectedScore": 133.7,
-          "opponentProjectedScore": 127.5,
-          "spread": 6.2,
-          "spreadLabel": "+6.2 pts"
+          "opponentProjectedScore": 126.2,
+          "spread": 7.5,
+          "spreadLabel": "+7.5 pts"
         },
         {
           "week": 5,
@@ -169,23 +169,23 @@
         },
         {
           "week": 6,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 59.7,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 62.4,
           "projectedScore": 133.7,
-          "opponentProjectedScore": 128.6,
-          "spread": 5.1,
-          "spreadLabel": "+5.1 pts"
+          "opponentProjectedScore": 127.6,
+          "spread": 6.1,
+          "spreadLabel": "+6.1 pts"
         },
         {
           "week": 7,
-          "opponentRosterId": 6,
-          "opponentName": "Final Boss",
-          "winProbability": 69.7,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 55.5,
           "projectedScore": 133.7,
-          "opponentProjectedScore": 123.0,
-          "spread": 10.7,
-          "spreadLabel": "+10.7 pts"
+          "opponentProjectedScore": 131.2,
+          "spread": 2.5,
+          "spreadLabel": "+2.5 pts"
         },
         {
           "week": 8,
@@ -199,63 +199,63 @@
         },
         {
           "week": 9,
-          "opponentRosterId": 4,
-          "opponentName": "Bub\u2019s Club",
-          "winProbability": 64.4,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 59.1,
           "projectedScore": 133.7,
-          "opponentProjectedScore": 126.2,
-          "spread": 7.5,
-          "spreadLabel": "+7.5 pts"
+          "opponentProjectedScore": 128.6,
+          "spread": 5.1,
+          "spreadLabel": "+5.1 pts"
         },
         {
           "week": 10,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 54.6,
-          "projectedScore": 133.7,
-          "opponentProjectedScore": 131.2,
-          "spread": 2.5,
-          "spreadLabel": "+2.5 pts"
-        },
-        {
-          "week": 11,
           "opponentRosterId": 2,
           "opponentName": "2 Dagos and A Dream",
-          "winProbability": 59.6,
+          "winProbability": 59.0,
           "projectedScore": 133.7,
           "opponentProjectedScore": 128.7,
           "spread": 5.0,
           "spreadLabel": "+5.0 pts"
         },
         {
+          "week": 11,
+          "opponentRosterId": 10,
+          "opponentName": "Bijan And The Maye-ssiah",
+          "winProbability": 50.5,
+          "projectedScore": 133.7,
+          "opponentProjectedScore": 133.2,
+          "spread": 0.5,
+          "spreadLabel": "+0.5 pts"
+        },
+        {
           "week": 12,
+          "opponentRosterId": 9,
+          "opponentName": "Max\u2019s Shadynasty",
+          "winProbability": 62.3,
+          "projectedScore": 133.7,
+          "opponentProjectedScore": 127.5,
+          "spread": 6.2,
+          "spreadLabel": "+6.2 pts"
+        },
+        {
+          "week": 13,
           "opponentRosterId": 12,
           "opponentName": "Bronco Stampede",
-          "winProbability": 48.9,
+          "winProbability": 49.0,
           "projectedScore": 133.7,
           "opponentProjectedScore": 134.2,
           "spread": -0.5,
           "spreadLabel": "-0.5 pts"
         },
         {
-          "week": 13,
-          "opponentRosterId": 11,
-          "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 62.2,
-          "projectedScore": 133.7,
-          "opponentProjectedScore": 127.6,
-          "spread": 6.1,
-          "spreadLabel": "+6.1 pts"
-        },
-        {
           "week": 14,
-          "opponentRosterId": 10,
-          "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 52.3,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 70.4,
           "projectedScore": 133.7,
-          "opponentProjectedScore": 133.2,
-          "spread": 0.5,
-          "spreadLabel": "+0.5 pts"
+          "opponentProjectedScore": 123.0,
+          "spread": 10.7,
+          "spreadLabel": "+10.7 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -295,14 +295,14 @@
     "2": {
       "rosterId": 2,
       "teamName": "2 Dagos and A Dream",
-      "projectedRank": 5,
-      "expectedSeed": 6.7,
+      "projectedRank": 6,
+      "expectedSeed": 6.5,
       "medianSeed": 7,
       "powerRank": 5,
       "powerScore": 73.8,
-      "powerRankDelta": 0,
-      "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Simulated finish (#5, Exp Seed 6.7) perfectly matches static Power Rank (#5), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
+      "powerRankDelta": -1,
+      "powerDeltaLabel": "-1 vs Power Rank",
+      "powerConnectionNarrative": "Simulated finish (#6, Exp Seed 6.5) trails static Power Rank (#5) because although roster depth is strong on paper, regular-season schedule clusters and weekly score variance produce occasional tight losses.",
       "modelFactors": {
         "compositePowerScore": 73.8,
         "projectedMeanScore": 128.7,
@@ -343,105 +343,105 @@
         },
         "volatilityImpactNarrative": "With a high variance profile (86.6/100), the model applies a weekly scoring standard deviation of \u00b117.1 pts. The top 3 starters account for 80.7% of starting redraft value and RBs represent 84.7%. In 10,000 simulations, this volatility models an expected weekly floor of 106.7 pts (10th percentile) and a shootout ceiling of 150.6 pts (90th percentile)."
       },
-      "expectedWins": 6.9,
-      "expectedLosses": 7.1,
+      "expectedWins": 7.1,
+      "expectedLosses": 6.9,
       "expectedPointsFor": 1799.6,
-      "playoffProbability": 48.5,
-      "byeProbability": 12.6,
-      "championshipProbability": 6.2,
-      "lastPlaceProbability": 7.1,
+      "playoffProbability": 49.9,
+      "byeProbability": 13.3,
+      "championshipProbability": 5.6,
+      "lastPlaceProbability": 5.9,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 5.1
+          "probability": 5.5
         },
         {
           "seed": 2,
-          "probability": 7.5
+          "probability": 7.8
         },
         {
           "seed": 3,
-          "probability": 8.2
+          "probability": 8.6
         },
         {
           "seed": 4,
-          "probability": 9.1
-        },
-        {
-          "seed": 5,
           "probability": 8.9
         },
         {
-          "seed": 6,
+          "seed": 5,
           "probability": 9.7
         },
         {
+          "seed": 6,
+          "probability": 9.5
+        },
+        {
           "seed": 7,
-          "probability": 9.0
+          "probability": 10.2
         },
         {
           "seed": 8,
-          "probability": 9.2
+          "probability": 9.7
         },
         {
           "seed": 9,
-          "probability": 9.4
+          "probability": 9.0
         },
         {
           "seed": 10,
-          "probability": 8.8
+          "probability": 7.7
         },
         {
           "seed": 11,
-          "probability": 8.0
+          "probability": 7.5
         },
         {
           "seed": 12,
-          "probability": 7.1
+          "probability": 5.9
         }
       ],
       "weeklySchedule": [
         {
           "week": 1,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 60.0,
+          "projectedScore": 128.7,
+          "opponentProjectedScore": 123.0,
+          "spread": 5.7,
+          "spreadLabel": "+5.7 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 4,
+          "opponentName": "Bub\u2019s Club",
+          "winProbability": 53.4,
+          "projectedScore": 128.7,
+          "opponentProjectedScore": 126.2,
+          "spread": 2.5,
+          "spreadLabel": "+2.5 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 8,
+          "opponentName": "arkinsjt",
+          "winProbability": 50.0,
+          "projectedScore": 128.7,
+          "opponentProjectedScore": 128.4,
+          "spread": 0.3,
+          "spreadLabel": "+0.3 pts"
+        },
+        {
+          "week": 4,
           "opponentRosterId": 11,
           "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 52.0,
+          "winProbability": 52.7,
           "projectedScore": 128.7,
           "opponentProjectedScore": 127.6,
           "spread": 1.1,
           "spreadLabel": "+1.1 pts"
-        },
-        {
-          "week": 2,
-          "opponentRosterId": 9,
-          "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 52.1,
-          "projectedScore": 128.7,
-          "opponentProjectedScore": 127.5,
-          "spread": 1.2,
-          "spreadLabel": "+1.2 pts"
-        },
-        {
-          "week": 3,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 49.8,
-          "projectedScore": 128.7,
-          "opponentProjectedScore": 128.6,
-          "spread": 0.1,
-          "spreadLabel": "+0.1 pts"
-        },
-        {
-          "week": 4,
-          "opponentRosterId": 5,
-          "opponentName": "My Nabers Tetties",
-          "winProbability": 54.6,
-          "projectedScore": 128.7,
-          "opponentProjectedScore": 125.8,
-          "spread": 2.9,
-          "spreadLabel": "+2.9 pts"
         },
         {
           "week": 5,
@@ -455,93 +455,93 @@
         },
         {
           "week": 6,
-          "opponentRosterId": 12,
-          "opponentName": "Bronco Stampede",
-          "winProbability": 39.7,
+          "opponentRosterId": 5,
+          "opponentName": "My Nabers Tetties",
+          "winProbability": 54.5,
           "projectedScore": 128.7,
-          "opponentProjectedScore": 134.2,
-          "spread": -5.5,
-          "spreadLabel": "-5.5 pts"
+          "opponentProjectedScore": 125.8,
+          "spread": 2.9,
+          "spreadLabel": "+2.9 pts"
         },
         {
           "week": 7,
-          "opponentRosterId": 10,
-          "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 41.2,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 50.0,
           "projectedScore": 128.7,
-          "opponentProjectedScore": 133.2,
-          "spread": -4.5,
-          "spreadLabel": "-4.5 pts"
+          "opponentProjectedScore": 128.6,
+          "spread": 0.1,
+          "spreadLabel": "+0.1 pts"
         },
         {
           "week": 8,
-          "opponentRosterId": 8,
-          "opponentName": "arkinsjt",
-          "winProbability": 51.0,
-          "projectedScore": 128.7,
-          "opponentProjectedScore": 128.4,
-          "spread": 0.3,
-          "spreadLabel": "+0.3 pts"
-        },
-        {
-          "week": 9,
-          "opponentRosterId": 6,
-          "opponentName": "Final Boss",
-          "winProbability": 59.2,
-          "projectedScore": 128.7,
-          "opponentProjectedScore": 123.0,
-          "spread": 5.7,
-          "spreadLabel": "+5.7 pts"
-        },
-        {
-          "week": 10,
-          "opponentRosterId": 4,
-          "opponentName": "Bub\u2019s Club",
-          "winProbability": 54.4,
-          "projectedScore": 128.7,
-          "opponentProjectedScore": 126.2,
-          "spread": 2.5,
-          "spreadLabel": "+2.5 pts"
-        },
-        {
-          "week": 11,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 40.4,
-          "projectedScore": 128.7,
-          "opponentProjectedScore": 133.7,
-          "spread": -5.0,
-          "spreadLabel": "-5.0 pts"
-        },
-        {
-          "week": 12,
-          "opponentRosterId": 11,
-          "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 52.1,
-          "projectedScore": 128.7,
-          "opponentProjectedScore": 127.6,
-          "spread": 1.1,
-          "spreadLabel": "+1.1 pts"
-        },
-        {
-          "week": 13,
           "opponentRosterId": 9,
           "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 51.5,
+          "winProbability": 51.8,
           "projectedScore": 128.7,
           "opponentProjectedScore": 127.5,
           "spread": 1.2,
           "spreadLabel": "+1.2 pts"
         },
         {
-          "week": 14,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 49.7,
+          "week": 9,
+          "opponentRosterId": 10,
+          "opponentName": "Bijan And The Maye-ssiah",
+          "winProbability": 42.1,
           "projectedScore": 128.7,
-          "opponentProjectedScore": 128.6,
-          "spread": 0.1,
-          "spreadLabel": "+0.1 pts"
+          "opponentProjectedScore": 133.2,
+          "spread": -4.5,
+          "spreadLabel": "-4.5 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 41.0,
+          "projectedScore": 128.7,
+          "opponentProjectedScore": 133.7,
+          "spread": -5.0,
+          "spreadLabel": "-5.0 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 12,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 39.8,
+          "projectedScore": 128.7,
+          "opponentProjectedScore": 134.2,
+          "spread": -5.5,
+          "spreadLabel": "-5.5 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 59.9,
+          "projectedScore": 128.7,
+          "opponentProjectedScore": 123.0,
+          "spread": 5.7,
+          "spreadLabel": "+5.7 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 4,
+          "opponentName": "Bub\u2019s Club",
+          "winProbability": 55.2,
+          "projectedScore": 128.7,
+          "opponentProjectedScore": 126.2,
+          "spread": 2.5,
+          "spreadLabel": "+2.5 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 8,
+          "opponentName": "arkinsjt",
+          "winProbability": 50.5,
+          "projectedScore": 128.7,
+          "opponentProjectedScore": 128.4,
+          "spread": 0.3,
+          "spreadLabel": "+0.3 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -629,105 +629,105 @@
         },
         "volatilityImpactNarrative": "With a volatile profile (58.6/100), the model applies a weekly scoring standard deviation of \u00b115.3 pts. The top 3 starters account for 51.9% of starting redraft value and RBs represent 29.3%. In 10,000 simulations, this volatility models an expected weekly floor of 111.6 pts (10th percentile) and a shootout ceiling of 150.8 pts (90th percentile)."
       },
-      "expectedWins": 7.6,
-      "expectedLosses": 6.4,
+      "expectedWins": 7.7,
+      "expectedLosses": 6.3,
       "expectedPointsFor": 1835.4,
-      "playoffProbability": 65.2,
-      "byeProbability": 23.7,
-      "championshipProbability": 11.3,
-      "lastPlaceProbability": 2.9,
+      "playoffProbability": 65.7,
+      "byeProbability": 23.0,
+      "championshipProbability": 11.1,
+      "lastPlaceProbability": 2.7,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 11.4
+          "probability": 11.0
         },
         {
           "seed": 2,
-          "probability": 12.3
+          "probability": 12.0
         },
         {
           "seed": 3,
-          "probability": 11.6
+          "probability": 11.7
         },
         {
           "seed": 4,
-          "probability": 11.1
+          "probability": 11.2
         },
         {
           "seed": 5,
-          "probability": 9.8
+          "probability": 10.1
         },
         {
           "seed": 6,
-          "probability": 9.0
+          "probability": 9.8
         },
         {
           "seed": 7,
-          "probability": 8.3
+          "probability": 8.1
         },
         {
           "seed": 8,
-          "probability": 7.1
+          "probability": 7.6
         },
         {
           "seed": 9,
-          "probability": 6.3
+          "probability": 6.4
         },
         {
           "seed": 10,
-          "probability": 5.9
+          "probability": 5.6
         },
         {
           "seed": 11,
-          "probability": 4.2
+          "probability": 3.9
         },
         {
           "seed": 12,
-          "probability": 2.9
+          "probability": 2.7
         }
       ],
       "weeklySchedule": [
         {
           "week": 1,
-          "opponentRosterId": 10,
-          "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 46.0,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 56.4,
           "projectedScore": 131.2,
-          "opponentProjectedScore": 133.2,
-          "spread": -2.0,
-          "spreadLabel": "-2.0 pts"
+          "opponentProjectedScore": 127.6,
+          "spread": 3.6,
+          "spreadLabel": "+3.6 pts"
         },
         {
           "week": 2,
-          "opponentRosterId": 8,
-          "opponentName": "arkinsjt",
-          "winProbability": 54.9,
+          "opponentRosterId": 9,
+          "opponentName": "Max\u2019s Shadynasty",
+          "winProbability": 56.6,
           "projectedScore": 131.2,
-          "opponentProjectedScore": 128.4,
-          "spread": 2.8,
-          "spreadLabel": "+2.8 pts"
+          "opponentProjectedScore": 127.5,
+          "spread": 3.7,
+          "spreadLabel": "+3.7 pts"
         },
         {
           "week": 3,
-          "opponentRosterId": 6,
-          "opponentName": "Final Boss",
-          "winProbability": 65.3,
+          "opponentRosterId": 5,
+          "opponentName": "My Nabers Tetties",
+          "winProbability": 59.9,
           "projectedScore": 131.2,
-          "opponentProjectedScore": 123.0,
-          "spread": 8.2,
-          "spreadLabel": "+8.2 pts"
+          "opponentProjectedScore": 125.8,
+          "spread": 5.4,
+          "spreadLabel": "+5.4 pts"
         },
         {
           "week": 4,
-          "opponentRosterId": 4,
-          "opponentName": "Bub\u2019s Club",
-          "winProbability": 58.6,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 54.2,
           "projectedScore": 131.2,
-          "opponentProjectedScore": 126.2,
-          "spread": 5.0,
-          "spreadLabel": "+5.0 pts"
+          "opponentProjectedScore": 128.6,
+          "spread": 2.6,
+          "spreadLabel": "+2.6 pts"
         },
         {
           "week": 5,
@@ -741,93 +741,93 @@
         },
         {
           "week": 6,
-          "opponentRosterId": 11,
-          "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 57.0,
-          "projectedScore": 131.2,
-          "opponentProjectedScore": 127.6,
-          "spread": 3.6,
-          "spreadLabel": "+3.6 pts"
-        },
-        {
-          "week": 7,
-          "opponentRosterId": 9,
-          "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 55.8,
-          "projectedScore": 131.2,
-          "opponentProjectedScore": 127.5,
-          "spread": 3.7,
-          "spreadLabel": "+3.7 pts"
-        },
-        {
-          "week": 8,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 54.4,
-          "projectedScore": 131.2,
-          "opponentProjectedScore": 128.6,
-          "spread": 2.6,
-          "spreadLabel": "+2.6 pts"
-        },
-        {
-          "week": 9,
-          "opponentRosterId": 5,
-          "opponentName": "My Nabers Tetties",
-          "winProbability": 60.8,
-          "projectedScore": 131.2,
-          "opponentProjectedScore": 125.8,
-          "spread": 5.4,
-          "spreadLabel": "+5.4 pts"
-        },
-        {
-          "week": 10,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 45.4,
-          "projectedScore": 131.2,
-          "opponentProjectedScore": 133.7,
-          "spread": -2.5,
-          "spreadLabel": "-2.5 pts"
-        },
-        {
-          "week": 11,
-          "opponentRosterId": 12,
-          "opponentName": "Bronco Stampede",
-          "winProbability": 44.6,
-          "projectedScore": 131.2,
-          "opponentProjectedScore": 134.2,
-          "spread": -3.0,
-          "spreadLabel": "-3.0 pts"
-        },
-        {
-          "week": 12,
           "opponentRosterId": 10,
           "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 46.9,
+          "winProbability": 45.5,
           "projectedScore": 131.2,
           "opponentProjectedScore": 133.2,
           "spread": -2.0,
           "spreadLabel": "-2.0 pts"
         },
         {
-          "week": 13,
+          "week": 7,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 44.5,
+          "projectedScore": 131.2,
+          "opponentProjectedScore": 133.7,
+          "spread": -2.5,
+          "spreadLabel": "-2.5 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 12,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 43.5,
+          "projectedScore": 131.2,
+          "opponentProjectedScore": 134.2,
+          "spread": -3.0,
+          "spreadLabel": "-3.0 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 64.8,
+          "projectedScore": 131.2,
+          "opponentProjectedScore": 123.0,
+          "spread": 8.2,
+          "spreadLabel": "+8.2 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 4,
+          "opponentName": "Bub\u2019s Club",
+          "winProbability": 59.6,
+          "projectedScore": 131.2,
+          "opponentProjectedScore": 126.2,
+          "spread": 5.0,
+          "spreadLabel": "+5.0 pts"
+        },
+        {
+          "week": 11,
           "opponentRosterId": 8,
           "opponentName": "arkinsjt",
-          "winProbability": 54.8,
+          "winProbability": 55.1,
           "projectedScore": 131.2,
           "opponentProjectedScore": 128.4,
           "spread": 2.8,
           "spreadLabel": "+2.8 pts"
         },
         {
-          "week": 14,
-          "opponentRosterId": 6,
-          "opponentName": "Final Boss",
-          "winProbability": 64.3,
+          "week": 12,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 56.9,
           "projectedScore": 131.2,
-          "opponentProjectedScore": 123.0,
-          "spread": 8.2,
-          "spreadLabel": "+8.2 pts"
+          "opponentProjectedScore": 127.6,
+          "spread": 3.6,
+          "spreadLabel": "+3.6 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 9,
+          "opponentName": "Max\u2019s Shadynasty",
+          "winProbability": 56.3,
+          "projectedScore": 131.2,
+          "opponentProjectedScore": 127.5,
+          "spread": 3.7,
+          "spreadLabel": "+3.7 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 5,
+          "opponentName": "My Nabers Tetties",
+          "winProbability": 59.8,
+          "projectedScore": 131.2,
+          "opponentProjectedScore": 125.8,
+          "spread": 5.4,
+          "spreadLabel": "+5.4 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -868,13 +868,13 @@
       "rosterId": 4,
       "teamName": "Bub\u2019s Club",
       "projectedRank": 10,
-      "expectedSeed": 7.8,
+      "expectedSeed": 8.0,
       "medianSeed": 8,
       "powerRank": 10,
       "powerScore": 65.2,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Simulated finish (#10, Exp Seed 7.8) perfectly matches static Power Rank (#10), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
+      "powerConnectionNarrative": "Simulated finish (#10, Exp Seed 8.0) perfectly matches static Power Rank (#10), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
       "modelFactors": {
         "compositePowerScore": 65.2,
         "projectedMeanScore": 126.2,
@@ -915,31 +915,31 @@
         },
         "volatilityImpactNarrative": "With a volatile profile (59.9/100), the model applies a weekly scoring standard deviation of \u00b115.4 pts. The top 3 starters account for 64.3% of starting redraft value and RBs represent 57.6%. In 10,000 simulations, this volatility models an expected weekly floor of 106.5 pts (10th percentile) and a shootout ceiling of 146.0 pts (90th percentile)."
       },
-      "expectedWins": 6.4,
-      "expectedLosses": 7.6,
+      "expectedWins": 6.2,
+      "expectedLosses": 7.8,
       "expectedPointsFor": 1767.8,
-      "playoffProbability": 33.8,
-      "byeProbability": 6.8,
-      "championshipProbability": 3.0,
-      "lastPlaceProbability": 12.2,
+      "playoffProbability": 31.4,
+      "byeProbability": 5.9,
+      "championshipProbability": 2.8,
+      "lastPlaceProbability": 12.5,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 2.8
+          "probability": 2.3
         },
         {
           "seed": 2,
-          "probability": 4.0
+          "probability": 3.6
         },
         {
           "seed": 3,
-          "probability": 5.1
+          "probability": 4.6
         },
         {
           "seed": 4,
-          "probability": 6.6
+          "probability": 5.7
         },
         {
           "seed": 5,
@@ -951,7 +951,7 @@
         },
         {
           "seed": 7,
-          "probability": 9.1
+          "probability": 8.9
         },
         {
           "seed": 8,
@@ -959,61 +959,61 @@
         },
         {
           "seed": 9,
-          "probability": 10.9
+          "probability": 11.3
         },
         {
           "seed": 10,
-          "probability": 11.2
+          "probability": 12.5
         },
         {
           "seed": 11,
-          "probability": 12.8
+          "probability": 13.4
         },
         {
           "seed": 12,
-          "probability": 12.2
+          "probability": 12.5
         }
       ],
       "weeklySchedule": [
         {
           "week": 1,
-          "opponentRosterId": 9,
-          "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 47.8,
-          "projectedScore": 126.2,
-          "opponentProjectedScore": 127.5,
-          "spread": -1.3,
-          "spreadLabel": "-1.3 pts"
-        },
-        {
-          "week": 2,
           "opponentRosterId": 7,
           "opponentName": "Gridiron geezers",
-          "winProbability": 46.0,
+          "winProbability": 45.7,
           "projectedScore": 126.2,
           "opponentProjectedScore": 128.6,
           "spread": -2.4,
           "spreadLabel": "-2.4 pts"
         },
         {
-          "week": 3,
-          "opponentRosterId": 5,
-          "opponentName": "My Nabers Tetties",
-          "winProbability": 50.6,
+          "week": 2,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 46.6,
           "projectedScore": 126.2,
-          "opponentProjectedScore": 125.8,
-          "spread": 0.4,
-          "spreadLabel": "+0.4 pts"
+          "opponentProjectedScore": 128.7,
+          "spread": -2.5,
+          "spreadLabel": "-2.5 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 10,
+          "opponentName": "Bijan And The Maye-ssiah",
+          "winProbability": 37.6,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 133.2,
+          "spread": -7.0,
+          "spreadLabel": "-7.0 pts"
         },
         {
           "week": 4,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 41.4,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 35.4,
           "projectedScore": 126.2,
-          "opponentProjectedScore": 131.2,
-          "spread": -5.0,
-          "spreadLabel": "-5.0 pts"
+          "opponentProjectedScore": 133.7,
+          "spread": -7.5,
+          "spreadLabel": "-7.5 pts"
         },
         {
           "week": 5,
@@ -1027,6 +1027,86 @@
         },
         {
           "week": 6,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 56.8,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 123.0,
+          "spread": 3.2,
+          "spreadLabel": "+3.2 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 9,
+          "opponentName": "Max\u2019s Shadynasty",
+          "winProbability": 47.7,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 127.5,
+          "spread": -1.3,
+          "spreadLabel": "-1.3 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 8,
+          "opponentName": "arkinsjt",
+          "winProbability": 46.4,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 128.4,
+          "spread": -2.2,
+          "spreadLabel": "-2.2 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 47.5,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 127.6,
+          "spread": -1.4,
+          "spreadLabel": "-1.4 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 40.4,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 131.2,
+          "spread": -5.0,
+          "spreadLabel": "-5.0 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 5,
+          "opponentName": "My Nabers Tetties",
+          "winProbability": 51.5,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 125.8,
+          "spread": 0.4,
+          "spreadLabel": "+0.4 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 46.7,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 128.6,
+          "spread": -2.4,
+          "spreadLabel": "-2.4 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 44.8,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 128.7,
+          "spread": -2.5,
+          "spreadLabel": "-2.5 pts"
+        },
+        {
+          "week": 14,
           "opponentRosterId": 10,
           "opponentName": "Bijan And The Maye-ssiah",
           "winProbability": 37.5,
@@ -1034,86 +1114,6 @@
           "opponentProjectedScore": 133.2,
           "spread": -7.0,
           "spreadLabel": "-7.0 pts"
-        },
-        {
-          "week": 7,
-          "opponentRosterId": 8,
-          "opponentName": "arkinsjt",
-          "winProbability": 46.6,
-          "projectedScore": 126.2,
-          "opponentProjectedScore": 128.4,
-          "spread": -2.2,
-          "spreadLabel": "-2.2 pts"
-        },
-        {
-          "week": 8,
-          "opponentRosterId": 6,
-          "opponentName": "Final Boss",
-          "winProbability": 56.1,
-          "projectedScore": 126.2,
-          "opponentProjectedScore": 123.0,
-          "spread": 3.2,
-          "spreadLabel": "+3.2 pts"
-        },
-        {
-          "week": 9,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 35.6,
-          "projectedScore": 126.2,
-          "opponentProjectedScore": 133.7,
-          "spread": -7.5,
-          "spreadLabel": "-7.5 pts"
-        },
-        {
-          "week": 10,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 45.6,
-          "projectedScore": 126.2,
-          "opponentProjectedScore": 128.7,
-          "spread": -2.5,
-          "spreadLabel": "-2.5 pts"
-        },
-        {
-          "week": 11,
-          "opponentRosterId": 11,
-          "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 48.5,
-          "projectedScore": 126.2,
-          "opponentProjectedScore": 127.6,
-          "spread": -1.4,
-          "spreadLabel": "-1.4 pts"
-        },
-        {
-          "week": 12,
-          "opponentRosterId": 9,
-          "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 48.2,
-          "projectedScore": 126.2,
-          "opponentProjectedScore": 127.5,
-          "spread": -1.3,
-          "spreadLabel": "-1.3 pts"
-        },
-        {
-          "week": 13,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 45.2,
-          "projectedScore": 126.2,
-          "opponentProjectedScore": 128.6,
-          "spread": -2.4,
-          "spreadLabel": "-2.4 pts"
-        },
-        {
-          "week": 14,
-          "opponentRosterId": 5,
-          "opponentName": "My Nabers Tetties",
-          "winProbability": 50.2,
-          "projectedScore": 126.2,
-          "opponentProjectedScore": 125.8,
-          "spread": 0.4,
-          "spreadLabel": "+0.4 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -1154,13 +1154,13 @@
       "rosterId": 5,
       "teamName": "My Nabers Tetties",
       "projectedRank": 11,
-      "expectedSeed": 8.0,
-      "medianSeed": 8,
+      "expectedSeed": 8.2,
+      "medianSeed": 9,
       "powerRank": 11,
       "powerScore": 63.4,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Simulated finish (#11, Exp Seed 8.0) perfectly matches static Power Rank (#11), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
+      "powerConnectionNarrative": "Simulated finish (#11, Exp Seed 8.2) perfectly matches static Power Rank (#11), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
       "modelFactors": {
         "compositePowerScore": 63.4,
         "projectedMeanScore": 125.8,
@@ -1201,47 +1201,47 @@
         },
         "volatilityImpactNarrative": "With a balanced profile (54.8/100), the model applies a weekly scoring standard deviation of \u00b115.1 pts. The top 3 starters account for 61.8% of starting redraft value and RBs represent 0.0%. In 10,000 simulations, this volatility models an expected weekly floor of 106.5 pts (10th percentile) and a shootout ceiling of 145.1 pts (90th percentile)."
       },
-      "expectedWins": 6.2,
-      "expectedLosses": 7.8,
+      "expectedWins": 6.1,
+      "expectedLosses": 7.9,
       "expectedPointsFor": 1760.1,
-      "playoffProbability": 31.2,
-      "byeProbability": 5.6,
-      "championshipProbability": 2.4,
-      "lastPlaceProbability": 14.0,
+      "playoffProbability": 27.9,
+      "byeProbability": 4.5,
+      "championshipProbability": 2.2,
+      "lastPlaceProbability": 14.4,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 2.0
+          "probability": 1.6
         },
         {
           "seed": 2,
-          "probability": 3.6
+          "probability": 2.9
         },
         {
           "seed": 3,
-          "probability": 4.7
+          "probability": 4.0
         },
         {
           "seed": 4,
-          "probability": 6.1
+          "probability": 5.5
         },
         {
           "seed": 5,
-          "probability": 7.1
+          "probability": 6.6
         },
         {
           "seed": 6,
-          "probability": 7.7
+          "probability": 7.2
         },
         {
           "seed": 7,
-          "probability": 8.8
+          "probability": 9.3
         },
         {
           "seed": 8,
-          "probability": 10.1
+          "probability": 10.6
         },
         {
           "seed": 9,
@@ -1249,15 +1249,15 @@
         },
         {
           "seed": 10,
-          "probability": 11.6
+          "probability": 12.7
         },
         {
           "seed": 11,
-          "probability": 12.8
+          "probability": 13.8
         },
         {
           "seed": 12,
-          "probability": 14.0
+          "probability": 14.4
         }
       ],
       "weeklySchedule": [
@@ -1273,63 +1273,63 @@
         },
         {
           "week": 2,
-          "opponentRosterId": 6,
-          "opponentName": "Final Boss",
-          "winProbability": 54.9,
-          "projectedScore": 125.8,
-          "opponentProjectedScore": 123.0,
-          "spread": 2.8,
-          "spreadLabel": "+2.8 pts"
-        },
-        {
-          "week": 3,
-          "opponentRosterId": 4,
-          "opponentName": "Bub\u2019s Club",
-          "winProbability": 49.4,
-          "projectedScore": 125.8,
-          "opponentProjectedScore": 126.2,
-          "spread": -0.4,
-          "spreadLabel": "-0.4 pts"
-        },
-        {
-          "week": 4,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 45.4,
-          "projectedScore": 125.8,
-          "opponentProjectedScore": 128.7,
-          "spread": -2.9,
-          "spreadLabel": "-2.9 pts"
-        },
-        {
-          "week": 5,
           "opponentRosterId": 11,
           "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 45.6,
+          "winProbability": 46.3,
           "projectedScore": 125.8,
           "opponentProjectedScore": 127.6,
           "spread": -1.8,
           "spreadLabel": "-1.8 pts"
         },
         {
-          "week": 6,
+          "week": 3,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 40.1,
+          "projectedScore": 125.8,
+          "opponentProjectedScore": 131.2,
+          "spread": -5.4,
+          "spreadLabel": "-5.4 pts"
+        },
+        {
+          "week": 4,
           "opponentRosterId": 9,
           "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 46.5,
+          "winProbability": 47.1,
           "projectedScore": 125.8,
           "opponentProjectedScore": 127.5,
           "spread": -1.7,
           "spreadLabel": "-1.7 pts"
         },
         {
-          "week": 7,
+          "week": 5,
           "opponentRosterId": 7,
           "opponentName": "Gridiron geezers",
-          "winProbability": 45.6,
+          "winProbability": 44.4,
           "projectedScore": 125.8,
           "opponentProjectedScore": 128.6,
           "spread": -2.8,
           "spreadLabel": "-2.8 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 45.5,
+          "projectedScore": 125.8,
+          "opponentProjectedScore": 128.7,
+          "spread": -2.9,
+          "spreadLabel": "-2.9 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 10,
+          "opponentName": "Bijan And The Maye-ssiah",
+          "winProbability": 35.5,
+          "projectedScore": 125.8,
+          "opponentProjectedScore": 133.2,
+          "spread": -7.4,
+          "spreadLabel": "-7.4 pts"
         },
         {
           "week": 8,
@@ -1343,33 +1343,33 @@
         },
         {
           "week": 9,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 39.2,
-          "projectedScore": 125.8,
-          "opponentProjectedScore": 131.2,
-          "spread": -5.4,
-          "spreadLabel": "-5.4 pts"
-        },
-        {
-          "week": 10,
           "opponentRosterId": 12,
           "opponentName": "Bronco Stampede",
-          "winProbability": 33.8,
+          "winProbability": 34.0,
           "projectedScore": 125.8,
           "opponentProjectedScore": 134.2,
           "spread": -8.4,
           "spreadLabel": "-8.4 pts"
         },
         {
-          "week": 11,
-          "opponentRosterId": 10,
-          "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 35.2,
+          "week": 10,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 54.7,
           "projectedScore": 125.8,
-          "opponentProjectedScore": 133.2,
-          "spread": -7.4,
-          "spreadLabel": "-7.4 pts"
+          "opponentProjectedScore": 123.0,
+          "spread": 2.8,
+          "spreadLabel": "+2.8 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 4,
+          "opponentName": "Bub\u2019s Club",
+          "winProbability": 48.5,
+          "projectedScore": 125.8,
+          "opponentProjectedScore": 126.2,
+          "spread": -0.4,
+          "spreadLabel": "-0.4 pts"
         },
         {
           "week": 12,
@@ -1383,23 +1383,23 @@
         },
         {
           "week": 13,
-          "opponentRosterId": 6,
-          "opponentName": "Final Boss",
-          "winProbability": 55.1,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 46.7,
           "projectedScore": 125.8,
-          "opponentProjectedScore": 123.0,
-          "spread": 2.8,
-          "spreadLabel": "+2.8 pts"
+          "opponentProjectedScore": 127.6,
+          "spread": -1.8,
+          "spreadLabel": "-1.8 pts"
         },
         {
           "week": 14,
-          "opponentRosterId": 4,
-          "opponentName": "Bub\u2019s Club",
-          "winProbability": 49.8,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 40.2,
           "projectedScore": 125.8,
-          "opponentProjectedScore": 126.2,
-          "spread": -0.4,
-          "spreadLabel": "-0.4 pts"
+          "opponentProjectedScore": 131.2,
+          "spread": -5.4,
+          "spreadLabel": "-5.4 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -1440,13 +1440,13 @@
       "rosterId": 6,
       "teamName": "Final Boss",
       "projectedRank": 12,
-      "expectedSeed": 9.4,
+      "expectedSeed": 9.6,
       "medianSeed": 10,
       "powerRank": 12,
       "powerScore": 53.4,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Simulated finish (#12, Exp Seed 9.4) perfectly matches static Power Rank (#12), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
+      "powerConnectionNarrative": "Simulated finish (#12, Exp Seed 9.6) perfectly matches static Power Rank (#12), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
       "modelFactors": {
         "compositePowerScore": 53.4,
         "projectedMeanScore": 123.0,
@@ -1487,13 +1487,13 @@
         },
         "volatilityImpactNarrative": "With a volatile profile (67.5/100), the model applies a weekly scoring standard deviation of \u00b115.9 pts. The top 3 starters account for 58.7% of starting redraft value and RBs represent 16.2%. In 10,000 simulations, this volatility models an expected weekly floor of 102.6 pts (10th percentile) and a shootout ceiling of 143.3 pts (90th percentile)."
       },
-      "expectedWins": 5.4,
-      "expectedLosses": 8.6,
+      "expectedWins": 5.2,
+      "expectedLosses": 8.8,
       "expectedPointsFor": 1721.2,
-      "playoffProbability": 16.6,
-      "byeProbability": 2.1,
-      "championshipProbability": 0.9,
-      "lastPlaceProbability": 28.7,
+      "playoffProbability": 13.5,
+      "byeProbability": 1.8,
+      "championshipProbability": 0.8,
+      "lastPlaceProbability": 30.5,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
@@ -1503,79 +1503,79 @@
         },
         {
           "seed": 2,
-          "probability": 1.6
+          "probability": 1.2
         },
         {
           "seed": 3,
-          "probability": 2.4
+          "probability": 1.4
         },
         {
           "seed": 4,
-          "probability": 3.0
+          "probability": 2.6
         },
         {
           "seed": 5,
-          "probability": 4.1
+          "probability": 3.3
         },
         {
           "seed": 6,
-          "probability": 4.9
+          "probability": 4.3
         },
         {
           "seed": 7,
-          "probability": 6.6
+          "probability": 6.3
         },
         {
           "seed": 8,
-          "probability": 7.8
+          "probability": 7.6
         },
         {
           "seed": 9,
-          "probability": 9.5
+          "probability": 9.7
         },
         {
           "seed": 10,
-          "probability": 13.6
+          "probability": 13.5
         },
         {
           "seed": 11,
-          "probability": 17.2
+          "probability": 18.9
         },
         {
           "seed": 12,
-          "probability": 28.7
+          "probability": 30.5
         }
       ],
       "weeklySchedule": [
         {
           "week": 1,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 40.7,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 40.0,
           "projectedScore": 123.0,
-          "opponentProjectedScore": 128.6,
-          "spread": -5.6,
-          "spreadLabel": "-5.6 pts"
+          "opponentProjectedScore": 128.7,
+          "spread": -5.7,
+          "spreadLabel": "-5.7 pts"
         },
         {
           "week": 2,
-          "opponentRosterId": 5,
-          "opponentName": "My Nabers Tetties",
-          "winProbability": 45.1,
+          "opponentRosterId": 10,
+          "opponentName": "Bijan And The Maye-ssiah",
+          "winProbability": 31.8,
           "projectedScore": 123.0,
-          "opponentProjectedScore": 125.8,
-          "spread": -2.8,
-          "spreadLabel": "-2.8 pts"
+          "opponentProjectedScore": 133.2,
+          "spread": -10.2,
+          "spreadLabel": "-10.2 pts"
         },
         {
           "week": 3,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 34.7,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 29.4,
           "projectedScore": 123.0,
-          "opponentProjectedScore": 131.2,
-          "spread": -8.2,
-          "spreadLabel": "-8.2 pts"
+          "opponentProjectedScore": 133.7,
+          "spread": -10.7,
+          "spreadLabel": "-10.7 pts"
         },
         {
           "week": 4,
@@ -1589,16 +1589,26 @@
         },
         {
           "week": 5,
-          "opponentRosterId": 10,
-          "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 32.1,
+          "opponentRosterId": 9,
+          "opponentName": "Max\u2019s Shadynasty",
+          "winProbability": 41.8,
           "projectedScore": 123.0,
-          "opponentProjectedScore": 133.2,
-          "spread": -10.2,
-          "spreadLabel": "-10.2 pts"
+          "opponentProjectedScore": 127.5,
+          "spread": -4.5,
+          "spreadLabel": "-4.5 pts"
         },
         {
           "week": 6,
+          "opponentRosterId": 4,
+          "opponentName": "Bub\u2019s Club",
+          "winProbability": 43.2,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 126.2,
+          "spread": -3.2,
+          "spreadLabel": "-3.2 pts"
+        },
+        {
+          "week": 7,
           "opponentRosterId": 8,
           "opponentName": "arkinsjt",
           "winProbability": 40.2,
@@ -1608,84 +1618,74 @@
           "spreadLabel": "-5.4 pts"
         },
         {
-          "week": 7,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 30.3,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 133.7,
-          "spread": -10.7,
-          "spreadLabel": "-10.7 pts"
-        },
-        {
           "week": 8,
-          "opponentRosterId": 4,
-          "opponentName": "Bub\u2019s Club",
-          "winProbability": 43.9,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 126.2,
-          "spread": -3.2,
-          "spreadLabel": "-3.2 pts"
-        },
-        {
-          "week": 9,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 40.8,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 128.7,
-          "spread": -5.7,
-          "spreadLabel": "-5.7 pts"
-        },
-        {
-          "week": 10,
           "opponentRosterId": 11,
           "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 41.2,
+          "winProbability": 41.6,
           "projectedScore": 123.0,
           "opponentProjectedScore": 127.6,
           "spread": -4.6,
           "spreadLabel": "-4.6 pts"
         },
         {
-          "week": 11,
-          "opponentRosterId": 9,
-          "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 42.5,
+          "week": 9,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 35.2,
           "projectedScore": 123.0,
-          "opponentProjectedScore": 127.5,
-          "spread": -4.5,
-          "spreadLabel": "-4.5 pts"
+          "opponentProjectedScore": 131.2,
+          "spread": -8.2,
+          "spreadLabel": "-8.2 pts"
         },
         {
-          "week": 12,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 41.1,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 128.6,
-          "spread": -5.6,
-          "spreadLabel": "-5.6 pts"
-        },
-        {
-          "week": 13,
+          "week": 10,
           "opponentRosterId": 5,
           "opponentName": "My Nabers Tetties",
-          "winProbability": 44.9,
+          "winProbability": 45.3,
           "projectedScore": 123.0,
           "opponentProjectedScore": 125.8,
           "spread": -2.8,
           "spreadLabel": "-2.8 pts"
         },
         {
-          "week": 14,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 35.7,
+          "week": 11,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 40.1,
           "projectedScore": 123.0,
-          "opponentProjectedScore": 131.2,
-          "spread": -8.2,
-          "spreadLabel": "-8.2 pts"
+          "opponentProjectedScore": 128.6,
+          "spread": -5.6,
+          "spreadLabel": "-5.6 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 40.1,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 128.7,
+          "spread": -5.7,
+          "spreadLabel": "-5.7 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 10,
+          "opponentName": "Bijan And The Maye-ssiah",
+          "winProbability": 31.1,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 133.2,
+          "spread": -10.2,
+          "spreadLabel": "-10.2 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 29.6,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 133.7,
+          "spread": -10.7,
+          "spreadLabel": "-10.7 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -1725,14 +1725,14 @@
     "7": {
       "rosterId": 7,
       "teamName": "Gridiron geezers",
-      "projectedRank": 6,
-      "expectedSeed": 6.5,
+      "projectedRank": 5,
+      "expectedSeed": 6.6,
       "medianSeed": 7,
       "powerRank": 6,
       "powerScore": 73.6,
-      "powerRankDelta": 0,
-      "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Simulated finish (#6, Exp Seed 6.5) perfectly matches static Power Rank (#6), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
+      "powerRankDelta": 1,
+      "powerDeltaLabel": "+1 vs Power Rank",
+      "powerConnectionNarrative": "Simulated finish (#5, Exp Seed 6.6) outperforms static Power Rank (#6) because high starting star variance and favorable schedule sequence convert into extra head-to-head wins in shootout weeks.",
       "modelFactors": {
         "compositePowerScore": 73.6,
         "projectedMeanScore": 128.6,
@@ -1773,35 +1773,35 @@
         },
         "volatilityImpactNarrative": "With a high variance profile (94.4/100), the model applies a weekly scoring standard deviation of \u00b117.6 pts. The top 3 starters account for 69.9% of starting redraft value and RBs represent 77.8%. In 10,000 simulations, this volatility models an expected weekly floor of 106.0 pts (10th percentile) and a shootout ceiling of 151.2 pts (90th percentile)."
       },
-      "expectedWins": 7.1,
-      "expectedLosses": 6.9,
+      "expectedWins": 7.0,
+      "expectedLosses": 7.0,
       "expectedPointsFor": 1800.6,
-      "playoffProbability": 50.8,
-      "byeProbability": 13.7,
-      "championshipProbability": 6.1,
-      "lastPlaceProbability": 6.3,
+      "playoffProbability": 48.9,
+      "byeProbability": 12.8,
+      "championshipProbability": 5.8,
+      "lastPlaceProbability": 6.0,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 5.9
+          "probability": 5.6
         },
         {
           "seed": 2,
-          "probability": 7.7
+          "probability": 7.2
         },
         {
           "seed": 3,
-          "probability": 8.7
+          "probability": 8.4
         },
         {
           "seed": 4,
-          "probability": 9.2
+          "probability": 9.1
         },
         {
           "seed": 5,
-          "probability": 9.5
+          "probability": 8.8
         },
         {
           "seed": 6,
@@ -1809,169 +1809,169 @@
         },
         {
           "seed": 7,
-          "probability": 9.3
+          "probability": 9.4
         },
         {
           "seed": 8,
-          "probability": 8.9
+          "probability": 9.9
         },
         {
           "seed": 9,
-          "probability": 8.6
+          "probability": 9.5
         },
         {
           "seed": 10,
-          "probability": 8.4
+          "probability": 8.6
         },
         {
           "seed": 11,
-          "probability": 7.8
+          "probability": 7.7
         },
         {
           "seed": 12,
-          "probability": 6.3
+          "probability": 6.0
         }
       ],
       "weeklySchedule": [
         {
           "week": 1,
-          "opponentRosterId": 6,
-          "opponentName": "Final Boss",
-          "winProbability": 59.3,
-          "projectedScore": 128.6,
-          "opponentProjectedScore": 123.0,
-          "spread": 5.6,
-          "spreadLabel": "+5.6 pts"
-        },
-        {
-          "week": 2,
           "opponentRosterId": 4,
           "opponentName": "Bub\u2019s Club",
-          "winProbability": 54.0,
+          "winProbability": 54.3,
           "projectedScore": 128.6,
           "opponentProjectedScore": 126.2,
           "spread": 2.4,
           "spreadLabel": "+2.4 pts"
         },
         {
-          "week": 3,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 50.2,
-          "projectedScore": 128.6,
-          "opponentProjectedScore": 128.7,
-          "spread": -0.1,
-          "spreadLabel": "-0.1 pts"
-        },
-        {
-          "week": 4,
-          "opponentRosterId": 11,
-          "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 51.7,
-          "projectedScore": 128.6,
-          "opponentProjectedScore": 127.6,
-          "spread": 1.0,
-          "spreadLabel": "+1.0 pts"
-        },
-        {
-          "week": 5,
-          "opponentRosterId": 9,
-          "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 52.1,
-          "projectedScore": 128.6,
-          "opponentProjectedScore": 127.5,
-          "spread": 1.1,
-          "spreadLabel": "+1.1 pts"
-        },
-        {
-          "week": 6,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 40.3,
-          "projectedScore": 128.6,
-          "opponentProjectedScore": 133.7,
-          "spread": -5.1,
-          "spreadLabel": "-5.1 pts"
-        },
-        {
-          "week": 7,
-          "opponentRosterId": 5,
-          "opponentName": "My Nabers Tetties",
-          "winProbability": 54.4,
-          "projectedScore": 128.6,
-          "opponentProjectedScore": 125.8,
-          "spread": 2.8,
-          "spreadLabel": "+2.8 pts"
-        },
-        {
-          "week": 8,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 45.6,
-          "projectedScore": 128.6,
-          "opponentProjectedScore": 131.2,
-          "spread": -2.6,
-          "spreadLabel": "-2.6 pts"
-        },
-        {
-          "week": 9,
-          "opponentRosterId": 12,
-          "opponentName": "Bronco Stampede",
-          "winProbability": 40.0,
-          "projectedScore": 128.6,
-          "opponentProjectedScore": 134.2,
-          "spread": -5.6,
-          "spreadLabel": "-5.6 pts"
-        },
-        {
-          "week": 10,
-          "opponentRosterId": 10,
-          "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 42.4,
-          "projectedScore": 128.6,
-          "opponentProjectedScore": 133.2,
-          "spread": -4.6,
-          "spreadLabel": "-4.6 pts"
-        },
-        {
-          "week": 11,
+          "week": 2,
           "opponentRosterId": 8,
           "opponentName": "arkinsjt",
-          "winProbability": 51.1,
+          "winProbability": 51.3,
           "projectedScore": 128.6,
           "opponentProjectedScore": 128.4,
           "spread": 0.2,
           "spreadLabel": "+0.2 pts"
         },
         {
-          "week": 12,
+          "week": 3,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 51.2,
+          "projectedScore": 128.6,
+          "opponentProjectedScore": 127.6,
+          "spread": 1.0,
+          "spreadLabel": "+1.0 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 45.8,
+          "projectedScore": 128.6,
+          "opponentProjectedScore": 131.2,
+          "spread": -2.6,
+          "spreadLabel": "-2.6 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 5,
+          "opponentName": "My Nabers Tetties",
+          "winProbability": 55.6,
+          "projectedScore": 128.6,
+          "opponentProjectedScore": 125.8,
+          "spread": 2.8,
+          "spreadLabel": "+2.8 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 9,
+          "opponentName": "Max\u2019s Shadynasty",
+          "winProbability": 51.5,
+          "projectedScore": 128.6,
+          "opponentProjectedScore": 127.5,
+          "spread": 1.1,
+          "spreadLabel": "+1.1 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 50.0,
+          "projectedScore": 128.6,
+          "opponentProjectedScore": 128.7,
+          "spread": -0.1,
+          "spreadLabel": "-0.1 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 10,
+          "opponentName": "Bijan And The Maye-ssiah",
+          "winProbability": 42.1,
+          "projectedScore": 128.6,
+          "opponentProjectedScore": 133.2,
+          "spread": -4.6,
+          "spreadLabel": "-4.6 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 40.9,
+          "projectedScore": 128.6,
+          "opponentProjectedScore": 133.7,
+          "spread": -5.1,
+          "spreadLabel": "-5.1 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 12,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 40.1,
+          "projectedScore": 128.6,
+          "opponentProjectedScore": 134.2,
+          "spread": -5.6,
+          "spreadLabel": "-5.6 pts"
+        },
+        {
+          "week": 11,
           "opponentRosterId": 6,
           "opponentName": "Final Boss",
-          "winProbability": 58.9,
+          "winProbability": 59.9,
           "projectedScore": 128.6,
           "opponentProjectedScore": 123.0,
           "spread": 5.6,
           "spreadLabel": "+5.6 pts"
         },
         {
-          "week": 13,
+          "week": 12,
           "opponentRosterId": 4,
           "opponentName": "Bub\u2019s Club",
-          "winProbability": 54.8,
+          "winProbability": 53.3,
           "projectedScore": 128.6,
           "opponentProjectedScore": 126.2,
           "spread": 2.4,
           "spreadLabel": "+2.4 pts"
         },
         {
-          "week": 14,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 50.3,
+          "week": 13,
+          "opponentRosterId": 8,
+          "opponentName": "arkinsjt",
+          "winProbability": 50.5,
           "projectedScore": 128.6,
-          "opponentProjectedScore": 128.7,
-          "spread": -0.1,
-          "spreadLabel": "-0.1 pts"
+          "opponentProjectedScore": 128.4,
+          "spread": 0.2,
+          "spreadLabel": "+0.2 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 51.8,
+          "projectedScore": 128.6,
+          "opponentProjectedScore": 127.6,
+          "spread": 1.0,
+          "spreadLabel": "+1.0 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -2012,13 +2012,13 @@
       "rosterId": 8,
       "teamName": "arkinsjt",
       "projectedRank": 7,
-      "expectedSeed": 7.0,
+      "expectedSeed": 6.8,
       "medianSeed": 7,
       "powerRank": 7,
       "powerScore": 72.7,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Simulated finish (#7, Exp Seed 7.0) perfectly matches static Power Rank (#7), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
+      "powerConnectionNarrative": "Simulated finish (#7, Exp Seed 6.8) perfectly matches static Power Rank (#7), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
       "modelFactors": {
         "compositePowerScore": 72.7,
         "projectedMeanScore": 128.4,
@@ -2059,13 +2059,13 @@
         },
         "volatilityImpactNarrative": "With a balanced profile (44.4/100), the model applies a weekly scoring standard deviation of \u00b114.4 pts. The top 3 starters account for 52.8% of starting redraft value and RBs represent 18.8%. In 10,000 simulations, this volatility models an expected weekly floor of 109.9 pts (10th percentile) and a shootout ceiling of 146.8 pts (90th percentile)."
       },
-      "expectedWins": 6.7,
-      "expectedLosses": 7.3,
+      "expectedWins": 6.9,
+      "expectedLosses": 7.1,
       "expectedPointsFor": 1797.1,
-      "playoffProbability": 43.2,
-      "byeProbability": 10.1,
-      "championshipProbability": 4.6,
-      "lastPlaceProbability": 7.6,
+      "playoffProbability": 46.1,
+      "byeProbability": 11.1,
+      "championshipProbability": 5.5,
+      "lastPlaceProbability": 6.5,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
@@ -2075,47 +2075,47 @@
         },
         {
           "seed": 2,
-          "probability": 5.7
+          "probability": 6.5
         },
         {
           "seed": 3,
-          "probability": 7.5
+          "probability": 7.7
         },
         {
           "seed": 4,
-          "probability": 8.0
+          "probability": 8.4
         },
         {
           "seed": 5,
-          "probability": 8.3
+          "probability": 9.4
         },
         {
           "seed": 6,
-          "probability": 9.3
+          "probability": 9.5
         },
         {
           "seed": 7,
-          "probability": 9.9
+          "probability": 10.0
         },
         {
           "seed": 8,
-          "probability": 10.5
+          "probability": 9.9
         },
         {
           "seed": 9,
-          "probability": 10.3
+          "probability": 10.1
         },
         {
           "seed": 10,
-          "probability": 9.6
+          "probability": 9.1
         },
         {
           "seed": 11,
-          "probability": 8.9
+          "probability": 8.4
         },
         {
           "seed": 12,
-          "probability": 7.6
+          "probability": 6.5
         }
       ],
       "weeklySchedule": [
@@ -2131,23 +2131,23 @@
         },
         {
           "week": 2,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 45.1,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 48.6,
           "projectedScore": 128.4,
-          "opponentProjectedScore": 131.2,
-          "spread": -2.8,
-          "spreadLabel": "-2.8 pts"
+          "opponentProjectedScore": 128.6,
+          "spread": -0.2,
+          "spreadLabel": "-0.2 pts"
         },
         {
           "week": 3,
-          "opponentRosterId": 12,
-          "opponentName": "Bronco Stampede",
-          "winProbability": 38.7,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 50.0,
           "projectedScore": 128.4,
-          "opponentProjectedScore": 134.2,
-          "spread": -5.8,
-          "spreadLabel": "-5.8 pts"
+          "opponentProjectedScore": 128.7,
+          "spread": -0.3,
+          "spreadLabel": "-0.3 pts"
         },
         {
           "week": 4,
@@ -2171,6 +2171,16 @@
         },
         {
           "week": 6,
+          "opponentRosterId": 12,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 38.3,
+          "projectedScore": 128.4,
+          "opponentProjectedScore": 134.2,
+          "spread": -5.8,
+          "spreadLabel": "-5.8 pts"
+        },
+        {
+          "week": 7,
           "opponentRosterId": 6,
           "opponentName": "Final Boss",
           "winProbability": 59.8,
@@ -2180,54 +2190,44 @@
           "spreadLabel": "+5.4 pts"
         },
         {
-          "week": 7,
+          "week": 8,
           "opponentRosterId": 4,
           "opponentName": "Bub\u2019s Club",
-          "winProbability": 53.4,
+          "winProbability": 53.6,
           "projectedScore": 128.4,
           "opponentProjectedScore": 126.2,
           "spread": 2.2,
           "spreadLabel": "+2.2 pts"
         },
         {
-          "week": 8,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 49.0,
-          "projectedScore": 128.4,
-          "opponentProjectedScore": 128.7,
-          "spread": -0.3,
-          "spreadLabel": "-0.3 pts"
-        },
-        {
           "week": 9,
-          "opponentRosterId": 11,
-          "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 51.3,
-          "projectedScore": 128.4,
-          "opponentProjectedScore": 127.6,
-          "spread": 0.8,
-          "spreadLabel": "+0.8 pts"
-        },
-        {
-          "week": 10,
           "opponentRosterId": 9,
           "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 51.1,
+          "winProbability": 51.9,
           "projectedScore": 128.4,
           "opponentProjectedScore": 127.5,
           "spread": 0.9,
           "spreadLabel": "+0.9 pts"
         },
         {
-          "week": 11,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 48.9,
+          "week": 10,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 50.2,
           "projectedScore": 128.4,
-          "opponentProjectedScore": 128.6,
-          "spread": -0.2,
-          "spreadLabel": "-0.2 pts"
+          "opponentProjectedScore": 127.6,
+          "spread": 0.8,
+          "spreadLabel": "+0.8 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 44.9,
+          "projectedScore": 128.4,
+          "opponentProjectedScore": 131.2,
+          "spread": -2.8,
+          "spreadLabel": "-2.8 pts"
         },
         {
           "week": 12,
@@ -2241,23 +2241,23 @@
         },
         {
           "week": 13,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 45.2,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 49.5,
           "projectedScore": 128.4,
-          "opponentProjectedScore": 131.2,
-          "spread": -2.8,
-          "spreadLabel": "-2.8 pts"
+          "opponentProjectedScore": 128.6,
+          "spread": -0.2,
+          "spreadLabel": "-0.2 pts"
         },
         {
           "week": 14,
-          "opponentRosterId": 12,
-          "opponentName": "Bronco Stampede",
-          "winProbability": 37.7,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 49.5,
           "projectedScore": 128.4,
-          "opponentProjectedScore": 134.2,
-          "spread": -5.8,
-          "spreadLabel": "-5.8 pts"
+          "opponentProjectedScore": 128.7,
+          "spread": -0.3,
+          "spreadLabel": "-0.3 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -2297,14 +2297,14 @@
     "9": {
       "rosterId": 9,
       "teamName": "Max\u2019s Shadynasty",
-      "projectedRank": 8,
-      "expectedSeed": 7.2,
-      "medianSeed": 7,
+      "projectedRank": 9,
+      "expectedSeed": 7.6,
+      "medianSeed": 8,
       "powerRank": 9,
       "powerScore": 69.6,
-      "powerRankDelta": 1,
-      "powerDeltaLabel": "+1 vs Power Rank",
-      "powerConnectionNarrative": "Simulated finish (#8, Exp Seed 7.2) outperforms static Power Rank (#9) because high starting star variance and favorable schedule sequence convert into extra head-to-head wins in shootout weeks.",
+      "powerRankDelta": 0,
+      "powerDeltaLabel": "Even with Power Rank",
+      "powerConnectionNarrative": "Simulated finish (#9, Exp Seed 7.6) perfectly matches static Power Rank (#9), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
       "modelFactors": {
         "compositePowerScore": 69.6,
         "projectedMeanScore": 127.5,
@@ -2345,138 +2345,198 @@
         },
         "volatilityImpactNarrative": "With a balanced profile (50.1/100), the model applies a weekly scoring standard deviation of \u00b114.8 pts. The top 3 starters account for 49.1% of starting redraft value and RBs represent 36.1%. In 10,000 simulations, this volatility models an expected weekly floor of 108.6 pts (10th percentile) and a shootout ceiling of 146.4 pts (90th percentile)."
       },
-      "expectedWins": 6.6,
-      "expectedLosses": 7.4,
+      "expectedWins": 6.3,
+      "expectedLosses": 7.7,
       "expectedPointsFor": 1785.0,
-      "playoffProbability": 40.4,
-      "byeProbability": 9.0,
-      "championshipProbability": 4.4,
-      "lastPlaceProbability": 8.3,
+      "playoffProbability": 35.3,
+      "byeProbability": 6.8,
+      "championshipProbability": 3.5,
+      "lastPlaceProbability": 10.5,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 3.5
+          "probability": 2.8
         },
         {
           "seed": 2,
-          "probability": 5.4
+          "probability": 4.0
         },
         {
           "seed": 3,
-          "probability": 6.8
+          "probability": 5.3
         },
         {
           "seed": 4,
-          "probability": 7.3
+          "probability": 6.6
         },
         {
           "seed": 5,
-          "probability": 8.3
+          "probability": 8.0
         },
         {
           "seed": 6,
-          "probability": 8.9
+          "probability": 8.6
         },
         {
           "seed": 7,
-          "probability": 9.9
+          "probability": 10.2
         },
         {
           "seed": 8,
-          "probability": 9.9
+          "probability": 10.1
         },
         {
           "seed": 9,
-          "probability": 10.4
+          "probability": 11.4
         },
         {
           "seed": 10,
-          "probability": 10.5
+          "probability": 11.4
         },
         {
           "seed": 11,
-          "probability": 10.7
+          "probability": 11.1
         },
         {
           "seed": 12,
-          "probability": 8.3
+          "probability": 10.5
         }
       ],
       "weeklySchedule": [
         {
           "week": 1,
-          "opponentRosterId": 4,
-          "opponentName": "Bub\u2019s Club",
-          "winProbability": 52.2,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 126.2,
-          "spread": 1.3,
-          "spreadLabel": "+1.3 pts"
-        },
-        {
-          "week": 2,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 47.9,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 128.7,
-          "spread": -1.2,
-          "spreadLabel": "-1.2 pts"
-        },
-        {
-          "week": 3,
-          "opponentRosterId": 11,
-          "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 49.7,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 127.6,
-          "spread": -0.1,
-          "spreadLabel": "-0.1 pts"
-        },
-        {
-          "week": 4,
           "opponentRosterId": 1,
           "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 37.1,
+          "winProbability": 38.1,
           "projectedScore": 127.5,
           "opponentProjectedScore": 133.7,
           "spread": -6.2,
           "spreadLabel": "-6.2 pts"
         },
         {
-          "week": 5,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 47.9,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 128.6,
-          "spread": -1.1,
-          "spreadLabel": "-1.1 pts"
-        },
-        {
-          "week": 6,
-          "opponentRosterId": 5,
-          "opponentName": "My Nabers Tetties",
-          "winProbability": 53.5,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 125.8,
-          "spread": 1.7,
-          "spreadLabel": "+1.7 pts"
-        },
-        {
-          "week": 7,
+          "week": 2,
           "opponentRosterId": 3,
           "opponentName": "The Ape",
-          "winProbability": 44.2,
+          "winProbability": 43.4,
           "projectedScore": 127.5,
           "opponentProjectedScore": 131.2,
           "spread": -3.7,
           "spreadLabel": "-3.7 pts"
         },
         {
+          "week": 3,
+          "opponentRosterId": 12,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 36.6,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 134.2,
+          "spread": -6.7,
+          "spreadLabel": "-6.7 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 5,
+          "opponentName": "My Nabers Tetties",
+          "winProbability": 52.9,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 125.8,
+          "spread": 1.7,
+          "spreadLabel": "+1.7 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 58.2,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 123.0,
+          "spread": 4.5,
+          "spreadLabel": "+4.5 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 48.5,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 128.6,
+          "spread": -1.1,
+          "spreadLabel": "-1.1 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 4,
+          "opponentName": "Bub\u2019s Club",
+          "winProbability": 52.3,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 126.2,
+          "spread": 1.3,
+          "spreadLabel": "+1.3 pts"
+        },
+        {
           "week": 8,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 48.2,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 128.7,
+          "spread": -1.2,
+          "spreadLabel": "-1.2 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 8,
+          "opponentName": "arkinsjt",
+          "winProbability": 48.1,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 128.4,
+          "spread": -0.9,
+          "spreadLabel": "-0.9 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 10,
+          "opponentName": "Bijan And The Maye-ssiah",
+          "winProbability": 39.6,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 133.2,
+          "spread": -5.7,
+          "spreadLabel": "-5.7 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 49.8,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 127.6,
+          "spread": -0.1,
+          "spreadLabel": "-0.1 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 37.7,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 133.7,
+          "spread": -6.2,
+          "spreadLabel": "-6.2 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 43.7,
+          "projectedScore": 127.5,
+          "opponentProjectedScore": 131.2,
+          "spread": -3.7,
+          "spreadLabel": "-3.7 pts"
+        },
+        {
+          "week": 14,
           "opponentRosterId": 12,
           "opponentName": "Bronco Stampede",
           "winProbability": 36.8,
@@ -2484,66 +2544,6 @@
           "opponentProjectedScore": 134.2,
           "spread": -6.7,
           "spreadLabel": "-6.7 pts"
-        },
-        {
-          "week": 9,
-          "opponentRosterId": 10,
-          "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 38.6,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 133.2,
-          "spread": -5.7,
-          "spreadLabel": "-5.7 pts"
-        },
-        {
-          "week": 10,
-          "opponentRosterId": 8,
-          "opponentName": "arkinsjt",
-          "winProbability": 48.9,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 128.4,
-          "spread": -0.9,
-          "spreadLabel": "-0.9 pts"
-        },
-        {
-          "week": 11,
-          "opponentRosterId": 6,
-          "opponentName": "Final Boss",
-          "winProbability": 57.5,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 123.0,
-          "spread": 4.5,
-          "spreadLabel": "+4.5 pts"
-        },
-        {
-          "week": 12,
-          "opponentRosterId": 4,
-          "opponentName": "Bub\u2019s Club",
-          "winProbability": 51.8,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 126.2,
-          "spread": 1.3,
-          "spreadLabel": "+1.3 pts"
-        },
-        {
-          "week": 13,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 48.5,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 128.7,
-          "spread": -1.2,
-          "spreadLabel": "-1.2 pts"
-        },
-        {
-          "week": 14,
-          "opponentRosterId": 11,
-          "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 49.6,
-          "projectedScore": 127.5,
-          "opponentProjectedScore": 127.6,
-          "spread": -0.1,
-          "spreadLabel": "-0.1 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -2584,13 +2584,13 @@
       "rosterId": 10,
       "teamName": "Bijan And The Maye-ssiah",
       "projectedRank": 3,
-      "expectedSeed": 4.6,
+      "expectedSeed": 4.3,
       "medianSeed": 4,
       "powerRank": 3,
       "powerScore": 90.0,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Simulated finish (#3, Exp Seed 4.6) perfectly matches static Power Rank (#3), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
+      "powerConnectionNarrative": "Simulated finish (#3, Exp Seed 4.3) perfectly matches static Power Rank (#3), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
       "modelFactors": {
         "compositePowerScore": 90.0,
         "projectedMeanScore": 133.2,
@@ -2631,95 +2631,95 @@
         },
         "volatilityImpactNarrative": "With a balanced profile (48.7/100), the model applies a weekly scoring standard deviation of \u00b114.7 pts. The top 3 starters account for 62.4% of starting redraft value and RBs represent 48.8%. In 10,000 simulations, this volatility models an expected weekly floor of 114.4 pts (10th percentile) and a shootout ceiling of 152.0 pts (90th percentile)."
       },
-      "expectedWins": 7.9,
-      "expectedLosses": 6.1,
+      "expectedWins": 8.2,
+      "expectedLosses": 5.8,
       "expectedPointsFor": 1864.7,
-      "playoffProbability": 73.0,
-      "byeProbability": 31.1,
-      "championshipProbability": 16.8,
-      "lastPlaceProbability": 1.5,
+      "playoffProbability": 78.1,
+      "byeProbability": 34.5,
+      "championshipProbability": 17.5,
+      "lastPlaceProbability": 1.2,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 16.6
+          "probability": 18.4
         },
         {
           "seed": 2,
-          "probability": 14.5
+          "probability": 16.1
         },
         {
           "seed": 3,
-          "probability": 12.6
+          "probability": 14.2
         },
         {
           "seed": 4,
-          "probability": 11.1
+          "probability": 11.7
         },
         {
           "seed": 5,
-          "probability": 9.8
+          "probability": 9.6
         },
         {
           "seed": 6,
-          "probability": 8.5
+          "probability": 8.2
         },
         {
           "seed": 7,
-          "probability": 7.2
+          "probability": 6.2
         },
         {
           "seed": 8,
-          "probability": 6.4
+          "probability": 5.1
         },
         {
           "seed": 9,
-          "probability": 4.9
+          "probability": 4.3
         },
         {
           "seed": 10,
-          "probability": 4.2
+          "probability": 3.1
         },
         {
           "seed": 11,
-          "probability": 2.8
+          "probability": 2.0
         },
         {
           "seed": 12,
-          "probability": 1.5
+          "probability": 1.2
         }
       ],
       "weeklySchedule": [
         {
           "week": 1,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 54.0,
-          "projectedScore": 133.2,
-          "opponentProjectedScore": 131.2,
-          "spread": 2.0,
-          "spreadLabel": "+2.0 pts"
-        },
-        {
-          "week": 2,
           "opponentRosterId": 12,
           "opponentName": "Bronco Stampede",
-          "winProbability": 48.4,
+          "winProbability": 48.3,
           "projectedScore": 133.2,
           "opponentProjectedScore": 134.2,
           "spread": -1.0,
           "spreadLabel": "-1.0 pts"
         },
         {
-          "week": 3,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 48.6,
+          "week": 2,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 68.2,
           "projectedScore": 133.2,
-          "opponentProjectedScore": 133.7,
-          "spread": -0.5,
-          "spreadLabel": "-0.5 pts"
+          "opponentProjectedScore": 123.0,
+          "spread": 10.2,
+          "spreadLabel": "+10.2 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 4,
+          "opponentName": "Bub\u2019s Club",
+          "winProbability": 62.4,
+          "projectedScore": 133.2,
+          "opponentProjectedScore": 126.2,
+          "spread": 7.0,
+          "spreadLabel": "+7.0 pts"
         },
         {
           "week": 4,
@@ -2733,16 +2733,96 @@
         },
         {
           "week": 5,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 60.7,
+          "projectedScore": 133.2,
+          "opponentProjectedScore": 127.6,
+          "spread": 5.6,
+          "spreadLabel": "+5.6 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 54.5,
+          "projectedScore": 133.2,
+          "opponentProjectedScore": 131.2,
+          "spread": 2.0,
+          "spreadLabel": "+2.0 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 5,
+          "opponentName": "My Nabers Tetties",
+          "winProbability": 64.5,
+          "projectedScore": 133.2,
+          "opponentProjectedScore": 125.8,
+          "spread": 7.4,
+          "spreadLabel": "+7.4 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 57.9,
+          "projectedScore": 133.2,
+          "opponentProjectedScore": 128.6,
+          "spread": 4.6,
+          "spreadLabel": "+4.6 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 57.9,
+          "projectedScore": 133.2,
+          "opponentProjectedScore": 128.7,
+          "spread": 4.5,
+          "spreadLabel": "+4.5 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 9,
+          "opponentName": "Max\u2019s Shadynasty",
+          "winProbability": 60.4,
+          "projectedScore": 133.2,
+          "opponentProjectedScore": 127.5,
+          "spread": 5.7,
+          "spreadLabel": "+5.7 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 49.5,
+          "projectedScore": 133.2,
+          "opponentProjectedScore": 133.7,
+          "spread": -0.5,
+          "spreadLabel": "-0.5 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 12,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 47.3,
+          "projectedScore": 133.2,
+          "opponentProjectedScore": 134.2,
+          "spread": -1.0,
+          "spreadLabel": "-1.0 pts"
+        },
+        {
+          "week": 13,
           "opponentRosterId": 6,
           "opponentName": "Final Boss",
-          "winProbability": 67.9,
+          "winProbability": 68.9,
           "projectedScore": 133.2,
           "opponentProjectedScore": 123.0,
           "spread": 10.2,
           "spreadLabel": "+10.2 pts"
         },
         {
-          "week": 6,
+          "week": 14,
           "opponentRosterId": 4,
           "opponentName": "Bub\u2019s Club",
           "winProbability": 62.5,
@@ -2750,86 +2830,6 @@
           "opponentProjectedScore": 126.2,
           "spread": 7.0,
           "spreadLabel": "+7.0 pts"
-        },
-        {
-          "week": 7,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 58.8,
-          "projectedScore": 133.2,
-          "opponentProjectedScore": 128.7,
-          "spread": 4.5,
-          "spreadLabel": "+4.5 pts"
-        },
-        {
-          "week": 8,
-          "opponentRosterId": 11,
-          "opponentName": "Terry Tate\u2019s Pain Train",
-          "winProbability": 60.8,
-          "projectedScore": 133.2,
-          "opponentProjectedScore": 127.6,
-          "spread": 5.6,
-          "spreadLabel": "+5.6 pts"
-        },
-        {
-          "week": 9,
-          "opponentRosterId": 9,
-          "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 61.4,
-          "projectedScore": 133.2,
-          "opponentProjectedScore": 127.5,
-          "spread": 5.7,
-          "spreadLabel": "+5.7 pts"
-        },
-        {
-          "week": 10,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 57.6,
-          "projectedScore": 133.2,
-          "opponentProjectedScore": 128.6,
-          "spread": 4.6,
-          "spreadLabel": "+4.6 pts"
-        },
-        {
-          "week": 11,
-          "opponentRosterId": 5,
-          "opponentName": "My Nabers Tetties",
-          "winProbability": 64.8,
-          "projectedScore": 133.2,
-          "opponentProjectedScore": 125.8,
-          "spread": 7.4,
-          "spreadLabel": "+7.4 pts"
-        },
-        {
-          "week": 12,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 53.1,
-          "projectedScore": 133.2,
-          "opponentProjectedScore": 131.2,
-          "spread": 2.0,
-          "spreadLabel": "+2.0 pts"
-        },
-        {
-          "week": 13,
-          "opponentRosterId": 12,
-          "opponentName": "Bronco Stampede",
-          "winProbability": 48.9,
-          "projectedScore": 133.2,
-          "opponentProjectedScore": 134.2,
-          "spread": -1.0,
-          "spreadLabel": "-1.0 pts"
-        },
-        {
-          "week": 14,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 47.7,
-          "projectedScore": 133.2,
-          "opponentProjectedScore": 133.7,
-          "spread": -0.5,
-          "spreadLabel": "-0.5 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -2869,14 +2869,14 @@
     "11": {
       "rosterId": 11,
       "teamName": "Terry Tate\u2019s Pain Train",
-      "projectedRank": 9,
-      "expectedSeed": 7.4,
-      "medianSeed": 8,
+      "projectedRank": 8,
+      "expectedSeed": 7.2,
+      "medianSeed": 7,
       "powerRank": 8,
       "powerScore": 70.0,
-      "powerRankDelta": -1,
-      "powerDeltaLabel": "-1 vs Power Rank",
-      "powerConnectionNarrative": "Simulated finish (#9, Exp Seed 7.4) trails static Power Rank (#8) because although roster depth is strong on paper, regular-season schedule clusters and weekly score variance produce occasional tight losses.",
+      "powerRankDelta": 0,
+      "powerDeltaLabel": "Even with Power Rank",
+      "powerConnectionNarrative": "Simulated finish (#8, Exp Seed 7.2) perfectly matches static Power Rank (#8), indicating high correlation between composite roster viability and 14-week schedule outcomes.",
       "modelFactors": {
         "compositePowerScore": 70.0,
         "projectedMeanScore": 127.6,
@@ -2917,125 +2917,125 @@
         },
         "volatilityImpactNarrative": "With a balanced profile (43.1/100), the model applies a weekly scoring standard deviation of \u00b114.3 pts. The top 3 starters account for 51.7% of starting redraft value and RBs represent 32.6%. In 10,000 simulations, this volatility models an expected weekly floor of 109.3 pts (10th percentile) and a shootout ceiling of 145.9 pts (90th percentile)."
       },
-      "expectedWins": 6.5,
-      "expectedLosses": 7.5,
+      "expectedWins": 6.6,
+      "expectedLosses": 7.4,
       "expectedPointsFor": 1786.2,
-      "playoffProbability": 38.5,
-      "byeProbability": 8.1,
-      "championshipProbability": 3.9,
-      "lastPlaceProbability": 9.3,
+      "playoffProbability": 40.7,
+      "byeProbability": 8.6,
+      "championshipProbability": 4.3,
+      "lastPlaceProbability": 8.2,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 3.2
+          "probability": 3.6
         },
         {
           "seed": 2,
-          "probability": 4.9
+          "probability": 5.0
         },
         {
           "seed": 3,
-          "probability": 5.7
+          "probability": 6.3
         },
         {
           "seed": 4,
-          "probability": 7.1
+          "probability": 7.6
         },
         {
           "seed": 5,
-          "probability": 8.5
+          "probability": 8.7
         },
         {
           "seed": 6,
-          "probability": 9.1
+          "probability": 9.6
         },
         {
           "seed": 7,
-          "probability": 10.3
+          "probability": 9.9
         },
         {
           "seed": 8,
-          "probability": 10.1
+          "probability": 9.9
         },
         {
           "seed": 9,
-          "probability": 10.8
+          "probability": 10.3
         },
         {
           "seed": 10,
-          "probability": 10.4
+          "probability": 10.8
         },
         {
           "seed": 11,
-          "probability": 10.6
+          "probability": 10.2
         },
         {
           "seed": 12,
-          "probability": 9.3
+          "probability": 8.2
         }
       ],
       "weeklySchedule": [
         {
           "week": 1,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 48.0,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 43.6,
           "projectedScore": 127.6,
-          "opponentProjectedScore": 128.7,
-          "spread": -1.1,
-          "spreadLabel": "-1.1 pts"
+          "opponentProjectedScore": 131.2,
+          "spread": -3.6,
+          "spreadLabel": "-3.6 pts"
         },
         {
           "week": 2,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 37.5,
-          "projectedScore": 127.6,
-          "opponentProjectedScore": 133.7,
-          "spread": -6.1,
-          "spreadLabel": "-6.1 pts"
-        },
-        {
-          "week": 3,
-          "opponentRosterId": 9,
-          "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 50.3,
-          "projectedScore": 127.6,
-          "opponentProjectedScore": 127.5,
-          "spread": 0.1,
-          "spreadLabel": "+0.1 pts"
-        },
-        {
-          "week": 4,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 48.3,
-          "projectedScore": 127.6,
-          "opponentProjectedScore": 128.6,
-          "spread": -1.0,
-          "spreadLabel": "-1.0 pts"
-        },
-        {
-          "week": 5,
           "opponentRosterId": 5,
           "opponentName": "My Nabers Tetties",
-          "winProbability": 54.4,
+          "winProbability": 53.7,
           "projectedScore": 127.6,
           "opponentProjectedScore": 125.8,
           "spread": 1.8,
           "spreadLabel": "+1.8 pts"
         },
         {
-          "week": 6,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 43.0,
+          "week": 3,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 48.8,
           "projectedScore": 127.6,
-          "opponentProjectedScore": 131.2,
-          "spread": -3.6,
-          "spreadLabel": "-3.6 pts"
+          "opponentProjectedScore": 128.6,
+          "spread": -1.0,
+          "spreadLabel": "-1.0 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 47.3,
+          "projectedScore": 127.6,
+          "opponentProjectedScore": 128.7,
+          "spread": -1.1,
+          "spreadLabel": "-1.1 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 10,
+          "opponentName": "Bijan And The Maye-ssiah",
+          "winProbability": 39.3,
+          "projectedScore": 127.6,
+          "opponentProjectedScore": 133.2,
+          "spread": -5.6,
+          "spreadLabel": "-5.6 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 37.6,
+          "projectedScore": 127.6,
+          "opponentProjectedScore": 133.7,
+          "spread": -6.1,
+          "spreadLabel": "-6.1 pts"
         },
         {
           "week": 7,
@@ -3049,73 +3049,73 @@
         },
         {
           "week": 8,
-          "opponentRosterId": 10,
-          "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 39.2,
-          "projectedScore": 127.6,
-          "opponentProjectedScore": 133.2,
-          "spread": -5.6,
-          "spreadLabel": "-5.6 pts"
-        },
-        {
-          "week": 9,
-          "opponentRosterId": 8,
-          "opponentName": "arkinsjt",
-          "winProbability": 48.7,
-          "projectedScore": 127.6,
-          "opponentProjectedScore": 128.4,
-          "spread": -0.8,
-          "spreadLabel": "-0.8 pts"
-        },
-        {
-          "week": 10,
           "opponentRosterId": 6,
           "opponentName": "Final Boss",
-          "winProbability": 58.8,
+          "winProbability": 58.4,
           "projectedScore": 127.6,
           "opponentProjectedScore": 123.0,
           "spread": 4.6,
           "spreadLabel": "+4.6 pts"
         },
         {
-          "week": 11,
+          "week": 9,
           "opponentRosterId": 4,
           "opponentName": "Bub\u2019s Club",
-          "winProbability": 51.4,
+          "winProbability": 52.5,
           "projectedScore": 127.6,
           "opponentProjectedScore": 126.2,
           "spread": 1.4,
           "spreadLabel": "+1.4 pts"
         },
         {
-          "week": 12,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 47.9,
+          "week": 10,
+          "opponentRosterId": 8,
+          "opponentName": "arkinsjt",
+          "winProbability": 49.8,
           "projectedScore": 127.6,
-          "opponentProjectedScore": 128.7,
-          "spread": -1.1,
-          "spreadLabel": "-1.1 pts"
+          "opponentProjectedScore": 128.4,
+          "spread": -0.8,
+          "spreadLabel": "-0.8 pts"
         },
         {
-          "week": 13,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 37.8,
-          "projectedScore": 127.6,
-          "opponentProjectedScore": 133.7,
-          "spread": -6.1,
-          "spreadLabel": "-6.1 pts"
-        },
-        {
-          "week": 14,
+          "week": 11,
           "opponentRosterId": 9,
           "opponentName": "Max\u2019s Shadynasty",
-          "winProbability": 50.4,
+          "winProbability": 50.2,
           "projectedScore": 127.6,
           "opponentProjectedScore": 127.5,
           "spread": 0.1,
           "spreadLabel": "+0.1 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 43.1,
+          "projectedScore": 127.6,
+          "opponentProjectedScore": 131.2,
+          "spread": -3.6,
+          "spreadLabel": "-3.6 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 5,
+          "opponentName": "My Nabers Tetties",
+          "winProbability": 53.3,
+          "projectedScore": 127.6,
+          "opponentProjectedScore": 125.8,
+          "spread": 1.8,
+          "spreadLabel": "+1.8 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 48.2,
+          "projectedScore": 127.6,
+          "opponentProjectedScore": 128.6,
+          "spread": -1.0,
+          "spreadLabel": "-1.0 pts"
         }
       ],
       "fluctuationNarrative": {
@@ -3203,95 +3203,95 @@
         },
         "volatilityImpactNarrative": "With a balanced profile (36.9/100), the model applies a weekly scoring standard deviation of \u00b113.9 pts. The top 3 starters account for 50.7% of starting redraft value and RBs represent 25.5%. In 10,000 simulations, this volatility models an expected weekly floor of 116.4 pts (10th percentile) and a shootout ceiling of 152.0 pts (90th percentile)."
       },
-      "expectedWins": 8.3,
-      "expectedLosses": 5.7,
+      "expectedWins": 8.4,
+      "expectedLosses": 5.6,
       "expectedPointsFor": 1879.3,
-      "playoffProbability": 80.0,
-      "byeProbability": 40.0,
-      "championshipProbability": 21.4,
-      "lastPlaceProbability": 1.1,
+      "playoffProbability": 80.7,
+      "byeProbability": 39.3,
+      "championshipProbability": 20.9,
+      "lastPlaceProbability": 0.9,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 23.5
+          "probability": 23.2
         },
         {
           "seed": 2,
-          "probability": 16.5
+          "probability": 16.1
         },
         {
           "seed": 3,
-          "probability": 12.9
+          "probability": 13.6
         },
         {
           "seed": 4,
-          "probability": 10.8
+          "probability": 11.0
         },
         {
           "seed": 5,
-          "probability": 8.9
+          "probability": 9.1
         },
         {
           "seed": 6,
-          "probability": 7.3
+          "probability": 7.7
         },
         {
           "seed": 7,
-          "probability": 5.7
+          "probability": 5.9
         },
         {
           "seed": 8,
-          "probability": 4.8
+          "probability": 4.9
         },
         {
           "seed": 9,
-          "probability": 3.6
+          "probability": 3.2
         },
         {
           "seed": 10,
-          "probability": 2.7
+          "probability": 2.8
         },
         {
           "seed": 11,
-          "probability": 2.1
+          "probability": 1.7
         },
         {
           "seed": 12,
-          "probability": 1.1
+          "probability": 0.9
         }
       ],
       "weeklySchedule": [
         {
           "week": 1,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 51.1,
-          "projectedScore": 134.2,
-          "opponentProjectedScore": 133.7,
-          "spread": 0.5,
-          "spreadLabel": "+0.5 pts"
-        },
-        {
-          "week": 2,
           "opponentRosterId": 10,
           "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 51.6,
+          "winProbability": 51.7,
           "projectedScore": 134.2,
           "opponentProjectedScore": 133.2,
           "spread": 1.0,
           "spreadLabel": "+1.0 pts"
         },
         {
-          "week": 3,
-          "opponentRosterId": 8,
-          "opponentName": "arkinsjt",
-          "winProbability": 61.3,
+          "week": 2,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 51.0,
           "projectedScore": 134.2,
-          "opponentProjectedScore": 128.4,
-          "spread": 5.8,
-          "spreadLabel": "+5.8 pts"
+          "opponentProjectedScore": 133.7,
+          "spread": 0.5,
+          "spreadLabel": "+0.5 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 9,
+          "opponentName": "Max\u2019s Shadynasty",
+          "winProbability": 63.3,
+          "projectedScore": 134.2,
+          "opponentProjectedScore": 127.5,
+          "spread": 6.7,
+          "spreadLabel": "+6.7 pts"
         },
         {
           "week": 4,
@@ -3315,13 +3315,13 @@
         },
         {
           "week": 6,
-          "opponentRosterId": 2,
-          "opponentName": "2 Dagos and A Dream",
-          "winProbability": 60.3,
+          "opponentRosterId": 8,
+          "opponentName": "arkinsjt",
+          "winProbability": 61.7,
           "projectedScore": 134.2,
-          "opponentProjectedScore": 128.7,
-          "spread": 5.5,
-          "spreadLabel": "+5.5 pts"
+          "opponentProjectedScore": 128.4,
+          "spread": 5.8,
+          "spreadLabel": "+5.8 pts"
         },
         {
           "week": 7,
@@ -3335,6 +3335,66 @@
         },
         {
           "week": 8,
+          "opponentRosterId": 3,
+          "opponentName": "The Ape",
+          "winProbability": 56.5,
+          "projectedScore": 134.2,
+          "opponentProjectedScore": 131.2,
+          "spread": 3.0,
+          "spreadLabel": "+3.0 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 5,
+          "opponentName": "My Nabers Tetties",
+          "winProbability": 66.0,
+          "projectedScore": 134.2,
+          "opponentProjectedScore": 125.8,
+          "spread": 8.4,
+          "spreadLabel": "+8.4 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 7,
+          "opponentName": "Gridiron geezers",
+          "winProbability": 59.9,
+          "projectedScore": 134.2,
+          "opponentProjectedScore": 128.6,
+          "spread": 5.6,
+          "spreadLabel": "+5.6 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 60.2,
+          "projectedScore": 134.2,
+          "opponentProjectedScore": 128.7,
+          "spread": 5.5,
+          "spreadLabel": "+5.5 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 10,
+          "opponentName": "Bijan And The Maye-ssiah",
+          "winProbability": 52.7,
+          "projectedScore": 134.2,
+          "opponentProjectedScore": 133.2,
+          "spread": 1.0,
+          "spreadLabel": "+1.0 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 1,
+          "opponentName": "Ertz & Krafts \ud83c\udfc6",
+          "winProbability": 51.0,
+          "projectedScore": 134.2,
+          "opponentProjectedScore": 133.7,
+          "spread": 0.5,
+          "spreadLabel": "+0.5 pts"
+        },
+        {
+          "week": 14,
           "opponentRosterId": 9,
           "opponentName": "Max\u2019s Shadynasty",
           "winProbability": 63.2,
@@ -3342,66 +3402,6 @@
           "opponentProjectedScore": 127.5,
           "spread": 6.7,
           "spreadLabel": "+6.7 pts"
-        },
-        {
-          "week": 9,
-          "opponentRosterId": 7,
-          "opponentName": "Gridiron geezers",
-          "winProbability": 60.0,
-          "projectedScore": 134.2,
-          "opponentProjectedScore": 128.6,
-          "spread": 5.6,
-          "spreadLabel": "+5.6 pts"
-        },
-        {
-          "week": 10,
-          "opponentRosterId": 5,
-          "opponentName": "My Nabers Tetties",
-          "winProbability": 66.2,
-          "projectedScore": 134.2,
-          "opponentProjectedScore": 125.8,
-          "spread": 8.4,
-          "spreadLabel": "+8.4 pts"
-        },
-        {
-          "week": 11,
-          "opponentRosterId": 3,
-          "opponentName": "The Ape",
-          "winProbability": 55.4,
-          "projectedScore": 134.2,
-          "opponentProjectedScore": 131.2,
-          "spread": 3.0,
-          "spreadLabel": "+3.0 pts"
-        },
-        {
-          "week": 12,
-          "opponentRosterId": 1,
-          "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "winProbability": 51.1,
-          "projectedScore": 134.2,
-          "opponentProjectedScore": 133.7,
-          "spread": 0.5,
-          "spreadLabel": "+0.5 pts"
-        },
-        {
-          "week": 13,
-          "opponentRosterId": 10,
-          "opponentName": "Bijan And The Maye-ssiah",
-          "winProbability": 51.1,
-          "projectedScore": 134.2,
-          "opponentProjectedScore": 133.2,
-          "spread": 1.0,
-          "spreadLabel": "+1.0 pts"
-        },
-        {
-          "week": 14,
-          "opponentRosterId": 8,
-          "opponentName": "arkinsjt",
-          "winProbability": 62.3,
-          "projectedScore": 134.2,
-          "opponentProjectedScore": 128.4,
-          "spread": 5.8,
-          "spreadLabel": "+5.8 pts"
         }
       ],
       "fluctuationNarrative": {

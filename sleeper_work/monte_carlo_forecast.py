@@ -206,23 +206,11 @@ def rank_component_score(rank):
     """Maps rank 1..12 to standard 100..50 score."""
     return 100.0 - (float(rank) - 1.0) * (50.0 / 11.0)
 
+OFFICIAL_SLEEPER_SCHEDULE = [(1, [(1, 9), (3, 11), (10, 12), (5, 8), (2, 6), (4, 7)]), (2, [(3, 9), (1, 12), (5, 11), (6, 10), (7, 8), (2, 4)]), (3, [(9, 12), (3, 5), (1, 6), (7, 11), (4, 10), (2, 8)]), (4, [(5, 9), (6, 12), (3, 7), (1, 4), (2, 11), (8, 10)]), (5, [(6, 9), (5, 7), (4, 12), (2, 3), (1, 8), (10, 11)]), (6, [(7, 9), (4, 6), (2, 5), (8, 12), (3, 10), (1, 11)]), (7, [(4, 9), (2, 7), (6, 8), (5, 10), (11, 12), (1, 3)]), (8, [(2, 9), (4, 8), (7, 10), (6, 11), (1, 5), (3, 12)]), (9, [(8, 9), (2, 10), (4, 11), (1, 7), (3, 6), (5, 12)]), (10, [(9, 10), (8, 11), (1, 2), (3, 4), (7, 12), (5, 6)]), (11, [(9, 11), (1, 10), (3, 8), (2, 12), (4, 5), (6, 7)]), (12, [(1, 9), (3, 11), (10, 12), (5, 8), (2, 6), (4, 7)]), (13, [(3, 9), (1, 12), (5, 11), (6, 10), (7, 8), (2, 4)]), (14, [(9, 12), (3, 5), (1, 6), (7, 11), (4, 10), (2, 8)])]
+
 def generate_round_robin_schedule(team_ids, weeks=14):
-    """Generates standard 12-team 14-week fantasy regular season schedule."""
-    schedule = []
-    n = len(team_ids)
-    teams = list(team_ids)
-    
-    for w in range(1, weeks + 1):
-        week_matchups = []
-        for i in range(n // 2):
-            t1 = teams[i]
-            t2 = teams[n - 1 - i]
-            week_matchups.append((t1, t2))
-        schedule.append((w, week_matchups))
-        # Rotate teams (keep index 0 fixed)
-        teams = [teams[0]] + [teams[-1]] + teams[1:-1]
-        
-    return schedule
+    """Returns the official 14-week schedule directly verified with Sleeper API (League ID 1312209616372772864)."""
+    return OFFICIAL_SLEEPER_SCHEDULE[:weeks]
 
 def run_monte_carlo_simulation(simulations=10000, random_seed=42):
     print(f"=== Running {simulations:,} Monte Carlo Season Simulations (Seed={random_seed}) ===")
