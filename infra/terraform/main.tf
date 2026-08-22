@@ -250,3 +250,56 @@ resource "google_monitoring_alert_policy" "capture_failed" {
 
   depends_on = [google_project_service.enabled_services]
 }
+
+# ---------------------------------------------------------------------------
+# CI pipeline identity
+#
+# The scheduled refresh needs to read raw from the bucket and write the derived
+# layers in BigQuery. It does not need to create infrastructure, manage IAM, or
+# delete anything -- so it must not run as terraform-admin. A key for that
+# identity sitting in a GitHub secret would be a project-wide credential in a
+# place many people can trigger.
+#
+# This identity can read raw and write derived data, and nothing else.
+# ---------------------------------------------------------------------------
+
+resource "google_service_account" "ams_pipeline" {
+  account_id   = "ams-pipeline"
+  display_name = "Apes Mac Salad scheduled refresh (CI)"
+}
+
+# Read raw. Explicitly not objectCreator: the refresh consumes captures, it does
+# not produce them, and capture stays the only writer to the store of record.
+resource "google_storage_bucket_iam_member" "pipeline_raw_reader" {
+  bucket = google_storage_bucket.raw_prod.name
+  role   = "roles/storage.objectViewer"
+  member = "serviceAccount:${google_service_account.ams_pipeline.email}"
+}
+
+# Write the derived layers only. canonical, features, analytics and control are
+# all rebuildable from raw, so a mistake here is recoverable.
+resource "google_bigquery_dataset_iam_member" "pipeline_dataset_editor" {
+  for_each = toset([
+    google_bigquery_dataset.canonical.dataset_id,
+    google_bigquery_dataset.features.dataset_id,
+    google_bigquery_dataset.analytics.dataset_id,
+    google_bigquery_dataset.control.dataset_id,
+  ])
+
+  dataset_id = each.key
+  role       = "roles/bigquery.dataEditor"
+  member     = "serviceAccount:${google_service_account.ams_pipeline.email}"
+}
+
+# Running a query bills against the project, which is a project-level right
+# rather than a dataset-level one.
+resource "google_project_iam_member" "pipeline_job_user" {
+  project = var.project_id
+  role    = "roles/bigquery.jobUser"
+  member  = "serviceAccount:${google_service_account.ams_pipeline.email}"
+}
+
+output "ci_service_account" {
+  value       = google_service_account.ams_pipeline.email
+  description = "Create a key for this account and store it as the GCP_SA_KEY repository secret"
+}
