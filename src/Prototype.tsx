@@ -24,6 +24,7 @@ import macSaladAwardsJson from "./generated/mac-salad-awards.json";
 import forecastInsightsJson from "./generated/forecast-insights.json";
 import draftRecapJson from "./generated/draft-recap.json";
 import weeklyRecapJson from "./generated/weekly-recap.json";
+import powerRankingsJson from "./generated/power-rankings.json";
 
 type WeeklyMatchup = {
   week: number;
@@ -1046,6 +1047,7 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
             const insight = insightFor(team);
             const history = insight.previousSeason;
             const editorial = powerEditorial[team.rosterId];
+            const move = powerMovement.get(team.rosterId);
             return (
               <button className="power-card" type="button" key={team.name} onClick={() => onTeam(team)}>
                 <div className="power-card__header">
@@ -1076,7 +1078,37 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
             );
           })}
         </div>
-        <p className="method-note">The 2026 ranking is 55% current optimal-lineup strength, 25% usable depth, 10% positional balance calibrated to this three-FLEX format, and 10% prior-season scoring. Letters come from the resulting score—not a forced league distribution. Dynasty grade and three-year rank are reported separately and cannot inflate the current-year grade.</p>
+        <section className="power-movement" aria-labelledby="power-movement-title">
+          <h2 id="power-movement-title">
+            {powerRankings.hasPriorWeek
+              ? `What changed since week ${powerRankings.week - 1}`
+              : "Baseline ranking"}
+          </h2>
+          <p className="detail-explainer">
+            {powerRankings.hasPriorWeek
+              ? "Movement is measured against the previous stored ranking. Each note names the component that actually moved."
+              : "The first ranking of the season. Movement appears once a second week has been stored."}
+          </p>
+          <div className="standings-scroll">
+            <table className="standings">
+              <thead>
+                <tr><th>#</th><th>Move</th><th>Team</th><th>Score</th><th>What changed</th></tr>
+              </thead>
+              <tbody>
+                {powerRankings.teams.map((entry) => (
+                  <tr key={entry.rosterId}>
+                    <td className="num">{entry.rank}</td>
+                    <td className="num"><RankMove delta={entry.rankDelta} /></td>
+                    <td>{entry.teamName}</td>
+                    <td className="num">{entry.score.toFixed(1)}</td>
+                    <td className="move-note">{entry.commentary}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <p className="method-note">The 2026 ranking is {Math.round(powerRankings.methodology.lineupWeight * 100)}% current optimal-lineup strength, {Math.round(powerRankings.methodology.depthWeight * 100)}% usable depth, {Math.round(powerRankings.methodology.balanceWeight * 100)}% positional balance calibrated to this three-FLEX format, and {Math.round(powerRankings.methodology.priorSeasonWeight * 100)}% prior-season scoring. Letters come from the resulting score—not a forced league distribution. Refreshed every Tuesday from the canonical layer; each week is stored, so movement is measured rather than remembered.</p>
       </main>
     </div>
   );
@@ -1125,6 +1157,26 @@ function StandingsTable({ rows }: { rows: StandingRow[] }) {
 }
 
 const weeklyRecap = weeklyRecapJson;
+const powerRankings = powerRankingsJson;
+
+// Movement against the previously stored ranking, keyed by roster.
+const powerMovement = new Map(
+  powerRankings.teams.map((entry) => [entry.rosterId, entry]),
+);
+
+// Rank movement, shown the way a real power-rankings column does it: the
+// direction and size of the move, with an em dash when there is nothing to
+// compare against rather than a fabricated zero.
+function RankMove({ delta }: { delta: number | null | undefined }) {
+  if (delta == null) return <span className="rank-move rank-move--new">NEW</span>;
+  if (delta === 0) return <span className="rank-move rank-move--flat">&mdash;</span>;
+  const up = delta > 0;
+  return (
+    <span className={"rank-move " + (up ? "rank-move--up" : "rank-move--down")}>
+      {up ? "▲" : "▼"}{Math.abs(delta)}
+    </span>
+  );
+}
 
 function MatchupsScreen() {
   const topServingCount = macSaladStandings[0]?.count ?? 0;

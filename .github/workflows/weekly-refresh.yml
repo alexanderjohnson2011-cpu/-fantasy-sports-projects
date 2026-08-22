@@ -66,6 +66,17 @@ jobs:
         working-directory: sleeper_work
         run: python load_control_plane.py
 
+      - name: Load reference data into canonical
+        working-directory: sleeper_work
+        run: python load_reference_canonical.py
+
+      # Power rankings are stored per week, so this must run before the payload
+      # is rebuilt: the movement column compares against the snapshot the
+      # previous run wrote.
+      - name: Rebuild power rankings
+        working-directory: sleeper_work
+        run: python build_power_rankings.py
+
       - name: Rebuild the weekly recap payload
         working-directory: sleeper_work
         run: python build_weekly_recap.py --season "${{ github.event.inputs.season || '2026' }}"

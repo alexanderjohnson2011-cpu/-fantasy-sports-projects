@@ -3561,3 +3561,13 @@ table.standings .luck-bad { color: #c44322; }
   font-weight: 600;
   color: rgba(11, 51, 41, 0.6);
 }
+
+/* Power rankings movement — refreshed weekly from analytics.power_rankings */
+.power-movement { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+.power-movement h2 { font-size: 21px; margin: 0; letter-spacing: -0.01em; }
+table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); min-width: 260px; }
+.rank-move { font-family: "IBM Plex Sans Condensed", sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; }
+.rank-move--up { color: #2f6b3f; }
+.rank-move--down { color: #c44322; }
+.rank-move--flat { color: rgba(11, 51, 41, 0.4); }
+.rank-move--new { color: rgba(11, 51, 41, 0.55); }
