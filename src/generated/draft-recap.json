@@ -1,664 +1,3467 @@
 {
-  "version": "1.0.0",
-  "generatedAt": "2026-08-21T21:00:00Z",
-  "draftState": {
-    "status": "complete",
-    "picksMade": 48,
-    "totalPicks": 48
+  "schemaVersion": "1.0.0",
+  "modelVersion": "draft-cycle-2026-v1",
+  "league": {
+    "leagueId": "1312209616372772864",
+    "season": "2026",
+    "name": "Ape Invitational Dynasty",
+    "formatLabel": "12-team \u00b7 1QB \u00b7 half-PPR \u00b7 no TE premium \u00b7 3 FLEX"
   },
-  "formula": {
+  "draft": {
+    "draftId": "1312209616385343488",
+    "status": "complete",
+    "isFinal": true,
+    "picksMade": 48,
+    "totalPicks": 48,
+    "snapshotAsOfUtc": "2026-08-22T05:25:12.862691+00:00"
+  },
+  "methodology": {
     "executionWeight": 0.6,
     "capitalWeight": 0.3,
     "fitWeight": 0.1,
-    "pickRatioExpertMarketSplit": "55/45"
+    "expertWeight": 0.55,
+    "marketWeight": 0.45,
+    "ratioCurve": "piecewise-linear-v1",
+    "expertSources": [
+      "fantasypros_ecr",
+      "rotoballer",
+      "boone_1qb",
+      "draftsharks"
+    ],
+    "expertAsOfUtc": "2026-08-19T23:41:04.355969+00:00",
+    "marketAsOfUtc": "2026-08-20T14:29:22+00:00",
+    "futurePickDiscountPerSeason": 0.85,
+    "capitalValuationView": "market_snapshot_value",
+    "capitalValuationNote": "Trade legs are valued at the market snapshot above, not at each transaction date. This is a retrospective view, not a claim that these values were known when the trades were made."
   },
-  "teams": {
-    "1": {
-      "rosterId": 1,
-      "manager": "jccbraves99",
-      "hasPicks": true,
-      "pickCount": 4,
-      "scores": {
-        "execution": 75.4,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 77.7,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "2.06",
-          "player": "Chris Bell",
-          "position": "WR",
-          "expertRank": 17,
-          "marketRank": 19,
-          "blendedRatio": 1.009,
-          "evidenceId": "EV-2026-DRAFT-1-P18"
-        },
-        {
-          "slot": "3.04",
-          "player": "Demond Claiborne",
-          "position": "RB",
-          "expertRank": 27,
-          "marketRank": 29,
-          "blendedRatio": 1.005,
-          "evidenceId": "EV-2026-DRAFT-1-P28"
-        },
-        {
-          "slot": "3.12",
-          "player": "Max Klare",
-          "position": "TE",
-          "expertRank": 35,
-          "marketRank": 37,
-          "blendedRatio": 1.004,
-          "evidenceId": "EV-2026-DRAFT-1-P36"
-        },
-        {
-          "slot": "4.12",
-          "player": "Barion Brown",
-          "position": "WR",
-          "expertRank": 47,
-          "marketRank": 49,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-1-P48"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-1"
+  "quality": {
+    "status": "passed",
+    "errors": [],
+    "warnings": [],
+    "checks": {
+      "pickCount": 48,
+      "contiguous": true,
+      "marketCoverage": 1.0,
+      "expertCoverage": 1.0,
+      "tradesWith2026Capital": 22
+    }
+  },
+  "award": {
+    "status": "candidate",
+    "winnerRosterIds": [
+      6
+    ],
+    "hallOfMacRecordId": "2026-draft",
+    "note": "Model output only. Publication requires explicit approval (MASTER_PLAN ss8 decision 2)."
+  },
+  "superlatives": [
+    {
+      "category": "bestFirstRoundValue",
+      "label": "Best first-round value",
+      "selector": "highest execution score in round 1",
+      "winnerPickKey": "1312209616385343488:3",
+      "team": "Final Boss",
+      "player": "Carnell Tate",
+      "slot": "1.03",
+      "displayWinner": "Carnell Tate \u00b7 1.03",
+      "note": "expert consensus rank 2; market rookie rank 2; selected 3 overall.",
+      "executionScore": 96.7,
+      "impact": 54778.7,
+      "evidenceFactIds": [
+        "pick:1312209616385343488:3:execution"
       ]
     },
-    "2": {
-      "rosterId": 2,
-      "manager": "TGamby",
-      "hasPicks": true,
-      "pickCount": 3,
-      "scores": {
-        "execution": 75.9,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 78.0,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "1.08",
-          "player": "Denzel Boston",
-          "position": "WR",
-          "expertRank": 7,
-          "marketRank": 9,
-          "blendedRatio": 1.029,
-          "evidenceId": "EV-2026-DRAFT-2-P8"
-        },
-        {
-          "slot": "3.08",
-          "player": "Ty Simpson",
-          "position": "QB",
-          "expertRank": 31,
-          "marketRank": 33,
-          "blendedRatio": 1.004,
-          "evidenceId": "EV-2026-DRAFT-2-P32"
-        },
-        {
-          "slot": "4.08",
-          "player": "Brenen Thompson",
-          "position": "WR",
-          "expertRank": 43,
-          "marketRank": 45,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-2-P44"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-2"
+    {
+      "category": "bestLateValue",
+      "label": "Best late value",
+      "selector": "highest positive impact in rounds 3-4",
+      "winnerPickKey": "1312209616385343488:25",
+      "team": "Bub\u2019s Club",
+      "player": "Antonio Williams",
+      "slot": "3.01",
+      "displayWinner": "Antonio Williams \u00b7 3.01",
+      "note": "expert consensus rank 14; market rookie rank 17; selected 25 overall.",
+      "executionScore": 99.9,
+      "impact": 20867.2,
+      "evidenceFactIds": [
+        "pick:1312209616385343488:25:execution"
       ]
     },
-    "3": {
-      "rosterId": 3,
-      "manager": "sduda351",
-      "hasPicks": true,
-      "pickCount": 4,
-      "scores": {
-        "execution": 75.6,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 77.8,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "1.12",
-          "player": "Ja'Kobi Lane",
-          "position": "WR",
-          "expertRank": 11,
-          "marketRank": 13,
-          "blendedRatio": 1.015,
-          "evidenceId": "EV-2026-DRAFT-3-P12"
-        },
-        {
-          "slot": "2.09",
-          "player": "Adam Randall",
-          "position": "RB",
-          "expertRank": 20,
-          "marketRank": 22,
-          "blendedRatio": 1.007,
-          "evidenceId": "EV-2026-DRAFT-3-P21"
-        },
-        {
-          "slot": "3.03",
-          "player": "Eli Raridon",
-          "position": "TE",
-          "expertRank": 26,
-          "marketRank": 28,
-          "blendedRatio": 1.005,
-          "evidenceId": "EV-2026-DRAFT-3-P27"
-        },
-        {
-          "slot": "4.05",
-          "player": "Colbie Young",
-          "position": "WR",
-          "expertRank": 40,
-          "marketRank": 42,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-3-P41"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-3"
+    {
+      "category": "largestConvictionBet",
+      "label": "Largest conviction bet",
+      "selector": "largest expert-versus-market rank disagreement",
+      "winnerPickKey": "1312209616385343488:48",
+      "team": "Ertz & Krafts \ud83c\udfc6",
+      "player": "Barion Brown",
+      "slot": "4.12",
+      "displayWinner": "Barion Brown \u00b7 4.12",
+      "note": "Expert rookie rank 64 versus live-market rookie rank 36.",
+      "executionScore": 52.4,
+      "impact": -4408.3,
+      "evidenceFactIds": [
+        "pick:1312209616385343488:48:execution"
       ]
     },
-    "4": {
-      "rosterId": 4,
-      "manager": "bubberdubber",
-      "hasPicks": true,
-      "pickCount": 9,
-      "scores": {
-        "execution": 74.5,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 77.2,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "1.01",
-          "player": "Jeremiyah Love",
-          "position": "RB",
-          "expertRank": 1,
-          "marketRank": 2,
-          "blendedRatio": 0.865,
-          "evidenceId": "EV-2026-DRAFT-4-P1"
-        },
-        {
-          "slot": "1.09",
-          "player": "Jonah Coleman",
-          "position": "RB",
-          "expertRank": 8,
-          "marketRank": 10,
-          "blendedRatio": 1.024,
-          "evidenceId": "EV-2026-DRAFT-4-P9"
-        },
-        {
-          "slot": "1.10",
-          "player": "Kenyon Sadiq",
-          "position": "TE",
-          "expertRank": 9,
-          "marketRank": 11,
-          "blendedRatio": 1.02,
-          "evidenceId": "EV-2026-DRAFT-4-P10"
-        },
-        {
-          "slot": "2.01",
-          "player": "Omar Cooper",
-          "position": "WR",
-          "expertRank": 12,
-          "marketRank": 14,
-          "blendedRatio": 1.014,
-          "evidenceId": "EV-2026-DRAFT-4-P13"
-        },
-        {
-          "slot": "2.10",
-          "player": "Caleb Douglas",
-          "position": "WR",
-          "expertRank": 21,
-          "marketRank": 23,
-          "blendedRatio": 1.007,
-          "evidenceId": "EV-2026-DRAFT-4-P22"
-        },
-        {
-          "slot": "3.01",
-          "player": "Antonio Williams",
-          "position": "WR",
-          "expertRank": 24,
-          "marketRank": 26,
-          "blendedRatio": 1.006,
-          "evidenceId": "EV-2026-DRAFT-4-P25"
-        },
-        {
-          "slot": "3.11",
-          "player": "Malik Benson",
-          "position": "WR",
-          "expertRank": 34,
-          "marketRank": 36,
-          "blendedRatio": 1.004,
-          "evidenceId": "EV-2026-DRAFT-4-P35"
-        },
-        {
-          "slot": "4.01",
-          "player": "Bryce Lance",
-          "position": "WR",
-          "expertRank": 36,
-          "marketRank": 38,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-4-P37"
-        },
-        {
-          "slot": "4.09",
-          "player": "Cade Klubnik",
-          "position": "QB",
-          "expertRank": 44,
-          "marketRank": 46,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-4-P45"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-4"
-      ]
-    },
-    "5": {
-      "rosterId": 5,
-      "manager": "DRockefeller",
-      "hasPicks": true,
-      "pickCount": 7,
-      "scores": {
-        "execution": 76.5,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 78.4,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "1.02",
-          "player": "Jordyn Tyson",
-          "position": "WR",
-          "expertRank": 1,
-          "marketRank": 3,
-          "blendedRatio": 1.03,
-          "evidenceId": "EV-2026-DRAFT-5-P2"
-        },
-        {
-          "slot": "1.05",
-          "player": "KC Concepcion",
-          "position": "WR",
-          "expertRank": 4,
-          "marketRank": 6,
-          "blendedRatio": 1.062,
-          "evidenceId": "EV-2026-DRAFT-5-P5"
-        },
-        {
-          "slot": "1.11",
-          "player": "Fernando Mendoza",
-          "position": "QB",
-          "expertRank": 10,
-          "marketRank": 12,
-          "blendedRatio": 1.018,
-          "evidenceId": "EV-2026-DRAFT-5-P11"
-        },
-        {
-          "slot": "2.03",
-          "player": "Cyrus Allen",
-          "position": "WR",
-          "expertRank": 14,
-          "marketRank": 16,
-          "blendedRatio": 1.011,
-          "evidenceId": "EV-2026-DRAFT-5-P15"
-        },
-        {
-          "slot": "2.05",
-          "player": "Emmett Johnson",
-          "position": "RB",
-          "expertRank": 16,
-          "marketRank": 18,
-          "blendedRatio": 1.009,
-          "evidenceId": "EV-2026-DRAFT-5-P17"
-        },
-        {
-          "slot": "3.02",
-          "player": "Eli Stowers",
-          "position": "TE",
-          "expertRank": 25,
-          "marketRank": 27,
-          "blendedRatio": 1.005,
-          "evidenceId": "EV-2026-DRAFT-5-P26"
-        },
-        {
-          "slot": "3.07",
-          "player": "Kaelon Black",
-          "position": "RB",
-          "expertRank": 30,
-          "marketRank": 32,
-          "blendedRatio": 1.004,
-          "evidenceId": "EV-2026-DRAFT-5-P31"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-5"
-      ]
-    },
-    "6": {
-      "rosterId": 6,
-      "manager": "OldManBacala",
-      "hasPicks": true,
-      "pickCount": 4,
-      "scores": {
-        "execution": 76.2,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 78.2,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "1.03",
-          "player": "Carnell Tate",
-          "position": "WR",
-          "expertRank": 2,
-          "marketRank": 4,
-          "blendedRatio": 1.053,
-          "evidenceId": "EV-2026-DRAFT-6-P3"
-        },
-        {
-          "slot": "3.05",
-          "player": "Kaytron Allen",
-          "position": "RB",
-          "expertRank": 28,
-          "marketRank": 30,
-          "blendedRatio": 1.005,
-          "evidenceId": "EV-2026-DRAFT-6-P29"
-        },
-        {
-          "slot": "4.03",
-          "player": "Seth McGowan",
-          "position": "RB",
-          "expertRank": 38,
-          "marketRank": 40,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-6-P39"
-        },
-        {
-          "slot": "4.10",
-          "player": "Carson Beck",
-          "position": "QB",
-          "expertRank": 45,
-          "marketRank": 47,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-6-P46"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-6"
-      ]
-    },
-    "7": {
-      "rosterId": 7,
-      "manager": "kong58",
-      "hasPicks": true,
-      "pickCount": 3,
-      "scores": {
-        "execution": 75.5,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 77.8,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "2.02",
-          "player": "Germie Bernard",
-          "position": "WR",
-          "expertRank": 13,
-          "marketRank": 15,
-          "blendedRatio": 1.012,
-          "evidenceId": "EV-2026-DRAFT-7-P14"
-        },
-        {
-          "slot": "2.11",
-          "player": "Zachariah Branch",
-          "position": "WR",
-          "expertRank": 22,
-          "marketRank": 24,
-          "blendedRatio": 1.006,
-          "evidenceId": "EV-2026-DRAFT-7-P23"
-        },
-        {
-          "slot": "4.11",
-          "player": "Zavion Thomas",
-          "position": "WR",
-          "expertRank": 46,
-          "marketRank": 48,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-7-P47"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-7"
-      ]
-    },
-    "8": {
-      "rosterId": 8,
-      "manager": "arkinsjt",
-      "hasPicks": true,
-      "pickCount": 2,
-      "scores": {
-        "execution": 75.5,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 77.8,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "2.04",
-          "player": "Nicholas Singleton",
-          "position": "RB",
-          "expertRank": 15,
-          "marketRank": 17,
-          "blendedRatio": 1.01,
-          "evidenceId": "EV-2026-DRAFT-8-P16"
-        },
-        {
-          "slot": "4.04",
-          "player": "Matt Hibner",
-          "position": "TE",
-          "expertRank": 39,
-          "marketRank": 41,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-8-P40"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-8"
-      ]
-    },
-    "9": {
-      "rosterId": 9,
-      "manager": "maxjabb",
-      "hasPicks": true,
-      "pickCount": 2,
-      "scores": {
-        "execution": 75.3,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 77.7,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "3.09",
-          "player": "Skyler Bell",
-          "position": "WR",
-          "expertRank": 32,
-          "marketRank": 34,
-          "blendedRatio": 1.004,
-          "evidenceId": "EV-2026-DRAFT-9-P33"
-        },
-        {
-          "slot": "3.10",
-          "player": "Drew Allar",
-          "position": "QB",
-          "expertRank": 33,
-          "marketRank": 35,
-          "blendedRatio": 1.004,
-          "evidenceId": "EV-2026-DRAFT-9-P34"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-9"
-      ]
-    },
-    "10": {
-      "rosterId": 10,
-      "manager": "jcflash59",
-      "hasPicks": true,
-      "pickCount": 5,
-      "scores": {
-        "execution": 75.9,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 78.0,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "1.07",
-          "player": "De'Zhaun Stribling",
-          "position": "WR",
-          "expertRank": 6,
-          "marketRank": 8,
-          "blendedRatio": 1.035,
-          "evidenceId": "EV-2026-DRAFT-10-P7"
-        },
-        {
-          "slot": "2.07",
-          "player": "Malachi Fields",
-          "position": "WR",
-          "expertRank": 18,
-          "marketRank": 20,
-          "blendedRatio": 1.008,
-          "evidenceId": "EV-2026-DRAFT-10-P19"
-        },
-        {
-          "slot": "2.08",
-          "player": "Elijah Sarratt",
-          "position": "WR",
-          "expertRank": 19,
-          "marketRank": 21,
-          "blendedRatio": 1.008,
-          "evidenceId": "EV-2026-DRAFT-10-P20"
-        },
-        {
-          "slot": "4.02",
-          "player": "Eli Heidenreich",
-          "position": "RB",
-          "expertRank": 37,
-          "marketRank": 39,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-10-P38"
-        },
-        {
-          "slot": "4.07",
-          "player": "Justin Joly",
-          "position": "TE",
-          "expertRank": 42,
-          "marketRank": 44,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-10-P43"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-10"
-      ]
-    },
-    "11": {
-      "rosterId": 11,
-      "manager": "mannyrsox24",
-      "hasPicks": true,
-      "pickCount": 5,
-      "scores": {
-        "execution": 77.0,
-        "capital": 80.0,
-        "fit": 85.0,
-        "cycleScore": 78.7,
-        "grade": "B"
-      },
-      "picks": [
-        {
-          "slot": "1.04",
-          "player": "Jadarian Price",
-          "position": "RB",
-          "expertRank": 3,
-          "marketRank": 5,
-          "blendedRatio": 1.075,
-          "evidenceId": "EV-2026-DRAFT-11-P4"
-        },
-        {
-          "slot": "1.06",
-          "player": "Makai Lemon",
-          "position": "WR",
-          "expertRank": 5,
-          "marketRank": 7,
-          "blendedRatio": 1.046,
-          "evidenceId": "EV-2026-DRAFT-11-P6"
-        },
-        {
-          "slot": "2.12",
-          "player": "Mike Washington",
-          "position": "RB",
-          "expertRank": 23,
-          "marketRank": 25,
-          "blendedRatio": 1.006,
-          "evidenceId": "EV-2026-DRAFT-11-P24"
-        },
-        {
-          "slot": "3.06",
-          "player": "Ted Hurst",
-          "position": "WR",
-          "expertRank": 29,
-          "marketRank": 31,
-          "blendedRatio": 1.004,
-          "evidenceId": "EV-2026-DRAFT-11-P30"
-        },
-        {
-          "slot": "4.06",
-          "player": "Oscar Delp",
-          "position": "TE",
-          "expertRank": 41,
-          "marketRank": 43,
-          "blendedRatio": 1.003,
-          "evidenceId": "EV-2026-DRAFT-11-P42"
-        }
-      ],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-11"
-      ]
-    },
-    "12": {
-      "rosterId": 12,
-      "manager": "5FinkleRay",
-      "hasPicks": false,
-      "pickCount": 0,
-      "scores": {
-        "execution": null,
-        "capital": null,
-        "fit": null,
-        "cycleScore": null,
-        "grade": "INC"
-      },
-      "picks": [],
-      "evidenceIds": [
-        "EV-2026-DRAFT-TEAM-12"
+    {
+      "category": "bestOverallValue",
+      "label": "Best value of the draft",
+      "selector": "highest weighted impact across all rounds",
+      "winnerPickKey": "1312209616385343488:3",
+      "team": "Final Boss",
+      "player": "Carnell Tate",
+      "slot": "1.03",
+      "displayWinner": "Carnell Tate \u00b7 1.03",
+      "note": "expert consensus rank 2; market rookie rank 2; selected 3 overall.",
+      "executionScore": 96.7,
+      "impact": 54778.7,
+      "evidenceFactIds": [
+        "pick:1312209616385343488:3:execution"
       ]
     }
-  }
+  ],
+  "teams": [
+    {
+      "rosterId": 6,
+      "teamName": "Final Boss",
+      "managerName": "OldManBacala",
+      "rank": 1,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 89.6,
+        "grade": "A-"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 94.6,
+          "grade": "A"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 80.7,
+          "ratio": 0.9873,
+          "valueSent": 13557.4,
+          "valueReceived": 13385.0,
+          "transactionCount": 6,
+          "estimatedLegs": 2,
+          "flooredLegs": 0,
+          "legs": [
+            {
+              "transactionId": "1394733669339377664",
+              "direction": "received",
+              "asset": "Tucker Kraft",
+              "value": 2928.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1394733669339377664",
+              "direction": "sent",
+              "asset": "R1 pick -> Jadarian Price",
+              "value": 3266.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1393999371669864448",
+              "direction": "received",
+              "asset": "Daniel Jones",
+              "value": 1287.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1393999371669864448",
+              "direction": "sent",
+              "asset": "R2 pick -> Caleb Douglas",
+              "value": 1322.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1393999371669864448",
+              "direction": "received",
+              "asset": "R3 pick -> Kaytron Allen",
+              "value": 984.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1393999371669864448",
+              "direction": "sent",
+              "asset": "2027 round 3 pick",
+              "value": 706.4,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1277811306778357760",
+              "direction": "received",
+              "asset": "Travis Hunter",
+              "value": 1678.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1277811306778357760",
+              "direction": "sent",
+              "asset": "A.J. Brown",
+              "value": 3753.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1277811306778357760",
+              "direction": "received",
+              "asset": "R1 pick -> Jadarian Price",
+              "value": 3266.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1276942200353079296",
+              "direction": "received",
+              "asset": "Phil Mafah",
+              "value": 27.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1276942200353079296",
+              "direction": "sent",
+              "asset": "Tyler Allgeier",
+              "value": 1580.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1276942200353079296",
+              "direction": "received",
+              "asset": "R2 pick -> Caleb Douglas",
+              "value": 1322.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1282102586014457856",
+              "direction": "sent",
+              "asset": "Tyreek Hill",
+              "value": 617.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1282102586014457856",
+              "direction": "received",
+              "asset": "Rashid Shaheed",
+              "value": 1316.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1282102586014457856",
+              "direction": "sent",
+              "asset": "R2 pick -> Cyrus Allen",
+              "value": 1482.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1301725137158012928",
+              "direction": "received",
+              "asset": "Tyquan Thornton",
+              "value": 238.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1301725137158012928",
+              "direction": "sent",
+              "asset": "R3 pick -> Eli Raridon",
+              "value": 831.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1301725137158012928",
+              "direction": "received",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 86.3,
+          "preDraftRoomRanks": {
+            "QB": 10,
+            "RB": 11,
+            "WR": 9,
+            "TE": 12
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 126.3,
+        "marketPct": 136.6
+      },
+      "pickCounts": {
+        "total": 4,
+        "original": 2,
+        "acquired": 2
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:3",
+          "pickNo": 3,
+          "round": 1,
+          "draftSlot": 3,
+          "slot": "1.03",
+          "playerId": "13279",
+          "playerName": "Carnell Tate",
+          "position": "WR",
+          "nflTeam": "TEN",
+          "provenance": "original",
+          "originalRosterId": 6,
+          "expertConsensusRank": 2.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 29,
+          "marketRookieRank": 2,
+          "marketValue": 4181.0,
+          "expectedSlotValue": 3272.0,
+          "marketRatio": 1.2778,
+          "expertRatio": 1.2778,
+          "marketScore": 96.7,
+          "expertScore": 96.7,
+          "executionScore": 96.7,
+          "grade": "A+",
+          "impact": 54778.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:3:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:29",
+          "pickNo": 29,
+          "round": 3,
+          "draftSlot": 5,
+          "slot": "3.05",
+          "playerId": "13405",
+          "playerName": "Kaytron Allen",
+          "position": "RB",
+          "nflTeam": "WAS",
+          "provenance": "acquired",
+          "originalRosterId": 3,
+          "expertConsensusRank": 28.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 200,
+          "marketRookieRank": 28,
+          "marketValue": 984.0,
+          "expectedSlotValue": 856.0,
+          "marketRatio": 1.1495,
+          "expertRatio": 1.1495,
+          "marketScore": 92.0,
+          "expertScore": 92.0,
+          "executionScore": 92.0,
+          "grade": "A-",
+          "impact": 10249.1,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:29:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:39",
+          "pickNo": 39,
+          "round": 4,
+          "draftSlot": 3,
+          "slot": "4.03",
+          "playerId": "13424",
+          "playerName": "Seth McGowan",
+          "position": "RB",
+          "nflTeam": "IND",
+          "provenance": "original",
+          "originalRosterId": 6,
+          "expertConsensusRank": 41.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 266,
+          "marketRookieRank": 40,
+          "marketValue": 413.0,
+          "expectedSlotValue": 423.0,
+          "marketRatio": 0.9764,
+          "expertRatio": 0.9716,
+          "marketScore": 81.1,
+          "expertScore": 80.8,
+          "executionScore": 80.9,
+          "grade": "B+",
+          "impact": 388.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:39:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:46",
+          "pickNo": 46,
+          "round": 4,
+          "draftSlot": 10,
+          "slot": "4.10",
+          "playerId": "13272",
+          "playerName": "Carson Beck",
+          "position": "QB",
+          "nflTeam": "ARI",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 38.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 203,
+          "marketRookieRank": null,
+          "marketValue": 932.0,
+          "expectedSlotValue": 213.0,
+          "marketRatio": 4.3756,
+          "expertRatio": 2.061,
+          "marketScore": 100.0,
+          "expertScore": 100.0,
+          "executionScore": 100.0,
+          "grade": "A+",
+          "impact": 4260.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:46:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Strong selections backed by sound capital management",
+        "commentary": "Final Boss used 4 picks (2 original, 2 acquired); Carnell Tate at 1.03 was the class-defining selection; the class attacked the rooms that were thinnest before the draft.",
+        "bestPick": "Carnell Tate at 1.03 (execution 97)",
+        "biggestQuestion": "Can this class hold its value once the rookie market settles?",
+        "verdict": "Cycle score 89.6 (A-). Pick execution carried the grade; capital management was the drag.",
+        "capitalNote": "Received 98.7% of the value sent across 6 completed trades containing 2026 capital (13,385 received against 13,557 sent, market snapshot). 2 legs valued by estimate rather than a realized selection.",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:3:execution",
+          "team:1312209616372772864:6:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 11,
+      "teamName": "Terry Tate\u2019s Pain Train",
+      "managerName": "mannyrsox24",
+      "rank": 2,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 86.3,
+        "grade": "B+"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 87.8,
+          "grade": "A-"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 88.1,
+          "ratio": 1.1024,
+          "valueSent": 6532.0,
+          "valueReceived": 7201.0,
+          "transactionCount": 2,
+          "estimatedLegs": 0,
+          "flooredLegs": 0,
+          "legs": [
+            {
+              "transactionId": "1394813522348609536",
+              "direction": "sent",
+              "asset": "Dylan Sampson",
+              "value": 1336.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1394813522348609536",
+              "direction": "sent",
+              "asset": "Chris Olave",
+              "value": 4037.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1394813522348609536",
+              "direction": "received",
+              "asset": "Tyjae Spears",
+              "value": 1356.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1394813522348609536",
+              "direction": "received",
+              "asset": "R2 pick -> Mike Washington",
+              "value": 1649.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1394813522348609536",
+              "direction": "received",
+              "asset": "R1 pick -> Jadarian Price",
+              "value": 3266.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1288642564798283776",
+              "direction": "received",
+              "asset": "Kayshon Boutte",
+              "value": 930.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1288642564798283776",
+              "direction": "sent",
+              "asset": "R2 pick -> Chris Bell",
+              "value": 1159.0,
+              "valuationBasis": "realized"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 72.3,
+          "preDraftRoomRanks": {
+            "QB": 9,
+            "RB": 8,
+            "WR": 8,
+            "TE": 8
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 115.7,
+        "marketPct": 116.6
+      },
+      "pickCounts": {
+        "total": 5,
+        "original": 3,
+        "acquired": 2
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:4",
+          "pickNo": 4,
+          "round": 1,
+          "draftSlot": 4,
+          "slot": "1.04",
+          "playerId": "13286",
+          "playerName": "Jadarian Price",
+          "position": "RB",
+          "nflTeam": "SEA",
+          "provenance": "acquired",
+          "originalRosterId": 8,
+          "expertConsensusRank": 5.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 54,
+          "marketRookieRank": 4,
+          "marketValue": 3266.0,
+          "expectedSlotValue": 3266.0,
+          "marketRatio": 1.0,
+          "expertRatio": 0.91,
+          "marketScore": 82.7,
+          "expertScore": 76.7,
+          "executionScore": 79.4,
+          "grade": "B",
+          "impact": -2070.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:4:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:6",
+          "pickNo": 6,
+          "round": 1,
+          "draftSlot": 6,
+          "slot": "1.06",
+          "playerId": "13294",
+          "playerName": "Makai Lemon",
+          "position": "WR",
+          "nflTeam": "PHI",
+          "provenance": "original",
+          "originalRosterId": 11,
+          "expertConsensusRank": 4.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 61,
+          "marketRookieRank": 5,
+          "marketValue": 2972.0,
+          "expectedSlotValue": 2610.0,
+          "marketRatio": 1.1387,
+          "expertRatio": 1.2513,
+          "marketScore": 91.4,
+          "expertScore": 96.0,
+          "executionScore": 93.9,
+          "grade": "A",
+          "impact": 36354.8,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:6:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:24",
+          "pickNo": 24,
+          "round": 2,
+          "draftSlot": 12,
+          "slot": "2.12",
+          "playerId": "13305",
+          "playerName": "Mike Washington",
+          "position": "RB",
+          "nflTeam": "LV",
+          "provenance": "acquired",
+          "originalRosterId": 1,
+          "expertConsensusRank": 26.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 127,
+          "marketRookieRank": 14,
+          "marketValue": 1649.0,
+          "expectedSlotValue": 1159.0,
+          "marketRatio": 1.4228,
+          "expertRatio": 0.8939,
+          "marketScore": 100.0,
+          "expertScore": 75.6,
+          "executionScore": 86.6,
+          "grade": "B+",
+          "impact": 7620.9,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:24:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:30",
+          "pickNo": 30,
+          "round": 3,
+          "draftSlot": 6,
+          "slot": "3.06",
+          "playerId": "13317",
+          "playerName": "Ted Hurst",
+          "position": "WR",
+          "nflTeam": "TB",
+          "provenance": "original",
+          "originalRosterId": 11,
+          "expertConsensusRank": 19.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 195,
+          "marketRookieRank": 25,
+          "marketValue": 1046.0,
+          "expectedSlotValue": 831.0,
+          "marketRatio": 1.2587,
+          "expertRatio": 1.6751,
+          "marketScore": 96.2,
+          "expertScore": 100.0,
+          "executionScore": 98.3,
+          "grade": "A+",
+          "impact": 15211.2,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:30:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:42",
+          "pickNo": 42,
+          "round": 4,
+          "draftSlot": 6,
+          "slot": "4.06",
+          "playerId": "13319",
+          "playerName": "Oscar Delp",
+          "position": "TE",
+          "nflTeam": "NO",
+          "provenance": "original",
+          "originalRosterId": 11,
+          "expertConsensusRank": 30.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 239,
+          "marketRookieRank": 34,
+          "marketValue": 634.0,
+          "expectedSlotValue": 339.0,
+          "marketRatio": 1.8702,
+          "expertRatio": 2.4513,
+          "marketScore": 100.0,
+          "expertScore": 100.0,
+          "executionScore": 100.0,
+          "grade": "A+",
+          "impact": 6780.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:42:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Strong selections backed by sound capital management",
+        "commentary": "Terry Tate\u2019s Pain Train used 5 picks (3 original, 2 acquired); Makai Lemon at 1.06 was the class-defining selection; the class attacked the rooms that were thinnest before the draft.",
+        "bestPick": "Makai Lemon at 1.06 (execution 94)",
+        "biggestQuestion": "Was Jadarian Price at 1.04 worth an early pick the board valued higher?",
+        "verdict": "Cycle score 86.3 (B+). Capital management carried the grade; pick execution was the drag.",
+        "capitalNote": "Received 110.2% of the value sent across 2 completed trades containing 2026 capital (7,201 received against 6,532 sent, market snapshot).",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:6:execution",
+          "pick:1312209616385343488:4:execution",
+          "team:1312209616372772864:11:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 4,
+      "teamName": "Bub\u2019s Club",
+      "managerName": "bubberdubber",
+      "rank": 3,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 84.7,
+        "grade": "B+"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 80.4,
+          "grade": "B+"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 95.2,
+          "ratio": 1.3645,
+          "valueSent": 8114.0,
+          "valueReceived": 11071.6,
+          "transactionCount": 4,
+          "estimatedLegs": 5,
+          "flooredLegs": 0,
+          "legs": [
+            {
+              "transactionId": "1395984359407755264",
+              "direction": "sent",
+              "asset": "Gunnar Helm",
+              "value": 1151.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1395984359407755264",
+              "direction": "received",
+              "asset": "Greg Dulcich",
+              "value": 867.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1395984359407755264",
+              "direction": "received",
+              "asset": "R4 pick -> Carson Beck",
+              "value": 932.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1389706078471598080",
+              "direction": "sent",
+              "asset": "2026 round 2 pick",
+              "value": 1409.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1389706078471598080",
+              "direction": "received",
+              "asset": "R3 pick -> Malik Benson",
+              "value": 445.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1389706078471598080",
+              "direction": "received",
+              "asset": "2027 round 2 pick",
+              "value": 1197.6,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1278939788853919744",
+              "direction": "sent",
+              "asset": "Jake Ferguson",
+              "value": 1639.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1278939788853919744",
+              "direction": "received",
+              "asset": "2026 round 2 pick",
+              "value": 1409.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1276958205578051584",
+              "direction": "sent",
+              "asset": "Ladd McConkey",
+              "value": 3915.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1276958205578051584",
+              "direction": "received",
+              "asset": "R1 pick -> Kenyon Sadiq",
+              "value": 2202.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1276958205578051584",
+              "direction": "received",
+              "asset": "2026 round 2 pick",
+              "value": 1409.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1276958205578051584",
+              "direction": "received",
+              "asset": "2026 round 1 pick",
+              "value": 2610.0,
+              "valuationBasis": "slot_estimate"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 78.9,
+          "preDraftRoomRanks": {
+            "QB": 8,
+            "RB": 9,
+            "WR": 11,
+            "TE": 2
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 97.4,
+        "marketPct": 103.1
+      },
+      "pickCounts": {
+        "total": 9,
+        "original": 0,
+        "acquired": 9
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:1",
+          "pickNo": 1,
+          "round": 1,
+          "draftSlot": 1,
+          "slot": "1.01",
+          "playerId": "13287",
+          "playerName": "Jeremiyah Love",
+          "position": "RB",
+          "nflTeam": "ARI",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 1.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 7,
+          "marketRookieRank": 1,
+          "marketValue": 7372.0,
+          "expectedSlotValue": 7372.0,
+          "marketRatio": 1.0,
+          "expertRatio": 1.0,
+          "marketScore": 82.7,
+          "expertScore": 82.7,
+          "executionScore": 82.7,
+          "grade": "B+",
+          "impact": 19658.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:1:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:9",
+          "pickNo": 9,
+          "round": 1,
+          "draftSlot": 9,
+          "slot": "1.09",
+          "playerId": "13345",
+          "playerName": "Jonah Coleman",
+          "position": "RB",
+          "nflTeam": "DEN",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 12.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 94,
+          "marketRookieRank": 10,
+          "marketValue": 1980.0,
+          "expectedSlotValue": 2166.0,
+          "marketRatio": 0.9141,
+          "expertRatio": 0.8199,
+          "marketScore": 76.9,
+          "expertScore": 70.7,
+          "executionScore": 73.5,
+          "grade": "B-",
+          "impact": -14004.4,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:9:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:10",
+          "pickNo": 10,
+          "round": 1,
+          "draftSlot": 10,
+          "slot": "1.10",
+          "playerId": "13330",
+          "playerName": "Kenyon Sadiq",
+          "position": "TE",
+          "nflTeam": "NYJ",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 8.5,
+          "expertSourceCount": 4,
+          "marketOverallRank": 81,
+          "marketRookieRank": 7,
+          "marketValue": 2202.0,
+          "expectedSlotValue": 1980.0,
+          "marketRatio": 1.1121,
+          "expertRatio": 1.102,
+          "marketScore": 89.8,
+          "expertScore": 89.3,
+          "executionScore": 89.5,
+          "grade": "A-",
+          "impact": 18845.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:10:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:13",
+          "pickNo": 13,
+          "round": 2,
+          "draftSlot": 1,
+          "slot": "2.01",
+          "playerId": "13276",
+          "playerName": "Omar Cooper",
+          "position": "WR",
+          "nflTeam": "NYJ",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 7.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 110,
+          "marketRookieRank": 12,
+          "marketValue": 1776.0,
+          "expectedSlotValue": 1740.0,
+          "marketRatio": 1.0207,
+          "expertRatio": 1.2655,
+          "marketScore": 84.0,
+          "expertScore": 96.4,
+          "executionScore": 90.8,
+          "grade": "A-",
+          "impact": 18876.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:13:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:22",
+          "pickNo": 22,
+          "round": 2,
+          "draftSlot": 10,
+          "slot": "2.10",
+          "playerId": "13296",
+          "playerName": "Caleb Douglas",
+          "position": "WR",
+          "nflTeam": "MIA",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 35.5,
+          "expertSourceCount": 4,
+          "marketOverallRank": 168,
+          "marketRookieRank": 20,
+          "marketValue": 1322.0,
+          "expectedSlotValue": 1250.0,
+          "marketRatio": 1.0576,
+          "expertRatio": 0.36,
+          "marketScore": 86.5,
+          "expertScore": 30.0,
+          "executionScore": 55.4,
+          "grade": "C-",
+          "impact": -30715.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:22:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:25",
+          "pickNo": 25,
+          "round": 3,
+          "draftSlot": 1,
+          "slot": "3.01",
+          "playerId": "13301",
+          "playerName": "Antonio Williams",
+          "position": "WR",
+          "nflTeam": "WAS",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 14.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 145,
+          "marketRookieRank": 17,
+          "marketValue": 1460.0,
+          "expectedSlotValue": 1046.0,
+          "marketRatio": 1.3958,
+          "expertRatio": 1.5765,
+          "marketScore": 99.9,
+          "expertScore": 100.0,
+          "executionScore": 99.9,
+          "grade": "A+",
+          "impact": 20867.2,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:25:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:35",
+          "pickNo": 35,
+          "round": 3,
+          "draftSlot": 11,
+          "slot": "3.11",
+          "playerId": "13329",
+          "playerName": "Malik Benson",
+          "position": "WR",
+          "nflTeam": "LV",
+          "provenance": "acquired",
+          "originalRosterId": 7,
+          "expertConsensusRank": 58.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 262,
+          "marketRookieRank": 37,
+          "marketValue": 445.0,
+          "expectedSlotValue": 573.0,
+          "marketRatio": 0.7766,
+          "expertRatio": 0.0454,
+          "marketScore": 68.0,
+          "expertScore": 3.8,
+          "executionScore": 32.7,
+          "grade": "D",
+          "impact": -27104.6,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:35:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:37",
+          "pickNo": 37,
+          "round": 4,
+          "draftSlot": 1,
+          "slot": "4.01",
+          "playerId": "13420",
+          "playerName": "Bryce Lance",
+          "position": "WR",
+          "nflTeam": "NO",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 34.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 265,
+          "marketRookieRank": 39,
+          "marketValue": 423.0,
+          "expectedSlotValue": 445.0,
+          "marketRatio": 0.9506,
+          "expertRatio": 1.4247,
+          "marketScore": 79.4,
+          "expertScore": 100.0,
+          "executionScore": 90.7,
+          "grade": "A-",
+          "impact": 4769.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:37:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:45",
+          "pickNo": 45,
+          "round": 4,
+          "draftSlot": 9,
+          "slot": "4.09",
+          "playerId": "13303",
+          "playerName": "Cade Klubnik",
+          "position": "QB",
+          "nflTeam": "NYJ",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 54.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 276,
+          "marketRookieRank": 42,
+          "marketValue": 339.0,
+          "expectedSlotValue": 227.0,
+          "marketRatio": 1.4934,
+          "expertRatio": 0.3216,
+          "marketScore": 100.0,
+          "expertScore": 26.8,
+          "executionScore": 59.7,
+          "grade": "C-",
+          "impact": -4599.2,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:45:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Strong selections backed by sound capital management",
+        "commentary": "Bub\u2019s Club used 9 picks (0 original, 9 acquired); Antonio Williams at 3.01 was the class-defining selection; the class attacked the rooms that were thinnest before the draft.",
+        "bestPick": "Antonio Williams at 3.01 (execution 100)",
+        "biggestQuestion": "Was Caleb Douglas at 2.10 worth an early pick the board valued higher?",
+        "verdict": "Cycle score 84.7 (B+). Capital management carried the grade; pick execution was the drag.",
+        "capitalNote": "Received 136.5% of the value sent across 4 completed trades containing 2026 capital (11,072 received against 8,114 sent, market snapshot). 5 legs valued by estimate rather than a realized selection.",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:25:execution",
+          "pick:1312209616385343488:22:execution",
+          "team:1312209616372772864:4:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 7,
+      "teamName": "Gridiron geezers",
+      "managerName": "kong58",
+      "rank": 4,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 83.3,
+        "grade": "B+"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 80.8,
+          "grade": "B+"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 82.6,
+          "ratio": 1.0098,
+          "valueSent": 4096.8,
+          "valueReceived": 4137.0,
+          "transactionCount": 2,
+          "estimatedLegs": 3,
+          "flooredLegs": 0,
+          "legs": [
+            {
+              "transactionId": "1389706078471598080",
+              "direction": "received",
+              "asset": "2026 round 2 pick",
+              "value": 1409.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1389706078471598080",
+              "direction": "sent",
+              "asset": "R3 pick -> Malik Benson",
+              "value": 445.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1389706078471598080",
+              "direction": "sent",
+              "asset": "2027 round 2 pick",
+              "value": 1197.6,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1281983997185921024",
+              "direction": "received",
+              "asset": "Darren Waller",
+              "value": 602.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1281983997185921024",
+              "direction": "received",
+              "asset": "Jaylen Warren",
+              "value": 2126.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1281983997185921024",
+              "direction": "sent",
+              "asset": "R1 pick -> Fernando Mendoza",
+              "value": 2166.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1281983997185921024",
+              "direction": "sent",
+              "asset": "2027 round 4 pick",
+              "value": 288.1,
+              "valuationBasis": "future_estimate"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 100.0,
+          "preDraftRoomRanks": {
+            "QB": 11,
+            "RB": 3,
+            "WR": 12,
+            "TE": 7
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 98.4,
+        "marketPct": 104.0
+      },
+      "pickCounts": {
+        "total": 3,
+        "original": 3,
+        "acquired": 0
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:14",
+          "pickNo": 14,
+          "round": 2,
+          "draftSlot": 2,
+          "slot": "2.02",
+          "playerId": "13274",
+          "playerName": "Germie Bernard",
+          "position": "WR",
+          "nflTeam": "PIT",
+          "provenance": "original",
+          "originalRosterId": 7,
+          "expertConsensusRank": 18.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 173,
+          "marketRookieRank": 21,
+          "marketValue": 1298.0,
+          "expectedSlotValue": 1649.0,
+          "marketRatio": 0.7871,
+          "expertRatio": 0.8545,
+          "marketScore": 68.7,
+          "expertScore": 73.0,
+          "executionScore": 71.0,
+          "grade": "C+",
+          "impact": -14769.2,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:14:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:23",
+          "pickNo": 23,
+          "round": 2,
+          "draftSlot": 11,
+          "slot": "2.11",
+          "playerId": "13320",
+          "playerName": "Zachariah Branch",
+          "position": "WR",
+          "nflTeam": "ATL",
+          "provenance": "original",
+          "originalRosterId": 7,
+          "expertConsensusRank": 21.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 149,
+          "marketRookieRank": 18,
+          "marketValue": 1409.0,
+          "expectedSlotValue": 1177.0,
+          "marketRatio": 1.1971,
+          "expertRatio": 1.1028,
+          "marketScore": 93.9,
+          "expertScore": 89.3,
+          "executionScore": 91.4,
+          "grade": "A-",
+          "impact": 13376.2,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:23:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:47",
+          "pickNo": 47,
+          "round": 4,
+          "draftSlot": 11,
+          "slot": "4.11",
+          "playerId": "13411",
+          "playerName": "Zavion Thomas",
+          "position": "WR",
+          "nflTeam": "CHI",
+          "provenance": "original",
+          "originalRosterId": 7,
+          "expertConsensusRank": 43.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 264,
+          "marketRookieRank": 38,
+          "marketValue": 439.0,
+          "expectedSlotValue": 200.0,
+          "marketRatio": 2.195,
+          "expertRatio": 1.36,
+          "marketScore": 100.0,
+          "expertScore": 98.9,
+          "executionScore": 99.4,
+          "grade": "A+",
+          "impact": 3882.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:47:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Strong selections backed by sound capital management",
+        "commentary": "Gridiron geezers used 3 picks (3 original, 0 acquired); Zachariah Branch at 2.11 was the class-defining selection; the class attacked the rooms that were thinnest before the draft.",
+        "bestPick": "Zachariah Branch at 2.11 (execution 91)",
+        "biggestQuestion": "Was Germie Bernard at 2.02 worth an early pick the board valued higher?",
+        "verdict": "Cycle score 83.3 (B+). Capital management carried the grade; pick execution was the drag.",
+        "capitalNote": "Received 101.0% of the value sent across 2 completed trades containing 2026 capital (4,137 received against 4,097 sent, market snapshot). 3 legs valued by estimate rather than a realized selection.",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:23:execution",
+          "pick:1312209616385343488:14:execution",
+          "team:1312209616372772864:7:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 2,
+      "teamName": "2 Dagos and A Dream ",
+      "managerName": "TGamby",
+      "rank": 5,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 80.9,
+        "grade": "B+"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 85.0,
+          "grade": "B+"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 71.4,
+          "ratio": 0.9033,
+          "valueSent": 782.0,
+          "valueReceived": 706.4,
+          "transactionCount": 1,
+          "estimatedLegs": 1,
+          "flooredLegs": 0,
+          "legs": [
+            {
+              "transactionId": "1259702591328112640",
+              "direction": "received",
+              "asset": "2025 round 3 pick",
+              "value": 706.4,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1259702591328112640",
+              "direction": "sent",
+              "asset": "R2 pick -> Elijah Sarratt",
+              "value": 782.0,
+              "valuationBasis": "realized"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 85.0,
+          "preDraftRoomRanks": {
+            "QB": 12,
+            "RB": 1,
+            "WR": 10,
+            "TE": 5
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 119.0,
+        "marketPct": 113.8
+      },
+      "pickCounts": {
+        "total": 3,
+        "original": 3,
+        "acquired": 0
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:8",
+          "pickNo": 8,
+          "round": 1,
+          "draftSlot": 8,
+          "slot": "1.08",
+          "playerId": "13346",
+          "playerName": "Denzel Boston",
+          "position": "WR",
+          "nflTeam": "CLE",
+          "provenance": "original",
+          "originalRosterId": 2,
+          "expertConsensusRank": 10.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 84,
+          "marketRookieRank": 8,
+          "marketValue": 2182.0,
+          "expectedSlotValue": 2182.0,
+          "marketRatio": 1.0,
+          "expertRatio": 0.9074,
+          "marketScore": 82.7,
+          "expertScore": 76.5,
+          "executionScore": 79.3,
+          "grade": "B",
+          "impact": -1588.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:8:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:32",
+          "pickNo": 32,
+          "round": 3,
+          "draftSlot": 8,
+          "slot": "3.08",
+          "playerId": "13275",
+          "playerName": "Ty Simpson",
+          "position": "QB",
+          "nflTeam": "LAR",
+          "provenance": "original",
+          "originalRosterId": 2,
+          "expertConsensusRank": 20.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 186,
+          "marketRookieRank": 23,
+          "marketValue": 1177.0,
+          "expectedSlotValue": 734.0,
+          "marketRatio": 1.6035,
+          "expertRatio": 1.8011,
+          "marketScore": 100.0,
+          "expertScore": 100.0,
+          "executionScore": 100.0,
+          "grade": "A+",
+          "impact": 14680.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:32:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:44",
+          "pickNo": 44,
+          "round": 4,
+          "draftSlot": 8,
+          "slot": "4.08",
+          "playerId": "13380",
+          "playerName": "Brenen Thompson",
+          "position": "WR",
+          "nflTeam": "LAC",
+          "provenance": "original",
+          "originalRosterId": 2,
+          "expertConsensusRank": 37.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 293,
+          "marketRookieRank": 45,
+          "marketValue": 227.0,
+          "expectedSlotValue": 234.0,
+          "marketRatio": 0.9701,
+          "expertRatio": 1.9017,
+          "marketScore": 80.7,
+          "expertScore": 100.0,
+          "executionScore": 91.3,
+          "grade": "A-",
+          "impact": 2644.8,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:44:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Excellent selections, weaker capital management",
+        "commentary": "2 Dagos and A Dream  used 3 picks (3 original, 0 acquired); Ty Simpson at 3.08 was the class-defining selection; the class attacked the rooms that were thinnest before the draft.",
+        "bestPick": "Ty Simpson at 3.08 (execution 100)",
+        "biggestQuestion": "Was Denzel Boston at 1.08 worth an early pick the board valued higher?",
+        "verdict": "Cycle score 80.9 (B+). Pick execution carried the grade; capital management was the drag.",
+        "capitalNote": "Received 90.3% of the value sent across 1 completed trade containing 2026 capital (706 received against 782 sent, market snapshot). 1 leg valued by estimate rather than a realized selection.",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:32:execution",
+          "pick:1312209616385343488:8:execution",
+          "team:1312209616372772864:2:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 8,
+      "teamName": "arkinsjt",
+      "managerName": "arkinsjt",
+      "rank": 6,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 80.5,
+        "grade": "B+"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 77.6,
+          "grade": "B"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 83.4,
+          "ratio": 1.0236,
+          "valueSent": 11808.4,
+          "valueReceived": 12087.0,
+          "transactionCount": 3,
+          "estimatedLegs": 1,
+          "flooredLegs": 0,
+          "legs": [
+            {
+              "transactionId": "1392291944566108160",
+              "direction": "received",
+              "asset": "Woody Marks",
+              "value": 1331.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1392291944566108160",
+              "direction": "received",
+              "asset": "David Montgomery",
+              "value": 2545.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1392291944566108160",
+              "direction": "sent",
+              "asset": "R1 pick -> Ja'Kobi Lane",
+              "value": 1781.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1392291944566108160",
+              "direction": "sent",
+              "asset": "2027 round 3 pick",
+              "value": 706.4,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1277811306778357760",
+              "direction": "sent",
+              "asset": "Travis Hunter",
+              "value": 1678.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1277811306778357760",
+              "direction": "received",
+              "asset": "A.J. Brown",
+              "value": 3753.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1277811306778357760",
+              "direction": "sent",
+              "asset": "R1 pick -> Jadarian Price",
+              "value": 3266.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1302120063133839360",
+              "direction": "received",
+              "asset": "Trevor Etienne",
+              "value": 246.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1302120063133839360",
+              "direction": "sent",
+              "asset": "Derrick Henry",
+              "value": 3341.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1302120063133839360",
+              "direction": "received",
+              "asset": "Parker Washington",
+              "value": 2431.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1302120063133839360",
+              "direction": "received",
+              "asset": "R1 pick -> Ja'Kobi Lane",
+              "value": 1781.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1302120063133839360",
+              "direction": "sent",
+              "asset": "R3 pick -> Demond Claiborne",
+              "value": 1036.0,
+              "valuationBasis": "realized"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 89.4,
+          "preDraftRoomRanks": {
+            "QB": 6,
+            "RB": 10,
+            "WR": 2,
+            "TE": 11
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 87.2,
+        "marketPct": 105.2
+      },
+      "pickCounts": {
+        "total": 2,
+        "original": 2,
+        "acquired": 0
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:16",
+          "pickNo": 16,
+          "round": 2,
+          "draftSlot": 4,
+          "slot": "2.04",
+          "playerId": "13288",
+          "playerName": "Nicholas Singleton",
+          "position": "RB",
+          "nflTeam": "TEN",
+          "provenance": "original",
+          "originalRosterId": 8,
+          "expertConsensusRank": 15.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 130,
+          "marketRookieRank": 15,
+          "marketValue": 1626.0,
+          "expectedSlotValue": 1482.0,
+          "marketRatio": 1.0972,
+          "expertRatio": 1.0972,
+          "marketScore": 89.0,
+          "expertScore": 89.0,
+          "executionScore": 89.0,
+          "grade": "A-",
+          "impact": 13309.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:16:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:40",
+          "pickNo": 40,
+          "round": 4,
+          "draftSlot": 4,
+          "slot": "4.04",
+          "playerId": "13324",
+          "playerName": "Matt Hibner",
+          "position": "TE",
+          "nflTeam": "BAL",
+          "provenance": "original",
+          "originalRosterId": 8,
+          "expertConsensusRank": 55.5,
+          "expertSourceCount": 2,
+          "marketOverallRank": 272,
+          "marketRookieRank": null,
+          "marketValue": 368.0,
+          "expectedSlotValue": 413.0,
+          "marketRatio": 0.891,
+          "expertRatio": 0.063,
+          "marketScore": 75.4,
+          "expertScore": 5.2,
+          "executionScore": 36.8,
+          "grade": "D",
+          "impact": -17834.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:40:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Capital gains carry an inefficient set of selections",
+        "commentary": "arkinsjt used 2 picks (2 original, 0 acquired); Nicholas Singleton at 2.04 was the class-defining selection; the class attacked the rooms that were thinnest before the draft.",
+        "bestPick": "Nicholas Singleton at 2.04 (execution 89)",
+        "biggestQuestion": "Did Matt Hibner at 4.04 duplicate strength this roster already had?",
+        "verdict": "Cycle score 80.5 (B+). Capital management carried the grade; pick execution was the drag.",
+        "capitalNote": "Received 102.4% of the value sent across 3 completed trades containing 2026 capital (12,087 received against 11,808 sent, market snapshot). 1 leg valued by estimate rather than a realized selection.",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:16:execution",
+          "pick:1312209616385343488:40:execution",
+          "team:1312209616372772864:8:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 1,
+      "teamName": "Ertz & Krafts \ud83c\udfc6",
+      "managerName": "jccbraves99",
+      "rank": 7,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 77.5,
+        "grade": "B"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 82.9,
+          "grade": "B+"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 79.2,
+          "ratio": 0.9718,
+          "valueSent": 14587.0,
+          "valueReceived": 14175.0,
+          "transactionCount": 4,
+          "estimatedLegs": 0,
+          "flooredLegs": 0,
+          "legs": [
+            {
+              "transactionId": "1394813522348609536",
+              "direction": "received",
+              "asset": "Dylan Sampson",
+              "value": 1336.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1394813522348609536",
+              "direction": "received",
+              "asset": "Chris Olave",
+              "value": 4037.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1394813522348609536",
+              "direction": "sent",
+              "asset": "Tyjae Spears",
+              "value": 1356.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1394813522348609536",
+              "direction": "sent",
+              "asset": "R2 pick -> Mike Washington",
+              "value": 1649.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1394813522348609536",
+              "direction": "sent",
+              "asset": "R1 pick -> Jadarian Price",
+              "value": 3266.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1394733669339377664",
+              "direction": "sent",
+              "asset": "Tucker Kraft",
+              "value": 2928.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1394733669339377664",
+              "direction": "received",
+              "asset": "R1 pick -> Jadarian Price",
+              "value": 3266.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1288642564798283776",
+              "direction": "sent",
+              "asset": "Kayshon Boutte",
+              "value": 930.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1288642564798283776",
+              "direction": "received",
+              "asset": "R2 pick -> Chris Bell",
+              "value": 1159.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1302120063133839360",
+              "direction": "sent",
+              "asset": "Trevor Etienne",
+              "value": 246.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1302120063133839360",
+              "direction": "received",
+              "asset": "Derrick Henry",
+              "value": 3341.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1302120063133839360",
+              "direction": "sent",
+              "asset": "Parker Washington",
+              "value": 2431.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1302120063133839360",
+              "direction": "sent",
+              "asset": "R1 pick -> Ja'Kobi Lane",
+              "value": 1781.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1302120063133839360",
+              "direction": "received",
+              "asset": "R3 pick -> Demond Claiborne",
+              "value": 1036.0,
+              "valuationBasis": "realized"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 39.8,
+          "preDraftRoomRanks": {
+            "QB": 5,
+            "RB": 4,
+            "WR": 6,
+            "TE": 3
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 114.9,
+        "marketPct": 101.8
+      },
+      "pickCounts": {
+        "total": 4,
+        "original": 2,
+        "acquired": 2
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:18",
+          "pickNo": 18,
+          "round": 2,
+          "draftSlot": 6,
+          "slot": "2.06",
+          "playerId": "13311",
+          "playerName": "Chris Bell",
+          "position": "WR",
+          "nflTeam": "MIA",
+          "provenance": "acquired",
+          "originalRosterId": 11,
+          "expertConsensusRank": 16.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 189,
+          "marketRookieRank": 24,
+          "marketValue": 1159.0,
+          "expectedSlotValue": 1409.0,
+          "marketRatio": 0.8226,
+          "expertRatio": 1.0518,
+          "marketScore": 70.9,
+          "expertScore": 86.1,
+          "executionScore": 79.3,
+          "grade": "B",
+          "impact": -1019.9,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:18:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:28",
+          "pickNo": 28,
+          "round": 3,
+          "draftSlot": 4,
+          "slot": "3.04",
+          "playerId": "13347",
+          "playerName": "Demond Claiborne",
+          "position": "RB",
+          "nflTeam": "MIN",
+          "provenance": "acquired",
+          "originalRosterId": 8,
+          "expertConsensusRank": 24.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 196,
+          "marketRookieRank": 26,
+          "marketValue": 1036.0,
+          "expectedSlotValue": 984.0,
+          "marketRatio": 1.0528,
+          "expertRatio": 1.1778,
+          "marketScore": 86.2,
+          "expertScore": 93.1,
+          "executionScore": 90.0,
+          "grade": "A-",
+          "impact": 9838.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:28:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:36",
+          "pickNo": 36,
+          "round": 3,
+          "draftSlot": 12,
+          "slot": "3.12",
+          "playerId": "13278",
+          "playerName": "Max Klare",
+          "position": "TE",
+          "nflTeam": "LAR",
+          "provenance": "original",
+          "originalRosterId": 1,
+          "expertConsensusRank": 31.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 268,
+          "marketRookieRank": 41,
+          "marketValue": 411.0,
+          "expectedSlotValue": 450.0,
+          "marketRatio": 0.9133,
+          "expertRatio": 1.7378,
+          "marketScore": 76.9,
+          "expertScore": 100.0,
+          "executionScore": 89.6,
+          "grade": "A-",
+          "impact": 4320.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:36:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:48",
+          "pickNo": 48,
+          "round": 4,
+          "draftSlot": 12,
+          "slot": "4.12",
+          "playerId": "13533",
+          "playerName": "Barion Brown",
+          "position": "WR",
+          "nflTeam": "NO",
+          "provenance": "original",
+          "originalRosterId": 1,
+          "expertConsensusRank": 64.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 260,
+          "marketRookieRank": 36,
+          "marketValue": 450.0,
+          "expectedSlotValue": 160.0,
+          "marketRatio": 2.8125,
+          "expertRatio": 0.1625,
+          "marketScore": 100.0,
+          "expertScore": 13.5,
+          "executionScore": 52.4,
+          "grade": "C-",
+          "impact": -4408.3,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:48:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Excellent selections, weaker capital management",
+        "commentary": "Ertz & Krafts \ud83c\udfc6 used 4 picks (2 original, 2 acquired); Demond Claiborne at 3.04 was the class-defining selection; the class largely bypassed the rooms that were thinnest before the draft.",
+        "bestPick": "Demond Claiborne at 3.04 (execution 90)",
+        "biggestQuestion": "Was Chris Bell at 2.06 worth an early pick the board valued higher?",
+        "verdict": "Cycle score 77.5 (B). Pick execution carried the grade; capital management was the drag.",
+        "capitalNote": "Received 97.2% of the value sent across 4 completed trades containing 2026 capital (14,175 received against 14,587 sent, market snapshot).",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:28:execution",
+          "pick:1312209616385343488:18:execution",
+          "team:1312209616372772864:1:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 10,
+      "teamName": "Bijan And The Maye-ssiah",
+      "managerName": "jcflash59",
+      "rank": 8,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 77.2,
+        "grade": "B"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 73.8,
+          "grade": "B-"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 100.0,
+          "ratio": 2.5347,
+          "valueSent": 1747.3,
+          "valueReceived": 4429.0,
+          "transactionCount": 2,
+          "estimatedLegs": 2,
+          "flooredLegs": 1,
+          "legs": [
+            {
+              "transactionId": "1259702591328112640",
+              "direction": "sent",
+              "asset": "2025 round 3 pick",
+              "value": 706.4,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1259702591328112640",
+              "direction": "received",
+              "asset": "R2 pick -> Elijah Sarratt",
+              "value": 782.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1297018935937355776",
+              "direction": "sent",
+              "asset": "unlisted player 12412",
+              "value": 8.0,
+              "valuationBasis": "floor"
+            },
+            {
+              "transactionId": "1297018935937355776",
+              "direction": "received",
+              "asset": "Romeo Doubs",
+              "value": 1553.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1297018935937355776",
+              "direction": "received",
+              "asset": "Wan'Dale Robinson",
+              "value": 1755.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1297018935937355776",
+              "direction": "sent",
+              "asset": "R3 pick -> Kaelon Black",
+              "value": 1033.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1297018935937355776",
+              "direction": "received",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 29.3,
+          "preDraftRoomRanks": {
+            "QB": 2,
+            "RB": 2,
+            "WR": 4,
+            "TE": 4
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 93.1,
+        "marketPct": 87.7
+      },
+      "pickCounts": {
+        "total": 5,
+        "original": 3,
+        "acquired": 2
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:7",
+          "pickNo": 7,
+          "round": 1,
+          "draftSlot": 7,
+          "slot": "1.07",
+          "playerId": "13417",
+          "playerName": "De'Zhaun Stribling",
+          "position": "WR",
+          "nflTeam": "SF",
+          "provenance": "original",
+          "originalRosterId": 10,
+          "expertConsensusRank": 13.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 91,
+          "marketRookieRank": null,
+          "marketValue": 2041.0,
+          "expectedSlotValue": 2202.0,
+          "marketRatio": 0.9269,
+          "expertRatio": 0.7902,
+          "marketScore": 77.8,
+          "expertScore": 68.9,
+          "executionScore": 72.9,
+          "grade": "C+",
+          "impact": -15646.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:7:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:19",
+          "pickNo": 19,
+          "round": 2,
+          "draftSlot": 7,
+          "slot": "2.07",
+          "playerId": "13285",
+          "playerName": "Malachi Fields",
+          "position": "WR",
+          "nflTeam": "NYG",
+          "provenance": "original",
+          "originalRosterId": 10,
+          "expertConsensusRank": 22.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 154,
+          "marketRookieRank": 19,
+          "marketValue": 1392.0,
+          "expectedSlotValue": 1392.0,
+          "marketRatio": 1.0,
+          "expertRatio": 0.898,
+          "marketScore": 82.7,
+          "expertScore": 75.9,
+          "executionScore": 78.9,
+          "grade": "B",
+          "impact": -1494.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:19:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:20",
+          "pickNo": 20,
+          "round": 2,
+          "draftSlot": 8,
+          "slot": "2.08",
+          "playerId": "13268",
+          "playerName": "Elijah Sarratt",
+          "position": "WR",
+          "nflTeam": "BAL",
+          "provenance": "acquired",
+          "originalRosterId": 2,
+          "expertConsensusRank": 22.5,
+          "expertSourceCount": 4,
+          "marketOverallRank": 217,
+          "marketRookieRank": 31,
+          "marketValue": 782.0,
+          "expectedSlotValue": 1322.0,
+          "marketRatio": 0.5915,
+          "expertRatio": 0.9455,
+          "marketScore": 51.2,
+          "expertScore": 79.0,
+          "executionScore": 66.5,
+          "grade": "C",
+          "impact": -17862.3,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:20:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:38",
+          "pickNo": 38,
+          "round": 4,
+          "draftSlot": 2,
+          "slot": "4.02",
+          "playerId": "13423",
+          "playerName": "Eli Heidenreich",
+          "position": "RB",
+          "nflTeam": "PIT",
+          "provenance": "acquired",
+          "originalRosterId": 7,
+          "expertConsensusRank": 39.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 284,
+          "marketRookieRank": 43,
+          "marketValue": 272.0,
+          "expectedSlotValue": 439.0,
+          "marketRatio": 0.6196,
+          "expertRatio": 0.9636,
+          "marketScore": 54.0,
+          "expertScore": 80.2,
+          "executionScore": 68.4,
+          "grade": "C+",
+          "impact": -5087.2,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:38:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:43",
+          "pickNo": 43,
+          "round": 4,
+          "draftSlot": 7,
+          "slot": "4.07",
+          "playerId": "13400",
+          "playerName": "Justin Joly",
+          "position": "TE",
+          "nflTeam": "DEN",
+          "provenance": "original",
+          "originalRosterId": 10,
+          "expertConsensusRank": 35.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 261,
+          "marketRookieRank": null,
+          "marketValue": 450.0,
+          "expectedSlotValue": 272.0,
+          "marketRatio": 1.6544,
+          "expertRatio": 2.1066,
+          "marketScore": 100.0,
+          "expertScore": 100.0,
+          "executionScore": 100.0,
+          "grade": "A+",
+          "impact": 5440.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:43:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Capital gains carry an inefficient set of selections",
+        "commentary": "Bijan And The Maye-ssiah used 5 picks (3 original, 2 acquired); Justin Joly at 4.07 was the class-defining selection; the class largely bypassed the rooms that were thinnest before the draft.",
+        "bestPick": "Justin Joly at 4.07 (execution 100)",
+        "biggestQuestion": "Was Elijah Sarratt at 2.08 worth an early pick the board valued higher?",
+        "verdict": "Cycle score 77.2 (B). Capital management carried the grade; pick execution was the drag.",
+        "capitalNote": "Received 253.5% of the value sent across 2 completed trades containing 2026 capital (4,429 received against 1,747 sent, market snapshot). 2 legs valued by estimate rather than a realized selection.",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:43:execution",
+          "pick:1312209616385343488:20:execution",
+          "team:1312209616372772864:10:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 9,
+      "teamName": "Max\u2019s Shadynasty",
+      "managerName": "maxjabb",
+      "rank": 9,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 76.9,
+        "grade": "B"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 81.1,
+          "grade": "B+"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 88.0,
+          "ratio": 1.101,
+          "valueSent": 8880.3,
+          "valueReceived": 9776.8,
+          "transactionCount": 3,
+          "estimatedLegs": 9,
+          "flooredLegs": 0,
+          "legs": [
+            {
+              "transactionId": "1259364047107657728",
+              "direction": "received",
+              "asset": "2025 round 2 pick",
+              "value": 1197.6,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1259364047107657728",
+              "direction": "received",
+              "asset": "2026 round 2 pick",
+              "value": 1409.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1259364047107657728",
+              "direction": "sent",
+              "asset": "2025 round 2 pick",
+              "value": 1197.6,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1259364047107657728",
+              "direction": "sent",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "sent",
+              "asset": "J.J. McCarthy",
+              "value": 718.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "received",
+              "asset": "Jayden Daniels",
+              "value": 3596.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "received",
+              "asset": "Troy Franklin",
+              "value": 791.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "received",
+              "asset": "R3 pick -> Drew Allar",
+              "value": 856.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "received",
+              "asset": "2027 round 4 pick",
+              "value": 288.1,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "sent",
+              "asset": "2026 round 2 pick",
+              "value": 1409.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "sent",
+              "asset": "2026 round 1 pick",
+              "value": 2610.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "sent",
+              "asset": "2027 round 2 pick",
+              "value": 1197.6,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1278939788853919744",
+              "direction": "received",
+              "asset": "Jake Ferguson",
+              "value": 1639.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1278939788853919744",
+              "direction": "sent",
+              "asset": "2026 round 2 pick",
+              "value": 1409.0,
+              "valuationBasis": "slot_estimate"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 18.0,
+          "preDraftRoomRanks": {
+            "QB": 4,
+            "RB": 6,
+            "WR": 3,
+            "TE": 9
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 105.5,
+        "marketPct": 117.1
+      },
+      "pickCounts": {
+        "total": 2,
+        "original": 0,
+        "acquired": 2
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:33",
+          "pickNo": 33,
+          "round": 3,
+          "draftSlot": 9,
+          "slot": "3.09",
+          "playerId": "13402",
+          "playerName": "Skyler Bell",
+          "position": "WR",
+          "nflTeam": "BUF",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 27.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 234,
+          "marketRookieRank": 33,
+          "marketValue": 667.0,
+          "expectedSlotValue": 667.0,
+          "marketRatio": 1.0,
+          "expertRatio": 1.5487,
+          "marketScore": 82.7,
+          "expertScore": 100.0,
+          "executionScore": 92.2,
+          "grade": "A",
+          "impact": 8137.4,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:33:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:34",
+          "pickNo": 34,
+          "round": 3,
+          "draftSlot": 10,
+          "slot": "3.10",
+          "playerId": "13289",
+          "playerName": "Drew Allar",
+          "position": "QB",
+          "nflTeam": "PIT",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 42.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 207,
+          "marketRookieRank": 29,
+          "marketValue": 856.0,
+          "expectedSlotValue": 634.0,
+          "marketRatio": 1.3502,
+          "expertRatio": 0.5347,
+          "marketScore": 98.7,
+          "expertScore": 45.5,
+          "executionScore": 69.4,
+          "grade": "C+",
+          "impact": -6713.8,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:34:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Strong selections backed by sound capital management",
+        "commentary": "Max\u2019s Shadynasty used 2 picks (0 original, 2 acquired); Skyler Bell at 3.09 was the class-defining selection; the class largely bypassed the rooms that were thinnest before the draft.",
+        "bestPick": "Skyler Bell at 3.09 (execution 92)",
+        "biggestQuestion": "Did Drew Allar at 3.10 duplicate strength this roster already had?",
+        "verdict": "Cycle score 76.9 (B). Capital management carried the grade; pick execution was the drag.",
+        "capitalNote": "Received 110.1% of the value sent across 3 completed trades containing 2026 capital (9,777 received against 8,880 sent, market snapshot). 9 legs valued by estimate rather than a realized selection.",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:33:execution",
+          "pick:1312209616385343488:34:execution",
+          "team:1312209616372772864:9:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 5,
+      "teamName": "My Nabers Tetties",
+      "managerName": "DRockefeller",
+      "rank": 10,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 71.8,
+        "grade": "C+"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 74.5,
+          "grade": "B-"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 69.6,
+          "ratio": 0.8882,
+          "valueSent": 16921.8,
+          "valueReceived": 15030.6,
+          "transactionCount": 7,
+          "estimatedLegs": 12,
+          "flooredLegs": 3,
+          "legs": [
+            {
+              "transactionId": "1259364047107657728",
+              "direction": "sent",
+              "asset": "2025 round 2 pick",
+              "value": 1197.6,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1259364047107657728",
+              "direction": "sent",
+              "asset": "2026 round 2 pick",
+              "value": 1409.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1259364047107657728",
+              "direction": "received",
+              "asset": "2025 round 2 pick",
+              "value": 1197.6,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1259364047107657728",
+              "direction": "received",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1276991256551002112",
+              "direction": "sent",
+              "asset": "unlisted player 4988",
+              "value": 8.0,
+              "valuationBasis": "floor"
+            },
+            {
+              "transactionId": "1276991256551002112",
+              "direction": "received",
+              "asset": "R2 pick -> Emmett Johnson",
+              "value": 1250.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "sent",
+              "asset": "Ollie Gordon",
+              "value": 728.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "received",
+              "asset": "Shedeur Sanders",
+              "value": 776.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "sent",
+              "asset": "Kyren Williams",
+              "value": 3525.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "received",
+              "asset": "R1 pick -> KC Concepcion",
+              "value": 2610.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "received",
+              "asset": "2027 round 1 pick",
+              "value": 2218.5,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "sent",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "sent",
+              "asset": "2027 round 4 pick",
+              "value": 288.1,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "sent",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1282102586014457856",
+              "direction": "received",
+              "asset": "Tyreek Hill",
+              "value": 617.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1282102586014457856",
+              "direction": "sent",
+              "asset": "Rashid Shaheed",
+              "value": 1316.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1282102586014457856",
+              "direction": "received",
+              "asset": "R2 pick -> Cyrus Allen",
+              "value": 1482.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1281983997185921024",
+              "direction": "sent",
+              "asset": "Darren Waller",
+              "value": 602.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1281983997185921024",
+              "direction": "sent",
+              "asset": "Jaylen Warren",
+              "value": 2126.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1281983997185921024",
+              "direction": "received",
+              "asset": "R1 pick -> Fernando Mendoza",
+              "value": 2166.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1281983997185921024",
+              "direction": "received",
+              "asset": "2027 round 4 pick",
+              "value": 288.1,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1296162568712261632",
+              "direction": "sent",
+              "asset": "Stefon Diggs",
+              "value": 1389.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1296162568712261632",
+              "direction": "sent",
+              "asset": "unlisted player 4098",
+              "value": 8.0,
+              "valuationBasis": "floor"
+            },
+            {
+              "transactionId": "1296162568712261632",
+              "direction": "received",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1296162568712261632",
+              "direction": "received",
+              "asset": "2027 round 3 pick",
+              "value": 706.4,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1297018935937355776",
+              "direction": "received",
+              "asset": "unlisted player 12412",
+              "value": 8.0,
+              "valuationBasis": "floor"
+            },
+            {
+              "transactionId": "1297018935937355776",
+              "direction": "sent",
+              "asset": "Romeo Doubs",
+              "value": 1553.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1297018935937355776",
+              "direction": "sent",
+              "asset": "Wan'Dale Robinson",
+              "value": 1755.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1297018935937355776",
+              "direction": "received",
+              "asset": "R3 pick -> Kaelon Black",
+              "value": 1033.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1297018935937355776",
+              "direction": "sent",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 62.2,
+          "preDraftRoomRanks": {
+            "QB": 3,
+            "RB": 12,
+            "WR": 7,
+            "TE": 10
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 88.4,
+        "marketPct": 97.9
+      },
+      "pickCounts": {
+        "total": 7,
+        "original": 0,
+        "acquired": 7
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:2",
+          "pickNo": 2,
+          "round": 1,
+          "draftSlot": 2,
+          "slot": "1.02",
+          "playerId": "13281",
+          "playerName": "Jordyn Tyson",
+          "position": "WR",
+          "nflTeam": "NO",
+          "provenance": "acquired",
+          "originalRosterId": 7,
+          "expertConsensusRank": 3.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 53,
+          "marketRookieRank": 3,
+          "marketValue": 3272.0,
+          "expectedSlotValue": 4181.0,
+          "marketRatio": 0.7826,
+          "expertRatio": 0.7826,
+          "marketScore": 68.4,
+          "expertScore": 68.4,
+          "executionScore": 68.4,
+          "grade": "C+",
+          "impact": -48450.5,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:2:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:5",
+          "pickNo": 5,
+          "round": 1,
+          "draftSlot": 5,
+          "slot": "1.05",
+          "playerId": "13298",
+          "playerName": "KC Concepcion",
+          "position": "WR",
+          "nflTeam": "CLE",
+          "provenance": "acquired",
+          "originalRosterId": 3,
+          "expertConsensusRank": 6.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 73,
+          "marketRookieRank": 6,
+          "marketValue": 2610.0,
+          "expectedSlotValue": 2972.0,
+          "marketRatio": 0.8782,
+          "expertRatio": 0.8782,
+          "marketScore": 74.5,
+          "expertScore": 74.5,
+          "executionScore": 74.5,
+          "grade": "B-",
+          "impact": -16208.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:5:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:11",
+          "pickNo": 11,
+          "round": 1,
+          "draftSlot": 11,
+          "slot": "1.11",
+          "playerId": "13269",
+          "playerName": "Fernando Mendoza",
+          "position": "QB",
+          "nflTeam": "LV",
+          "provenance": "acquired",
+          "originalRosterId": 7,
+          "expertConsensusRank": 13.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 85,
+          "marketRookieRank": 9,
+          "marketValue": 2166.0,
+          "expectedSlotValue": 1781.0,
+          "marketRatio": 1.2162,
+          "expertRatio": 0.977,
+          "marketScore": 94.6,
+          "expertScore": 81.1,
+          "executionScore": 87.2,
+          "grade": "A-",
+          "impact": 12847.5,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:11:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:15",
+          "pickNo": 15,
+          "round": 2,
+          "draftSlot": 3,
+          "slot": "2.03",
+          "playerId": "13413",
+          "playerName": "Cyrus Allen",
+          "position": "WR",
+          "nflTeam": "KC",
+          "provenance": "acquired",
+          "originalRosterId": 6,
+          "expertConsensusRank": 40.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 143,
+          "marketRookieRank": 16,
+          "marketValue": 1482.0,
+          "expectedSlotValue": 1626.0,
+          "marketRatio": 0.9114,
+          "expertRatio": 0.254,
+          "marketScore": 76.8,
+          "expertScore": 21.2,
+          "executionScore": 46.2,
+          "grade": "D",
+          "impact": -54983.6,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:15:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:17",
+          "pickNo": 17,
+          "round": 2,
+          "draftSlot": 5,
+          "slot": "2.05",
+          "playerId": "13337",
+          "playerName": "Emmett Johnson",
+          "position": "RB",
+          "nflTeam": "KC",
+          "provenance": "acquired",
+          "originalRosterId": 3,
+          "expertConsensusRank": 18.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 178,
+          "marketRookieRank": 22,
+          "marketValue": 1250.0,
+          "expectedSlotValue": 1460.0,
+          "marketRatio": 0.8562,
+          "expertRatio": 0.9651,
+          "marketScore": 73.1,
+          "expertScore": 80.3,
+          "executionScore": 77.1,
+          "grade": "B",
+          "impact": -4276.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:17:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:26",
+          "pickNo": 26,
+          "round": 3,
+          "draftSlot": 2,
+          "slot": "3.02",
+          "playerId": "13349",
+          "playerName": "Eli Stowers",
+          "position": "TE",
+          "nflTeam": "PHI",
+          "provenance": "acquired",
+          "originalRosterId": 7,
+          "expertConsensusRank": 13.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 113,
+          "marketRookieRank": 13,
+          "marketValue": 1740.0,
+          "expectedSlotValue": 1036.0,
+          "marketRatio": 1.6795,
+          "expertRatio": 1.6795,
+          "marketScore": 100.0,
+          "expertScore": 100.0,
+          "executionScore": 100.0,
+          "grade": "A+",
+          "impact": 20720.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:26:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:31",
+          "pickNo": 31,
+          "round": 3,
+          "draftSlot": 7,
+          "slot": "3.07",
+          "playerId": "13414",
+          "playerName": "Kaelon Black",
+          "position": "RB",
+          "nflTeam": "SF",
+          "provenance": "acquired",
+          "originalRosterId": 10,
+          "expertConsensusRank": 25.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 197,
+          "marketRookieRank": 27,
+          "marketValue": 1033.0,
+          "expectedSlotValue": 782.0,
+          "marketRatio": 1.321,
+          "expertRatio": 1.3376,
+          "marketScore": 97.9,
+          "expertScore": 98.3,
+          "executionScore": 98.1,
+          "grade": "A+",
+          "impact": 14182.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:31:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Below-market selections and a costly capital path",
+        "commentary": "My Nabers Tetties used 7 picks (0 original, 7 acquired); Eli Stowers at 3.02 was the class-defining selection; the class largely bypassed the rooms that were thinnest before the draft.",
+        "bestPick": "Eli Stowers at 3.02 (execution 100)",
+        "biggestQuestion": "Was Cyrus Allen at 2.03 worth an early pick the board valued higher?",
+        "verdict": "Cycle score 71.8 (C+). Pick execution carried the grade; capital management was the drag.",
+        "capitalNote": "Received 88.8% of the value sent across 7 completed trades containing 2026 capital (15,031 received against 16,922 sent, market snapshot). 12 legs valued by estimate rather than a realized selection.",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:26:execution",
+          "pick:1312209616385343488:15:execution",
+          "team:1312209616372772864:5:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 3,
+      "teamName": "The Ape",
+      "managerName": "sduda351",
+      "rank": 11,
+      "rankStatus": "ranked",
+      "cycle": {
+        "status": "official",
+        "score": 57.4,
+        "grade": "C-"
+      },
+      "components": {
+        "execution": {
+          "status": "scored",
+          "score": 58.9,
+          "grade": "C-"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 60.6,
+          "ratio": 0.8186,
+          "valueSent": 14623.9,
+          "valueReceived": 11970.9,
+          "transactionCount": 6,
+          "estimatedLegs": 9,
+          "flooredLegs": 2,
+          "legs": [
+            {
+              "transactionId": "1393999371669864448",
+              "direction": "sent",
+              "asset": "Daniel Jones",
+              "value": 1287.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1393999371669864448",
+              "direction": "received",
+              "asset": "R2 pick -> Caleb Douglas",
+              "value": 1322.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1393999371669864448",
+              "direction": "sent",
+              "asset": "R3 pick -> Kaytron Allen",
+              "value": 984.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1393999371669864448",
+              "direction": "received",
+              "asset": "2027 round 3 pick",
+              "value": 706.4,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1392291944566108160",
+              "direction": "sent",
+              "asset": "Woody Marks",
+              "value": 1331.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1392291944566108160",
+              "direction": "sent",
+              "asset": "David Montgomery",
+              "value": 2545.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1392291944566108160",
+              "direction": "received",
+              "asset": "R1 pick -> Ja'Kobi Lane",
+              "value": 1781.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1392291944566108160",
+              "direction": "received",
+              "asset": "2027 round 3 pick",
+              "value": 706.4,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1276991256551002112",
+              "direction": "received",
+              "asset": "unlisted player 4988",
+              "value": 8.0,
+              "valuationBasis": "floor"
+            },
+            {
+              "transactionId": "1276991256551002112",
+              "direction": "sent",
+              "asset": "R2 pick -> Emmett Johnson",
+              "value": 1250.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "received",
+              "asset": "Ollie Gordon",
+              "value": 728.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "sent",
+              "asset": "Shedeur Sanders",
+              "value": 776.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "received",
+              "asset": "Kyren Williams",
+              "value": 3525.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "sent",
+              "asset": "R1 pick -> KC Concepcion",
+              "value": 2610.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "sent",
+              "asset": "2027 round 1 pick",
+              "value": 2218.5,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "received",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "received",
+              "asset": "2027 round 4 pick",
+              "value": 288.1,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1279667505844977664",
+              "direction": "received",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1296162568712261632",
+              "direction": "received",
+              "asset": "Stefon Diggs",
+              "value": 1389.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1296162568712261632",
+              "direction": "received",
+              "asset": "unlisted player 4098",
+              "value": 8.0,
+              "valuationBasis": "floor"
+            },
+            {
+              "transactionId": "1296162568712261632",
+              "direction": "sent",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1296162568712261632",
+              "direction": "sent",
+              "asset": "2027 round 3 pick",
+              "value": 706.4,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1301725137158012928",
+              "direction": "sent",
+              "asset": "Tyquan Thornton",
+              "value": 238.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1301725137158012928",
+              "direction": "received",
+              "asset": "R3 pick -> Eli Raridon",
+              "value": 831.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1301725137158012928",
+              "direction": "sent",
+              "asset": "2026 round 4 pick",
+              "value": 339.0,
+              "valuationBasis": "slot_estimate"
+            }
+          ]
+        },
+        "fit": {
+          "status": "scored",
+          "score": 38.3,
+          "preDraftRoomRanks": {
+            "QB": 7,
+            "RB": 7,
+            "WR": 5,
+            "TE": 1
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": 61.0,
+        "marketPct": 78.5
+      },
+      "pickCounts": {
+        "total": 4,
+        "original": 1,
+        "acquired": 3
+      },
+      "picks": [
+        {
+          "pickKey": "1312209616385343488:12",
+          "pickNo": 12,
+          "round": 1,
+          "draftSlot": 12,
+          "slot": "1.12",
+          "playerId": "13293",
+          "playerName": "Ja'Kobi Lane",
+          "position": "WR",
+          "nflTeam": "BAL",
+          "provenance": "acquired",
+          "originalRosterId": 1,
+          "expertConsensusRank": 22.0,
+          "expertSourceCount": 4,
+          "marketOverallRank": 109,
+          "marketRookieRank": 11,
+          "marketValue": 1781.0,
+          "expectedSlotValue": 1776.0,
+          "marketRatio": 1.0028,
+          "expertRatio": 0.7038,
+          "marketScore": 82.9,
+          "expertScore": 62.1,
+          "executionScore": 71.4,
+          "grade": "C+",
+          "impact": -15218.1,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:12:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:21",
+          "pickNo": 21,
+          "round": 2,
+          "draftSlot": 9,
+          "slot": "2.09",
+          "playerId": "13302",
+          "playerName": "Adam Randall",
+          "position": "RB",
+          "nflTeam": "BAL",
+          "provenance": "acquired",
+          "originalRosterId": 12,
+          "expertConsensusRank": 35.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 223,
+          "marketRookieRank": 32,
+          "marketValue": 734.0,
+          "expectedSlotValue": 1298.0,
+          "marketRatio": 0.5655,
+          "expertRatio": 0.4414,
+          "marketScore": 48.5,
+          "expertScore": 36.8,
+          "executionScore": 42.1,
+          "grade": "D",
+          "impact": -49220.3,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:21:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:27",
+          "pickNo": 27,
+          "round": 3,
+          "draftSlot": 3,
+          "slot": "3.03",
+          "playerId": "13421",
+          "playerName": "Eli Raridon",
+          "position": "TE",
+          "nflTeam": "NE",
+          "provenance": "acquired",
+          "originalRosterId": 6,
+          "expertConsensusRank": 32.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 211,
+          "marketRookieRank": 30,
+          "marketValue": 831.0,
+          "expectedSlotValue": 1033.0,
+          "marketRatio": 0.8045,
+          "expertRatio": 0.7106,
+          "marketScore": 69.8,
+          "expertScore": 62.7,
+          "executionScore": 65.9,
+          "grade": "C",
+          "impact": -14595.7,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:27:execution"
+          ]
+        },
+        {
+          "pickKey": "1312209616385343488:41",
+          "pickNo": 41,
+          "round": 4,
+          "draftSlot": 5,
+          "slot": "4.05",
+          "playerId": "13477",
+          "playerName": "Colbie Young",
+          "position": "WR",
+          "nflTeam": "CIN",
+          "provenance": "original",
+          "originalRosterId": 3,
+          "expertConsensusRank": 47.0,
+          "expertSourceCount": 3,
+          "marketOverallRank": 300,
+          "marketRookieRank": 47,
+          "marketValue": 200.0,
+          "expectedSlotValue": 411.0,
+          "marketRatio": 0.4866,
+          "expertRatio": 0.4866,
+          "marketScore": 40.7,
+          "expertScore": 40.7,
+          "executionScore": 40.7,
+          "grade": "D",
+          "impact": -16168.0,
+          "evidenceFactIds": [
+            "pick:1312209616385343488:41:execution"
+          ]
+        }
+      ],
+      "narrative": {
+        "headline": "Below-market selections and a costly capital path",
+        "commentary": "The Ape used 4 picks (1 original, 3 acquired); the class largely bypassed the rooms that were thinnest before the draft.",
+        "bestPick": "Eli Raridon at 3.03, best of a class that did not beat its slots",
+        "biggestQuestion": "Was Adam Randall at 2.09 worth an early pick the board valued higher?",
+        "verdict": "Cycle score 57.4 (C-). Capital management carried the grade; pick execution was the drag.",
+        "capitalNote": "Received 81.9% of the value sent across 6 completed trades containing 2026 capital (11,971 received against 14,624 sent, market snapshot). 9 legs valued by estimate rather than a realized selection.",
+        "evidenceFactIds": [
+          "pick:1312209616385343488:27:execution",
+          "pick:1312209616385343488:21:execution",
+          "team:1312209616372772864:3:capital_ratio"
+        ]
+      }
+    },
+    {
+      "rosterId": 12,
+      "teamName": "Bronco Stampede",
+      "managerName": "5FinkleRay",
+      "rank": null,
+      "rankStatus": "unranked",
+      "cycle": {
+        "status": "incomplete_no_picks",
+        "score": null,
+        "grade": "INC"
+      },
+      "components": {
+        "execution": {
+          "status": "not_applicable",
+          "score": null,
+          "grade": "INC"
+        },
+        "capital": {
+          "status": "scored",
+          "score": 64.2,
+          "ratio": 0.8443,
+          "valueSent": 14900.1,
+          "valueReceived": 12580.6,
+          "transactionCount": 4,
+          "estimatedLegs": 6,
+          "flooredLegs": 0,
+          "legs": [
+            {
+              "transactionId": "1395984359407755264",
+              "direction": "received",
+              "asset": "Gunnar Helm",
+              "value": 1151.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1395984359407755264",
+              "direction": "sent",
+              "asset": "Greg Dulcich",
+              "value": 867.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1395984359407755264",
+              "direction": "sent",
+              "asset": "R4 pick -> Carson Beck",
+              "value": 932.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "received",
+              "asset": "J.J. McCarthy",
+              "value": 718.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "sent",
+              "asset": "Jayden Daniels",
+              "value": 3596.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "sent",
+              "asset": "Troy Franklin",
+              "value": 791.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "sent",
+              "asset": "R3 pick -> Drew Allar",
+              "value": 856.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "sent",
+              "asset": "2027 round 4 pick",
+              "value": 288.1,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "received",
+              "asset": "2026 round 2 pick",
+              "value": 1409.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "received",
+              "asset": "2026 round 1 pick",
+              "value": 2610.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1274605316889120768",
+              "direction": "received",
+              "asset": "2027 round 2 pick",
+              "value": 1197.6,
+              "valuationBasis": "future_estimate"
+            },
+            {
+              "transactionId": "1276958205578051584",
+              "direction": "received",
+              "asset": "Ladd McConkey",
+              "value": 3915.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1276958205578051584",
+              "direction": "sent",
+              "asset": "R1 pick -> Kenyon Sadiq",
+              "value": 2202.0,
+              "valuationBasis": "realized"
+            },
+            {
+              "transactionId": "1276958205578051584",
+              "direction": "sent",
+              "asset": "2026 round 2 pick",
+              "value": 1409.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1276958205578051584",
+              "direction": "sent",
+              "asset": "2026 round 1 pick",
+              "value": 2610.0,
+              "valuationBasis": "slot_estimate"
+            },
+            {
+              "transactionId": "1276942200353079296",
+              "direction": "sent",
+              "asset": "Phil Mafah",
+              "value": 27.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1276942200353079296",
+              "direction": "received",
+              "asset": "Tyler Allgeier",
+              "value": 1580.0,
+              "valuationBasis": "market"
+            },
+            {
+              "transactionId": "1276942200353079296",
+              "direction": "sent",
+              "asset": "R2 pick -> Caleb Douglas",
+              "value": 1322.0,
+              "valuationBasis": "realized"
+            }
+          ]
+        },
+        "fit": {
+          "status": "not_applicable",
+          "score": null,
+          "preDraftRoomRanks": {
+            "QB": 1,
+            "RB": 5,
+            "WR": 1,
+            "TE": 6
+          },
+          "reconstructionMethod": "post_draft_minus_rookies"
+        }
+      },
+      "capture": {
+        "expertPct": null,
+        "marketPct": null
+      },
+      "pickCounts": {
+        "total": 0,
+        "original": 0,
+        "acquired": 0
+      },
+      "picks": [],
+      "narrative": {
+        "headline": "No selections; graded on capital management alone",
+        "commentary": "Bronco Stampede made no selection in this cycle.",
+        "bestPick": "No selection made in this cycle.",
+        "biggestQuestion": "Does standing pat through four rounds fit this roster's window?",
+        "verdict": "Incomplete: no selections to grade. Capital activity is shown separately.",
+        "capitalNote": "Received 84.4% of the value sent across 4 completed trades containing 2026 capital (12,581 received against 14,900 sent, market snapshot). 6 legs valued by estimate rather than a realized selection.",
+        "evidenceFactIds": [
+          "team:1312209616372772864:12:capital_ratio"
+        ]
+      }
+    }
+  ]
 }

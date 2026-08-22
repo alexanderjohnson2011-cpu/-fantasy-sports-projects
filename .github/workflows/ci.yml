@@ -1,0 +1,73 @@
+name: CI & Data Quality Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy google-cloud-storage google-cloud-bigquery
+
+      - name: Verify Mobile Runtime Integrity
+        run: npm run check:runtime
+
+      - name: Build Almanac Frontend & Sites Worker
+        run: npm run build
+
+      - name: Run Sites Packaging Integration Tests
+        run: npm run test:sites
+
+      - name: Run P3 Canonical Rebuild Drill
+        run: python sleeper_work/rebuild_drill.py
+
+      - name: Run P4 Feature Store Leakage Guard
+        run: python sleeper_work/check_feature_leakage.py
+
+      - name: Run P7 Scoring Reconciliation Audit
+        run: python sleeper_work/scoring_reconciliation.py
+
+      - name: Run P7 Lineup Optimizer & Hindsight Lens Tests
+        run: python sleeper_work/lineup_optimizer.py
+
+      - name: Run P7 Matchup Timeline & Decisive Event Engine
+        run: python sleeper_work/matchup_timeline.py
+
+      - name: Run P8 Monte Carlo Calibration & Golden Tests
+        run: python sleeper_work/forecast_calibration.py
+
+      - name: Run P9 Story Facts Validation
+        run: python sleeper_work/story_facts_generator.py
+
+      - name: Run P9 Hall of Mac Approval Workflow
+        run: python sleeper_work/hall_of_mac_approval.py
+
+      - name: Run P9 Season-Close Demotion Job Drill
+        run: python sleeper_work/season_close_demotion_drill.py

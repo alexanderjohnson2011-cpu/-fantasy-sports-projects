@@ -22,6 +22,7 @@ import "@fontsource/ibm-plex-sans-condensed/600.css";
 import leagueInsightsJson from "./generated/league-insights.json";
 import macSaladAwardsJson from "./generated/mac-salad-awards.json";
 import forecastInsightsJson from "./generated/forecast-insights.json";
+import draftRecapJson from "./generated/draft-recap.json";
 
 type TeamForecast = {
   rosterId: number;
@@ -180,297 +181,52 @@ type Team = {
   marketCapture?: number;
   originalPicks: number;
   acquiredPicks: number;
-  scores: { execution: number; capital: number; fit: number };
+  cycleScore: number | null;
+  cycleGrade: string;
+  scores: { execution: number | null; capital: number | null; fit: number | null };
   picks: Pick[];
 };
 
-const teams: Team[] = [
-  {
-    rosterId: 6,
-    rank: 1,
-    name: "Final Boss",
-    manager: "OldManBacala",
-    headline: "Great selections, weaker capital management",
-    commentary: "Final Boss landed the consensus rookie No. 2 at 1.03, then spent discounted late picks on the roster's weakest room. Tate gives the rebuild a true centerpiece; Allen and McGowan are the right kind of low-cost RB bets, and Carson Beck closed the class as a genuine fourth-round value.",
-    bestPick: "Carnell Tate at 1.03",
-    question: "Did a rebuilding roster need Tucker Kraft more than the liquidity of 1.04?",
-    verdict: "The selections were the league's cleanest marriage of value and team direction. The 1.04 trade trims the permanent grade one notch.",
-    capitalNote: "Retained 96.1% of current value sent. Trading 1.04 for Tucker Kraft was defensible, but it worked against the flexibility a rebuild usually needs.",
-    capitalOutcome: 96.1,
-    expertCapture: 120.1,
-    marketCapture: 118.5,
-    originalPicks: 2,
-    acquiredPicks: 1,
-    scores: { execution: 94, capital: 77, fit: 91 },
-    picks: [
-      { slot: "1.03", player: "Carnell Tate", position: "WR", expertRank: 2, marketRank: 2 },
-      { slot: "3.05", player: "Kaytron Allen", position: "RB", expertRank: 28, marketRank: 29, acquired: true },
-      { slot: "4.03", player: "Seth McGowan", position: "RB", expertRank: 41, marketRank: 43 },
-      { slot: "4.10", player: "Carson Beck", position: "QB", expertRank: 38, marketRank: 29 },
-    ],
+const draftRecap = draftRecapJson;
+
+// Draft Recap facts come from the generated payload. Nothing about a team is
+// authored here and no grade is computed in the browser: the pipeline owns the
+// scoring engine (MASTER_PLAN P5-1).
+const teams: Team[] = draftRecap.teams.map((entry) => ({
+  rosterId: entry.rosterId,
+  rank: entry.rank ?? draftRecap.teams.length,
+  name: entry.teamName,
+  manager: entry.managerName,
+  headline: entry.narrative.headline,
+  commentary: entry.narrative.commentary,
+  bestPick: entry.narrative.bestPick,
+  question: entry.narrative.biggestQuestion,
+  verdict: entry.narrative.verdict,
+  capitalNote: entry.narrative.capitalNote,
+  capitalOutcome:
+    entry.components.capital.ratio != null
+      ? Number((entry.components.capital.ratio * 100).toFixed(1))
+      : undefined,
+  expertCapture: entry.capture.expertPct ?? undefined,
+  marketCapture: entry.capture.marketPct ?? undefined,
+  originalPicks: entry.pickCounts.original,
+  acquiredPicks: entry.pickCounts.acquired,
+  cycleScore: entry.cycle.score,
+  cycleGrade: entry.cycle.grade,
+  scores: {
+    execution: entry.components.execution.score,
+    capital: entry.components.capital.score,
+    fit: entry.components.fit.score,
   },
-  {
-    rosterId: 11,
-    rank: 2,
-    name: "Terry Tate’s Pain Train",
-    manager: "mannyrsox24",
-    headline: "Excellent picks; the full trade ledger lands near neutral",
-    commentary: "Price was a defensible need pick, Lemon was a clean first-round value, and the board then turned into a hunt for asymmetric upside. Hurst and Delp fell well beyond expert consensus, while Washington is the class's defining experts-versus-market disagreement.",
-    bestPick: "Ted Hurst at 3.06",
-    question: "Can Jadarian Price justify moving the best established asset in the deal?",
-    verdict: "This is how a lower-tier roster should use a draft window: turn depth into more value at its weakest position, then layer in asymmetric upside.",
-    capitalNote: "The Olave deal returned 112.5% of value as traded and 116.7% after the picks. An earlier 2.06-for-Kayshon Boutte sale pulls the full-cycle result back to 101.0%.",
-    capitalOutcome: 101,
-    expertCapture: 114.5,
-    marketCapture: 113.8,
-    originalPicks: 3,
-    acquiredPicks: 2,
-    scores: { execution: 92, capital: 82, fit: 89 },
-    picks: [
-      { slot: "1.04", player: "Jadarian Price", position: "RB", expertRank: 5, marketRank: 4, acquired: true },
-      { slot: "1.06", player: "Makai Lemon", position: "WR", expertRank: 4, marketRank: 5 },
-      { slot: "2.12", player: "Mike Washington", position: "RB", expertRank: 26, marketRank: 15, acquired: true },
-      { slot: "3.06", player: "Ted Hurst", position: "WR", expertRank: 19, marketRank: 26 },
-      { slot: "4.06", player: "Oscar Delp", position: "TE", expertRank: 30, marketRank: 36 },
-    ],
-  },
-  {
-    rosterId: 2,
-    rank: 3,
-    name: "2 Dagos and A Dream",
-    manager: "TGamby",
-    headline: "Value everywhere, with every pick aimed at a weakness",
-    commentary: "Boston came off the board a little early, but Simpson and Thompson were excellent Day 3 values. Every selection attacked a bottom-two position room, and the separate 2.08-for-Harold Fannin result gives this class the league's strongest capital backdrop.",
-    bestPick: "Ty Simpson at 3.08",
-    question: "Was Denzel Boston worth passing on the higher-ranked names at 1.08?",
-    verdict: "All three original selections attacked bottom-two rooms. Turning 2.08 into Harold Fannin adds the strongest capital result in the league.",
-    capitalNote: "Current value returned is 197.9% of value sent, driven by Harold Fannin's appreciation after the trade. The model caps this at an A because some of the gain is retrospective.",
-    capitalOutcome: 197.9,
-    expertCapture: 117,
-    marketCapture: 104.7,
-    originalPicks: 3,
-    acquiredPicks: 0,
-    scores: { execution: 88, capital: 97, fit: 93 },
-    picks: [
-      { slot: "1.08", player: "Denzel Boston", position: "WR", expertRank: 10, marketRank: 8 },
-      { slot: "3.08", player: "Ty Simpson", position: "QB", expertRank: 20, marketRank: 24 },
-      { slot: "4.08", player: "Brenen Thompson", position: "WR", expertRank: 37, marketRank: 50 },
-    ],
-  },
-  {
-    rosterId: 4,
-    rank: 4,
-    name: "Bub’s Club",
-    manager: "bubberdubber",
-    headline: "Strong acquisition economics lift an uneven nine-pick haul",
-    commentary: "Love was automatic, Sadiq was fair, and Cooper was one of the board's clearest wins. The class got far more volatile after that: Williams and Lance beat consensus, while Douglas, Benson, and now Klubnik required conviction well ahead of the expert board.",
-    bestPick: "Omar Cooper at 2.01",
-    question: "Why spend so much capital ahead of consensus after the early wins?",
-    verdict: "The picks were mixed, but four acquired selections were earned through sharp capital management—not purchased through overpayment.",
-    capitalNote: "Five of nine picks were acquired. The complete ledger returns 138.6% of value sent, earning an A for capital management without granting a volume bonus.",
-    capitalOutcome: 138.6,
-    expertCapture: 97.7,
-    marketCapture: 99.6,
-    originalPicks: 4,
-    acquiredPicks: 5,
-    scores: { execution: 79, capital: 92, fit: 84 },
-    picks: [
-      { slot: "1.01", player: "Jeremiyah Love", position: "RB", expertRank: 1, marketRank: 1 },
-      { slot: "1.09", player: "Jonah Coleman", position: "RB", expertRank: 12, marketRank: 11, acquired: true },
-      { slot: "1.10", player: "Kenyon Sadiq", position: "TE", expertRank: 9, marketRank: 7, acquired: true },
-      { slot: "2.01", player: "Omar Cooper", position: "WR", expertRank: 7, marketRank: 13 },
-      { slot: "2.10", player: "Caleb Douglas", position: "WR", expertRank: 36, marketRank: 21, acquired: true },
-      { slot: "3.01", player: "Antonio Williams", position: "WR", expertRank: 14, marketRank: 18 },
-      { slot: "3.11", player: "Malik Benson", position: "WR", expertRank: 58, marketRank: 40, acquired: true },
-      { slot: "4.01", player: "Bryce Lance", position: "WR", expertRank: 34, marketRank: 42 },
-      { slot: "4.09", player: "Cade Klubnik", position: "QB", expertRank: 54, marketRank: 46, acquired: true },
-    ],
-  },
-  {
-    rosterId: 1,
-    rank: 5,
-    name: "Ertz & Krafts",
-    manager: "jccbraves99",
-    headline: "Ordinary picks, excellent contender consolidation",
-    commentary: "Bell, Claiborne, and Klare all met or beat the expert board, although the live market is cooler on the trio. Barion Brown added a real market-value swing at 4.12, even if the expert board was much less enthusiastic. The sharper move came away from the clock, where surplus TE depth and bridge capital became Chris Olave without a meaningful market premium.",
-    bestPick: "Chris Bell at 2.06",
-    question: "Was Max Klare the best use of a pick for the league's No. 2 TE room?",
-    verdict: "Solid, low-ceiling selections paired with smart roster-shape management. That is enough to raise the full-cycle grade.",
-    capitalNote: "The 1.04 bridge trades were nearly value-neutral, but effectively converted Tucker Kraft, Tyjae Spears and 2.12 into Chris Olave and Dylan Sampson.",
-    capitalOutcome: 101.2,
-    expertCapture: 117,
-    marketCapture: 83.3,
-    originalPicks: 1,
-    acquiredPicks: 2,
-    scores: { execution: 78, capital: 86, fit: 83 },
-    picks: [
-      { slot: "2.06", player: "Chris Bell", position: "WR", expertRank: 16, marketRank: 25, acquired: true },
-      { slot: "3.04", player: "Demond Claiborne", position: "RB", expertRank: 24, marketRank: 27, acquired: true },
-      { slot: "3.12", player: "Max Klare", position: "TE", expertRank: 31, marketRank: 44 },
-      { slot: "4.12", player: "Barion Brown", position: "WR", expertRank: 64, marketRank: 39 },
-    ],
-  },
-  {
-    rosterId: 10,
-    rank: 6,
-    name: "Bijan And The Maye-ssiah",
-    manager: "jcflash59",
-    headline: "Capital wins rescue inefficient selections",
-    commentary: "The positional thesis was correct—receiver was the roster's weakest starting room—but three straight WR selections came ahead of consensus. Heidenreich and Joly improved the finish, while an excellent trade ledger prevented inefficient picks from defining the cycle.",
-    bestPick: "Justin Joly at 4.07",
-    question: "Can one of three receivers taken ahead of consensus separate from the tier?",
-    verdict: "Strong acquisition economics pull a good roster's permanent result back to average after an undisciplined draft board.",
-    capitalNote: "The ledger returns 146.4% of value sent, driven partly by acquiring Romeo Doubs, Wan'Dale Robinson and 4.02 for Terrell Jennings and 3.07.",
-    capitalOutcome: 146.4,
-    expertCapture: 93.6,
-    marketCapture: 84.2,
-    originalPicks: 3,
-    acquiredPicks: 2,
-    scores: { execution: 68, capital: 94, fit: 76 },
-    picks: [
-      { slot: "1.07", player: "De'Zhaun Stribling", position: "WR", expertRank: 13, marketRank: 10 },
-      { slot: "2.07", player: "Malachi Fields", position: "WR", expertRank: 22, marketRank: 20 },
-      { slot: "2.08", player: "Elijah Sarratt", position: "WR", expertRank: 23, marketRank: 33, acquired: true },
-      { slot: "4.02", player: "Eli Heidenreich", position: "RB", expertRank: 39, marketRank: 47, acquired: true },
-      { slot: "4.07", player: "Justin Joly", position: "TE", expertRank: 35, marketRank: 39 },
-    ],
-  },
-  {
-    rosterId: 5,
-    rank: 7,
-    name: "My Nabers Tetties",
-    manager: "DRockefeller",
-    headline: "Efficiently acquired capital, uneven execution",
-    commentary: "The first-round foundation was sound, then Cyrus Allen introduced the draft's widest expert-market disagreement. Stowers and Black delivered a strong recovery, and the five acquired picks were assembled efficiently enough to keep one aggressive reach from sinking the whole cycle.",
-    bestPick: "Eli Stowers at 3.02",
-    question: "Was Cyrus Allen at 2.03 worth betting two rounds against consensus?",
-    verdict: "Five acquired picks were assembled efficiently, but the on-clock results still need Stowers and the RB swings to do repair work.",
-    capitalNote: "Five of seven picks were acquired. The current full-cycle ledger returns 112.0% of value sent, preventing the class from being treated as empty volume.",
-    capitalOutcome: 112,
-    expertCapture: 88.2,
-    marketCapture: 95.7,
-    originalPicks: 2,
-    acquiredPicks: 5,
-    scores: { execution: 67, capital: 85, fit: 75 },
-    picks: [
-      { slot: "1.02", player: "Jordyn Tyson", position: "WR", expertRank: 3, marketRank: 3 },
-      { slot: "1.05", player: "KC Concepcion", position: "WR", expertRank: 6, marketRank: 6, acquired: true },
-      { slot: "1.11", player: "Fernando Mendoza", position: "QB", expertRank: 13, marketRank: 9, acquired: true },
-      { slot: "2.03", player: "Cyrus Allen", position: "WR", expertRank: 40, marketRank: 17, acquired: true },
-      { slot: "2.05", player: "Emmett Johnson", position: "RB", expertRank: 18, marketRank: 23, acquired: true },
-      { slot: "3.02", player: "Eli Stowers", position: "TE", expertRank: 13, marketRank: 14 },
-      { slot: "3.07", player: "Kaelon Black", position: "RB", expertRank: 25, marketRank: 28, acquired: true },
-    ],
-  },
-  {
-    rosterId: 7,
-    rank: 8,
-    name: "Gridiron geezers",
-    manager: "kong58",
-    headline: "Correct positions, expensive capital path",
-    commentary: "No roster needed receivers more, and every selection went directly at that problem. Bernard was slightly early and Branch slightly late, then Zavion Thomas supplied a clean fourth-round value swing; the expensive acquisition path is what keeps the class from climbing.",
-    bestPick: "Zachariah Branch at 2.11",
-    question: "Do two mid-tier receivers materially repair the league's weakest WR room?",
-    verdict: "Need alignment keeps the grade afloat, but the acquisition ledger makes 2.02 more expensive than it first appears.",
-    capitalNote: "One of two selections was acquired. The full ledger returns 85.8% of value sent, so the extra pick slightly reduces rather than improves the permanent grade.",
-    capitalOutcome: 85.8,
-    expertCapture: 93,
-    marketCapture: 90.5,
-    originalPicks: 1,
-    acquiredPicks: 1,
-    scores: { execution: 74, capital: 67, fit: 90 },
-    picks: [
-      { slot: "2.02", player: "Germie Bernard", position: "WR", expertRank: 18, marketRank: 22, acquired: true },
-      { slot: "2.11", player: "Zachariah Branch", position: "WR", expertRank: 21, marketRank: 19 },
-      { slot: "4.11", player: "Zavion Thomas", position: "WR", expertRank: 43, marketRank: 44 },
-    ],
-  },
-  {
-    rosterId: 8,
-    rank: 9,
-    name: "arkinsjt",
-    manager: "arkinsjt",
-    headline: "Near-neutral capital and sensible need picks",
-    commentary: "Singleton was almost exactly consensus value and directly repaired a weak RB room. Hibner is the swing: in a no-TE-premium league, athletic promise is not enough—he must become a credible weekly starter to repay the opportunity cost.",
-    bestPick: "Nicholas Singleton at 2.04",
-    question: "Can Hibner become a starter in a league that gives tight ends no premium?",
-    verdict: "Two selections attacked bottom-three rooms. Capital management was neutral enough to leave the pick grade intact.",
-    capitalNote: "Both selections were original. Other 2026-pick trades retained 98.0% of value sent—close enough to neutral that capital does not move the grade.",
-    capitalOutcome: 98,
-    expertCapture: 87.3,
-    marketCapture: 96.3,
-    originalPicks: 2,
-    acquiredPicks: 0,
-    scores: { execution: 73, capital: 79, fit: 82 },
-    picks: [
-      { slot: "2.04", player: "Nicholas Singleton", position: "RB", expertRank: 15, marketRank: 16 },
-      { slot: "4.04", player: "Matt Hibner", position: "TE", expertRank: 56, marketRank: 45 },
-    ],
-  },
-  {
-    rosterId: 9,
-    rank: 10,
-    name: "Max’s Shadynasty",
-    manager: "maxjabb",
-    headline: "One value pick cannot cover capital leakage",
-    commentary: "Bell was a clean third-round value, but Allar was taken ahead of the expert median at a position where this roster was already strong. In 1QB with four-point passing touchdowns, the quarterback bet needs a real value spike or an active trade market.",
-    bestPick: "Skyler Bell at 3.09",
-    question: "Why add another QB to the league's No. 3 room in a one-quarterback format?",
-    verdict: "The selections were acceptable. The full acquisition record pulls the result down one notch.",
-    capitalNote: "Skyler Bell was acquired, Drew Allar was original. The full ledger returns 85.3% of value sent, so Bell's bargain was not free volume.",
-    capitalOutcome: 85.3,
-    expertCapture: 96.2,
-    marketCapture: 100.5,
-    originalPicks: 1,
-    acquiredPicks: 1,
-    scores: { execution: 74, capital: 65, fit: 63 },
-    picks: [
-      { slot: "3.09", player: "Skyler Bell", position: "WR", expertRank: 27, marketRank: 35, acquired: true },
-      { slot: "3.10", player: "Drew Allar", position: "QB", expertRank: 42, marketRank: 31 },
-    ],
-  },
-  {
-    rosterId: 3,
-    rank: 11,
-    name: "The Ape",
-    manager: "sduda351",
-    headline: "Acquired picks magnify four below-market selections",
-    commentary: "Every selection came ahead of expert consensus, and three of the four picks carried an acquisition cost. Lane or Randall can still make the conviction look sharp, but adding again to already-strong WR and TE rooms demanded better prices than the board supplied.",
-    bestPick: "Eli Raridon at 3.03",
-    question: "Why keep adding to the roster's strongest rooms?",
-    verdict: "Conviction is not free. Lane or Randall needs to become a clear outlier for this class to beat its opportunity cost.",
-    capitalNote: "Three of four picks were acquired. The ledger returns 83.5% of value sent, increasing the burden rather than softening it.",
-    capitalOutcome: 83.5,
-    expertCapture: 67,
-    marketCapture: 77.5,
-    originalPicks: 1,
-    acquiredPicks: 3,
-    scores: { execution: 51, capital: 62, fit: 54 },
-    picks: [
-      { slot: "1.12", player: "Ja'Kobi Lane", position: "WR", expertRank: 22, marketRank: 12, acquired: true },
-      { slot: "2.09", player: "Adam Randall", position: "RB", expertRank: 35, marketRank: 34, acquired: true },
-      { slot: "3.03", player: "Eli Raridon", position: "TE", expertRank: 32, marketRank: 32, acquired: true },
-      { slot: "4.05", player: "Colbie Young", position: "WR", expertRank: 47, marketRank: 53 },
-    ],
-  },
-  {
-    rosterId: 12,
-    rank: 12,
-    name: "Bronco Stampede",
-    manager: "5FinkleRay",
-    headline: "The league favorite chose liquidity over a rookie class",
-    commentary: "Bronco Stampede moved every original selection and finished the draft without making a pick. That cannot weaken the league's best current roster by itself, but the 83.8% capital return means the no-pick strategy did not preserve full market value.",
-    bestPick: "No rookie selection",
-    question: "Did moving every 2026 selection create enough present value for a title favorite?",
-    verdict: "The absence of rookies is not the concern; the price received is. A loaded roster can rationally sell picks, but this ledger currently returns only 83.8% of the value sent.",
-    capitalNote: "No selection was made. Current capital retained is 83.8% of value sent, so the final capital-management mark is a C.",
-    capitalOutcome: 83.8,
-    originalPicks: 0,
-    acquiredPicks: 0,
-    scores: { execution: 0, capital: 64, fit: 88 },
-    picks: [],
-  },
-];
+  picks: entry.picks.map((pick) => ({
+    slot: pick.slot,
+    player: pick.playerName,
+    position: pick.position,
+    expertRank: pick.expertConsensusRank ?? undefined,
+    marketRank: pick.marketRookieRank ?? undefined,
+    acquired: pick.provenance === "acquired",
+  })),
+}));
 
 const powerEditorial: Record<number, { headline: string; now: string; future: string }> = {
   12: {
@@ -535,12 +291,11 @@ const powerEditorial: Record<number, { headline: string; now: string; future: st
   },
 };
 
-const draftSuperlatives = [
-  ["Best foundational pick", "Carnell Tate · 1.03", "Consensus No. 2 talent to the league's clearest rebuild."],
-  ["Best first-round value", "Makai Lemon · 1.06", "Every expert source placed him inside the top four."],
-  ["Best Day 3 value", "Ted Hurst · 3.06", "Expert rank 19; selected 30th overall."],
-  ["Largest conviction bet", "Cyrus Allen · 2.03", "Expert rank 40 versus live-market rank 17."],
-] as const;
+// Superlatives are chosen by explicit selectors in the pipeline (sub-plan ss12.7),
+// not curated here. A category with no qualifying pick is omitted upstream.
+const draftSuperlatives = draftRecap.superlatives.map(
+  (s) => [s.label, s.displayWinner, s.note] as const,
+);
 
 type NavId = "analysis" | "power" | "matchups" | "forecast";
 
@@ -589,25 +344,12 @@ function rankBar(rank: number) {
 }
 
 function draftCycleScore(team: Team) {
-  return Number((team.scores.execution * 0.6 + team.scores.capital * 0.3 + team.scores.fit * 0.1).toFixed(1));
+  return team.cycleScore;
 }
 
-function gradeDraftScore(score: number, hasPicks = true) {
-  if (!hasPicks) return "INC";
-  if (score >= 95) return "A+";
-  if (score >= 92) return "A";
-  if (score >= 87) return "A−";
-  if (score >= 80) return "B+";
-  if (score >= 76.5) return "B";
-  if (score >= 73) return "B−";
-  if (score >= 68) return "C+";
-  if (score >= 60) return "C";
-  if (score >= 50) return "C−";
-  return "D";
-}
-
+// The payload carries ASCII grades; the product renders a typographic minus.
 function draftCycleGrade(team: Team) {
-  return gradeDraftScore(draftCycleScore(team), team.picks.length > 0);
+  return team.cycleGrade.replace("-", "−");
 }
 
 function rankComponentScore(rank: number) {
@@ -891,7 +633,13 @@ function AnalysisScreen({
           <p className="issue-deck">Every pick, trade, and roster fit—graded like a real draft desk, for this league.</p>
         </section>
         <div className="issue-rule" aria-label="Report status">
-          <span>Aug 20 · {leagueInsights.draftState.status}</span>
+          <span>
+            {new Date(draftRecap.draft.snapshotAsOfUtc).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            })}{" · "}
+            {draftRecap.draft.status}
+          </span>
           <span>{leagueInsights.draftState.picksMade} / {leagueInsights.draftState.totalPicks} picks</span>
         </div>
         <button className="lead-story" type="button" onClick={() => onTeam(featured)}>
@@ -912,9 +660,9 @@ function AnalysisScreen({
             </div>
           </div>
           <div className="lead-scores">
-            <div><span>Pick execution</span><strong>{featured.scores.execution}</strong></div>
-            <div><span>Capital</span><strong>{featured.scores.capital}</strong></div>
-            <div><span>Roster fit</span><strong>{featured.scores.fit}</strong></div>
+            <div><span>Pick execution</span><strong>{featured.scores.execution ?? "—"}</strong></div>
+            <div><span>Capital</span><strong>{featured.scores.capital ?? "—"}</strong></div>
+            <div><span>Roster fit</span><strong>{featured.scores.fit ?? "—"}</strong></div>
           </div>
         </button>
         <section className="board-section" aria-labelledby="board-title">
@@ -955,7 +703,13 @@ function AnalysisScreen({
             ))}
           </section>
         </section>
-        <p className="method-note">Final after all 48 Sleeper selections. Grades use league-specific settings, four expert boards, current market values, and the full 2026-pick trade ledger.</p>
+        <p className="method-note">
+          {draftRecap.draft.isFinal
+            ? `Final after all ${draftRecap.draft.picksMade} Sleeper selections.`
+            : `Provisional at ${draftRecap.draft.picksMade} of ${draftRecap.draft.totalPicks} selections.`}{" "}
+          Grades use league-specific settings, {draftRecap.methodology.expertSources.length} expert boards,
+          current market values, and the full {draftRecap.league.season}-pick trade ledger.
+        </p>
       </main>
     </div>
   );
@@ -971,11 +725,11 @@ function DetailHeader({ onBack, team, context, grade }: { onBack: () => void; te
   );
 }
 
-function ScoreBar({ label, value }: { label: string; value: number }) {
+function ScoreBar({ label, value }: { label: string; value: number | null }) {
   return (
     <div className="score-bar">
-      <div className="score-bar__label"><span>{label}</span><span>{value || "—"} · {value ? scoreLabel(value) : "Pending"}</span></div>
-      <div className="score-bar__track"><span style={{ width: value + "%" }} /></div>
+      <div className="score-bar__label"><span>{label}</span><span>{value ?? "—"} · {value != null ? scoreLabel(value) : "Not applicable"}</span></div>
+      <div className="score-bar__track"><span style={{ width: (value ?? 0) + "%" }} /></div>
     </div>
   );
 }
@@ -1009,7 +763,7 @@ function DraftTeamScreen({ team }: { team: Team }) {
           <ScoreBar label="Roster construction" value={team.scores.fit} />
           <div className="grade-compare">
             <div><span>Pick grade</span><strong>{insight.draftAudit.executionGrade}</strong></div>
-            <div><span>Cycle grade</span><strong>{draftCycleGrade(team)}</strong><small>{draftCycleScore(team)} / 100</small></div>
+            <div><span>Cycle grade</span><strong>{draftCycleGrade(team)}</strong><small>{draftCycleScore(team) != null ? `${draftCycleScore(team)} / 100` : "Incomplete"}</small></div>
           </div>
           {heaviestPick ? (
             <p className="grade-audit-note"><strong>Why the pick letters do not average evenly:</strong> selections are weighted by nonlinear slot value. {heaviestPick.slot} represents {heaviestPickWeight.toFixed(0)}% of this class’s expected draft capital, so its result matters far more than a fourth-round pick.</p>
