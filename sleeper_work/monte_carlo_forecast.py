@@ -40,18 +40,18 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = KEY_PATH
 
 # 12 Teams Roster Baseline Mapping
 TEAM_NAMES = {
-    1: "Bronco Stampede",
+    1: "Ertz & Krafts 🏆",
     2: "2 Dagos and A Dream",
-    3: "Calamari Express",
-    4: "Austin Ekeler's Guitar Hero",
-    5: "Young Guns",
+    3: "The Ape",
+    4: "Bub’s Club",
+    5: "My Nabers Tetties",
     6: "Final Boss",
-    7: "The Big Kahuna",
-    8: "Dynasty Kingpin",
-    9: "Gridiron Gorilla",
-    10: "Touchdown Titans",
+    7: "Gridiron geezers",
+    8: "arkinsjt",
+    9: "Max’s Shadynasty",
+    10: "Bijan And The Maye-ssiah",
     11: "Terry Tate’s Pain Train",
-    12: "Red Zone Renegades"
+    12: "Bronco Stampede"
 }
 
 # Fluctuation & Injury Narrative Archetypes per Team
@@ -60,7 +60,7 @@ FLUCTUATION_NARRATIVES = {
         "headline": "Elite lineup floor creates the league's highest regular season ceiling",
         "trend": "Up +1.4 wins since post-draft baseline",
         "primaryDriver": "STARTING_STRENGTH",
-        "analysis": "Red Zone Renegades boasts the No. 1 redraft starting lineup. Even with zero 2027 firsts, their weekly scoring consistency insulates them from major matchup variance across 14 weeks.",
+        "analysis": "Bronco Stampede boasts the No. 1 redraft starting lineup. Even with zero 2027 firsts, their weekly scoring consistency insulates them from major matchup variance across 14 weeks.",
         "keyRisk": "Tight end room lacks top-tier insurance; an injury to starter would force backup FLEX adjustments.",
         "historyNotes": [
             {"date": "2026-08-01", "expectedWins": 8.4, "playoffOdds": 84.0, "titleOdds": 22.5, "rank": 3, "event": "Post-Draft Initial Run"},
@@ -144,7 +144,7 @@ FLUCTUATION_NARRATIVES = {
         "headline": "Superstar wideouts provide explosive spikes alongside a thinner baseline",
         "trend": "Down -0.4 wins from preseason baseline",
         "primaryDriver": "SPIKE_WEEK_VOLATILITY",
-        "analysis": "Ja'Marr Chase and Garrett Wilson create massive weekly variance. In high-scoring shootout weeks, Gridiron Gorilla wins 68% of simulated games.",
+        "analysis": "Ja'Marr Chase and Garrett Wilson create massive weekly variance. In high-scoring shootout weeks, Max’s Shadynasty wins 68% of simulated games.",
         "keyRisk": "Low-ranked tight end and depth value limit floor in standard weekly grinds.",
         "historyNotes": [
             {"date": "2026-08-01", "expectedWins": 6.8, "playoffOdds": 52.0, "titleOdds": 3.8, "rank": 7, "event": "Post-Draft Initial Run"},

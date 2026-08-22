@@ -1318,7 +1318,7 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
                 <div className="marquee-preview-footer">
                   <div className="tv-callout">
                     <Television size={18} weight="duotone" />
-                    <span><b>Crucial TV Window:</b> Thursday 8:15 PM ET (NBC) · 8 Starters Active at Opening Kickoff</span>
+                    <span><b>Crucial TV Window:</b> {marqueeMatchup.tvSchedule[0]?.timeSlot} ({marqueeMatchup.tvSchedule[0]?.network}) · {marqueeMatchup.tvSchedule[0]?.fantasyPointsAtStake} at stake</span>
                   </div>
                   <div className="deep-dive-link">
                     <span>View Head-to-Head Deep Dive</span>
