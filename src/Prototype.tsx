@@ -1549,10 +1549,49 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
           </div>
         </section>
 
+        {/* Tactical Breakdown & Game Previews (Moved to Top as Section 01 Overview) */}
+        <section className="detail-block tactical-preview-container">
+          <div className="detail-title">
+            <span>01</span>
+            <h2>Tactical Breakdown & Game Previews</h2>
+          </div>
+          
+          <div className="tactical-headline-card">
+            <h3>{matchup.tacticalAnalysis.headline}</h3>
+            <p>{matchup.tacticalAnalysis.breakdown}</p>
+          </div>
+
+          <div className="key-variables-card">
+            <h4>Key Matchup Variables & Swing Factors</h4>
+            <ul>
+              {matchup.tacticalAnalysis.keyVariables.map((v, vIdx) => (
+                <li key={vIdx}>{v}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Positional Advantages */}
+          <div className="positional-edges-section">
+            <h4>Positional Edge Breakdown</h4>
+            <div className="positional-edges-grid">
+              {matchup.positionalEdges.map((edge, eIdx) => (
+                <div className="edge-card" key={eIdx}>
+                  <div className="edge-top">
+                    <span className="edge-cat">{edge.category}</span>
+                    <strong className="edge-margin">{edge.margin}</strong>
+                  </div>
+                  <span className="edge-adv-tag">{edge.advantage}</span>
+                  <p>{edge.narrative}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Crucial TV Viewing Schedule Section */}
         <section className="detail-block tv-schedule-container">
           <div className="detail-title">
-            <span>01</span>
+            <span>02</span>
             <h2>Crucial TV Viewing Schedule</h2>
           </div>
           <p className="detail-explainer">
@@ -1606,7 +1645,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
         {/* Tale of the Tape Starter Lineups Grid */}
         <section className="detail-block tale-of-tape-container">
           <div className="detail-title">
-            <span>02</span>
+            <span>03</span>
             <h2>Lineup Tale of the Tape</h2>
           </div>
           <p className="detail-explainer">
@@ -1663,45 +1702,6 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
                 </div>
               );
             })}
-          </div>
-        </section>
-
-        {/* Tactical Breakdown & Game Previews */}
-        <section className="detail-block tactical-preview-container">
-          <div className="detail-title">
-            <span>03</span>
-            <h2>Tactical Breakdown & Game Previews</h2>
-          </div>
-          
-          <div className="tactical-headline-card">
-            <h3>{matchup.tacticalAnalysis.headline}</h3>
-            <p>{matchup.tacticalAnalysis.breakdown}</p>
-          </div>
-
-          <div className="key-variables-card">
-            <h4>Key Matchup Variables & Swing Factors</h4>
-            <ul>
-              {matchup.tacticalAnalysis.keyVariables.map((v, vIdx) => (
-                <li key={vIdx}>{v}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Positional Advantages */}
-          <div className="positional-edges-section">
-            <h4>Positional Edge Breakdown</h4>
-            <div className="positional-edges-grid">
-              {matchup.positionalEdges.map((edge, eIdx) => (
-                <div className="edge-card" key={eIdx}>
-                  <div className="edge-top">
-                    <span className="edge-cat">{edge.category}</span>
-                    <strong className="edge-margin">{edge.margin}</strong>
-                  </div>
-                  <span className="edge-adv-tag">{edge.advantage}</span>
-                  <p>{edge.narrative}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
       </main>

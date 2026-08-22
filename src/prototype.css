@@ -4395,6 +4395,22 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
 
 .matchup-deep-dive-screen {
   padding-bottom: 60px;
+  width: 100%;
+}
+
+.matchup-deep-dive-screen .detail-page {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 36px;
+  max-width: 1040px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.matchup-deep-dive-screen .detail-block {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .matchup-hero-scoreboard {
@@ -4402,7 +4418,8 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
   border-radius: 4px;
   padding: 32px;
-  margin-bottom: 32px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .scoreboard-badge-row {
@@ -4453,13 +4470,15 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
 
 .scoreboard-clash-box {
   display: grid;
-  grid-template-columns: 1fr 160px 1fr;
+  grid-template-columns: 1fr 140px 1fr;
   align-items: center;
   gap: 24px;
   background: rgba(11, 51, 41, 0.02);
   border: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
   padding: 24px;
   border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
