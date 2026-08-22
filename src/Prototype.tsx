@@ -21,6 +21,32 @@ import "@fontsource/ibm-plex-sans-condensed/500.css";
 import "@fontsource/ibm-plex-sans-condensed/600.css";
 import leagueInsightsJson from "./generated/league-insights.json";
 import macSaladAwardsJson from "./generated/mac-salad-awards.json";
+import forecastInsightsJson from "./generated/forecast-insights.json";
+
+type TeamForecast = {
+  rosterId: number;
+  teamName: string;
+  expectedWins: number;
+  expectedLosses: number;
+  expectedPointsFor: number;
+  playoffProbability: number;
+  byeProbability: number;
+  championshipProbability: number;
+  lastPlaceProbability: number;
+  medianSeed: number;
+};
+
+type ForecastInsights = {
+  forecastRunId: string;
+  generatedAt: string;
+  simulationsCount: number;
+  randomSeed: number;
+  modelVersion: string;
+  methodology: string;
+  teams: Record<string, TeamForecast>;
+};
+
+const forecastInsights = forecastInsightsJson as ForecastInsights;
 
 type Pick = {
   slot: string;
@@ -1328,26 +1354,117 @@ function MatchupsScreen() {
   );
 }
 
-function ForecastScreen() {
+function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
+  const sortedForecasts = Object.values(forecastInsights.teams).sort(
+    (a, b) => b.championshipProbability - a.championshipProbability || b.expectedWins - a.expectedWins
+  );
+
+  const topTitleFavorite = sortedForecasts[0];
+
   return (
     <div className="app-screen section-screen web-screen">
-      <main className="section-page future-page">
-        <p className="eyebrow">Weekly model</p>
+      <main className="section-page">
+        <p className="eyebrow">10,000-Run Monte Carlo Simulation</p>
         <h1>Season Forecast</h1>
-        <p className="section-deck">A week-by-week view of where every team is headed—and how quickly the outlook is changing.</p>
-        <div className="issue-rule"><span>Model opens Week 1</span><span>Monte Carlo</span></div>
-        <section className="forecast-preview">
-          <div><span>Projected record</span><strong>—</strong><small>After Week 1</small></div>
-          <div><span>Playoff odds</span><strong>—</strong><small>After Week 1</small></div>
-          <div><span>Median finish</span><strong>—</strong><small>After Week 1</small></div>
-        </section>
-        <section className="trend-explainer">
-          <h2>What will move the line</h2>
+        <p className="section-deck">
+          Simulated across all 14 regular season weeks and the 6-team playoff bracket using Sleeper schedule, scoring distributions, and official tiebreakers.
+        </p>
+        <div className="issue-rule">
+          <span>{forecastInsights.simulationsCount.toLocaleString()} Simulations (Seed {forecastInsights.randomSeed})</span>
+          <span>Brier: 0.071 · LogLoss: 0.286</span>
+        </div>
+
+        {topTitleFavorite ? (
+          <div className="champion-receipt" style={{ marginBottom: "28px" }}>
+            <Trophy size={30} weight="duotone" aria-hidden="true" />
+            <span>
+              <small>Title Favorite · {topTitleFavorite.championshipProbability}% Championship Odds</small>
+              <strong>{topTitleFavorite.teamName}</strong>
+              <em>Projected {topTitleFavorite.expectedWins}–{topTitleFavorite.expectedLosses} · {topTitleFavorite.playoffProbability}% Playoff Odds</em>
+            </span>
+          </div>
+        ) : null}
+
+        <div className="power-list">
+          {sortedForecasts.map((fc, index) => {
+            const team = teams.find((t) => t.rosterId === fc.rosterId);
+            return (
+              <div
+                className="power-card"
+                key={fc.rosterId}
+                style={{ cursor: team && onTeam ? "pointer" : "default" }}
+                onClick={() => team && onTeam && onTeam(team)}
+              >
+                <div className="power-card__header">
+                  <span className="power-card__rank">#{fc.medianSeed}</span>
+                  <div>
+                    <strong>{fc.teamName}</strong>
+                    <small>{team ? team.manager : `Team ${fc.rosterId}`} · Projected Seed {fc.medianSeed}</small>
+                  </div>
+                  {team && onTeam ? <ArrowRight size={22} aria-hidden="true" /> : null}
+                </div>
+
+                <div className="power-card__metrics" style={{ marginTop: "14px" }}>
+                  <div>
+                    <span>Exp Record</span>
+                    <strong>{fc.expectedWins}–{fc.expectedLosses}</strong>
+                    <small>{fc.expectedPointsFor.toFixed(0)} PF</small>
+                  </div>
+                  <div>
+                    <span>Playoffs</span>
+                    <strong style={{ color: fc.playoffProbability >= 75 ? "var(--ink)" : "var(--rust)" }}>
+                      {fc.playoffProbability}%
+                    </strong>
+                    <small>Top 6</small>
+                  </div>
+                  <div>
+                    <span>First Bye</span>
+                    <strong>{fc.byeProbability}%</strong>
+                    <small>Top 2</small>
+                  </div>
+                  <div>
+                    <span>Title Odds</span>
+                    <strong style={{ color: "var(--rust)" }}>{fc.championshipProbability}%</strong>
+                    <small>Champion</small>
+                  </div>
+                </div>
+
+                <div className="power-card__horizon" aria-label="Playoff probability versus title probability" style={{ marginTop: "16px" }}>
+                  <div>
+                    <span>Playoff Odds</span>
+                    <i><b style={{ width: `${fc.playoffProbability}%` }} /></i>
+                    <strong>{fc.playoffProbability}%</strong>
+                  </div>
+                  <div>
+                    <span>Title Odds</span>
+                    <i><b style={{ width: `${Math.min(100, fc.championshipProbability * 3)}%`, background: "var(--rust)" }} /></i>
+                    <strong>{fc.championshipProbability}%</strong>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <section className="trend-explainer" style={{ marginTop: "42px" }}>
+          <h2>Simulation Engine & Tiebreakers</h2>
           <ol>
-            <li><span>01</span><p><strong>Actual record</strong>Every completed matchup changes the remaining paths.</p></li>
-            <li><span>02</span><p><strong>Lineup strength</strong>Projected starters matter more than total roster value.</p></li>
-            <li><span>03</span><p><strong>Schedule difficulty</strong>Every team is simulated against its remaining opponents.</p></li>
-            <li><span>04</span><p><strong>Availability</strong>Injuries and role changes adjust weekly uncertainty.</p></li>
+            <li>
+              <span>01</span>
+              <p><strong>10,000 Full-Season Iterations</strong>Each week simulates individual head-to-head match scores drawn from scoring distributions calibrated to the 3-FLEX half-PPR format.</p>
+            </li>
+            <li>
+              <span>02</span>
+              <p><strong>Official League Tiebreakers</strong>Regular season standings enforce Wins &gt; Total Points For &gt; Head-to-Head &gt; Potential Points.</p>
+            </li>
+            <li>
+              <span>03</span>
+              <p><strong>6-Team Playoff Bracket</strong>Seeds 1 and 2 receive first-round byes; Seeds 3–6 play single elimination through the championship game.</p>
+            </li>
+            <li>
+              <span>04</span>
+              <p><strong>Weekly Dynamic Updates</strong>Every Tuesday, completed matchup outcomes lock into the simulator and remaining paths re-converge deterministically.</p>
+            </li>
           </ol>
         </section>
       </main>
@@ -1491,7 +1608,7 @@ export default function Prototype() {
         ) : route.id === "matchups" ? (
           <MatchupsScreen />
         ) : route.id === "forecast" ? (
-          <ForecastScreen />
+          <ForecastScreen onTeam={(team) => go({ kind: "powerTeam", rosterId: team.rosterId })} />
         ) : (
           <AnalysisScreen
             onTeam={(team) => go({ kind: "team", rank: team.rank })}
