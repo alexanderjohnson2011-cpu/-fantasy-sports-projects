@@ -1,6 +1,6 @@
 {
   "season": "2026",
-  "closed_at_utc": "2026-08-22T06:08:22.113684+00:00",
+  "closed_at_utc": "2026-08-22T06:09:27.226608+00:00",
   "storage_lifecycle_policy": {
     "nearline_transition_days": 30,
     "coldline_transition_days": 90,
@@ -16,5 +16,17 @@
     "canonical.expert_rankings",
     "canonical.player_crosswalk"
   ],
-  "archived_model_artifacts": {}
+  "archived_model_artifacts": {
+    "forecast_insights": {
+      "run_id": "fc_202608220609_42",
+      "random_seed": 42,
+      "simulations": 10000,
+      "sha256": "5f8ad83f1fc61dff10cf842d5c906cfc2be41aee2d1d025cdd94624cbe1a9530"
+    },
+    "draft_recap": {
+      "draft_id": null,
+      "picks_analyzed": null,
+      "sha256": "87a466219ae5b6a9aa271f28dc0bb77f3a6e89955b537b5f6a99c8be69506f34"
+    }
+  }
 }

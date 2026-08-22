@@ -34,12 +34,25 @@ def generate_story_facts():
     facts = []
     
     # Extract Draft Narrative Facts
-    for r_id_str, team_draft in draft_recap["teams"].items():
-        r_id = int(r_id_str)
-        scores = team_draft["scores"]
-        picks = team_draft["picks"]
+    teams_data = draft_recap.get("teams", [])
+    team_list = teams_data.values() if isinstance(teams_data, dict) else teams_data
+
+    for team_draft in team_list:
+        r_id = int(team_draft.get("rosterId", 0))
+        cycle = team_draft.get("cycle", {})
+        components = team_draft.get("components", {})
+        scores = team_draft.get("scores", {})
+        picks = team_draft.get("picks", [])
+        has_picks = len(picks) > 0 or team_draft.get("hasPicks", False)
         
-        if team_draft["hasPicks"]:
+        score_val = cycle.get("score") if cycle else scores.get("cycleScore", scores.get("compositeScore", 0))
+        grade_val = cycle.get("grade") if cycle else scores.get("grade", "INC")
+        exec_val = components.get("execution", {}).get("score") if components else scores.get("execution", 0)
+        cap_val = components.get("capital", {}).get("score") if components else scores.get("capital", 0)
+        fit_val = components.get("fit", {}).get("score") if components else scores.get("fit", 0)
+        manager_name = team_draft.get("managerName") or team_draft.get("manager", f"Team {r_id}")
+        
+        if has_picks and score_val is not None:
             facts.append({
                 "fact_id": f"FACT-2026-DRAFT-TEAM-{r_id}",
                 "category": "DRAFT_CYCLE_GRADE",
@@ -47,34 +60,41 @@ def generate_story_facts():
                 "entity_id": r_id,
                 "claim_template": "Team {manager} received a draft cycle score of {score} ({grade}) across {pick_count} picks.",
                 "metric_values": {
-                    "manager": team_draft["manager"],
-                    "score": scores["cycleScore"],
-                    "grade": scores["grade"],
-                    "pick_count": team_draft["pickCount"],
-                    "execution_score": scores["execution"],
-                    "capital_score": scores["capital"],
-                    "fit_score": scores["fit"]
+                    "manager": manager_name,
+                    "score": score_val,
+                    "grade": grade_val,
+                    "pick_count": team_draft.get("pickCount", len(picks)),
+                    "execution_score": exec_val,
+                    "capital_score": cap_val,
+                    "fit_score": fit_val
                 },
                 "evidence_ids": [f"EV-2026-DRAFT-TEAM-{r_id}"],
                 "confidence_score": 1.0
             })
             
             for p in picks:
+                p_name = p.get("playerName") or p.get("player") or "Selected Player"
+                p_slot = p.get("slot", "1.01")
+                exp_rank = p.get("expertRank", p.get("expertConsensusRank", 0))
+                mkt_rank = p.get("marketRank", p.get("marketRookieRank", 0))
+                ratio = p.get("blendedRatio", p.get("valueRatio", 1.0))
+                ev_id = p.get("evidenceId") or p.get("evidenceFactIds", [f"EV-2026-PICK-{r_id}-{p_slot}"])[0]
+                
                 facts.append({
-                    "fact_id": f"FACT-2026-DRAFT-{r_id}-{p['slot'].replace('.', '_')}",
+                    "fact_id": f"FACT-2026-DRAFT-{r_id}-{str(p_slot).replace('.', '_')}",
                     "category": "DRAFT_PICK_EVALUATION",
                     "entity_type": "PLAYER_PICK",
-                    "entity_id": f"{r_id}:{p['slot']}",
+                    "entity_id": f"{r_id}:{p_slot}",
                     "claim_template": "Selected {player} ({position}) at {slot} with consensus rank {expert_rank} and blended ratio {ratio}.",
                     "metric_values": {
-                        "player": p["player"],
-                        "position": p["position"],
-                        "slot": p["slot"],
-                        "expert_rank": p["expertRank"],
-                        "market_rank": p["marketRank"],
-                        "blended_ratio": p["blendedRatio"]
+                        "player": p_name,
+                        "position": p.get("position", "WR"),
+                        "slot": p_slot,
+                        "expert_rank": exp_rank,
+                        "market_rank": mkt_rank,
+                        "blended_ratio": ratio
                     },
-                    "evidence_ids": [p["evidenceId"]],
+                    "evidence_ids": [ev_id],
                     "confidence_score": 1.0
                 })
                 
