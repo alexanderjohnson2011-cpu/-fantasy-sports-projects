@@ -2999,3 +2999,24 @@ body {
     line-height: 1.05;
   }
 }
+
+/* Weekly review standings — MASTER_PLAN P5-2 */
+.weekly-table { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+.weekly-table h2 { font-size: 21px; margin: 0; letter-spacing: -0.01em; }
+.standings-scroll { overflow-x: auto; border-top: 1px solid rgba(11, 51, 41, 0.16); }
+table.standings { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 14px; }
+table.standings th {
+  text-align: left; padding: 9px 10px; white-space: nowrap;
+  font-family: "IBM Plex Sans Condensed", sans-serif; font-size: 12px;
+  font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(11, 51, 41, 0.55); border-bottom: 1px solid rgba(11, 51, 41, 0.16);
+}
+table.standings td {
+  padding: 9px 10px; border-bottom: 1px solid rgba(11, 51, 41, 0.08); vertical-align: middle;
+}
+table.standings tbody tr:last-child td { border-bottom: none; }
+table.standings td.num, table.standings th.num {
+  text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+table.standings .luck-good { color: #2f6b3f; }
+table.standings .luck-bad { color: #c44322; }

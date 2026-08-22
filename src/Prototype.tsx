@@ -23,6 +23,7 @@ import leagueInsightsJson from "./generated/league-insights.json";
 import macSaladAwardsJson from "./generated/mac-salad-awards.json";
 import forecastInsightsJson from "./generated/forecast-insights.json";
 import draftRecapJson from "./generated/draft-recap.json";
+import weeklyRecapJson from "./generated/weekly-recap.json";
 
 type TeamForecast = {
   rosterId: number;
@@ -1029,6 +1030,51 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
   );
 }
 
+type StandingRow = {
+  rosterId: number; teamName: string; wins: number; losses: number; ties: number;
+  pointsFor: number; pointsAgainst: number; allPlayWinPct: number | null;
+  expectedWins: number | null; scheduleLuck: number | null;
+  weeksAboveMedian: number; totalLineupMiss: number; rank: number;
+};
+
+function StandingsTable({ rows }: { rows: StandingRow[] }) {
+  return (
+    <div className="standings-scroll">
+      <table className="standings">
+        <thead>
+          <tr>
+            <th>#</th><th>Team</th><th>W-L</th><th>PF</th>
+            <th>All-play</th><th>Exp. W</th><th>Luck</th><th>Left on bench</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.rosterId}>
+              <td className="num">{row.rank}</td>
+              <td>{row.teamName}</td>
+              <td className="num">{row.wins}&ndash;{row.losses}{row.ties ? `–${row.ties}` : ""}</td>
+              <td className="num">{Math.round(row.pointsFor)}</td>
+              <td className="num">
+                {row.allPlayWinPct != null ? `${Math.round(row.allPlayWinPct * 100)}%` : "—"}
+              </td>
+              <td className="num">{row.expectedWins ?? "—"}</td>
+              <td className={"num " + (
+                row.scheduleLuck == null ? "" : row.scheduleLuck > 0 ? "luck-good" : "luck-bad")}>
+                {row.scheduleLuck == null
+                  ? "—"
+                  : `${row.scheduleLuck > 0 ? "+" : ""}${row.scheduleLuck.toFixed(2)}`}
+              </td>
+              <td className="num">{Math.round(row.totalLineupMiss)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+const weeklyRecap = weeklyRecapJson;
+
 function MatchupsScreen() {
   const topServingCount = macSaladStandings[0]?.count ?? 0;
   const kongLeaders = macSaladStandings.filter((entry) => entry.count === topServingCount);
@@ -1038,7 +1084,7 @@ function MatchupsScreen() {
       <main className="section-page future-page">
         <p className="eyebrow">Every Tuesday</p>
         <h1>The Weekend<br />Review</h1>
-        <p className="section-deck">Matchup stories will explain what happened—not just repeat the final score.</p>
+        <p className="section-deck">Scores, all-play records, schedule luck and the points every manager left on the bench.</p>
         <div className="issue-rule"><span>Begins Week 1</span><span>Tuesday AM</span></div>
         <section className="weekly-award">
           <img src="./assets/app/mac-salad-trophy.webp" alt="" />
@@ -1096,13 +1142,31 @@ function MatchupsScreen() {
           <h2>The upset, the lineup decision and the player who swung the week</h2>
           <p>Each matchup gets an original recap built from final scores, expected points, lineup efficiency and the largest player-level swings.</p>
         </section>
-        <div className="story-metrics">
-          <div><strong>01</strong><span>Points left on bench</span></div>
-          <div><strong>02</strong><span>Lineup efficiency</span></div>
-          <div><strong>03</strong><span>Upset index</span></div>
-          <div><strong>04</strong><span>Weekly luck</span></div>
-        </div>
-        <p className="method-note">Stories will use structured matchup data first; commentary is generated only after the underlying facts pass validation.</p>
+        {weeklyRecap.status === "scored" ? (
+          <section className="weekly-table" aria-labelledby="weekly-title">
+            <h2 id="weekly-title">Season to date</h2>
+            <StandingsTable rows={weeklyRecap.standings} />
+          </section>
+        ) : (
+          <section className="weekly-table" aria-labelledby="weekly-title">
+            <h2 id="weekly-title">
+              {weeklyRecap.priorSeason.season} final · how last season actually went
+            </h2>
+            <p className="detail-explainer">
+              No {weeklyRecap.league.season} games have been scored yet. These are the same
+              measures the weekly review will use, applied to the completed{" "}
+              {weeklyRecap.priorSeason.season} season.
+            </p>
+            <StandingsTable rows={weeklyRecap.priorSeason.standings} />
+          </section>
+        )}
+        <p className="method-note">
+          All-play compares each score with every other team that week, so it separates
+          scoring from schedule draw. Luck is actual wins minus all-play expected wins:
+          positive means the schedule was kind. Bench points are the gap to the best legal
+          lineup under this league&rsquo;s 1QB/2RB/2WR/1TE/3FLEX/K/DEF slots. Every figure
+          comes from Sleeper alone.
+        </p>
       </main>
     </div>
   );

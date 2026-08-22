@@ -13,8 +13,22 @@ RAW_DIR = os.path.join(os.path.dirname(__file__), "raw")
 CACHE_DIR = os.path.join(os.path.dirname(__file__), ".cache")
 OUTPUT_LATEST_DIR = os.path.join(os.path.dirname(__file__), "output_latest")
 
-# Perishable handoff captures timestamp (2026-08-20 13:30:00 UTC)
-HISTORICAL_AS_OF = datetime.datetime(2026, 8, 20, 13, 30, 0, tzinfo=datetime.timezone.utc)
+# The observation time of an ingested file is a property of THAT FILE, never a
+# constant. A fixed timestamp here previously stamped whatever happened to be on
+# disk as an August 20 observation -- including a draft board that had been
+# overwritten with post-completion data. That put a false "what we knew at time
+# T" row into a corpus whose entire value is answering exactly that question.
+#
+# The file's own mtime is used instead, with the constant kept only as a floor
+# for files whose mtime is clearly wrong (unpacked from an archive, for example).
+HISTORICAL_AS_OF_FLOOR = datetime.datetime(2026, 8, 20, 13, 30, 0, tzinfo=datetime.timezone.utc)
+
+
+def observed_at_for(path):
+    """True observation time for an ingested file, from its mtime."""
+    mtime = datetime.datetime.fromtimestamp(
+        os.path.getmtime(path), tz=datetime.timezone.utc)
+    return min(mtime, HISTORICAL_AS_OF_FLOOR) if mtime > HISTORICAL_AS_OF_FLOOR else mtime
 HISTORICAL_RUN_ID = "handoff_aug2026"
 SEASON = "2026"
 WEEK = "00"
@@ -30,8 +44,9 @@ def ingest_file(base_dir, source, entity_name, src_file_path):
     with open(src_file_path, "rb") as f:
         content_bytes = f.read()
         
-    as_of_str = HISTORICAL_AS_OF.strftime("%Y%m%dT%H%M%SZ")
-    date_str = HISTORICAL_AS_OF.strftime("%Y-%m-%d")
+    observed_at = observed_at_for(src_file_path)
+    as_of_str = observed_at.strftime("%Y%m%dT%H%M%SZ")
+    date_str = observed_at.strftime("%Y-%m-%d")
     source_clean = source.replace("/", "_")
     
     dir_path = os.path.join(
@@ -52,7 +67,7 @@ def ingest_file(base_dir, source, entity_name, src_file_path):
     sidecar = {
         "logical_source": source,
         "endpoint": f"local://handoff/{os.path.basename(src_file_path)}",
-        "retrieval_utc": HISTORICAL_AS_OF.isoformat(),
+        "retrieval_utc": observed_at.isoformat(),
         "http_status": 200,
         "content_sha256": content_sha256,
         "uncompressed_bytes": len(content_bytes),

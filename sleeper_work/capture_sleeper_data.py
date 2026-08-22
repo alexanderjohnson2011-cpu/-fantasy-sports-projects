@@ -252,6 +252,16 @@ def build_sources(week):
         ("fantasycalc/redraft", fc % "false", "fantasycalc_redraft", "daily", 0),
     ]
 
+    # Prior-season matchups are completed and scored. They are backfillable, so
+    # they ride the weekly bucket, and they give the matchup parser real data to
+    # be verified against before week 1 of the current season exists.
+    for wk in range(1, 19):
+        sources.append((
+            "sleeper/prior_matchups",
+            "%s/league/%s/matchups/%d" % (api, P, wk),
+            "prior_matchups_w%02d" % wk, "weekly", wk,
+        ))
+
     # Prior-season transactions are backfillable, so they ride the weekly bucket.
     for rnd in TRANSACTION_ROUNDS:
         sources.append((
@@ -284,12 +294,14 @@ def capture_week(week, args, run_id, now, phase="regular"):
     coverage = []
 
     for source, url, entity, cadence, wk in build_sources(week):
-        wk = wk or week if source in ("sleeper/matchups", "sleeper/transactions") else wk
+        if source in ("sleeper/matchups", "sleeper/transactions"):
+            wk = wk or week
+        src_phase = "regular" if source.startswith("sleeper/prior_") and wk else phase
         as_of = bucket_as_of(now, cadence)
         idem = "%s:%s:%s:%s:%s" % (
-            CURRENT_LEAGUE_ID, SEASON, week_token(wk, phase), source,
+            CURRENT_LEAGUE_ID, SEASON, week_token(wk, src_phase), source,
             as_of.strftime("%Y%m%dT%H%M%SZ"))
-        rel = rel_dir_for(source, wk, as_of, phase)
+        rel = rel_dir_for(source, wk, as_of, src_phase)
 
         if not args.force and already_captured(args.output_dir, rel, entity, args.gcs_bucket):
             skipped += 1
@@ -304,7 +316,7 @@ def capture_week(week, args, run_id, now, phase="regular"):
                 body, status = fetch(url)
 
             n = save(args.output_dir, source, entity, body, run_id, as_of, utc_now(),
-                     url, wk, status, args.gcs_bucket, idem, phase)
+                     url, wk, status, args.gcs_bucket, idem, src_phase)
             captured += 1
             coverage.append({"source": source, "week": wk, "phase": phase,
                              "state": "present", "records": n})
