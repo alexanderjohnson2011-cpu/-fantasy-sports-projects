@@ -91,6 +91,8 @@ type ModelFactors = {
 type TeamForecast = {
   rosterId: number;
   teamName: string;
+  projectedRank?: number;
+  expectedSeed?: number;
   powerRank?: number;
   powerScore?: number;
   powerRankDelta?: number;
@@ -1076,7 +1078,6 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
             const insight = insightFor(team);
             const history = insight.previousSeason;
             const editorial = powerEditorial[team.rosterId];
-            const move = powerMovement.get(team.rosterId);
             return (
               <button className="power-card" type="button" key={team.name} onClick={() => onTeam(team)}>
                 <div className="power-card__header">
@@ -1099,7 +1100,7 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
                 {forecastInsights.teams[String(team.rosterId)] ? (
                   <div className="power-card__sim-badge">
                     <span>Sim Outlook</span>
-                    <strong>Proj Seed #{forecastInsights.teams[String(team.rosterId)].medianSeed}</strong>
+                    <strong>Proj Finish #{forecastInsights.teams[String(team.rosterId)].projectedRank ?? forecastInsights.teams[String(team.rosterId)].medianSeed}</strong>
                     <em>{forecastInsights.teams[String(team.rosterId)].playoffProbability}% Playoffs · {forecastInsights.teams[String(team.rosterId)].expectedWins}W</em>
                   </div>
                 ) : null}
@@ -1107,37 +1108,7 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
             );
           })}
         </div>
-        <section className="power-movement" aria-labelledby="power-movement-title">
-          <h2 id="power-movement-title">
-            {powerRankings.hasPriorWeek
-              ? `What changed since week ${powerRankings.week - 1}`
-              : "Baseline ranking"}
-          </h2>
-          <p className="detail-explainer">
-            {powerRankings.hasPriorWeek
-              ? "Movement is measured against the previous stored ranking. Each note names the component that actually moved."
-              : "The first ranking of the season. Movement appears once a second week has been stored."}
-          </p>
-          <div className="standings-scroll">
-            <table className="standings">
-              <thead>
-                <tr><th>#</th><th>Move</th><th>Team</th><th>Score</th><th>What changed</th></tr>
-              </thead>
-              <tbody>
-                {powerRankings.teams.map((entry) => (
-                  <tr key={entry.rosterId}>
-                    <td className="num">{entry.rank}</td>
-                    <td className="num"><RankMove delta={entry.rankDelta} /></td>
-                    <td>{entry.teamName}</td>
-                    <td className="num">{entry.score.toFixed(1)}</td>
-                    <td className="move-note">{entry.commentary}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-        <p className="method-note">The 2026 ranking is {Math.round(powerRankings.methodology.lineupWeight * 100)}% current optimal-lineup strength, {Math.round(powerRankings.methodology.depthWeight * 100)}% usable depth, {Math.round(powerRankings.methodology.balanceWeight * 100)}% positional balance calibrated to this three-FLEX format, and {Math.round(powerRankings.methodology.priorSeasonWeight * 100)}% prior-season scoring. Letters come from the resulting score—not a forced league distribution. Refreshed every Tuesday from the canonical layer; each week is stored, so movement is measured rather than remembered.</p>
+        <p className="method-note">The 2026 ranking is 55% current optimal-lineup strength, 25% usable depth, 10% positional balance calibrated to this three-FLEX format, and 10% prior-season scoring. Letters come from the resulting score—not a forced league distribution. Dynasty grade and three-year rank are reported separately and cannot inflate the current-year grade.</p>
       </main>
     </div>
   );
@@ -1186,26 +1157,6 @@ function StandingsTable({ rows }: { rows: StandingRow[] }) {
 }
 
 const weeklyRecap = weeklyRecapJson;
-const powerRankings = powerRankingsJson;
-
-// Movement against the previously stored ranking, keyed by roster.
-const powerMovement = new Map(
-  powerRankings.teams.map((entry) => [entry.rosterId, entry]),
-);
-
-// Rank movement, shown the way a real power-rankings column does it: the
-// direction and size of the move, with an em dash when there is nothing to
-// compare against rather than a fabricated zero.
-function RankMove({ delta }: { delta: number | null | undefined }) {
-  if (delta == null) return <span className="rank-move rank-move--new">NEW</span>;
-  if (delta === 0) return <span className="rank-move rank-move--flat">&mdash;</span>;
-  const up = delta > 0;
-  return (
-    <span className={"rank-move " + (up ? "rank-move--up" : "rank-move--down")}>
-      {up ? "▲" : "▼"}{Math.abs(delta)}
-    </span>
-  );
-}
 
 function MatchupsScreen() {
   const topServingCount = macSaladStandings[0]?.count ?? 0;
@@ -1306,7 +1257,7 @@ function MatchupsScreen() {
 
 function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
   const sortedForecasts = Object.values(forecastInsights.teams).sort(
-    (a, b) => b.championshipProbability - a.championshipProbability || b.expectedWins - a.expectedWins
+    (a, b) => (a.projectedRank ?? 1) - (b.projectedRank ?? 1) || b.championshipProbability - a.championshipProbability
   );
 
   const topTitleFavorite = sortedForecasts[0];
@@ -1330,7 +1281,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
             <span>
               <small>Title Favorite · {topTitleFavorite.championshipProbability}% Championship Odds</small>
               <strong>{topTitleFavorite.teamName}</strong>
-              <em>Projected {topTitleFavorite.expectedWins}–{topTitleFavorite.expectedLosses} · {topTitleFavorite.playoffProbability}% Playoff Odds</em>
+              <em>Projected Finish #{topTitleFavorite.projectedRank ?? 1} · {topTitleFavorite.expectedWins}–{topTitleFavorite.expectedLosses} · {topTitleFavorite.playoffProbability}% Playoff Odds</em>
             </span>
           </div>
         ) : null}
@@ -1338,6 +1289,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
         <div className="power-list">
           {sortedForecasts.map((fc, index) => {
             const team = teams.find((t) => t.rosterId === fc.rosterId);
+            const rankNumber = fc.projectedRank ?? index + 1;
             return (
               <div
                 className="power-card"
@@ -1346,12 +1298,12 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                 onClick={() => team && onTeam && onTeam(team)}
               >
                 <div className="power-card__header">
-                  <span className="power-card__rank">#{fc.medianSeed}</span>
+                  <span className="power-card__rank">#{rankNumber}</span>
                   <div>
                     <strong>{fc.teamName}</strong>
-                    <small>{team ? team.manager : `Team ${fc.rosterId}`} · Projected Seed {fc.medianSeed}</small>
+                    <small>{team ? team.manager : `Team ${fc.rosterId}`} · Projected Finish #{rankNumber} (Exp Seed {fc.expectedSeed?.toFixed(1) ?? fc.medianSeed})</small>
                     <div className="power-connection-pill">
-                      <span>Power Rank #{fc.powerRank ?? fc.medianSeed}</span>
+                      <span>Power Rank #{fc.powerRank ?? rankNumber}</span>
                       <b style={{ color: (fc.powerRankDelta ?? 0) > 0 ? "var(--ink)" : (fc.powerRankDelta ?? 0) < 0 ? "var(--rust)" : "var(--ink-soft)" }}>
                         {fc.powerDeltaLabel ?? "Even with Power Rank"}
                       </b>
@@ -1541,7 +1493,7 @@ function ForecastTeamScreen({ team }: { team: Team }) {
         <section className="forecast-hero-card">
           <div className="forecast-hero-top">
             <div>
-              <span className="forecast-seed-badge">Projected Seed #{fc.medianSeed}</span>
+              <span className="forecast-seed-badge">Projected Finish #{fc.projectedRank ?? fc.medianSeed} · Exp Seed {fc.expectedSeed?.toFixed(1) ?? fc.medianSeed}</span>
               <p className="eyebrow">{team.manager} · Roster #{team.rosterId}</p>
               <h1>{fc.teamName}</h1>
             </div>
@@ -1579,7 +1531,7 @@ function ForecastTeamScreen({ team }: { team: Team }) {
 
           <div className="forecast-range-banner">
             <strong>Range of Outcomes:</strong>
-            <span>Best-Case: <b>Seed #{fc.bestCaseSeed ?? 1}</b> · Worst-Case: <b>Seed #{fc.worstCaseSeed ?? 12}</b></span>
+            <span>Best-Case: <b>Seed #{fc.bestCaseSeed ?? 1}</b> · Worst-Case: <b>Seed #{fc.worstCaseSeed ?? 12}</b> · Median: <b>Seed #{fc.medianSeed}</b></span>
             <em>10,000 Monte Carlo Iterations</em>
           </div>
         </section>
@@ -1603,8 +1555,8 @@ function ForecastTeamScreen({ team }: { team: Team }) {
             </div>
             <div className="power-conn-col">
               <span className="conn-label">Simulated Finish</span>
-              <strong className="conn-rank">Seed #{fc.medianSeed}</strong>
-              <small>{fc.expectedWins}–{fc.expectedLosses} Exp Record</small>
+              <strong className="conn-rank">Proj #{fc.projectedRank ?? fc.medianSeed}</strong>
+              <small>{fc.expectedWins}–{fc.expectedLosses} Exp Record (Exp Seed {fc.expectedSeed?.toFixed(1) ?? fc.medianSeed})</small>
               <p>{fc.powerConnectionNarrative}</p>
             </div>
           </div>

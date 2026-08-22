@@ -5,6 +5,7 @@ Simulates remaining regular season matchups and 6-team playoff bracket with offi
 Ties simulation scoring directly to Composite Power Viability Ratings (Lineup, Depth, Balance, History)
 and calibrates weekly score standard deviations from Roster Volatility (Concentration, RB Exposure, Depth Gap).
 Outputs forecast-insights.json with:
+- Projected Rank (1 to 12) & Expected Seed
 - 14-week schedule & matchup win probabilities
 - 12-seed probability distribution histogram
 - Deep model factor breakdowns (Volatility impact, 4 Power Pillars, Ceiling/Floor ranges)
@@ -431,13 +432,8 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
         champ_team = team_ids[champ_winner]
         championships[champ_team] += 1
 
-    # Aggregate & Format Results
-    forecast_run_id = f"fc_{datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%d%H%M')}_{random_seed}"
-    now_iso = datetime.datetime.now(datetime.timezone.utc).isoformat()
-    
-    projections = {}
-    bq_rows = []
-    
+    # First Pass: Compute summary metrics to establish unique Projected League Rank (1..12)
+    team_results = {}
     for t in team_ids:
         exp_wins = round(total_wins[t] / simulations, 1)
         exp_losses = round(14.0 - exp_wins, 1)
@@ -446,6 +442,10 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
         bye_pct = round((bye_appearances[t] / simulations) * 100.0, 1)
         title_pct = round((championships[t] / simulations) * 100.0, 1)
         last_pct = round((last_places[t] / simulations) * 100.0, 1)
+        
+        # Expected Seed (continuous mean across 10,000 runs)
+        seed_sum = sum(s * seed_distributions[t][s] for s in range(1, 13))
+        exp_seed = round(seed_sum / simulations, 1)
         
         # Median seed & range of outcomes
         cumulative = 0
@@ -462,6 +462,55 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
             cumulative += count
             if cumulative >= simulations / 2 and median_seed == 6:
                 median_seed = s
+                
+        team_results[t] = {
+            "exp_wins": exp_wins,
+            "exp_losses": exp_losses,
+            "exp_pf": exp_pf,
+            "playoff_pct": playoff_pct,
+            "bye_pct": bye_pct,
+            "title_pct": title_pct,
+            "last_pct": last_pct,
+            "exp_seed": exp_seed,
+            "median_seed": median_seed,
+            "best_seed": best_seed,
+            "worst_seed": worst_seed
+        }
+        
+    # Sort all 12 teams to establish canonical Projected League Rank (1..12)
+    # Ranked by: Championship Odds DESC, Expected Wins DESC, Expected PF DESC, Expected Seed ASC
+    sorted_forecast_teams = sorted(
+        team_ids,
+        key=lambda t: (
+            -team_results[t]["title_pct"],
+            -team_results[t]["exp_wins"],
+            -team_results[t]["exp_pf"],
+            team_results[t]["exp_seed"]
+        )
+    )
+    forecast_ranks = {t: idx + 1 for idx, t in enumerate(sorted_forecast_teams)}
+
+    # Aggregate & Format Results
+    forecast_run_id = f"fc_{datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%d%H%M')}_{random_seed}"
+    now_iso = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    
+    projections = {}
+    bq_rows = []
+    
+    for t in team_ids:
+        res = team_results[t]
+        exp_wins = res["exp_wins"]
+        exp_losses = res["exp_losses"]
+        exp_pf = res["exp_pf"]
+        playoff_pct = res["playoff_pct"]
+        bye_pct = res["bye_pct"]
+        title_pct = res["title_pct"]
+        last_pct = res["last_pct"]
+        exp_seed = res["exp_seed"]
+        median_seed = res["median_seed"]
+        best_seed = res["best_seed"]
+        worst_seed = res["worst_seed"]
+        proj_rank = forecast_ranks[t]
                 
         # 12-Seed Probability Breakdown
         seed_breakdown = []
@@ -496,9 +545,9 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
                     })
                     
         team_name = TEAM_NAMES.get(t, f"Team {t}")
-        p_rank = power_ranks.get(t, median_seed)
+        p_rank = power_ranks.get(t, proj_rank)
         p_score = round(power_scores.get(t, 75.0), 1)
-        rank_delta = p_rank - median_seed
+        rank_delta = p_rank - proj_rank
         delta_label = (
             f"+{rank_delta} vs Power Rank" if rank_delta > 0
             else f"{rank_delta} vs Power Rank" if rank_delta < 0
@@ -516,15 +565,18 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
         
         # Explanatory connection text
         if rank_delta > 0:
-            conn_note = f"Simulated finish (#{median_seed}) outperforms static Power Rank (#{p_rank}) because high starting star variance and favorable schedule sequence convert into extra head-to-head wins in shootout weeks."
+            conn_note = f"Simulated finish (#{proj_rank}, Exp Seed {exp_seed}) outperforms static Power Rank (#{p_rank}) because high starting star variance and favorable schedule sequence convert into extra head-to-head wins in shootout weeks."
         elif rank_delta < 0:
-            conn_note = f"Simulated finish (#{median_seed}) trails static Power Rank (#{p_rank}) because although roster depth is strong on paper, regular-season schedule clusters and weekly score variance produce occasional tight losses."
+            conn_note = f"Simulated finish (#{proj_rank}, Exp Seed {exp_seed}) trails static Power Rank (#{p_rank}) because although roster depth is strong on paper, regular-season schedule clusters and weekly score variance produce occasional tight losses."
         else:
-            conn_note = f"Simulated finish (#{median_seed}) perfectly matches static Power Rank (#{p_rank}), indicating high correlation between composite roster viability and 14-week schedule outcomes."
+            conn_note = f"Simulated finish (#{proj_rank}, Exp Seed {exp_seed}) perfectly matches static Power Rank (#{p_rank}), indicating high correlation between composite roster viability and 14-week schedule outcomes."
             
         projections[str(t)] = {
             "rosterId": t,
             "teamName": team_name,
+            "projectedRank": proj_rank,
+            "expectedSeed": exp_seed,
+            "medianSeed": median_seed,
             "powerRank": p_rank,
             "powerScore": p_score,
             "powerRankDelta": rank_delta,
@@ -538,7 +590,6 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
             "byeProbability": bye_pct,
             "championshipProbability": title_pct,
             "lastPlaceProbability": last_pct,
-            "medianSeed": median_seed,
             "bestCaseSeed": best_seed,
             "worstCaseSeed": worst_seed,
             "seedDistribution": seed_breakdown,
@@ -561,6 +612,8 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
             "championship_probability": title_pct,
             "last_place_probability": last_pct,
             "projected_median_seed": median_seed,
+            "projected_rank": proj_rank,
+            "expected_seed": exp_seed,
             "observed_at_utc": now_iso
         })
         
@@ -578,7 +631,7 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
     os.makedirs(os.path.dirname(OUTPUT_JSON_PATH), exist_ok=True)
     with open(OUTPUT_JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
-    print(f"Generated forecast JSON with schedule, history, power connection & detailed model factors at {OUTPUT_JSON_PATH}")
+    print(f"Generated forecast JSON with projectedRank (1..12), expectedSeed & detailed model factors at {OUTPUT_JSON_PATH}")
     
     # Stream to BigQuery
     if BQ_AVAILABLE:
