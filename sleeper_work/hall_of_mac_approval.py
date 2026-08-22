@@ -13,8 +13,13 @@ VALID_STATES = ["DRAFT", "PENDING_REVIEW", "APPROVED", "PUBLISHED"]
 
 class AwardApprovalWorkflow:
     def __init__(self, awards_file_path=None):
+        base_dir = os.path.dirname(__file__)
+        if os.path.exists(os.path.join(os.path.dirname(base_dir), "src")):
+            almanac_dir = os.path.dirname(base_dir)
+        else:
+            almanac_dir = os.path.join(os.path.dirname(base_dir), "ape-invitational-almanac")
         self.awards_file_path = awards_file_path or os.path.join(
-            os.path.dirname(__file__), "..", "ape-invitational-almanac", "src", "generated", "mac-salad-history.json"
+            almanac_dir, "src", "generated", "mac-salad-awards.json"
         )
         self.queue = []
         

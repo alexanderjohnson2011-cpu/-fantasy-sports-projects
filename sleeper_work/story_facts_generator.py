@@ -11,8 +11,11 @@ import json
 import uuid
 import datetime
 
-SLEEPER_WORK_DIR = os.path.dirname(__file__)
-ALMANAC_DIR = os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ape-invitational-almanac")
+SLEEPER_WORK_DIR = os.path.abspath(os.path.dirname(__file__))
+if os.path.exists(os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "src")):
+    ALMANAC_DIR = os.path.dirname(SLEEPER_WORK_DIR)
+else:
+    ALMANAC_DIR = os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ape-invitational-almanac")
 OUTPUT_FACTS_PATH = os.path.join(ALMANAC_DIR, "src", "generated", "story-facts.json")
 
 def generate_story_facts():

@@ -12,8 +12,11 @@ import json
 import datetime
 import hashlib
 
-SLEEPER_WORK_DIR = os.path.dirname(__file__)
-ALMANAC_DIR = os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ape-invitational-almanac")
+SLEEPER_WORK_DIR = os.path.abspath(os.path.dirname(__file__))
+if os.path.exists(os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "src")):
+    ALMANAC_DIR = os.path.dirname(SLEEPER_WORK_DIR)
+else:
+    ALMANAC_DIR = os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ape-invitational-almanac")
 ARCHIVE_DIR = os.path.join(SLEEPER_WORK_DIR, "archive", "season_2026")
 
 def rehearse_season_close():

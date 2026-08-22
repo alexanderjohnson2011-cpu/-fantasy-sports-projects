@@ -1,0 +1,132 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-08-21T21:00:00Z",
+  "sources": [
+    {
+      "source_id": "sleeper/league",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "weekly",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/league/{league_id}",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/users",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "weekly",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/league/{league_id}/users",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/rosters",
+      "nature": "perishable",
+      "retention_class": "A",
+      "cadence": "daily",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/league/{league_id}/rosters",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/matchups",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "in_window",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/league/{league_id}/matchups/{week}",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/transactions",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "weekly",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/league/{league_id}/transactions/{round}",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/traded_picks",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "weekly",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/league/{league_id}/traded_picks",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/winners_bracket",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "seasonal",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/league/{league_id}/winners_bracket",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/losers_bracket",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "seasonal",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/league/{league_id}/losers_bracket",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/drafts",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "weekly",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/league/{league_id}/drafts",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/draft_picks",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "weekly",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/draft/{draft_id}/picks",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/draft_traded_picks",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "weekly",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/draft/{draft_id}/traded_picks",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "sleeper/players",
+      "nature": "perishable",
+      "retention_class": "A",
+      "cadence": "daily",
+      "access_mode": "free",
+      "endpoint_template": "https://api.sleeper.app/v1/players/nfl",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "fantasycalc/dynasty",
+      "nature": "perishable",
+      "retention_class": "A",
+      "cadence": "twice_daily",
+      "access_mode": "free",
+      "endpoint_template": "https://api.fantasycalc.com/values/current?isDynasty=true&numQbs=1&numTeams=12&ppr=0.5",
+      "parser_version": "v1.0"
+    },
+    {
+      "source_id": "fantasycalc/redraft",
+      "nature": "perishable",
+      "retention_class": "A",
+      "cadence": "twice_daily",
+      "access_mode": "free",
+      "endpoint_template": "https://api.fantasycalc.com/values/current?isDynasty=false&numQbs=1&numTeams=12&ppr=0.5",
+      "parser_version": "v1.0"
+    }
+  ]
+}

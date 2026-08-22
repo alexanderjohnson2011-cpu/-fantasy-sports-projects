@@ -25,7 +25,11 @@ def main():
     cutoff_dt = datetime.datetime(2026, 8, 20, 13, 30, 0, tzinfo=datetime.timezone.utc).isoformat()
     
     # 1. Load team features from generated analysis
-    insights_path = os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ape-invitational-almanac", "src", "generated", "league-insights.json")
+    if os.path.exists(os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "src")):
+        almanac_dir = os.path.dirname(SLEEPER_WORK_DIR)
+    else:
+        almanac_dir = os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ape-invitational-almanac")
+    insights_path = os.path.join(almanac_dir, "src", "generated", "league-insights.json")
     with open(insights_path, "r", encoding="utf-8") as f:
         insights = json.load(f)
         

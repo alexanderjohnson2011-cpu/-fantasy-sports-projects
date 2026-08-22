@@ -19,8 +19,11 @@ except ImportError:
 
 KEY_PATH = r"C:\Users\alexa\Documents\Codex\Apes Mac Salad\apes-mac-salad-0d52b5a00417.json"
 PROJECT_ID = "apes-mac-salad"
-SLEEPER_WORK_DIR = os.path.dirname(__file__)
-ALMANAC_DIR = os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ape-invitational-almanac")
+SLEEPER_WORK_DIR = os.path.abspath(os.path.dirname(__file__))
+if os.path.exists(os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "src")):
+    ALMANAC_DIR = os.path.dirname(SLEEPER_WORK_DIR)
+else:
+    ALMANAC_DIR = os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ape-invitational-almanac")
 OUTPUT_JSON_PATH = os.path.join(ALMANAC_DIR, "src", "generated", "forecast-insights.json")
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = KEY_PATH
