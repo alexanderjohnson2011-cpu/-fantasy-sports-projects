@@ -4,7 +4,7 @@ Generates 100% verified Sleeper API Week 1 Head-to-Head matchup intelligence dat
 - Matchup Overview (Projected Scores, Win Probabilities, Spreads, Over/Unders)
 - Tale of the Tape Starter Rosters (1QB/2RB/2WR/1TE/3FLEX/K/DEF) from actual Sleeper rosters
 - Real-World NFL News Commentary & Tactical Matchup Previews
-- Crucial TV Viewing Schedule (Thursday Kickoff, Brazil Friday, Sunday Early, Sunday Late, Sunday Night, Monday Night)
+- Crucial TV Viewing Schedule with accurate point totals & calibrated leverage levels
 - Positional Edge Breakdown
 Outputs to `src/generated/matchups-week1.json` and syncs with BigQuery.
 """
@@ -98,34 +98,34 @@ def generate_week1_matchups():
             ],
             "tvSchedule": [
                 {
-                    "timeSlot": "Thursday 8:20 PM ET",
-                    "network": "NBC / Peacock",
-                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
+                    "timeSlot": "Sunday 1:00 PM ET",
+                    "network": "CBS & FOX Early Window",
+                    "gameMatchup": "New England @ Cincinnati, Washington @ Tampa Bay & Arizona @ Buffalo",
+                    "leverageLevel": "CRITICAL",
+                    "fantasyPointsAtStake": "124.4 pts",
+                    "teamAStarters": ["Chris Olave (NO)", "Trey McBride (ARI)", "Emeka Egbuka (TB)", "D'Andre Swift (CHI)"],
+                    "teamBStarters": ["Ja'Marr Chase (CIN)", "Jayden Daniels (WAS)", "Travis Etienne (NO)", "TreVeyon Henderson (NE)", "Bhayshul Tuten (JAX)"],
+                    "windowAnalysis": "The primary battlefield of the matchup with 9 starters active. Ja'Marr Chase and Jayden Daniels look to mount a massive early Sunday scoring surge against Trey McBride and Chris Olave."
+                },
+                {
+                    "timeSlot": "Sunday 4:05 PM / 4:25 PM ET",
+                    "network": "CBS & FOX Late Window",
+                    "gameMatchup": "Denver @ Seattle, Dallas @ Cleveland & Las Vegas @ LA Chargers",
                     "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "28.7 pts",
-                    "teamAStarters": ["Derrick Henry (BAL)", "Rashee Rice (KC)"],
-                    "teamBStarters": [],
-                    "windowAnalysis": "Ertz & Krafts gets the first punch of 2026 on Thursday Night Football with Derrick Henry and Rashee Rice."
+                    "fantasyPointsAtStake": "50.7 pts",
+                    "teamAStarters": ["Bo Nix (DEN)", "Brandon Aubrey (DAL)"],
+                    "teamBStarters": ["Quinshon Judkins (CLE)", "Oronde Gadsden (LAC)", "Jason Myers (SEA)"],
+                    "windowAnalysis": "Bo Nix makes his rookie start for Denver while Brandon Aubrey provides long-range kicking points against Quinshon Judkins."
                 },
                 {
                     "timeSlot": "Friday 8:15 PM ET",
                     "network": "Peacock / YouTube",
                     "gameMatchup": "Green Bay Packers vs Philadelphia Eagles (Brazil)",
-                    "leverageLevel": "CRITICAL",
+                    "leverageLevel": "HIGH",
                     "fantasyPointsAtStake": "36.7 pts",
                     "teamAStarters": ["Saquon Barkley (PHI)", "Josh Jacobs (GB)", "Eagles DEF"],
                     "teamBStarters": [],
-                    "windowAnalysis": "Saquon Barkley and Josh Jacobs lead the historic Brazil showcase for Ertz & Krafts."
-                },
-                {
-                    "timeSlot": "Sunday 1:00 PM ET",
-                    "network": "CBS & FOX",
-                    "gameMatchup": "New England @ Cincinnati & Washington @ Tampa Bay",
-                    "leverageLevel": "CRITICAL",
-                    "fantasyPointsAtStake": "93.4 pts",
-                    "teamAStarters": ["Chris Olave (NO)", "Trey McBride (ARI)", "Emeka Egbuka (TB)", "D'Andre Swift (CHI)"],
-                    "teamBStarters": ["Ja'Marr Chase (CIN)", "Jayden Daniels (WAS)", "Travis Etienne (NO)", "TreVeyon Henderson (NE)", "Bhayshul Tuten (JAX)"],
-                    "windowAnalysis": "The primary clash. Ja'Marr Chase and Jayden Daniels look to mount a massive early Sunday surge."
+                    "windowAnalysis": "Saquon Barkley and Josh Jacobs anchor the historic Brazil showcase for Ertz & Krafts."
                 },
                 {
                     "timeSlot": "Monday 8:15 PM ET",
@@ -136,6 +136,16 @@ def generate_week1_matchups():
                     "teamAStarters": [],
                     "teamBStarters": ["Garrett Wilson (NYJ)", "Mike Evans (SF)", "Jets DEF"],
                     "windowAnalysis": "Max’s Shadynasty deploys Garrett Wilson, Mike Evans, and Jets DEF on Monday Night Football to close out the match."
+                },
+                {
+                    "timeSlot": "Thursday 8:20 PM ET",
+                    "network": "NBC / Peacock",
+                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
+                    "leverageLevel": "MEDIUM",
+                    "fantasyPointsAtStake": "28.7 pts",
+                    "teamAStarters": ["Derrick Henry (BAL)", "Rashee Rice (KC)"],
+                    "teamBStarters": [],
+                    "windowAnalysis": "Ertz & Krafts gets the opening punch of 2026 on Thursday Night Football with Derrick Henry and Rashee Rice."
                 }
             ]
         },
@@ -213,34 +223,24 @@ def generate_week1_matchups():
             ],
             "tvSchedule": [
                 {
+                    "timeSlot": "Sunday 1:00 PM ET",
+                    "network": "CBS & FOX Early Window",
+                    "gameMatchup": "Minnesota @ NY Giants, Houston @ Indianapolis, Arizona @ Buffalo",
+                    "leverageLevel": "CRITICAL",
+                    "fantasyPointsAtStake": "151.0 pts",
+                    "teamAStarters": ["James Cook (BUF)", "Justin Jefferson (MIN)", "Drake London (ATL)", "Cam Skattebo (NYG)", "Tyrone Tracy (NYG)", "Bills DEF"],
+                    "teamBStarters": ["Nico Collins (HOU)", "Terry McLaurin (WAS)", "Tyler Warren (IND)", "Rico Dowdle (PIT)", "Marvin Harrison (ARI)", "Ka'imi Fairbairn (HOU)", "Texans DEF"],
+                    "windowAnalysis": "The main event of the matchup. 13 starters active across the early Sunday window, highlighted by superstar wideouts Justin Jefferson and Nico Collins."
+                },
+                {
                     "timeSlot": "Thursday 8:20 PM ET",
                     "network": "NBC / Peacock",
                     "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
-                    "leverageLevel": "CRITICAL",
+                    "leverageLevel": "HIGH",
                     "fantasyPointsAtStake": "52.5 pts",
                     "teamAStarters": ["Lamar Jackson (BAL)", "Zay Flowers (BAL)", "Mark Andrews (BAL)", "Justin Tucker (BAL)"],
                     "teamBStarters": [],
                     "windowAnalysis": "The Ape unleashes 4 Ravens starters on Kickoff Night to establish an early scoreboard lead."
-                },
-                {
-                    "timeSlot": "Friday 8:15 PM ET",
-                    "network": "Peacock / YouTube",
-                    "gameMatchup": "Green Bay Packers vs Philadelphia Eagles (Brazil)",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "28.8 pts",
-                    "teamAStarters": [],
-                    "teamBStarters": ["Jalen Hurts (PHI)", "Makai Lemon (PHI)"],
-                    "windowAnalysis": "Jalen Hurts responds for Terry Tate in the Friday night Brazil game."
-                },
-                {
-                    "timeSlot": "Sunday 1:00 PM ET",
-                    "network": "CBS & FOX",
-                    "gameMatchup": "Minnesota @ NY Giants, Houston @ Indianapolis, Arizona @ Buffalo",
-                    "leverageLevel": "CRITICAL",
-                    "fantasyPointsAtStake": "97.4 pts",
-                    "teamAStarters": ["James Cook (BUF)", "Justin Jefferson (MIN)", "Drake London (ATL)", "Cam Skattebo (NYG)", "Tyrone Tracy (NYG)", "Bills DEF"],
-                    "teamBStarters": ["Nico Collins (HOU)", "Terry McLaurin (WAS)", "Tyler Warren (IND)", "Rico Dowdle (PIT)", "Marvin Harrison (ARI)", "Ka'imi Fairbairn (HOU)", "Texans DEF"],
-                    "windowAnalysis": "Massive 1:00 PM early window with 13 starters active, highlighted by Justin Jefferson and Nico Collins."
                 },
                 {
                     "timeSlot": "Sunday 4:05 PM / 4:25 PM ET",
@@ -250,7 +250,17 @@ def generate_week1_matchups():
                     "fantasyPointsAtStake": "37.9 pts",
                     "teamAStarters": ["Brock Bowers (LV)"],
                     "teamBStarters": ["Javonte Williams (DAL)", "Jadarian Price (SEA)"],
-                    "windowAnalysis": "Brock Bowers makes his NFL debut as Javonte Williams looks to close out the matchup."
+                    "windowAnalysis": "Brock Bowers makes his NFL debut as Javonte Williams anchors Dallas's ground game."
+                },
+                {
+                    "timeSlot": "Friday 8:15 PM ET",
+                    "network": "Peacock / YouTube",
+                    "gameMatchup": "Green Bay Packers vs Philadelphia Eagles (Brazil)",
+                    "leverageLevel": "MEDIUM",
+                    "fantasyPointsAtStake": "28.8 pts",
+                    "teamAStarters": [],
+                    "teamBStarters": ["Jalen Hurts (PHI)", "Makai Lemon (PHI)"],
+                    "windowAnalysis": "Jalen Hurts leads Philadelphia in the Brazil season opener for Terry Tate."
                 }
             ]
         },
@@ -328,34 +338,24 @@ def generate_week1_matchups():
             ],
             "tvSchedule": [
                 {
-                    "timeSlot": "Thursday 8:20 PM ET",
-                    "network": "NBC / Peacock",
-                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "30.1 pts",
-                    "teamAStarters": [],
-                    "teamBStarters": ["Kenneth Walker (KC)", "Harrison Butker (KC)", "Ravens DEF"],
-                    "windowAnalysis": "Bronco Stampede gets early leverage on Kickoff Night with Kenneth Walker and Harrison Butker."
-                },
-                {
-                    "timeSlot": "Friday 8:15 PM ET",
-                    "network": "Peacock / YouTube",
-                    "gameMatchup": "Green Bay Packers vs Philadelphia Eagles (Brazil)",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "24.9 pts",
-                    "teamAStarters": ["Christian Watson (GB)"],
-                    "teamBStarters": ["DeVonta Smith (PHI)"],
-                    "windowAnalysis": "Direct wide receiver clash in São Paulo: Christian Watson vs DeVonta Smith."
-                },
-                {
                     "timeSlot": "Sunday 1:00 PM ET",
-                    "network": "CBS & FOX",
+                    "network": "CBS & FOX Early Window",
                     "gameMatchup": "Pittsburgh @ Atlanta, Arizona @ Buffalo, New England @ Cincinnati",
                     "leverageLevel": "CRITICAL",
-                    "fantasyPointsAtStake": "88.2 pts",
+                    "fantasyPointsAtStake": "111.0 pts",
                     "teamAStarters": ["Bijan Robinson (ATL)", "Chase Brown (CIN)", "Drake Maye (NE)", "Colston Loveland (CHI)", "Rhamondre Stevenson (NE)", "Kyle Monangai (CHI)"],
                     "teamBStarters": ["Josh Allen (BUF)", "Isaiah Likely (NYG)"],
                     "windowAnalysis": "Josh Allen's MVP ceiling goes directly head-to-head with Bijan Robinson and Chase Brown in high-volume roles."
+                },
+                {
+                    "timeSlot": "Sunday 8:20 PM ET",
+                    "network": "NBC Sunday Night Football",
+                    "gameMatchup": "Los Angeles Rams @ Detroit Lions",
+                    "leverageLevel": "DECISIVE CLIMAX",
+                    "fantasyPointsAtStake": "71.5 pts",
+                    "teamAStarters": ["Amon-Ra St. Brown (DET)", "Jake Bates (DET)", "Lions DEF"],
+                    "teamBStarters": ["Puka Nacua (LAR)", "Kyren Williams (LAR)", "Blake Corum (LAR)"],
+                    "windowAnalysis": "The undisputed game of the week. 6 active starters in Ford Field will decide the outcome of the marquee matchup."
                 },
                 {
                     "timeSlot": "Sunday 4:05 PM ET",
@@ -368,14 +368,24 @@ def generate_week1_matchups():
                     "windowAnalysis": "JSN and Ladd McConkey provide major late-afternoon points for Bronco Stampede."
                 },
                 {
-                    "timeSlot": "Sunday 8:20 PM ET",
-                    "network": "NBC Sunday Night Football",
-                    "gameMatchup": "Los Angeles Rams @ Detroit Lions",
-                    "leverageLevel": "DECISIVE CLIMAX",
-                    "fantasyPointsAtStake": "71.5 pts",
-                    "teamAStarters": ["Amon-Ra St. Brown (DET)", "Jake Bates (DET)", "Lions DEF"],
-                    "teamBStarters": ["Puka Nacua (LAR)", "Kyren Williams (LAR)", "Blake Corum (LAR)"],
-                    "windowAnalysis": "The undisputed game of the week. 6 active starters in Ford Field will decide the outcome of the marquee matchup."
+                    "timeSlot": "Thursday 8:20 PM ET",
+                    "network": "NBC / Peacock",
+                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
+                    "leverageLevel": "MEDIUM",
+                    "fantasyPointsAtStake": "30.1 pts",
+                    "teamAStarters": [],
+                    "teamBStarters": ["Kenneth Walker (KC)", "Harrison Butker (KC)", "Ravens DEF"],
+                    "windowAnalysis": "Bronco Stampede gets early leverage on Kickoff Night with Kenneth Walker and Harrison Butker."
+                },
+                {
+                    "timeSlot": "Friday 8:15 PM ET",
+                    "network": "Peacock / YouTube",
+                    "gameMatchup": "Green Bay Packers vs Philadelphia Eagles (Brazil)",
+                    "leverageLevel": "MEDIUM",
+                    "fantasyPointsAtStake": "24.9 pts",
+                    "teamAStarters": ["Christian Watson (GB)"],
+                    "teamBStarters": ["DeVonta Smith (PHI)"],
+                    "windowAnalysis": "Direct wide receiver clash in São Paulo: Christian Watson vs DeVonta Smith."
                 }
             ]
         },
@@ -453,24 +463,14 @@ def generate_week1_matchups():
             ],
             "tvSchedule": [
                 {
-                    "timeSlot": "Thursday 8:20 PM ET",
-                    "network": "NBC / Peacock",
-                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "20.8 pts",
-                    "teamAStarters": ["Emmett Johnson (KC)"],
-                    "teamBStarters": ["Travis Kelce (KC)"],
-                    "windowAnalysis": "Travis Kelce opens the season in Arrowhead to give arkinsjt the first punch on the scoreboard."
-                },
-                {
                     "timeSlot": "Sunday 1:00 PM ET",
-                    "network": "CBS & FOX",
-                    "gameMatchup": "Tennessee @ Chicago, New England @ Cincinnati, Minnesota @ NY Giants",
+                    "network": "CBS & FOX Early Window",
+                    "gameMatchup": "Tennessee @ Chicago, New England @ Cincinnati & Minnesota @ NY Giants",
                     "leverageLevel": "CRITICAL",
-                    "fantasyPointsAtStake": "148.2 pts",
+                    "fantasyPointsAtStake": "196.9 pts",
                     "teamAStarters": ["Joe Burrow (CIN)", "Brian Robinson (ATL)", "Malik Nabers (NYG)", "Tetairoa McMillan (CAR)", "Kyle Pitts (ATL)", "Luther Burden (CHI)", "Jordyn Tyson (NO)", "Hunter Henry (NE)", "Evan McPherson (CIN)", "Bengals DEF"],
                     "teamBStarters": ["Caleb Williams (CHI)", "David Montgomery (HOU)", "Bucky Irving (TB)", "A.J. Brown (NE)", "Tee Higgins (CIN)", "Rome Odunze (CHI)", "Parker Washington (JAX)"],
-                    "windowAnalysis": "The colossal 1:00 PM window features 17 active starters! Joe Burrow, Malik Nabers, and Caleb Williams battle across the early slate."
+                    "windowAnalysis": "The colossal 1:00 PM window features 17 active starters! 77% of the total fantasy points in this matchup will be determined in this single window as Joe Burrow and Malik Nabers battle Caleb Williams and A.J. Brown."
                 },
                 {
                     "timeSlot": "Sunday 4:25 PM ET",
@@ -481,6 +481,16 @@ def generate_week1_matchups():
                     "teamAStarters": [],
                     "teamBStarters": ["CeeDee Lamb (DAL)", "Cameron Dicker (LAC)", "Cowboys DEF"],
                     "windowAnalysis": "CeeDee Lamb headlines the national late game to close out the matchup for arkinsjt."
+                },
+                {
+                    "timeSlot": "Thursday 8:20 PM ET",
+                    "network": "NBC / Peacock",
+                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
+                    "leverageLevel": "LOW",
+                    "fantasyPointsAtStake": "20.8 pts",
+                    "teamAStarters": ["Emmett Johnson (KC)"],
+                    "teamBStarters": ["Travis Kelce (KC)"],
+                    "windowAnalysis": "Travis Kelce opens the season in Arrowhead to give arkinsjt the first punch on the scoreboard."
                 }
             ]
         },
@@ -558,14 +568,24 @@ def generate_week1_matchups():
             ],
             "tvSchedule": [
                 {
-                    "timeSlot": "Thursday 8:20 PM ET",
-                    "network": "NBC / Peacock",
-                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
+                    "timeSlot": "Sunday 1:00 PM ET",
+                    "network": "CBS & FOX Early Window",
+                    "gameMatchup": "Houston @ Indianapolis, Tennessee @ Chicago, Carolina @ New Orleans",
+                    "leverageLevel": "CRITICAL",
+                    "fantasyPointsAtStake": "98.4 pts",
+                    "teamAStarters": ["Jonathan Taylor (IND)", "Tony Pollard (TEN)", "Dalton Kincaid (BUF)"],
+                    "teamBStarters": ["Chuba Hubbard (CAR)", "Carnell Tate (TEN)", "Michael Pittman (PIT)", "Jalen Coker (CAR)", "Travis Hunter (JAX)", "Younghoe Koo (ATL)"],
+                    "windowAnalysis": "Jonathan Taylor powers 2 Dagos while Final Boss deploys 6 starters across the early window."
+                },
+                {
+                    "timeSlot": "Sunday 4:05 PM / 4:25 PM ET",
+                    "network": "CBS & FOX Late Window",
+                    "gameMatchup": "Las Vegas @ LA Chargers, Dallas @ Cleveland & Denver @ Seattle",
                     "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "27.2 pts",
-                    "teamAStarters": [],
-                    "teamBStarters": ["Patrick Mahomes (KC)", "Chiefs DEF"],
-                    "windowAnalysis": "Patrick Mahomes gets the first opportunity of Week 1 to give Final Boss an early lead."
+                    "fantasyPointsAtStake": "64.2 pts",
+                    "teamAStarters": ["Quentin Johnston (LAC)", "Harold Fannin (CLE)", "Ashton Jeanty (LV)", "Matt Prater (ARI)"],
+                    "teamBStarters": ["J.K. Dobbins (DEN)", "George Pickens (DAL)"],
+                    "windowAnalysis": "Ashton Jeanty makes his NFL debut while George Pickens looks to spark Final Boss's offense."
                 },
                 {
                     "timeSlot": "Friday 8:15 PM ET",
@@ -578,24 +598,24 @@ def generate_week1_matchups():
                     "windowAnalysis": "Heavy Packers stack in São Paulo: Jordan Love and Jayden Reed against Tucker Kraft."
                 },
                 {
-                    "timeSlot": "Sunday 1:00 PM ET",
-                    "network": "CBS & FOX",
-                    "gameMatchup": "Houston @ Indianapolis, Tennessee @ Chicago, Carolina @ New Orleans",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "88.7 pts",
-                    "teamAStarters": ["Jonathan Taylor (IND)", "Tony Pollard (TEN)", "Dalton Kincaid (BUF)"],
-                    "teamBStarters": ["Chuba Hubbard (CAR)", "Carnell Tate (TEN)", "Michael Pittman (PIT)", "Jalen Coker (CAR)", "Travis Hunter (JAX)", "Younghoe Koo (ATL)"],
-                    "windowAnalysis": "Jonathan Taylor powers 2 Dagos while Final Boss deploys 6 starters across the early window."
+                    "timeSlot": "Thursday 8:20 PM ET",
+                    "network": "NBC / Peacock",
+                    "gameMatchup": "Baltimore Ravens @ Kansas City Chiefs",
+                    "leverageLevel": "MEDIUM",
+                    "fantasyPointsAtStake": "27.2 pts",
+                    "teamAStarters": [],
+                    "teamBStarters": ["Patrick Mahomes (KC)", "Chiefs DEF"],
+                    "windowAnalysis": "Patrick Mahomes gets the first opportunity of Week 1 to give Final Boss an early lead."
                 },
                 {
                     "timeSlot": "Sunday 8:20 PM ET",
                     "network": "NBC Sunday Night Football",
                     "gameMatchup": "Los Angeles Rams @ Detroit Lions",
-                    "leverageLevel": "DECISIVE CLIMAX",
+                    "leverageLevel": "DECISIVE CLOSER",
                     "fantasyPointsAtStake": "17.8 pts",
                     "teamAStarters": ["Jahmyr Gibbs (DET)"],
                     "teamBStarters": [],
-                    "windowAnalysis": "Jahmyr Gibbs takes center stage on Sunday Night Football to close out the victory for 2 Dagos."
+                    "windowAnalysis": "Jahmyr Gibbs enters Sunday Night Football as the sole active asset to seal the victory for 2 Dagos."
                 }
             ]
         },
@@ -673,24 +693,24 @@ def generate_week1_matchups():
             ],
             "tvSchedule": [
                 {
-                    "timeSlot": "Sunday 1:00 PM ET",
-                    "network": "CBS & FOX",
-                    "gameMatchup": "Jacksonville @ Miami & Arizona @ Buffalo",
-                    "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "65.1 pts",
-                    "teamAStarters": ["Jeremiyah Love (ARI)", "Roman Wilson (PIT)", "Jonathon Brooks (CAR)", "Tyler Allgeier (ARI)", "Tyler Bass (BUF)"],
-                    "teamBStarters": ["De'Von Achane (MIA)", "Jaylen Warren (PIT)", "Aaron Jones (MIN)"],
-                    "windowAnalysis": "Achane's home run ability headlines the early Sunday window."
+                    "timeSlot": "Monday 8:15 PM ET",
+                    "network": "ESPN / ABC Monday Night Football",
+                    "gameMatchup": "New York Jets @ San Francisco 49ers",
+                    "leverageLevel": "DECISIVE CLIMAX",
+                    "fantasyPointsAtStake": "94.0 pts",
+                    "teamAStarters": ["Breece Hall (NYJ)"],
+                    "teamBStarters": ["Brock Purdy (SF)", "Christian McCaffrey (SF)", "Deebo Samuel (SF)", "George Kittle (SF)", "Jake Moody (SF)", "49ers DEF"],
+                    "windowAnalysis": "The highest-stakes window of the matchup. Breece Hall takes on 6 San Francisco 49ers in prime time to decide the victory on Monday Night Football."
                 },
                 {
-                    "timeSlot": "Sunday 4:05 PM / 4:25 PM ET",
-                    "network": "CBS & FOX Late Window",
-                    "gameMatchup": "Las Vegas @ LA Chargers & Dallas @ Cleveland",
+                    "timeSlot": "Sunday 1:00 PM ET",
+                    "network": "CBS & FOX Early Window",
+                    "gameMatchup": "Jacksonville @ Miami, Arizona @ Buffalo & Carolina @ New Orleans",
                     "leverageLevel": "HIGH",
-                    "fantasyPointsAtStake": "43.3 pts",
-                    "teamAStarters": ["Jaylen Waddle (DEN)", "Kimani Vidal (LAC)", "Browns DEF"],
-                    "teamBStarters": ["Omarion Hampton (LAC)"],
-                    "windowAnalysis": "Omarion Hampton makes his Chargers debut against Jaylen Waddle and Kimani Vidal."
+                    "fantasyPointsAtStake": "86.1 pts",
+                    "teamAStarters": ["Jeremiyah Love (ARI)", "Roman Wilson (PIT)", "Jonathon Brooks (CAR)", "Tyler Allgeier (ARI)", "Tyler Bass (BUF)"],
+                    "teamBStarters": ["De'Von Achane (MIA)", "Jaylen Warren (PIT)", "Aaron Jones (MIN)"],
+                    "windowAnalysis": "Achane's home run ability headlines the early Sunday window against Jeremiyah Love and Jonathon Brooks."
                 },
                 {
                     "timeSlot": "Sunday 8:20 PM ET",
@@ -703,14 +723,14 @@ def generate_week1_matchups():
                     "windowAnalysis": "Goff and LaPorta combine in Ford Field against Davante Adams."
                 },
                 {
-                    "timeSlot": "Monday 8:15 PM ET",
-                    "network": "ESPN / ABC Monday Night Football",
-                    "gameMatchup": "New York Jets @ San Francisco 49ers",
-                    "leverageLevel": "DECISIVE CLIMAX",
-                    "fantasyPointsAtStake": "81.4 pts",
-                    "teamAStarters": ["Breece Hall (NYJ)"],
-                    "teamBStarters": ["Brock Purdy (SF)", "Christian McCaffrey (SF)", "Deebo Samuel (SF)", "George Kittle (SF)", "Jake Moody (SF)", "49ers DEF"],
-                    "windowAnalysis": "The grand finale: Breece Hall takes on 6 San Francisco 49ers in prime time to decide Week 1."
+                    "timeSlot": "Sunday 4:05 PM / 4:25 PM ET",
+                    "network": "CBS & FOX Late Window",
+                    "gameMatchup": "Las Vegas @ LA Chargers & Dallas @ Cleveland",
+                    "leverageLevel": "MEDIUM",
+                    "fantasyPointsAtStake": "43.3 pts",
+                    "teamAStarters": ["Jaylen Waddle (DEN)", "Kimani Vidal (LAC)", "Browns DEF"],
+                    "teamBStarters": ["Omarion Hampton (LAC)"],
+                    "windowAnalysis": "Omarion Hampton makes his Chargers debut against Jaylen Waddle and Kimani Vidal."
                 }
             ]
         }
@@ -729,7 +749,7 @@ def generate_week1_matchups():
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
         
-    print(f"Generated {len(matchups)} official Sleeper Week 1 matchups to {OUTPUT_PATH}")
+    print(f"Generated {len(matchups)} official Sleeper Week 1 matchups with accurate TV leverage to {OUTPUT_PATH}")
 
 if __name__ == "__main__":
     generate_week1_matchups()

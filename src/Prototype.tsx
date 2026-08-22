@@ -1268,72 +1268,75 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
         {matchupTab === "slate" ? (
           <div className="matchups-slate-content">
             {/* Marquee Matchup Spotlight Card */}
-            {marqueeMatchup ? (
-              <section
-                className="marquee-matchup-hero"
-                onClick={() => onMatchup && onMatchup(marqueeMatchup)}
-                style={{ cursor: onMatchup ? "pointer" : "default" }}
-              >
-                <div className="marquee-badge-row">
-                  <span className="marquee-pill"><Lightning size={14} weight="fill" /> Marquee Matchup of the Week</span>
-                  <span className="spread-pill">{marqueeMatchup.spreadLabel}</span>
-                  <span className="ou-pill">O/U {marqueeMatchup.overUnder}</span>
-                </div>
-                <h2>{marqueeMatchup.title}</h2>
-                <p className="marquee-sub">{marqueeMatchup.subtitle}</p>
+            {marqueeMatchup ? (() => {
+              const marqueeCrucialTV = [...marqueeMatchup.tvSchedule].sort((a, b) => (parseFloat(b.fantasyPointsAtStake) || 0) - (parseFloat(a.fantasyPointsAtStake) || 0))[0];
+              return (
+                <section
+                  className="marquee-matchup-hero"
+                  onClick={() => onMatchup && onMatchup(marqueeMatchup)}
+                  style={{ cursor: onMatchup ? "pointer" : "default" }}
+                >
+                  <div className="marquee-badge-row">
+                    <span className="marquee-pill"><Lightning size={14} weight="fill" /> Marquee Matchup of the Week</span>
+                    <span className="spread-pill">{marqueeMatchup.spreadLabel}</span>
+                    <span className="ou-pill">O/U {marqueeMatchup.overUnder}</span>
+                  </div>
+                  <h2>{marqueeMatchup.title}</h2>
+                  <p className="marquee-sub">{marqueeMatchup.subtitle}</p>
 
-                <div className="marquee-teams-clash">
-                  <div className="team-col team-a">
-                    <span className="rank-badge">#{marqueeMatchup.teamA.projectedRank}</span>
-                    <div className="team-meta-info">
-                      <strong>{marqueeMatchup.teamA.teamName}</strong>
-                      <small>{marqueeMatchup.teamA.manager}</small>
+                  <div className="marquee-teams-clash">
+                    <div className="team-col team-a">
+                      <span className="rank-badge">#{marqueeMatchup.teamA.projectedRank}</span>
+                      <div className="team-meta-info">
+                        <strong>{marqueeMatchup.teamA.teamName}</strong>
+                        <small>{marqueeMatchup.teamA.manager}</small>
+                      </div>
+                      <div className="team-score-proj">
+                        <strong>{marqueeMatchup.teamA.projectedScore}</strong>
+                        <span>{marqueeMatchup.teamA.winProbability}% Win Prob</span>
+                      </div>
                     </div>
-                    <div className="team-score-proj">
-                      <strong>{marqueeMatchup.teamA.projectedScore}</strong>
-                      <span>{marqueeMatchup.teamA.winProbability}% Win Prob</span>
+
+                    <div className="clash-center">
+                      <span className="vs-circle">VS</span>
+                      <div className="win-bar-track">
+                        <b style={{ width: `${marqueeMatchup.teamA.winProbability}%` }} />
+                      </div>
+                    </div>
+
+                    <div className="team-col team-b">
+                      <div className="team-score-proj">
+                        <strong>{marqueeMatchup.teamB.projectedScore}</strong>
+                        <span>{marqueeMatchup.teamB.winProbability}% Win Prob</span>
+                      </div>
+                      <div className="team-meta-info">
+                        <strong>{marqueeMatchup.teamB.teamName}</strong>
+                        <small>{marqueeMatchup.teamB.manager}</small>
+                      </div>
+                      <span className="rank-badge">#{marqueeMatchup.teamB.projectedRank}</span>
                     </div>
                   </div>
 
-                  <div className="clash-center">
-                    <span className="vs-circle">VS</span>
-                    <div className="win-bar-track">
-                      <b style={{ width: `${marqueeMatchup.teamA.winProbability}%` }} />
+                  <div className="marquee-preview-footer">
+                    <div className="tv-callout">
+                      <Television size={18} weight="duotone" />
+                      <span><b>Crucial TV Window:</b> {marqueeCrucialTV?.timeSlot} ({marqueeCrucialTV?.network}) · {marqueeCrucialTV?.fantasyPointsAtStake} at stake</span>
+                    </div>
+                    <div className="deep-dive-link">
+                      <span>View Head-to-Head Deep Dive</span>
+                      <ArrowRight size={18} />
                     </div>
                   </div>
-
-                  <div className="team-col team-b">
-                    <div className="team-score-proj">
-                      <strong>{marqueeMatchup.teamB.projectedScore}</strong>
-                      <span>{marqueeMatchup.teamB.winProbability}% Win Prob</span>
-                    </div>
-                    <div className="team-meta-info">
-                      <strong>{marqueeMatchup.teamB.teamName}</strong>
-                      <small>{marqueeMatchup.teamB.manager}</small>
-                    </div>
-                    <span className="rank-badge">#{marqueeMatchup.teamB.projectedRank}</span>
-                  </div>
-                </div>
-
-                <div className="marquee-preview-footer">
-                  <div className="tv-callout">
-                    <Television size={18} weight="duotone" />
-                    <span><b>Crucial TV Window:</b> {marqueeMatchup.tvSchedule[0]?.timeSlot} ({marqueeMatchup.tvSchedule[0]?.network}) · {marqueeMatchup.tvSchedule[0]?.fantasyPointsAtStake} at stake</span>
-                  </div>
-                  <div className="deep-dive-link">
-                    <span>View Head-to-Head Deep Dive</span>
-                    <ArrowRight size={18} />
-                  </div>
-                </div>
-              </section>
-            ) : null}
+                </section>
+              );
+            })() : null}
 
             {/* All 6 Matchup Cards Grid */}
             <div className="matchup-list-grid">
               {matchupsList.map((m) => {
                 const teamA = m.teamA;
                 const teamB = m.teamB;
-                const leadTV = m.tvSchedule[0];
+                const crucialTV = [...m.tvSchedule].sort((a, b) => (parseFloat(b.fantasyPointsAtStake) || 0) - (parseFloat(a.fantasyPointsAtStake) || 0))[0];
                 return (
                   <article
                     className="matchup-card"
@@ -1391,7 +1394,7 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
                     <div className="matchup-card-footer">
                       <div className="card-tv-info">
                         <Television size={16} weight="duotone" />
-                        <span>{leadTV?.timeSlot} ({leadTV?.network}) · {leadTV?.fantasyPointsAtStake} at stake</span>
+                        <span><b>Key Window:</b> {crucialTV?.timeSlot} · {crucialTV?.fantasyPointsAtStake}</span>
                       </div>
                       <span className="card-action-cue">
                         Deep Dive <ArrowRight size={16} />
