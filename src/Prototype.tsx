@@ -8,7 +8,9 @@ import {
   ClockCounterClockwise,
   Football,
   Info,
+  Lightning,
   List,
+  Television,
   Trophy,
   UsersThree,
 } from "@phosphor-icons/react";
@@ -25,6 +27,7 @@ import forecastInsightsJson from "./generated/forecast-insights.json";
 import draftRecapJson from "./generated/draft-recap.json";
 import weeklyRecapJson from "./generated/weekly-recap.json";
 import powerRankingsJson from "./generated/power-rankings.json";
+import matchupsWeek1Json from "./generated/matchups-week1.json";
 
 type WeeklyMatchup = {
   week: number;
@@ -35,6 +38,69 @@ type WeeklyMatchup = {
   opponentProjectedScore: number;
   spread: number;
   spreadLabel: string;
+};
+
+type Week1Starter = {
+  slot: string;
+  player: string;
+  position: string;
+  nflTeam: string;
+  projectedPoints: number;
+  tier: string;
+  matchupVs: string;
+  news: string;
+};
+
+type PositionalEdge = {
+  category: string;
+  advantage: string;
+  margin: string;
+  narrative: string;
+};
+
+type TVScheduleSlot = {
+  timeSlot: string;
+  network: string;
+  gameMatchup: string;
+  leverageLevel: string;
+  fantasyPointsAtStake: string;
+  teamAStarters: string[];
+  teamBStarters: string[];
+  windowAnalysis: string;
+};
+
+type MatchupTactical = {
+  headline: string;
+  breakdown: string;
+  keyVariables: string[];
+};
+
+type Week1TeamData = {
+  rosterId: number;
+  teamName: string;
+  manager: string;
+  powerRank: number;
+  projectedRank: number;
+  projectedScore: number;
+  winProbability: number;
+  impliedTotal: number;
+  starters: Week1Starter[];
+};
+
+type Week1Matchup = {
+  matchupId: number;
+  week: number;
+  title: string;
+  subtitle: string;
+  isMarquee: boolean;
+  teamA: Week1TeamData;
+  teamB: Week1TeamData;
+  spread: number;
+  spreadLabel: string;
+  overUnder: number;
+  tacticalAnalysis: MatchupTactical;
+  positionalEdges: PositionalEdge[];
+  tvSchedule: TVScheduleSlot[];
 };
 
 type SeedProbability = {
@@ -381,6 +447,7 @@ type Route =
   | { kind: "team"; rank: number }
   | { kind: "powerTeam"; rosterId: number }
   | { kind: "forecastTeam"; rosterId: number }
+  | { kind: "matchup"; matchupId: number }
   | { kind: "methodology" };
 
 const navItems: Array<{ id: NavId; label: string; icon: typeof BookOpenText }> = [
@@ -1158,98 +1225,485 @@ function StandingsTable({ rows }: { rows: StandingRow[] }) {
 
 const weeklyRecap = weeklyRecapJson;
 
-function MatchupsScreen() {
+function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => void }) {
+  const [matchupTab, setMatchupTab] = useState<"slate" | "hall">("slate");
+  const matchupsList = (matchupsWeek1Json.matchups as Week1Matchup[]) || [];
+  const marqueeMatchup = matchupsList.find((m) => m.isMarquee) || matchupsList[0];
   const topServingCount = macSaladStandings[0]?.count ?? 0;
   const kongLeaders = macSaladStandings.filter((entry) => entry.count === topServingCount);
 
   return (
-    <div className="app-screen section-screen web-screen">
-      <main className="section-page future-page">
-        <p className="eyebrow">Matchup & Award Ledger</p>
-        <h1>Matchups & Hall of Mac</h1>
-        <p className="section-deck">Scores, all-play records, schedule luck and the points every manager left on the bench.</p>
-        <div className="issue-rule"><span>Begins Week 1</span><span>Tuesday AM</span></div>
-        <section className="weekly-award">
-          <img src="./assets/app/mac-salad-trophy.webp" alt="" />
-          <div>
-            <span>The weekly honor</span>
-            <h2>Who gets to eat Ape’s Mac Salad?</h2>
-            <p>Every Tuesday, one manager earns the bowl for the league's best performance—not automatically the highest score. Upset quality, lineup decisions, opponent strength, and how far the result beat expectation all matter.</p>
-          </div>
-        </section>
-        <section className="hall-of-mac" aria-labelledby="hall-of-mac-title">
-          <header className="hall-heading">
-            <div>
-              <span>Permanent league record</span>
-              <h2 id="hall-of-mac-title">Hall of Mac</h2>
-              <p>Every bowl gets a permanent receipt. Draft and weekly winners each add one serving to the annual race.</p>
-            </div>
-            <div className="hall-total"><strong>{String(macSaladHistory.awards.length).padStart(2, "0")}</strong><small>{macSaladHistory.awards.length === 1 ? "serving" : "servings"}</small></div>
-          </header>
-          <div className="hall-grid">
-            <article className="kong-card">
-              <img src="./assets/app/mac-salad-trophy.webp" alt="" />
-              <div className="kong-card__copy">
-                <span>Year-end crown · {macSaladHistory.currentSeason}</span>
-                <h3>Kong Mac Salad Award</h3>
-                <p>The manager who collects the most Ape’s Mac Salads across the draft and weekly awards takes home the annual Kong.</p>
-                <div className="kong-leader">
-                  <small>{kongLeaders.length > 1 ? "Current co-leaders" : "Current leader"}</small>
-                  <strong>{kongLeaders.map((leader) => leader.manager).join(" · ") || "Race opens Week 1"}</strong>
-                  <em>{topServingCount} {topServingCount === 1 ? "serving" : "servings"}</em>
+    <div className="app-screen section-screen web-screen matchups-screen-container">
+      <main className="section-page">
+        <p className="eyebrow">NFL Week 1 Matchup Intelligence & TV Schedule</p>
+        <h1>Week 1 Matchups</h1>
+        <p className="section-deck">
+          Head-to-head tactical previews, starting lineup clashes, real-world scheme commentary, and the crucial broadcast TV viewing schedule.
+        </p>
+        <div className="issue-rule">
+          <span>6 Matchups · {matchupsWeek1Json.totalProjectedPoints.toFixed(0)} Projected Points</span>
+          <span>Kickoff: Thursday 8:15 PM ET (NBC)</span>
+        </div>
+
+        {/* View Switcher Tabs */}
+        <div className="matchup-view-switcher">
+          <button
+            className={`tab-pill ${matchupTab === "slate" ? "active" : ""}`}
+            onClick={() => setMatchupTab("slate")}
+            type="button"
+          >
+            <Football size={18} weight="duotone" />
+            <span>Week 1 Matchup Slate</span>
+          </button>
+          <button
+            className={`tab-pill ${matchupTab === "hall" ? "active" : ""}`}
+            onClick={() => setMatchupTab("hall")}
+            type="button"
+          >
+            <Trophy size={18} weight="duotone" />
+            <span>Hall of Mac & History</span>
+          </button>
+        </div>
+
+        {matchupTab === "slate" ? (
+          <div className="matchups-slate-content">
+            {/* Marquee Matchup Spotlight Card */}
+            {marqueeMatchup ? (
+              <section
+                className="marquee-matchup-hero"
+                onClick={() => onMatchup && onMatchup(marqueeMatchup)}
+                style={{ cursor: onMatchup ? "pointer" : "default" }}
+              >
+                <div className="marquee-badge-row">
+                  <span className="marquee-pill"><Lightning size={14} weight="fill" /> Marquee Matchup of the Week</span>
+                  <span className="spread-pill">{marqueeMatchup.spreadLabel}</span>
+                  <span className="ou-pill">O/U {marqueeMatchup.overUnder}</span>
                 </div>
-              </div>
-            </article>
-            <div className="hall-ledger">
-              {macSaladSeasons.map((season) => {
-                const seasonAwards = macSaladHistory.awards.filter((award) => award.season === season);
+                <h2>{marqueeMatchup.title}</h2>
+                <p className="marquee-sub">{marqueeMatchup.subtitle}</p>
+
+                <div className="marquee-teams-clash">
+                  <div className="team-col team-a">
+                    <span className="rank-badge">#{marqueeMatchup.teamA.projectedRank}</span>
+                    <div className="team-meta-info">
+                      <strong>{marqueeMatchup.teamA.teamName}</strong>
+                      <small>{marqueeMatchup.teamA.manager}</small>
+                    </div>
+                    <div className="team-score-proj">
+                      <strong>{marqueeMatchup.teamA.projectedScore}</strong>
+                      <span>{marqueeMatchup.teamA.winProbability}% Win Prob</span>
+                    </div>
+                  </div>
+
+                  <div className="clash-center">
+                    <span className="vs-circle">VS</span>
+                    <div className="win-bar-track">
+                      <b style={{ width: `${marqueeMatchup.teamA.winProbability}%` }} />
+                    </div>
+                  </div>
+
+                  <div className="team-col team-b">
+                    <div className="team-score-proj">
+                      <strong>{marqueeMatchup.teamB.projectedScore}</strong>
+                      <span>{marqueeMatchup.teamB.winProbability}% Win Prob</span>
+                    </div>
+                    <div className="team-meta-info">
+                      <strong>{marqueeMatchup.teamB.teamName}</strong>
+                      <small>{marqueeMatchup.teamB.manager}</small>
+                    </div>
+                    <span className="rank-badge">#{marqueeMatchup.teamB.projectedRank}</span>
+                  </div>
+                </div>
+
+                <div className="marquee-preview-footer">
+                  <div className="tv-callout">
+                    <Television size={18} weight="duotone" />
+                    <span><b>Crucial TV Window:</b> Thursday 8:15 PM ET (NBC) · 8 Starters Active at Opening Kickoff</span>
+                  </div>
+                  <div className="deep-dive-link">
+                    <span>View Head-to-Head Deep Dive</span>
+                    <ArrowRight size={18} />
+                  </div>
+                </div>
+              </section>
+            ) : null}
+
+            {/* All 6 Matchup Cards Grid */}
+            <div className="matchup-list-grid">
+              {matchupsList.map((m) => {
+                const teamA = m.teamA;
+                const teamB = m.teamB;
+                const leadTV = m.tvSchedule[0];
                 return (
-                  <section className="hall-season" key={season} aria-label={`${season} Mac Salad winners`}>
-                    <div className="hall-ledger__head"><span>{season} serving ledger</span><strong>{seasonAwards.length} {seasonAwards.length === 1 ? "award" : "awards"}</strong></div>
-                    {[...seasonAwards].reverse().map((award) => (
-                      <article className="hall-entry" key={award.id}>
-                        <time dateTime={award.date}>{award.displayDate}</time>
-                        <div><strong>{award.manager}</strong><small>{award.team} · {award.occasion}</small><p>{award.reason}</p></div>
-                        <span>+1</span>
-                      </article>
-                    ))}
-                  </section>
+                  <article
+                    className="matchup-card"
+                    key={m.matchupId}
+                    onClick={() => onMatchup && onMatchup(m)}
+                    style={{ cursor: onMatchup ? "pointer" : "default" }}
+                  >
+                    <div className="matchup-card-header">
+                      <div>
+                        <span className="matchup-num-tag">Matchup 0{m.matchupId}</span>
+                        <h3>{m.title}</h3>
+                      </div>
+                      <div className="matchup-odds-pills">
+                        <span className="card-spread-pill">{m.spreadLabel}</span>
+                        <span className="card-ou-pill">O/U {m.overUnder}</span>
+                      </div>
+                    </div>
+
+                    <p className="matchup-card-deck">{m.subtitle}</p>
+
+                    <div className="matchup-card-teams">
+                      <div className="card-team-row">
+                        <div className="team-id-cell">
+                          <span className="card-rank-num">#{teamA.projectedRank}</span>
+                          <div>
+                            <strong>{teamA.teamName}</strong>
+                            <small>{teamA.manager}</small>
+                          </div>
+                        </div>
+                        <div className="team-proj-cell">
+                          <strong>{teamA.projectedScore}</strong>
+                          <span className="prob-label">{teamA.winProbability}%</span>
+                        </div>
+                      </div>
+
+                      <div className="card-prob-bar">
+                        <b style={{ width: `${teamA.winProbability}%` }} />
+                      </div>
+
+                      <div className="card-team-row">
+                        <div className="team-id-cell">
+                          <span className="card-rank-num">#{teamB.projectedRank}</span>
+                          <div>
+                            <strong>{teamB.teamName}</strong>
+                            <small>{teamB.manager}</small>
+                          </div>
+                        </div>
+                        <div className="team-proj-cell">
+                          <strong>{teamB.projectedScore}</strong>
+                          <span className="prob-label">{teamB.winProbability}%</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="matchup-card-footer">
+                      <div className="card-tv-info">
+                        <Television size={16} weight="duotone" />
+                        <span>{leadTV?.timeSlot} ({leadTV?.network}) · {leadTV?.fantasyPointsAtStake} at stake</span>
+                      </div>
+                      <span className="card-action-cue">
+                        Deep Dive <ArrowRight size={16} />
+                      </span>
+                    </div>
+                  </article>
                 );
               })}
-              <p className="hall-ledger__next">Weekly servings begin after Week 1. Every Tuesday winner will be added here.</p>
+            </div>
+          </div>
+        ) : (
+          <div className="matchups-hall-content">
+            {/* Hall of Mac section preserved */}
+            <section className="weekly-award" style={{ marginTop: "24px" }}>
+              <img src="./assets/app/mac-salad-trophy.webp" alt="" />
+              <div>
+                <span>The weekly honor</span>
+                <h2>Who gets to eat Ape’s Mac Salad?</h2>
+                <p>Every Tuesday, one manager earns the bowl for the league's best performance—not automatically the highest score. Upset quality, lineup decisions, opponent strength, and how far the result beat expectation all matter.</p>
+              </div>
+            </section>
+            <section className="hall-of-mac" aria-labelledby="hall-of-mac-title">
+              <header className="hall-heading">
+                <div>
+                  <span>Permanent league record</span>
+                  <h2 id="hall-of-mac-title">Hall of Mac</h2>
+                  <p>Every bowl gets a permanent receipt. Draft and weekly winners each add one serving to the annual race.</p>
+                </div>
+                <div className="hall-total"><strong>{String(macSaladHistory.awards.length).padStart(2, "0")}</strong><small>{macSaladHistory.awards.length === 1 ? "serving" : "servings"}</small></div>
+              </header>
+              <div className="hall-grid">
+                <article className="kong-card">
+                  <img src="./assets/app/mac-salad-trophy.webp" alt="" />
+                  <div className="kong-card__copy">
+                    <span>Year-end crown · {macSaladHistory.currentSeason}</span>
+                    <h3>Kong Mac Salad Award</h3>
+                    <p>The manager who collects the most Ape’s Mac Salads across the draft and weekly awards takes home the annual Kong.</p>
+                    <div className="kong-leader">
+                      <small>{kongLeaders.length > 1 ? "Current co-leaders" : "Current leader"}</small>
+                      <strong>{kongLeaders.map((leader) => leader.manager).join(" · ") || "Race opens Week 1"}</strong>
+                      <em>{topServingCount} {topServingCount === 1 ? "serving" : "servings"}</em>
+                    </div>
+                  </div>
+                </article>
+                <div className="hall-ledger">
+                  {macSaladSeasons.map((season) => {
+                    const seasonAwards = macSaladHistory.awards.filter((award) => award.season === season);
+                    return (
+                      <section className="hall-season" key={season} aria-label={`${season} Mac Salad winners`}>
+                        <div className="hall-ledger__head"><span>{season} serving ledger</span><strong>{seasonAwards.length} {seasonAwards.length === 1 ? "award" : "awards"}</strong></div>
+                        {[...seasonAwards].reverse().map((award) => (
+                          <article className="hall-entry" key={award.id}>
+                            <time dateTime={award.date}>{award.displayDate}</time>
+                            <div><strong>{award.manager}</strong><small>{award.team} · {award.occasion}</small><p>{award.reason}</p></div>
+                            <span>+1</span>
+                          </article>
+                        ))}
+                      </section>
+                    );
+                  })}
+                  <p className="hall-ledger__next">Weekly servings begin after Week 1. Every Tuesday winner will be added here.</p>
+                </div>
+              </div>
+            </section>
+            {weeklyRecap.status === "scored" ? (
+              <section className="weekly-table" aria-labelledby="weekly-title">
+                <h2 id="weekly-title">Season to date</h2>
+                <StandingsTable rows={weeklyRecap.standings} />
+              </section>
+            ) : (
+              <section className="weekly-table" aria-labelledby="weekly-title">
+                <h2 id="weekly-title">
+                  {weeklyRecap.priorSeason.season} final · how last season actually went
+                </h2>
+                <p className="detail-explainer">
+                  No {weeklyRecap.league.season} games have been scored yet. These are the same
+                  measures the weekly review will use, applied to the completed{" "}
+                  {weeklyRecap.priorSeason.season} season.
+                </p>
+                <StandingsTable rows={weeklyRecap.priorSeason.standings} />
+              </section>
+            )}
+          </div>
+        )}
+
+        <p className="method-note" style={{ marginTop: "36px" }}>
+          All matchup projections simulate player weekly distributions derived from 3-FLEX half-PPR formats. Win probabilities update dynamically as real game scores finalize throughout opening weekend.
+        </p>
+      </main>
+    </div>
+  );
+}
+
+function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onBack: () => void }) {
+  const teamA = matchup.teamA;
+  const teamB = matchup.teamB;
+
+  return (
+    <div className="app-screen detail-screen web-screen matchup-deep-dive-screen">
+      <div className="detail-header">
+        <button type="button" onClick={onBack} aria-label="Back">
+          <ArrowLeft size={24} />
+        </button>
+        <div>
+          <span>Week 1 Head-to-Head</span>
+          <strong>{teamA.teamName} vs {teamB.teamName}</strong>
+        </div>
+      </div>
+
+      <main className="detail-page">
+        {/* Matchup Scoreboard Banner */}
+        <section className="matchup-hero-scoreboard">
+          <div className="scoreboard-badge-row">
+            <span className="matchup-tag-badge">Week 1 Matchup 0{matchup.matchupId}</span>
+            <span className="scoreboard-spread-badge">{matchup.spreadLabel}</span>
+            <span className="scoreboard-ou-badge">O/U {matchup.overUnder} pts</span>
+          </div>
+
+          <h1 className="scoreboard-title">{matchup.title}</h1>
+          <p className="scoreboard-subtitle">{matchup.subtitle}</p>
+
+          <div className="scoreboard-clash-box">
+            {/* Team A Box */}
+            <div className="sb-team-side side-a">
+              <span className="sb-rank-tag">Proj #{teamA.projectedRank}</span>
+              <h2>{teamA.teamName}</h2>
+              <p className="sb-manager-label">{teamA.manager} · 0–0</p>
+              <div className="sb-score-callout">
+                <strong>{teamA.projectedScore}</strong>
+                <small>Projected Points</small>
+              </div>
+              <span className="sb-win-prob-pill">{teamA.winProbability}% Win Probability</span>
+            </div>
+
+            {/* Middle Meter */}
+            <div className="sb-center-divider">
+              <span className="sb-vs-badge">VS</span>
+              <div className="sb-meter-bar">
+                <b style={{ width: `${teamA.winProbability}%` }} />
+              </div>
+              <small className="sb-margin-note">Spread: {matchup.spreadLabel}</small>
+            </div>
+
+            {/* Team B Box */}
+            <div className="sb-team-side side-b">
+              <span className="sb-rank-tag">Proj #{teamB.projectedRank}</span>
+              <h2>{teamB.teamName}</h2>
+              <p className="sb-manager-label">{teamB.manager} · 0–0</p>
+              <div className="sb-score-callout">
+                <strong>{teamB.projectedScore}</strong>
+                <small>Projected Points</small>
+              </div>
+              <span className="sb-win-prob-pill">{teamB.winProbability}% Win Probability</span>
             </div>
           </div>
         </section>
-        <section className="future-feature">
-          <span>Lead story</span>
-          <h2>The upset, the lineup decision and the player who swung the week</h2>
-          <p>Each matchup gets an original recap built from final scores, expected points, lineup efficiency and the largest player-level swings.</p>
+
+        {/* Crucial TV Viewing Schedule Section */}
+        <section className="detail-block tv-schedule-container">
+          <div className="detail-title">
+            <span>01</span>
+            <h2>Crucial TV Viewing Schedule</h2>
+          </div>
+          <p className="detail-explainer">
+            Where this matchup will be won and lost. Follow each broadcast window chronologically to track active fantasy starters and swing leverage.
+          </p>
+
+          <div className="tv-schedule-cards-list">
+            {matchup.tvSchedule.map((slot, idx) => (
+              <div className="tv-window-card" key={idx}>
+                <div className="tv-card-top">
+                  <div className="tv-time-meta">
+                    <span className="tv-network-badge">{slot.network}</span>
+                    <strong>{slot.timeSlot}</strong>
+                    <span className="tv-game-title">{slot.gameMatchup}</span>
+                  </div>
+                  <div className="tv-leverage-wrap">
+                    <span className={`leverage-pill lev-${slot.leverageLevel.toLowerCase().replace(/\s+/g, "-")}`}>
+                      {slot.leverageLevel}
+                    </span>
+                    <small className="tv-stake-val">{slot.fantasyPointsAtStake} at stake</small>
+                  </div>
+                </div>
+
+                <div className="tv-starters-clash-grid">
+                  <div className="tv-starters-col col-a">
+                    <span className="col-team-label">{teamA.teamName}</span>
+                    <ul>
+                      {slot.teamAStarters.map((s, sIdx) => (
+                        <li key={sIdx}>{s}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="tv-starters-col col-b">
+                    <span className="col-team-label">{teamB.teamName}</span>
+                    <ul>
+                      {slot.teamBStarters.map((s, sIdx) => (
+                        <li key={sIdx}>{s}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="tv-window-analysis">
+                  <p><strong>Window Analysis:</strong> {slot.windowAnalysis}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
-        {weeklyRecap.status === "scored" ? (
-          <section className="weekly-table" aria-labelledby="weekly-title">
-            <h2 id="weekly-title">Season to date</h2>
-            <StandingsTable rows={weeklyRecap.standings} />
-          </section>
-        ) : (
-          <section className="weekly-table" aria-labelledby="weekly-title">
-            <h2 id="weekly-title">
-              {weeklyRecap.priorSeason.season} final · how last season actually went
-            </h2>
-            <p className="detail-explainer">
-              No {weeklyRecap.league.season} games have been scored yet. These are the same
-              measures the weekly review will use, applied to the completed{" "}
-              {weeklyRecap.priorSeason.season} season.
-            </p>
-            <StandingsTable rows={weeklyRecap.priorSeason.standings} />
-          </section>
-        )}
-        <p className="method-note">
-          All-play compares each score with every other team that week, so it separates
-          scoring from schedule draw. Luck is actual wins minus all-play expected wins:
-          positive means the schedule was kind. Bench points are the gap to the best legal
-          lineup under this league&rsquo;s 1QB/2RB/2WR/1TE/3FLEX/K/DEF slots. Every figure
-          comes from Sleeper alone.
-        </p>
+
+        {/* Tale of the Tape Starter Lineups Grid */}
+        <section className="detail-block tale-of-tape-container">
+          <div className="detail-title">
+            <span>02</span>
+            <h2>Lineup Tale of the Tape</h2>
+          </div>
+          <p className="detail-explainer">
+            Starting lineup breakdown by slot (1QB / 2RB / 2WR / 1TE / 3FLEX / K / DEF) featuring projected point output, opponent matchups, and real-world role notes.
+          </p>
+
+          <div className="starter-slots-table">
+            {teamA.starters.map((starterA, idx) => {
+              const starterB = teamB.starters[idx] || teamB.starters[0];
+              const ptDiff = starterA.projectedPoints - starterB.projectedPoints;
+              const slotAdvantage = ptDiff > 0 ? "A" : ptDiff < 0 ? "B" : "EVEN";
+
+              return (
+                <div className="starter-slot-row" key={starterA.slot}>
+                  {/* Starter A */}
+                  <div className={`starter-box starter-a ${slotAdvantage === "A" ? "advantage" : ""}`}>
+                    <div className="starter-main-info">
+                      <strong>{starterA.player}</strong>
+                      <span className="starter-team-pos">{starterA.position} · {starterA.nflTeam}</span>
+                      <small className="starter-opp">{starterA.matchupVs}</small>
+                    </div>
+                    <div className="starter-pts-callout">
+                      <strong>{starterA.projectedPoints.toFixed(1)}</strong>
+                      <small>pts</small>
+                    </div>
+                    <p className="starter-news-note">{starterA.news}</p>
+                  </div>
+
+                  {/* Slot Middle Badge */}
+                  <div className="slot-badge-column">
+                    <span className="slot-name-badge">{starterA.slot}</span>
+                    <small className={`diff-tag diff-${slotAdvantage.toLowerCase()}`}>
+                      {slotAdvantage === "A"
+                        ? `+${ptDiff.toFixed(1)} A`
+                        : slotAdvantage === "B"
+                        ? `+${Math.abs(ptDiff).toFixed(1)} B`
+                        : "Even"}
+                    </small>
+                  </div>
+
+                  {/* Starter B */}
+                  <div className={`starter-box starter-b ${slotAdvantage === "B" ? "advantage" : ""}`}>
+                    <div className="starter-main-info">
+                      <strong>{starterB.player}</strong>
+                      <span className="starter-team-pos">{starterB.position} · {starterB.nflTeam}</span>
+                      <small className="starter-opp">{starterB.matchupVs}</small>
+                    </div>
+                    <div className="starter-pts-callout">
+                      <strong>{starterB.projectedPoints.toFixed(1)}</strong>
+                      <small>pts</small>
+                    </div>
+                    <p className="starter-news-note">{starterB.news}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Tactical Breakdown & Game Previews */}
+        <section className="detail-block tactical-preview-container">
+          <div className="detail-title">
+            <span>03</span>
+            <h2>Tactical Breakdown & Game Previews</h2>
+          </div>
+          
+          <div className="tactical-headline-card">
+            <h3>{matchup.tacticalAnalysis.headline}</h3>
+            <p>{matchup.tacticalAnalysis.breakdown}</p>
+          </div>
+
+          <div className="key-variables-card">
+            <h4>Key Matchup Variables & Swing Factors</h4>
+            <ul>
+              {matchup.tacticalAnalysis.keyVariables.map((v, vIdx) => (
+                <li key={vIdx}>{v}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Positional Advantages */}
+          <div className="positional-edges-section">
+            <h4>Positional Edge Breakdown</h4>
+            <div className="positional-edges-grid">
+              {matchup.positionalEdges.map((edge, eIdx) => (
+                <div className="edge-card" key={eIdx}>
+                  <div className="edge-top">
+                    <span className="edge-cat">{edge.category}</span>
+                    <strong className="edge-margin">{edge.margin}</strong>
+                  </div>
+                  <span className="edge-adv-tag">{edge.advantage}</span>
+                  <p>{edge.narrative}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
@@ -1844,6 +2298,12 @@ function MethodologyScreen() {
 function routeFromHash(): Route {
   const value = window.location.hash.replace(/^#\/?/, "");
   if (value === "methodology") return { kind: "methodology" };
+  if (value.startsWith("matchup-")) {
+    const matchupId = Number(value.slice("matchup-".length));
+    if ((matchupsWeek1Json.matchups as Week1Matchup[]).some((m) => m.matchupId === matchupId)) {
+      return { kind: "matchup", matchupId };
+    }
+  }
   if (value.startsWith("forecast-team-")) {
     const rosterId = Number(value.slice("forecast-team-".length));
     if (teams.some((team) => team.rosterId === rosterId)) return { kind: "forecastTeam", rosterId };
@@ -1870,6 +2330,7 @@ function routeHash(route: Route) {
   if (route.kind === "team") return `#team-${route.rank}`;
   if (route.kind === "powerTeam") return `#power-team-${route.rosterId}`;
   if (route.kind === "forecastTeam") return `#forecast-team-${route.rosterId}`;
+  if (route.kind === "matchup") return `#matchup-${route.matchupId}`;
   if (route.kind === "methodology") return "#methodology";
   if (route.id === "power") return "#power-rankings";
   return route.id === "analysis" ? "#analysis" : `#${route.id}`;
@@ -1881,6 +2342,7 @@ export default function Prototype() {
     const initial = routeFromHash();
     if (initial.kind === "nav") return initial.id;
     if (initial.kind === "forecastTeam") return "forecast";
+    if (initial.kind === "matchup") return "matchups";
     return initial.kind === "powerTeam" ? "power" : "analysis";
   });
 
@@ -1890,6 +2352,7 @@ export default function Prototype() {
       setRoute(next);
       if (next.kind === "nav") setActiveNav(next.id);
       if (next.kind === "powerTeam") setActiveNav("power");
+      if (next.kind === "matchup") setActiveNav("matchups");
       if (next.kind === "forecastTeam") setActiveNav("forecast");
       if (next.kind === "team" || next.kind === "methodology") setActiveNav("analysis");
       window.scrollTo({ top: 0, behavior: "auto" });
@@ -1917,12 +2380,22 @@ export default function Prototype() {
   const selectedTeam = route.kind === "team" ? teams.find((team) => team.rank === route.rank) : undefined;
   const selectedPowerTeam = route.kind === "powerTeam" ? teams.find((team) => team.rosterId === route.rosterId) : undefined;
   const selectedForecastTeam = route.kind === "forecastTeam" ? teams.find((team) => team.rosterId === route.rosterId) : undefined;
+  const selectedMatchup = route.kind === "matchup" ? (matchupsWeek1Json.matchups as Week1Matchup[]).find((m) => m.matchupId === route.matchupId) : undefined;
 
   return (
     <div className="site-shell">
       <SiteNav active={activeNav} onNavigate={(id) => go({ kind: "nav", id })} />
       <div className="site-content">
-        {route.kind === "forecastTeam" ? (
+        {route.kind === "matchup" ? (
+          selectedMatchup ? (
+            <MatchupDeepDiveScreen
+              matchup={selectedMatchup}
+              onBack={goBack}
+            />
+          ) : (
+            <MatchupsScreen onMatchup={(matchup) => go({ kind: "matchup", matchupId: matchup.matchupId })} />
+          )
+        ) : route.kind === "forecastTeam" ? (
           selectedForecastTeam ? (
             <>
               <DetailHeader onBack={goBack} team={selectedForecastTeam} context="Season Forecast" grade={`#${forecastInsights.teams[String(selectedForecastTeam.rosterId)]?.medianSeed ?? 1}`} />
@@ -1964,7 +2437,7 @@ export default function Prototype() {
         ) : route.id === "power" ? (
           <PowerRankingsScreen onTeam={(team) => go({ kind: "powerTeam", rosterId: team.rosterId })} />
         ) : route.id === "matchups" ? (
-          <MatchupsScreen />
+          <MatchupsScreen onMatchup={(matchup) => go({ kind: "matchup", matchupId: matchup.matchupId })} />
         ) : route.id === "forecast" ? (
           <ForecastScreen onTeam={(team) => go({ kind: "forecastTeam", rosterId: team.rosterId })} />
         ) : (

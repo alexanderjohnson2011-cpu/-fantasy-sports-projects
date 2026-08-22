@@ -3963,3 +3963,1003 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   line-height: 1.5;
   color: rgba(11, 51, 41, 0.8);
 }
+
+/* ==========================================================================
+   WEEK 1 MATCHUPS SLATE & HEAD-TO-HEAD DEEP DIVE
+   ========================================================================== */
+
+/* View Switcher */
+.matchup-view-switcher {
+  display: inline-flex;
+  background: rgba(11, 51, 41, 0.05);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.14));
+  padding: 4px;
+  gap: 4px;
+  border-radius: 4px;
+  margin: 20px 0 28px;
+}
+
+.matchup-view-switcher .tab-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.7));
+  border-radius: 3px;
+  transition: all 0.15s ease;
+}
+
+.matchup-view-switcher .tab-pill.active {
+  background: #fff;
+  color: var(--ink, #0b3329);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Marquee Matchup Spotlight Card */
+.marquee-matchup-hero {
+  background: linear-gradient(135deg, #fff 0%, #faf8f5 100%);
+  border: 2px solid var(--ink, #0b3329);
+  border-radius: 4px;
+  padding: 28px;
+  margin-bottom: 32px;
+  box-shadow: 0 6px 18px rgba(11, 51, 41, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.marquee-matchup-hero:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(11, 51, 41, 0.1);
+}
+
+.marquee-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.marquee-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--rust, #b34b2c);
+  color: #fff;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.spread-pill,
+.ou-pill {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  background: rgba(11, 51, 41, 0.06);
+  color: var(--ink, #0b3329);
+  border-radius: 2px;
+}
+
+.marquee-matchup-hero h2 {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  margin: 0 0 4px;
+  line-height: 1.1;
+}
+
+.marquee-sub {
+  font-size: 14px;
+  color: rgba(11, 51, 41, 0.7);
+  margin: 0 0 24px;
+}
+
+.marquee-teams-clash {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--hairline, rgba(11, 51, 41, 0.14));
+  border-bottom: 1px solid var(--hairline, rgba(11, 51, 41, 0.14));
+}
+
+@media (max-width: 768px) {
+  .marquee-teams-clash {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.team-col {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.team-col.team-b {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--ink, #0b3329);
+  color: #fff;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 18px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.team-meta-info strong {
+  display: block;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  line-height: 1.1;
+}
+
+.team-meta-info small {
+  font-size: 12px;
+  color: rgba(11, 51, 41, 0.65);
+}
+
+.team-score-proj {
+  margin-left: auto;
+  text-align: right;
+}
+
+.team-col.team-b .team-score-proj {
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
+}
+
+.team-score-proj strong {
+  display: block;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  line-height: 1;
+}
+
+.team-score-proj span {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(11, 51, 41, 0.7);
+}
+
+.clash-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.vs-circle {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(11, 51, 41, 0.5);
+  letter-spacing: 0.08em;
+}
+
+.win-bar-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(11, 51, 41, 0.12);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.win-bar-track b {
+  display: block;
+  height: 100%;
+  background: var(--ink, #0b3329);
+  border-radius: 3px;
+}
+
+.marquee-preview-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.tv-callout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink, #0b3329);
+}
+
+.deep-dive-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rust, #b34b2c);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Matchup Cards Grid */
+.matchup-list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 860px) {
+  .matchup-list-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.matchup-card {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  border-radius: 4px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.matchup-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(11, 51, 41, 0.08);
+}
+
+.matchup-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.matchup-num-tag {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rust, #b34b2c);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.matchup-card-header h3 {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  margin: 0;
+  line-height: 1.15;
+}
+
+.matchup-odds-pills {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.card-spread-pill,
+.card-ou-pill {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 6px;
+  background: rgba(11, 51, 41, 0.06);
+  border-radius: 2px;
+  color: var(--ink, #0b3329);
+}
+
+.matchup-card-deck {
+  font-size: 13px;
+  color: rgba(11, 51, 41, 0.7);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.matchup-card-teams {
+  background: rgba(11, 51, 41, 0.03);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.1));
+  padding: 14px 16px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-team-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.team-id-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-rank-num {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--rust, #b34b2c);
+}
+
+.team-id-cell strong {
+  font-size: 15px;
+  color: var(--ink, #0b3329);
+  display: block;
+}
+
+.team-id-cell small {
+  font-size: 11px;
+  color: rgba(11, 51, 41, 0.6);
+}
+
+.team-proj-cell {
+  text-align: right;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.team-proj-cell strong {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+}
+
+.prob-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(11, 51, 41, 0.65);
+}
+
+.card-prob-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(11, 51, 41, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.card-prob-bar b {
+  display: block;
+  height: 100%;
+  background: var(--ink, #0b3329);
+}
+
+.matchup-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.card-tv-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(11, 51, 41, 0.7);
+}
+
+.card-action-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-weight: 600;
+  color: var(--rust, #b34b2c);
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+/* ==========================================================================
+   MATCHUP DEEP DIVE SCREEN
+   ========================================================================== */
+
+.matchup-deep-dive-screen {
+  padding-bottom: 60px;
+}
+
+.matchup-hero-scoreboard {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  border-radius: 4px;
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.scoreboard-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.matchup-tag-badge {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--ink, #0b3329);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.scoreboard-spread-badge,
+.scoreboard-ou-badge {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: rgba(11, 51, 41, 0.06);
+  color: var(--ink, #0b3329);
+  padding: 4px 8px;
+  border-radius: 2px;
+}
+
+.scoreboard-title {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  margin: 0 0 6px;
+  line-height: 1.1;
+}
+
+.scoreboard-subtitle {
+  font-size: 16px;
+  color: rgba(11, 51, 41, 0.75);
+  margin: 0 0 28px;
+}
+
+.scoreboard-clash-box {
+  display: grid;
+  grid-template-columns: 1fr 160px 1fr;
+  align-items: center;
+  gap: 24px;
+  background: rgba(11, 51, 41, 0.02);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
+  padding: 24px;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .scoreboard-clash-box {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.sb-team-side {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sb-team-side.side-b {
+  text-align: right;
+  align-items: flex-end;
+}
+
+@media (max-width: 768px) {
+  .sb-team-side.side-b {
+    text-align: center;
+    align-items: center;
+  }
+}
+
+.sb-rank-tag {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--rust, #b34b2c);
+  letter-spacing: 0.06em;
+}
+
+.sb-team-side h2 {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.sb-manager-label {
+  font-size: 13px;
+  color: rgba(11, 51, 41, 0.65);
+  margin: 0;
+}
+
+.sb-score-callout {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 12px 0 6px;
+}
+
+.sb-score-callout strong {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 44px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  line-height: 1;
+}
+
+.sb-score-callout small {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(11, 51, 41, 0.6);
+}
+
+.sb-win-prob-pill {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--ink, #0b3329);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.sb-center-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.sb-vs-badge {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(11, 51, 41, 0.4);
+}
+
+.sb-meter-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(11, 51, 41, 0.12);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.sb-meter-bar b {
+  display: block;
+  height: 100%;
+  background: var(--ink, #0b3329);
+}
+
+.sb-margin-note {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(11, 51, 41, 0.65);
+}
+
+/* TV Schedule Viewing Cards */
+.tv-schedule-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.tv-window-card {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tv-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.tv-time-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tv-network-badge {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--ink, #0b3329);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.tv-time-meta strong {
+  font-size: 15px;
+  color: var(--ink, #0b3329);
+}
+
+.tv-game-title {
+  font-size: 13px;
+  color: rgba(11, 51, 41, 0.7);
+}
+
+.tv-leverage-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.leverage-pill {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.leverage-pill.lev-critical {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.leverage-pill.lev-high {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.leverage-pill.lev-decisive,
+.leverage-pill.lev-decisive-climax {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.leverage-pill.lev-closing {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.tv-stake-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(11, 51, 41, 0.7);
+}
+
+.tv-starters-clash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  background: rgba(11, 51, 41, 0.02);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.1));
+  padding: 14px;
+  border-radius: 3px;
+}
+
+@media (max-width: 600px) {
+  .tv-starters-clash-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tv-starters-col .col-team-label {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.tv-starters-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tv-starters-col li {
+  font-size: 12px;
+  color: rgba(11, 51, 41, 0.85);
+}
+
+.tv-window-analysis {
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(11, 51, 41, 0.8);
+  border-left: 3px solid var(--rust, #b34b2c);
+  padding-left: 12px;
+  margin-top: 2px;
+}
+
+/* Tale of the Tape Starter Slots */
+.starter-slots-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.starter-slot-row {
+  display: grid;
+  grid-template-columns: 1fr 90px 1fr;
+  align-items: stretch;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .starter-slot-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+.starter-box {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  border-radius: 3px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.starter-box.advantage {
+  border-color: var(--ink, #0b3329);
+  background: #fdfdfd;
+}
+
+.starter-main-info strong {
+  display: block;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+}
+
+.starter-team-pos {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(11, 51, 41, 0.7);
+  display: block;
+}
+
+.starter-opp {
+  font-size: 11px;
+  color: var(--rust, #b34b2c);
+  font-weight: 600;
+  display: block;
+}
+
+.starter-pts-callout {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  text-align: right;
+}
+
+.starter-pts-callout strong {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  line-height: 1;
+}
+
+.starter-pts-callout small {
+  font-size: 10px;
+  color: rgba(11, 51, 41, 0.6);
+  display: block;
+}
+
+.starter-news-note {
+  font-size: 11px;
+  line-height: 1.35;
+  color: rgba(11, 51, 41, 0.75);
+  margin: 6px 0 0;
+  padding-top: 6px;
+  border-top: 1px dashed var(--hairline, rgba(11, 51, 41, 0.12));
+}
+
+.slot-badge-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.slot-name-badge {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink, #0b3329);
+  background: rgba(11, 51, 41, 0.08);
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.diff-tag {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.diff-tag.diff-a {
+  color: var(--ink, #0b3329);
+}
+
+.diff-tag.diff-b {
+  color: var(--rust, #b34b2c);
+}
+
+/* Tactical Previews & Positional Edges */
+.tactical-headline-card {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  border-radius: 4px;
+  padding: 24px;
+  margin-top: 18px;
+}
+
+.tactical-headline-card h3 {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  margin: 0 0 10px;
+  line-height: 1.2;
+}
+
+.tactical-headline-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(11, 51, 41, 0.85);
+  margin: 0;
+}
+
+.key-variables-card {
+  background: rgba(11, 51, 41, 0.03);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.14));
+  border-radius: 4px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.key-variables-card h4 {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  margin: 0 0 10px;
+}
+
+.key-variables-card ul {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.key-variables-card li {
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(11, 51, 41, 0.85);
+}
+
+.positional-edges-section {
+  margin-top: 24px;
+}
+
+.positional-edges-section h4 {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  margin: 0 0 12px;
+}
+
+.positional-edges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.edge-card {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.14));
+  border-radius: 3px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.edge-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edge-cat {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(11, 51, 41, 0.6);
+}
+
+.edge-margin {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--rust, #b34b2c);
+}
+
+.edge-adv-tag {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+}
+
+.edge-card p {
+  font-size: 11px;
+  line-height: 1.35;
+  color: rgba(11, 51, 41, 0.7);
+  margin: 4px 0 0;
+}
+
