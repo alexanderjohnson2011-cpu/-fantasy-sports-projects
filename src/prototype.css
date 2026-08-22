@@ -2092,22 +2092,24 @@ body {
 
 .power-card__horizon > div {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 24px;
+  grid-template-columns: 78px minmax(0, 1fr) 48px;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin: 6px 0;
 }
 
 .power-card__horizon span,
 .power-card__horizon strong {
   color: var(--ink-soft);
-  font-size: 9px;
+  font-size: 11px;
   text-transform: uppercase;
 }
 
 .power-card__horizon strong {
   color: var(--ink);
   text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .power-card__horizon i {
