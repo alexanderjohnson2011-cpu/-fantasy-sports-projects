@@ -3020,3 +3020,425 @@ table.standings td.num, table.standings th.num {
 }
 table.standings .luck-good { color: #2f6b3f; }
 table.standings .luck-bad { color: #c44322; }
+
+/* Forecast Deep Dive Styles */
+.forecast-team-screen .detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.forecast-hero-card {
+  background: var(--sand, #f6f2e9);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.forecast-hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.forecast-seed-badge {
+  display: inline-block;
+  background: var(--ink, #0b3329);
+  color: #fff;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.forecast-record-callout {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  padding: 10px 16px;
+  border-radius: 4px;
+}
+
+.forecast-record-callout .record-label {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: rgba(11, 51, 41, 0.6);
+  letter-spacing: 0.08em;
+}
+
+.forecast-record-callout strong {
+  font-size: 24px;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink, #0b3329);
+}
+
+.forecast-record-callout small {
+  font-size: 12px;
+  color: rgba(11, 51, 41, 0.6);
+}
+
+.forecast-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .forecast-metrics-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.metric-tile {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-tile span {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: rgba(11, 51, 41, 0.6);
+  letter-spacing: 0.05em;
+}
+
+.metric-tile strong {
+  font-size: 20px;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-weight: 600;
+}
+
+.metric-bar {
+  height: 4px;
+  background: rgba(11, 51, 41, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.metric-bar b {
+  display: block;
+  height: 100%;
+  background: var(--ink, #0b3329);
+}
+
+.forecast-range-banner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(11, 51, 41, 0.1);
+}
+
+.forecast-range-banner em {
+  font-size: 12px;
+  color: rgba(11, 51, 41, 0.5);
+  font-style: normal;
+}
+
+.forecast-section-header {
+  margin-bottom: 16px;
+}
+
+.forecast-section-header h2 {
+  font-size: 24px;
+  margin: 4px 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.trend-pill-badge {
+  display: inline-block;
+  background: #e8edea;
+  color: var(--ink, #0b3329);
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.narrative-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 768px) {
+  .narrative-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.narrative-card {
+  padding: 16px 18px;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  background: #fff;
+}
+
+.narrative-card.analysis-card {
+  border-left: 4px solid var(--ink, #0b3329);
+}
+
+.narrative-card.risk-card {
+  border-left: 4px solid var(--rust, #b34b2c);
+}
+
+.narrative-card h3 {
+  font-size: 14px;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  color: rgba(11, 51, 41, 0.7);
+}
+
+.narrative-card p {
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.history-timeline-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 600px) {
+  .history-timeline-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.history-timeline-card {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 12px;
+}
+
+.history-date {
+  color: rgba(11, 51, 41, 0.55);
+}
+
+.history-rank {
+  color: var(--ink, #0b3329);
+}
+
+.history-event-label {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.history-stats-row {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(11, 51, 41, 0.08);
+  padding-top: 8px;
+  font-size: 12px;
+}
+
+.history-stats-row div {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-stats-row span {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: rgba(11, 51, 41, 0.5);
+}
+
+.schedule-matrix-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 600px) {
+  .schedule-matrix-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .schedule-matrix-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.schedule-matchup-card {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.matchup-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.week-badge {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(11, 51, 41, 0.6);
+  letter-spacing: 0.05em;
+}
+
+.spread-pill {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.matchup-opponent-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.matchup-opponent-row span {
+  font-size: 12px;
+  color: rgba(11, 51, 41, 0.5);
+  font-style: italic;
+}
+
+.matchup-opponent-row strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.matchup-scores-row small {
+  font-size: 12px;
+  color: rgba(11, 51, 41, 0.55);
+}
+
+.matchup-prob-section {
+  margin-top: 4px;
+}
+
+.matchup-prob-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.matchup-prob-header span {
+  font-size: 11px;
+  color: rgba(11, 51, 41, 0.55);
+  text-transform: uppercase;
+}
+
+.matchup-prob-bar {
+  height: 5px;
+  background: rgba(11, 51, 41, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.matchup-prob-bar b {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+}
+
+.seed-distribution-grid {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  padding: 20px 14px 14px;
+  overflow-x: auto;
+}
+
+.seed-bar-column {
+  flex: 1;
+  min-width: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.seed-prob-val {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.seed-bar-track {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(11, 51, 41, 0.03);
+  border-radius: 3px 3px 0 0;
+  padding: 0 4px;
+}
+
+.seed-bar-track b {
+  width: 100%;
+  border-radius: 2px 2px 0 0;
+}
+
+.seed-label {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+}
+
+.seed-tag {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 1px 4px;
+  border-radius: 2px;
+  background: rgba(11, 51, 41, 0.08);
+  color: rgba(11, 51, 41, 0.7);
+}
+
+.seed-bar-column.playoff-seed .seed-tag {
+  background: #e8edea;
+  color: var(--ink, #0b3329);
+}

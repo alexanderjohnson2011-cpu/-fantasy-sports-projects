@@ -25,6 +25,40 @@ import forecastInsightsJson from "./generated/forecast-insights.json";
 import draftRecapJson from "./generated/draft-recap.json";
 import weeklyRecapJson from "./generated/weekly-recap.json";
 
+type WeeklyMatchup = {
+  week: number;
+  opponentRosterId: number;
+  opponentName: string;
+  winProbability: number;
+  projectedScore: number;
+  opponentProjectedScore: number;
+  spread: number;
+  spreadLabel: string;
+};
+
+type SeedProbability = {
+  seed: number;
+  probability: number;
+};
+
+type HistoryNote = {
+  date: string;
+  expectedWins: number;
+  playoffOdds: number;
+  titleOdds: number;
+  rank: number;
+  event: string;
+};
+
+type FluctuationNarrative = {
+  headline: string;
+  trend: string;
+  primaryDriver: string;
+  analysis: string;
+  keyRisk: string;
+  historyNotes: HistoryNote[];
+};
+
 type TeamForecast = {
   rosterId: number;
   teamName: string;
@@ -36,6 +70,11 @@ type TeamForecast = {
   championshipProbability: number;
   lastPlaceProbability: number;
   medianSeed: number;
+  bestCaseSeed?: number;
+  worstCaseSeed?: number;
+  seedDistribution?: SeedProbability[];
+  weeklySchedule?: WeeklyMatchup[];
+  fluctuationNarrative?: FluctuationNarrative;
 };
 
 type ForecastInsights = {
@@ -304,6 +343,7 @@ type Route =
   | { kind: "nav"; id: NavId }
   | { kind: "team"; rank: number }
   | { kind: "powerTeam"; rosterId: number }
+  | { kind: "forecastTeam"; rosterId: number }
   | { kind: "methodology" };
 
 const navItems: Array<{ id: NavId; label: string; icon: typeof BookOpenText }> = [
@@ -1290,6 +1330,204 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
   );
 }
 
+function ForecastTeamScreen({ team }: { team: Team }) {
+  const fc = forecastInsights.teams[String(team.rosterId)];
+  if (!fc) return <div className="app-screen detail-screen web-screen"><main className="detail-page"><p>No forecast data available for this team.</p></main></div>;
+
+  const narrative = fc.fluctuationNarrative;
+  const historyNotes = narrative?.historyNotes ?? [];
+  const schedule = fc.weeklySchedule ?? [];
+  const seedDist = fc.seedDistribution ?? [];
+
+  return (
+    <div className="app-screen detail-screen web-screen forecast-team-screen">
+      <main className="detail-page">
+        {/* Simulation Hero Overview */}
+        <section className="forecast-hero-card">
+          <div className="forecast-hero-top">
+            <div>
+              <span className="forecast-seed-badge">Projected Seed #{fc.medianSeed}</span>
+              <p className="eyebrow">{team.manager} · Roster #{team.rosterId}</p>
+              <h1>{fc.teamName}</h1>
+            </div>
+            <div className="forecast-record-callout">
+              <span className="record-label">Expected Record</span>
+              <strong>{fc.expectedWins}–{fc.expectedLosses}</strong>
+              <small>{fc.expectedPointsFor.toFixed(0)} Projected PF</small>
+            </div>
+          </div>
+
+          <div className="forecast-metrics-grid">
+            <div className="metric-tile">
+              <span>Playoffs (Top 6)</span>
+              <strong style={{ color: fc.playoffProbability >= 75 ? "var(--ink)" : "var(--rust)" }}>
+                {fc.playoffProbability}%
+              </strong>
+              <div className="metric-bar"><b style={{ width: `${fc.playoffProbability}%` }} /></div>
+            </div>
+            <div className="metric-tile">
+              <span>First-Round Bye</span>
+              <strong>{fc.byeProbability}%</strong>
+              <div className="metric-bar"><b style={{ width: `${fc.byeProbability * 2}%` }} /></div>
+            </div>
+            <div className="metric-tile">
+              <span>Championship Odds</span>
+              <strong style={{ color: "var(--rust)" }}>{fc.championshipProbability}%</strong>
+              <div className="metric-bar"><b style={{ width: `${Math.min(100, fc.championshipProbability * 3)}%`, background: "var(--rust)" }} /></div>
+            </div>
+            <div className="metric-tile">
+              <span>Toilet Bowl (12th)</span>
+              <strong>{fc.lastPlaceProbability}%</strong>
+              <div className="metric-bar"><b style={{ width: `${Math.min(100, fc.lastPlaceProbability * 5)}%`, background: "#71717a" }} /></div>
+            </div>
+          </div>
+
+          <div className="forecast-range-banner">
+            <strong>Range of Outcomes:</strong>
+            <span>Best-Case: <b>Seed #{fc.bestCaseSeed ?? 1}</b> · Worst-Case: <b>Seed #{fc.worstCaseSeed ?? 12}</b></span>
+            <em>10,000 Monte Carlo Iterations</em>
+          </div>
+        </section>
+
+        {/* Section 1: Fluctuation Narrative & Volatility Risk Analysis */}
+        {narrative ? (
+          <section className="forecast-narrative-section">
+            <div className="forecast-section-header">
+              <p className="eyebrow">Model Evaluation & Fluctuation</p>
+              <h2>{narrative.headline}</h2>
+              <div className="trend-pill-badge">{narrative.trend}</div>
+            </div>
+
+            <div className="narrative-cards-grid">
+              <div className="narrative-card analysis-card">
+                <h3>Primary Driver & Simulation Readout</h3>
+                <p>{narrative.analysis}</p>
+              </div>
+              <div className="narrative-card risk-card">
+                <h3>Key Injury & Volatility Vulnerabilities</h3>
+                <p>{narrative.keyRisk}</p>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {/* Section 2: Projection History Timeline Widget */}
+        {historyNotes.length > 0 ? (
+          <section className="forecast-history-section">
+            <div className="forecast-section-header">
+              <p className="eyebrow">Trajectory Over Time</p>
+              <h2>Projection History & Model Shifts</h2>
+            </div>
+
+            <div className="history-timeline-cards">
+              {historyNotes.map((note, idx) => (
+                <div className="history-timeline-card" key={idx}>
+                  <div className="history-card-header">
+                    <span className="history-date">{note.date}</span>
+                    <strong className="history-rank">Rank #{note.rank}</strong>
+                  </div>
+                  <div className="history-event-label">{note.event}</div>
+                  <div className="history-stats-row">
+                    <div>
+                      <span>Exp Wins</span>
+                      <strong>{note.expectedWins}</strong>
+                    </div>
+                    <div>
+                      <span>Playoff %</span>
+                      <strong>{note.playoffOdds}%</strong>
+                    </div>
+                    <div>
+                      <span>Title %</span>
+                      <strong style={{ color: "var(--rust)" }}>{note.titleOdds}%</strong>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {/* Section 3: 14-Week Schedule & Matchup Win % Matrix */}
+        <section className="forecast-schedule-section">
+          <div className="forecast-section-header">
+            <p className="eyebrow">14-Week Matchup Matrix</p>
+            <h2>Weekly Schedule & Win Probabilities</h2>
+            <p className="section-deck">
+              Exact simulated win probabilities from 10,000 iterations based on team scoring distributions and projected spreads.
+            </p>
+          </div>
+
+          <div className="schedule-matrix-grid">
+            {schedule.map((game) => {
+              const isFavored = game.winProbability >= 50.0;
+              const probColor = game.winProbability >= 65 ? "var(--ink)" : game.winProbability >= 45 ? "#b45309" : "var(--rust)";
+              return (
+                <div className="schedule-matchup-card" key={game.week}>
+                  <div className="matchup-card-top">
+                    <span className="week-badge">Week {game.week}</span>
+                    <span className="spread-pill" style={{ background: isFavored ? "#e8edea" : "#fbf0ec", color: isFavored ? "var(--ink)" : "var(--rust)" }}>
+                      {game.spreadLabel}
+                    </span>
+                  </div>
+                  <div className="matchup-opponent-row">
+                    <span>vs</span>
+                    <strong>{game.opponentName}</strong>
+                  </div>
+                  <div className="matchup-scores-row">
+                    <small>Proj: {game.projectedScore.toFixed(1)} – {game.opponentProjectedScore.toFixed(1)}</small>
+                  </div>
+                  <div className="matchup-prob-section">
+                    <div className="matchup-prob-header">
+                      <span>Win Chance</span>
+                      <strong style={{ color: probColor }}>{game.winProbability}%</strong>
+                    </div>
+                    <div className="matchup-prob-bar">
+                      <b style={{ width: `${game.winProbability}%`, background: probColor }} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Section 4: Seed Probability Distribution */}
+        <section className="forecast-distribution-section">
+          <div className="forecast-section-header">
+            <p className="eyebrow">Finish Horizon</p>
+            <h2>12-Seed Probability Distribution</h2>
+            <p className="section-deck">
+              Probability of finishing in each regular season seed across 10,000 simulations. Seeds 1–6 qualify for the playoffs; Seeds 7–12 enter the Toilet Bowl.
+            </p>
+          </div>
+
+          <div className="seed-distribution-grid">
+            {seedDist.map((item) => {
+              const isPlayoff = item.seed <= 6;
+              const isBye = item.seed <= 2;
+              return (
+                <div className={`seed-bar-column ${isPlayoff ? "playoff-seed" : "toilet-seed"}`} key={item.seed}>
+                  <span className="seed-prob-val">{item.probability}%</span>
+                  <div className="seed-bar-track">
+                    <b
+                      style={{
+                        height: `${Math.max(4, item.probability * 3.5)}px`,
+                        background: isBye ? "var(--ink)" : isPlayoff ? "#2d6a4f" : "#9ca3af"
+                      }}
+                    />
+                  </div>
+                  <span className="seed-label">#{item.seed}</span>
+                  <small className="seed-tag">{isBye ? "BYE" : isPlayoff ? "PLY" : "OUT"}</small>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
 function MethodologyScreen() {
   return (
     <div className="app-screen methodology-screen web-screen">
@@ -1321,6 +1559,10 @@ function MethodologyScreen() {
 function routeFromHash(): Route {
   const value = window.location.hash.replace(/^#\/?/, "");
   if (value === "methodology") return { kind: "methodology" };
+  if (value.startsWith("forecast-team-")) {
+    const rosterId = Number(value.slice("forecast-team-".length));
+    if (teams.some((team) => team.rosterId === rosterId)) return { kind: "forecastTeam", rosterId };
+  }
   if (value.startsWith("power-team-")) {
     const rosterId = Number(value.slice("power-team-".length));
     if (teams.some((team) => team.rosterId === rosterId)) return { kind: "powerTeam", rosterId };
@@ -1342,6 +1584,7 @@ function routeFromHash(): Route {
 function routeHash(route: Route) {
   if (route.kind === "team") return `#team-${route.rank}`;
   if (route.kind === "powerTeam") return `#power-team-${route.rosterId}`;
+  if (route.kind === "forecastTeam") return `#forecast-team-${route.rosterId}`;
   if (route.kind === "methodology") return "#methodology";
   if (route.id === "power") return "#power-rankings";
   return route.id === "analysis" ? "#analysis" : `#${route.id}`;
@@ -1352,6 +1595,7 @@ export default function Prototype() {
   const [activeNav, setActiveNav] = useState<NavId>(() => {
     const initial = routeFromHash();
     if (initial.kind === "nav") return initial.id;
+    if (initial.kind === "forecastTeam") return "forecast";
     return initial.kind === "powerTeam" ? "power" : "analysis";
   });
 
@@ -1361,6 +1605,7 @@ export default function Prototype() {
       setRoute(next);
       if (next.kind === "nav") setActiveNav(next.id);
       if (next.kind === "powerTeam") setActiveNav("power");
+      if (next.kind === "forecastTeam") setActiveNav("forecast");
       if (next.kind === "team" || next.kind === "methodology") setActiveNav("analysis");
       window.scrollTo({ top: 0, behavior: "auto" });
     };
@@ -1386,12 +1631,22 @@ export default function Prototype() {
 
   const selectedTeam = route.kind === "team" ? teams.find((team) => team.rank === route.rank) : undefined;
   const selectedPowerTeam = route.kind === "powerTeam" ? teams.find((team) => team.rosterId === route.rosterId) : undefined;
+  const selectedForecastTeam = route.kind === "forecastTeam" ? teams.find((team) => team.rosterId === route.rosterId) : undefined;
 
   return (
     <div className="site-shell">
       <SiteNav active={activeNav} onNavigate={(id) => go({ kind: "nav", id })} />
       <div className="site-content">
-        {route.kind === "powerTeam" ? (
+        {route.kind === "forecastTeam" ? (
+          selectedForecastTeam ? (
+            <>
+              <DetailHeader onBack={goBack} team={selectedForecastTeam} context="Season Forecast" grade={`#${forecastInsights.teams[String(selectedForecastTeam.rosterId)]?.medianSeed ?? 1}`} />
+              <ForecastTeamScreen team={selectedForecastTeam} />
+            </>
+          ) : (
+            <ForecastScreen onTeam={(team) => go({ kind: "forecastTeam", rosterId: team.rosterId })} />
+          )
+        ) : route.kind === "powerTeam" ? (
           selectedPowerTeam ? (
             <>
               <DetailHeader onBack={goBack} team={selectedPowerTeam} context="Power Rankings" grade={powerProfileFor(selectedPowerTeam).grade} />
@@ -1426,7 +1681,7 @@ export default function Prototype() {
         ) : route.id === "matchups" ? (
           <MatchupsScreen />
         ) : route.id === "forecast" ? (
-          <ForecastScreen onTeam={(team) => go({ kind: "powerTeam", rosterId: team.rosterId })} />
+          <ForecastScreen onTeam={(team) => go({ kind: "forecastTeam", rosterId: team.rosterId })} />
         ) : (
           <AnalysisScreen
             onTeam={(team) => go({ kind: "team", rank: team.rank })}

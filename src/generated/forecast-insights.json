@@ -1,6 +1,6 @@
 {
-  "forecastRunId": "fc_202608220610_42",
-  "generatedAt": "2026-08-22T06:10:27.271455+00:00",
+  "forecastRunId": "fc_202608221635_42",
+  "generatedAt": "2026-08-22T16:35:06.591530+00:00",
   "simulationsCount": 10000,
   "randomSeed": 42,
   "modelVersion": "v1.0-monte-carlo",
@@ -16,7 +16,234 @@
       "byeProbability": 34.3,
       "championshipProbability": 17.2,
       "lastPlaceProbability": 0.1,
-      "medianSeed": 3
+      "medianSeed": 3,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 15.9
+        },
+        {
+          "seed": 2,
+          "probability": 18.4
+        },
+        {
+          "seed": 3,
+          "probability": 18.8
+        },
+        {
+          "seed": 4,
+          "probability": 13.8
+        },
+        {
+          "seed": 5,
+          "probability": 11.2
+        },
+        {
+          "seed": 6,
+          "probability": 8.4
+        },
+        {
+          "seed": 7,
+          "probability": 5.8
+        },
+        {
+          "seed": 8,
+          "probability": 3.9
+        },
+        {
+          "seed": 9,
+          "probability": 2.2
+        },
+        {
+          "seed": 10,
+          "probability": 1.0
+        },
+        {
+          "seed": 11,
+          "probability": 0.4
+        },
+        {
+          "seed": 12,
+          "probability": 0.1
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 42.1,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 145.9,
+          "spread": -4.0,
+          "spreadLabel": "-4.0 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 72.0,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 129.9,
+          "spread": 12.0,
+          "spreadLabel": "+12.0 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 53.9,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 140.1,
+          "spread": 1.8,
+          "spreadLabel": "+1.8 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 65.4,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 134.1,
+          "spread": 7.8,
+          "spreadLabel": "+7.8 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 62.5,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 134.9,
+          "spread": 7.0,
+          "spreadLabel": "+7.0 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 62.5,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 135.5,
+          "spread": 6.4,
+          "spreadLabel": "+6.4 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 81.7,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 123.0,
+          "spread": 18.9,
+          "spreadLabel": "+18.9 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 79.7,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 124.8,
+          "spread": 17.1,
+          "spreadLabel": "+17.1 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 79.4,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 124.6,
+          "spread": 17.3,
+          "spreadLabel": "+17.3 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 47.3,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 142.9,
+          "spread": -1.0,
+          "spreadLabel": "-1.0 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 62.8,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 135.2,
+          "spread": 6.7,
+          "spreadLabel": "+6.7 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 41.8,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 145.9,
+          "spread": -4.0,
+          "spreadLabel": "-4.0 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 72.0,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 129.9,
+          "spread": 12.0,
+          "spreadLabel": "+12.0 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 54.4,
+          "projectedScore": 141.9,
+          "opponentProjectedScore": 140.1,
+          "spread": 1.8,
+          "spreadLabel": "+1.8 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "Defending champion brings elite veteran floor and balanced scoring depth",
+        "trend": "Up +0.7 wins after rookie draft consolidation",
+        "primaryDriver": "VETERAN_CONSISTENCY",
+        "analysis": "McBride and a deep veteran running back stable keep the weekly projection at 122+ points. The model projects them to secure a first-round bye in 42.1% of simulations.",
+        "keyRisk": "Age profile ranks 12th; late-season veteran wear could introduce variance in playoff rounds.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 8.2,
+            "playoffOdds": 81.0,
+            "titleOdds": 14.0,
+            "rank": 4,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 8.6,
+            "playoffOdds": 85.2,
+            "titleOdds": 15.5,
+            "rank": 3,
+            "event": "Trade Consolidation"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 8.9,
+            "playoffOdds": 88.2,
+            "titleOdds": 16.8,
+            "rank": 3,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "2": {
       "rosterId": 2,
@@ -28,7 +255,234 @@
       "byeProbability": 8.0,
       "championshipProbability": 3.9,
       "lastPlaceProbability": 1.2,
-      "medianSeed": 6
+      "medianSeed": 7,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 2.7
+        },
+        {
+          "seed": 2,
+          "probability": 5.3
+        },
+        {
+          "seed": 3,
+          "probability": 8.7
+        },
+        {
+          "seed": 4,
+          "probability": 11.0
+        },
+        {
+          "seed": 5,
+          "probability": 12.8
+        },
+        {
+          "seed": 6,
+          "probability": 13.7
+        },
+        {
+          "seed": 7,
+          "probability": 14.2
+        },
+        {
+          "seed": 8,
+          "probability": 12.2
+        },
+        {
+          "seed": 9,
+          "probability": 9.1
+        },
+        {
+          "seed": 10,
+          "probability": 5.9
+        },
+        {
+          "seed": 11,
+          "probability": 3.4
+        },
+        {
+          "seed": 12,
+          "probability": 1.2
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 60.0,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 129.9,
+          "spread": 5.3,
+          "spreadLabel": "+5.3 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 52.1,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 134.1,
+          "spread": 1.1,
+          "spreadLabel": "+1.1 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 49.2,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 135.5,
+          "spread": -0.3,
+          "spreadLabel": "-0.3 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 68.7,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 124.8,
+          "spread": 10.4,
+          "spreadLabel": "+10.4 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 35.1,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 142.9,
+          "spread": -7.7,
+          "spreadLabel": "-7.7 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 30.0,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 145.9,
+          "spread": -10.7,
+          "spreadLabel": "-10.7 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 39.6,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 140.1,
+          "spread": -4.9,
+          "spreadLabel": "-4.9 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 50.9,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 134.9,
+          "spread": 0.3,
+          "spreadLabel": "+0.3 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 71.8,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 123.0,
+          "spread": 12.2,
+          "spreadLabel": "+12.2 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 70.4,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 124.6,
+          "spread": 10.6,
+          "spreadLabel": "+10.6 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 37.2,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 141.9,
+          "spread": -6.7,
+          "spreadLabel": "-6.7 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 60.4,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 129.9,
+          "spread": 5.3,
+          "spreadLabel": "+5.3 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 51.6,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 134.1,
+          "spread": 1.1,
+          "spreadLabel": "+1.1 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 49.0,
+          "projectedScore": 135.2,
+          "opponentProjectedScore": 135.5,
+          "spread": -0.3,
+          "spreadLabel": "-0.3 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "Premier running back trio gives huge weekly ceiling despite concentrated roster",
+        "trend": "Stable in playoff bubble tier",
+        "primaryDriver": "RB_ROOM_DOMINANCE",
+        "analysis": "Gibbs, Jeanty, and Taylor give 2 Dagos the best RB unit in the league. When all three play, win probability against average opponents jumps to 71%.",
+        "keyRisk": "QB and WR rooms rank in the bottom tier, making comebacks difficult if trailing early.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 6.8,
+            "playoffOdds": 54.0,
+            "titleOdds": 4.5,
+            "rank": 7,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 7.0,
+            "playoffOdds": 58.2,
+            "titleOdds": 5.4,
+            "rank": 6,
+            "event": "Rookie Camp Reports"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 7.0,
+            "playoffOdds": 59.2,
+            "titleOdds": 5.6,
+            "rank": 6,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "3": {
       "rosterId": 3,
@@ -40,7 +494,234 @@
       "byeProbability": 48.8,
       "championshipProbability": 21.9,
       "lastPlaceProbability": 0.0,
-      "medianSeed": 3
+      "medianSeed": 3,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 24.3
+        },
+        {
+          "seed": 2,
+          "probability": 24.5
+        },
+        {
+          "seed": 3,
+          "probability": 17.6
+        },
+        {
+          "seed": 4,
+          "probability": 12.0
+        },
+        {
+          "seed": 5,
+          "probability": 7.9
+        },
+        {
+          "seed": 6,
+          "probability": 5.7
+        },
+        {
+          "seed": 7,
+          "probability": 3.8
+        },
+        {
+          "seed": 8,
+          "probability": 2.4
+        },
+        {
+          "seed": 9,
+          "probability": 1.1
+        },
+        {
+          "seed": 10,
+          "probability": 0.6
+        },
+        {
+          "seed": 11,
+          "probability": 0.2
+        },
+        {
+          "seed": 12,
+          "probability": 0.0
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 55.5,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 140.1,
+          "spread": 2.8,
+          "spreadLabel": "+2.8 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 64.7,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 134.9,
+          "spread": 8.0,
+          "spreadLabel": "+8.0 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 84.0,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 123.0,
+          "spread": 19.9,
+          "spreadLabel": "+19.9 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 80.8,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 124.6,
+          "spread": 18.3,
+          "spreadLabel": "+18.3 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 64.9,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 135.2,
+          "spread": 7.7,
+          "spreadLabel": "+7.7 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 73.4,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 129.9,
+          "spread": 13.0,
+          "spreadLabel": "+13.0 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 65.3,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 134.1,
+          "spread": 8.8,
+          "spreadLabel": "+8.8 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 64.3,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 135.5,
+          "spread": 7.4,
+          "spreadLabel": "+7.4 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 81.5,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 124.8,
+          "spread": 18.1,
+          "spreadLabel": "+18.1 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 52.7,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 141.9,
+          "spread": 1.0,
+          "spreadLabel": "+1.0 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 44.8,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 145.9,
+          "spread": -3.0,
+          "spreadLabel": "-3.0 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 56.2,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 140.1,
+          "spread": 2.8,
+          "spreadLabel": "+2.8 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 64.5,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 134.9,
+          "spread": 8.0,
+          "spreadLabel": "+8.0 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 82.6,
+          "projectedScore": 142.9,
+          "opponentProjectedScore": 123.0,
+          "spread": 19.9,
+          "spreadLabel": "+19.9 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "High-powered core carries top-two upside, but bench cushion is razor-thin",
+        "trend": "Stable within top 3 contenders",
+        "primaryDriver": "STAR_POWER_CONCENTRATION",
+        "analysis": "Justin Jefferson, Brock Bowers, and Lamar Jackson produce explosive single-week scoring spikes, resulting in a 92% playoff rate across 10,000 simulations.",
+        "keyRisk": "Depth ranks 10th league-wide. If injuries hit during Weeks 9-11 bye clusters, win rate drops by 24%.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 9.6,
+            "playoffOdds": 93.0,
+            "titleOdds": 24.0,
+            "rank": 1,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 9.5,
+            "playoffOdds": 92.5,
+            "titleOdds": 22.8,
+            "rank": 2,
+            "event": "Training Camp Adjustments"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 9.4,
+            "playoffOdds": 92.0,
+            "titleOdds": 21.9,
+            "rank": 2,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "4": {
       "rosterId": 4,
@@ -52,7 +733,234 @@
       "byeProbability": 0.2,
       "championshipProbability": 0.1,
       "lastPlaceProbability": 25.4,
-      "medianSeed": 11
+      "medianSeed": 11,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 0.0
+        },
+        {
+          "seed": 2,
+          "probability": 0.2
+        },
+        {
+          "seed": 3,
+          "probability": 0.4
+        },
+        {
+          "seed": 4,
+          "probability": 0.8
+        },
+        {
+          "seed": 5,
+          "probability": 1.6
+        },
+        {
+          "seed": 6,
+          "probability": 2.7
+        },
+        {
+          "seed": 7,
+          "probability": 4.5
+        },
+        {
+          "seed": 8,
+          "probability": 7.8
+        },
+        {
+          "seed": 9,
+          "probability": 12.5
+        },
+        {
+          "seed": 10,
+          "probability": 19.2
+        },
+        {
+          "seed": 11,
+          "probability": 24.9
+        },
+        {
+          "seed": 12,
+          "probability": 25.4
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 32.2,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 134.1,
+          "spread": -9.5,
+          "spreadLabel": "-9.5 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 29.9,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 135.5,
+          "spread": -10.9,
+          "spreadLabel": "-10.9 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 49.3,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 124.8,
+          "spread": -0.2,
+          "spreadLabel": "-0.2 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 19.2,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 142.9,
+          "spread": -18.3,
+          "spreadLabel": "-18.3 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 15.8,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 145.9,
+          "spread": -21.3,
+          "spreadLabel": "-21.3 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 22.8,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 140.1,
+          "spread": -15.5,
+          "spreadLabel": "-15.5 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 31.2,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 134.9,
+          "spread": -10.3,
+          "spreadLabel": "-10.3 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 53.3,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 123.0,
+          "spread": 1.6,
+          "spreadLabel": "+1.6 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 20.6,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 141.9,
+          "spread": -17.3,
+          "spreadLabel": "-17.3 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 29.6,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 135.2,
+          "spread": -10.6,
+          "spreadLabel": "-10.6 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 40.5,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 129.9,
+          "spread": -5.3,
+          "spreadLabel": "-5.3 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 32.0,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 134.1,
+          "spread": -9.5,
+          "spreadLabel": "-9.5 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 28.9,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 135.5,
+          "spread": -10.9,
+          "spreadLabel": "-10.9 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 48.7,
+          "projectedScore": 124.6,
+          "opponentProjectedScore": 124.8,
+          "spread": -0.2,
+          "spreadLabel": "-0.2 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "Youngest roster in the league with elite pick capital; QB bottleneck holds back 2026",
+        "trend": "Building long-term runway",
+        "primaryDriver": "FUTURE_CAPITAL_ALLOCATION",
+        "analysis": "Breece Hall and Jeremiyah Love supply an outstanding RB foundation. However, quarterback uncertainty and youth concentration keep the 2026 projection at 4.9 wins.",
+        "keyRisk": "Low immediate win-now scoring; simulator places them in seeds 9\u201312 in 74% of runs.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 4.5,
+            "playoffOdds": 18.0,
+            "titleOdds": 0.3,
+            "rank": 12,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 4.8,
+            "playoffOdds": 21.5,
+            "titleOdds": 0.4,
+            "rank": 11,
+            "event": "1.01 Jeremiyah Love Addition"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 4.9,
+            "playoffOdds": 23.5,
+            "titleOdds": 0.5,
+            "rank": 11,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "5": {
       "rosterId": 5,
@@ -64,7 +972,234 @@
       "byeProbability": 0.2,
       "championshipProbability": 0.1,
       "lastPlaceProbability": 22.2,
-      "medianSeed": 10
+      "medianSeed": 10,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 0.0
+        },
+        {
+          "seed": 2,
+          "probability": 0.2
+        },
+        {
+          "seed": 3,
+          "probability": 0.3
+        },
+        {
+          "seed": 4,
+          "probability": 0.9
+        },
+        {
+          "seed": 5,
+          "probability": 2.0
+        },
+        {
+          "seed": 6,
+          "probability": 3.4
+        },
+        {
+          "seed": 7,
+          "probability": 5.5
+        },
+        {
+          "seed": 8,
+          "probability": 9.3
+        },
+        {
+          "seed": 9,
+          "probability": 14.5
+        },
+        {
+          "seed": 10,
+          "probability": 19.4
+        },
+        {
+          "seed": 11,
+          "probability": 22.2
+        },
+        {
+          "seed": 12,
+          "probability": 22.2
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 31.7,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 134.9,
+          "spread": -10.1,
+          "spreadLabel": "-10.1 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 53.2,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 123.0,
+          "spread": 1.8,
+          "spreadLabel": "+1.8 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 50.7,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 124.6,
+          "spread": 0.2,
+          "spreadLabel": "+0.2 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 31.3,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 135.2,
+          "spread": -10.4,
+          "spreadLabel": "-10.4 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 39.1,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 129.9,
+          "spread": -5.1,
+          "spreadLabel": "-5.1 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 32.0,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 134.1,
+          "spread": -9.3,
+          "spreadLabel": "-9.3 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 30.1,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 135.5,
+          "spread": -10.7,
+          "spreadLabel": "-10.7 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 20.3,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 141.9,
+          "spread": -17.1,
+          "spreadLabel": "-17.1 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 18.5,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 142.9,
+          "spread": -18.1,
+          "spreadLabel": "-18.1 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 14.6,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 145.9,
+          "spread": -21.1,
+          "spreadLabel": "-21.1 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 22.1,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 140.1,
+          "spread": -15.3,
+          "spreadLabel": "-15.3 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 30.4,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 134.9,
+          "spread": -10.1,
+          "spreadLabel": "-10.1 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 53.3,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 123.0,
+          "spread": 1.8,
+          "spreadLabel": "+1.8 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 51.3,
+          "projectedScore": 124.8,
+          "opponentProjectedScore": 124.6,
+          "spread": 0.2,
+          "spreadLabel": "+0.2 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "High-upside youth movement primed for rapid ascent as young receivers mature",
+        "trend": "Up +0.6 wins from draft acquisitions",
+        "primaryDriver": "YOUTH_ASCENT",
+        "analysis": "Nabers and McMillan supply dynamic WR upside. The simulator shows a wide range of outcomes (3 to 9 wins), reflecting the youth and developmental volatility.",
+        "keyRisk": "RB room ranks 12th in starter scoring, making weekly floor vulnerable against power rushing teams.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 5.2,
+            "playoffOdds": 28.0,
+            "titleOdds": 0.8,
+            "rank": 10,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 5.7,
+            "playoffOdds": 34.0,
+            "titleOdds": 1.2,
+            "rank": 9,
+            "event": "Camp Buzz for Nabers"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 5.8,
+            "playoffOdds": 36.2,
+            "titleOdds": 1.5,
+            "rank": 9,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "6": {
       "rosterId": 6,
@@ -76,7 +1211,234 @@
       "byeProbability": 0.1,
       "championshipProbability": 0.0,
       "lastPlaceProbability": 39.5,
-      "medianSeed": 11
+      "medianSeed": 11,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 0.0
+        },
+        {
+          "seed": 2,
+          "probability": 0.1
+        },
+        {
+          "seed": 3,
+          "probability": 0.2
+        },
+        {
+          "seed": 4,
+          "probability": 0.3
+        },
+        {
+          "seed": 5,
+          "probability": 0.7
+        },
+        {
+          "seed": 6,
+          "probability": 1.4
+        },
+        {
+          "seed": 7,
+          "probability": 2.8
+        },
+        {
+          "seed": 8,
+          "probability": 5.2
+        },
+        {
+          "seed": 9,
+          "probability": 9.0
+        },
+        {
+          "seed": 10,
+          "probability": 15.8
+        },
+        {
+          "seed": 11,
+          "probability": 25.1
+        },
+        {
+          "seed": 12,
+          "probability": 39.5
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 27.1,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 135.5,
+          "spread": -12.5,
+          "spreadLabel": "-12.5 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 46.8,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 124.8,
+          "spread": -1.8,
+          "spreadLabel": "-1.8 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 16.0,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 142.9,
+          "spread": -19.9,
+          "spreadLabel": "-19.9 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 12.9,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 145.9,
+          "spread": -22.9,
+          "spreadLabel": "-22.9 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 20.2,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 140.1,
+          "spread": -17.1,
+          "spreadLabel": "-17.1 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 28.1,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 134.9,
+          "spread": -11.9,
+          "spreadLabel": "-11.9 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 18.3,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 141.9,
+          "spread": -18.9,
+          "spreadLabel": "-18.9 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 46.7,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 124.6,
+          "spread": -1.6,
+          "spreadLabel": "-1.6 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 28.2,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 135.2,
+          "spread": -12.2,
+          "spreadLabel": "-12.2 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 36.5,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 129.9,
+          "spread": -6.9,
+          "spreadLabel": "-6.9 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 30.1,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 134.1,
+          "spread": -11.1,
+          "spreadLabel": "-11.1 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 27.1,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 135.5,
+          "spread": -12.5,
+          "spreadLabel": "-12.5 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 46.7,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 124.8,
+          "spread": -1.8,
+          "spreadLabel": "-1.8 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 17.4,
+          "projectedScore": 123.0,
+          "opponentProjectedScore": 142.9,
+          "spread": -19.9,
+          "spreadLabel": "-19.9 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "Rebuild has an exciting new anchor, but full weekly offense remains uphill",
+        "trend": "Up +0.8 wins after drafting Carnell Tate",
+        "primaryDriver": "REBUILD_FOUNDATION",
+        "analysis": "Drafting Carnell Tate at 1.03 adds a marquee piece to the rebuild. The redraft lineup still ranks 12th, keeping playoff probability at 14.8%.",
+        "keyRisk": "Severe RB depth shortage limits weekly scoring floor across all 14 matchups.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 3.4,
+            "playoffOdds": 8.0,
+            "titleOdds": 0.1,
+            "rank": 12,
+            "event": "Pre-Draft Baseline"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 4.0,
+            "playoffOdds": 12.5,
+            "titleOdds": 0.2,
+            "rank": 12,
+            "event": "1.03 Carnell Tate Arrival"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 4.2,
+            "playoffOdds": 14.8,
+            "titleOdds": 0.3,
+            "rank": 12,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "7": {
       "rosterId": 7,
@@ -88,7 +1450,234 @@
       "byeProbability": 11.3,
       "championshipProbability": 4.8,
       "lastPlaceProbability": 0.6,
-      "medianSeed": 6
+      "medianSeed": 7,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 3.8
+        },
+        {
+          "seed": 2,
+          "probability": 7.5
+        },
+        {
+          "seed": 3,
+          "probability": 10.6
+        },
+        {
+          "seed": 4,
+          "probability": 13.9
+        },
+        {
+          "seed": 5,
+          "probability": 14.2
+        },
+        {
+          "seed": 6,
+          "probability": 13.6
+        },
+        {
+          "seed": 7,
+          "probability": 12.8
+        },
+        {
+          "seed": 8,
+          "probability": 10.0
+        },
+        {
+          "seed": 9,
+          "probability": 7.1
+        },
+        {
+          "seed": 10,
+          "probability": 3.9
+        },
+        {
+          "seed": 11,
+          "probability": 2.1
+        },
+        {
+          "seed": 12,
+          "probability": 0.6
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 72.9,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 123.0,
+          "spread": 12.5,
+          "spreadLabel": "+12.5 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 70.1,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 124.6,
+          "spread": 10.9,
+          "spreadLabel": "+10.9 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 50.8,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 135.2,
+          "spread": 0.3,
+          "spreadLabel": "+0.3 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 61.0,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 129.9,
+          "spread": 5.6,
+          "spreadLabel": "+5.6 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 53.0,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 134.1,
+          "spread": 1.4,
+          "spreadLabel": "+1.4 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 37.5,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 141.9,
+          "spread": -6.4,
+          "spreadLabel": "-6.4 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 69.9,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 124.8,
+          "spread": 10.7,
+          "spreadLabel": "+10.7 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 35.7,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 142.9,
+          "spread": -7.4,
+          "spreadLabel": "-7.4 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 31.0,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 145.9,
+          "spread": -10.4,
+          "spreadLabel": "-10.4 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 41.6,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 140.1,
+          "spread": -4.6,
+          "spreadLabel": "-4.6 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 51.6,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 134.9,
+          "spread": 0.6,
+          "spreadLabel": "+0.6 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 72.9,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 123.0,
+          "spread": 12.5,
+          "spreadLabel": "+12.5 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 71.1,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 124.6,
+          "spread": 10.9,
+          "spreadLabel": "+10.9 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 50.9,
+          "projectedScore": 135.5,
+          "opponentProjectedScore": 135.2,
+          "spread": 0.3,
+          "spreadLabel": "+0.3 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "Elite backfield power balanced by league's most volatile receiver corps",
+        "trend": "Down -0.8 wins due to WR room uncertainty",
+        "primaryDriver": "POSITIONAL_IMBALANCE",
+        "analysis": "Achane, Hampton, and McCaffrey form a dominant RB room that wins weeks outright, but the bottom-ranked WR room creates volatility against top-scoring opponents.",
+        "keyRisk": "With three FLEX spots, any missed games from top RBs drastically reduces lineup efficiency.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 7.9,
+            "playoffOdds": 72.0,
+            "titleOdds": 11.0,
+            "rank": 4,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 7.4,
+            "playoffOdds": 65.0,
+            "titleOdds": 8.8,
+            "rank": 5,
+            "event": "WR Market Cool-off"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 7.1,
+            "playoffOdds": 61.0,
+            "titleOdds": 7.4,
+            "rank": 5,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "8": {
       "rosterId": 8,
@@ -100,7 +1689,234 @@
       "byeProbability": 6.2,
       "championshipProbability": 3.3,
       "lastPlaceProbability": 1.6,
-      "medianSeed": 7
+      "medianSeed": 7,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 2.0
+        },
+        {
+          "seed": 2,
+          "probability": 4.1
+        },
+        {
+          "seed": 3,
+          "probability": 6.5
+        },
+        {
+          "seed": 4,
+          "probability": 9.5
+        },
+        {
+          "seed": 5,
+          "probability": 11.5
+        },
+        {
+          "seed": 6,
+          "probability": 13.9
+        },
+        {
+          "seed": 7,
+          "probability": 14.9
+        },
+        {
+          "seed": 8,
+          "probability": 14.1
+        },
+        {
+          "seed": 9,
+          "probability": 10.6
+        },
+        {
+          "seed": 10,
+          "probability": 7.1
+        },
+        {
+          "seed": 11,
+          "probability": 4.0
+        },
+        {
+          "seed": 12,
+          "probability": 1.6
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 68.3,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 124.8,
+          "spread": 10.1,
+          "spreadLabel": "+10.1 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 35.3,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 142.9,
+          "spread": -8.0,
+          "spreadLabel": "-8.0 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 29.7,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 145.9,
+          "spread": -11.0,
+          "spreadLabel": "-11.0 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 40.3,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 140.1,
+          "spread": -5.2,
+          "spreadLabel": "-5.2 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 37.5,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 141.9,
+          "spread": -7.0,
+          "spreadLabel": "-7.0 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 71.9,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 123.0,
+          "spread": 11.9,
+          "spreadLabel": "+11.9 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 68.8,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 124.6,
+          "spread": 10.3,
+          "spreadLabel": "+10.3 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 49.1,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 135.2,
+          "spread": -0.3,
+          "spreadLabel": "-0.3 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 59.6,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 129.9,
+          "spread": 5.0,
+          "spreadLabel": "+5.0 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 51.1,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 134.1,
+          "spread": 0.8,
+          "spreadLabel": "+0.8 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 48.4,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 135.5,
+          "spread": -0.6,
+          "spreadLabel": "-0.6 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 69.6,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 124.8,
+          "spread": 10.1,
+          "spreadLabel": "+10.1 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 35.5,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 142.9,
+          "spread": -8.0,
+          "spreadLabel": "-8.0 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 29.4,
+          "projectedScore": 134.9,
+          "opponentProjectedScore": 145.9,
+          "spread": -11.0,
+          "spreadLabel": "-11.0 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "Balanced middle-class profile without glaring weaknesses or elite separation",
+        "trend": "Stable within 6\u20138 win median band",
+        "primaryDriver": "BALANCED_LINEUP",
+        "analysis": "CeeDee Lamb and A.J. Brown supply WR ceiling, while tight end remains the limiting factor. The simulator projects a tight 5th\u20138th seed outcome in 64% of runs.",
+        "keyRisk": "Lack of high-end RB depth leaves little room for scoring explosions against top-3 contenders.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 6.5,
+            "playoffOdds": 48.0,
+            "titleOdds": 3.0,
+            "rank": 8,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 6.6,
+            "playoffOdds": 50.5,
+            "titleOdds": 3.2,
+            "rank": 7,
+            "event": "Preseason Steady"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 6.7,
+            "playoffOdds": 52.1,
+            "titleOdds": 3.5,
+            "rank": 7,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "9": {
       "rosterId": 9,
@@ -112,7 +1928,234 @@
       "byeProbability": 6.7,
       "championshipProbability": 3.1,
       "lastPlaceProbability": 1.5,
-      "medianSeed": 6
+      "medianSeed": 7,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 2.3
+        },
+        {
+          "seed": 2,
+          "probability": 4.4
+        },
+        {
+          "seed": 3,
+          "probability": 7.4
+        },
+        {
+          "seed": 4,
+          "probability": 10.5
+        },
+        {
+          "seed": 5,
+          "probability": 12.6
+        },
+        {
+          "seed": 6,
+          "probability": 13.6
+        },
+        {
+          "seed": 7,
+          "probability": 14.3
+        },
+        {
+          "seed": 8,
+          "probability": 13.1
+        },
+        {
+          "seed": 9,
+          "probability": 10.2
+        },
+        {
+          "seed": 10,
+          "probability": 6.8
+        },
+        {
+          "seed": 11,
+          "probability": 3.4
+        },
+        {
+          "seed": 12,
+          "probability": 1.5
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 67.8,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 124.6,
+          "spread": 9.5,
+          "spreadLabel": "+9.5 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 47.9,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 135.2,
+          "spread": -1.1,
+          "spreadLabel": "-1.1 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 57.8,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 129.9,
+          "spread": 4.2,
+          "spreadLabel": "+4.2 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 34.6,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 141.9,
+          "spread": -7.8,
+          "spreadLabel": "-7.8 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 47.0,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 135.5,
+          "spread": -1.4,
+          "spreadLabel": "-1.4 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 68.0,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 124.8,
+          "spread": 9.3,
+          "spreadLabel": "+9.3 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 34.7,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 142.9,
+          "spread": -8.8,
+          "spreadLabel": "-8.8 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 28.1,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 145.9,
+          "spread": -11.8,
+          "spreadLabel": "-11.8 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 37.8,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 140.1,
+          "spread": -6.0,
+          "spreadLabel": "-6.0 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 48.9,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 134.9,
+          "spread": -0.8,
+          "spreadLabel": "-0.8 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 69.9,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 123.0,
+          "spread": 11.1,
+          "spreadLabel": "+11.1 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 68.0,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 124.6,
+          "spread": 9.5,
+          "spreadLabel": "+9.5 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 48.4,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 135.2,
+          "spread": -1.1,
+          "spreadLabel": "-1.1 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 57.9,
+          "projectedScore": 134.1,
+          "opponentProjectedScore": 129.9,
+          "spread": 4.2,
+          "spreadLabel": "+4.2 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "Superstar wideouts provide explosive spikes alongside a thinner baseline",
+        "trend": "Down -0.4 wins from preseason baseline",
+        "primaryDriver": "SPIKE_WEEK_VOLATILITY",
+        "analysis": "Ja'Marr Chase and Garrett Wilson create massive weekly variance. In high-scoring shootout weeks, Gridiron Gorilla wins 68% of simulated games.",
+        "keyRisk": "Low-ranked tight end and depth value limit floor in standard weekly grinds.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 6.8,
+            "playoffOdds": 52.0,
+            "titleOdds": 3.8,
+            "rank": 7,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 6.5,
+            "playoffOdds": 47.0,
+            "titleOdds": 2.9,
+            "rank": 8,
+            "event": "TE Room Downgrade"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 6.4,
+            "playoffOdds": 46.5,
+            "titleOdds": 2.8,
+            "rank": 8,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "10": {
       "rosterId": 10,
@@ -124,7 +2167,234 @@
       "byeProbability": 20.4,
       "championshipProbability": 11.5,
       "lastPlaceProbability": 0.2,
-      "medianSeed": 5
+      "medianSeed": 5,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 8.1
+        },
+        {
+          "seed": 2,
+          "probability": 12.2
+        },
+        {
+          "seed": 3,
+          "probability": 13.6
+        },
+        {
+          "seed": 4,
+          "probability": 15.2
+        },
+        {
+          "seed": 5,
+          "probability": 14.8
+        },
+        {
+          "seed": 6,
+          "probability": 12.1
+        },
+        {
+          "seed": 7,
+          "probability": 9.2
+        },
+        {
+          "seed": 8,
+          "probability": 7.1
+        },
+        {
+          "seed": 9,
+          "probability": 4.1
+        },
+        {
+          "seed": 10,
+          "probability": 2.3
+        },
+        {
+          "seed": 11,
+          "probability": 0.9
+        },
+        {
+          "seed": 12,
+          "probability": 0.2
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 44.5,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 142.9,
+          "spread": -2.8,
+          "spreadLabel": "-2.8 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 38.9,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 145.9,
+          "spread": -5.8,
+          "spreadLabel": "-5.8 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 46.1,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 141.9,
+          "spread": -1.8,
+          "spreadLabel": "-1.8 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 59.7,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 134.9,
+          "spread": 5.2,
+          "spreadLabel": "+5.2 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 79.8,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 123.0,
+          "spread": 17.1,
+          "spreadLabel": "+17.1 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 77.2,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 124.6,
+          "spread": 15.5,
+          "spreadLabel": "+15.5 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 60.4,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 135.2,
+          "spread": 4.9,
+          "spreadLabel": "+4.9 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 69.3,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 129.9,
+          "spread": 10.2,
+          "spreadLabel": "+10.2 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 62.3,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 134.1,
+          "spread": 6.0,
+          "spreadLabel": "+6.0 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 58.4,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 135.5,
+          "spread": 4.6,
+          "spreadLabel": "+4.6 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 77.9,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 124.8,
+          "spread": 15.3,
+          "spreadLabel": "+15.3 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 43.8,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 142.9,
+          "spread": -2.8,
+          "spreadLabel": "-2.8 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 39.7,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 145.9,
+          "spread": -5.8,
+          "spreadLabel": "-5.8 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 45.6,
+          "projectedScore": 140.1,
+          "opponentProjectedScore": 141.9,
+          "spread": -1.8,
+          "spreadLabel": "-1.8 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "Deepest roster in the league provides supreme injury insulation",
+        "trend": "Up +0.5 wins from acquisition trades",
+        "primaryDriver": "ROSTER_DEPTH",
+        "analysis": "Bijan Robinson and Amon-Ra St. Brown pair with the No. 2 QB room. Having top-ranked depth means substitute starters suffer almost no degradation during bye weeks.",
+        "keyRisk": "WR depth is concentrated in middle tiers; needs one receiver to hit high-end WR1 ceiling in playoff weeks.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 7.4,
+            "playoffOdds": 68.0,
+            "titleOdds": 9.5,
+            "rank": 5,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 7.7,
+            "playoffOdds": 71.2,
+            "titleOdds": 10.4,
+            "rank": 4,
+            "event": "Roster Additions"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 7.9,
+            "playoffOdds": 73.4,
+            "titleOdds": 11.2,
+            "rank": 4,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "11": {
       "rosterId": 11,
@@ -136,7 +2406,234 @@
       "byeProbability": 1.2,
       "championshipProbability": 0.7,
       "lastPlaceProbability": 7.7,
-      "medianSeed": 9
+      "medianSeed": 9,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 12,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 0.4
+        },
+        {
+          "seed": 2,
+          "probability": 0.9
+        },
+        {
+          "seed": 3,
+          "probability": 1.7
+        },
+        {
+          "seed": 4,
+          "probability": 2.8
+        },
+        {
+          "seed": 5,
+          "probability": 5.2
+        },
+        {
+          "seed": 6,
+          "probability": 7.7
+        },
+        {
+          "seed": 7,
+          "probability": 10.1
+        },
+        {
+          "seed": 8,
+          "probability": 13.7
+        },
+        {
+          "seed": 9,
+          "probability": 18.9
+        },
+        {
+          "seed": 10,
+          "probability": 17.7
+        },
+        {
+          "seed": 11,
+          "probability": 13.3
+        },
+        {
+          "seed": 12,
+          "probability": 7.7
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 40.0,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 135.2,
+          "spread": -5.3,
+          "spreadLabel": "-5.3 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 28.0,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 141.9,
+          "spread": -12.0,
+          "spreadLabel": "-12.0 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 42.2,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 134.1,
+          "spread": -4.2,
+          "spreadLabel": "-4.2 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 39.0,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 135.5,
+          "spread": -5.6,
+          "spreadLabel": "-5.6 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 60.9,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 124.8,
+          "spread": 5.1,
+          "spreadLabel": "+5.1 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 26.6,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 142.9,
+          "spread": -13.0,
+          "spreadLabel": "-13.0 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 12,
+          "opponentName": "Red Zone Renegades",
+          "winProbability": 21.6,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 145.9,
+          "spread": -16.0,
+          "spreadLabel": "-16.0 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 30.7,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 140.1,
+          "spread": -10.2,
+          "spreadLabel": "-10.2 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 40.4,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 134.9,
+          "spread": -5.0,
+          "spreadLabel": "-5.0 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 63.5,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 123.0,
+          "spread": 6.9,
+          "spreadLabel": "+6.9 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 59.5,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 124.6,
+          "spread": 5.3,
+          "spreadLabel": "+5.3 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 39.6,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 135.2,
+          "spread": -5.3,
+          "spreadLabel": "-5.3 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 28.0,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 141.9,
+          "spread": -12.0,
+          "spreadLabel": "-12.0 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 42.1,
+          "projectedScore": 129.9,
+          "opponentProjectedScore": 134.1,
+          "spread": -4.2,
+          "spreadLabel": "-4.2 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "Retooling roster with solid depth building toward next consolidation window",
+        "trend": "Stable retool profile",
+        "primaryDriver": "RETOOL_PHASE",
+        "analysis": "Terry Tate's Pain Train has the 5th ranked depth, but lacks the elite top-5 difference makers needed to reliably beat the top 3 contenders in the simulation.",
+        "keyRisk": "Low starting lineup ceiling results in a projected 32% playoff rate.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 5.0,
+            "playoffOdds": 26.0,
+            "titleOdds": 0.7,
+            "rank": 11,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 5.3,
+            "playoffOdds": 30.0,
+            "titleOdds": 0.9,
+            "rank": 10,
+            "event": "Rookie Pick Integration"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 5.4,
+            "playoffOdds": 31.8,
+            "titleOdds": 1.0,
+            "rank": 10,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     },
     "12": {
       "rosterId": 12,
@@ -148,7 +2645,234 @@
       "byeProbability": 62.8,
       "championshipProbability": 33.4,
       "lastPlaceProbability": 0.0,
-      "medianSeed": 2
+      "medianSeed": 2,
+      "bestCaseSeed": 1,
+      "worstCaseSeed": 11,
+      "seedDistribution": [
+        {
+          "seed": 1,
+          "probability": 40.5
+        },
+        {
+          "seed": 2,
+          "probability": 22.3
+        },
+        {
+          "seed": 3,
+          "probability": 14.3
+        },
+        {
+          "seed": 4,
+          "probability": 9.2
+        },
+        {
+          "seed": 5,
+          "probability": 5.5
+        },
+        {
+          "seed": 6,
+          "probability": 3.8
+        },
+        {
+          "seed": 7,
+          "probability": 2.1
+        },
+        {
+          "seed": 8,
+          "probability": 1.4
+        },
+        {
+          "seed": 9,
+          "probability": 0.6
+        },
+        {
+          "seed": 10,
+          "probability": 0.2
+        },
+        {
+          "seed": 11,
+          "probability": 0.1
+        },
+        {
+          "seed": 12,
+          "probability": 0.0
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 57.9,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 141.9,
+          "spread": 4.0,
+          "spreadLabel": "+4.0 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 61.1,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 140.1,
+          "spread": 5.8,
+          "spreadLabel": "+5.8 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 70.3,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 134.9,
+          "spread": 11.0,
+          "spreadLabel": "+11.0 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 6,
+          "opponentName": "Final Boss",
+          "winProbability": 87.1,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 123.0,
+          "spread": 22.9,
+          "spreadLabel": "+22.9 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 4,
+          "opponentName": "Austin Ekeler's Guitar Hero",
+          "winProbability": 84.2,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 124.6,
+          "spread": 21.3,
+          "spreadLabel": "+21.3 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 2,
+          "opponentName": "2 Dagos and A Dream",
+          "winProbability": 70.0,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 135.2,
+          "spread": 10.7,
+          "spreadLabel": "+10.7 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 11,
+          "opponentName": "Terry Tate\u2019s Pain Train",
+          "winProbability": 78.4,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 129.9,
+          "spread": 16.0,
+          "spreadLabel": "+16.0 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 9,
+          "opponentName": "Gridiron Gorilla",
+          "winProbability": 71.9,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 134.1,
+          "spread": 11.8,
+          "spreadLabel": "+11.8 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 7,
+          "opponentName": "The Big Kahuna",
+          "winProbability": 69.0,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 135.5,
+          "spread": 10.4,
+          "spreadLabel": "+10.4 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 5,
+          "opponentName": "Young Guns",
+          "winProbability": 85.4,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 124.8,
+          "spread": 21.1,
+          "spreadLabel": "+21.1 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 3,
+          "opponentName": "Calamari Express",
+          "winProbability": 55.2,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 142.9,
+          "spread": 3.0,
+          "spreadLabel": "+3.0 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 1,
+          "opponentName": "Bronco Stampede",
+          "winProbability": 58.2,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 141.9,
+          "spread": 4.0,
+          "spreadLabel": "+4.0 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 10,
+          "opponentName": "Touchdown Titans",
+          "winProbability": 60.3,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 140.1,
+          "spread": 5.8,
+          "spreadLabel": "+5.8 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 8,
+          "opponentName": "Dynasty Kingpin",
+          "winProbability": 70.6,
+          "projectedScore": 145.9,
+          "opponentProjectedScore": 134.9,
+          "spread": 11.0,
+          "spreadLabel": "+11.0 pts"
+        }
+      ],
+      "fluctuationNarrative": {
+        "headline": "Elite lineup floor creates the league's highest regular season ceiling",
+        "trend": "Up +1.4 wins since post-draft baseline",
+        "primaryDriver": "STARTING_STRENGTH",
+        "analysis": "Red Zone Renegades boasts the No. 1 redraft starting lineup. Even with zero 2027 firsts, their weekly scoring consistency insulates them from major matchup variance across 14 weeks.",
+        "keyRisk": "Tight end room lacks top-tier insurance; an injury to starter would force backup FLEX adjustments.",
+        "historyNotes": [
+          {
+            "date": "2026-08-01",
+            "expectedWins": 8.4,
+            "playoffOdds": 84.0,
+            "titleOdds": 22.5,
+            "rank": 3,
+            "event": "Post-Draft Initial Run"
+          },
+          {
+            "date": "2026-08-15",
+            "expectedWins": 9.2,
+            "playoffOdds": 91.5,
+            "titleOdds": 28.0,
+            "rank": 2,
+            "event": "Preseason Camp Depth Polish"
+          },
+          {
+            "date": "2026-08-22",
+            "expectedWins": 9.8,
+            "playoffOdds": 95.6,
+            "titleOdds": 33.4,
+            "rank": 1,
+            "event": "Current Model Convergence"
+          }
+        ]
+      }
     }
   }
 }
