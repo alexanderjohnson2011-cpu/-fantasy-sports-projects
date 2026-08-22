@@ -1729,6 +1729,103 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
           <span>Brier: 0.071 · LogLoss: 0.286</span>
         </div>
 
+        {/* Expandable Statistical Viability & Methodology Breakdown (Moved to Top) */}
+        <section className="forecast-methodology-container" style={{ margin: "24px 0 28px" }}>
+          <details className="forecast-methodology-accordion">
+            <summary>
+              <div className="summary-title-wrap">
+                <span className="eyebrow">Institutional Verification</span>
+                <h3>Statistical Viability & Calibration Proof</h3>
+                <p>Click to inspect the mathematical foundations, probability conservation guarantees, and calibration benchmarks proving model validity.</p>
+              </div>
+              <span className="summary-toggle-pill">Explore Methodology</span>
+            </summary>
+
+            <div className="methodology-details-content">
+              {/* Metric Verification Badges */}
+              <div className="method-benchmarks-grid">
+                <div className="benchmark-card">
+                  <span className="bench-metric">Brier Score</span>
+                  <strong>0.071</strong>
+                  <small>Target &lt; 0.20 · Gold Standard Calibration</small>
+                  <p>Measures mean squared error of predicted probabilities. Lower is better; random guessing is 0.25.</p>
+                </div>
+                <div className="benchmark-card">
+                  <span className="bench-metric">Log-Loss / Cross-Entropy</span>
+                  <strong>0.2865</strong>
+                  <small>Target &lt; 0.50 · Information Theoretic Bound</small>
+                  <p>Heavily penalizes overconfidence. Scores below 0.30 reflect well-calibrated odds.</p>
+                </div>
+                <div className="benchmark-card">
+                  <span className="bench-metric">Probability Conservation</span>
+                  <strong>100.0%</strong>
+                  <small>Title: 100% · Playoffs: 600% · Byes: 200%</small>
+                  <p>Mathematical proof that all simulated seeds sum to exact physical bracket constraints.</p>
+                </div>
+                <div className="benchmark-card">
+                  <span className="bench-metric">Covariance Matrix PSD</span>
+                  <strong>+0.5456</strong>
+                  <small>Min Eigenvalue &gt; 0 · Valid Positive Semi-Definite</small>
+                  <p>Guarantees realistic position-level scoring correlations without mathematical divergence.</p>
+                </div>
+              </div>
+
+              {/* 5 Core Pillars of Statistical Viability */}
+              <div className="method-principles-list">
+                <article className="method-principle-item">
+                  <span className="principle-num">01</span>
+                  <div>
+                    <h4>Law of Large Numbers & Convergence (10,000 Iterations)</h4>
+                    <p>
+                      Simulating 10,000 full 14-week regular seasons and 6-team playoff brackets compresses standard error to within ±0.4% on playoff probabilities and ±0.08 wins on expected records. This eliminates the random variance noise seen in smaller 500-to-1,000 run simulators.
+                    </p>
+                  </div>
+                </article>
+
+                <article className="method-principle-item">
+                  <span className="principle-num">02</span>
+                  <div>
+                    <h4>Bitemporal Point-in-Time Integrity & Leakage Prevention</h4>
+                    <p>
+                      All feature stores and model inputs are strictly bounded by observation timestamp cutoffs (T_obs). Automated CI guards mathematically prevent lookahead bias or future-state contamination, ensuring past forecasts remain strictly uncorrupted.
+                    </p>
+                  </div>
+                </article>
+
+                <article className="method-principle-item">
+                  <span className="principle-num">03</span>
+                  <div>
+                    <h4>Heteroskedastic Scoring Distributions (Team-Specific Variance σ)</h4>
+                    <p>
+                      Rather than assuming an unrealistic static standard deviation across all 12 teams, each roster receives an individualized weekly scoring variance (σ ∈ [11.5, 18.0] pts). This captures the real distinction between concentrated boom-or-bust stars and high-floor balanced depth.
+                    </p>
+                  </div>
+                </article>
+
+                <article className="method-principle-item">
+                  <span className="principle-num">04</span>
+                  <div>
+                    <h4>Official Schedule Matrix & Tiebreaker Execution</h4>
+                    <p>
+                      The simulation executes the authentic 12-team Sleeper round-robin schedule and head-to-head match draws. Standings tiebreakers strictly apply official league rules: Wins → Total Points For → Head-to-Head → Potential Points, directly mirroring Sleeper's playoff qualification rules.
+                    </p>
+                  </div>
+                </article>
+
+                <article className="method-principle-item">
+                  <span className="principle-num">05</span>
+                  <div>
+                    <h4>Deterministic Reproducibility & Bayesian In-Season Updating</h4>
+                    <p>
+                      Fixed-seed execution (Seed=42) produces bit-identical outputs across Python, TypeScript, and BigQuery analytics tables. Every Tuesday throughout the season, completed real-world results lock into place, and the remaining schedule re-converges dynamically.
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </details>
+        </section>
+
         {topTitleFavorite ? (
           <div className="champion-receipt" style={{ marginBottom: "28px" }}>
             <Trophy size={30} weight="duotone" aria-hidden="true" />
@@ -1828,103 +1925,6 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
               <p><strong>Weekly Dynamic Updates</strong>Every Tuesday, completed matchup outcomes lock into the simulator and remaining paths re-converge deterministically.</p>
             </li>
           </ol>
-        </section>
-
-        {/* Expandable Statistical Viability & Methodology Breakdown */}
-        <section className="forecast-methodology-container">
-          <details className="forecast-methodology-accordion">
-            <summary>
-              <div className="summary-title-wrap">
-                <span className="eyebrow">Institutional Verification</span>
-                <h3>Statistical Viability & Calibration Proof</h3>
-                <p>Click to inspect the mathematical foundations, probability conservation guarantees, and calibration benchmarks proving model validity.</p>
-              </div>
-              <span className="summary-toggle-pill">Explore Methodology</span>
-            </summary>
-
-            <div className="methodology-details-content">
-              {/* Metric Verification Badges */}
-              <div className="method-benchmarks-grid">
-                <div className="benchmark-card">
-                  <span className="bench-metric">Brier Score</span>
-                  <strong>0.071</strong>
-                  <small>Target &lt; 0.20 · Gold Standard Calibration</small>
-                  <p>Measures mean squared error of predicted probabilities. Lower is better; random guessing is 0.25.</p>
-                </div>
-                <div className="benchmark-card">
-                  <span className="bench-metric">Log-Loss / Cross-Entropy</span>
-                  <strong>0.2865</strong>
-                  <small>Target &lt; 0.50 · Information Theoretic Bound</small>
-                  <p>Heavily penalizes overconfidence. Scores below 0.30 reflect well-calibrated odds.</p>
-                </div>
-                <div className="benchmark-card">
-                  <span className="bench-metric">Probability Conservation</span>
-                  <strong>100.0%</strong>
-                  <small>Title: 100% · Playoffs: 600% · Byes: 200%</small>
-                  <p>Mathematical proof that all simulated seeds sum to exact physical bracket constraints.</p>
-                </div>
-                <div className="benchmark-card">
-                  <span className="bench-metric">Covariance Matrix PSD</span>
-                  <strong>+0.5456</strong>
-                  <small>Min Eigenvalue &gt; 0 · Valid Positive Semi-Definite</small>
-                  <p>Guarantees realistic position-level scoring correlations without mathematical divergence.</p>
-                </div>
-              </div>
-
-              {/* 5 Core Pillars of Statistical Viability */}
-              <div className="method-principles-list">
-                <article className="method-principle-item">
-                  <span className="principle-num">01</span>
-                  <div>
-                    <h4>Law of Large Numbers & Convergence (10,000 Iterations)</h4>
-                    <p>
-                      Simulating 10,000 full 14-week regular seasons and 6-team playoff brackets compresses standard error to within ±0.4% on playoff probabilities and ±0.08 wins on expected records. This eliminates the random variance noise seen in smaller 500-to-1,000 run simulators.
-                    </p>
-                  </div>
-                </article>
-
-                <article className="method-principle-item">
-                  <span className="principle-num">02</span>
-                  <div>
-                    <h4>Bitemporal Point-in-Time Integrity & Leakage Prevention</h4>
-                    <p>
-                      All feature stores and model inputs are strictly bounded by observation timestamp cutoffs (T_obs). Automated CI guards mathematically prevent lookahead bias or future-state contamination, ensuring past forecasts remain strictly uncorrupted.
-                    </p>
-                  </div>
-                </article>
-
-                <article className="method-principle-item">
-                  <span className="principle-num">03</span>
-                  <div>
-                    <h4>Heteroskedastic Scoring Distributions (Team-Specific Variance σ)</h4>
-                    <p>
-                      Rather than assuming an unrealistic static standard deviation across all 12 teams, each roster receives an individualized weekly scoring variance (σ ∈ [11.5, 18.0] pts). This captures the real distinction between concentrated boom-or-bust stars and high-floor balanced depth.
-                    </p>
-                  </div>
-                </article>
-
-                <article className="method-principle-item">
-                  <span className="principle-num">04</span>
-                  <div>
-                    <h4>Official Schedule Matrix & Tiebreaker Execution</h4>
-                    <p>
-                      The simulation executes the authentic 12-team Sleeper round-robin schedule and head-to-head match draws. Standings tiebreakers strictly apply official league rules: Wins → Total Points For → Head-to-Head → Potential Points, directly mirroring Sleeper's playoff qualification rules.
-                    </p>
-                  </div>
-                </article>
-
-                <article className="method-principle-item">
-                  <span className="principle-num">05</span>
-                  <div>
-                    <h4>Deterministic Reproducibility & Bayesian In-Season Updating</h4>
-                    <p>
-                      Fixed-seed execution (Seed=42) produces bit-identical outputs across Python, TypeScript, and BigQuery analytics tables. Every Tuesday throughout the season, completed real-world results lock into place, and the remaining schedule re-converges dynamically.
-                    </p>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </details>
         </section>
       </main>
     </div>
