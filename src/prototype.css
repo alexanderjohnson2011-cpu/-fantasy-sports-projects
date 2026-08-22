@@ -3801,3 +3801,165 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   color: rgba(11, 51, 41, 0.7);
   margin: 0;
 }
+
+/* Statistical Viability Methodology Accordion */
+.forecast-methodology-container {
+  margin-top: 48px;
+  border-top: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  padding-top: 36px;
+}
+
+.forecast-methodology-accordion {
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.forecast-methodology-accordion summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  cursor: pointer;
+  background: #faf8f5;
+  user-select: none;
+  list-style: none;
+}
+
+.forecast-methodology-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary-title-wrap h3 {
+  margin: 4px 0 6px;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  line-height: 1.1;
+}
+
+.summary-title-wrap p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(11, 51, 41, 0.7);
+  line-height: 1.35;
+}
+
+.summary-toggle-pill {
+  flex-shrink: 0;
+  background: var(--ink, #0b3329);
+  color: #fff;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 3px;
+}
+
+.methodology-details-content {
+  padding: 24px;
+  border-top: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.method-benchmarks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 860px) {
+  .method-benchmarks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.benchmark-card {
+  background: rgba(11, 51, 41, 0.03);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bench-metric {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--rust, #b34b2c);
+}
+
+.benchmark-card strong {
+  font-size: 28px;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+  line-height: 1;
+}
+
+.benchmark-card small {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(11, 51, 41, 0.8);
+}
+
+.benchmark-card p {
+  font-size: 12px;
+  line-height: 1.35;
+  color: rgba(11, 51, 41, 0.65);
+  margin: 4px 0 0;
+}
+
+.method-principles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.method-principle-item {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 16px;
+  align-items: flex-start;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
+}
+
+.method-principle-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.principle-num {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--rust, #b34b2c);
+  line-height: 1;
+}
+
+.method-principle-item h4 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+}
+
+.method-principle-item p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(11, 51, 41, 0.8);
+}
