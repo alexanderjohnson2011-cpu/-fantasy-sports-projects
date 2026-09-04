@@ -2,6 +2,10 @@
 
 A responsive React editorial app for the Ape Invitational Dynasty league. The current release combines 2026 draft-cycle grades, complete pick commentary, league power rankings, prior-season results, and the recurring **Ape's Mac Salad** award.
 
+## Moosey's Mommy draft room
+
+The same codebase now includes a private, local-first Yahoo draft assistant and a separately configurable Moosey's Mommy publication. Start the room with `powershell -ExecutionPolicy Bypass -File scripts/start-draft-room.ps1`; the complete credential, rehearsal, live-draft, and public-release procedure is in [docs/mooseys-mommy-runbook.md](docs/mooseys-mommy-runbook.md). Build the separate static publication with `npm run build:moose`.
+
 ## What is built
 
 - Permanent draft-cycle grades for all 12 teams

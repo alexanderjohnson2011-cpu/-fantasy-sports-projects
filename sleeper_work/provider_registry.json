@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "2.0.0",
+  "providers": [
+    {"id": "sleeper", "role": "league-truth", "publicAllowed": true, "storesArticleBody": false},
+    {"id": "yahoo", "role": "league-truth", "publicAllowed": false, "publicTransform": "team-names-only", "storesArticleBody": false},
+    {"id": "fantasycalc-redraft", "role": "market-signal", "publicAllowed": false, "reason": "redistribution review required", "storesArticleBody": false},
+    {"id": "fantasy-football-calculator-adp", "role": "adp", "publicAllowed": true, "attributionRequired": true, "storesArticleBody": false},
+    {"id": "fantasypros-private", "role": "projection", "publicAllowed": false, "reason": "free prototype access is non-production", "storesArticleBody": false},
+    {"id": "nflverse-players", "role": "historical-model-input", "publicAllowed": true, "attributionRequired": true, "storesArticleBody": false},
+    {"id": "rotowire-nfl-rss", "role": "news-metadata", "publicAllowed": true, "publicFields": ["headline", "publishedAt", "sourceUrl", "reporter"], "storesArticleBody": false}
+  ]
+}

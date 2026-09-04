@@ -1,18 +1,29 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import { QueryClient, QueryClientProvider, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ArrowLeft,
+  ArrowClockwise,
   ArrowRight,
   BookOpenText,
   ChartBar,
   ChartLineUp,
+  CheckCircle,
   ClockCounterClockwise,
+  CloudArrowDown,
   Football,
+  Gear,
   Info,
   Lightning,
   List,
+  MagnifyingGlass,
+  PaperPlaneTilt,
+  Phone,
+  Sparkle,
   Television,
   Trophy,
   UsersThree,
+  Warning,
+  X,
 } from "@phosphor-icons/react";
 import "@fontsource/cormorant-garamond/400.css";
 import "@fontsource/cormorant-garamond/500.css";
@@ -28,6 +39,7 @@ import draftRecapJson from "./generated/draft-recap.json";
 import weeklyRecapJson from "./generated/weekly-recap.json";
 import powerRankingsJson from "./generated/power-rankings.json";
 import matchupsWeek1Json from "./generated/matchups-week1.json";
+import { api, DraftPlayer, DraftState, PlayerAiTake, PlayerDossier } from "./draft-api";
 
 type WeeklyMatchup = {
   week: number;
@@ -448,6 +460,7 @@ type Route =
   | { kind: "powerTeam"; rosterId: number }
   | { kind: "forecastTeam"; rosterId: number }
   | { kind: "matchup"; matchupId: number }
+  | { kind: "draftRoom" }
   | { kind: "methodology" };
 
 const navItems: Array<{ id: NavId; label: string; icon: typeof BookOpenText }> = [
@@ -2298,8 +2311,319 @@ function MethodologyScreen() {
   );
 }
 
+const draftQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: { retry: 1, staleTime: 1500, refetchOnWindowFocus: true },
+    mutations: { retry: 0 },
+  },
+});
+
+function pct(value: number | undefined) {
+  return value === undefined ? "—" : `${Math.round(value * 100)}%`;
+}
+
+function signalDescription(player: DraftPlayer) {
+  return player.newsRisk === "clear"
+    ? "Clear signal: no player-specific RotoWire RSS headline is matched in the current source snapshot. This is not a medical clearance."
+    : `Watch signal: a current attributable RotoWire RSS headline is matched. Open the player dossier for the headline and source link.`;
+}
+
+const sourceScope: Record<string, string> = {
+  "fantasycalc-redraft": "Private market value and 30-day movement; not presented as a projection feed.",
+  "fantasy-football-calculator-adp": "Current draft cost and availability signal; not a player projection.",
+  "rotowire-nfl-rss": "Official RSS headline, time, link, and reporter credit only—never article text.",
+  "nflverse-players": "Durable player identity and historical-model join key.",
+  nflverse: "Historical-model source; not a live beat-report feed.",
+  "fantasypros-private": "Optional private prototype source; excluded until a licensed endpoint is configured.",
+};
+
+function DraftRoomApp() {
+  return (
+    <QueryClientProvider client={draftQueryClient}>
+      <DraftRoomScreen />
+    </QueryClientProvider>
+  );
+}
+
+function DraftRoomScreen() {
+  const queryClient = useQueryClient();
+  const [search, setSearch] = useState("");
+  const [position, setPosition] = useState("ALL");
+  const [question, setQuestion] = useState("");
+  const [chatReply, setChatReply] = useState("Ask “Who are the sleepers?” for price, momentum, news, and scarcity signals. The desk never invents a depth-chart report.");
+  const [showSetup, setShowSetup] = useState(false);
+  const [correctionPick, setCorrectionPick] = useState("");
+  const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null);
+  const [aiTakes, setAiTakes] = useState<Record<string, PlayerAiTake>>({});
+  const [credentials, setCredentials] = useState({ yahooClientId: "", yahooClientSecret: "", fantasyProsKey: "" });
+  const [oauth, setOauth] = useState({ code: "", state: "", url: "" });
+  const [leagueOptions, setLeagueOptions] = useState<Array<{ leagueKey: string; name: string }>>([]);
+  const [draftShape, setDraftShape] = useState<{ leagueKey: string; leagueName: string; userSlot: number; numTeams: number; rounds: number; scoringFormat: "standard" | "half-ppr" | "ppr"; scoring: Array<Record<string, unknown>>; rosterSlots: Array<Record<string, unknown>> }>({ leagueKey: "", leagueName: "Moosey’s Mommy", userSlot: 1, numTeams: 12, rounds: 16, scoringFormat: "half-ppr", scoring: [], rosterSlots: [] });
+  const stateQuery = useQuery({
+    queryKey: ["draft-state"],
+    queryFn: () => api<DraftState>("/api/draft/state"),
+    refetchInterval: (query) => query.state.data?.session.sync_mode === "yahoo" ? 4000 : 20000,
+  });
+  const state = stateQuery.data;
+  const dossierQuery = useQuery({
+    queryKey: ["player-dossier", selectedPlayerId],
+    queryFn: () => api<PlayerDossier>(`/api/players/${encodeURIComponent(selectedPlayerId || "")}/dossier`),
+    enabled: Boolean(selectedPlayerId),
+    staleTime: 10_000,
+  });
+  const aiTakeMutation = useMutation({
+    mutationFn: (player: DraftPlayer) => api<PlayerAiTake>(`/api/players/${encodeURIComponent(player.playerId)}/ai-take`, { method: "POST" }),
+    onSuccess: (take, player) => setAiTakes((current) => ({ ...current, [player.playerId]: take })),
+  });
+  const refresh = () => queryClient.invalidateQueries({ queryKey: ["draft-state"] });
+  const pickMutation = useMutation({
+    mutationFn: (player: DraftPlayer) => api("/api/draft/manual-picks", {
+      method: "POST",
+      body: JSON.stringify({ playerId: player.playerId, teamSlot: state?.draft.onClockSlot }),
+    }),
+    onSuccess: refresh,
+  });
+  const undoMutation = useMutation({ mutationFn: () => api("/api/draft/undo", { method: "POST" }), onSuccess: refresh });
+  const correctionMutation = useMutation({
+    mutationFn: ({ player, pickNo }: { player: DraftPlayer; pickNo: number }) => api("/api/draft/correct", {
+      method: "POST",
+      body: JSON.stringify({ playerId: player.playerId, pickNo }),
+    }),
+    onSuccess: () => { setCorrectionPick(""); refresh(); },
+  });
+  const rehearsalMutation = useMutation({ mutationFn: () => api("/api/draft/rehearsal", { method: "POST" }), onSuccess: refresh });
+  const resetRehearsalMutation = useMutation({ mutationFn: () => api("/api/draft/rehearsal/reset", { method: "POST" }), onSuccess: refresh });
+  const yahooMutation = useMutation({ mutationFn: () => api("/api/yahoo/sync", { method: "POST" }), onSuccess: refresh });
+  const sourcesMutation = useMutation({ mutationFn: () => api("/api/sources/refresh", { method: "POST" }), onSuccess: refresh });
+  const exportMutation = useMutation({ mutationFn: () => api<{ htmlPath: string; jsonPath: string }>("/api/offline/export", { method: "POST" }) });
+  const analysisExportMutation = useMutation({ mutationFn: () => api<{ markdownPath: string; jsonPath: string }>("/api/analysis/export", { method: "POST" }) });
+  const chatMutation = useMutation({
+    mutationFn: () => api<{ reply: string; provider: string; reason?: string }>("/api/chat", { method: "POST", body: JSON.stringify({ question }) }),
+    onSuccess: (response) => { setChatReply(response.reply); setQuestion(""); },
+  });
+  const setupMutation = useMutation({
+    mutationFn: () => api("/api/setup/credentials", { method: "POST", body: JSON.stringify(credentials) }),
+    onSuccess: async () => {
+      const auth = await api<{ authorizationUrl: string; state: string }>("/auth/yahoo/start");
+      setOauth((current) => ({ ...current, url: auth.authorizationUrl, state: auth.state }));
+      window.open(auth.authorizationUrl, "_blank", "noopener,noreferrer");
+    },
+  });
+  const oauthMutation = useMutation({
+    mutationFn: () => api("/auth/yahoo/exchange", { method: "POST", body: JSON.stringify({ code: oauth.code, state: oauth.state }) }),
+    onSuccess: async () => {
+      const result = await api<{ leagues: Array<{ leagueKey: string; name: string }> }>("/api/leagues");
+      setLeagueOptions(result.leagues);
+      refresh();
+    },
+  });
+  const leagueMutation = useMutation({
+    mutationFn: async (league: { leagueKey: string; name: string }) => {
+      const inspected = await api<{ leagueKey: string; name: string; numTeams: number; scoring: Array<Record<string, unknown>>; rosterSlots: Array<Record<string, unknown>> }>(`/api/leagues/${encodeURIComponent(league.leagueKey)}/inspect`);
+      const next = { ...draftShape, leagueKey: league.leagueKey, leagueName: inspected.name || league.name, numTeams: inspected.numTeams || 12, scoring: inspected.scoring || [], rosterSlots: inspected.rosterSlots || [] };
+      setDraftShape(next);
+      return next;
+    },
+  });
+  const shapeMutation = useMutation({
+    mutationFn: () => api("/api/setup/session", { method: "POST", body: JSON.stringify(draftShape) }),
+    onSuccess: () => { setShowSetup(false); refresh(); },
+  });
+  const manualSafeModeMutation = useMutation({
+    mutationFn: () => {
+      const { leagueKey: _leagueKey, ...manualShape } = draftShape;
+      return api("/api/draft/manual-safe-mode", {
+        method: "POST",
+        body: JSON.stringify({
+          ...manualShape,
+          leagueSettings: {
+            ...(state?.session.league_settings_json || {}),
+            userSlotConfirmed: true,
+            roundsConfirmed: true,
+          },
+        }),
+      });
+    },
+    onSuccess: () => { setShowSetup(false); refresh(); },
+  });
+  const strategyMutation = useMutation({
+    mutationFn: (strategy: string) => api("/api/setup/session", { method: "POST", body: JSON.stringify({ strategy }) }),
+    onSuccess: refresh,
+  });
+
+  const players = useMemo(() => {
+    const needle = search.trim().toLowerCase();
+    return (state?.draft.available || []).filter((player) =>
+      (position === "ALL" || player.position === position) &&
+      (!needle || `${player.name} ${player.team} ${player.position}`.toLowerCase().includes(needle)),
+    ).slice(0, 80);
+  }, [state, position, search]);
+  const primary = state?.draft.recommendations[0];
+
+  if (stateQuery.isLoading) {
+    return <div className="draft-room draft-room--center"><Lightning size={34} weight="duotone" /><h1>Building the room</h1><p>Loading the local board and simulation engine…</p></div>;
+  }
+  if (stateQuery.isError || !state) {
+    return (
+      <div className="draft-room draft-room--center">
+        <Warning size={38} weight="duotone" />
+        <h1>The board is ready; the local service is not connected.</h1>
+        <p>Start the draft API, then retry. The public Ape’s Mac Salad site remains unaffected.</p>
+        <button className="draft-button draft-button--primary" onClick={() => stateQuery.refetch()} type="button"><ArrowClockwise size={18} /> Retry connection</button>
+      </div>
+    );
+  }
+
+  const userSlotConfirmed = state.session.league_settings_json?.userSlotConfirmed === true;
+  const roundsConfirmed = state.session.league_settings_json?.roundsConfirmed === true;
+  const isOurTurn = userSlotConfirmed && state.draft.onClockSlot === state.session.user_slot;
+  const draftClockSeconds = state.session.league_settings_json?.draftClockSeconds;
+  const keeperToolsEnabled = state.session.league_settings_json?.keeperManagementEnabled;
+  const correctionNumber = Number(correctionPick);
+  const isCorrecting = Number.isInteger(correctionNumber) && correctionNumber >= 1;
+  const recordPlayer = (player: DraftPlayer) => {
+    if (isCorrecting) correctionMutation.mutate({ player, pickNo: correctionNumber });
+    else pickMutation.mutate(player);
+  };
+  const actionError = pickMutation.error || correctionMutation.error || undoMutation.error || rehearsalMutation.error || resetRehearsalMutation.error || yahooMutation.error || sourcesMutation.error || analysisExportMutation.error || aiTakeMutation.error;
+  return (
+    <div className="draft-room">
+      <header className="draft-topbar">
+        <a className="draft-brand" href="#analysis" aria-label="Open league publication">
+          <span className="draft-brand__mark"><Phone size={24} weight="duotone" /></span>
+          <span><strong>Moosey’s Mommy</strong><small>Live draft room</small></span>
+        </a>
+        <div className="draft-clock" aria-live="polite">
+          <span className={isOurTurn ? "is-live" : ""}>{!userSlotConfirmed ? "Confirm your draft slot" : isOurTurn ? "You’re on the clock" : `Team ${state.draft.onClockSlot} is on the clock`}</span>
+          <strong>Pick {state.draft.currentPick} · Round {state.draft.currentRound}</strong>
+        </div>
+        <div className="draft-status">
+          <span className={`source-dot ${state.session.sync_mode === "yahoo" ? "is-fresh" : "is-manual"}`} />
+          <div><strong>{state.session.sync_mode === "yahoo" ? "Yahoo live" : "Manual safe mode"}</strong><small>{state.session.sync_message}</small></div>
+        </div>
+        <button className="draft-icon-button" type="button" onClick={() => setShowSetup((value) => !value)} aria-label="Open setup"><Gear size={23} /></button>
+      </header>
+
+      {showSetup ? (
+        <section className="draft-setup" aria-label="Draft setup">
+          <div><p className="draft-kicker">Private local setup</p><h2>Set manual fallback or connect Yahoo</h2><p>Manual Safe Mode needs no credentials. Yahoo credentials stay only on this laptop and are never added to the public build.</p></div>
+          <label>Yahoo client ID<input type="password" value={credentials.yahooClientId} onChange={(event) => setCredentials({ ...credentials, yahooClientId: event.target.value })} /></label>
+          <label>Yahoo client secret<input type="password" value={credentials.yahooClientSecret} onChange={(event) => setCredentials({ ...credentials, yahooClientSecret: event.target.value })} /></label>
+          <label>FantasyPros prototype key<input type="password" value={credentials.fantasyProsKey} onChange={(event) => setCredentials({ ...credentials, fantasyProsKey: event.target.value })} /></label>
+          <button type="button" className="draft-button draft-button--primary" disabled={!credentials.yahooClientId || !credentials.yahooClientSecret || setupMutation.isPending} onClick={() => setupMutation.mutate()}>Save & open Yahoo</button>
+          <div className="draft-manual-shape">
+            <div><p className="draft-kicker">Manual Safe Mode</p><strong>Lock tonight’s draft shape</strong><small>These values drive snake order, roster replacement levels, and the recommendation engine until Yahoo is approved.</small></div>
+            <label>League name<input value={draftShape.leagueName} onChange={(event) => setDraftShape({ ...draftShape, leagueName: event.target.value })} /></label>
+            <label>Teams<input type="number" min="4" max="32" value={draftShape.numTeams} onChange={(event) => setDraftShape({ ...draftShape, numTeams: Number(event.target.value) })} /></label>
+            <label>Your draft slot<input type="number" min="1" max={draftShape.numTeams} value={draftShape.userSlot} onChange={(event) => setDraftShape({ ...draftShape, userSlot: Number(event.target.value) })} /></label>
+            <label>Rounds<input type="number" min="1" max="40" value={draftShape.rounds} onChange={(event) => setDraftShape({ ...draftShape, rounds: Number(event.target.value) })} /></label>
+            <label>Scoring<select value={draftShape.scoringFormat} onChange={(event) => setDraftShape({ ...draftShape, scoringFormat: event.target.value as "standard" | "half-ppr" | "ppr" })}><option value="standard">Standard</option><option value="half-ppr">Half PPR</option><option value="ppr">PPR</option></select></label>
+            <button type="button" className="draft-button draft-button--primary" disabled={manualSafeModeMutation.isPending} onClick={() => manualSafeModeMutation.mutate()}>Activate Manual Safe Mode</button>
+          </div>
+          {oauth.url ? <><label>Yahoo verification code<input value={oauth.code} onChange={(event) => setOauth({ ...oauth, code: event.target.value })} /></label><button type="button" className="draft-button" disabled={!oauth.code || oauthMutation.isPending} onClick={() => oauthMutation.mutate()}>Finish Yahoo connection</button></> : null}
+          {leagueOptions.length ? <div className="draft-league-options"><span>Select tonight’s league</span>{leagueOptions.map((league) => <button type="button" key={league.leagueKey} onClick={() => leagueMutation.mutate(league)}>{league.name}</button>)}</div> : null}
+          {draftShape.leagueKey ? <><label>Your draft slot<input type="number" min="1" max={draftShape.numTeams} value={draftShape.userSlot} onChange={(event) => setDraftShape({ ...draftShape, userSlot: Number(event.target.value) })} /></label><label>Rounds<input type="number" min="1" max="40" value={draftShape.rounds} onChange={(event) => setDraftShape({ ...draftShape, rounds: Number(event.target.value) })} /></label><button type="button" className="draft-button draft-button--primary" onClick={() => shapeMutation.mutate()}>Use {draftShape.leagueName}</button></> : null}
+          {(setupMutation.error || oauthMutation.error || leagueMutation.error || shapeMutation.error) ? <p className="draft-error">{String(setupMutation.error || oauthMutation.error || leagueMutation.error || shapeMutation.error)}</p> : null}
+        </section>
+      ) : null}
+
+      <section className="draft-controlbar">
+        <p className="draft-rule-summary"><strong>{state.session.league_name}</strong> · {state.session.num_teams} teams · {draftClockSeconds ? `${draftClockSeconds}-second clock` : "clock not confirmed"} · half PPR + custom Yahoo scoring{keeperToolsEnabled ? " · keeper tools enabled" : ""} · {userSlotConfirmed ? `your slot ${state.session.user_slot}` : "your slot pending"} · {roundsConfirmed ? `${state.session.rounds} rounds` : "round count pending"}</p>
+        <div className="draft-controlbar__actions">
+          <button type="button" className="draft-button" onClick={() => yahooMutation.mutate()} disabled={yahooMutation.isPending}><ArrowClockwise size={17} /> Sync Yahoo</button>
+          <button type="button" className="draft-button" onClick={() => sourcesMutation.mutate()} disabled={sourcesMutation.isPending}><CloudArrowDown size={17} /> Refresh sources</button>
+          <button type="button" className="draft-button" onClick={() => undoMutation.mutate()} disabled={!state.events.length || undoMutation.isPending}>Undo last</button>
+          <button type="button" className="draft-button" onClick={() => exportMutation.mutate()} disabled={exportMutation.isPending}>Export backup</button>
+          <button type="button" className="draft-button" onClick={() => analysisExportMutation.mutate()} disabled={analysisExportMutation.isPending}>Export ChatGPT packet</button>
+          {!state.events.length ? <button type="button" className="draft-button" onClick={() => rehearsalMutation.mutate()} disabled={rehearsalMutation.isPending}>Run 6-pick rehearsal</button> : null}
+          {state.events.length && state.events.every((event) => event.source === "rehearsal") ? <button type="button" className="draft-button" onClick={() => resetRehearsalMutation.mutate()} disabled={resetRehearsalMutation.isPending}>Clear rehearsal</button> : null}
+        </div>
+        <label className={`draft-correction ${isCorrecting ? "is-active" : ""}`}>Correct pick<input type="number" min="1" value={correctionPick} onChange={(event) => setCorrectionPick(event.target.value)} placeholder="#" />{isCorrecting ? <button type="button" onClick={() => setCorrectionPick("")}>Cancel</button> : null}</label>
+        <div className="draft-strategy" aria-label="Draft strategy">
+          {(["floor", "balanced", "upside"] as const).map((strategy) => <button type="button" key={strategy} className={state.session.strategy === strategy ? "is-active" : ""} onClick={() => strategyMutation.mutate(strategy)}>{strategy}</button>)}
+        </div>
+        {exportMutation.data ? <p className="draft-export-note">Backup saved: {exportMutation.data.htmlPath}</p> : null}
+        {analysisExportMutation.data ? <p className="draft-export-note">ChatGPT packet saved: {analysisExportMutation.data.markdownPath}</p> : null}
+        {isCorrecting ? <p className="draft-rehearsal-note">Correction mode: choose the replacement player from the board. Pick {correctionNumber} will be updated with the correct snake team slot.</p> : null}
+        {state.events.length && state.events.every((event) => event.source === "rehearsal") ? <p className="draft-rehearsal-note">Rehearsal ledger active: six simulated picks are changing the board. Clear rehearsal before recording real picks.</p> : null}
+        {actionError ? <p className="draft-error">{String(actionError)}</p> : null}
+      </section>
+
+      <main className="draft-grid">
+        <section className="draft-recommendations">
+          <div className="draft-section-title"><div><p className="draft-kicker">Best incremental value</p><h1>{primary ? <button type="button" className="draft-player-trigger draft-player-trigger--headline" onClick={() => setSelectedPlayerId(primary.playerId)}>{primary.name}</button> : "No player available"}</h1></div><span>{state.draft.calculationMs} ms</span></div>
+          {primary ? (
+            <article className="draft-primary-card">
+              <div className="draft-player-line"><span className={`position-chip pos-${primary.position.toLowerCase()}`}>{primary.position}</span><strong>{primary.team}</strong><small>Tier {primary.tier}</small></div>
+              <div className="draft-score-grid"><div><span>Utility</span><strong>{primary.utility.toFixed(1)}</strong></div><div><span>Increment</span><strong>+{primary.incrementalValue?.toFixed(1)}</strong></div><div><span>VORP</span><strong>{primary.vorp > 0 ? "+" : ""}{primary.vorp}</strong></div><div><span>Pos. drop</span><strong>{primary.samePositionDropoff > 0 ? "+" : ""}{primary.samePositionDropoff}</strong></div><div><span>Need</span><strong>{primary.rosterNeed ? "Yes" : "Luxury"}</strong></div></div>
+              <div className="survival-strip">{primary.survival.map((point) => <div key={point.pick}><span>There at {point.pick}</span><strong>{pct(point.probability)}</strong><i><b style={{ width: pct(point.probability) }} /></i></div>)}</div>
+              <p>{primary.news}</p>
+              <button type="button" className="draft-button draft-button--primary draft-pick-button" onClick={() => recordPlayer(primary)} disabled={pickMutation.isPending || correctionMutation.isPending}>{isCorrecting ? `Correct pick ${correctionNumber} with ${primary.name}` : `Record ${primary.name} at pick ${state.draft.currentPick}`}</button>
+            </article>
+          ) : null}
+          <div className="draft-alternatives">
+            {state.draft.recommendations.slice(1).map((player, index) => (
+              <button type="button" key={player.playerId} onClick={() => recordPlayer(player)}>
+                <span>{index + 2}</span><div><strong>{player.name}</strong><small>{player.position} · {player.team} · VORP {player.vorp > 0 ? "+" : ""}{player.vorp}</small></div><b>{pct(player.survival[0]?.probability)}</b>
+              </button>
+            ))}
+          </div>
+          <div className="draft-ai-card">
+            <div className="draft-ai-card__head"><Sparkle size={20} weight="duotone" /><div><strong>Draft desk</strong><small>Gemini when available · deterministic fallback</small></div></div>
+            <p>{chatReply}</p>
+            <form onSubmit={(event: FormEvent) => { event.preventDefault(); chatMutation.mutate(); }}>
+              <input value={question} onChange={(event) => setQuestion(event.target.value)} placeholder="Ask why, who the sleepers are, or where risk sits…" aria-label="Ask the draft desk" />
+              <button type="submit" disabled={chatMutation.isPending || !question.trim()} aria-label="Send"><PaperPlaneTilt size={19} /></button>
+            </form>
+          </div>
+        </section>
+
+        <section className="draft-board-panel">
+          <div className="draft-board-tools">
+            <label><MagnifyingGlass size={18} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search player or team" /></label>
+            <div>{["ALL", "QB", "RB", "WR", "TE", "K", "DST"].map((item) => <button type="button" key={item} className={position === item ? "is-active" : ""} onClick={() => setPosition(item)}>{item}</button>)}</div>
+          </div>
+          <div className="draft-table-wrap">
+            <table className="draft-table">
+              <thead><tr><th scope="col" title="Click a player name to open the complete dossier, sources, and draft case.">Player</th><th scope="col" title="Market-based tier: a compact grouping of similarly valued players.">Tier</th><th scope="col" title="Current FantasyCalc market-value rank. Lower is more valuable.">Market</th><th scope="col" title="Fantasy Football Calculator average draft position: the expected overall pick where this player is selected.">ADP</th><th scope="col" title="Internal market-derived point baseline. It is not yet an exact custom-Yahoo stat-line projection.">Baseline</th><th scope="col" title="Value over replacement at the player’s position in this 14-team roster format.">VORP</th><th scope="col" title="Chance the player remains available at your next selection, from the seeded draft simulation. Pending until your draft slot is confirmed.">Next pick</th><th scope="col" title="Current matched RotoWire RSS metadata signal. Hover the icon for the exact meaning.">Signal</th><th scope="col" title="A cached Recommendation, Upside, and Risk summary. It uses Vertex Gemini when GCP is ready, otherwise a labelled deterministic fallback.">AI take</th><th scope="col" title="Record the player as the current pick, or replace the selected correction pick.">Action</th></tr></thead>
+              <tbody>{players.map((player) => { const take = aiTakes[player.playerId]; const taking = aiTakeMutation.isPending && aiTakeMutation.variables?.playerId === player.playerId; return <tr key={player.playerId}><td><button type="button" className="draft-player-trigger" onClick={() => setSelectedPlayerId(player.playerId)}>{player.name}</button><span><i className={`position-chip pos-${player.position.toLowerCase()}`}>{player.position}</i>{player.team}</span></td><td>{player.tier}</td><td>#{player.marketRank}</td><td>{player.adp.toFixed(1)}</td><td>{player.projectedPoints.toFixed(1)}</td><td className={player.vorp >= 0 ? "is-positive" : ""}>{player.vorp > 0 ? "+" : ""}{player.vorp}</td><td>{pct(player.survival[0]?.probability)}</td><td><span className={`draft-signal ${player.newsRisk === "clear" ? "is-clear" : "is-watch"}`} title={signalDescription(player)} role="img" aria-label={signalDescription(player)}>{player.newsRisk === "clear" ? <CheckCircle size={18} weight="fill" /> : <Warning size={18} weight="fill" />}</span></td><td className="draft-table__ai">{take ? <button type="button" className="draft-ai-take" title={`${take.provider === "deterministic" ? "Deterministic fallback" : `Vertex AI: ${take.provider}`}. ${take.summary}`} onClick={() => setSelectedPlayerId(player.playerId)}><Sparkle size={15} weight="fill" /><span>{take.summary}</span><small>{take.provider === "deterministic" ? "Fallback" : "Vertex AI"}{take.cached ? " · cached" : ""}</small></button> : <button type="button" className="draft-ai-take draft-ai-take--generate" title="Generate a short Recommendation, Upside, and Risk summary for this player. Uses Vertex AI when available." onClick={() => aiTakeMutation.mutate(player)} disabled={taking}><Sparkle size={15} weight="fill" /> {taking ? "Generating…" : "Generate"}</button>}</td><td><button type="button" onClick={() => recordPlayer(player)}>{isCorrecting ? "Correct" : "Record"}</button></td></tr>; })}</tbody>
+            </table>
+          </div>
+        </section>
+
+        <aside className="draft-rail">
+          <section><p className="draft-kicker">Roster build</p><h2>Your construction</h2><div className="roster-counts">{["QB", "RB", "WR", "TE", "K", "DST"].map((pos) => <div key={pos}><span>{pos}</span><strong>{state.draft.rosterCounts[pos] || 0}</strong></div>)}</div><p>Next turns: {state.draft.nextUserPicks.length ? state.draft.nextUserPicks.join(" · ") : "draft complete"}</p></section>
+          <section><p className="draft-kicker">Source health</p><h2>{state.draft.projectionLabel}</h2>{state.sources.length ? state.sources.map((source) => <div className="source-row" key={source.provider}><span className={`source-dot ${source.status === "fresh" ? "is-fresh" : ""}`} /><div><strong>{source.provider.replaceAll("-", " ")}</strong><small>{source.detail || source.status}</small><em>{sourceScope[source.provider] || "Local source metadata."}</em></div></div>) : <p>Refresh sources to create tonight’s snapshots.</p>}<p className="draft-qualitative-note">One numeric projection feed is not connected yet, so the room accurately labels this as an internal baseline plus market signals.</p></section>
+          <section><p className="draft-kicker">Sleeper radar</p><h2>Situation signals</h2><p className="draft-qualitative-note">{state.draft.qualitativeMethod}</p>{state.draft.sleeperRadar.length ? <div className="sleeper-radar">{state.draft.sleeperRadar.slice(0, 4).map((player) => <article key={`${player.name}-${player.team}`}><div><strong>{player.name}</strong><span>{player.position} · {player.team}</span></div><b>ADP {player.adp.toFixed(1)}</b><p>{player.qualitative.reasons.slice(0, 2).join("; ")}.</p>{player.newsRisk !== "clear" ? <small>{player.news}</small> : null}</article>)}</div> : <p>No later-round market-discount signals are available on this board.</p>}</section>
+          <section><p className="draft-kicker">Pick ledger</p><h2>{state.events.length} picks recorded</h2><ol className="draft-ledger">{state.events.slice(-8).reverse().map((event) => <li key={event.event_id}><span>{event.pick_no}</span><div><strong>{event.player_name}</strong><small>Team {event.team_slot} · {event.source}</small></div></li>)}</ol></section>
+          {state.news.length ? <section><p className="draft-kicker">Reporter wire</p><h2>RotoWire RSS headlines</h2><p className="draft-qualitative-note">Open a headline for its full source context. The assistant stores only the permitted metadata shown here.</p>{state.news.slice(0, 5).map((item) => <a className="news-row" key={item.sourceUrl} href={item.sourceUrl} target="_blank" rel="noreferrer"><strong>{item.headline}</strong><small>{item.reporter || "RotoWire"}</small></a>)}</section> : null}
+        </aside>
+      </main>
+      {selectedPlayerId ? <div className="draft-dossier-backdrop" role="presentation" onMouseDown={() => setSelectedPlayerId(null)}><article className="draft-dossier" role="dialog" aria-modal="true" aria-label="Player dossier" onMouseDown={(event) => event.stopPropagation()}><button type="button" className="draft-dossier__close" onClick={() => setSelectedPlayerId(null)} aria-label="Close player dossier"><X size={20} /></button>{dossierQuery.isLoading ? <p>Building player dossier…</p> : null}{dossierQuery.isError ? <p className="draft-error">Unable to load this player dossier. The board may have changed—try again.</p> : null}{dossierQuery.data ? <><p className="draft-kicker">Player dossier</p><div className="draft-dossier__title"><div><h2>{dossierQuery.data.player.name}</h2><span>{dossierQuery.data.player.position} · {dossierQuery.data.player.team} · Tier {dossierQuery.data.player.tier}</span></div><b>ADP {dossierQuery.data.player.adp.toFixed(1)}</b></div><div className="draft-dossier__metrics"><span>Baseline <strong>{dossierQuery.data.player.projectedPoints.toFixed(1)}</strong></span><span>VORP <strong>{dossierQuery.data.player.vorp > 0 ? "+" : ""}{dossierQuery.data.player.vorp}</strong></span><span>Utility <strong>{dossierQuery.data.player.utility.toFixed(1)}</strong></span><span>30d <strong>{dossierQuery.data.player.qualitative?.trend30Day && dossierQuery.data.player.qualitative.trend30Day > 0 ? "+" : ""}{dossierQuery.data.player.qualitative?.trend30Day ?? "—"}</strong></span></div><section><h3>Consensus desk</h3><p>{dossierQuery.data.marketSynthesis}</p></section><section><h3>Expert-commentary coverage</h3><p>{dossierQuery.data.commentaryCoverage}</p></section><section><h3>The positive case</h3><ul>{dossierQuery.data.positiveCase.map((item) => <li key={item}>{item}</li>)}</ul></section><section><h3>What could go wrong</h3><ul>{dossierQuery.data.cautions.map((item) => <li key={item}>{item}</li>)}</ul></section><section><h3>Draft desk takeaway</h3><p>{dossierQuery.data.draftTakeaway}</p>{dossierQuery.data.player.newsUrl ? <a className="draft-dossier__news" href={dossierQuery.data.player.newsUrl} target="_blank" rel="noreferrer">Open linked {dossierQuery.data.player.newsReporter || "RotoWire"} headline</a> : null}</section><p className="draft-dossier__boundary">{dossierQuery.data.sourceBoundary}</p><button type="button" className="draft-button draft-button--primary" onClick={() => { recordPlayer(dossierQuery.data.player); setSelectedPlayerId(null); }} disabled={pickMutation.isPending || correctionMutation.isPending}>{isCorrecting ? `Correct pick ${correctionNumber}` : `Record at pick ${state.draft.currentPick}`}</button></> : null}</article></div> : null}
+      <footer className="draft-footnote">{state.draft.simulations.toLocaleString()} seeded simulations · {state.draft.projectionLabel} · Picks are never submitted to Yahoo</footer>
+    </div>
+  );
+}
+
+type MooseSection = "analysis" | "power" | "matchups" | "forecast" | "hall";
+
+function MoosePublication() {
+  const [section, setSection] = useState<MooseSection>("analysis");
+  const labels: Array<[MooseSection, string]> = [["analysis", "Draft Analysis"], ["power", "Power Rankings"], ["matchups", "Matchups"], ["forecast", "Forecast"], ["hall", "Hall of Callers"]];
+  const copy: Record<MooseSection, { eyebrow: string; title: string; body: string }> = {
+    analysis: { eyebrow: "2026 inaugural issue", title: "The draft story starts tonight.", body: "Pick-by-pick value, roster fit, and league-specific grades will publish only after Yahoo’s final draft ledger is reconciled." },
+    power: { eyebrow: "League-wide viability", title: "Power Rankings", body: "Current-lineup strength, depth, balance, scoring history, and uncertainty will populate after the Yahoo roster import." },
+    matchups: { eyebrow: "Weekly field guide", title: "Matchups", body: "Head-to-head projections and tactical previews arrive with the first Yahoo schedule release." },
+    forecast: { eyebrow: "Simulation desk", title: "Season Forecast", body: "Playoff, seed, title, and last-place probabilities will be calculated from league-scoped simulations." },
+    hall: { eyebrow: "Permanent league record", title: "Hall of Callers", body: "No callers have been recorded yet. The draft winner and each weekly honoree will be added only after approval." },
+  };
+  const active = copy[section];
+  return <div className="moose-publication"><header><a href="#draft-room" className="moose-wordmark"><span><Phone size={27} weight="duotone" /></span><strong>Moosey’s Mommy</strong></a><nav>{labels.map(([id, label]) => <button key={id} type="button" className={section === id ? "is-active" : ""} onClick={() => setSection(id)}>{label}</button>)}</nav></header><main><div className="moose-hero-copy"><p className="draft-kicker">{active.eyebrow}</p><h1>{active.title}</h1><p className="moose-deck">{active.body}</p></div><img className="moose-hero-art" src="./assets/app/mooseys-mommy-og.png" alt="A suited moose answers a vintage telephone at a fantasy football draft desk." /><section className="moose-empty"><Phone size={48} weight="thin" /><div><strong>{section === "hall" ? "The line is open." : "Awaiting the verified Yahoo release."}</strong><p>Team names only. No manager identity, private chat, OAuth data, or restricted provider content is included in this publication.</p></div></section>{section === "hall" ? <div className="caller-rule"><span>Weekly honor</span><strong>Gets to Call Moosey’s Mommy</strong></div> : null}</main><footer>Moosey’s Mommy · A league publication built from versioned, source-aware releases</footer></div>;
+}
+
 function routeFromHash(): Route {
   const value = window.location.hash.replace(/^#\/?/, "");
+  if (value === "draft-room" || value === "draft") return { kind: "draftRoom" };
   if (value === "methodology") return { kind: "methodology" };
   if (value.startsWith("matchup-")) {
     const matchupId = Number(value.slice("matchup-".length));
@@ -2330,6 +2654,7 @@ function routeFromHash(): Route {
 }
 
 function routeHash(route: Route) {
+  if (route.kind === "draftRoom") return "#draft-room";
   if (route.kind === "team") return `#team-${route.rank}`;
   if (route.kind === "powerTeam") return `#power-team-${route.rosterId}`;
   if (route.kind === "forecastTeam") return `#forecast-team-${route.rosterId}`;
@@ -2364,6 +2689,13 @@ export default function Prototype() {
     return () => window.removeEventListener("hashchange", handleHash);
   }, []);
 
+  useEffect(() => {
+    const moose = (import.meta.env.VITE_PUBLICATION_ID || "") === "mooseys-mommy" || route.kind === "draftRoom";
+    document.title = moose ? "Moosey’s Mommy · Fantasy Draft & League Desk" : "Ape’s Mac Salad · Draft Recap";
+    const description = document.querySelector('meta[name="description"]');
+    if (description) description.setAttribute("content", moose ? "Moosey’s Mommy: a live fantasy draft assistant and team-name-only league publication." : "Ape’s Mac Salad: league-specific dynasty draft analysis, power rankings, and weekly fantasy stories.");
+  }, [route.kind]);
+
   const go = (next: Route) => {
     if (next.kind === "nav") setActiveNav(next.id);
     const nextHash = routeHash(next);
@@ -2384,6 +2716,10 @@ export default function Prototype() {
   const selectedPowerTeam = route.kind === "powerTeam" ? teams.find((team) => team.rosterId === route.rosterId) : undefined;
   const selectedForecastTeam = route.kind === "forecastTeam" ? teams.find((team) => team.rosterId === route.rosterId) : undefined;
   const selectedMatchup = route.kind === "matchup" ? (matchupsWeek1Json.matchups as Week1Matchup[]).find((m) => m.matchupId === route.matchupId) : undefined;
+  const publicationId = import.meta.env.VITE_PUBLICATION_ID || "apes-mac-salad";
+
+  if (route.kind === "draftRoom") return <DraftRoomApp />;
+  if (publicationId === "mooseys-mommy") return <MoosePublication />;
 
   return (
     <div className="site-shell">

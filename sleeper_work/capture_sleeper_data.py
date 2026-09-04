@@ -49,10 +49,10 @@ except ImportError:
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-CURRENT_LEAGUE_ID = "1312209616372772864"
-PRIOR_LEAGUE_ID = "1187879775490527232"
-CURRENT_DRAFT_ID = "1312209616385343488"
-SEASON = "2026"
+DEFAULT_CURRENT_LEAGUE_ID = os.environ.get("SLEEPER_LEAGUE_ID", "1312209616372772864")
+DEFAULT_PRIOR_LEAGUE_ID = os.environ.get("SLEEPER_PRIOR_LEAGUE_ID", "1187879775490527232")
+DEFAULT_CURRENT_DRAFT_ID = os.environ.get("SLEEPER_DRAFT_ID", "1312209616385343488")
+SEASON = os.environ.get("NFL_SEASON", "2026")
 
 TRANSACTION_ROUNDS = range(1, 19)   # Sleeper exposes transactions per round
 USER_AGENT = "ApesMacSalad/1.1 (+league data pipeline)"
@@ -220,13 +220,15 @@ def save(base_dir, source, entity, content, run_id, as_of_bucket, retrieved_at,
 
 # ----------------------------------------------------------------- source list
 
-def build_sources(week):
+def build_sources(week, current_league_id=DEFAULT_CURRENT_LEAGUE_ID,
+                  prior_league_id=DEFAULT_PRIOR_LEAGUE_ID,
+                  current_draft_id=DEFAULT_CURRENT_DRAFT_ID):
     """(source_id, url, entity, cadence, week_partition).
 
     Weekly sources carry the real week. Everything else is filed under week 00,
     which keeps the season-level partitions from fragmenting.
     """
-    L, P, D = CURRENT_LEAGUE_ID, PRIOR_LEAGUE_ID, CURRENT_DRAFT_ID
+    L, P, D = current_league_id, prior_league_id, current_draft_id
     api = "https://api.sleeper.app/v1"
     fc = "https://api.fantasycalc.com/values/current?isDynasty=%s&numQbs=1&numTeams=12&ppr=0.5"
 
@@ -293,13 +295,14 @@ def capture_week(week, args, run_id, now, phase="regular"):
     captured = skipped = failed = 0
     coverage = []
 
-    for source, url, entity, cadence, wk in build_sources(week):
+    for source, url, entity, cadence, wk in build_sources(
+            week, args.current_league_id, args.prior_league_id, args.current_draft_id):
         if source in ("sleeper/matchups", "sleeper/transactions"):
             wk = wk or week
         src_phase = "regular" if source.startswith("sleeper/prior_") and wk else phase
         as_of = bucket_as_of(now, cadence)
         idem = "%s:%s:%s:%s:%s" % (
-            CURRENT_LEAGUE_ID, SEASON, week_token(wk, src_phase), source,
+            args.current_league_id, SEASON, week_token(wk, src_phase), source,
             as_of.strftime("%Y%m%dT%H%M%SZ"))
         rel = rel_dir_for(source, wk, as_of, src_phase)
 
@@ -333,6 +336,7 @@ def capture_week(week, args, run_id, now, phase="regular"):
 
 
 def main():
+    global SEASON
     ap = argparse.ArgumentParser(description="Capture perishable league sources.")
     ap.add_argument("--output-dir", default=HERE)
     ap.add_argument("--gcs-bucket", default=os.environ.get("OUTPUT_BUCKET"))
@@ -342,7 +346,15 @@ def main():
     ap.add_argument("--phase", choices=["pre", "regular", "post"],
                     help="override the season phase in the week partition")
     ap.add_argument("--replay", action="store_true", help="no network calls")
+    ap.add_argument("--publication-id", default=os.environ.get("PUBLICATION_ID", "apes-mac-salad"))
+    ap.add_argument("--current-league-id", default=DEFAULT_CURRENT_LEAGUE_ID)
+    ap.add_argument("--prior-league-id", default=DEFAULT_PRIOR_LEAGUE_ID)
+    ap.add_argument("--current-draft-id", default=DEFAULT_CURRENT_DRAFT_ID)
+    ap.add_argument("--season", default=SEASON)
     args = ap.parse_args()
+    SEASON = str(args.season)
+    if args.publication_id != "apes-mac-salad" and args.output_dir == HERE:
+        args.output_dir = os.path.join(HERE, "publications", args.publication_id)
 
     run_id = hashlib.sha256(
         ("%s|%s" % (utc_now().strftime("%Y%m%dT%H"), os.getpid())).encode()
