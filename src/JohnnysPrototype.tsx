@@ -732,19 +732,42 @@ export default function JohnnysPrototype() {
           /* Default: Draft Recap (AnalysisScreen) */
           <div className="app-screen section-screen web-screen">
             <main className="section-page">
-              <header className="masthead">
-                <div className="masthead-issue">
-                  <span>Vol. I · Issue No. 1</span>
-                  <span>2026 Redraft Post-Draft Almanac</span>
+              <header className="jj-recap-masthead" style={{ display: "flex", flexDirection: "column", width: "100%", gap: "10px", marginBottom: "16px" }}>
+                <div
+                  className="masthead-issue"
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%",
+                    borderBottom: "1px solid var(--hairline)",
+                    paddingBottom: "8px",
+                    fontSize: "0.78rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "var(--ink-soft)",
+                  }}
+                >
+                  <span style={{ whiteSpace: "nowrap" }}>Vol. I · Issue No. 1</span>
+                  <span style={{ textAlign: "right", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginLeft: "8px" }}>
+                    2026 Redraft Post-Draft Almanac
+                  </span>
                 </div>
-                <div className="masthead-main" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div className="masthead-title-wrap">
-                    <h1 className="publication-name" style={{ font: "600 3.2rem/0.95 var(--serif)", margin: 0 }}>Johnny’s Jerks</h1>
-                    <p className="publication-sub" style={{ margin: "6px 0 0", color: "var(--ink-soft)", fontSize: "0.95rem" }}>
+                <div className="masthead-main" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", width: "100%" }}>
+                  <div className="masthead-title-wrap" style={{ flex: 1, minWidth: 0 }}>
+                    <h1 className="publication-name" style={{ font: "600 clamp(2.2rem, 7.5vw, 3.2rem)/0.95 var(--serif)", margin: 0, letterSpacing: "-0.02em" }}>
+                      Johnny’s Jerks
+                    </h1>
+                    <p className="publication-sub" style={{ margin: "6px 0 0", color: "var(--ink-soft)", fontSize: "0.88rem", lineHeight: 1.35 }}>
                       Craig Invitational Redraft · 12 Teams · Half-PPR · 16 Rounds · 192 Selections
                     </p>
                   </div>
-                  <img src="./assets/johnny/capri_sun_lifesaver.jpg" alt="" style={{ width: 80, height: 80, borderRadius: 8, objectFit: "cover", boxShadow: "0 4px 14px rgba(0,0,0,0.12)" }} />
+                  <img
+                    src="./assets/johnny/capri_sun_lifesaver.jpg"
+                    alt=""
+                    style={{ width: 68, height: 68, borderRadius: 8, objectFit: "cover", boxShadow: "0 4px 14px rgba(0,0,0,0.12)", flexShrink: 0 }}
+                  />
                 </div>
               </header>
 
