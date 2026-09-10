@@ -22,7 +22,7 @@ def main():
     print("=== P3-7 Gate Verification: Rebuild Drill Harness ===")
     
     # 1. First Pass Build
-    build_canonical_layer.load_canonical_data()
+    build_canonical_layer.load_canonical_data(sync_bigquery=False)
     
     conn = sqlite3.connect(SQLITE_DB_PATH)
     cur = conn.cursor()
@@ -39,7 +39,7 @@ def main():
         os.remove(SQLITE_DB_PATH)
         
     # 3. Second Pass Reconstruction from Raw Snapshots
-    build_canonical_layer.load_canonical_data()
+    build_canonical_layer.load_canonical_data(sync_bigquery=False)
     
     conn2 = sqlite3.connect(SQLITE_DB_PATH)
     cur2 = conn2.cursor()

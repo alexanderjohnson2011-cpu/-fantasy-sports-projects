@@ -26,7 +26,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
 
       - name: Install Node dependencies
         run: npm ci
@@ -41,6 +40,12 @@ jobs:
 
       - name: Build Almanac Frontend & Sites Worker
         run: npm run build
+
+      - name: Build Johnny's Jerks
+        run: npm run build:johnny
+
+      - name: Run Python Unit Tests
+        run: python -m unittest discover -s tests -p "test_*.py"
 
       - name: Run Sites Packaging Integration Tests
         run: npm run test:sites
