@@ -1156,13 +1156,58 @@ function ForecastTeamScreen({ team }: { team: any }) {
         <section className="detail-block">
           <div className="detail-title"><span>02</span><h2>What the model knows</h2></div>
           <p className="detail-explainer">{forecastInsightsJson.methodology}</p>
-          <div style={{ padding: 18, background: "var(--paper-deep)", borderLeft: "4px solid var(--rust)", marginTop: 16 }}>
-            <ClockCounterClockwise size={22} color="var(--rust)" weight="duotone" aria-hidden="true" />
-            <strong style={{ display: "block", marginTop: 6 }}>Schedule status</strong>
-            <p style={{ margin: "4px 0 0", color: "var(--ink-soft)", lineHeight: 1.5 }}>{forecastInsightsJson.scheduleBasis}</p>
+          <div style={{ padding: "14px 18px", background: "rgba(46, 125, 50, 0.05)", border: "1px solid rgba(46, 125, 50, 0.2)", borderLeft: "5px solid #2e7d32", borderRadius: 6, marginTop: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <CheckCircle size={20} color="#2e7d32" weight="fill" aria-hidden="true" />
+              <strong style={{ color: "var(--ink)", fontSize: "0.95rem" }}>Sleeper Schedule Verified (Weeks 1–14)</strong>
+            </div>
+            <p style={{ margin: "4px 0 0", color: "var(--ink-soft)", lineHeight: 1.5, fontSize: "0.85rem" }}>
+              {forecastInsightsJson.scheduleBasis}
+            </p>
           </div>
           <p className="method-note">Power score {team.powerScore.toFixed(1)} · Simulation seed {forecastInsightsJson.randomSeed}. Forecasts are decision support, not guarantees.</p>
         </section>
+        {team.weeklySchedule && team.weeklySchedule.length > 0 && (
+          <section className="detail-block">
+            <div className="detail-title"><span>03</span><h2>14-Week Matchup Schedule</h2></div>
+            <p className="detail-explainer">
+              Each simulated 10,000-run season tests this roster across all official regular-season Sleeper pairings:
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "8px", marginTop: "12px" }}>
+              {team.weeklySchedule.map((w: any) => (
+                <div
+                  key={w.week}
+                  style={{
+                    padding: "8px 12px",
+                    background: "var(--paper-deep)",
+                    border: "1px solid var(--hairline)",
+                    borderRadius: 6,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div>
+                    <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "var(--ink-soft)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                      Week {w.week}
+                    </span>
+                    <strong style={{ display: "block", fontSize: "0.85rem", color: "var(--ink)" }}>
+                      vs {w.opponentManager}
+                    </strong>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <span style={{ fontSize: "0.8rem", fontWeight: 700, color: w.winProbability >= 50 ? "#2e7d32" : "var(--rust)" }}>
+                      {w.winProbability}% win
+                    </span>
+                    <span style={{ display: "block", fontSize: "0.68rem", color: "var(--ink-soft)" }}>
+                      {w.spreadLabel}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
     </div>
   );

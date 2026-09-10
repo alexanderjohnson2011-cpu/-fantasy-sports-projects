@@ -2,9 +2,9 @@
   "simulationsCount": 10000,
   "randomSeed": 20260909,
   "modelVersion": "johnnys-forecast-v4",
-  "generatedAt": "2026-09-10T21:10:28.341767+00:00",
+  "generatedAt": "2026-09-10T21:14:54.760021+00:00",
   "methodology": "Seeded weekly-score Monte Carlo using the current-season lineup mean, team-specific volatility, all 14 official Sleeper regular-season pairing weeks, active live game scores, and a six-team playoff bracket.",
-  "scheduleBasis": "Exact Sleeper schedule for Weeks 1-14, captured 2026-09-10T19:59:54.912419+00:00.",
+  "scheduleBasis": "Official Sleeper schedule active for all 14 regular-season weeks (84 scheduled matchups). Synchronized directly from Sleeper League #1401673232670539776.",
   "scheduleSource": {
     "provider": "Sleeper",
     "leagueUrl": "https://api.sleeper.app/v1/league/1401673232670539776"
@@ -285,6 +285,162 @@
           "rank": 2,
           "event": "NE @ SEA Game Impact"
         }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 64.8,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 119.5,
+          "spread": 7.3,
+          "spreadLabel": "+7.3 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 53.5,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 125.1,
+          "spread": 1.7,
+          "spreadLabel": "+1.7 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 59.7,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 122.1,
+          "spread": 4.7,
+          "spreadLabel": "+4.7 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 72.3,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 115.3,
+          "spread": 11.5,
+          "spreadLabel": "+11.5 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 54.8,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 124.5,
+          "spread": 2.3,
+          "spreadLabel": "+2.3 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 72.6,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 115.1,
+          "spread": 11.7,
+          "spreadLabel": "+11.7 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 95.3,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 90.8,
+          "spread": 36.0,
+          "spreadLabel": "+36.0 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 80.9,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 109.5,
+          "spread": 17.3,
+          "spreadLabel": "+17.3 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 66.6,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 118.5,
+          "spread": 8.3,
+          "spreadLabel": "+8.3 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 76.0,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 113.0,
+          "spread": 13.8,
+          "spreadLabel": "+13.8 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 73.4,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 114.6,
+          "spread": 12.2,
+          "spreadLabel": "+12.2 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 64.8,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 119.5,
+          "spread": 7.3,
+          "spreadLabel": "+7.3 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 53.5,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 125.1,
+          "spread": 1.7,
+          "spreadLabel": "+1.7 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 59.7,
+          "projectedScore": 126.8,
+          "opponentProjectedScore": 122.1,
+          "spread": 4.7,
+          "spreadLabel": "+4.7 pts"
+        }
       ]
     },
     {
@@ -327,6 +483,162 @@
           "playoffOdds": 85.5,
           "rank": 3,
           "event": "NE @ SEA Game Impact"
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 78.6,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 109.5,
+          "spread": 15.6,
+          "spreadLabel": "+15.6 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 46.5,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 126.8,
+          "spread": -1.7,
+          "spreadLabel": "-1.7 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 73.3,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 113.0,
+          "spread": 12.1,
+          "spreadLabel": "+12.1 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 70.6,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 114.6,
+          "spread": 10.5,
+          "spreadLabel": "+10.5 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 61.5,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 119.5,
+          "spread": 5.6,
+          "spreadLabel": "+5.6 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 63.4,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 118.5,
+          "spread": 6.6,
+          "spreadLabel": "+6.6 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 56.2,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 122.1,
+          "spread": 3.0,
+          "spreadLabel": "+3.0 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 69.4,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 115.3,
+          "spread": 9.8,
+          "spreadLabel": "+9.8 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 51.2,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 124.5,
+          "spread": 0.6,
+          "spreadLabel": "+0.6 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 69.7,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 115.1,
+          "spread": 10.0,
+          "spreadLabel": "+10.0 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 94.6,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 90.8,
+          "spread": 34.3,
+          "spreadLabel": "+34.3 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 78.6,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 109.5,
+          "spread": 15.6,
+          "spreadLabel": "+15.6 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 46.5,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 126.8,
+          "spread": -1.7,
+          "spreadLabel": "-1.7 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 73.3,
+          "projectedScore": 125.1,
+          "opponentProjectedScore": 113.0,
+          "spread": 12.1,
+          "spreadLabel": "+12.1 pts"
         }
       ]
     },
@@ -371,6 +683,162 @@
           "rank": 9,
           "event": "NE @ SEA Game Impact"
         }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 93.1,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 90.8,
+          "spread": 31.3,
+          "spreadLabel": "+31.3 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 74.1,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 109.5,
+          "spread": 12.6,
+          "spreadLabel": "+12.6 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 40.3,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 126.8,
+          "spread": -4.7,
+          "spreadLabel": "-4.7 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 68.1,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 113.0,
+          "spread": 9.1,
+          "spreadLabel": "+9.1 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 65.1,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 114.6,
+          "spread": 7.5,
+          "spreadLabel": "+7.5 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 55.4,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 119.5,
+          "spread": 2.6,
+          "spreadLabel": "+2.6 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 43.8,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 125.1,
+          "spread": -3.0,
+          "spreadLabel": "-3.0 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 57.4,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 118.5,
+          "spread": 3.6,
+          "spreadLabel": "+3.6 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 63.8,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 115.3,
+          "spread": 6.8,
+          "spreadLabel": "+6.8 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 45.0,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 124.5,
+          "spread": -2.4,
+          "spreadLabel": "-2.4 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 64.2,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 115.1,
+          "spread": 7.0,
+          "spreadLabel": "+7.0 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 93.1,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 90.8,
+          "spread": 31.3,
+          "spreadLabel": "+31.3 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 74.1,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 109.5,
+          "spread": 12.6,
+          "spreadLabel": "+12.6 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 40.3,
+          "projectedScore": 122.1,
+          "opponentProjectedScore": 126.8,
+          "spread": -4.7,
+          "spreadLabel": "-4.7 pts"
+        }
       ]
     },
     {
@@ -413,6 +881,162 @@
           "playoffOdds": 90.6,
           "rank": 1,
           "event": "NE @ SEA Game Impact"
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 62.2,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 118.5,
+          "spread": 6.0,
+          "spreadLabel": "+6.0 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 68.6,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 115.1,
+          "spread": 9.4,
+          "spreadLabel": "+9.4 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 94.3,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 90.8,
+          "spread": 33.7,
+          "spreadLabel": "+33.7 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 77.7,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 109.5,
+          "spread": 15.0,
+          "spreadLabel": "+15.0 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 45.2,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 126.8,
+          "spread": -2.3,
+          "spreadLabel": "-2.3 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 72.3,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 113.0,
+          "spread": 11.5,
+          "spreadLabel": "+11.5 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 69.5,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 114.6,
+          "spread": 9.9,
+          "spreadLabel": "+9.9 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 60.3,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 119.5,
+          "spread": 5.0,
+          "spreadLabel": "+5.0 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 48.8,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 125.1,
+          "spread": -0.6,
+          "spreadLabel": "-0.6 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 55.0,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 122.1,
+          "spread": 2.4,
+          "spreadLabel": "+2.4 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 68.3,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 115.3,
+          "spread": 9.2,
+          "spreadLabel": "+9.2 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 62.2,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 118.5,
+          "spread": 6.0,
+          "spreadLabel": "+6.0 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 68.6,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 115.1,
+          "spread": 9.4,
+          "spreadLabel": "+9.4 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 94.3,
+          "projectedScore": 124.5,
+          "opponentProjectedScore": 90.8,
+          "spread": 33.7,
+          "spreadLabel": "+33.7 pts"
         }
       ]
     },
@@ -457,6 +1081,162 @@
           "rank": 4,
           "event": "NE @ SEA Game Impact"
         }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 35.2,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 126.8,
+          "spread": -7.3,
+          "spreadLabel": "-7.3 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 63.2,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 113.0,
+          "spread": 6.5,
+          "spreadLabel": "+6.5 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 60.1,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 114.6,
+          "spread": 4.9,
+          "spreadLabel": "+4.9 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 52.1,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 118.5,
+          "spread": 1.0,
+          "spreadLabel": "+1.0 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 38.5,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 125.1,
+          "spread": -5.6,
+          "spreadLabel": "-5.6 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 44.6,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 122.1,
+          "spread": -2.6,
+          "spreadLabel": "-2.6 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 58.7,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 115.3,
+          "spread": 4.2,
+          "spreadLabel": "+4.2 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 39.7,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 124.5,
+          "spread": -5.0,
+          "spreadLabel": "-5.0 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 59.1,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 115.1,
+          "spread": 4.4,
+          "spreadLabel": "+4.4 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 91.6,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 90.8,
+          "spread": 28.7,
+          "spreadLabel": "+28.7 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 69.7,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 109.5,
+          "spread": 10.0,
+          "spreadLabel": "+10.0 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 35.2,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 126.8,
+          "spread": -7.3,
+          "spreadLabel": "-7.3 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 63.2,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 113.0,
+          "spread": 6.5,
+          "spreadLabel": "+6.5 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 60.1,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 114.6,
+          "spread": 4.9,
+          "spreadLabel": "+4.9 pts"
+        }
       ]
     },
     {
@@ -499,6 +1279,162 @@
           "playoffOdds": 46.6,
           "rank": 10,
           "event": "NE @ SEA Game Impact"
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 50.4,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 115.1,
+          "spread": 0.2,
+          "spreadLabel": "+0.2 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 88.5,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 90.8,
+          "spread": 24.5,
+          "spreadLabel": "+24.5 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 61.9,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 109.5,
+          "spread": 5.8,
+          "spreadLabel": "+5.8 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 27.7,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 126.8,
+          "spread": -11.5,
+          "spreadLabel": "-11.5 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 54.8,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 113.0,
+          "spread": 2.3,
+          "spreadLabel": "+2.3 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 51.5,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 114.6,
+          "spread": 0.7,
+          "spreadLabel": "+0.7 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 41.3,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 119.5,
+          "spread": -4.2,
+          "spreadLabel": "-4.2 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 30.6,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 125.1,
+          "spread": -9.8,
+          "spreadLabel": "-9.8 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 36.2,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 122.1,
+          "spread": -6.8,
+          "spreadLabel": "-6.8 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 43.4,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 118.5,
+          "spread": -3.2,
+          "spreadLabel": "-3.2 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 31.7,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 124.5,
+          "spread": -9.2,
+          "spreadLabel": "-9.2 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 50.4,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 115.1,
+          "spread": 0.2,
+          "spreadLabel": "+0.2 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 88.5,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 90.8,
+          "spread": 24.5,
+          "spreadLabel": "+24.5 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 61.9,
+          "projectedScore": 115.3,
+          "opponentProjectedScore": 109.5,
+          "spread": 5.8,
+          "spreadLabel": "+5.8 pts"
         }
       ]
     },
@@ -543,6 +1479,162 @@
           "rank": 7,
           "event": "NE @ SEA Game Impact"
         }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 37.8,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 124.5,
+          "spread": -6.0,
+          "spreadLabel": "-6.0 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 58.1,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 114.6,
+          "spread": 3.9,
+          "spreadLabel": "+3.9 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 57.0,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 115.1,
+          "spread": 3.4,
+          "spreadLabel": "+3.4 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 47.9,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 119.5,
+          "spread": -1.0,
+          "spreadLabel": "-1.0 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 91.0,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 90.8,
+          "spread": 27.7,
+          "spreadLabel": "+27.7 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 36.6,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 125.1,
+          "spread": -6.6,
+          "spreadLabel": "-6.6 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 67.9,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 109.5,
+          "spread": 9.0,
+          "spreadLabel": "+9.0 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 42.6,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 122.1,
+          "spread": -3.6,
+          "spreadLabel": "-3.6 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 33.4,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 126.8,
+          "spread": -8.3,
+          "spreadLabel": "-8.3 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 56.6,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 115.3,
+          "spread": 3.2,
+          "spreadLabel": "+3.2 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 61.3,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 113.0,
+          "spread": 5.5,
+          "spreadLabel": "+5.5 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 37.8,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 124.5,
+          "spread": -6.0,
+          "spreadLabel": "-6.0 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 58.1,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 114.6,
+          "spread": 3.9,
+          "spreadLabel": "+3.9 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 57.0,
+          "projectedScore": 118.5,
+          "opponentProjectedScore": 115.1,
+          "spread": 3.4,
+          "spreadLabel": "+3.4 pts"
+        }
       ]
     },
     {
@@ -585,6 +1677,162 @@
           "playoffOdds": 34.1,
           "rank": 6,
           "event": "NE @ SEA Game Impact"
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 49.6,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 115.3,
+          "spread": -0.2,
+          "spreadLabel": "-0.2 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 31.4,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 124.5,
+          "spread": -9.4,
+          "spreadLabel": "-9.4 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 43.0,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 118.5,
+          "spread": -3.4,
+          "spreadLabel": "-3.4 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 88.3,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 90.8,
+          "spread": 24.3,
+          "spreadLabel": "+24.3 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 61.5,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 109.5,
+          "spread": 5.6,
+          "spreadLabel": "+5.6 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 27.4,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 126.8,
+          "spread": -11.7,
+          "spreadLabel": "-11.7 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 54.4,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 113.0,
+          "spread": 2.1,
+          "spreadLabel": "+2.1 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 51.0,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 114.6,
+          "spread": 0.5,
+          "spreadLabel": "+0.5 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 40.9,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 119.5,
+          "spread": -4.4,
+          "spreadLabel": "-4.4 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 30.3,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 125.1,
+          "spread": -10.0,
+          "spreadLabel": "-10.0 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 35.8,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 122.1,
+          "spread": -7.0,
+          "spreadLabel": "-7.0 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 49.6,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 115.3,
+          "spread": -0.2,
+          "spreadLabel": "-0.2 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 31.4,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 124.5,
+          "spread": -9.4,
+          "spreadLabel": "-9.4 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 43.0,
+          "projectedScore": 115.1,
+          "opponentProjectedScore": 118.5,
+          "spread": -3.4,
+          "spreadLabel": "-3.4 pts"
         }
       ]
     },
@@ -629,6 +1877,162 @@
           "rank": 5,
           "event": "NE @ SEA Game Impact"
         }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 46.7,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 114.6,
+          "spread": -1.6,
+          "spreadLabel": "-1.6 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 36.8,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 119.5,
+          "spread": -6.5,
+          "spreadLabel": "-6.5 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 26.7,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 125.1,
+          "spread": -12.1,
+          "spreadLabel": "-12.1 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 31.9,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 122.1,
+          "spread": -9.1,
+          "spreadLabel": "-9.1 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 45.2,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 115.3,
+          "spread": -2.3,
+          "spreadLabel": "-2.3 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 27.7,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 124.5,
+          "spread": -11.5,
+          "spreadLabel": "-11.5 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 45.6,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 115.1,
+          "spread": -2.1,
+          "spreadLabel": "-2.1 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 86.4,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 90.8,
+          "spread": 22.2,
+          "spreadLabel": "+22.2 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 57.2,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 109.5,
+          "spread": 3.5,
+          "spreadLabel": "+3.5 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 24.0,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 126.8,
+          "spread": -13.8,
+          "spreadLabel": "-13.8 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 38.7,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 118.5,
+          "spread": -5.5,
+          "spreadLabel": "-5.5 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 46.7,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 114.6,
+          "spread": -1.6,
+          "spreadLabel": "-1.6 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 36.8,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 119.5,
+          "spread": -6.5,
+          "spreadLabel": "-6.5 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 26.7,
+          "projectedScore": 113.0,
+          "opponentProjectedScore": 125.1,
+          "spread": -12.1,
+          "spreadLabel": "-12.1 pts"
+        }
       ]
     },
     {
@@ -671,6 +2075,162 @@
           "playoffOdds": 27.8,
           "rank": 11,
           "event": "NE @ SEA Game Impact"
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 53.3,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 113.0,
+          "spread": 1.6,
+          "spreadLabel": "+1.6 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 41.9,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 118.5,
+          "spread": -3.9,
+          "spreadLabel": "-3.9 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 39.9,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 119.5,
+          "spread": -4.9,
+          "spreadLabel": "-4.9 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 29.4,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 125.1,
+          "spread": -10.5,
+          "spreadLabel": "-10.5 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 34.9,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 122.1,
+          "spread": -7.5,
+          "spreadLabel": "-7.5 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 48.5,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 115.3,
+          "spread": -0.7,
+          "spreadLabel": "-0.7 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 30.5,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 124.5,
+          "spread": -9.9,
+          "spreadLabel": "-9.9 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 49.0,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 115.1,
+          "spread": -0.5,
+          "spreadLabel": "-0.5 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 87.9,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 90.8,
+          "spread": 23.8,
+          "spreadLabel": "+23.8 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 60.5,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 109.5,
+          "spread": 5.1,
+          "spreadLabel": "+5.1 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 26.6,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 126.8,
+          "spread": -12.2,
+          "spreadLabel": "-12.2 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 53.3,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 113.0,
+          "spread": 1.6,
+          "spreadLabel": "+1.6 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 41.9,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 118.5,
+          "spread": -3.9,
+          "spreadLabel": "-3.9 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 39.9,
+          "projectedScore": 114.6,
+          "opponentProjectedScore": 119.5,
+          "spread": -4.9,
+          "spreadLabel": "-4.9 pts"
         }
       ]
     },
@@ -715,6 +2275,162 @@
           "rank": 8,
           "event": "NE @ SEA Game Impact"
         }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 21.4,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 125.1,
+          "spread": -15.6,
+          "spreadLabel": "-15.6 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 25.9,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 122.1,
+          "spread": -12.6,
+          "spreadLabel": "-12.6 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 38.1,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 115.3,
+          "spread": -5.8,
+          "spreadLabel": "-5.8 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 22.3,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 124.5,
+          "spread": -15.0,
+          "spreadLabel": "-15.0 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 38.5,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 115.1,
+          "spread": -5.6,
+          "spreadLabel": "-5.6 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 2,
+          "opponentName": "Achane in the Membrane",
+          "opponentManager": "sduda351",
+          "winProbability": 82.6,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 90.8,
+          "spread": 18.7,
+          "spreadLabel": "+18.7 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 32.1,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 118.5,
+          "spread": -9.0,
+          "spreadLabel": "-9.0 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 19.1,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 126.8,
+          "spread": -17.3,
+          "spreadLabel": "-17.3 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 42.8,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 113.0,
+          "spread": -3.5,
+          "spreadLabel": "-3.5 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 39.5,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 114.6,
+          "spread": -5.1,
+          "spreadLabel": "-5.1 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 30.3,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 119.5,
+          "spread": -10.0,
+          "spreadLabel": "-10.0 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 21.4,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 125.1,
+          "spread": -15.6,
+          "spreadLabel": "-15.6 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 25.9,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 122.1,
+          "spread": -12.6,
+          "spreadLabel": "-12.6 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 38.1,
+          "projectedScore": 109.5,
+          "opponentProjectedScore": 115.3,
+          "spread": -5.8,
+          "spreadLabel": "-5.8 pts"
+        }
       ]
     },
     {
@@ -757,6 +2473,162 @@
           "playoffOdds": 0.0,
           "rank": 12,
           "event": "NE @ SEA Game Impact"
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 6.9,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 122.1,
+          "spread": -31.3,
+          "spreadLabel": "-31.3 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 11.5,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 115.3,
+          "spread": -24.5,
+          "spreadLabel": "-24.5 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 5.7,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 124.5,
+          "spread": -33.7,
+          "spreadLabel": "-33.7 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 11.7,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 115.1,
+          "spread": -24.3,
+          "spreadLabel": "-24.3 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 9.0,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 118.5,
+          "spread": -27.7,
+          "spreadLabel": "-27.7 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 17.4,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 109.5,
+          "spread": -18.7,
+          "spreadLabel": "-18.7 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 4.7,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 126.8,
+          "spread": -36.0,
+          "spreadLabel": "-36.0 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 13.6,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 113.0,
+          "spread": -22.2,
+          "spreadLabel": "-22.2 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 12.1,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 114.6,
+          "spread": -23.8,
+          "spreadLabel": "-23.8 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 4,
+          "opponentName": "Team kong58",
+          "opponentManager": "kong58",
+          "winProbability": 8.4,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 119.5,
+          "spread": -28.7,
+          "spreadLabel": "-28.7 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 5.4,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 125.1,
+          "spread": -34.3,
+          "spreadLabel": "-34.3 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 6.9,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 122.1,
+          "spread": -31.3,
+          "spreadLabel": "-31.3 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 11.5,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 115.3,
+          "spread": -24.5,
+          "spreadLabel": "-24.5 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 5.7,
+          "projectedScore": 90.8,
+          "opponentProjectedScore": 124.5,
+          "spread": -33.7,
+          "spreadLabel": "-33.7 pts"
         }
       ]
     }

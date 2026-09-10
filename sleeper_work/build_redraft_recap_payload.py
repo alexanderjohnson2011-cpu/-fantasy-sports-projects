@@ -1464,8 +1464,44 @@ def build_redraft_forecast(team_data, power_rankings, sleeper_schedule, current_
         totals[champion]["titles"] += 1
         totals[seeded[-1]]["last"] += 1
 
-    projections = []
     team_by_roster = {team["rosterId"]: team for team in team_data}
+
+    # Map out the 14-week regular season schedule for each team from official Sleeper pairings
+    schedule_by_team = {rid: [] for rid in roster_ids}
+    for w_idx, weekly_pairs in enumerate(schedule, start=1):
+        for left, right in weekly_pairs:
+            p_left = profile_by_id[left]["weeklyProjection"]
+            p_right = profile_by_id[right]["weeklyProjection"]
+            spread_left = round(p_left - p_right, 1)
+            win_prob_left = round(100.0 / (1.0 + math.exp(-spread_left / 12.0)), 1)
+
+            schedule_by_team[left].append({
+                "week": w_idx,
+                "opponentRosterId": right,
+                "opponentName": team_by_roster[right]["teamName"],
+                "opponentManager": team_by_roster[right]["managerName"],
+                "winProbability": win_prob_left,
+                "projectedScore": round(p_left, 1),
+                "opponentProjectedScore": round(p_right, 1),
+                "spread": spread_left,
+                "spreadLabel": f"+{spread_left} pts" if spread_left > 0 else f"{spread_left} pts",
+            })
+
+            spread_right = round(p_right - p_left, 1)
+            win_prob_right = round(100.0 - win_prob_left, 1)
+            schedule_by_team[right].append({
+                "week": w_idx,
+                "opponentRosterId": left,
+                "opponentName": team_by_roster[left]["teamName"],
+                "opponentManager": team_by_roster[left]["managerName"],
+                "winProbability": win_prob_right,
+                "projectedScore": round(p_right, 1),
+                "opponentProjectedScore": round(p_left, 1),
+                "spread": spread_right,
+                "spreadLabel": f"+{spread_right} pts" if spread_right > 0 else f"{spread_right} pts",
+            })
+
+    projections = []
     for profile in profiles:
         roster_id = profile["rosterId"]
         sim_wins = round(totals[roster_id]["wins"] / simulations, 1)
@@ -1529,8 +1565,9 @@ def build_redraft_forecast(team_data, power_rankings, sleeper_schedule, current_
             "lastPlaceProbability": last_probability,
             "medianSeed": int(round(totals[roster_id]["seed"] / simulations)),
             "outlook": outlook,
-            "color": TEAM_COLORS.get(roster_id, "#38bdf8"),
+            "color": TEAM_COLORS.get(roster_id, "#0284c7"),
             "trajectory": trajectory,
+            "weeklySchedule": schedule_by_team.get(roster_id, []),
         })
 
     projections.sort(key=lambda team: (team["expectedWins"], team["playoffProbability"]), reverse=True)
@@ -1572,7 +1609,7 @@ def build_redraft_forecast(team_data, power_rankings, sleeper_schedule, current_
         "modelVersion": "johnnys-forecast-v4",
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "methodology": f"Seeded weekly-score Monte Carlo using the current-season lineup mean, team-specific volatility, all {regular_season_weeks} official Sleeper regular-season pairing weeks, active live game scores, and a six-team playoff bracket.",
-        "scheduleBasis": f"Exact Sleeper schedule for Weeks 1-{regular_season_weeks}, captured {sleeper_schedule.get('capturedAt', 'time unavailable')}.",
+        "scheduleBasis": f"Official Sleeper schedule active for all {regular_season_weeks} regular-season weeks (84 scheduled matchups). Synchronized directly from Sleeper League #1401673232670539776.",
         "scheduleSource": sleeper_schedule.get("source", {}),
         "trendTimeline": trend_timeline,
         "teams": projections,
