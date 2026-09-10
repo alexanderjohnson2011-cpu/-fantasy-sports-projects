@@ -33,7 +33,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install numpy google-cloud-storage google-cloud-bigquery
+          pip install -r requirements-draft.txt numpy google-cloud-storage google-cloud-bigquery
 
       - name: Verify Mobile Runtime Integrity
         run: npm run check:runtime
