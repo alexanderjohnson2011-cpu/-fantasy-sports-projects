@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./johnnys-jerks.css";
 import { CapriSunIcon, LifeSaverIcon } from "./components/johnny/CapriSunLifeSaver";
 import TrajectoryChart from "./components/johnny/TrajectoryChart";
+import PowerTrajectoryChart from "./components/johnny/PowerTrajectoryChart";
 import draftRecapJson from "./generated/johnnys-jerks/draft-recap.json";
 import powerRankingsJson from "./generated/johnnys-jerks/power-rankings.json";
 import matchupsJson from "./generated/johnnys-jerks/matchups-current.json";
@@ -319,6 +320,16 @@ export default function JohnnysJerksApp() {
                 </p>
               </div>
             </div>
+
+            {(power as any).trendTimeline && (
+              <div style={{ marginBottom: "1.5rem" }}>
+                <PowerTrajectoryChart
+                  mode="league"
+                  timeline={(power as any).trendTimeline}
+                  onSelectTeam={toggleTeam}
+                />
+              </div>
+            )}
 
             <table className="jj-forecast-table">
               <thead>

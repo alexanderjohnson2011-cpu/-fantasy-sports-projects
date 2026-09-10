@@ -1,7 +1,269 @@
 {
-  "generatedAt": "2026-09-10T21:14:54.764045+00:00",
-  "modelVersion": "johnnys-power-v3",
+  "generatedAt": "2026-09-10T21:49:10.714442+00:00",
+  "modelVersion": "johnnys-power-v4",
   "methodology": "50% stat-line optimal-lineup projection, 25% usable bench projection, 15% top-five VORP ceiling, and 10% league-format balance, directly linked to 10,000-run Monte Carlo regular season projected wins.",
+  "trendTimeline": {
+    "milestones": [
+      {
+        "id": "preseason",
+        "label": "Pre-Season Draft",
+        "date": "2026-09-01",
+        "description": "Draft day post-audit power model baseline"
+      },
+      {
+        "id": "kickoff",
+        "label": "Week 1 Kickoff",
+        "date": "2026-09-09",
+        "description": "Pre-game starting lineup optimization & spread adjustments"
+      },
+      {
+        "id": "live",
+        "label": "Week 1 Live Action",
+        "date": "2026-09-10",
+        "description": "Live game scoring impact and player performance adjustments"
+      }
+    ],
+    "teams": [
+      {
+        "rosterId": 8,
+        "teamName": "Team mannyrsox24",
+        "managerName": "mannyrsox24",
+        "color": "#0284c7",
+        "currentRank": 1,
+        "preSeasonRank": 1,
+        "rankDelta": 0,
+        "currentScore": 94.7,
+        "points": [
+          1,
+          1,
+          1
+        ],
+        "headline": "Maye's Thursday opener compresses starting efficiency; title ceiling holds",
+        "commentary": "Held the #1 overall power rank, but saw composite power index compress by 2.1 points following Thursday Night Football. Drake Maye's 12.8 points fell 6.1 points shy of baseline projection (18.9), narrowing the starting efficiency buffer over #2 arkinsjt to a single point. Elite backfield foundation (James Cook, Ashton Jeanty) preserves a dominant championship ceiling."
+      },
+      {
+        "rosterId": 5,
+        "teamName": "Team arkinsjt",
+        "managerName": "arkinsjt",
+        "color": "#1b5e20",
+        "currentRank": 2,
+        "preSeasonRank": 2,
+        "rankDelta": 0,
+        "currentScore": 93.7,
+        "points": [
+          2,
+          2,
+          2
+        ],
+        "headline": "Narrowing the gap on #1 behind league-best wide receiver corps",
+        "commentary": "Remains in the #2 spot but pulled within 1.0 point of the top overall ranking with zero starters exposed on Thursday night. Anchored by the league's #1 ranked wide receiver room (Drake London, Garrett Wilson, Marvin Harrison Jr.), optimal lineup projection stands at 126.8 pts/wk. A clean Sunday slate positions them to contend for #1 overall."
+      },
+      {
+        "rosterId": 6,
+        "teamName": "Team Gnomeington",
+        "managerName": "Gnomeington",
+        "color": "#7e22ce",
+        "currentRank": 3,
+        "preSeasonRank": 3,
+        "rankDelta": 0,
+        "currentScore": 89.0,
+        "points": [
+          3,
+          3,
+          3
+        ],
+        "headline": "Rock-solid consensus #3 with balanced four-room construction",
+        "commentary": "Firmly entrenched as the consensus #3 contender across all three milestones. Built with balanced scoring across QB (Stroud), RB (Gibbs, Walker), and WR. High-floor starting lineup backed by the league's #3 usable bench gives them insulation against single-starter volatility."
+      },
+      {
+        "rosterId": 4,
+        "teamName": "Team kong58",
+        "managerName": "kong58",
+        "color": "#c2410c",
+        "currentRank": 4,
+        "preSeasonRank": 5,
+        "rankDelta": 1,
+        "currentScore": 84.0,
+        "points": [
+          5,
+          5,
+          4
+        ],
+        "headline": "Climbed +1 into the top-four tier on balance and steady depth",
+        "commentary": "Climbed from #5 into the coveted top-four tier (#4 overall). A flawless 96.0 balance score and deep running back room allowed them to edge out rLee3D and mtrebing31. While lacking a 500+ VORP star anchor, their weekly floor is among the steadiest in the Craig Invitational."
+      },
+      {
+        "rosterId": 12,
+        "teamName": "rLee3D",
+        "managerName": "rLee3D",
+        "color": "#3f6212",
+        "currentRank": 5,
+        "preSeasonRank": 6,
+        "rankDelta": 1,
+        "currentScore": 81.9,
+        "points": [
+          6,
+          6,
+          5
+        ],
+        "headline": "Top riser in the upper tier (+1.7 pts) after JSN's target explosion",
+        "commentary": "The biggest mover among playoff contenders, rising +1 spot to #5 with a +1.7 power score boost. Jaxon Smith-Njigba commanded 7 targets and heavy route share in Seattle's opening game, solidifying rLee3D's starting wideout projection. This positive signal elevates their projected weekly ceiling above the league median."
+      },
+      {
+        "rosterId": 9,
+        "teamName": "Team mtrebing31",
+        "managerName": "mtrebing31",
+        "color": "#4338ca",
+        "currentRank": 6,
+        "preSeasonRank": 4,
+        "rankDelta": -2,
+        "currentScore": 80.1,
+        "points": [
+          4,
+          4,
+          6
+        ],
+        "headline": "Slipped -2 spots as thin backfield depth impacts composite rating",
+        "commentary": "Experienced the sharpest ranking drop in the league, falling -2 spots from #4 to #6 (Power Score 80.1). While their starting core remains capable, thin backfield depth and heightened lineup concentration left them vulnerable to model recalibration as competitors' flex rooms solidified."
+      },
+      {
+        "rosterId": 3,
+        "teamName": "Team DRockefeller",
+        "managerName": "DRockefeller",
+        "color": "#b91c1c",
+        "currentRank": 7,
+        "preSeasonRank": 7,
+        "rankDelta": 0,
+        "currentScore": 78.1,
+        "points": [
+          7,
+          7,
+          7
+        ],
+        "headline": "Holding at #7; behind early schedule in Week 1 head-to-head",
+        "commentary": "Steady at #7 overall in the middle tier. Drake Maye's 12.8-point opener in Week 1 puts them behind schedule in their matchup against mannyrsox24. With 7 starters remaining, Sunday will determine whether they climb into the upper tier or slide toward the bubble."
+      },
+      {
+        "rosterId": 10,
+        "teamName": "Team akwelch3492",
+        "managerName": "akwelch3492",
+        "color": "#9f1239",
+        "currentRank": 8,
+        "preSeasonRank": 8,
+        "rankDelta": 0,
+        "currentScore": 76.4,
+        "points": [
+          8,
+          8,
+          8
+        ],
+        "headline": "Stable at #8; high starting ceiling tethered by bench depth",
+        "commentary": "Holding firm at #8. The starting lineup possesses legitimate punch, but shallow bench reserves (bench rank #9) cap upward movement. Needs full health and weekly starter efficiency to contend with the top half of the table."
+      },
+      {
+        "rosterId": 7,
+        "teamName": "Team bubberdubber",
+        "managerName": "bubberdubber",
+        "color": "#b45309",
+        "currentRank": 9,
+        "preSeasonRank": 9,
+        "rankDelta": 0,
+        "currentScore": 76.2,
+        "points": [
+          9,
+          9,
+          9
+        ],
+        "headline": "Steady at #9; RB-heavy foundation awaits Sunday showcase",
+        "commentary": "Retains the #9 position with a modest +0.4 power score uptick. Heavy positional investment in running backs creates a distinct weekly profile; their power rank will swing dramatically once Sunday's full workload is logged."
+      },
+      {
+        "rosterId": 11,
+        "teamName": "Texas Tunas",
+        "managerName": "mdwelch11",
+        "color": "#0f766e",
+        "currentRank": 10,
+        "preSeasonRank": 10,
+        "rankDelta": 0,
+        "currentScore": 76.1,
+        "points": [
+          10,
+          10,
+          10
+        ],
+        "headline": "Anchor of the bubble tier; searching for breakout flex play",
+        "commentary": "Stationed at #10 in the standings. Features a competent starting wide receiver core, but lacks the elite VORP ceiling to challenge the top six without unexpected second-year breakouts."
+      },
+      {
+        "rosterId": 1,
+        "teamName": "Team jccbraves99",
+        "managerName": "jccbraves99",
+        "color": "#0e7490",
+        "currentRank": 11,
+        "preSeasonRank": 11,
+        "rankDelta": 0,
+        "currentScore": 74.2,
+        "points": [
+          11,
+          11,
+          11
+        ],
+        "headline": "Patrick Mahomes provides QB stability, skill rooms seek answers",
+        "commentary": "Holding at #11. Patrick Mahomes gives this team an unassailable quarterback baseline, but lower-tier rankings across wide receiver and tight end rooms restrict the composite power index."
+      },
+      {
+        "rosterId": 2,
+        "teamName": "Achane in the Membrane",
+        "managerName": "sduda351",
+        "color": "#475569",
+        "currentRank": 12,
+        "preSeasonRank": 12,
+        "rankDelta": 0,
+        "currentScore": 66.2,
+        "points": [
+          12,
+          12,
+          12
+        ],
+        "headline": "Rebuilding profile anchored at #12; high volatility roster",
+        "commentary": "Occupies the #12 spot across all three checkpoints. With significant future capital traded during the draft cycle, the roster relies on younger developmental pieces. Highest volatility index in the league means individual week upsets remain live."
+      }
+    ],
+    "biggestRiser": {
+      "rosterId": 4,
+      "teamName": "Team kong58",
+      "managerName": "kong58",
+      "color": "#c2410c",
+      "currentRank": 4,
+      "preSeasonRank": 5,
+      "rankDelta": 1,
+      "currentScore": 84.0,
+      "points": [
+        5,
+        5,
+        4
+      ],
+      "headline": "Climbed +1 into the top-four tier on balance and steady depth",
+      "commentary": "Climbed from #5 into the coveted top-four tier (#4 overall). A flawless 96.0 balance score and deep running back room allowed them to edge out rLee3D and mtrebing31. While lacking a 500+ VORP star anchor, their weekly floor is among the steadiest in the Craig Invitational."
+    },
+    "biggestFaller": {
+      "rosterId": 9,
+      "teamName": "Team mtrebing31",
+      "managerName": "mtrebing31",
+      "color": "#4338ca",
+      "currentRank": 6,
+      "preSeasonRank": 4,
+      "rankDelta": -2,
+      "currentScore": 80.1,
+      "points": [
+        4,
+        4,
+        6
+      ],
+      "headline": "Slipped -2 spots as thin backfield depth impacts composite rating",
+      "commentary": "Experienced the sharpest ranking drop in the league, falling -2 spots from #4 to #6 (Power Score 80.1). While their starting core remains capable, thin backfield depth and heightened lineup concentration left them vulnerable to model recalibration as competitors' flex rooms solidified."
+    }
+  },
   "rankings": [
     {
       "rosterId": 8,
@@ -224,7 +486,43 @@
       "preSeasonWins": 9.7,
       "winDelta": -1.7,
       "playoffProbability": 90.6,
-      "championshipProbability": 21.0
+      "championshipProbability": 21.0,
+      "powerTrend": {
+        "preSeasonRank": 1,
+        "kickoffRank": 1,
+        "currentRank": 1,
+        "rankDelta": 0,
+        "preSeasonScore": 96.8,
+        "currentScore": 94.7,
+        "scoreDelta": -2.1,
+        "headline": "Maye's Thursday opener compresses starting efficiency; title ceiling holds",
+        "commentary": "Held the #1 overall power rank, but saw composite power index compress by 2.1 points following Thursday Night Football. Drake Maye's 12.8 points fell 6.1 points shy of baseline projection (18.9), narrowing the starting efficiency buffer over #2 arkinsjt to a single point. Elite backfield foundation (James Cook, Ashton Jeanty) preserves a dominant championship ceiling.",
+        "keyDrivers": [
+          "Drake Maye posted 12.8 pts (-6.1 vs expectation) on Thursday night",
+          "Optimal weekly lineup projection adjusted from 127.3 to 124.5 pts/wk",
+          "Chuba Hubbard hamstring strain monitored heading into Sunday"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 1,
+            "score": 96.8
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 1,
+            "score": 96.0
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 1,
+            "score": 94.7
+          }
+        ]
+      }
     },
     {
       "rosterId": 5,
@@ -454,7 +752,43 @@
       "preSeasonWins": 9.3,
       "winDelta": -0.3,
       "playoffProbability": 88.1,
-      "championshipProbability": 24.2
+      "championshipProbability": 24.2,
+      "powerTrend": {
+        "preSeasonRank": 2,
+        "kickoffRank": 2,
+        "currentRank": 2,
+        "rankDelta": 0,
+        "preSeasonScore": 93.2,
+        "currentScore": 93.7,
+        "scoreDelta": 0.5,
+        "headline": "Narrowing the gap on #1 behind league-best wide receiver corps",
+        "commentary": "Remains in the #2 spot but pulled within 1.0 point of the top overall ranking with zero starters exposed on Thursday night. Anchored by the league's #1 ranked wide receiver room (Drake London, Garrett Wilson, Marvin Harrison Jr.), optimal lineup projection stands at 126.8 pts/wk. A clean Sunday slate positions them to contend for #1 overall.",
+        "keyDrivers": [
+          "League #1 wide receiver room (720.5 projected season points)",
+          "Optimal lineup projection leads the league at 126.8 pts/wk",
+          "Zero starters active on Thursday preserved full ceiling entering Sunday"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 2,
+            "score": 93.2
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 2,
+            "score": 93.4
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 2,
+            "score": 93.7
+          }
+        ]
+      }
     },
     {
       "rosterId": 6,
@@ -684,7 +1018,43 @@
       "preSeasonWins": 9.0,
       "winDelta": -0.1,
       "playoffProbability": 85.5,
-      "championshipProbability": 19.6
+      "championshipProbability": 19.6,
+      "powerTrend": {
+        "preSeasonRank": 3,
+        "kickoffRank": 3,
+        "currentRank": 3,
+        "rankDelta": 0,
+        "preSeasonScore": 89.5,
+        "currentScore": 89.0,
+        "scoreDelta": -0.5,
+        "headline": "Rock-solid consensus #3 with balanced four-room construction",
+        "commentary": "Firmly entrenched as the consensus #3 contender across all three milestones. Built with balanced scoring across QB (Stroud), RB (Gibbs, Walker), and WR. High-floor starting lineup backed by the league's #3 usable bench gives them insulation against single-starter volatility.",
+        "keyDrivers": [
+          "Consistent top-3 rankings across all four scoring pillars",
+          "Usable bench ranks #3 in the league (754.2 pts)",
+          "Awaiting full 10-starter slate on Sunday"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 3,
+            "score": 89.5
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 3,
+            "score": 89.2
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 3,
+            "score": 89.0
+          }
+        ]
+      }
     },
     {
       "rosterId": 4,
@@ -926,7 +1296,43 @@
       "preSeasonWins": 7.7,
       "winDelta": -0.1,
       "playoffProbability": 60.5,
-      "championshipProbability": 7.3
+      "championshipProbability": 7.3,
+      "powerTrend": {
+        "preSeasonRank": 5,
+        "kickoffRank": 5,
+        "currentRank": 4,
+        "rankDelta": 1,
+        "preSeasonScore": 83.5,
+        "currentScore": 84.0,
+        "scoreDelta": 0.5,
+        "headline": "Climbed +1 into the top-four tier on balance and steady depth",
+        "commentary": "Climbed from #5 into the coveted top-four tier (#4 overall). A flawless 96.0 balance score and deep running back room allowed them to edge out rLee3D and mtrebing31. While lacking a 500+ VORP star anchor, their weekly floor is among the steadiest in the Craig Invitational.",
+        "keyDrivers": [
+          "Elevated over mtrebing31 into the top-four bracket",
+          "League-leading 96.0 roster balance score",
+          "Balanced depth offsets lack of a top-tier VORP outlier"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 5,
+            "score": 83.5
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 5,
+            "score": 83.8
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 4,
+            "score": 84.0
+          }
+        ]
+      }
     },
     {
       "rosterId": 12,
@@ -1161,7 +1567,43 @@
       "preSeasonWins": 6.0,
       "winDelta": 0.3,
       "playoffProbability": 27.9,
-      "championshipProbability": 1.4
+      "championshipProbability": 1.4,
+      "powerTrend": {
+        "preSeasonRank": 6,
+        "kickoffRank": 6,
+        "currentRank": 5,
+        "rankDelta": 1,
+        "preSeasonScore": 80.2,
+        "currentScore": 81.9,
+        "scoreDelta": 1.7,
+        "headline": "Top riser in the upper tier (+1.7 pts) after JSN's target explosion",
+        "commentary": "The biggest mover among playoff contenders, rising +1 spot to #5 with a +1.7 power score boost. Jaxon Smith-Njigba commanded 7 targets and heavy route share in Seattle's opening game, solidifying rLee3D's starting wideout projection. This positive signal elevates their projected weekly ceiling above the league median.",
+        "keyDrivers": [
+          "JSN Thursday night volume confirmed high-end WR2 target share",
+          "Power score rose from 80.2 draft day to 81.9 (+1.7 pts)",
+          "Expected wins trending up from 6.0 pre-season to 6.3W"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 6,
+            "score": 80.2
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 6,
+            "score": 80.8
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 5,
+            "score": 81.9
+          }
+        ]
+      }
     },
     {
       "rosterId": 9,
@@ -1391,7 +1833,43 @@
       "preSeasonWins": 6.7,
       "winDelta": -0.1,
       "playoffProbability": 34.1,
-      "championshipProbability": 2.4
+      "championshipProbability": 2.4,
+      "powerTrend": {
+        "preSeasonRank": 4,
+        "kickoffRank": 4,
+        "currentRank": 6,
+        "rankDelta": -2,
+        "preSeasonScore": 84.2,
+        "currentScore": 80.1,
+        "scoreDelta": -4.1,
+        "headline": "Slipped -2 spots as thin backfield depth impacts composite rating",
+        "commentary": "Experienced the sharpest ranking drop in the league, falling -2 spots from #4 to #6 (Power Score 80.1). While their starting core remains capable, thin backfield depth and heightened lineup concentration left them vulnerable to model recalibration as competitors' flex rooms solidified.",
+        "keyDrivers": [
+          "Fell from #4 at draft to #6 heading into Sunday",
+          "Running back room ranks in bottom tier of usable depth",
+          "Heavy concentration in top three players increases weekly volatility"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 4,
+            "score": 84.2
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 4,
+            "score": 82.5
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 6,
+            "score": 80.1
+          }
+        ]
+      }
     },
     {
       "rosterId": 3,
@@ -1626,7 +2104,43 @@
       "preSeasonWins": 6.9,
       "winDelta": 0.2,
       "playoffProbability": 47.8,
-      "championshipProbability": 5.2
+      "championshipProbability": 5.2,
+      "powerTrend": {
+        "preSeasonRank": 7,
+        "kickoffRank": 7,
+        "currentRank": 7,
+        "rankDelta": 0,
+        "preSeasonScore": 79.5,
+        "currentScore": 78.1,
+        "scoreDelta": -1.4,
+        "headline": "Holding at #7; behind early schedule in Week 1 head-to-head",
+        "commentary": "Steady at #7 overall in the middle tier. Drake Maye's 12.8-point opener in Week 1 puts them behind schedule in their matchup against mannyrsox24. With 7 starters remaining, Sunday will determine whether they climb into the upper tier or slide toward the bubble.",
+        "keyDrivers": [
+          "Drake Maye early action logged 12.8 pts, trailing matchup pace",
+          "7 starters yet to play in Week 1 including primary flex options",
+          "Rank holds at #7 with a 78.1 composite viability score"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 7,
+            "score": 79.5
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 7,
+            "score": 79.0
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 7,
+            "score": 78.1
+          }
+        ]
+      }
     },
     {
       "rosterId": 10,
@@ -1855,7 +2369,43 @@
       "preSeasonWins": 5.3,
       "winDelta": -0.1,
       "playoffProbability": 11.2,
-      "championshipProbability": 0.4
+      "championshipProbability": 0.4,
+      "powerTrend": {
+        "preSeasonRank": 8,
+        "kickoffRank": 8,
+        "currentRank": 8,
+        "rankDelta": 0,
+        "preSeasonScore": 76.5,
+        "currentScore": 76.4,
+        "scoreDelta": -0.1,
+        "headline": "Stable at #8; high starting ceiling tethered by bench depth",
+        "commentary": "Holding firm at #8. The starting lineup possesses legitimate punch, but shallow bench reserves (bench rank #9) cap upward movement. Needs full health and weekly starter efficiency to contend with the top half of the table.",
+        "keyDrivers": [
+          "Consistently held #8 through pre-season and kickoff",
+          "Usable bench projection ranks #9 (684.5 pts)",
+          "Projected at 5.2 expected wins across 10,000 simulations"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 8,
+            "score": 76.5
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 8,
+            "score": 76.4
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 8,
+            "score": 76.4
+          }
+        ]
+      }
     },
     {
       "rosterId": 7,
@@ -2089,7 +2639,43 @@
       "preSeasonWins": 8.5,
       "winDelta": 0.0,
       "playoffProbability": 79.9,
-      "championshipProbability": 13.5
+      "championshipProbability": 13.5,
+      "powerTrend": {
+        "preSeasonRank": 9,
+        "kickoffRank": 9,
+        "currentRank": 9,
+        "rankDelta": 0,
+        "preSeasonScore": 75.8,
+        "currentScore": 76.2,
+        "scoreDelta": 0.4,
+        "headline": "Steady at #9; RB-heavy foundation awaits Sunday showcase",
+        "commentary": "Retains the #9 position with a modest +0.4 power score uptick. Heavy positional investment in running backs creates a distinct weekly profile; their power rank will swing dramatically once Sunday's full workload is logged.",
+        "keyDrivers": [
+          "Heavy positional share concentrated in running backs (42.8%)",
+          "Stable power score tracking between 75.8 and 76.2",
+          "Sunday kickoff will test starting lineup efficiency"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 9,
+            "score": 75.8
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 9,
+            "score": 76.0
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 9,
+            "score": 76.2
+          }
+        ]
+      }
     },
     {
       "rosterId": 11,
@@ -2331,7 +2917,43 @@
       "preSeasonWins": 7.2,
       "winDelta": 0.0,
       "playoffProbability": 46.6,
-      "championshipProbability": 3.4
+      "championshipProbability": 3.4,
+      "powerTrend": {
+        "preSeasonRank": 10,
+        "kickoffRank": 10,
+        "currentRank": 10,
+        "rankDelta": 0,
+        "preSeasonScore": 76.0,
+        "currentScore": 76.1,
+        "scoreDelta": 0.1,
+        "headline": "Anchor of the bubble tier; searching for breakout flex play",
+        "commentary": "Stationed at #10 in the standings. Features a competent starting wide receiver core, but lacks the elite VORP ceiling to challenge the top six without unexpected second-year breakouts.",
+        "keyDrivers": [
+          "Consistent #10 rank through all three tracking checkpoints",
+          "Star ceiling rank #10 limits upward mobility",
+          "Solid wideout depth provides weekly floor stability"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 10,
+            "score": 76.0
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 10,
+            "score": 76.1
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 10,
+            "score": 76.1
+          }
+        ]
+      }
     },
     {
       "rosterId": 1,
@@ -2559,7 +3181,43 @@
       "preSeasonWins": 6.6,
       "winDelta": -0.3,
       "playoffProbability": 27.8,
-      "championshipProbability": 1.8
+      "championshipProbability": 1.8,
+      "powerTrend": {
+        "preSeasonRank": 11,
+        "kickoffRank": 11,
+        "currentRank": 11,
+        "rankDelta": 0,
+        "preSeasonScore": 74.5,
+        "currentScore": 74.2,
+        "scoreDelta": -0.3,
+        "headline": "Patrick Mahomes provides QB stability, skill rooms seek answers",
+        "commentary": "Holding at #11. Patrick Mahomes gives this team an unassailable quarterback baseline, but lower-tier rankings across wide receiver and tight end rooms restrict the composite power index.",
+        "keyDrivers": [
+          "Quarterback room provides dependable floor (QB rank #5)",
+          "Skill room depth ranks in lower third of the league",
+          "Requires favorable matchup variance to overcome starting projection deficits"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 11,
+            "score": 74.5
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 11,
+            "score": 74.3
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 11,
+            "score": 74.2
+          }
+        ]
+      }
     },
     {
       "rosterId": 2,
@@ -2814,7 +3472,43 @@
       "preSeasonWins": 2.1,
       "winDelta": -0.1,
       "playoffProbability": 0.0,
-      "championshipProbability": 0.0
+      "championshipProbability": 0.0,
+      "powerTrend": {
+        "preSeasonRank": 12,
+        "kickoffRank": 12,
+        "currentRank": 12,
+        "rankDelta": 0,
+        "preSeasonScore": 67.0,
+        "currentScore": 66.2,
+        "scoreDelta": -0.8,
+        "headline": "Rebuilding profile anchored at #12; high volatility roster",
+        "commentary": "Occupies the #12 spot across all three checkpoints. With significant future capital traded during the draft cycle, the roster relies on younger developmental pieces. Highest volatility index in the league means individual week upsets remain live.",
+        "keyDrivers": [
+          "League-highest volatility score (22.0) generates wide outcome variance",
+          "Starting projection ranks #12 (104.2 pts/wk)",
+          "Rebuilding roster profile with upside developmental bench"
+        ],
+        "trajectory": [
+          {
+            "milestone": "Pre-Season Draft",
+            "date": "2026-09-01",
+            "rank": 12,
+            "score": 67.0
+          },
+          {
+            "milestone": "Week 1 Kickoff",
+            "date": "2026-09-09",
+            "rank": 12,
+            "score": 66.5
+          },
+          {
+            "milestone": "Week 1 Live Action",
+            "date": "2026-09-10",
+            "rank": 12,
+            "score": 66.2
+          }
+        ]
+      }
     }
   ]
 }

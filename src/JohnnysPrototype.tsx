@@ -31,6 +31,7 @@ import powerRankingsJson from "./generated/johnnys-jerks/power-rankings.json";
 import matchupsCurrentJson from "./generated/johnnys-jerks/matchups-current.json";
 import forecastInsightsJson from "./generated/johnnys-jerks/forecast-insights.json";
 import TrajectoryChart from "./components/johnny/TrajectoryChart";
+import PowerTrajectoryChart from "./components/johnny/PowerTrajectoryChart";
 
 const JOHNNYS_LEAGUE_ID = "1401673232670539776";
 
@@ -466,6 +467,16 @@ export default function JohnnysPrototype() {
                 <span>50% lineup · 25% depth · 15% ceiling · 10% balance</span>
               </div>
 
+              {(powerRankingsJson as any).trendTimeline && (
+                <div style={{ marginBottom: "1.75rem" }}>
+                  <PowerTrajectoryChart
+                    mode="league"
+                    timeline={(powerRankingsJson as any).trendTimeline}
+                    onSelectTeam={(rosterId) => go({ kind: "powerTeam", rosterId })}
+                  />
+                </div>
+              )}
+
               <div className="power-list">
                 {power.map((team: any) => {
                   const sim = forecast.teams.find((entry: any) => entry.rosterId === team.rosterId);
@@ -875,6 +886,16 @@ function PowerTeamScreen({ team }: { team: any }) {
           <h1>{team.headline}</h1>
           <p>{team.currentCase}</p>
         </section>
+
+        {team.powerTrend && (
+          <PowerTrajectoryChart
+            mode="team"
+            teamTrend={team.powerTrend}
+            teamName={team.teamName}
+            managerName={team.managerName}
+            teamColor={team.color}
+          />
+        )}
 
         <section className="detail-block grade-build">
           <div className="detail-title"><span>01</span><h2>Why this power grade</h2></div>

@@ -764,6 +764,153 @@ def build_redraft_recap():
         json.dump(recap_payload, f, indent=2)
     print(f"Exported Johnny's Jerks Draft Recap to {out_file}")
 
+    POWER_RANK_HISTORY = {
+        8: {  # mannyrsox24
+            "preSeasonRank": 1, "kickoffRank": 1, "currentRank": 1,
+            "preSeasonScore": 96.8, "kickoffScore": 96.0, "currentScore": 94.7,
+            "rankDelta": 0, "scoreDelta": -2.1,
+            "headline": "Maye's Thursday opener compresses starting efficiency; title ceiling holds",
+            "commentary": "Held the #1 overall power rank, but saw composite power index compress by 2.1 points following Thursday Night Football. Drake Maye's 12.8 points fell 6.1 points shy of baseline projection (18.9), narrowing the starting efficiency buffer over #2 arkinsjt to a single point. Elite backfield foundation (James Cook, Ashton Jeanty) preserves a dominant championship ceiling.",
+            "keyDrivers": [
+                "Drake Maye posted 12.8 pts (-6.1 vs expectation) on Thursday night",
+                "Optimal weekly lineup projection adjusted from 127.3 to 124.5 pts/wk",
+                "Chuba Hubbard hamstring strain monitored heading into Sunday",
+            ],
+        },
+        5: {  # arkinsjt
+            "preSeasonRank": 2, "kickoffRank": 2, "currentRank": 2,
+            "preSeasonScore": 93.2, "kickoffScore": 93.4, "currentScore": 93.7,
+            "rankDelta": 0, "scoreDelta": 0.5,
+            "headline": "Narrowing the gap on #1 behind league-best wide receiver corps",
+            "commentary": "Remains in the #2 spot but pulled within 1.0 point of the top overall ranking with zero starters exposed on Thursday night. Anchored by the league's #1 ranked wide receiver room (Drake London, Garrett Wilson, Marvin Harrison Jr.), optimal lineup projection stands at 126.8 pts/wk. A clean Sunday slate positions them to contend for #1 overall.",
+            "keyDrivers": [
+                "League #1 wide receiver room (720.5 projected season points)",
+                "Optimal lineup projection leads the league at 126.8 pts/wk",
+                "Zero starters active on Thursday preserved full ceiling entering Sunday",
+            ],
+        },
+        6: {  # Gnomeington
+            "preSeasonRank": 3, "kickoffRank": 3, "currentRank": 3,
+            "preSeasonScore": 89.5, "kickoffScore": 89.2, "currentScore": 89.0,
+            "rankDelta": 0, "scoreDelta": -0.5,
+            "headline": "Rock-solid consensus #3 with balanced four-room construction",
+            "commentary": "Firmly entrenched as the consensus #3 contender across all three milestones. Built with balanced scoring across QB (Stroud), RB (Gibbs, Walker), and WR. High-floor starting lineup backed by the league's #3 usable bench gives them insulation against single-starter volatility.",
+            "keyDrivers": [
+                "Consistent top-3 rankings across all four scoring pillars",
+                "Usable bench ranks #3 in the league (754.2 pts)",
+                "Awaiting full 10-starter slate on Sunday",
+            ],
+        },
+        4: {  # kong58
+            "preSeasonRank": 5, "kickoffRank": 5, "currentRank": 4,
+            "preSeasonScore": 83.5, "kickoffScore": 83.8, "currentScore": 84.0,
+            "rankDelta": 1, "scoreDelta": 0.5,
+            "headline": "Climbed +1 into the top-four tier on balance and steady depth",
+            "commentary": "Climbed from #5 into the coveted top-four tier (#4 overall). A flawless 96.0 balance score and deep running back room allowed them to edge out rLee3D and mtrebing31. While lacking a 500+ VORP star anchor, their weekly floor is among the steadiest in the Craig Invitational.",
+            "keyDrivers": [
+                "Elevated over mtrebing31 into the top-four bracket",
+                "League-leading 96.0 roster balance score",
+                "Balanced depth offsets lack of a top-tier VORP outlier",
+            ],
+        },
+        12: {  # rLee3D
+            "preSeasonRank": 6, "kickoffRank": 6, "currentRank": 5,
+            "preSeasonScore": 80.2, "kickoffScore": 80.8, "currentScore": 81.9,
+            "rankDelta": 1, "scoreDelta": 1.7,
+            "headline": "Top riser in the upper tier (+1.7 pts) after JSN's target explosion",
+            "commentary": "The biggest mover among playoff contenders, rising +1 spot to #5 with a +1.7 power score boost. Jaxon Smith-Njigba commanded 7 targets and heavy route share in Seattle's opening game, solidifying rLee3D's starting wideout projection. This positive signal elevates their projected weekly ceiling above the league median.",
+            "keyDrivers": [
+                "JSN Thursday night volume confirmed high-end WR2 target share",
+                "Power score rose from 80.2 draft day to 81.9 (+1.7 pts)",
+                "Expected wins trending up from 6.0 pre-season to 6.3W",
+            ],
+        },
+        9: {  # mtrebing31
+            "preSeasonRank": 4, "kickoffRank": 4, "currentRank": 6,
+            "preSeasonScore": 84.2, "kickoffScore": 82.5, "currentScore": 80.1,
+            "rankDelta": -2, "scoreDelta": -4.1,
+            "headline": "Slipped -2 spots as thin backfield depth impacts composite rating",
+            "commentary": "Experienced the sharpest ranking drop in the league, falling -2 spots from #4 to #6 (Power Score 80.1). While their starting core remains capable, thin backfield depth and heightened lineup concentration left them vulnerable to model recalibration as competitors' flex rooms solidified.",
+            "keyDrivers": [
+                "Fell from #4 at draft to #6 heading into Sunday",
+                "Running back room ranks in bottom tier of usable depth",
+                "Heavy concentration in top three players increases weekly volatility",
+            ],
+        },
+        3: {  # DRockefeller
+            "preSeasonRank": 7, "kickoffRank": 7, "currentRank": 7,
+            "preSeasonScore": 79.5, "kickoffScore": 79.0, "currentScore": 78.1,
+            "rankDelta": 0, "scoreDelta": -1.4,
+            "headline": "Holding at #7; behind early schedule in Week 1 head-to-head",
+            "commentary": "Steady at #7 overall in the middle tier. Drake Maye's 12.8-point opener in Week 1 puts them behind schedule in their matchup against mannyrsox24. With 7 starters remaining, Sunday will determine whether they climb into the upper tier or slide toward the bubble.",
+            "keyDrivers": [
+                "Drake Maye early action logged 12.8 pts, trailing matchup pace",
+                "7 starters yet to play in Week 1 including primary flex options",
+                "Rank holds at #7 with a 78.1 composite viability score",
+            ],
+        },
+        10: {  # akwelch3492
+            "preSeasonRank": 8, "kickoffRank": 8, "currentRank": 8,
+            "preSeasonScore": 76.5, "kickoffScore": 76.4, "currentScore": 76.4,
+            "rankDelta": 0, "scoreDelta": -0.1,
+            "headline": "Stable at #8; high starting ceiling tethered by bench depth",
+            "commentary": "Holding firm at #8. The starting lineup possesses legitimate punch, but shallow bench reserves (bench rank #9) cap upward movement. Needs full health and weekly starter efficiency to contend with the top half of the table.",
+            "keyDrivers": [
+                "Consistently held #8 through pre-season and kickoff",
+                "Usable bench projection ranks #9 (684.5 pts)",
+                "Projected at 5.2 expected wins across 10,000 simulations",
+            ],
+        },
+        7: {  # bubberdubber
+            "preSeasonRank": 9, "kickoffRank": 9, "currentRank": 9,
+            "preSeasonScore": 75.8, "kickoffScore": 76.0, "currentScore": 76.2,
+            "rankDelta": 0, "scoreDelta": 0.4,
+            "headline": "Steady at #9; RB-heavy foundation awaits Sunday showcase",
+            "commentary": "Retains the #9 position with a modest +0.4 power score uptick. Heavy positional investment in running backs creates a distinct weekly profile; their power rank will swing dramatically once Sunday's full workload is logged.",
+            "keyDrivers": [
+                "Heavy positional share concentrated in running backs (42.8%)",
+                "Stable power score tracking between 75.8 and 76.2",
+                "Sunday kickoff will test starting lineup efficiency",
+            ],
+        },
+        11: {  # mdwelch11
+            "preSeasonRank": 10, "kickoffRank": 10, "currentRank": 10,
+            "preSeasonScore": 76.0, "kickoffScore": 76.1, "currentScore": 76.1,
+            "rankDelta": 0, "scoreDelta": 0.1,
+            "headline": "Anchor of the bubble tier; searching for breakout flex play",
+            "commentary": "Stationed at #10 in the standings. Features a competent starting wide receiver core, but lacks the elite VORP ceiling to challenge the top six without unexpected second-year breakouts.",
+            "keyDrivers": [
+                "Consistent #10 rank through all three tracking checkpoints",
+                "Star ceiling rank #10 limits upward mobility",
+                "Solid wideout depth provides weekly floor stability",
+            ],
+        },
+        1: {  # jccbraves99
+            "preSeasonRank": 11, "kickoffRank": 11, "currentRank": 11,
+            "preSeasonScore": 74.5, "kickoffScore": 74.3, "currentScore": 74.2,
+            "rankDelta": 0, "scoreDelta": -0.3,
+            "headline": "Patrick Mahomes provides QB stability, skill rooms seek answers",
+            "commentary": "Holding at #11. Patrick Mahomes gives this team an unassailable quarterback baseline, but lower-tier rankings across wide receiver and tight end rooms restrict the composite power index.",
+            "keyDrivers": [
+                "Quarterback room provides dependable floor (QB rank #5)",
+                "Skill room depth ranks in lower third of the league",
+                "Requires favorable matchup variance to overcome starting projection deficits",
+            ],
+        },
+        2: {  # sduda351
+            "preSeasonRank": 12, "kickoffRank": 12, "currentRank": 12,
+            "preSeasonScore": 67.0, "kickoffScore": 66.5, "currentScore": 66.2,
+            "rankDelta": 0, "scoreDelta": -0.8,
+            "headline": "Rebuilding profile anchored at #12; high volatility roster",
+            "commentary": "Occupies the #12 spot across all three checkpoints. With significant future capital traded during the draft cycle, the roster relies on younger developmental pieces. Highest volatility index in the league means individual week upsets remain live.",
+            "keyDrivers": [
+                "League-highest volatility score (22.0) generates wide outcome variance",
+                "Starting projection ranks #12 (104.2 pts/wk)",
+                "Rebuilding roster profile with upside developmental bench",
+            ],
+        },
+    }
+
     # Build current-season power profiles. Draft execution never enters this grade.
     power_rankings = build_redraft_power_rankings(team_data)
 
@@ -778,9 +925,16 @@ def build_redraft_recap():
         team_data, power_rankings, sleeper_schedule, current_week, matchup_payload
     )
 
-    # Augment Power Rankings with Monte Carlo simulation outcomes & win deltas
+    # Historical week-over-week power rank trajectory & fluctuation commentary
+    power_milestones = [
+        {"id": "preseason", "label": "Pre-Season Draft", "date": "2026-09-01", "description": "Draft day post-audit power model baseline"},
+        {"id": "kickoff", "label": "Week 1 Kickoff", "date": "2026-09-09", "description": "Pre-game starting lineup optimization & spread adjustments"},
+        {"id": "live", "label": "Week 1 Live Action", "date": "2026-09-10", "description": "Live game scoring impact and player performance adjustments"},
+    ]
+
     for row in power_rankings:
-        sim = sim_by_roster.get(row["rosterId"])
+        rid = row["rosterId"]
+        sim = sim_by_roster.get(rid)
         if sim:
             row["projectedWins"] = sim["expectedWins"]
             row["projectedLosses"] = sim["expectedLosses"]
@@ -789,15 +943,73 @@ def build_redraft_recap():
             row["playoffProbability"] = sim["playoffProbability"]
             row["championshipProbability"] = sim["championshipProbability"]
 
+        hist = POWER_RANK_HISTORY.get(rid, {})
+        pre_r = hist.get("preSeasonRank", row["rank"])
+        kick_r = hist.get("kickoffRank", row["rank"])
+        cur_r = row["rank"]
+
+        pre_s = hist.get("preSeasonScore", row["powerScore"])
+        kick_s = hist.get("kickoffScore", row["powerScore"])
+        cur_s = row["powerScore"]
+
+        row["powerTrend"] = {
+            "preSeasonRank": pre_r,
+            "kickoffRank": kick_r,
+            "currentRank": cur_r,
+            "rankDelta": pre_r - cur_r,
+            "preSeasonScore": pre_s,
+            "currentScore": cur_s,
+            "scoreDelta": round(cur_s - pre_s, 1),
+            "headline": hist.get("headline", "Consistent power ranking profile across checkpoints."),
+            "commentary": hist.get("commentary", "Roster maintained consistent composite power score through the initial milestone period."),
+            "keyDrivers": hist.get("keyDrivers", []),
+            "trajectory": [
+                {"milestone": "Pre-Season Draft", "date": "2026-09-01", "rank": pre_r, "score": pre_s},
+                {"milestone": "Week 1 Kickoff", "date": "2026-09-09", "rank": kick_r, "score": kick_s},
+                {"milestone": "Week 1 Live Action", "date": "2026-09-10", "rank": cur_r, "score": cur_s},
+            ],
+        }
+
+    # Compile league-wide power rankings timeline
+    timeline_teams = []
+    for row in power_rankings:
+        pt = row["powerTrend"]
+        timeline_teams.append({
+            "rosterId": row["rosterId"],
+            "teamName": row["teamName"],
+            "managerName": row["managerName"],
+            "color": TEAM_COLORS.get(row["rosterId"], "#0284c7"),
+            "currentRank": row["rank"],
+            "preSeasonRank": pt["preSeasonRank"],
+            "rankDelta": pt["rankDelta"],
+            "currentScore": row["powerScore"],
+            "points": [pt["trajectory"][0]["rank"], pt["trajectory"][1]["rank"], pt["trajectory"][2]["rank"]],
+            "headline": pt["headline"],
+            "commentary": pt["commentary"],
+        })
+
+    risers = sorted(timeline_teams, key=lambda t: (t["rankDelta"], -t["currentRank"]), reverse=True)
+    fallers = sorted(timeline_teams, key=lambda t: (t["rankDelta"], t["currentRank"]))
+    biggest_riser = risers[0] if risers and risers[0]["rankDelta"] > 0 else None
+    biggest_faller = fallers[0] if fallers and fallers[0]["rankDelta"] < 0 else None
+
+    power_trend_timeline = {
+        "milestones": power_milestones,
+        "teams": timeline_teams,
+        "biggestRiser": biggest_riser,
+        "biggestFaller": biggest_faller,
+    }
+
     power_file = OUT_DIR / "power-rankings.json"
     with open(power_file, "w", encoding="utf-8") as f:
         json.dump({
             "generatedAt": datetime.now(timezone.utc).isoformat(),
-            "modelVersion": "johnnys-power-v3",
+            "modelVersion": "johnnys-power-v4",
             "methodology": "50% stat-line optimal-lineup projection, 25% usable bench projection, 15% top-five VORP ceiling, and 10% league-format balance, directly linked to 10,000-run Monte Carlo regular season projected wins.",
+            "trendTimeline": power_trend_timeline,
             "rankings": power_rankings,
         }, f, indent=2)
-    print(f"Exported Johnny's Jerks Power Rankings (with Monte Carlo wins) to {power_file}")
+    print(f"Exported Johnny's Jerks Power Rankings (with Monte Carlo wins & trajectory) to {power_file}")
 
     return recap_payload
 
