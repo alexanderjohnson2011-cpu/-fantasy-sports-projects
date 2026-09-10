@@ -12,6 +12,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from draft_assistant import board, db, offline
+from draft_assistant.config import DATA_DIR
 from draft_assistant.ai import fallback_commentary, fallback_player_take
 from draft_assistant.db import snake_slot
 from draft_assistant.scoring import score_stat_line
@@ -99,6 +100,7 @@ class RecommendationTests(unittest.TestCase):
         self.assertTrue(dossier["commentaryCoverage"])
         self.assertIn("does not reproduce article text", dossier["sourceBoundary"])
 
+    @unittest.skipUnless((DATA_DIR / "top500_board.json").exists(), "Requires local top500_board.json cache")
     def test_top_player_crosswalk_has_durable_identity(self):
         players = board.load_board()
         self.assertTrue(all(player.get("gsisId") for player in players[:100]))
@@ -219,6 +221,7 @@ class JoshJacobsSafeguardTests(unittest.TestCase):
         self.assertEqual(risk["projectionFactor"], 0.32)
         self.assertIn("EXEMPT LIST", risk["badge"])
 
+    @unittest.skipUnless((DATA_DIR / "top500_board.json").exists(), "Requires local top500_board.json cache")
     def test_josh_jacobs_not_recommended_as_early_starter(self):
         all_players = board.load_board()
         jacobs = next((p for p in all_players if "jacobs" in p["name"].lower() and "josh" in p["name"].lower()), None)
@@ -234,6 +237,16 @@ class JoshJacobsSafeguardTests(unittest.TestCase):
 
 
 class SleeperIntegrationTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.original_settings = db.settings
+        db.settings = replace(db.settings, database_path=Path(self.temp.name) / "draft.sqlite3")
+        db.initialize()
+
+    def tearDown(self):
+        db.settings = self.original_settings
+        self.temp.cleanup()
+
     def test_parse_sleeper_roster_slots(self):
         from draft_assistant.sleeper import parse_sleeper_roster_slots
         positions = ["QB", "RB", "RB", "WR", "WR", "TE", "FLEX", "K", "DEF", "BN", "BN"]
