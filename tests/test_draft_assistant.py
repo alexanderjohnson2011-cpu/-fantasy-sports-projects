@@ -1,10 +1,15 @@
 from __future__ import annotations
 
 import json
+import sys
 import tempfile
 import unittest
 from dataclasses import replace
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from draft_assistant import board, db, offline
 from draft_assistant.ai import fallback_commentary, fallback_player_take

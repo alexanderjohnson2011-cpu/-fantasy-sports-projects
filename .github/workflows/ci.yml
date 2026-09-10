@@ -45,6 +45,8 @@ jobs:
         run: npm run build:johnny
 
       - name: Run Python Unit Tests
+        env:
+          PYTHONPATH: .
         run: python -m unittest discover -s tests -p "test_*.py"
 
       - name: Run Sites Packaging Integration Tests
