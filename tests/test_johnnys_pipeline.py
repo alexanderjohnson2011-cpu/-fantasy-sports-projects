@@ -1,4 +1,4 @@
-﻿import json
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -107,11 +107,16 @@ class TestJohnnysPipeline(unittest.TestCase):
             self.assertTrue("cycleGrade" in t or "letterGrade" in t)
 
         # Check Power Rankings
+        # Check Power Rankings
         with open(power_rankings_file, "r", encoding="utf-8") as f:
             power = json.load(f)
         self.assertEqual(len(power.get("rankings", [])), TEAMS)
         ranks = [t["rank"] for t in power["rankings"]]
         self.assertEqual(sorted(ranks), list(range(1, TEAMS + 1)))
+        for r in power["rankings"]:
+            self.assertIn("projectedWins", r)
+            self.assertIn("winDelta", r)
+            self.assertIn("preSeasonWins", r)
 
         # Check Matchups
         with open(matchups_file, "r", encoding="utf-8") as f:
@@ -123,15 +128,22 @@ class TestJohnnysPipeline(unittest.TestCase):
             self.assertIn("team2", m)
             self.assertIn("tvSchedule", m)
 
-        # Check Forecast
+        # Check Forecast & Trajectory Timeline
         with open(forecast_file, "r", encoding="utf-8") as f:
             fc = json.load(f)
-        self.assertEqual(fc.get("modelVersion"), "johnnys-forecast-v3")
+        self.assertIn(fc.get("modelVersion"), ("johnnys-forecast-v3", "johnnys-forecast-v4"))
         self.assertEqual(fc.get("simulationsCount"), 10000)
         self.assertEqual(len(fc.get("teams", [])), TEAMS)
+        self.assertIn("trendTimeline", fc)
+        self.assertGreaterEqual(len(fc["trendTimeline"].get("milestones", [])), 3)
+        self.assertIn("biggestRiser", fc["trendTimeline"])
+        self.assertIn("biggestFaller", fc["trendTimeline"])
         for t in fc["teams"]:
             total_games = t["expectedWins"] + t["expectedLosses"]
             self.assertAlmostEqual(total_games, 14.0, delta=0.01)
+            self.assertIn("trajectory", t)
+            self.assertIn("winDelta", t)
+            self.assertIn("preSeasonExpectedWins", t)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./johnnys-jerks.css";
 import { CapriSunIcon, LifeSaverIcon } from "./components/johnny/CapriSunLifeSaver";
+import TrajectoryChart from "./components/johnny/TrajectoryChart";
 import draftRecapJson from "./generated/johnnys-jerks/draft-recap.json";
 import powerRankingsJson from "./generated/johnnys-jerks/power-rankings.json";
 import matchupsJson from "./generated/johnnys-jerks/matchups-current.json";
@@ -312,6 +313,7 @@ export default function JohnnysJerksApp() {
                   <th>Tier</th>
                   <th>Power Score</th>
                   <th>Grade</th>
+                  <th>Proj Wins (MC)</th>
                   <th>Starters Value</th>
                   <th>Star Power VORP</th>
                   <th>Verdict</th>
@@ -345,6 +347,30 @@ export default function JohnnysJerksApp() {
                     </td>
                     <td>
                       <strong>{r.grade}</strong>
+                    </td>
+                    <td>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                        <strong style={{ color: (r.projectedWins || 0) >= 8.5 ? "#4ade80" : (r.projectedWins || 0) >= 7.0 ? "#38bdf8" : "#facc15", fontSize: "0.95rem" }}>
+                          {r.projectedWins !== undefined ? `${r.projectedWins}W` : "—"}
+                        </strong>
+                        {r.winDelta !== undefined && r.winDelta !== 0 && (
+                          <span
+                            style={{
+                              fontSize: "0.7rem",
+                              fontWeight: 700,
+                              color: r.winDelta > 0 ? "#4ade80" : "#f43f5e",
+                              background: r.winDelta > 0 ? "rgba(74, 222, 128, 0.15)" : "rgba(244, 63, 94, 0.15)",
+                              padding: "0.1rem 0.35rem",
+                              borderRadius: 4,
+                            }}
+                          >
+                            {r.winDelta > 0 ? `▲ +${r.winDelta}` : `▼ ${r.winDelta}`}
+                          </span>
+                        )}
+                      </div>
+                      <span style={{ fontSize: "0.7rem", color: "#64748b" }}>
+                        Pre: {r.preSeasonWins ? `${r.preSeasonWins}W` : "—"}
+                      </span>
                     </td>
                     <td>{r.lineupStrength}</td>
                     <td>
@@ -446,17 +472,27 @@ export default function JohnnysJerksApp() {
                   <span>🎲</span> 10,000-Run Monte Carlo Season Forecast
                 </h2>
                 <p className="jj-section-desc">
-                  Simulated outcomes across a 14-week regular season schedule matrix. Zero data leakage.
+                  Simulated outcomes across a 14-week regular season schedule matrix, dynamically factoring in live completed game scoring and starter deltas.
                 </p>
               </div>
             </div>
+
+            {/* Interactive Trajectory Line Chart */}
+            {forecast.trendTimeline && (
+              <TrajectoryChart
+                timeline={forecast.trendTimeline}
+                onSelectTeam={toggleTeam}
+              />
+            )}
 
             <table className="jj-forecast-table">
               <thead>
                 <tr>
                   <th>Team</th>
                   <th>Manager</th>
-                  <th>Exp Wins</th>
+                  <th>Pre-Season</th>
+                  <th>Live Exp Wins</th>
+                  <th>Net Shift</th>
                   <th>Exp Losses</th>
                   <th>Playoff %</th>
                   <th>Title %</th>
@@ -471,8 +507,31 @@ export default function JohnnysJerksApp() {
                       <strong style={{ color: "#ffffff" }}>{t.teamName}</strong>
                     </td>
                     <td style={{ color: "#94a3b8" }}>{t.managerName}</td>
+                    <td style={{ color: "#94a3b8" }}>
+                      {t.preSeasonExpectedWins ?? t.expectedWins}W
+                    </td>
                     <td>
-                      <strong style={{ color: "#4ade80" }}>{t.expectedWins}</strong>
+                      <strong style={{ color: (t.expectedWins || 0) >= 8.5 ? "#4ade80" : (t.expectedWins || 0) >= 7.0 ? "#38bdf8" : "#facc15" }}>
+                        {t.expectedWins}W
+                      </strong>
+                    </td>
+                    <td>
+                      {t.winDelta !== undefined ? (
+                        <span
+                          style={{
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
+                            color: t.winDelta > 0 ? "#4ade80" : t.winDelta < 0 ? "#f43f5e" : "#94a3b8",
+                            background: t.winDelta > 0 ? "rgba(74, 222, 128, 0.15)" : t.winDelta < 0 ? "rgba(244, 63, 94, 0.15)" : "rgba(255,255,255,0.05)",
+                            padding: "0.15rem 0.4rem",
+                            borderRadius: 4,
+                          }}
+                        >
+                          {t.winDelta > 0 ? `▲ +${t.winDelta}W` : t.winDelta < 0 ? `▼ ${t.winDelta}W` : "0.0W"}
+                        </span>
+                      ) : (
+                        "—"
+                      )}
                     </td>
                     <td style={{ color: "#f43f5e" }}>{t.expectedLosses}</td>
                     <td>

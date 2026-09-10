@@ -30,6 +30,7 @@ import draftRecapJson from "./generated/johnnys-jerks/draft-recap.json";
 import powerRankingsJson from "./generated/johnnys-jerks/power-rankings.json";
 import matchupsCurrentJson from "./generated/johnnys-jerks/matchups-current.json";
 import forecastInsightsJson from "./generated/johnnys-jerks/forecast-insights.json";
+import TrajectoryChart from "./components/johnny/TrajectoryChart";
 
 const JOHNNYS_LEAGUE_ID = "1401673232670539776";
 
@@ -486,7 +487,16 @@ export default function JohnnysPrototype() {
                         <div><span>Viability</span><i><b style={{ width: `${team.powerScore}%` }} /></i><strong>{team.powerScore.toFixed(0)}</strong></div>
                         <div><span>Star ceiling</span><i><b style={{ width: `${team.components.star.score}%` }} /></i><strong>#{team.components.star.rank}</strong></div>
                       </div>
-                      {sim ? <div className="power-card__sim-badge"><span>Simulation outlook</span><strong>Median seed #{sim.medianSeed}</strong><em>{sim.playoffProbability}% playoffs · {sim.expectedWins}W</em></div> : null}
+                      {sim ? (
+                        <div className="power-card__sim-badge">
+                          <span>Simulation outlook</span>
+                          <strong>Median seed #{sim.medianSeed}</strong>
+                          <em>
+                            {sim.playoffProbability}% playoffs · {team.projectedWins ?? sim.expectedWins}W
+                            {team.winDelta !== undefined && team.winDelta !== 0 ? ` (${team.winDelta > 0 ? "+" : ""}${team.winDelta}W)` : ""}
+                          </em>
+                        </div>
+                      ) : null}
                     </button>
                   );
                 })}
@@ -600,13 +610,24 @@ export default function JohnnysPrototype() {
                 <span>Random seed {forecast.randomSeed}</span>
               </div>
 
+              {(forecast as any).trendTimeline && (
+                <div style={{ marginBottom: "1.5rem" }}>
+                  <TrajectoryChart
+                    timeline={(forecast as any).trendTimeline}
+                    onSelectTeam={(rosterId) => go({ kind: "forecastTeam", rosterId })}
+                  />
+                </div>
+              )}
+
               <div className="forecast-table-wrap">
                 <table className="power-table" style={{ width: "100%", textAlign: "left", fontSize: "0.9rem", borderCollapse: "collapse" }}>
                   <thead>
                     <tr style={{ borderBottom: "2px solid var(--hairline)", color: "var(--ink-soft)" }}>
                       <th style={{ padding: "10px 8px" }}>Team</th>
                       <th style={{ padding: "10px 8px" }}>Manager</th>
+                      <th style={{ padding: "10px 8px" }}>Pre-Season</th>
                       <th style={{ padding: "10px 8px" }}>Exp Wins</th>
+                      <th style={{ padding: "10px 8px" }}>Shift</th>
                       <th style={{ padding: "10px 8px" }}>Exp Losses</th>
                       <th style={{ padding: "10px 8px" }}>Playoff %</th>
                       <th style={{ padding: "10px 8px" }}>Title %</th>
@@ -627,7 +648,23 @@ export default function JohnnysPrototype() {
                           </button>
                         </td>
                         <td style={{ padding: "12px 8px", color: "var(--ink-soft)" }}>{team.managerName}</td>
-                        <td style={{ padding: "12px 8px", fontWeight: "bold", color: "#2e7d32" }}>{team.expectedWins}</td>
+                        <td style={{ padding: "12px 8px", color: "var(--ink-soft)" }}>{team.preSeasonExpectedWins ?? team.expectedWins}W</td>
+                        <td style={{ padding: "12px 8px", fontWeight: "bold", color: "#2e7d32" }}>{team.expectedWins}W</td>
+                        <td style={{ padding: "12px 8px" }}>
+                          {team.winDelta !== undefined ? (
+                            <span
+                              style={{
+                                fontSize: "0.75rem",
+                                fontWeight: 700,
+                                color: team.winDelta > 0 ? "#2e7d32" : team.winDelta < 0 ? "#c62828" : "var(--ink-soft)",
+                              }}
+                            >
+                              {team.winDelta > 0 ? `▲ +${team.winDelta}W` : team.winDelta < 0 ? `▼ ${team.winDelta}W` : "0.0W"}
+                            </span>
+                          ) : (
+                            "—"
+                          )}
+                        </td>
                         <td style={{ padding: "12px 8px", color: "#c62828" }}>{team.expectedLosses}</td>
                         <td style={{ padding: "12px 8px", fontWeight: "bold" }}>{team.playoffProbability}%</td>
                         <td style={{ padding: "12px 8px", fontWeight: "bold", color: "var(--rust)" }}>{team.championshipProbability}%</td>
