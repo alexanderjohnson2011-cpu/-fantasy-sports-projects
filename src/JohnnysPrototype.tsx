@@ -749,7 +749,13 @@ export default function JohnnysPrototype() {
                     color: "var(--ink-soft)",
                   }}
                 >
-                  <span style={{ whiteSpace: "nowrap" }}>Vol. I · Issue No. 1</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <a href="/" style={{ textDecoration: "none", color: "var(--accent-dark, #0b3329)", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                      ← Ape’s Mac Salad
+                    </a>
+                    <span style={{ opacity: 0.4 }}>|</span>
+                    <span style={{ whiteSpace: "nowrap" }}>Vol. I · Issue No. 1</span>
+                  </div>
                   <span style={{ textAlign: "right", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginLeft: "8px" }}>
                     2026 Redraft Post-Draft Almanac
                   </span>

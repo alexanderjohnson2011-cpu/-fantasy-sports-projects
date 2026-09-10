@@ -1342,18 +1342,18 @@ def build_redraft_matchups(team_data, power_rankings, week):
 
 
 TEAM_COLORS = {
-    8: "#38bdf8",   # mannyrsox24 - sky
-    5: "#4ade80",   # arkinsjt - emerald
-    6: "#a855f7",   # Gnomeington - purple
-    7: "#facc15",   # bubberdubber - amber
-    4: "#fb923c",   # kong58 - orange
-    3: "#f43f5e",   # DRockefeller - rose
-    11: "#2dd4bf",  # mdwelch11 - teal
-    9: "#818cf8",   # mtrebing31 - indigo
-    1: "#06b6d4",   # jccbraves99 - cyan
-    12: "#a3e635",  # rLee3D - lime
-    10: "#ec4899",  # akwelch3492 - pink
-    2: "#94a3b8",   # sduda351 - slate
+    8: "#0284c7",   # mannyrsox24 - deep cobalt
+    5: "#1b5e20",   # arkinsjt - deep forest green
+    6: "#7e22ce",   # Gnomeington - imperial purple
+    7: "#b45309",   # bubberdubber - warm burnished amber
+    4: "#c2410c",   # kong58 - burnt copper
+    3: "#b91c1c",   # DRockefeller - deep crimson
+    11: "#0f766e",  # mdwelch11 - deep sea pine/teal
+    9: "#4338ca",   # mtrebing31 - deep indigo
+    1: "#0e7490",   # jccbraves99 - dark cyan
+    12: "#3f6212",  # rLee3D - olive/moss green
+    10: "#9f1239",  # akwelch3492 - deep rose/wine
+    2: "#475569",   # sduda351 - charcoal slate
 }
 
 # Pre-season draft baseline expected wins (audit baseline before live kickoff)

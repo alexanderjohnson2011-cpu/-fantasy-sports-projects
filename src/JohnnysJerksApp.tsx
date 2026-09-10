@@ -82,6 +82,21 @@ export default function JohnnysJerksApp() {
             >
               Sources & Methodology 📖
             </button>
+            <a
+              href="#"
+              className="jj-nav-btn"
+              style={{
+                textDecoration: "none",
+                color: "#f6f2e9",
+                border: "1px solid rgba(255,255,255,0.25)",
+                borderRadius: "4px",
+                padding: "0.35rem 0.75rem",
+                marginLeft: "auto",
+                fontWeight: 600,
+              }}
+            >
+              ← Ape’s Mac Salad
+            </a>
           </nav>
         </div>
       </header>

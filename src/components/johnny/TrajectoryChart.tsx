@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 
 export interface TrajectoryPoint {
   milestone: string;
@@ -31,25 +31,47 @@ export interface TrajectoryChartProps {
   onSelectTeam?: (rosterId: number) => void;
 }
 
+// Fallback editorial palette if colors are missing or neon
+const EDITORIAL_PALETTE: Record<number, string> = {
+  8: "#0284c7",   // mannyrsox24 - deep cobalt
+  5: "#1b5e20",   // arkinsjt - deep forest green
+  6: "#7e22ce",   // Gnomeington - imperial purple
+  7: "#b45309",   // bubberdubber - warm burnished amber
+  4: "#c2410c",   // kong58 - burnt copper
+  3: "#b91c1c",   // DRockefeller - deep crimson
+  11: "#0f766e",  // mdwelch11 - deep sea pine/teal
+  9: "#4338ca",   // mtrebing31 - deep indigo
+  1: "#0e7490",   // jccbraves99 - dark cyan
+  12: "#3f6212",  // rLee3D - olive/moss green
+  10: "#9f1239",  // akwelch3492 - deep rose/wine
+  2: "#475569",   // sduda351 - charcoal slate
+};
+
 export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryChartProps) {
   const [hoveredRosterId, setHoveredRosterId] = useState<number | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<"all" | "contenders" | "movers">("all");
 
   const milestones = timeline.milestones || [];
-  const teams = timeline.teams || [];
+  const rawTeams = timeline.teams || [];
 
-  // Chart dimensions & scaling
-  const width = 740;
-  const height = 300;
-  const paddingLeft = 50;
-  const paddingRight = 140;
-  const paddingTop = 30;
-  const paddingBottom = 40;
+  // Harmonize colors with editorial palette
+  const teams: TrajectoryTeam[] = rawTeams.map((t) => ({
+    ...t,
+    color: EDITORIAL_PALETTE[t.rosterId] || t.color || "#0b3329",
+  }));
+
+  // Chart dimensions & margins
+  const width = 800;
+  const height = 340;
+  const paddingLeft = 46;
+  const paddingRight = 170; // Generous margin for anti-collided manager names
+  const paddingTop = 26;
+  const paddingBottom = 46;
 
   const chartWidth = width - paddingLeft - paddingRight;
   const chartHeight = height - paddingTop - paddingBottom;
 
-  // Y-axis range: 1 to 11.5 wins
+  // Y-axis range: 1.0 to 11.5 wins
   const minY = 1.0;
   const maxY = 11.5;
 
@@ -63,7 +85,7 @@ export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryCh
     return paddingLeft + (index / (milestones.length - 1)) * chartWidth;
   };
 
-  // Filter teams based on view
+  // Filter teams based on selected filter
   const visibleTeams = teams.filter((team) => {
     if (selectedFilter === "contenders") return team.powerRank <= 4;
     if (selectedFilter === "movers") return Math.abs(team.delta) >= 0.2;
@@ -72,58 +94,184 @@ export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryCh
 
   const activeTeam = teams.find((t) => t.rosterId === hoveredRosterId) || null;
 
+  // Anti-collision label positioning on right edge
+  interface PlacedLabel {
+    rosterId: number;
+    team: TrajectoryTeam;
+    idealY: number;
+    y: number;
+    endX: number;
+  }
+
+  const rawLabels: PlacedLabel[] = visibleTeams.map((team) => {
+    const lastVal = team.points.length > 0 ? team.points[team.points.length - 1] : team.currentWins;
+    const idealY = getY(lastVal);
+    return {
+      rosterId: team.rosterId,
+      team,
+      idealY,
+      y: idealY,
+      endX: getX(team.points.length - 1),
+    };
+  });
+
+  // Sort ascending by idealY (from top/highest wins to bottom/lowest wins)
+  rawLabels.sort((a, b) => a.idealY - b.idealY);
+
+  const minGap = 16; // minimum pixels between label baselines
+  const minYBound = paddingTop + 4;
+  const maxYBound = height - paddingBottom - 4;
+
+  // Pass 1: Forward push downwards
+  for (let i = 1; i < rawLabels.length; i++) {
+    if (rawLabels[i].y < rawLabels[i - 1].y + minGap) {
+      rawLabels[i].y = rawLabels[i - 1].y + minGap;
+    }
+  }
+
+  // Pass 2: Backward pull upwards if overflowing bottom
+  if (rawLabels.length > 0 && rawLabels[rawLabels.length - 1].y > maxYBound) {
+    rawLabels[rawLabels.length - 1].y = maxYBound;
+    for (let i = rawLabels.length - 2; i >= 0; i--) {
+      if (rawLabels[i].y > rawLabels[i + 1].y - minGap) {
+        rawLabels[i].y = rawLabels[i + 1].y - minGap;
+      }
+    }
+  }
+
+  // Pass 3: Clamp top bounds
+  if (rawLabels.length > 0 && rawLabels[0].y < minYBound) {
+    rawLabels[0].y = minYBound;
+    for (let i = 1; i < rawLabels.length; i++) {
+      if (rawLabels[i].y < rawLabels[i - 1].y + minGap) {
+        rawLabels[i].y = rawLabels[i - 1].y + minGap;
+      }
+    }
+  }
+
+  const labelMap = new Map<number, PlacedLabel>();
+  for (const l of rawLabels) {
+    labelMap.set(l.rosterId, l);
+  }
+
   return (
-    <div className="jj-trajectory-wrap" style={{ background: "rgba(15, 23, 42, 0.75)", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: 12, padding: "1.25rem", marginBottom: "1.5rem" }}>
-      {/* Header controls */}
-      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+    <div
+      className="jj-trajectory-card"
+      style={{
+        background: "var(--paper-deep, #eee8dc)",
+        border: "1px solid var(--hairline)",
+        borderRadius: "8px",
+        padding: "1.25rem",
+        marginBottom: "1.75rem",
+        boxShadow: "0 2px 8px rgba(11, 51, 41, 0.04)",
+      }}
+    >
+      {/* Header controls matching Almanac editorial aesthetics */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          gap: "1rem",
+          paddingBottom: "0.85rem",
+          borderBottom: "1px solid var(--hairline)",
+        }}
+      >
         <div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span style={{ fontSize: "1.2rem" }}>📈</span>
-            <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 700, color: "#ffffff" }}>
-              Projected Wins Trajectory Over Time
-            </h3>
-          </div>
-          <p style={{ margin: "0.2rem 0 0", fontSize: "0.8rem", color: "#94a3b8" }}>
+          <span
+            style={{
+              display: "block",
+              fontFamily: "var(--sans)",
+              fontSize: "0.72rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "var(--rust)",
+              marginBottom: "3px",
+            }}
+          >
+            Historical Trend Analysis
+          </span>
+          <h3
+            style={{
+              margin: 0,
+              fontFamily: "var(--serif)",
+              fontSize: "1.5rem",
+              fontWeight: 600,
+              color: "var(--ink)",
+              lineHeight: 1.1,
+            }}
+          >
+            Projected Wins Trajectory Over Time
+          </h3>
+          <p
+            style={{
+              margin: "4px 0 0",
+              fontFamily: "var(--sans)",
+              fontSize: "0.85rem",
+              color: "var(--ink-soft)",
+            }}
+          >
             Tracking 10,000-run Monte Carlo regular-season win expectations across each model run milestone.
           </p>
         </div>
 
-        <div style={{ display: "flex", gap: "0.35rem" }}>
-          {(["all", "contenders", "movers"] as const).map((filterKey) => (
-            <button
-              key={filterKey}
-              type="button"
-              onClick={() => setSelectedFilter(filterKey)}
-              style={{
-                background: selectedFilter === filterKey ? "#38bdf8" : "rgba(30, 41, 59, 0.8)",
-                color: selectedFilter === filterKey ? "#0f172a" : "#cbd5e1",
-                border: "1px solid",
-                borderColor: selectedFilter === filterKey ? "#38bdf8" : "rgba(255,255,255,0.1)",
-                borderRadius: 6,
-                padding: "0.3rem 0.65rem",
-                fontSize: "0.75rem",
-                fontWeight: 700,
-                cursor: "pointer",
-                textTransform: "capitalize",
-              }}
-            >
-              {filterKey === "all" ? "All 12 Teams" : filterKey === "contenders" ? "Top Contenders" : "Biggest Movers"}
-            </button>
-          ))}
+        {/* Filter Pill Controls */}
+        <div
+          style={{
+            display: "flex",
+            gap: "0.25rem",
+            background: "rgba(11, 51, 41, 0.06)",
+            padding: "3px",
+            borderRadius: "6px",
+            border: "1px solid rgba(11, 51, 41, 0.12)",
+          }}
+        >
+          {(["all", "contenders", "movers"] as const).map((filterKey) => {
+            const isSelected = selectedFilter === filterKey;
+            return (
+              <button
+                key={filterKey}
+                type="button"
+                onClick={() => setSelectedFilter(filterKey)}
+                style={{
+                  background: isSelected ? "var(--ink)" : "transparent",
+                  color: isSelected ? "#ffffff" : "var(--ink-soft)",
+                  border: "none",
+                  borderRadius: "4px",
+                  padding: "0.35rem 0.75rem",
+                  fontSize: "0.76rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  fontFamily: "var(--sans)",
+                  transition: "all 0.15s ease",
+                }}
+              >
+                {filterKey === "all" ? "All 12 Teams" : filterKey === "contenders" ? "Top Contenders" : "Biggest Movers"}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* SVG Chart */}
-      <div style={{ position: "relative", width: "100%", overflowX: "auto" }}>
-        <svg viewBox={`0 0 ${width} ${height}`} style={{ width: "100%", height: "auto", display: "block" }}>
-          <defs>
-            <linearGradient id="gridFade" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="rgba(255,255,255,0.03)" />
-              <stop offset="100%" stopColor="rgba(255,255,255,0.08)" />
-            </linearGradient>
-          </defs>
-
-          {/* Gridlines */}
+      {/* SVG Chart on Parchment Paper */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          overflowX: "auto",
+          background: "#ffffff",
+          borderRadius: "6px",
+          border: "1px solid var(--hairline)",
+          marginTop: "1rem",
+        }}
+      >
+        <svg
+          viewBox={`0 0 ${width} ${height}`}
+          style={{ width: "100%", height: "auto", display: "block", minWidth: "640px" }}
+        >
+          {/* Background Gridlines */}
           {[2, 4, 6, 7, 8, 10].map((winValue) => {
             const y = getY(winValue);
             const isPlayoffCutoff = winValue === 7;
@@ -132,40 +280,55 @@ export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryCh
                 <line
                   x1={paddingLeft}
                   y1={y}
-                  x2={width - paddingRight}
+                  x2={width - paddingRight + 12}
                   y2={y}
-                  stroke={isPlayoffCutoff ? "rgba(250, 204, 21, 0.35)" : "rgba(255, 255, 255, 0.08)"}
-                  strokeDasharray={isPlayoffCutoff ? "4 4" : undefined}
-                  strokeWidth={isPlayoffCutoff ? 1.5 : 1}
+                  stroke={isPlayoffCutoff ? "var(--rust)" : "rgba(11, 51, 41, 0.08)"}
+                  strokeDasharray={isPlayoffCutoff ? "4 3" : undefined}
+                  strokeWidth={isPlayoffCutoff ? 1.25 : 1}
+                  strokeOpacity={isPlayoffCutoff ? 0.7 : 1}
                 />
                 <text
                   x={paddingLeft - 8}
-                  y={y + 4}
+                  y={y + 3.5}
                   textAnchor="end"
-                  fill={isPlayoffCutoff ? "#facc15" : "#64748b"}
-                  fontSize="10"
-                  fontFamily="inherit"
-                  fontWeight={isPlayoffCutoff ? "bold" : "normal"}
+                  fill="var(--ink-soft)"
+                  fontSize="10.5"
+                  fontFamily="var(--sans)"
+                  fontWeight={isPlayoffCutoff ? "bold" : "600"}
                 >
                   {winValue}W
                 </text>
+                {/* Playoff cutoff label on LEFT side to prevent collision with team names */}
                 {isPlayoffCutoff && (
-                  <text
-                    x={width - paddingRight + 6}
-                    y={y + 3}
-                    fill="#facc15"
-                    fontSize="9"
-                    fontFamily="inherit"
-                    fontWeight="bold"
-                  >
-                    Playoff Cut line (~7.0W)
-                  </text>
+                  <g>
+                    <rect
+                      x={paddingLeft + 6}
+                      y={y - 12}
+                      width={104}
+                      height={14}
+                      rx={2}
+                      fill="var(--paper, #f6f2e9)"
+                      stroke="var(--rust)"
+                      strokeWidth={0.75}
+                    />
+                    <text
+                      x={paddingLeft + 10}
+                      y={y - 2}
+                      fill="var(--rust)"
+                      fontSize="8.5"
+                      fontFamily="var(--sans)"
+                      fontWeight="bold"
+                      letterSpacing="0.04em"
+                    >
+                      PLAYOFF CUT (~7.0W)
+                    </text>
+                  </g>
                 )}
               </g>
             );
           })}
 
-          {/* Milestone Columns */}
+          {/* Milestone Columns (X-axis) */}
           {milestones.map((m, idx) => {
             const x = getX(idx);
             return (
@@ -175,17 +338,17 @@ export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryCh
                   y1={paddingTop}
                   x2={x}
                   y2={height - paddingBottom}
-                  stroke="rgba(255, 255, 255, 0.06)"
+                  stroke="rgba(11, 51, 41, 0.12)"
                   strokeDasharray="2 2"
                 />
                 <text
                   x={x}
                   y={height - paddingBottom + 16}
                   textAnchor="middle"
-                  fill="#f1f5f9"
-                  fontSize="11"
-                  fontWeight="600"
-                  fontFamily="inherit"
+                  fill="var(--ink)"
+                  fontSize="11.5"
+                  fontWeight="700"
+                  fontFamily="var(--serif)"
                 >
                   {m.label}
                 </text>
@@ -193,9 +356,9 @@ export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryCh
                   x={x}
                   y={height - paddingBottom + 28}
                   textAnchor="middle"
-                  fill="#64748b"
-                  fontSize="9"
-                  fontFamily="inherit"
+                  fill="var(--ink-soft)"
+                  fontSize="9.5"
+                  fontFamily="var(--sans)"
                 >
                   {m.date}
                 </text>
@@ -203,16 +366,13 @@ export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryCh
             );
           })}
 
-          {/* Team Trajectory Lines */}
+          {/* Team Trajectory Polylines */}
           {visibleTeams.map((team) => {
             const isHovered = hoveredRosterId === team.rosterId;
             const isDimmed = hoveredRosterId !== null && !isHovered;
             const pointsStr = team.points
               .map((val, idx) => `${getX(idx)},${getY(val)}`)
               .join(" ");
-
-            const endX = getX(team.points.length - 1);
-            const endY = getY(team.points[team.points.length - 1]);
 
             return (
               <g
@@ -222,7 +382,7 @@ export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryCh
                 onClick={() => onSelectTeam?.(team.rosterId)}
                 style={{ cursor: "pointer" }}
               >
-                {/* Invisible wider stroke for easy hover targeting */}
+                {/* Fat transparent hover target */}
                 <polyline
                   points={pointsStr}
                   fill="none"
@@ -230,16 +390,16 @@ export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryCh
                   strokeWidth={16}
                 />
 
-                {/* Visible Trajectory Line */}
+                {/* Visible colored trajectory line */}
                 <polyline
                   points={pointsStr}
                   fill="none"
                   stroke={team.color}
                   strokeWidth={isHovered ? 3.5 : 2}
-                  strokeOpacity={isDimmed ? 0.18 : isHovered ? 1.0 : 0.8}
+                  strokeOpacity={isDimmed ? 0.18 : isHovered ? 1.0 : 0.85}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ transition: "all 0.15s ease" }}
+                  style={{ transition: "stroke-width 0.15s ease, stroke-opacity 0.15s ease" }}
                 />
 
                 {/* Milestone Node Dots */}
@@ -249,24 +409,72 @@ export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryCh
                     cx={getX(idx)}
                     cy={getY(val)}
                     r={isHovered ? 5 : 3.5}
-                    fill={isHovered ? "#ffffff" : team.color}
+                    fill={isHovered ? team.color : "#ffffff"}
                     stroke={team.color}
-                    strokeWidth={isHovered ? 2 : 1}
-                    opacity={isDimmed ? 0.18 : 1.0}
+                    strokeWidth={isHovered ? 2 : 1.75}
+                    opacity={isDimmed ? 0.2 : 1.0}
                     style={{ transition: "all 0.15s ease" }}
                   />
                 ))}
+              </g>
+            );
+          })}
 
-                {/* Team Label on Right Margin */}
+          {/* Anti-Collided Labels on Right Margin */}
+          {visibleTeams.map((team) => {
+            const placed = labelMap.get(team.rosterId);
+            if (!placed) return null;
+
+            const isHovered = hoveredRosterId === team.rosterId;
+            const isDimmed = hoveredRosterId !== null && !isHovered;
+            const hasShift = Math.abs(placed.y - placed.idealY) > 2;
+
+            return (
+              <g
+                key={`label-${team.rosterId}`}
+                onMouseEnter={() => setHoveredRosterId(team.rosterId)}
+                onMouseLeave={() => setHoveredRosterId(null)}
+                onClick={() => onSelectTeam?.(team.rosterId)}
+                style={{ cursor: "pointer" }}
+              >
+                {/* Subtle connector guide line when label was nudged to avoid collision */}
+                {hasShift && (
+                  <path
+                    d={`M ${placed.endX + 3} ${placed.idealY} Q ${placed.endX + 12} ${placed.idealY}, ${placed.endX + 14} ${placed.y} L ${placed.endX + 18} ${placed.y}`}
+                    fill="none"
+                    stroke={team.color}
+                    strokeWidth={isHovered ? 1.5 : 0.85}
+                    strokeDasharray={isHovered ? undefined : "2 2"}
+                    opacity={isDimmed ? 0.15 : isHovered ? 0.9 : 0.55}
+                  />
+                )}
+
+                {/* Small indicator dot at label anchor */}
+                <circle
+                  cx={placed.endX + 18}
+                  cy={placed.y}
+                  r={isHovered ? 3.5 : 2}
+                  fill={team.color}
+                  opacity={isDimmed ? 0.2 : 1.0}
+                />
+
+                {/* Clean, readable text with no collision */}
                 <text
-                  x={endX + 8}
-                  y={endY + 3.5}
-                  fill={isHovered ? "#ffffff" : isDimmed ? "rgba(148, 163, 184, 0.25)" : team.color}
-                  fontSize={isHovered ? "11" : "10"}
-                  fontWeight={isHovered ? "bold" : "500"}
-                  fontFamily="inherit"
+                  x={placed.endX + 24}
+                  y={placed.y + 3.5}
+                  fill={isHovered ? "var(--ink)" : isDimmed ? "rgba(11, 51, 41, 0.25)" : team.color}
+                  fontSize={isHovered ? "11.5" : "10.5"}
+                  fontWeight={isHovered ? "bold" : "600"}
+                  fontFamily="var(--sans)"
+                  letterSpacing="-0.01em"
                 >
-                  {team.managerName} ({team.currentWins}W)
+                  {team.managerName}{" "}
+                  <tspan
+                    fill={isHovered ? "var(--ink)" : isDimmed ? "rgba(11, 51, 41, 0.25)" : "var(--ink-soft)"}
+                    fontWeight={isHovered ? "bold" : "500"}
+                  >
+                    ({team.currentWins}W)
+                  </tspan>
                 </text>
               </g>
             );
@@ -274,64 +482,308 @@ export default function TrajectoryChart({ timeline, onSelectTeam }: TrajectoryCh
         </svg>
       </div>
 
-      {/* Active Selection Tooltip / Detail Readout */}
+      {/* Team Chips Legend for quick tap / inspection */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "0.35rem",
+          marginTop: "0.75rem",
+          padding: "0.4rem 0.25rem",
+        }}
+      >
+        {visibleTeams.map((team) => {
+          const isSelected = hoveredRosterId === team.rosterId;
+          return (
+            <button
+              key={team.rosterId}
+              type="button"
+              onMouseEnter={() => setHoveredRosterId(team.rosterId)}
+              onMouseLeave={() => setHoveredRosterId(null)}
+              onClick={() => onSelectTeam?.(team.rosterId)}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "5px",
+                background: isSelected ? "var(--ink)" : "#ffffff",
+                color: isSelected ? "#ffffff" : "var(--ink)",
+                border: "1px solid",
+                borderColor: isSelected ? "var(--ink)" : "var(--hairline)",
+                borderRadius: "4px",
+                padding: "0.2rem 0.45rem",
+                fontSize: "0.72rem",
+                fontFamily: "var(--sans)",
+                cursor: "pointer",
+                transition: "all 0.12s ease",
+              }}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  width: 7,
+                  height: 7,
+                  borderRadius: "50%",
+                  background: isSelected ? "#ffffff" : team.color,
+                }}
+              />
+              <span style={{ fontWeight: 600 }}>{team.managerName}</span>
+              <span style={{ color: isSelected ? "#cbd5e1" : "var(--ink-soft)", fontSize: "0.68rem" }}>
+                {team.currentWins}W
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Active Team Inspection Banner */}
       {activeTeam ? (
-        <div style={{ marginTop: "0.75rem", padding: "0.75rem 1rem", background: "rgba(30, 41, 59, 0.9)", borderLeft: `4px solid ${activeTeam.color}`, borderRadius: 6, display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
+        <div
+          style={{
+            marginTop: "0.75rem",
+            padding: "0.75rem 1rem",
+            background: "#ffffff",
+            border: "1px solid var(--hairline)",
+            borderLeft: `5px solid ${activeTeam.color}`,
+            borderRadius: "6px",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: "1rem",
+            boxShadow: "0 2px 6px rgba(11, 51, 41, 0.05)",
+          }}
+        >
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: activeTeam.color }} />
-              <strong style={{ color: "#ffffff", fontSize: "0.95rem" }}>{activeTeam.teamName}</strong>
-              <span style={{ fontSize: "0.8rem", color: "#94a3b8" }}>({activeTeam.managerName})</span>
-              <span style={{ fontSize: "0.75rem", background: "rgba(255,255,255,0.1)", padding: "0.15rem 0.4rem", borderRadius: 4, color: "#cbd5e1" }}>
+              <span
+                style={{
+                  display: "inline-block",
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: activeTeam.color,
+                }}
+              />
+              <strong
+                style={{
+                  color: "var(--ink)",
+                  fontFamily: "var(--serif)",
+                  fontSize: "1.1rem",
+                }}
+              >
+                {activeTeam.teamName}
+              </strong>
+              <span style={{ fontSize: "0.82rem", color: "var(--ink-soft)", fontFamily: "var(--sans)" }}>
+                ({activeTeam.managerName})
+              </span>
+              <span
+                style={{
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  background: "var(--paper-deep, #eee8dc)",
+                  border: "1px solid var(--hairline)",
+                  padding: "0.15rem 0.45rem",
+                  borderRadius: 4,
+                  color: "var(--ink)",
+                  fontFamily: "var(--sans)",
+                }}
+              >
                 Power #{activeTeam.powerRank}
               </span>
             </div>
-            <div style={{ fontSize: "0.8rem", color: "#cbd5e1", marginTop: "0.25rem" }}>
-              Pre-Season Draft Baseline: <strong style={{ color: "#ffffff" }}>{activeTeam.preSeasonWins} wins</strong> → Live Current: <strong style={{ color: activeTeam.color }}>{activeTeam.currentWins} wins</strong>
+            <div
+              style={{
+                fontSize: "0.82rem",
+                color: "var(--ink-soft)",
+                marginTop: "0.25rem",
+                fontFamily: "var(--sans)",
+              }}
+            >
+              Pre-Season Draft Baseline:{" "}
+              <strong style={{ color: "var(--ink)" }}>{activeTeam.preSeasonWins} wins</strong> → Live Current:{" "}
+              <strong style={{ color: activeTeam.color }}>{activeTeam.currentWins} wins</strong>
             </div>
           </div>
 
           <div style={{ textAlign: "right" }}>
-            <span style={{ fontSize: "0.75rem", color: "#94a3b8", display: "block" }}>Net Model Delta</span>
-            <strong style={{ fontSize: "1.1rem", color: activeTeam.delta > 0 ? "#4ade80" : activeTeam.delta < 0 ? "#f43f5e" : "#cbd5e1" }}>
+            <span
+              style={{
+                fontSize: "0.72rem",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                color: "var(--ink-soft)",
+                display: "block",
+                fontFamily: "var(--sans)",
+              }}
+            >
+              Net Model Delta
+            </span>
+            <strong
+              style={{
+                fontSize: "1.15rem",
+                fontFamily: "var(--sans)",
+                color: activeTeam.delta > 0 ? "#2e7d32" : activeTeam.delta < 0 ? "var(--rust)" : "var(--ink-soft)",
+              }}
+            >
               {activeTeam.delta > 0 ? `+${activeTeam.delta} W` : `${activeTeam.delta} W`}
             </strong>
           </div>
         </div>
       ) : (
-        <div style={{ marginTop: "0.75rem", padding: "0.5rem 0.75rem", fontSize: "0.75rem", color: "#64748b", textAlign: "center", background: "rgba(15, 23, 42, 0.4)", borderRadius: 6 }}>
-          Hover or tap any line to inspect a team's trajectory from draft day to live game action.
+        <div
+          style={{
+            marginTop: "0.75rem",
+            padding: "0.5rem 0.75rem",
+            fontSize: "0.78rem",
+            color: "var(--ink-soft)",
+            textAlign: "center",
+            background: "transparent",
+            border: "1px dashed var(--hairline)",
+            borderRadius: "6px",
+            fontFamily: "var(--sans)",
+          }}
+        >
+          Hover or tap any line or team chip to inspect trajectory details from draft day to live game action.
         </div>
       )}
 
-      {/* Riser / Faller Highlights */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "0.75rem", marginTop: "1rem" }}>
+      {/* Riser / Faller Highlights matching Almanac section callouts */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: "0.75rem",
+          marginTop: "1rem",
+        }}
+      >
         {timeline.biggestRiser && (
-          <div style={{ background: "rgba(74, 222, 128, 0.08)", border: "1px solid rgba(74, 222, 128, 0.2)", borderRadius: 8, padding: "0.7rem 0.9rem" }}>
-            <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#4ade80", textTransform: "uppercase" }}>
+          <div
+            style={{
+              background: "rgba(46, 125, 50, 0.05)",
+              border: "1px solid rgba(46, 125, 50, 0.25)",
+              borderRadius: "6px",
+              padding: "0.85rem 1rem",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                color: "#2e7d32",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                fontFamily: "var(--sans)",
+                display: "block",
+              }}
+            >
               ▲ Top Trajectory Riser
             </span>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: "0.2rem" }}>
-              <strong style={{ color: "#ffffff", fontSize: "0.9rem" }}>{timeline.biggestRiser.teamName}</strong>
-              <strong style={{ color: "#4ade80", fontSize: "0.9rem" }}>+{timeline.biggestRiser.delta} W</strong>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                marginTop: "0.2rem",
+              }}
+            >
+              <strong
+                style={{
+                  color: "var(--ink)",
+                  fontFamily: "var(--serif)",
+                  fontSize: "1.1rem",
+                  fontWeight: 600,
+                }}
+              >
+                {timeline.biggestRiser.teamName}
+              </strong>
+              <strong
+                style={{
+                  color: "#2e7d32",
+                  fontSize: "0.95rem",
+                  fontFamily: "var(--sans)",
+                  fontWeight: 800,
+                }}
+              >
+                +{timeline.biggestRiser.delta} W
+              </strong>
             </div>
-            <p style={{ margin: "0.2rem 0 0", fontSize: "0.75rem", color: "#94a3b8" }}>
-              From {timeline.biggestRiser.preSeasonWins} pre-season to {timeline.biggestRiser.currentWins} projected wins after live game action.
+            <p
+              style={{
+                margin: "0.25rem 0 0",
+                fontSize: "0.8rem",
+                color: "var(--ink-soft)",
+                fontFamily: "var(--sans)",
+                lineHeight: 1.35,
+              }}
+            >
+              From {timeline.biggestRiser.preSeasonWins} pre-season to {timeline.biggestRiser.currentWins} projected wins
+              after live game action.
             </p>
           </div>
         )}
 
         {timeline.biggestFaller && (
-          <div style={{ background: "rgba(244, 63, 94, 0.08)", border: "1px solid rgba(244, 63, 94, 0.2)", borderRadius: 8, padding: "0.7rem 0.9rem" }}>
-            <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#f43f5e", textTransform: "uppercase" }}>
+          <div
+            style={{
+              background: "rgba(196, 67, 34, 0.05)",
+              border: "1px solid rgba(196, 67, 34, 0.25)",
+              borderRadius: "6px",
+              padding: "0.85rem 1rem",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                color: "var(--rust)",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                fontFamily: "var(--sans)",
+                display: "block",
+              }}
+            >
               ▼ Sharpest Trajectory Shift
             </span>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: "0.2rem" }}>
-              <strong style={{ color: "#ffffff", fontSize: "0.9rem" }}>{timeline.biggestFaller.teamName}</strong>
-              <strong style={{ color: "#f43f5e", fontSize: "0.9rem" }}>{timeline.biggestFaller.delta} W</strong>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                marginTop: "0.2rem",
+              }}
+            >
+              <strong
+                style={{
+                  color: "var(--ink)",
+                  fontFamily: "var(--serif)",
+                  fontSize: "1.1rem",
+                  fontWeight: 600,
+                }}
+              >
+                {timeline.biggestFaller.teamName}
+              </strong>
+              <strong
+                style={{
+                  color: "var(--rust)",
+                  fontSize: "0.95rem",
+                  fontFamily: "var(--sans)",
+                  fontWeight: 800,
+                }}
+              >
+                {timeline.biggestFaller.delta} W
+              </strong>
             </div>
-            <p style={{ margin: "0.2rem 0 0", fontSize: "0.75rem", color: "#94a3b8" }}>
-              From {timeline.biggestFaller.preSeasonWins} pre-season baseline to {timeline.biggestFaller.currentWins} projected wins following Drake Maye underperformance.
+            <p
+              style={{
+                margin: "0.25rem 0 0",
+                fontSize: "0.8rem",
+                color: "var(--ink-soft)",
+                fontFamily: "var(--sans)",
+                lineHeight: 1.35,
+              }}
+            >
+              From {timeline.biggestFaller.preSeasonWins} pre-season baseline to {timeline.biggestFaller.currentWins} projected
+              wins following Drake Maye underperformance.
             </p>
           </div>
         )}

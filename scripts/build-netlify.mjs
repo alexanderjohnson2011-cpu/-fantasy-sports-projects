@@ -1,6 +1,6 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -42,5 +42,19 @@ if (isJohnny) {
   const nestedJohnny = path.join(clientDir, "johnny");
   mkdirSync(nestedJohnny, { recursive: true });
   cpSync(johnnyDir, nestedJohnny, { recursive: true });
+
+  const johnnyAssets = path.join(johnnyDir, "assets");
+  const clientAssets = path.join(clientDir, "assets");
+  if (existsSync(johnnyAssets)) {
+    cpSync(johnnyAssets, clientAssets, { recursive: true });
+  }
+
+  const nestedJohnnyIndex = path.join(nestedJohnny, "index.html");
+  if (existsSync(nestedJohnnyIndex)) {
+    let html = readFileSync(nestedJohnnyIndex, "utf8");
+    html = html.replaceAll('src="/assets/', 'src="./assets/').replaceAll('href="/assets/', 'href="./assets/');
+    writeFileSync(nestedJohnnyIndex, html, "utf8");
+  }
+
   console.log("[Netlify Build] Successfully populated dist/client for apesmacsalad.netlify.app");
 }

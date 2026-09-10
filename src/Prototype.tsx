@@ -766,25 +766,42 @@ function AppHeader({ onMenu }: { onMenu: () => void }) {
     <header className="masthead">
       <img className="league-seal" src="./assets/app/league-seal.png" alt="Ape’s Mac Salad league seal" />
       <p className="masthead__name">Ape’s Mac Salad · Dynasty</p>
-      <a
-        href="#draft-room"
-        style={{
-          marginLeft: "auto",
-          marginRight: "0.75rem",
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "6px",
-          padding: "5px 12px",
-          background: "#00ceb8",
-          color: "#0c1514",
-          fontWeight: 700,
-          fontSize: "0.85rem",
-          borderRadius: "6px",
-          textDecoration: "none",
-        }}
-      >
-        <Lightning size={16} weight="fill" /> Moosey’s Mommy Draft Desk
-      </a>
+      <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "8px", marginRight: "0.75rem" }}>
+        <a
+          href="/johnny"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "5px",
+            padding: "5px 12px",
+            background: "#c44322",
+            color: "#fff",
+            fontWeight: 700,
+            fontSize: "0.85rem",
+            borderRadius: "6px",
+            textDecoration: "none",
+          }}
+        >
+          🧃 Johnny’s Jerks
+        </a>
+        <a
+          href="#draft-room"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            padding: "5px 12px",
+            background: "#00ceb8",
+            color: "#0c1514",
+            fontWeight: 700,
+            fontSize: "0.85rem",
+            borderRadius: "6px",
+            textDecoration: "none",
+          }}
+        >
+          <Lightning size={16} weight="fill" /> Moosey’s Mommy Draft Desk
+        </a>
+      </div>
       <button className="icon-button" type="button" aria-label="Open methodology" onClick={onMenu}>
         <List size={29} weight="regular" aria-hidden="true" />
       </button>
@@ -2711,7 +2728,7 @@ function MoosePublication() {
 
 function routeFromHash(): Route {
   const value = window.location.hash.replace(/^#\/?/, "");
-  if (!value || value === "draft-room" || value === "draft" || value === "moose" || value === "mooseys-mommy") {
+  if (value === "draft-room" || value === "draft" || value === "moose" || value === "mooseys-mommy") {
     return { kind: "draftRoom" };
   }
   if (value === "methodology") return { kind: "methodology" };
@@ -2740,7 +2757,7 @@ function routeFromHash(): Route {
     return { kind: "nav", id: value };
   }
   if (value === "almanac") return { kind: "nav", id: "analysis" };
-  return { kind: "draftRoom" };
+  return { kind: "nav", id: "analysis" };
 }
 
 function routeHash(route: Route) {
