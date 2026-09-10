@@ -75,3 +75,55 @@ Focused region comparison was not required: the selected source contains no phot
 - [x] Runtime, build, and hosting tests
 
 final result: passed
+
+---
+
+# Design QA — Johnny’s Jerks Redraft Almanac
+
+## Comparison target
+
+- Source visual truth: live Ape’s Mac Salad power, power-detail, matchup-hub, and matchup-detail screens at `http://127.0.0.1:5176/`.
+- Browser-rendered implementation: live Johnny’s Jerks screens at `http://127.0.0.1:5175/`.
+- Viewport/state: desktop, light theme, generated 2026 Johnny’s Jerks data, Week 1.
+- Evidence note: source and implementation full-page captures were emitted together in the Codex browser QA session. The in-app browser did not expose stable local screenshot paths, so the audited route URLs are recorded here.
+
+## Re-evaluation findings
+
+- [P1] Power-ranking rows mixed market-value inputs with 0–100 scores, producing unreadable five-digit values.
+- [P1] Clicking a power row routed by ordinal rank into the draft-grade dossier, sometimes opening a completely different team.
+- [P1] Matchup cards did not open previews and there was no TV schedule.
+- [P1] The displayed “10,000-run Monte Carlo” forecast was a deterministic transform and showed hard-coded validation metrics.
+- [P2] Matchup commentary repeated one generic Capri Sun template and selected a draft-value pick rather than the strongest projected starter.
+- [P2] Power grades in the table defaulted to `B` because draft-grade fields were absent from power-ranking rows.
+
+## Implemented corrections
+
+- Split draft evaluation from current-season power. The power score is now 50% projected lineup, 25% usable depth, 15% top-five VORP ceiling, and 10% positional balance.
+- Rebuilt the power board as card-based current-season profiles with meaningful 0–100 grades, lineup/depth ranks, volatility, weekly projection, simulation outlook, and roster-ID routing.
+- Added dedicated power deep dives with component evidence, room ranks, strength/pressure commentary, health flags, concentration metrics, and a projected scoring spine.
+- Added clickable matchup cards and dedicated previews with win odds, tactical variables, positional edges, projected starters, and chronological broadcast windows.
+- Mapped TV windows to the official 2026 NFL Week 1 schedule and called out local-market limits for Sunday afternoon coverage.
+- Replaced the forecast transform with a seeded 10,000-run weekly-score simulation, six-team playoff bracket, explicit schedule basis, and per-team forecast drill-downs.
+- Replaced repeated matchup copy with matchup-specific commentary driven by spread, projected stars, positional edges, roster strengths, injuries, and the highest-leverage TV window.
+
+## Browser and data verification
+
+- Compared Ape’s Mac Salad and Johnny’s Jerks power hubs in one browser QA view.
+- Compared both power-team deep dives in one browser QA view.
+- Compared both matchup hubs in one browser QA view.
+- Opened Johnny’s Jerks power rank #1 and confirmed the route remained on the same roster rather than opening a draft-ranked team.
+- Opened the marquee matchup and confirmed all four sections rendered: tale of the tape, tactical swing factors, chronological TV guide, and projected starters.
+- Opened a forecast team and confirmed the probability drill-down and schedule qualification rendered.
+- Browser console: no warnings or errors.
+- Generated-data integrity: 12 unique power teams, 6 matchups covering 12 unique rosters, 12 forecast teams, all 6 TV schedules chronological, 600.0 total playoff probability points, 100.1 title probability points, and 99.9 last-place probability points after one-decimal rounding.
+- `python -m py_compile sleeper_work\\build_redraft_recap_payload.py` passed.
+- `npm run build:johnny` passed.
+- `npm run check:runtime` passed.
+
+## Remaining notes
+
+- The forecast now uses all 14 exact regular-season pairing weeks captured from Sleeper; the former balanced-rotation fallback has been removed.
+- [P2] Live team scores refresh from Sleeper every 60 seconds while the page is open. Opening win odds and editorial analysis do not move in-game yet because that requires a remaining-player projection model.
+- [P3] Sunday afternoon TV networks are shown as the scheduled carrier plus “local market” because actual availability depends on viewer location.
+
+final result: passed

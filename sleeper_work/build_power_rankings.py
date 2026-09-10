@@ -33,7 +33,12 @@ import bq_idempotent
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-OUT = os.path.join(ROOT, "ape-invitational-almanac", "src", "generated", "power-rankings.json")
+if os.path.exists(os.path.join(ROOT, "src", "generated")):
+    OUT = os.path.join(ROOT, "src", "generated", "power-rankings.json")
+elif os.path.exists(os.path.join(ROOT, "ape-invitational-almanac", "src", "generated")):
+    OUT = os.path.join(ROOT, "ape-invitational-almanac", "src", "generated", "power-rankings.json")
+else:
+    OUT = os.path.join(ROOT, "src", "generated", "power-rankings.json")
 
 PROJECT = os.environ.get("GCP_PROJECT", "apes-mac-salad")
 LEAGUE_ID = "1312209616372772864"

@@ -35,7 +35,12 @@ ROOT = os.path.dirname(HERE)
 RAW_DIR = os.path.join(HERE, "raw")
 POSITIONS = {}
 SLOTS = {"QB": 1, "RB": 2, "WR": 2, "TE": 1, "FLEX": 3, "K": 1, "DEF": 1}
-OUT = os.path.join(ROOT, "ape-invitational-almanac", "src", "generated", "weekly-recap.json")
+if os.path.exists(os.path.join(ROOT, "src", "generated")):
+    OUT = os.path.join(ROOT, "src", "generated", "weekly-recap.json")
+elif os.path.exists(os.path.join(ROOT, "ape-invitational-almanac", "src", "generated")):
+    OUT = os.path.join(ROOT, "ape-invitational-almanac", "src", "generated", "weekly-recap.json")
+else:
+    OUT = os.path.join(ROOT, "src", "generated", "weekly-recap.json")
 
 PROJECT = os.environ.get("GCP_PROJECT", "apes-mac-salad")
 LEAGUE_ID = "1312209616372772864"

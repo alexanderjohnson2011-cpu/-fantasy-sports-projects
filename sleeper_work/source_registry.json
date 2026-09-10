@@ -1,6 +1,16 @@
 {
-  "version": "1.0.0",
-  "updated_at": "2026-08-21T21:00:00Z",
+  "version": "2.0.0",
+  "updated_at": "2026-09-03T00:00:00Z",
+  "provider_registry": "provider_registry.json",
+  "provider_id_by_source_prefix": {
+    "sleeper": "sleeper",
+    "fantasycalc": "fantasycalc-redraft",
+    "yahoo": "yahoo",
+    "fantasy-football-calculator": "fantasy-football-calculator-adp",
+    "nflverse": "nflverse-players",
+    "rotowire": "rotowire-nfl-rss",
+    "fantasypros": "fantasypros-private"
+  },
   "sources": [
     {
       "source_id": "sleeper/league",
@@ -127,6 +137,70 @@
       "access_mode": "free",
       "endpoint_template": "https://api.fantasycalc.com/values/current?isDynasty=false&numQbs=1&numTeams=12&ppr=0.5",
       "parser_version": "v1.0"
+    },
+    {
+      "source_id": "yahoo/fantasy-sports",
+      "nature": "perishable",
+      "retention_class": "A",
+      "cadence": "draft-active: 4 seconds; paused: 20 seconds; otherwise on-demand",
+      "access_mode": "OAuth authorization-code, read-only",
+      "endpoint_template": "https://fantasysports.yahooapis.com/fantasy/v2/{resource}",
+      "parser_version": "v1.0",
+      "activation": "Yahoo approval and OAuth discovery",
+      "credential_boundary": "Tokens remain local and are not raw captures."
+    },
+    {
+      "source_id": "fantasy-football-calculator/adp",
+      "nature": "perishable",
+      "retention_class": "B",
+      "cadence": "on-demand before draft and daily in season",
+      "access_mode": "free API",
+      "endpoint_template": "https://fantasyfootballcalculator.com/api/v1/adp/{scoring}?teams={teams}&year={year}",
+      "parser_version": "v1.0",
+      "attribution_required": true
+    },
+    {
+      "source_id": "nflverse/players",
+      "nature": "backfillable",
+      "retention_class": "A",
+      "cadence": "daily",
+      "access_mode": "public release asset",
+      "endpoint_template": "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv",
+      "parser_version": "v1.0",
+      "attribution_required": true
+    },
+    {
+      "source_id": "rotowire/nfl-rss",
+      "nature": "perishable",
+      "retention_class": "B",
+      "cadence": "on-demand before draft and daily in season",
+      "access_mode": "official RSS metadata",
+      "endpoint_template": "https://www.rotowire.com/rss/news.php?sport=NFL",
+      "parser_version": "v1.0",
+      "allowed_fields": ["headline", "publishedAt", "sourceUrl", "reporter"],
+      "article_body_allowed": false
+    },
+    {
+      "source_id": "fantasypros/private",
+      "nature": "perishable",
+      "retention_class": "C",
+      "cadence": "on-demand only",
+      "access_mode": "licensed API only",
+      "endpoint_template": null,
+      "parser_version": "v1.0",
+      "activation": "Licensed endpoint and written usage confirmation",
+      "public_release_allowed": false
+    },
+    {
+      "source_id": "legacy/expert-snapshots",
+      "nature": "historic-only",
+      "retention_class": "C",
+      "cadence": "none",
+      "access_mode": "existing reproducibility artifact",
+      "endpoint_template": null,
+      "parser_version": "legacy",
+      "providers": ["FantasyPros ECR", "RotoBaller", "Justin Boone/Yahoo Sports", "DraftSharks"],
+      "public_release_allowed": false
     }
   ]
 }

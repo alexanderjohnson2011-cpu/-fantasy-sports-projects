@@ -1,12 +1,122 @@
 {
-  "schemaVersion": "2.0.0",
+  "schemaVersion": "2.1.0",
+  "policy": {
+    "publicReleaseRule": "A public release may include only a provider record whose publicAllowed is true and only the provider's publicFields. Derived data from a restricted provider remains private until a written redistribution right is recorded.",
+    "rawSnapshotRule": "Every capture has a checksum, fetch time, parser version, source URI, publication scope, and rights classification. OAuth tokens, secrets, manager names, and private chat are never snapshots.",
+    "sharedProviderRule": "Global football inputs may be consumed by approved publications. League truth and recommendation runs are publication-scoped and never join across leagues."
+  },
   "providers": [
-    {"id": "sleeper", "role": "league-truth", "publicAllowed": true, "storesArticleBody": false},
-    {"id": "yahoo", "role": "league-truth", "publicAllowed": false, "publicTransform": "team-names-only", "storesArticleBody": false},
-    {"id": "fantasycalc-redraft", "role": "market-signal", "publicAllowed": false, "reason": "redistribution review required", "storesArticleBody": false},
-    {"id": "fantasy-football-calculator-adp", "role": "adp", "publicAllowed": true, "attributionRequired": true, "storesArticleBody": false},
-    {"id": "fantasypros-private", "role": "projection", "publicAllowed": false, "reason": "free prototype access is non-production", "storesArticleBody": false},
-    {"id": "nflverse-players", "role": "historical-model-input", "publicAllowed": true, "attributionRequired": true, "storesArticleBody": false},
-    {"id": "rotowire-nfl-rss", "role": "news-metadata", "publicAllowed": true, "publicFields": ["headline", "publishedAt", "sourceUrl", "reporter"], "storesArticleBody": false}
+    {
+      "id": "sleeper",
+      "aliases": ["sleeper"],
+      "kind": "league-truth",
+      "active": true,
+      "publicationScope": "sleeper-publications",
+      "rawScope": "publication",
+      "consumers": ["apes-mac-salad", "johnnys-jerks"],
+      "publicAllowed": true,
+      "publicFields": ["sanitized league results", "team names", "rosters after privacy transform"],
+      "storesArticleBody": false
+    },
+    {
+      "id": "yahoo",
+      "aliases": ["yahoo-fantasy"],
+      "kind": "league-truth",
+      "active": false,
+      "activation": "Yahoo OAuth approval and league discovery",
+      "publicationScope": "mooseys-mommy",
+      "rawScope": "publication-restricted",
+      "publicAllowed": false,
+      "publicTransform": "team-names-only after post-draft approval",
+      "storesArticleBody": false,
+      "credentialBoundary": "OAuth credentials and refresh tokens remain local; they are never sent to GCS, BigQuery, generated releases, or frontend bundles."
+    },
+    {
+      "id": "fantasycalc-redraft",
+      "aliases": ["fantasycalc", "fantasycalc-redraft"],
+      "kind": "market-signal",
+      "active": true,
+      "publicationScope": "shared",
+      "rawScope": "global-restricted",
+      "consumers": ["apes-mac-salad", "johnnys-jerks", "mooseys-mommy"],
+      "publicAllowed": false,
+      "reason": "Redistribution review required before provider-derived fields enter a public release.",
+      "storesArticleBody": false
+    },
+    {
+      "id": "fantasy-football-calculator-adp",
+      "aliases": ["fantasy-football-calculator", "ffc-adp"],
+      "kind": "adp",
+      "active": true,
+      "publicationScope": "shared",
+      "rawScope": "global",
+      "consumers": ["apes-mac-salad", "johnnys-jerks", "mooseys-mommy"],
+      "publicAllowed": true,
+      "attributionRequired": true,
+      "publicFields": ["player identity", "ADP", "format", "team count", "as-of time"],
+      "storesArticleBody": false
+    },
+    {
+      "id": "fantasypros-private",
+      "aliases": ["fantasypros", "fantasypros-private"],
+      "kind": "projection-or-expert-consensus",
+      "active": false,
+      "activation": "Licensed endpoint and written usage confirmation",
+      "publicationScope": "shared-private",
+      "rawScope": "global-restricted",
+      "consumers": ["apes-mac-salad", "johnnys-jerks", "mooseys-mommy"],
+      "publicAllowed": false,
+      "reason": "Free prototype access is non-production and cannot feed the public site.",
+      "storesArticleBody": false
+    },
+    {
+      "id": "nflverse-players",
+      "aliases": ["nflverse", "nflverse-players"],
+      "kind": "identity-and-historical-model-input",
+      "active": true,
+      "publicationScope": "shared",
+      "rawScope": "global",
+      "consumers": ["apes-mac-salad", "johnnys-jerks", "mooseys-mommy"],
+      "publicAllowed": true,
+      "attributionRequired": true,
+      "publicFields": ["player identity", "historical derived model outputs with attribution"],
+      "storesArticleBody": false
+    },
+    {
+      "id": "rotowire-nfl-rss",
+      "aliases": ["rotowire", "rotowire-nfl-rss"],
+      "kind": "news-metadata",
+      "active": true,
+      "publicationScope": "shared",
+      "rawScope": "global",
+      "consumers": ["apes-mac-salad", "johnnys-jerks", "mooseys-mommy"],
+      "publicAllowed": true,
+      "publicFields": ["headline", "publishedAt", "sourceUrl", "reporter"],
+      "storesArticleBody": false,
+      "reason": "RSS metadata only; do not scrape or store article bodies or subscriber analysis."
+    },
+    {
+      "id": "vertex-gemini",
+      "aliases": ["vertex", "gemini", "vertex-gemini"],
+      "kind": "ai-generation",
+      "active": true,
+      "publicationScope": "shared-private",
+      "rawScope": "none",
+      "consumers": ["apes-mac-salad", "johnnys-jerks", "mooseys-mommy"],
+      "publicAllowed": false,
+      "storesArticleBody": false,
+      "reason": "A generation service, not a data source. It receives only source-bound facts and does not use web grounding; private chat is never persisted or published."
+    },
+    {
+      "id": "legacy-expert-snapshots",
+      "aliases": ["legacy-expert-snapshots"],
+      "kind": "historic-ranking-input",
+      "active": false,
+      "publicationScope": "apes-mac-salad",
+      "rawScope": "publication-restricted",
+      "publicAllowed": false,
+      "reason": "Existing FantasyPros ECR, RotoBaller, Justin Boone/Yahoo Sports, and DraftSharks snapshots remain reproducibility artifacts, not live adapters or public-release inputs.",
+      "storesArticleBody": false
+    }
   ]
 }

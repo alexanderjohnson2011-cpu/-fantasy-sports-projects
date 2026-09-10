@@ -4,15 +4,21 @@ All timestamps are ISO 8601 UTC. IDs are opaque strings. Every calculated recomm
 
 ## LeagueConfig
 
-`publicationId`, `displayName`, `platform`, `externalLeagueKey`, `season`, `userTeamKey`, `userSlot`, `numTeams`, `rounds`, `scoring`, `rosterSlots`, `settingsHash`, `privacyPolicy`.
+`publicationId`, `displayName`, `platform`, `externalLeagueKey`, `season`, `userTeamKey`, `userSlot`, `numTeams`, `rounds`, `scoring`, `rosterSlots`, `settingsHash`, `privacyPolicy`, and `providerBindings`.
+
+`externalLeagueKey`, `userTeamKey`, and `userSlot` are local/private until a platform authorization and privacy review permit a sanitized transform. They are never required for a public release.
 
 ## ProviderSnapshot
 
-`snapshotId`, `publicationId`, `provider`, `fetchedAt`, `checksum`, `publicAllowed`, `status`, `detail`, `localPath`. Raw content is immutable; a sidecar carries the same identity and rights metadata.
+`snapshotId`, `publicationId` (nullable only for a shared/global capture), `scope` (`global` or `publication`), `provider`, `fetchedAt`, `checksum`, `publicAllowed`, `publicUseClass`, `attribution`, `parserVersion`, `sourceUri`, `status`, and `detail`. Raw content is immutable; a sidecar carries the same identity and rights metadata. Secrets, manager identities, and private chat are not snapshots.
 
 ## ProjectionRecord
 
-`canonicalPlayerId`, `provider`, `asOf`, `statLine`, `leaguePoints`, `rank`, `tier`, `uncertainty`, `sourceSnapshotId`. Rankings, ADP, market values, and numeric projections remain distinct signal types.
+`canonicalPlayerId`, `publicationId`, `provider`, `asOf`, `statLine`, `leaguePoints`, `rank`, `tier`, `uncertainty`, `sourceSnapshotId`. Rankings, ADP, market values, and numeric projections remain distinct signal types. Shared ADP and market values use `MarketSignal`, not this contract, so no league-specific Yahoo score is reused by Ape's Mac Salad.
+
+## MarketSignal
+
+`canonicalPlayerId`, optional `publicationId`, `scope`, `provider`, `signalType` (`adp`, `marketValue`, `marketRank`, or `trend`), `asOf`, `value`, `rank`, `trend30Day`, and `sourceSnapshotId`.
 
 ## DraftState and DraftEvent
 

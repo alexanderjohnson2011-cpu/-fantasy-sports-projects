@@ -14,6 +14,10 @@
     "build": "tsc && vite build && node scripts/prepare-sites-build.mjs && node scripts/configure-publication-build.mjs",
     "build:pages": "npm run build && node scripts/prepare-github-pages.mjs",
     "build:moose": "node scripts/build-mooseys-mommy.mjs",
+    "build:johnny": "node scripts/build-johnnys-jerks.mjs",
+    "dev:johnny": "vite --config vite.johnny.config.ts",
+    "pipeline:johnny": "python -m sleeper_work.capture_craig_redraft && python -m sleeper_work.build_redraft_recap_payload",
+    "refresh:johnny": "npm run pipeline:johnny && npm run build:johnny",
     "draft:api": "python -m draft_assistant",
     "draft:web": "vite --host 127.0.0.1 --port 4173",
     "draft:check": "python -m unittest discover -s tests -p test_draft_assistant.py"
@@ -28,6 +32,7 @@
     "@radix-ui/react-icons": "1.3.2",
     "@tanstack/react-query": "^5.102.8",
     "@use-gesture/react": "10.3.1",
+    "html2canvas": "^1.4.1",
     "motion": "12.42.2",
     "react": "19.2.7",
     "react-dom": "19.2.7"

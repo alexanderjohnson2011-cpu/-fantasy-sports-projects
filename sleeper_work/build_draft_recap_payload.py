@@ -27,7 +27,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 FIXTURES = os.path.join(HERE, "fixtures")
 RAW = os.path.join(HERE, "raw")
-OUT = os.path.join(ROOT, "ape-invitational-almanac", "src", "generated", "draft-recap.json")
+if os.path.exists(os.path.join(ROOT, "src", "generated")):
+    OUT = os.path.join(ROOT, "src", "generated", "draft-recap.json")
+elif os.path.exists(os.path.join(ROOT, "ape-invitational-almanac", "src", "generated")):
+    OUT = os.path.join(ROOT, "ape-invitational-almanac", "src", "generated", "draft-recap.json")
+else:
+    OUT = os.path.join(ROOT, "src", "generated", "draft-recap.json")
 
 LEAGUE_ID = "1312209616372772864"
 PRIOR_LEAGUE_ID = "1187879775490527232"

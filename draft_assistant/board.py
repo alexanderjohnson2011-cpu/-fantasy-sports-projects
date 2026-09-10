@@ -13,6 +13,7 @@ from typing import Any
 
 from .config import DATA_DIR, ROOT, settings
 from .db import snake_slot
+from .alerts import classify_player_risk
 
 
 POSITIONS = {"QB", "RB", "WR", "TE", "K", "DEF", "DST"}
@@ -80,6 +81,17 @@ def qualitative_profile(player: dict[str, Any]) -> dict[str, Any]:
 
 @lru_cache(maxsize=1)
 def load_board() -> list[dict[str, Any]]:
+    top500_path = DATA_DIR / "top500_board.json"
+    if top500_path.exists():
+        try:
+            top_players = json.loads(top500_path.read_text(encoding="utf-8"))
+            for p in top_players:
+                if "qualitative" not in p:
+                    p["qualitative"] = qualitative_profile(p)
+            return top_players
+        except Exception:
+            pass
+
     players_path = ROOT / "sleeper_work" / "raw" / "players.json"
     sleeper = json.loads(players_path.read_text(encoding="utf-8")) if players_path.exists() else {}
     with gzip.open(_latest_fantasycalc(), "rt", encoding="utf-8") as handle:
@@ -106,20 +118,33 @@ def load_board() -> list[dict[str, Any]]:
             continue
         sleeper_id = str(player.get("sleeperId") or "")
         identity = by_sleeper.get(sleeper_id, {})
-        ffc = ffc_by_name.get(_normalize(player.get("name") or ""), {})
-        news_item = news_by_name.get(_normalize(player.get("name") or ""))
-        nflverse = nflverse_by_name.get(_normalize(player.get("name") or ""), {})
+        name = player.get("name") or identity.get("full_name") or "Unknown player"
+        ffc = ffc_by_name.get(_normalize(name), {})
+        news_item = news_by_name.get(_normalize(name))
+        nflverse = nflverse_by_name.get(_normalize(name), {})
         rank = int(row.get("overallRank") or player.get("overallRank") or len(board) + 1)
         redraft_value = float(row.get("redraftValue") or row.get("value") or player.get("redraftValue") or player.get("value") or 0)
         projected = round(70 + 215 * (max(redraft_value, 1) / 11000) ** 0.58, 1)
         uncertainty = min(0.36, 0.08 + rank / 900 + (0.05 if position == "RB" else 0))
+
+        risk_info = classify_player_risk(
+            player_name=name,
+            injury_status=identity.get("injury_status"),
+            injury_notes=identity.get("injury_notes"),
+            headlines=[(news_item or {}).get("headline", "")] if news_item else [],
+            depth_chart_order=int(identity.get("depth_chart_order") or 1) if identity.get("depth_chart_order") else None,
+        )
+        if risk_info.get("isCritical"):
+            projected = 0.0
+            redraft_value = 0.0
+
         board.append({
             "playerId": sleeper_id or f"fc-{player.get('id')}",
             "yahooId": identity.get("yahoo_id"),
             "gsisId": str(nflverse.get("gsis_id") or identity.get("gsis_id") or "").strip() or None,
             "fantasyCalcId": str(player.get("id") or ""),
             "rotowireId": identity.get("rotowire_id"),
-            "name": player.get("name") or identity.get("full_name") or "Unknown player",
+            "name": name,
             "position": "DST" if position == "DEF" else position,
             "team": player.get("maybeTeam") or identity.get("team") or identity.get("team_abbr") or "FA",
             "bye": ffc.get("bye"),
@@ -131,9 +156,13 @@ def load_board() -> list[dict[str, Any]]:
             "tier": int(row.get("maybeTier") or player.get("maybeTier") or max(1, math.ceil(rank / 24))),
             "trend30Day": float(row.get("trend30Day") or player.get("trend30Day") or 0),
             "uncertainty": round(uncertainty, 3),
-            "newsRisk": "watch" if identity.get("injury_status") or news_item else "clear",
-            "news": (news_item or {}).get("headline") or identity.get("injury_notes") or "No active injury flag in the current local source set.",
-            "newsUrl": (news_item or {}).get("sourceUrl"),
+            "riskLevel": risk_info["riskLevel"],
+            "isCritical": risk_info["isCritical"],
+            "riskBadge": risk_info["badge"],
+            "riskBadgeColor": risk_info["badgeColor"],
+            "newsRisk": "critical" if risk_info["isCritical"] else ("high" if risk_info["riskLevel"] == "high" else ("watch" if risk_info["riskLevel"] == "moderate" else "clear")),
+            "news": risk_info.get("headline") or (news_item or {}).get("headline") or identity.get("injury_notes") or "No active injury flag in the current local source set.",
+            "newsUrl": risk_info.get("sourceUrl") or (news_item or {}).get("sourceUrl"),
             "newsReporter": (news_item or {}).get("reporter"),
             "newsPublishedAt": (news_item or {}).get("publishedAt"),
             "sourceLabel": "Internal baseline + FantasyCalc/FFC market signals",
@@ -148,6 +177,8 @@ def sleeper_radar(available: list[dict[str, Any]], current_pick: int) -> list[di
     """Find later-priced players with current, attributable market and news signals."""
     radar: list[dict[str, Any]] = []
     for player in available:
+        if player.get("isCritical") or player.get("riskLevel") == "critical":
+            continue
         if player["position"] not in {"QB", "RB", "WR", "TE"} or player["adp"] < max(30, current_pick + 6):
             continue
         qualitative = player.get("qualitative") or qualitative_profile(player)
@@ -168,6 +199,17 @@ def sleeper_radar(available: list[dict[str, Any]], current_pick: int) -> list[di
 
 def player_dossier(player: dict[str, Any]) -> dict[str, Any]:
     """Turn only captured/derived evidence into an actionable player brief."""
+    if player.get("dossier"):
+        d = player["dossier"]
+        return {
+            "player": player,
+            "positiveCase": d.get("positiveCase", []),
+            "cautions": d.get("cautions", []),
+            "marketSynthesis": d.get("marketSynthesis", ""),
+            "commentaryCoverage": d.get("commentaryCoverage") or "Derived from multi-source expert baselines and news wire.",
+            "draftTakeaway": d.get("draftTakeaway", ""),
+            "sourceBoundary": f"{(d.get('sourceAttribution') or 'Derived from NFLverse statistical baselines, Sleeper metadata, and public news wires.').rstrip('.')} It does not reproduce article text or invent team-situation facts.",
+        }
     qualitative = player.get("qualitative") or qualitative_profile(player)
     positives: list[str] = []
     cautions: list[str] = []
@@ -241,14 +283,17 @@ def player_dossier(player: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def next_user_picks(current_pick: int, num_teams: int, user_slot: int, count: int = 3) -> list[int]:
+def next_user_picks(current_pick: int, num_teams: int, user_slot: int, count: int = 3,
+                    taken: set[int] | None = None) -> list[int]:
+    """Upcoming picks owned by user_slot. Picks already filled (keepers) are skipped."""
+    taken = taken or set()
     picks: list[int] = []
     candidate = max(1, current_pick)
     while len(picks) < count and candidate <= num_teams * 30:
         round_no = ((candidate - 1) // num_teams) + 1
         within = ((candidate - 1) % num_teams) + 1
         slot = within if round_no % 2 else num_teams - within + 1
-        if slot == user_slot:
+        if slot == user_slot and candidate not in taken:
             picks.append(candidate)
         candidate += 1
     return picks
@@ -291,12 +336,16 @@ def recommend(session: dict[str, Any], events: list[dict[str, Any]], strategy: s
     strategy = strategy or session.get("strategy") or "balanced"
     drafted = {str(event["player_id"]) for event in events}
     available = [dict(player) for player in load_board() if str(player["playerId"]) not in drafted]
-    current_pick = max((int(event["pick_no"]) for event in events), default=0) + 1
+    # Lowest pick not yet filled. Keeper picks are pre-recorded at their assigned
+    # pick numbers, so the draft opens at 1 and later skips consumed slots.
+    taken_picks = {int(event["pick_no"]) for event in events}
+    total_picks = int(session["num_teams"]) * int(session.get("rounds", 16))
+    current_pick = next((p for p in range(1, total_picks + 1) if p not in taken_picks), total_picks)
     num_teams = int(session["num_teams"])
-    user_slot = int(session["user_slot"])
+    user_slot = int(session.get("user_slot", 1))
     league_settings = session.get("league_settings_json") or {}
     slot_confirmed = bool(league_settings.get("userSlotConfirmed", True))
-    future = next_user_picks(current_pick + 1, num_teams, user_slot, 3) if slot_confirmed else []
+    future = next_user_picks(current_pick + 1, num_teams, user_slot, 3, taken_picks) if slot_confirmed else []
     own_counts: dict[str, int] = {}
     if slot_confirmed:
         for event in events:
@@ -309,7 +358,10 @@ def recommend(session: dict[str, Any], events: list[dict[str, Any]], strategy: s
     rng = random.Random(seed)
     survival_samples: dict[str, list[float]] = {}
     top_for_sim = available[:120]
-    recent_positions = [event["position"] for event in events[-6:]]
+    # Only picks that have actually happened. On a keeper ledger the highest
+    # pick numbers are future keeper slots, not the most recent selections.
+    elapsed = [event for event in events if int(event["pick_no"]) < current_pick]
+    recent_positions = [event["position"] for event in elapsed[-6:]]
     team_counts: dict[int, dict[str, int]] = {}
     for event in events:
         slot_counts = team_counts.setdefault(int(event["team_slot"]), {})
@@ -327,17 +379,26 @@ def recommend(session: dict[str, Any], events: list[dict[str, Any]], strategy: s
     candidates: list[dict[str, Any]] = []
     for available_index, player in enumerate(available):
         position = player["position"]
-        vorp = player["projectedPoints"] - replacement.get(position, 0)
-        need_gap = max(0, position_targets.get(position, 0) - own_counts.get(position, 0))
-        need_bonus = need_gap * (8.0 if position in {"RB", "WR"} else 5.0)
-        upside = max(0.0, player["marketValue"] / 500.0) + max(0.0, player["trend30Day"] / 180.0)
-        risk = player["uncertainty"] * 35 + (7 if player["newsRisk"] != "clear" else 0)
-        utility = vorp * base_weight + need_bonus + upside * upside_weight - risk * risk_weight
-        survival = survival_samples.get(player["playerId"], [0.0 for _ in future])
-        wait_cost = (1 - (survival[0] if survival else 0)) * max(0, vorp)
-        score = utility + wait_cost * 0.35
-        next_same_position = next((other for other in available[available_index + 1:] if other["position"] == position), None)
-        position_dropoff = player["projectedPoints"] - (next_same_position["projectedPoints"] if next_same_position else replacement.get(position, 0))
+        is_crit = bool(player.get("isCritical") or player.get("riskLevel") == "critical")
+        if is_crit:
+            vorp = -999.0
+            score = -999.0
+            survival = [0.0 for _ in future]
+            need_gap = 0
+            position_dropoff = 0.0
+        else:
+            vorp = player["projectedPoints"] - replacement.get(position, 0)
+            need_gap = max(0, position_targets.get(position, 0) - own_counts.get(position, 0))
+            need_bonus = need_gap * (8.0 if position in {"RB", "WR"} else 5.0)
+            upside = max(0.0, player["marketValue"] / 500.0) + max(0.0, player["trend30Day"] / 180.0)
+            risk = player["uncertainty"] * 35 + (7 if player["newsRisk"] != "clear" else 0)
+            utility = vorp * base_weight + need_bonus + upside * upside_weight - risk * risk_weight
+            survival = survival_samples.get(player["playerId"], [0.0 for _ in future])
+            wait_cost = (1 - (survival[0] if survival else 0)) * max(0, vorp)
+            score = utility + wait_cost * 0.35
+            next_same_position = next((other for other in available[available_index + 1:] if other["position"] == position), None)
+            position_dropoff = player["projectedPoints"] - (next_same_position["projectedPoints"] if next_same_position else replacement.get(position, 0))
+
         candidates.append({
             **player,
             "vorp": round(vorp, 1),
@@ -351,6 +412,8 @@ def recommend(session: dict[str, Any], events: list[dict[str, Any]], strategy: s
     for index, candidate in enumerate(candidates):
         comparison = candidates[index + 1]["utility"] if index + 1 < len(candidates) else candidate["utility"]
         candidate["incrementalValue"] = round(candidate["utility"] - comparison, 2)
+
+    valid_recs = [c for c in candidates if not c.get("isCritical") and c.get("riskLevel") != "critical"]
     return {
         "generatedAt": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
         "currentPick": current_pick,
@@ -360,10 +423,14 @@ def recommend(session: dict[str, Any], events: list[dict[str, Any]], strategy: s
         "strategy": strategy,
         "simulations": simulations,
         "projectionLabel": (
-            "Internal baseline + FantasyCalc/FFC market signals; custom Yahoo rules are saved, but exact stat-line rescoring awaits a projection feed"
-            if session.get("scoring_json") else "Internal baseline + FantasyCalc/FFC market signals"
+            "Top 500 NFLverse Stats + Sleeper Alerts"
+            if (DATA_DIR / "top500_board.json").exists()
+            else (
+                "Internal baseline + FantasyCalc/FFC market signals; custom Yahoo rules are saved, but exact stat-line rescoring awaits a projection feed"
+                if session.get("scoring_json") else "Internal baseline + FantasyCalc/FFC market signals"
+            )
         ),
-        "recommendations": candidates[:4],
+        "recommendations": valid_recs[:4],
         "available": candidates,
         "rosterCounts": own_counts,
         "sleeperRadar": sleeper_radar(available, current_pick),

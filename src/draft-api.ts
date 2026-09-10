@@ -40,6 +40,18 @@ export type DraftPlayer = {
   samePositionDropoff: number;
   evidenceIds: string[];
   qualitative?: { label: string; adpGap: number; trend30Day: number; reasons: string[]; teamSituation: string };
+  riskLevel?: "clean" | "moderate" | "high" | "critical" | string;
+  riskCategory?: string;
+  isCritical?: boolean;
+  riskBadge?: string;
+  riskBadgeColor?: string;
+  newsHeadline?: string;
+  newsDetails?: string;
+  projectedStats?: Record<string, number>;
+  status?: string | null;
+  injuryStatus?: string | null;
+  injuryBodyPart?: string | null;
+  injuryNotes?: string | null;
 };
 
 export type PlayerDossier = {
@@ -67,8 +79,14 @@ export type DraftEvent = {
   player_id: string;
   player_name: string;
   position: string;
-  source: "manual" | "yahoo" | "correction" | "rehearsal";
+  source: "manual" | "yahoo" | "sleeper" | "correction" | "rehearsal";
   observed_at: string;
+  adp?: number;
+  projectedPoints?: number;
+  vorp?: number | null;
+  tier?: number;
+  marketRank?: number;
+  team?: string;
 };
 
 export type SourceState = {
@@ -79,14 +97,31 @@ export type SourceState = {
   detail?: string;
 };
 
+export type SleeperLeaguePreview = {
+  leagueId: string;
+  draftId: string;
+  leagueName: string;
+  numTeams: number;
+  rounds: number;
+  draftStatus: string;
+  draftType: string;
+  scoringFormat: string;
+  scoringRules: Array<{ name: string; value: number }>;
+  rosterSlots: Array<{ position: string; count: number }>;
+  userOptions: Array<{ slot: number; userId: string; displayName: string; teamName: string }>;
+};
+
 export type DraftState = {
   session: {
     session_id: string;
     league_name: string;
     league_key?: string;
+    sleeper_league_id?: string;
+    sleeper_draft_id?: string;
     user_slot: number;
     num_teams: number;
     rounds: number;
+    scoring_format?: string;
     scoring_json?: Array<{ name: string; value: number }>;
     roster_slots_json?: Array<{ position: string; count: number }>;
     league_settings_json?: {
@@ -94,11 +129,14 @@ export type DraftState = {
       keeperManagementEnabled?: boolean;
       userSlotConfirmed?: boolean;
       roundsConfirmed?: boolean;
+      sleeperDraftId?: string;
+      sleeperLeagueId?: string;
     };
     strategy: "floor" | "balanced" | "upside";
-    sync_mode: "manual" | "yahoo";
+    sync_mode: "manual" | "yahoo" | "sleeper";
     sync_message?: string;
     last_yahoo_sync?: string;
+    last_sleeper_sync?: string;
   };
   events: DraftEvent[];
   sources: SourceState[];

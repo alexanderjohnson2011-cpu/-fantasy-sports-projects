@@ -15,6 +15,7 @@ import sqlite3
 import hashlib
 import uuid
 import datetime
+from pathlib import Path
 from canonical_schema import compute_entity_hash, validate_scoring_settings
 
 try:
@@ -23,14 +24,32 @@ try:
 except ImportError:
     BQ_AVAILABLE = False
 
-KEY_PATH = r"C:\Users\alexa\Documents\Codex\Apes Mac Salad\apes-mac-salad-0d52b5a00417.json"
-PROJECT_ID = "apes-mac-salad"
+PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT", "apes-mac-salad")
 SLEEPER_WORK_DIR = os.path.dirname(__file__)
 FIXTURES_DIR = os.path.join(SLEEPER_WORK_DIR, "fixtures")
 RAW_DIR = os.path.join(SLEEPER_WORK_DIR, "raw")
 SQLITE_DB_PATH = os.path.join(SLEEPER_WORK_DIR, "canonical.db")
+LEAGUE_REGISTRY_PATH = Path(SLEEPER_WORK_DIR) / "league_registry.json"
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = KEY_PATH
+
+def load_publication_config(publication_id: str) -> dict:
+    """Load the platform boundary without embedding league IDs in code.
+
+    This legacy ingest remains a Sleeper-compatible Ape's Mac Salad adapter;
+    Yahoo and shared providers write their own platform-neutral canonical rows.
+    Keeping the ID in the league registry prevents a new publication from
+    accidentally inheriting Ape's league truth.
+    """
+    registry = json.loads(LEAGUE_REGISTRY_PATH.read_text(encoding="utf-8"))
+    try:
+        return registry["publications"][publication_id]
+    except KeyError as exc:
+        raise RuntimeError(f"Missing publication config: {publication_id}") from exc
+
+
+APES_CONFIG = load_publication_config("apes-mac-salad")
+APES_LEAGUE_ID = APES_CONFIG["externalLeagueKey"]
+APES_DRAFT_ID = APES_CONFIG["draftKey"]
 
 def init_sqlite_db():
     conn = sqlite3.connect(SQLITE_DB_PATH)
@@ -131,10 +150,10 @@ def load_canonical_data(sync_bigquery=True):
             INSERT OR REPLACE INTO roster_states 
             (league_id, roster_id, owner_id, wins, losses, fpts, ppts, observed_at_utc, content_hash)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, ("1312209616372772864", roster_id, owner_id, wins, losses, fpts, ppts, observed_at, c_hash))
+            """, (APES_LEAGUE_ID, roster_id, owner_id, wins, losses, fpts, ppts, observed_at, c_hash))
             
             roster_rows_bq.append({
-                "league_id": "1312209616372772864",
+                "league_id": APES_LEAGUE_ID,
                 "roster_id": roster_id,
                 "owner_id": owner_id,
                 "starters": starters,
@@ -161,7 +180,7 @@ def load_canonical_data(sync_bigquery=True):
     # 2. Parse 48-pick Draft Board
     pick_rows_bq = []
     crosswalk_rows_bq = []
-    picks_path = os.path.join(FIXTURES_DIR, "draft_1312209616385343488_picks.json")
+    picks_path = os.path.join(FIXTURES_DIR, f"draft_{APES_DRAFT_ID}_picks.json")
     if not os.path.exists(picks_path):
         picks_path = os.path.join(RAW_DIR, "picks.json")
         
@@ -171,7 +190,7 @@ def load_canonical_data(sync_bigquery=True):
             
         pick_count = 0
         for p in picks:
-            draft_id = p.get("draft_id", "1312209616385343488")
+            draft_id = p.get("draft_id", APES_DRAFT_ID)
             pick_no = p["pick_no"]
             round_no = p["round"]
             slot = p["draft_slot"]

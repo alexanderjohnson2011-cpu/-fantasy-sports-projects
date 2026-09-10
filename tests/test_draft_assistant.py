@@ -10,7 +10,7 @@ from draft_assistant import board, db, offline
 from draft_assistant.ai import fallback_commentary, fallback_player_take
 from draft_assistant.db import snake_slot
 from draft_assistant.scoring import score_stat_line
-from sleeper_work.build_public_release import assert_private_fields_absent, build, sanitize
+from sleeper_work.build_public_release import assert_private_fields_absent, build, sanitize, source_is_public
 
 
 class SnakeDraftTests(unittest.TestCase):
@@ -156,6 +156,24 @@ class PublicReleaseTests(unittest.TestCase):
             self.assertTrue(release.exists())
             self.assertEqual(json.loads(manifest.read_text())["publicationId"], "mooseys-mommy")
 
+    def test_sleeper_is_scoped_to_its_two_publications(self):
+        self.assertTrue(source_is_public("sleeper", "apes-mac-salad"))
+        self.assertTrue(source_is_public("sleeper", "johnnys-jerks"))
+        self.assertFalse(source_is_public("sleeper", "mooseys-mommy"))
+
+    def test_johnnys_release_is_registered(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            input_path = base / "input.json"
+            input_path.write_text(json.dumps({"teams": [{"teamName": "Team Test"}]}), encoding="utf-8")
+            _, manifest = build("johnnys-jerks", input_path, base / "out")
+            self.assertEqual(json.loads(manifest.read_text())["publicationId"], "johnnys-jerks")
+
+    def test_release_policy_does_not_trust_a_provider_self_marked_public(self):
+        source = {"sources": [{"provider": "fantasypros-private", "publicAllowed": True}]}
+        cleaned = sanitize(source, "mooseys-mommy")
+        self.assertEqual(cleaned["sources"], [])
+
 
 class ChatGPTPacketTests(unittest.TestCase):
     def test_packet_is_upload_ready_and_excludes_credentials_and_platform_ids(self):
@@ -179,6 +197,132 @@ class ChatGPTPacketTests(unittest.TestCase):
                 self.assertTrue(Path(result["markdownPath"]).exists())
             finally:
                 offline.DATA_DIR = original_data_dir
+
+
+class JoshJacobsSafeguardTests(unittest.TestCase):
+    def test_josh_jacobs_classified_as_speculative_stash(self):
+        from draft_assistant.alerts import classify_player_risk
+        risk = classify_player_risk(
+            player_name="Josh Jacobs",
+            injury_status="Active",
+            injury_notes="Brown County misdemeanor battery charges",
+            headlines=["NFL placed Josh Jacobs on Commissioner Exempt List"],
+            depth_chart_order=4,
+        )
+        self.assertEqual(risk["riskLevel"], "high")
+        self.assertFalse(risk["isCritical"])
+        self.assertEqual(risk["projectionFactor"], 0.32)
+        self.assertIn("EXEMPT LIST", risk["badge"])
+
+    def test_josh_jacobs_not_recommended_as_early_starter(self):
+        all_players = board.load_board()
+        jacobs = next((p for p in all_players if "jacobs" in p["name"].lower() and "josh" in p["name"].lower()), None)
+        self.assertIsNotNone(jacobs)
+        self.assertFalse(jacobs.get("isCritical", False))
+        self.assertGreater(jacobs.get("projectedPoints", 0), 40.0)
+        self.assertLess(jacobs.get("projectedPoints", 0), 120.0)
+
+        result = board.recommend({"strategy": "balanced", "num_teams": 12, "user_slot": 3, "rounds": 16}, [])
+        rec_ids = [p["playerId"] for p in result["recommendations"]]
+        self.assertNotIn(jacobs["playerId"], rec_ids)
+
+
+
+class SleeperIntegrationTests(unittest.TestCase):
+    def test_parse_sleeper_roster_slots(self):
+        from draft_assistant.sleeper import parse_sleeper_roster_slots
+        positions = ["QB", "RB", "RB", "WR", "WR", "TE", "FLEX", "K", "DEF", "BN", "BN"]
+        slots = parse_sleeper_roster_slots(positions)
+        slot_map = {s["position"]: s["count"] for s in slots}
+        self.assertEqual(slot_map["QB"], 1)
+        self.assertEqual(slot_map["RB"], 2)
+        self.assertEqual(slot_map["WR"], 2)
+        self.assertEqual(slot_map["FLEX"], 1)
+        self.assertNotIn("BN", slot_map)
+
+    def test_parse_sleeper_scoring(self):
+        from draft_assistant.sleeper import parse_sleeper_scoring
+        fmt_half, rules_half = parse_sleeper_scoring({"rec": 0.5, "pass_td": 4.0})
+        self.assertEqual(fmt_half, "half-ppr")
+        fmt_ppr, rules_ppr = parse_sleeper_scoring({"rec": 1.0, "pass_td": 6.0})
+        self.assertEqual(fmt_ppr, "ppr")
+        fmt_std, rules_std = parse_sleeper_scoring({"rec": 0.0})
+        self.assertEqual(fmt_std, "standard")
+
+    def test_sleeper_session_sync_mode(self):
+        from draft_assistant.db import get_session, update_session
+        updated = update_session("tonight", sync_mode="sleeper", sleeper_league_id="1312209616372772864")
+        self.assertEqual(updated["sync_mode"], "sleeper")
+        self.assertEqual(updated["sleeper_league_id"], "1312209616372772864")
+
+
+class InjuryAndRecoverySafeguardTests(unittest.TestCase):
+    def test_pup_list_classified_as_critical_recovery_risk(self):
+        from draft_assistant.alerts import classify_player_risk
+        risk = classify_player_risk(
+            player_name="George Kittle",
+            injury_status="PUP",
+            injury_notes="Achilles surgery rehab",
+            headlines=[],
+            depth_chart_order=1,
+            status="Active",
+            injury_body_part="Achilles",
+        )
+        self.assertEqual(risk["riskLevel"], "critical")
+        self.assertTrue(risk["isCritical"])
+        self.assertEqual(risk["projectionFactor"], 0.0)
+        self.assertEqual(risk["category"], "long_term_injury_recovery")
+        self.assertIn("PUP LIST", risk["badge"])
+        self.assertIn("DO NOT DRAFT", risk["badge"])
+
+    def test_season_ending_injury_classified_as_critical(self):
+        from draft_assistant.alerts import classify_player_risk
+        risk = classify_player_risk(
+            player_name="JJ McCarthy",
+            injury_status="IR",
+            injury_notes="Torn meniscus repair",
+            headlines=["Vikings QB J.J. McCarthy placed on season-ending injured reserve"],
+            depth_chart_order=2,
+            status="Injured Reserve",
+            injury_body_part="Knee",
+        )
+        self.assertEqual(risk["riskLevel"], "critical")
+        self.assertTrue(risk["isCritical"])
+        self.assertEqual(risk["projectionFactor"], 0.0)
+        self.assertEqual(risk["category"], "injury_season_ending")
+        self.assertIn("DO NOT DRAFT", risk["badge"])
+
+    def test_long_term_recovery_timeline_classified_as_critical(self):
+        from draft_assistant.alerts import classify_player_risk
+        risk = classify_player_risk(
+            player_name="Jonathon Brooks",
+            injury_status="Active",
+            injury_notes="Torn ACL recovery",
+            headlines=["Facing long-term recovery timeline from knee reconstruction; out 6-8 weeks"],
+            depth_chart_order=1,
+            status="Active",
+            injury_body_part="Knee",
+        )
+        self.assertEqual(risk["riskLevel"], "critical")
+        self.assertTrue(risk["isCritical"])
+        self.assertEqual(risk["projectionFactor"], 0.0)
+        self.assertIn("DO NOT DRAFT", risk["badge"])
+
+    def test_moderate_questionable_not_blocked(self):
+        from draft_assistant.alerts import classify_player_risk
+        risk = classify_player_risk(
+            player_name="Christian McCaffrey",
+            injury_status="Questionable",
+            injury_notes=None,
+            headlines=[],
+            depth_chart_order=1,
+            status="Active",
+            injury_body_part="Calf",
+        )
+        self.assertEqual(risk["riskLevel"], "moderate")
+        self.assertFalse(risk["isCritical"])
+        self.assertEqual(risk["projectionFactor"], 0.95)
+        self.assertIn("MONITOR", risk["badge"])
 
 
 if __name__ == "__main__":

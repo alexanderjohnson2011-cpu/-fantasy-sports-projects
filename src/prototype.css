@@ -1423,31 +1423,38 @@ button {
 /* Responsive website shell */
 html {
   min-height: 100%;
+  height: auto !important;
+  overflow-y: auto !important;
   background: var(--paper);
 }
 
 body {
   min-height: 100%;
-  height: auto;
-  overflow-x: hidden;
-  overflow-y: auto;
+  height: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
   background: var(--paper);
 }
 
 #root {
   min-height: 100%;
-  height: auto;
+  height: auto !important;
+  overflow: visible !important;
 }
 
 .site-shell {
   --mobile-safe-area-height: env(safe-area-inset-bottom, 0px);
-  min-height: 100dvh;
+  min-height: 100vh;
+  height: auto !important;
+  overflow: visible !important;
   background: var(--paper);
 }
 
 .site-content,
 .web-screen {
-  min-height: 100dvh;
+  min-height: 100vh;
+  height: auto !important;
+  overflow: visible !important;
 }
 
 .site-content {

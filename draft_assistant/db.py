@@ -97,7 +97,7 @@ def initialize() -> None:
             """
         )
         columns = {row[1] for row in conn.execute("PRAGMA table_info(draft_sessions)")}
-        for name in ("scoring_json", "roster_slots_json", "league_settings_json", "settings_hash"):
+        for name in ("scoring_json", "roster_slots_json", "league_settings_json", "settings_hash", "sleeper_league_id", "sleeper_draft_id", "last_sleeper_sync"):
             if name not in columns:
                 conn.execute(f"ALTER TABLE draft_sessions ADD COLUMN {name} TEXT")
         conn.execute("PRAGMA optimize")
@@ -105,6 +105,10 @@ def initialize() -> None:
 
 
 def ensure_session(conn: sqlite3.Connection, session_id: str = "tonight") -> None:
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(draft_sessions)")}
+    for name in ("scoring_json", "roster_slots_json", "league_settings_json", "settings_hash", "sleeper_league_id", "sleeper_draft_id", "last_sleeper_sync"):
+        if name not in columns:
+            conn.execute(f"ALTER TABLE draft_sessions ADD COLUMN {name} TEXT")
     now = utc_now()
     conn.execute(
         """
@@ -115,7 +119,7 @@ def ensure_session(conn: sqlite3.Connection, session_id: str = "tonight") -> Non
         """,
         (session_id, settings.publication_id, "Moosey's Mommy", 1, 12, 16,
          "half-ppr", "balanced", "pre_draft", "manual",
-         "Manual mode is ready. Connect Yahoo when credentials are available.", now, now),
+         "Manual mode is ready. Connect Yahoo or Sleeper when available.", now, now),
     )
     conn.execute(
         "INSERT OR IGNORE INTO ai_usage(session_id, updated_at) VALUES (?, ?)",
@@ -140,7 +144,8 @@ def get_session(session_id: str = "tonight") -> dict[str, Any]:
 def update_session(session_id: str = "tonight", **values: Any) -> dict[str, Any]:
     allowed = {"league_key", "league_name", "user_team_key", "user_slot", "num_teams", "rounds",
                "scoring_format", "scoring_json", "roster_slots_json", "league_settings_json", "settings_hash",
-               "strategy", "status", "sync_mode", "sync_message", "last_yahoo_sync"}
+               "strategy", "status", "sync_mode", "sync_message", "last_yahoo_sync",
+               "sleeper_league_id", "sleeper_draft_id", "last_sleeper_sync"}
     changes = {key: value for key, value in values.items() if key in allowed and value is not None}
     for key in ("scoring_json", "roster_slots_json", "league_settings_json"):
         if key in changes and not isinstance(changes[key], str):
@@ -193,14 +198,18 @@ def add_event(session_id: str, player: dict[str, Any], team_slot: int | None, so
             (session_id, pick_no, round_no, team_slot, str(player["playerId"]), player["name"],
              player.get("position", "NA"), source, provider_event_id, now),
         )
-    return list_events(session_id)[pick_no - 1]
+    # Look up by pick number, not list position: a keeper ledger is sparse,
+    # so index pick_no - 1 is not the event we just wrote.
+    return next(event for event in list_events(session_id) if int(event["pick_no"]) == pick_no)
 
 
 def undo_last(session_id: str = "tonight") -> dict[str, Any] | None:
     events = list_events(session_id)
     if not events:
         return None
-    last = events[-1]
+    # Most recently recorded, not highest pick number: keeper rows sit at high
+    # pick numbers and must never be what "Undo last" removes.
+    last = max(events, key=lambda event: int(event["event_id"]))
     with connection() as conn:
         conn.execute(
             "UPDATE draft_events SET superseded_at = ? WHERE event_id = ?",
@@ -218,6 +227,19 @@ def clear_events_by_source(session_id: str, source: str) -> int:
             WHERE session_id = ? AND source = ? AND superseded_at IS NULL
             """,
             (utc_now(), session_id, source),
+        )
+    return int(cursor.rowcount)
+
+
+def clear_all_events(session_id: str = "tonight") -> int:
+    """Supersede all draft events for a session to start fresh."""
+    with connection() as conn:
+        cursor = conn.execute(
+            """
+            UPDATE draft_events SET superseded_at = ?
+            WHERE session_id = ? AND superseded_at IS NULL
+            """,
+            (utc_now(), session_id),
         )
     return int(cursor.rowcount)
 

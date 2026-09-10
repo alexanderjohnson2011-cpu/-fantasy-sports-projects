@@ -1,0 +1,2748 @@
+{
+  "generatedAt": "2026-09-10T04:39:33.378778+00:00",
+  "modelVersion": "johnnys-power-v2",
+  "methodology": "50% stat-line optimal-lineup projection, 25% usable bench projection, 15% top-five VORP ceiling, and 10% league-format balance. Draft execution and draft grades are excluded.",
+  "rankings": [
+    {
+      "rosterId": 8,
+      "teamName": "Team mannyrsox24",
+      "managerName": "mannyrsox24",
+      "lineupProjection": 2116.4,
+      "weeklyProjection": 124.5,
+      "benchProjection": 818.7,
+      "starPowerVorp": 509.7,
+      "balanceRaw": 96.0,
+      "topThreeShare": 43.0,
+      "rbShare": 44.5,
+      "injuryFlags": [
+        {
+          "player": "Chuba Hubbard",
+          "status": "Questionable",
+          "note": "Hamstring strain monitor; limited practice participation.",
+          "starter": true
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 616.6,
+          "players": [
+            "Jayden Daniels",
+            "Dak Prescott"
+          ],
+          "rank": 2
+        },
+        "RB": {
+          "seasonProjection": 987.7,
+          "players": [
+            "James Cook",
+            "Ashton Jeanty",
+            "Chuba Hubbard",
+            "J.K. Dobbins"
+          ],
+          "rank": 3
+        },
+        "WR": {
+          "seasonProjection": 964.3,
+          "players": [
+            "Tee Higgins",
+            "Terry McLaurin",
+            "Carnell Tate",
+            "Jordan Addison"
+          ],
+          "rank": 7
+        },
+        "TE": {
+          "seasonProjection": 172.7,
+          "players": [
+            "Colston Loveland"
+          ],
+          "rank": 9
+        },
+        "K": {
+          "seasonProjection": 144.6,
+          "players": [
+            "Jake Bates"
+          ],
+          "rank": 7
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player DEN"
+          ],
+          "rank": 3
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Jayden Daniels",
+          "position": "QB",
+          "nflTeam": "WAS",
+          "slot": "6.10",
+          "starter": true,
+          "seasonProjection": 317.1,
+          "weeklyProjection": 18.7,
+          "trend30Day": 58.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "James Cook",
+          "position": "RB",
+          "nflTeam": "BUF",
+          "slot": "1.10",
+          "starter": true,
+          "seasonProjection": 305.3,
+          "weeklyProjection": 18.0,
+          "trend30Day": 434.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Dak Prescott",
+          "position": "QB",
+          "nflTeam": "DAL",
+          "slot": "11.10",
+          "starter": false,
+          "seasonProjection": 299.5,
+          "weeklyProjection": 17.6,
+          "trend30Day": 132.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Ashton Jeanty",
+          "position": "RB",
+          "nflTeam": "LV",
+          "slot": "2.10",
+          "starter": true,
+          "seasonProjection": 288.5,
+          "weeklyProjection": 17.0,
+          "trend30Day": -567.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Tee Higgins",
+          "position": "WR",
+          "nflTeam": "CIN",
+          "slot": "4.10",
+          "starter": true,
+          "seasonProjection": 241.7,
+          "weeklyProjection": 14.2,
+          "trend30Day": -145.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Terry McLaurin",
+          "position": "WR",
+          "nflTeam": "WAS",
+          "slot": "5.10",
+          "starter": true,
+          "seasonProjection": 203.4,
+          "weeklyProjection": 12.0,
+          "trend30Day": -111.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Chuba Hubbard",
+          "position": "RB",
+          "nflTeam": "CAR",
+          "slot": "8.10",
+          "starter": true,
+          "seasonProjection": 180.4,
+          "weeklyProjection": 10.6,
+          "trend30Day": -18.2,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Carnell Tate",
+          "position": "WR",
+          "nflTeam": "TEN",
+          "slot": "7.10",
+          "starter": false,
+          "seasonProjection": 177.4,
+          "weeklyProjection": 10.4,
+          "trend30Day": 42.5,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Colston Loveland",
+          "position": "TE",
+          "nflTeam": "CHI",
+          "slot": "3.10",
+          "starter": true,
+          "seasonProjection": 172.7,
+          "weeklyProjection": 10.2,
+          "trend30Day": -75.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "J.K. Dobbins",
+          "position": "RB",
+          "nflTeam": "DEN",
+          "slot": "9.10",
+          "starter": true,
+          "seasonProjection": 167.7,
+          "weeklyProjection": 9.9,
+          "trend30Day": -111.0,
+          "injuryStatus": "Healthy"
+        }
+      ],
+      "powerScore": 94.7,
+      "grade": "A+",
+      "volatilityScore": 25.4,
+      "volatilityLabel": "Stable",
+      "components": {
+        "lineup": {
+          "score": 94.9,
+          "rank": 3,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 96.5,
+          "rank": 2,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 90.3,
+          "rank": 2,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 96.0,
+          "rank": 3,
+          "weight": "10%"
+        }
+      },
+      "rank": 1,
+      "tier": "Title favorite",
+      "strongestRoom": "QB",
+      "weakestRoom": "TE",
+      "headline": "Team mannyrsox24 pairs top-end scoring with one of the league's safest redraft profiles.",
+      "currentCase": "The optimal lineup projects for 124.5 points per week, ranks #3, and is backed by the #2 usable bench. The QB room is the clearest weekly advantage.",
+      "pressurePoint": "The TE room ranks #9; that is the clearest place an opponent can create separation. 1 roster health flag(s) add uncertainty.",
+      "verdict": "Title favorite: protect the QB edge and find weekly answers at TE."
+    },
+    {
+      "rosterId": 5,
+      "teamName": "Team arkinsjt",
+      "managerName": "arkinsjt",
+      "lineupProjection": 2156.3,
+      "weeklyProjection": 126.8,
+      "benchProjection": 765.5,
+      "starPowerVorp": 507.6,
+      "balanceRaw": 96.0,
+      "topThreeShare": 40.8,
+      "rbShare": 25.1,
+      "injuryFlags": [
+        {
+          "player": "Kyle Monangai",
+          "status": "Questionable",
+          "note": "",
+          "starter": false
+        },
+        {
+          "player": "Kenyon Sadiq",
+          "status": "Questionable",
+          "note": "Surgery",
+          "starter": false
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 606.4,
+          "players": [
+            "Jalen Hurts",
+            "Kyler Murray"
+          ],
+          "rank": 3
+        },
+        "RB": {
+          "seasonProjection": 923.2,
+          "players": [
+            "Omarion Hampton",
+            "Javonte Williams",
+            "Kyle Monangai",
+            "Jordan Mason"
+          ],
+          "rank": 6
+        },
+        "WR": {
+          "seasonProjection": 975.5,
+          "players": [
+            "Ja'Marr Chase",
+            "Zay Flowers",
+            "Chris Olave",
+            "Rome Odunze"
+          ],
+          "rank": 6
+        },
+        "TE": {
+          "seasonProjection": 229.2,
+          "players": [
+            "Dalton Kincaid",
+            "Kenyon Sadiq"
+          ],
+          "rank": 7
+        },
+        "K": {
+          "seasonProjection": 146.6,
+          "players": [
+            "Cam Little"
+          ],
+          "rank": 5
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player PHI"
+          ],
+          "rank": 1
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Jalen Hurts",
+          "position": "QB",
+          "nflTeam": "PHI",
+          "slot": "7.05",
+          "starter": true,
+          "seasonProjection": 321.2,
+          "weeklyProjection": 18.9,
+          "trend30Day": 66.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Kyler Murray",
+          "position": "QB",
+          "nflTeam": "MIN",
+          "slot": "13.05",
+          "starter": false,
+          "seasonProjection": 285.2,
+          "weeklyProjection": 16.8,
+          "trend30Day": 96.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Omarion Hampton",
+          "position": "RB",
+          "nflTeam": "LAC",
+          "slot": "2.05",
+          "starter": true,
+          "seasonProjection": 282.5,
+          "weeklyProjection": 16.6,
+          "trend30Day": -317.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Ja'Marr Chase",
+          "position": "WR",
+          "nflTeam": "CIN",
+          "slot": "1.05",
+          "starter": true,
+          "seasonProjection": 277.1,
+          "weeklyProjection": 16.3,
+          "trend30Day": -326.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Javonte Williams",
+          "position": "RB",
+          "nflTeam": "DAL",
+          "slot": "3.05",
+          "starter": true,
+          "seasonProjection": 258.3,
+          "weeklyProjection": 15.2,
+          "trend30Day": 672.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Zay Flowers",
+          "position": "WR",
+          "nflTeam": "BAL",
+          "slot": "5.05",
+          "starter": true,
+          "seasonProjection": 230.6,
+          "weeklyProjection": 13.6,
+          "trend30Day": 64.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Chris Olave",
+          "position": "WR",
+          "nflTeam": "NO",
+          "slot": "4.05",
+          "starter": true,
+          "seasonProjection": 216.6,
+          "weeklyProjection": 12.7,
+          "trend30Day": 731.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Rome Odunze",
+          "position": "WR",
+          "nflTeam": "CHI",
+          "slot": "6.05",
+          "starter": true,
+          "seasonProjection": 197.1,
+          "weeklyProjection": 11.6,
+          "trend30Day": -379.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Cam Little",
+          "position": "K",
+          "nflTeam": "JAX",
+          "slot": "15.05",
+          "starter": true,
+          "seasonProjection": 146.6,
+          "weeklyProjection": 8.6,
+          "trend30Day": 0.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Kyle Monangai",
+          "position": "RB",
+          "nflTeam": "CHI",
+          "slot": "9.05",
+          "starter": false,
+          "seasonProjection": 139.7,
+          "weeklyProjection": 8.2,
+          "trend30Day": -200.0,
+          "injuryStatus": "Questionable"
+        }
+      ],
+      "powerScore": 93.7,
+      "grade": "A+",
+      "volatilityScore": 30.5,
+      "volatilityLabel": "Stable",
+      "components": {
+        "lineup": {
+          "score": 98.0,
+          "rank": 1,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 86.7,
+          "rank": 5,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 89.7,
+          "rank": 3,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 96.0,
+          "rank": 1,
+          "weight": "10%"
+        }
+      },
+      "rank": 2,
+      "tier": "Championship tier",
+      "strongestRoom": "QB",
+      "weakestRoom": "TE",
+      "headline": "Team arkinsjt pairs top-end scoring with one of the league's safest redraft profiles.",
+      "currentCase": "The optimal lineup projects for 126.8 points per week, ranks #1, and is backed by the #5 usable bench. The QB room is the clearest weekly advantage.",
+      "pressurePoint": "The TE room ranks #7; that is the clearest place an opponent can create separation. 2 roster health flag(s) add uncertainty.",
+      "verdict": "Championship tier: protect the QB edge and find weekly answers at TE."
+    },
+    {
+      "rosterId": 6,
+      "teamName": "Team Gnomeington",
+      "managerName": "Gnomeington",
+      "lineupProjection": 2126.4,
+      "weeklyProjection": 125.1,
+      "benchProjection": 661.3,
+      "starPowerVorp": 534.5,
+      "balanceRaw": 96.0,
+      "topThreeShare": 45.8,
+      "rbShare": 25.4,
+      "injuryFlags": [
+        {
+          "player": "Emeka Egbuka",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        },
+        {
+          "player": "DJ Moore",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 627.8,
+          "players": [
+            "Josh Allen",
+            "Justin Herbert"
+          ],
+          "rank": 1
+        },
+        "RB": {
+          "seasonProjection": 679.8,
+          "players": [
+            "Jahmyr Gibbs",
+            "Jaylen Warren",
+            "Tyjae Spears",
+            "Mike Washington"
+          ],
+          "rank": 11
+        },
+        "WR": {
+          "seasonProjection": 985.3,
+          "players": [
+            "Nico Collins",
+            "Emeka Egbuka",
+            "DJ Moore",
+            "Chris Godwin"
+          ],
+          "rank": 5
+        },
+        "TE": {
+          "seasonProjection": 298.0,
+          "players": [
+            "Kyle Pitts",
+            "Jake Ferguson"
+          ],
+          "rank": 3
+        },
+        "K": {
+          "seasonProjection": 153.0,
+          "players": [
+            "Cameron Dicker"
+          ],
+          "rank": 4
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player NE"
+          ],
+          "rank": 2
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Josh Allen",
+          "position": "QB",
+          "nflTeam": "BUF",
+          "slot": "3.01",
+          "starter": true,
+          "seasonProjection": 367.7,
+          "weeklyProjection": 21.6,
+          "trend30Day": -13.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Jahmyr Gibbs",
+          "position": "RB",
+          "nflTeam": "DET",
+          "slot": "1.01",
+          "starter": true,
+          "seasonProjection": 345.0,
+          "weeklyProjection": 20.3,
+          "trend30Day": 693.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Nico Collins",
+          "position": "WR",
+          "nflTeam": "HOU",
+          "slot": "2.01",
+          "starter": true,
+          "seasonProjection": 260.9,
+          "weeklyProjection": 15.3,
+          "trend30Day": -88.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Justin Herbert",
+          "position": "QB",
+          "nflTeam": "LAC",
+          "slot": "8.01",
+          "starter": false,
+          "seasonProjection": 260.1,
+          "weeklyProjection": 15.3,
+          "trend30Day": 101.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Emeka Egbuka",
+          "position": "WR",
+          "nflTeam": "TB",
+          "slot": "4.01",
+          "starter": true,
+          "seasonProjection": 213.0,
+          "weeklyProjection": 12.5,
+          "trend30Day": -649.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "DJ Moore",
+          "position": "WR",
+          "nflTeam": "BUF",
+          "slot": "5.01",
+          "starter": true,
+          "seasonProjection": 197.0,
+          "weeklyProjection": 11.6,
+          "trend30Day": 475.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Jaylen Warren",
+          "position": "RB",
+          "nflTeam": "PIT",
+          "slot": "7.01",
+          "starter": true,
+          "seasonProjection": 195.4,
+          "weeklyProjection": 11.5,
+          "trend30Day": 190.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Cameron Dicker",
+          "position": "K",
+          "nflTeam": "LAC",
+          "slot": "13.01",
+          "starter": true,
+          "seasonProjection": 153.0,
+          "weeklyProjection": 9.0,
+          "trend30Day": 0.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Chris Godwin",
+          "position": "WR",
+          "nflTeam": "TB",
+          "slot": "9.01",
+          "starter": true,
+          "seasonProjection": 150.1,
+          "weeklyProjection": 8.8,
+          "trend30Day": -15.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Kyle Pitts",
+          "position": "TE",
+          "nflTeam": "ATL",
+          "slot": "6.01",
+          "starter": true,
+          "seasonProjection": 149.3,
+          "weeklyProjection": 8.8,
+          "trend30Day": -67.0,
+          "injuryStatus": "Healthy"
+        }
+      ],
+      "powerScore": 89.0,
+      "grade": "A",
+      "volatilityScore": 39.7,
+      "volatilityLabel": "Balanced",
+      "components": {
+        "lineup": {
+          "score": 95.7,
+          "rank": 2,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 67.3,
+          "rank": 8,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 98.0,
+          "rank": 1,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 96.0,
+          "rank": 2,
+          "weight": "10%"
+        }
+      },
+      "rank": 3,
+      "tier": "Championship tier",
+      "strongestRoom": "QB",
+      "weakestRoom": "RB",
+      "headline": "Team Gnomeington pairs top-end scoring with one of the league's safest redraft profiles.",
+      "currentCase": "The optimal lineup projects for 125.1 points per week, ranks #2, and is backed by the #8 usable bench. The QB room is the clearest weekly advantage.",
+      "pressurePoint": "The RB room ranks #11; that is the clearest place an opponent can create separation. 2 roster health flag(s) add uncertainty.",
+      "verdict": "Championship tier: protect the QB edge and find weekly answers at RB."
+    },
+    {
+      "rosterId": 4,
+      "teamName": "Team kong58",
+      "managerName": "kong58",
+      "lineupProjection": 2031.2,
+      "weeklyProjection": 119.5,
+      "benchProjection": 698.6,
+      "starPowerVorp": 471.1,
+      "balanceRaw": 96.0,
+      "topThreeShare": 41.7,
+      "rbShare": 35.7,
+      "injuryFlags": [
+        {
+          "player": "Mike Evans",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        },
+        {
+          "player": "Christian McCaffrey",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        },
+        {
+          "player": "George Kittle",
+          "status": "PUP",
+          "note": "Surgery",
+          "starter": true
+        },
+        {
+          "player": "Breece Hall",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 509.4,
+          "players": [
+            "Brock Purdy",
+            "Jared Goff"
+          ],
+          "rank": 6
+        },
+        "RB": {
+          "seasonProjection": 962.4,
+          "players": [
+            "Christian McCaffrey",
+            "Breece Hall",
+            "Bhayshul Tuten",
+            "Chris Rodriguez"
+          ],
+          "rank": 4
+        },
+        "WR": {
+          "seasonProjection": 844.0,
+          "players": [
+            "George Pickens",
+            "Davante Adams",
+            "Mike Evans",
+            "De'Zhaun Stribling"
+          ],
+          "rank": 8
+        },
+        "TE": {
+          "seasonProjection": 240.5,
+          "players": [
+            "Hunter Henry",
+            "George Kittle"
+          ],
+          "rank": 6
+        },
+        "K": {
+          "seasonProjection": 141.3,
+          "players": [
+            "Eddy Pineiro"
+          ],
+          "rank": 8
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player SF"
+          ],
+          "rank": 6
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Brock Purdy",
+          "position": "QB",
+          "nflTeam": "SF",
+          "slot": "8.03",
+          "starter": true,
+          "seasonProjection": 300.0,
+          "weeklyProjection": 17.6,
+          "trend30Day": -350.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Christian McCaffrey",
+          "position": "RB",
+          "nflTeam": "SF",
+          "slot": "1.03",
+          "starter": true,
+          "seasonProjection": 282.9,
+          "weeklyProjection": 16.6,
+          "trend30Day": 680.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "George Pickens",
+          "position": "WR",
+          "nflTeam": "DAL",
+          "slot": "2.03",
+          "starter": true,
+          "seasonProjection": 263.3,
+          "weeklyProjection": 15.5,
+          "trend30Day": -321.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Breece Hall",
+          "position": "RB",
+          "nflTeam": "NYJ",
+          "slot": "3.03",
+          "starter": true,
+          "seasonProjection": 234.2,
+          "weeklyProjection": 13.8,
+          "trend30Day": -239.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Davante Adams",
+          "position": "WR",
+          "nflTeam": "LAR",
+          "slot": "4.03",
+          "starter": true,
+          "seasonProjection": 211.8,
+          "weeklyProjection": 12.5,
+          "trend30Day": -183.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Jared Goff",
+          "position": "QB",
+          "nflTeam": "DET",
+          "slot": "13.03",
+          "starter": false,
+          "seasonProjection": 209.4,
+          "weeklyProjection": 12.3,
+          "trend30Day": 192.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Bhayshul Tuten",
+          "position": "RB",
+          "nflTeam": "JAX",
+          "slot": "5.03",
+          "starter": true,
+          "seasonProjection": 208.2,
+          "weeklyProjection": 12.2,
+          "trend30Day": 501.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Mike Evans",
+          "position": "WR",
+          "nflTeam": "SF",
+          "slot": "6.03",
+          "starter": true,
+          "seasonProjection": 179.5,
+          "weeklyProjection": 10.6,
+          "trend30Day": -229.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Eddy Pineiro",
+          "position": "K",
+          "nflTeam": "SF",
+          "slot": "14.03",
+          "starter": true,
+          "seasonProjection": 141.3,
+          "weeklyProjection": 8.3,
+          "trend30Day": 0.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "De'Zhaun Stribling",
+          "position": "WR",
+          "nflTeam": "SF",
+          "slot": "9.03",
+          "starter": false,
+          "seasonProjection": 126.6,
+          "weeklyProjection": 7.4,
+          "trend30Day": 18.0,
+          "injuryStatus": "Healthy"
+        }
+      ],
+      "powerScore": 84.0,
+      "grade": "B+",
+      "volatilityScore": 40.6,
+      "volatilityLabel": "Balanced",
+      "components": {
+        "lineup": {
+          "score": 88.2,
+          "rank": 5,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 74.3,
+          "rank": 6,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 78.4,
+          "rank": 6,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 96.0,
+          "rank": 6,
+          "weight": "10%"
+        }
+      },
+      "rank": 4,
+      "tier": "Playoff contender",
+      "strongestRoom": "RB",
+      "weakestRoom": "WR",
+      "headline": "Running Back strength gives Team kong58 a real weekly identity.",
+      "currentCase": "The optimal lineup projects for 119.5 points per week, ranks #5, and is backed by the #6 usable bench. The RB room is the clearest weekly advantage.",
+      "pressurePoint": "The WR room ranks #8; that is the clearest place an opponent can create separation. 4 roster health flag(s) add uncertainty.",
+      "verdict": "Playoff contender: protect the RB edge and find weekly answers at WR."
+    },
+    {
+      "rosterId": 12,
+      "teamName": "rLee3D",
+      "managerName": "rLee3D",
+      "lineupProjection": 1921.5,
+      "weeklyProjection": 113.0,
+      "benchProjection": 793.6,
+      "starPowerVorp": 422.5,
+      "balanceRaw": 96.0,
+      "topThreeShare": 43.2,
+      "rbShare": 26.4,
+      "injuryFlags": [
+        {
+          "player": "Rachaad White",
+          "status": "Questionable",
+          "note": "",
+          "starter": false
+        },
+        {
+          "player": "Zach Charbonnet",
+          "status": "PUP",
+          "note": "Surgery",
+          "starter": false
+        },
+        {
+          "player": "Quentin Johnston",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 541.1,
+          "players": [
+            "Lamar Jackson",
+            "Baker Mayfield"
+          ],
+          "rank": 4
+        },
+        "RB": {
+          "seasonProjection": 845.0,
+          "players": [
+            "Kenneth Walker",
+            "David Montgomery",
+            "Rachaad White",
+            "Zach Charbonnet"
+          ],
+          "rank": 9
+        },
+        "WR": {
+          "seasonProjection": 1119.1,
+          "players": [
+            "CeeDee Lamb",
+            "Jameson Williams",
+            "Christian Watson",
+            "Brian Thomas"
+          ],
+          "rank": 1
+        },
+        "TE": {
+          "seasonProjection": 108.6,
+          "players": [
+            "Chig Okonkwo"
+          ],
+          "rank": 12
+        },
+        "K": {
+          "seasonProjection": 155.4,
+          "players": [
+            "Ka'imi Fairbairn"
+          ],
+          "rank": 3
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player SEA"
+          ],
+          "rank": 9
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Lamar Jackson",
+          "position": "QB",
+          "nflTeam": "BAL",
+          "slot": "3.09",
+          "starter": true,
+          "seasonProjection": 323.3,
+          "weeklyProjection": 19.0,
+          "trend30Day": 315.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Kenneth Walker",
+          "position": "RB",
+          "nflTeam": "KC",
+          "slot": "2.09",
+          "starter": true,
+          "seasonProjection": 278.9,
+          "weeklyProjection": 16.4,
+          "trend30Day": 493.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "David Montgomery",
+          "position": "RB",
+          "nflTeam": "HOU",
+          "slot": "4.09",
+          "starter": true,
+          "seasonProjection": 228.1,
+          "weeklyProjection": 13.4,
+          "trend30Day": 30.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "CeeDee Lamb",
+          "position": "WR",
+          "nflTeam": "DAL",
+          "slot": "1.09",
+          "starter": true,
+          "seasonProjection": 224.3,
+          "weeklyProjection": 13.2,
+          "trend30Day": -27.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Baker Mayfield",
+          "position": "QB",
+          "nflTeam": "TB",
+          "slot": "16.09",
+          "starter": false,
+          "seasonProjection": 217.8,
+          "weeklyProjection": 12.8,
+          "trend30Day": -96.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Jameson Williams",
+          "position": "WR",
+          "nflTeam": "DET",
+          "slot": "5.09",
+          "starter": true,
+          "seasonProjection": 201.1,
+          "weeklyProjection": 11.8,
+          "trend30Day": 35.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Christian Watson",
+          "position": "WR",
+          "nflTeam": "GB",
+          "slot": "6.09",
+          "starter": true,
+          "seasonProjection": 184.6,
+          "weeklyProjection": 10.9,
+          "trend30Day": 513.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Brian Thomas",
+          "position": "WR",
+          "nflTeam": "JAX",
+          "slot": "7.09",
+          "starter": false,
+          "seasonProjection": 180.6,
+          "weeklyProjection": 10.6,
+          "trend30Day": -275.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Ka'imi Fairbairn",
+          "position": "K",
+          "nflTeam": "HOU",
+          "slot": "13.09",
+          "starter": true,
+          "seasonProjection": 155.4,
+          "weeklyProjection": 9.1,
+          "trend30Day": 0.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Courtland Sutton",
+          "position": "WR",
+          "nflTeam": "DEN",
+          "slot": "8.09",
+          "starter": false,
+          "seasonProjection": 152.2,
+          "weeklyProjection": 9.0,
+          "trend30Day": -197.0,
+          "injuryStatus": "Healthy"
+        }
+      ],
+      "powerScore": 81.9,
+      "grade": "B+",
+      "volatilityScore": 32.5,
+      "volatilityLabel": "Balanced",
+      "components": {
+        "lineup": {
+          "score": 79.6,
+          "rank": 10,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 91.9,
+          "rank": 3,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 63.3,
+          "rank": 8,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 96.0,
+          "rank": 7,
+          "weight": "10%"
+        }
+      },
+      "rank": 5,
+      "tier": "Playoff contender",
+      "strongestRoom": "WR",
+      "weakestRoom": "TE",
+      "headline": "Wide Receiver strength gives rLee3D a real weekly identity.",
+      "currentCase": "The optimal lineup projects for 113.0 points per week, ranks #10, and is backed by the #3 usable bench. The WR room is the clearest weekly advantage.",
+      "pressurePoint": "The TE room ranks #12; that is the clearest place an opponent can create separation. 3 roster health flag(s) add uncertainty.",
+      "verdict": "Playoff contender: protect the WR edge and find weekly answers at TE."
+    },
+    {
+      "rosterId": 9,
+      "teamName": "Team mtrebing31",
+      "managerName": "mtrebing31",
+      "lineupProjection": 1955.9,
+      "weeklyProjection": 115.1,
+      "benchProjection": 696.8,
+      "starPowerVorp": 451.7,
+      "balanceRaw": 96.0,
+      "topThreeShare": 40.6,
+      "rbShare": 46.7,
+      "injuryFlags": [
+        {
+          "player": "Xavier Worthy",
+          "status": "Questionable",
+          "note": "",
+          "starter": false
+        },
+        {
+          "player": "Michael Pittman",
+          "status": "Questionable",
+          "note": "",
+          "starter": false
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 491.7,
+          "players": [
+            "Jaxson Dart",
+            "Sam Darnold"
+          ],
+          "rank": 7
+        },
+        "RB": {
+          "seasonProjection": 914.0,
+          "players": [
+            "Saquon Barkley",
+            "Cam Skattebo",
+            "Bucky Irving",
+            "D'Andre Swift"
+          ],
+          "rank": 7
+        },
+        "WR": {
+          "seasonProjection": 832.5,
+          "players": [
+            "Ladd McConkey",
+            "Michael Pittman",
+            "Jayden Reed",
+            "Matthew Golden"
+          ],
+          "rank": 9
+        },
+        "TE": {
+          "seasonProjection": 289.6,
+          "players": [
+            "Mark Andrews",
+            "Travis Kelce"
+          ],
+          "rank": 4
+        },
+        "K": {
+          "seasonProjection": 128.4,
+          "players": [
+            "Evan McPherson"
+          ],
+          "rank": 10
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player MIN"
+          ],
+          "rank": 11
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Jaxson Dart",
+          "position": "QB",
+          "nflTeam": "NYG",
+          "slot": "7.06",
+          "starter": true,
+          "seasonProjection": 304.6,
+          "weeklyProjection": 17.9,
+          "trend30Day": 334.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Saquon Barkley",
+          "position": "RB",
+          "nflTeam": "PHI",
+          "slot": "1.06",
+          "starter": true,
+          "seasonProjection": 245.7,
+          "weeklyProjection": 14.5,
+          "trend30Day": -389.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Cam Skattebo",
+          "position": "RB",
+          "nflTeam": "NYG",
+          "slot": "2.06",
+          "starter": true,
+          "seasonProjection": 242.9,
+          "weeklyProjection": 14.3,
+          "trend30Day": 387.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Ladd McConkey",
+          "position": "WR",
+          "nflTeam": "LAC",
+          "slot": "5.06",
+          "starter": true,
+          "seasonProjection": 232.9,
+          "weeklyProjection": 13.7,
+          "trend30Day": 416.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Bucky Irving",
+          "position": "RB",
+          "nflTeam": "TB",
+          "slot": "3.06",
+          "starter": true,
+          "seasonProjection": 213.8,
+          "weeklyProjection": 12.6,
+          "trend30Day": -907.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "D'Andre Swift",
+          "position": "RB",
+          "nflTeam": "CHI",
+          "slot": "4.06",
+          "starter": true,
+          "seasonProjection": 211.6,
+          "weeklyProjection": 12.4,
+          "trend30Day": 141.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Sam Darnold",
+          "position": "QB",
+          "nflTeam": "SEA",
+          "slot": "14.06",
+          "starter": false,
+          "seasonProjection": 187.1,
+          "weeklyProjection": 11.0,
+          "trend30Day": 44.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Michael Pittman",
+          "position": "WR",
+          "nflTeam": "PIT",
+          "slot": "10.06",
+          "starter": false,
+          "seasonProjection": 152.1,
+          "weeklyProjection": 8.9,
+          "trend30Day": 17.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Mark Andrews",
+          "position": "TE",
+          "nflTeam": "BAL",
+          "slot": "12.06",
+          "starter": false,
+          "seasonProjection": 144.9,
+          "weeklyProjection": 8.5,
+          "trend30Day": 64.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Travis Kelce",
+          "position": "TE",
+          "nflTeam": "KC",
+          "slot": "6.06",
+          "starter": true,
+          "seasonProjection": 144.7,
+          "weeklyProjection": 8.5,
+          "trend30Day": 2.0,
+          "injuryStatus": "Healthy"
+        }
+      ],
+      "powerScore": 80.1,
+      "grade": "B",
+      "volatilityScore": 34.8,
+      "volatilityLabel": "Balanced",
+      "components": {
+        "lineup": {
+          "score": 82.3,
+          "rank": 8,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 73.9,
+          "rank": 7,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 72.4,
+          "rank": 7,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 96.0,
+          "rank": 9,
+          "weight": "10%"
+        }
+      },
+      "rank": 6,
+      "tier": "Playoff contender",
+      "strongestRoom": "TE",
+      "weakestRoom": "WR",
+      "headline": "Tight End strength gives Team mtrebing31 a real weekly identity.",
+      "currentCase": "The optimal lineup projects for 115.1 points per week, ranks #8, and is backed by the #7 usable bench. The TE room is the clearest weekly advantage.",
+      "pressurePoint": "The WR room ranks #9; that is the clearest place an opponent can create separation. 2 roster health flag(s) add uncertainty.",
+      "verdict": "Playoff contender: protect the TE edge and find weekly answers at WR."
+    },
+    {
+      "rosterId": 3,
+      "teamName": "Team DRockefeller",
+      "managerName": "DRockefeller",
+      "lineupProjection": 2014.0,
+      "weeklyProjection": 118.5,
+      "benchProjection": 578.4,
+      "starPowerVorp": 478.1,
+      "balanceRaw": 96.0,
+      "topThreeShare": 43.1,
+      "rbShare": 45.6,
+      "injuryFlags": [
+        {
+          "player": "Jalen McMillan",
+          "status": "Questionable",
+          "note": "",
+          "starter": false
+        },
+        {
+          "player": "Jeremiyah Love",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        },
+        {
+          "player": "Alec Pierce",
+          "status": "PUP",
+          "note": "Surgery",
+          "starter": false
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 321.8,
+          "players": [
+            "Drake Maye"
+          ],
+          "rank": 10
+        },
+        "RB": {
+          "seasonProjection": 994.8,
+          "players": [
+            "Jonathan Taylor",
+            "Jeremiyah Love",
+            "Jadarian Price",
+            "RJ Harvey"
+          ],
+          "rank": 2
+        },
+        "WR": {
+          "seasonProjection": 821.7,
+          "players": [
+            "Drake London",
+            "Marvin Harrison Jr",
+            "Wan'Dale Robinson",
+            "Alec Pierce"
+          ],
+          "rank": 10
+        },
+        "TE": {
+          "seasonProjection": 259.6,
+          "players": [
+            "Dallas Goedert",
+            "Juwan Johnson"
+          ],
+          "rank": 5
+        },
+        "K": {
+          "seasonProjection": 160.8,
+          "players": [
+            "Jason Myers"
+          ],
+          "rank": 2
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player PIT"
+          ],
+          "rank": 5
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Drake Maye",
+          "position": "QB",
+          "nflTeam": "NE",
+          "slot": "4.04",
+          "starter": true,
+          "seasonProjection": 321.8,
+          "weeklyProjection": 18.9,
+          "trend30Day": 305.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Jonathan Taylor",
+          "position": "RB",
+          "nflTeam": "IND",
+          "slot": "1.04",
+          "starter": true,
+          "seasonProjection": 293.8,
+          "weeklyProjection": 17.3,
+          "trend30Day": 85.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Jeremiyah Love",
+          "position": "RB",
+          "nflTeam": "ARI",
+          "slot": "2.04",
+          "starter": true,
+          "seasonProjection": 252.3,
+          "weeklyProjection": 14.8,
+          "trend30Day": -972.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Drake London",
+          "position": "WR",
+          "nflTeam": "ATL",
+          "slot": "3.04",
+          "starter": true,
+          "seasonProjection": 229.3,
+          "weeklyProjection": 13.5,
+          "trend30Day": -430.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Jadarian Price",
+          "position": "RB",
+          "nflTeam": "SEA",
+          "slot": "5.04",
+          "starter": true,
+          "seasonProjection": 198.7,
+          "weeklyProjection": 11.7,
+          "trend30Day": -233.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Marvin Harrison Jr",
+          "position": "WR",
+          "nflTeam": "ARI",
+          "slot": "\u2014",
+          "starter": true,
+          "seasonProjection": 176.3,
+          "weeklyProjection": 10.4,
+          "trend30Day": -513.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "RJ Harvey",
+          "position": "RB",
+          "nflTeam": "DEN",
+          "slot": "8.04",
+          "starter": true,
+          "seasonProjection": 173.8,
+          "weeklyProjection": 10.2,
+          "trend30Day": 218.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Jason Myers",
+          "position": "K",
+          "nflTeam": "SEA",
+          "slot": "14.04",
+          "starter": true,
+          "seasonProjection": 160.8,
+          "weeklyProjection": 9.5,
+          "trend30Day": 0.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Dallas Goedert",
+          "position": "TE",
+          "nflTeam": "PHI",
+          "slot": "13.04",
+          "starter": false,
+          "seasonProjection": 147.4,
+          "weeklyProjection": 8.7,
+          "trend30Day": 95.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Wan'Dale Robinson",
+          "position": "WR",
+          "nflTeam": "TEN",
+          "slot": "9.04",
+          "starter": false,
+          "seasonProjection": 130.6,
+          "weeklyProjection": 7.7,
+          "trend30Day": 114.0,
+          "injuryStatus": "Healthy"
+        }
+      ],
+      "powerScore": 78.1,
+      "grade": "B",
+      "volatilityScore": 46.4,
+      "volatilityLabel": "Balanced",
+      "components": {
+        "lineup": {
+          "score": 86.9,
+          "rank": 6,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 52.0,
+          "rank": 10,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 80.5,
+          "rank": 4,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 96.0,
+          "rank": 5,
+          "weight": "10%"
+        }
+      },
+      "rank": 7,
+      "tier": "Playoff bubble",
+      "strongestRoom": "RB",
+      "weakestRoom": "QB",
+      "headline": "Running Back strength gives Team DRockefeller a real weekly identity.",
+      "currentCase": "The optimal lineup projects for 118.5 points per week, ranks #6, and is backed by the #10 usable bench. The RB room is the clearest weekly advantage.",
+      "pressurePoint": "The QB room ranks #10; that is the clearest place an opponent can create separation. 3 roster health flag(s) add uncertainty.",
+      "verdict": "Playoff bubble: protect the RB edge and find weekly answers at QB."
+    },
+    {
+      "rosterId": 10,
+      "teamName": "Team akwelch3492",
+      "managerName": "akwelch3492",
+      "lineupProjection": 1862.0,
+      "weeklyProjection": 109.5,
+      "benchProjection": 769.6,
+      "starPowerVorp": 379.5,
+      "balanceRaw": 96.0,
+      "topThreeShare": 42.3,
+      "rbShare": 24.8,
+      "injuryFlags": [
+        {
+          "player": "Malik Nabers",
+          "status": "Questionable",
+          "note": "Surgery",
+          "starter": true
+        },
+        {
+          "player": "Puka Nacua",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 481.2,
+          "players": [
+            "Caleb Williams",
+            "Jordan Love"
+          ],
+          "rank": 8
+        },
+        "RB": {
+          "seasonProjection": 839.0,
+          "players": [
+            "Travis Etienne",
+            "Tony Pollard",
+            "Jacory Croskey-Merritt",
+            "Aaron Jones"
+          ],
+          "rank": 10
+        },
+        "WR": {
+          "seasonProjection": 1029.9,
+          "players": [
+            "Puka Nacua",
+            "Malik Nabers",
+            "Justin Jefferson",
+            "Michael Wilson"
+          ],
+          "rank": 4
+        },
+        "TE": {
+          "seasonProjection": 149.7,
+          "players": [
+            "Sam LaPorta"
+          ],
+          "rank": 11
+        },
+        "K": {
+          "seasonProjection": 145.0,
+          "players": [
+            "Harrison Mevis"
+          ],
+          "rank": 6
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player LAC"
+          ],
+          "rank": 10
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Caleb Williams",
+          "position": "QB",
+          "nflTeam": "CHI",
+          "slot": "5.12",
+          "starter": true,
+          "seasonProjection": 274.2,
+          "weeklyProjection": 16.1,
+          "trend30Day": 19.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Puka Nacua",
+          "position": "WR",
+          "nflTeam": "LAR",
+          "slot": "2.12",
+          "starter": true,
+          "seasonProjection": 268.6,
+          "weeklyProjection": 15.8,
+          "trend30Day": -306.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Malik Nabers",
+          "position": "WR",
+          "nflTeam": "NYG",
+          "slot": "4.12",
+          "starter": true,
+          "seasonProjection": 243.9,
+          "weeklyProjection": 14.3,
+          "trend30Day": -17.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Travis Etienne",
+          "position": "RB",
+          "nflTeam": "NO",
+          "slot": "3.12",
+          "starter": true,
+          "seasonProjection": 233.3,
+          "weeklyProjection": 13.7,
+          "trend30Day": -172.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Justin Jefferson",
+          "position": "WR",
+          "nflTeam": "MIN",
+          "slot": "1.12",
+          "starter": true,
+          "seasonProjection": 223.9,
+          "weeklyProjection": 13.2,
+          "trend30Day": -103.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Jordan Love",
+          "position": "QB",
+          "nflTeam": "GB",
+          "slot": "13.12",
+          "starter": false,
+          "seasonProjection": 207.0,
+          "weeklyProjection": 12.2,
+          "trend30Day": -98.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Tony Pollard",
+          "position": "RB",
+          "nflTeam": "TEN",
+          "slot": "7.12",
+          "starter": true,
+          "seasonProjection": 175.9,
+          "weeklyProjection": 10.3,
+          "trend30Day": 130.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Michael Wilson",
+          "position": "WR",
+          "nflTeam": "ARI",
+          "slot": "10.12",
+          "starter": false,
+          "seasonProjection": 172.5,
+          "weeklyProjection": 10.1,
+          "trend30Day": 156.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Sam LaPorta",
+          "position": "TE",
+          "nflTeam": "DET",
+          "slot": "6.12",
+          "starter": true,
+          "seasonProjection": 149.7,
+          "weeklyProjection": 8.8,
+          "trend30Day": 555.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Harrison Mevis",
+          "position": "K",
+          "nflTeam": "LAR",
+          "slot": "16.12",
+          "starter": true,
+          "seasonProjection": 145.0,
+          "weeklyProjection": 8.5,
+          "trend30Day": 0.0,
+          "injuryStatus": "Healthy"
+        }
+      ],
+      "powerScore": 76.4,
+      "grade": "B-",
+      "volatilityScore": 31.0,
+      "volatilityLabel": "Stable",
+      "components": {
+        "lineup": {
+          "score": 75.0,
+          "rank": 11,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 87.4,
+          "rank": 4,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 50.0,
+          "rank": 12,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 96.0,
+          "rank": 8,
+          "weight": "10%"
+        }
+      },
+      "rank": 8,
+      "tier": "Playoff bubble",
+      "strongestRoom": "WR",
+      "weakestRoom": "TE",
+      "headline": "Wide Receiver strength gives Team akwelch3492 a real weekly identity.",
+      "currentCase": "The optimal lineup projects for 109.5 points per week, ranks #11, and is backed by the #4 usable bench. The WR room is the clearest weekly advantage.",
+      "pressurePoint": "The TE room ranks #11; that is the clearest place an opponent can create separation. 2 roster health flag(s) add uncertainty.",
+      "verdict": "Playoff bubble: protect the WR edge and find weekly answers at TE."
+    },
+    {
+      "rosterId": 7,
+      "teamName": "Team bubberdubber",
+      "managerName": "bubberdubber",
+      "lineupProjection": 2075.5,
+      "weeklyProjection": 122.1,
+      "benchProjection": 570.1,
+      "starPowerVorp": 405.7,
+      "balanceRaw": 90.0,
+      "topThreeShare": 39.6,
+      "rbShare": 19.5,
+      "injuryFlags": [
+        {
+          "player": "Luther Burden",
+          "status": "Probable",
+          "note": "Day-to-day lower-body tag; expected full readiness Week 1.",
+          "starter": true
+        },
+        {
+          "player": "Makai Lemon",
+          "status": "Questionable",
+          "note": "",
+          "starter": false
+        },
+        {
+          "player": "Isiah Pacheco",
+          "status": "Questionable",
+          "note": "",
+          "starter": false
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 300.1,
+          "players": [
+            "Trevor Lawrence"
+          ],
+          "rank": 11
+        },
+        "RB": {
+          "seasonProjection": 939.8,
+          "players": [
+            "Chase Brown",
+            "Jonathon Brooks",
+            "Blake Corum",
+            "Keaton Mitchell"
+          ],
+          "rank": 5
+        },
+        "WR": {
+          "seasonProjection": 1081.8,
+          "players": [
+            "Jaxon Smith-Njigba",
+            "Tetairoa McMillan",
+            "Garrett Wilson",
+            "Luther Burden"
+          ],
+          "rank": 2
+        },
+        "TE": {
+          "seasonProjection": 202.1,
+          "players": [
+            "Trey McBride"
+          ],
+          "rank": 8
+        },
+        "K": {
+          "seasonProjection": 138.0,
+          "players": [
+            "Harrison Butker"
+          ],
+          "rank": 9
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player HOU"
+          ],
+          "rank": 8
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Trevor Lawrence",
+          "position": "QB",
+          "nflTeam": "JAX",
+          "slot": "9.07",
+          "starter": true,
+          "seasonProjection": 300.1,
+          "weeklyProjection": 17.7,
+          "trend30Day": -53.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Jaxon Smith-Njigba",
+          "position": "WR",
+          "nflTeam": "SEA",
+          "slot": "1.07",
+          "starter": true,
+          "seasonProjection": 272.7,
+          "weeklyProjection": 16.0,
+          "trend30Day": -709.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Chase Brown",
+          "position": "RB",
+          "nflTeam": "CIN",
+          "slot": "2.07",
+          "starter": true,
+          "seasonProjection": 248.7,
+          "weeklyProjection": 14.6,
+          "trend30Day": 911.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Tetairoa McMillan",
+          "position": "WR",
+          "nflTeam": "CAR",
+          "slot": "4.07",
+          "starter": true,
+          "seasonProjection": 237.0,
+          "weeklyProjection": 13.9,
+          "trend30Day": 26.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Garrett Wilson",
+          "position": "WR",
+          "nflTeam": "NYJ",
+          "slot": "5.07",
+          "starter": true,
+          "seasonProjection": 226.5,
+          "weeklyProjection": 13.3,
+          "trend30Day": -226.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Trey McBride",
+          "position": "TE",
+          "nflTeam": "ARI",
+          "slot": "3.07",
+          "starter": true,
+          "seasonProjection": 202.1,
+          "weeklyProjection": 11.9,
+          "trend30Day": -237.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Luther Burden",
+          "position": "WR",
+          "nflTeam": "CHI",
+          "slot": "6.07",
+          "starter": true,
+          "seasonProjection": 199.1,
+          "weeklyProjection": 11.7,
+          "trend30Day": -12.4,
+          "injuryStatus": "Probable"
+        },
+        {
+          "player": "Jonathon Brooks",
+          "position": "RB",
+          "nflTeam": "CAR",
+          "slot": "7.07",
+          "starter": false,
+          "seasonProjection": 158.4,
+          "weeklyProjection": 9.3,
+          "trend30Day": 80.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Blake Corum",
+          "position": "RB",
+          "nflTeam": "LAR",
+          "slot": "8.07",
+          "starter": true,
+          "seasonProjection": 156.3,
+          "weeklyProjection": 9.2,
+          "trend30Day": 143.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Makai Lemon",
+          "position": "WR",
+          "nflTeam": "PHI",
+          "slot": "10.07",
+          "starter": false,
+          "seasonProjection": 146.5,
+          "weeklyProjection": 8.6,
+          "trend30Day": -52.0,
+          "injuryStatus": "Questionable"
+        }
+      ],
+      "powerScore": 76.2,
+      "grade": "B-",
+      "volatilityScore": 45.3,
+      "volatilityLabel": "Balanced",
+      "components": {
+        "lineup": {
+          "score": 91.7,
+          "rank": 4,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 50.4,
+          "rank": 11,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 58.1,
+          "rank": 10,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 90.0,
+          "rank": 11,
+          "weight": "10%"
+        }
+      },
+      "rank": 9,
+      "tier": "Playoff bubble",
+      "strongestRoom": "WR",
+      "weakestRoom": "QB",
+      "headline": "Wide Receiver strength gives Team bubberdubber a real weekly identity.",
+      "currentCase": "The optimal lineup projects for 122.1 points per week, ranks #4, and is backed by the #11 usable bench. The WR room is the clearest weekly advantage.",
+      "pressurePoint": "The QB room ranks #11; that is the clearest place an opponent can create separation. 3 roster health flag(s) add uncertainty.",
+      "verdict": "Playoff bubble: protect the WR edge and find weekly answers at QB."
+    },
+    {
+      "rosterId": 11,
+      "teamName": "Texas Tunas",
+      "managerName": "mdwelch11",
+      "lineupProjection": 1959.4,
+      "weeklyProjection": 115.3,
+      "benchProjection": 654.8,
+      "starPowerVorp": 404.0,
+      "balanceRaw": 96.0,
+      "topThreeShare": 42.6,
+      "rbShare": 18.6,
+      "injuryFlags": [
+        {
+          "player": "Alvin Kamara",
+          "status": "Questionable",
+          "note": "",
+          "starter": false
+        },
+        {
+          "player": "Josh Jacobs",
+          "status": "Questionable",
+          "note": "",
+          "starter": false
+        },
+        {
+          "player": "DeVonta Smith",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        },
+        {
+          "player": "Tucker Kraft",
+          "status": "Questionable",
+          "note": "Surgery",
+          "starter": true
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 530.0,
+          "players": [
+            "Joe Burrow",
+            "Matthew Stafford"
+          ],
+          "rank": 5
+        },
+        "RB": {
+          "seasonProjection": 536.8,
+          "players": [
+            "Derrick Henry",
+            "Malik Davis",
+            "Alvin Kamara",
+            "Josh Jacobs"
+          ],
+          "rank": 12
+        },
+        "WR": {
+          "seasonProjection": 1045.2,
+          "players": [
+            "Amon-Ra St. Brown",
+            "DeVonta Smith",
+            "Rashee Rice",
+            "Stefon Diggs"
+          ],
+          "rank": 3
+        },
+        "TE": {
+          "seasonProjection": 326.9,
+          "players": [
+            "Tucker Kraft",
+            "Harold Fannin"
+          ],
+          "rank": 2
+        },
+        "K": {
+          "seasonProjection": 161.8,
+          "players": [
+            "Brandon Aubrey"
+          ],
+          "rank": 1
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player LAR"
+          ],
+          "rank": 4
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Joe Burrow",
+          "position": "QB",
+          "nflTeam": "CIN",
+          "slot": "5.08",
+          "starter": true,
+          "seasonProjection": 303.3,
+          "weeklyProjection": 17.8,
+          "trend30Day": -331.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Derrick Henry",
+          "position": "RB",
+          "nflTeam": "BAL",
+          "slot": "2.08",
+          "starter": true,
+          "seasonProjection": 268.9,
+          "weeklyProjection": 15.8,
+          "trend30Day": 243.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Amon-Ra St. Brown",
+          "position": "WR",
+          "nflTeam": "DET",
+          "slot": "1.08",
+          "starter": true,
+          "seasonProjection": 262.0,
+          "weeklyProjection": 15.4,
+          "trend30Day": -471.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Matthew Stafford",
+          "position": "QB",
+          "nflTeam": "LAR",
+          "slot": "12.08",
+          "starter": false,
+          "seasonProjection": 226.7,
+          "weeklyProjection": 13.3,
+          "trend30Day": 61.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "DeVonta Smith",
+          "position": "WR",
+          "nflTeam": "PHI",
+          "slot": "4.08",
+          "starter": true,
+          "seasonProjection": 225.7,
+          "weeklyProjection": 13.3,
+          "trend30Day": -321.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Rashee Rice",
+          "position": "WR",
+          "nflTeam": "KC",
+          "slot": "3.08",
+          "starter": true,
+          "seasonProjection": 220.8,
+          "weeklyProjection": 13.0,
+          "trend30Day": 333.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Tucker Kraft",
+          "position": "TE",
+          "nflTeam": "GB",
+          "slot": "7.08",
+          "starter": true,
+          "seasonProjection": 168.0,
+          "weeklyProjection": 9.9,
+          "trend30Day": 410.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Brandon Aubrey",
+          "position": "K",
+          "nflTeam": "DAL",
+          "slot": "11.08",
+          "starter": true,
+          "seasonProjection": 161.8,
+          "weeklyProjection": 9.5,
+          "trend30Day": 0.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Harold Fannin",
+          "position": "TE",
+          "nflTeam": "CLE",
+          "slot": "8.08",
+          "starter": true,
+          "seasonProjection": 158.9,
+          "weeklyProjection": 9.3,
+          "trend30Day": 97.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Stefon Diggs",
+          "position": "WR",
+          "nflTeam": "WAS",
+          "slot": "10.08",
+          "starter": false,
+          "seasonProjection": 146.4,
+          "weeklyProjection": 8.6,
+          "trend30Day": 389.0,
+          "injuryStatus": "Healthy"
+        }
+      ],
+      "powerScore": 76.1,
+      "grade": "B-",
+      "volatilityScore": 44.0,
+      "volatilityLabel": "Balanced",
+      "components": {
+        "lineup": {
+          "score": 82.6,
+          "rank": 7,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 66.1,
+          "rank": 9,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 57.6,
+          "rank": 11,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 96.0,
+          "rank": 4,
+          "weight": "10%"
+        }
+      },
+      "rank": 10,
+      "tier": "Sacko watch",
+      "strongestRoom": "TE",
+      "weakestRoom": "RB",
+      "headline": "Tight End strength gives Texas Tunas a real weekly identity.",
+      "currentCase": "The optimal lineup projects for 115.3 points per week, ranks #7, and is backed by the #9 usable bench. The TE room is the clearest weekly advantage.",
+      "pressurePoint": "The RB room ranks #12; that is the clearest place an opponent can create separation. 4 roster health flag(s) add uncertainty.",
+      "verdict": "Sacko watch: protect the TE edge and find weekly answers at RB."
+    },
+    {
+      "rosterId": 1,
+      "teamName": "Team jccbraves99",
+      "managerName": "jccbraves99",
+      "lineupProjection": 1947.5,
+      "weeklyProjection": 114.6,
+      "benchProjection": 567.7,
+      "starPowerVorp": 473.1,
+      "balanceRaw": 90.0,
+      "topThreeShare": 41.7,
+      "rbShare": 39.9,
+      "injuryFlags": [
+        {
+          "player": "Tyler Warren",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        },
+        {
+          "player": "Parker Washington",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 229.2,
+          "players": [
+            "Bo Nix"
+          ],
+          "rank": 12
+        },
+        "RB": {
+          "seasonProjection": 1187.7,
+          "players": [
+            "Bijan Robinson",
+            "Kyren Williams",
+            "Rico Dowdle",
+            "Kenny Gainwell"
+          ],
+          "rank": 1
+        },
+        "WR": {
+          "seasonProjection": 817.5,
+          "players": [
+            "Jaylen Waddle",
+            "A.J. Brown",
+            "Parker Washington",
+            "Josh Downs"
+          ],
+          "rank": 11
+        },
+        "TE": {
+          "seasonProjection": 152.2,
+          "players": [
+            "Tyler Warren"
+          ],
+          "rank": 10
+        },
+        "K": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Spencer Shrader"
+          ],
+          "rank": 12
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player JAX"
+          ],
+          "rank": 7
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "Bijan Robinson",
+          "position": "RB",
+          "nflTeam": "ATL",
+          "slot": "1.02",
+          "starter": true,
+          "seasonProjection": 321.9,
+          "weeklyProjection": 18.9,
+          "trend30Day": 164.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Kyren Williams",
+          "position": "RB",
+          "nflTeam": "LAR",
+          "slot": "2.02",
+          "starter": true,
+          "seasonProjection": 261.9,
+          "weeklyProjection": 15.4,
+          "trend30Day": 545.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Bo Nix",
+          "position": "QB",
+          "nflTeam": "DEN",
+          "slot": "9.02",
+          "starter": true,
+          "seasonProjection": 229.2,
+          "weeklyProjection": 13.5,
+          "trend30Day": 398.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Jaylen Waddle",
+          "position": "WR",
+          "nflTeam": "DEN",
+          "slot": "4.02",
+          "starter": true,
+          "seasonProjection": 216.0,
+          "weeklyProjection": 12.7,
+          "trend30Day": 93.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "A.J. Brown",
+          "position": "WR",
+          "nflTeam": "NE",
+          "slot": "3.02",
+          "starter": true,
+          "seasonProjection": 213.5,
+          "weeklyProjection": 12.6,
+          "trend30Day": 609.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Rico Dowdle",
+          "position": "RB",
+          "nflTeam": "PIT",
+          "slot": "6.02",
+          "starter": true,
+          "seasonProjection": 193.2,
+          "weeklyProjection": 11.4,
+          "trend30Day": 13.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Kenny Gainwell",
+          "position": "RB",
+          "nflTeam": "TB",
+          "slot": "8.02",
+          "starter": false,
+          "seasonProjection": 170.9,
+          "weeklyProjection": 10.1,
+          "trend30Day": 258.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Parker Washington",
+          "position": "WR",
+          "nflTeam": "JAX",
+          "slot": "7.02",
+          "starter": true,
+          "seasonProjection": 169.6,
+          "weeklyProjection": 10.0,
+          "trend30Day": 493.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Tyler Warren",
+          "position": "TE",
+          "nflTeam": "IND",
+          "slot": "5.02",
+          "starter": true,
+          "seasonProjection": 152.2,
+          "weeklyProjection": 9.0,
+          "trend30Day": 374.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Josh Downs",
+          "position": "WR",
+          "nflTeam": "IND",
+          "slot": "10.02",
+          "starter": false,
+          "seasonProjection": 144.3,
+          "weeklyProjection": 8.5,
+          "trend30Day": 75.0,
+          "injuryStatus": "Healthy"
+        }
+      ],
+      "powerScore": 74.2,
+      "grade": "B-",
+      "volatilityScore": 43.8,
+      "volatilityLabel": "Balanced",
+      "components": {
+        "lineup": {
+          "score": 81.7,
+          "rank": 9,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 50.0,
+          "rank": 12,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 79.0,
+          "rank": 5,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 90.0,
+          "rank": 10,
+          "weight": "10%"
+        }
+      },
+      "rank": 11,
+      "tier": "Sacko watch",
+      "strongestRoom": "RB",
+      "weakestRoom": "QB",
+      "headline": "Running Back strength gives Team jccbraves99 a real weekly identity.",
+      "currentCase": "The optimal lineup projects for 114.6 points per week, ranks #9, and is backed by the #12 usable bench. The RB room is the clearest weekly advantage.",
+      "pressurePoint": "The QB room ranks #12; that is the clearest place an opponent can create separation. 2 roster health flag(s) add uncertainty.",
+      "verdict": "Sacko watch: protect the RB edge and find weekly answers at QB."
+    },
+    {
+      "rosterId": 2,
+      "teamName": "Team sduda351",
+      "managerName": "sduda351",
+      "lineupProjection": 1543.0,
+      "weeklyProjection": 90.8,
+      "benchProjection": 826.7,
+      "starPowerVorp": 413.4,
+      "balanceRaw": 76.0,
+      "topThreeShare": 46.6,
+      "rbShare": 43.2,
+      "injuryFlags": [
+        {
+          "player": "Quinshon Judkins",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        },
+        {
+          "player": "Jordyn Tyson",
+          "status": "Doubtful",
+          "note": "Strain",
+          "starter": false
+        },
+        {
+          "player": "Chris Bell",
+          "status": "Questionable",
+          "note": "Surgery",
+          "starter": false
+        },
+        {
+          "player": "Patrick Mahomes",
+          "status": "Questionable",
+          "note": "Surgery",
+          "starter": true
+        },
+        {
+          "player": "DK Metcalf",
+          "status": "Questionable",
+          "note": "",
+          "starter": true
+        },
+        {
+          "player": "Tank Dell",
+          "status": "Questionable",
+          "note": "Surgery",
+          "starter": false
+        }
+      ],
+      "positionRooms": {
+        "QB": {
+          "seasonProjection": 400.4,
+          "players": [
+            "Patrick Mahomes",
+            "Aaron Rodgers"
+          ],
+          "rank": 9
+        },
+        "RB": {
+          "seasonProjection": 884.5,
+          "players": [
+            "De'Von Achane",
+            "Quinshon Judkins",
+            "TreVeyon Henderson",
+            "Rhamondre Stevenson"
+          ],
+          "rank": 8
+        },
+        "WR": {
+          "seasonProjection": 725.1,
+          "players": [
+            "DK Metcalf",
+            "KC Concepcion",
+            "Jordyn Tyson",
+            "Denzel Boston"
+          ],
+          "rank": 12
+        },
+        "TE": {
+          "seasonProjection": 431.7,
+          "players": [
+            "Brock Bowers",
+            "Isaiah Likely",
+            "Michael Mayer"
+          ],
+          "rank": 1
+        },
+        "K": {
+          "seasonProjection": 114.5,
+          "players": [
+            "Trey Smack"
+          ],
+          "rank": 11
+        },
+        "DEF": {
+          "seasonProjection": 95.0,
+          "players": [
+            "Player BAL"
+          ],
+          "rank": 12
+        }
+      },
+      "scoringSpine": [
+        {
+          "player": "De'Von Achane",
+          "position": "RB",
+          "nflTeam": "MIA",
+          "slot": "1.11",
+          "starter": true,
+          "seasonProjection": 262.0,
+          "weeklyProjection": 15.4,
+          "trend30Day": -13.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Patrick Mahomes",
+          "position": "QB",
+          "nflTeam": "KC",
+          "slot": "6.11",
+          "starter": true,
+          "seasonProjection": 238.4,
+          "weeklyProjection": 14.0,
+          "trend30Day": -135.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Quinshon Judkins",
+          "position": "RB",
+          "nflTeam": "CLE",
+          "slot": "3.11",
+          "starter": true,
+          "seasonProjection": 218.7,
+          "weeklyProjection": 12.9,
+          "trend30Day": -383.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "TreVeyon Henderson",
+          "position": "RB",
+          "nflTeam": "NE",
+          "slot": "4.11",
+          "starter": false,
+          "seasonProjection": 217.3,
+          "weeklyProjection": 12.8,
+          "trend30Day": 260.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Brock Bowers",
+          "position": "TE",
+          "nflTeam": "LV",
+          "slot": "2.11",
+          "starter": false,
+          "seasonProjection": 195.6,
+          "weeklyProjection": 11.5,
+          "trend30Day": 623.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Rhamondre Stevenson",
+          "position": "RB",
+          "nflTeam": "NE",
+          "slot": "5.11",
+          "starter": true,
+          "seasonProjection": 186.5,
+          "weeklyProjection": 11.0,
+          "trend30Day": 19.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "Aaron Rodgers",
+          "position": "QB",
+          "nflTeam": "PIT",
+          "slot": "\u2014",
+          "starter": false,
+          "seasonProjection": 162.0,
+          "weeklyProjection": 9.5,
+          "trend30Day": 10.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "DK Metcalf",
+          "position": "WR",
+          "nflTeam": "PIT",
+          "slot": "7.11",
+          "starter": true,
+          "seasonProjection": 154.2,
+          "weeklyProjection": 9.1,
+          "trend30Day": -258.0,
+          "injuryStatus": "Questionable"
+        },
+        {
+          "player": "Isaiah Likely",
+          "position": "TE",
+          "nflTeam": "NYG",
+          "slot": "10.11",
+          "starter": false,
+          "seasonProjection": 141.1,
+          "weeklyProjection": 8.3,
+          "trend30Day": 78.0,
+          "injuryStatus": "Healthy"
+        },
+        {
+          "player": "KC Concepcion",
+          "position": "WR",
+          "nflTeam": "CLE",
+          "slot": "8.11",
+          "starter": true,
+          "seasonProjection": 124.6,
+          "weeklyProjection": 7.3,
+          "trend30Day": 206.0,
+          "injuryStatus": "Healthy"
+        }
+      ],
+      "powerScore": 66.2,
+      "grade": "C",
+      "volatilityScore": 39.0,
+      "volatilityLabel": "Balanced",
+      "components": {
+        "lineup": {
+          "score": 50.0,
+          "rank": 12,
+          "weight": "50%"
+        },
+        "depth": {
+          "score": 98.0,
+          "rank": 1,
+          "weight": "25%"
+        },
+        "star": {
+          "score": 60.5,
+          "rank": 9,
+          "weight": "15%"
+        },
+        "balance": {
+          "score": 76.0,
+          "rank": 12,
+          "weight": "10%"
+        }
+      },
+      "rank": 12,
+      "tier": "Sacko watch",
+      "strongestRoom": "TE",
+      "weakestRoom": "WR",
+      "headline": "Tight End strength gives Team sduda351 a real weekly identity.",
+      "currentCase": "The optimal lineup projects for 90.8 points per week, ranks #12, and is backed by the #1 usable bench. The TE room is the clearest weekly advantage.",
+      "pressurePoint": "The WR room ranks #12; that is the clearest place an opponent can create separation. 6 roster health flag(s) add uncertainty.",
+      "verdict": "Sacko watch: protect the TE edge and find weekly answers at WR."
+    }
+  ]
+}

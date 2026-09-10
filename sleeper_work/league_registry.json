@@ -1,5 +1,6 @@
 {
-  "schemaVersion": "2.0.0",
+  "schemaVersion": "2.1.0",
+  "providerRegistry": "sleeper_work/provider_registry.json",
   "publications": {
     "apes-mac-salad": {
       "displayName": "Ape's Mac Salad",
@@ -9,7 +10,32 @@
       "previousLeagueKey": "1187879775490527232",
       "draftKey": "1312209616385343488",
       "privacy": "team-names-only",
-      "releasePrefix": "publications/apes-mac-salad"
+      "releasePrefix": "publications/apes-mac-salad",
+      "providerBindings": [
+        "sleeper",
+        "fantasycalc-redraft",
+        "fantasy-football-calculator-adp",
+        "nflverse-players",
+        "rotowire-nfl-rss",
+        "legacy-expert-snapshots"
+      ]
+    },
+    "johnnys-jerks": {
+      "displayName": "Johnny's Jerks",
+      "platform": "sleeper",
+      "season": 2026,
+      "externalLeagueKey": "1401673232670539776",
+      "previousLeagueKey": null,
+      "draftKey": "1401673234486714368",
+      "privacy": "team-names-only",
+      "releasePrefix": "publications/johnnys-jerks",
+      "providerBindings": [
+        "sleeper",
+        "fantasycalc-redraft",
+        "fantasy-football-calculator-adp",
+        "nflverse-players",
+        "rotowire-nfl-rss"
+      ]
     },
     "mooseys-mommy": {
       "displayName": "Moosey's Mommy",
@@ -19,7 +45,16 @@
       "previousLeagueKey": null,
       "draftKey": null,
       "privacy": "team-names-only",
-      "releasePrefix": "publications/mooseys-mommy"
+      "releasePrefix": "publications/mooseys-mommy",
+      "providerBindings": [
+        "yahoo",
+        "fantasycalc-redraft",
+        "fantasy-football-calculator-adp",
+        "nflverse-players",
+        "rotowire-nfl-rss",
+        "fantasypros-private",
+        "vertex-gemini"
+      ]
     }
   }
 }

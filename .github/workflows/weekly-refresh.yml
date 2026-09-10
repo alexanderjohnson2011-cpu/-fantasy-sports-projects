@@ -28,6 +28,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 # Never let two refreshes race each other into the same branch.
 concurrency:
@@ -53,10 +54,11 @@ jobs:
       - name: Install pipeline dependencies
         run: pip install --quiet "google-cloud-bigquery>=3,<4" "google-cloud-storage>=2.14,<4"
 
-      - name: Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud (Workload Identity Federation)
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          workload_identity_provider: "projects/1097821806660/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider"
+          service_account: "ams-pipeline@apes-mac-salad.iam.gserviceaccount.com"
 
       - name: Load raw captures into canonical
         working-directory: sleeper_work
@@ -81,12 +83,19 @@ jobs:
         working-directory: sleeper_work
         run: python build_weekly_recap.py --season "${{ github.event.inputs.season || '2026' }}"
 
+      - name: Refresh Johnny's Jerks payload
+        run: |
+          python -m sleeper_work.capture_craig_redraft
+          python -m sleeper_work.build_redraft_recap_payload
+
       # A payload that does not compile is worse than a stale one, so the build
       # gates the commit rather than running after it.
       - name: Verify the site still builds
         run: |
           npm ci --no-audit --no-fund
+          npm run check:runtime
           npm run build
+          npm run build:johnny
           npm run test:sites
 
       - name: Commit refreshed payloads if they changed

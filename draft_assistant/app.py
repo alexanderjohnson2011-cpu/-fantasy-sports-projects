@@ -16,13 +16,23 @@ from pydantic import BaseModel, Field
 
 from . import __version__
 from .ai import comment, player_take, vertex_available
-from .board import load_board, player_dossier, recommend
+from .board import _normalize, load_board, player_dossier, recommend
 from .config import settings
-from .db import add_event, clear_events_by_source, get_session, initialize, latest_snapshots, list_events, snake_slot, undo_last, update_session, utc_now
+from .db import add_event, clear_all_events, clear_events_by_source, get_session, initialize, latest_snapshots, list_events, snake_slot, undo_last, update_session, utc_now
 from .offline import export_board, export_chatgpt_packet
 from .providers import latest_rotowire_items, refresh_all
 from .secrets import secret_status, set_secret
-from . import yahoo
+from . import sleeper, yahoo
+
+
+class SleeperPreviewBody(BaseModel):
+    targetId: str
+
+
+class SleeperConnectBody(BaseModel):
+    targetId: str
+    userSlot: int | None = Field(None, ge=1, le=32)
+    username: str | None = None
 
 
 class CredentialsBody(BaseModel):
@@ -85,6 +95,7 @@ def startup() -> None:
     _draft_state()
     if not _poller_started:
         threading.Thread(target=_yahoo_poll_loop, name="yahoo-draft-poller", daemon=True).start()
+        threading.Thread(target=_sleeper_poll_loop, name="sleeper-draft-poller", daemon=True).start()
         _poller_started = True
 
 
@@ -97,6 +108,17 @@ def _yahoo_poll_loop() -> None:
                 _sync_yahoo_once()
         except Exception as exc:
             update_session(sync_message=f"Yahoo poll delayed: {str(exc)[:120]}")
+
+
+def _sleeper_poll_loop() -> None:
+    while True:
+        time.sleep(2)
+        try:
+            session = get_session()
+            if session.get("sync_mode") == "sleeper" and (session.get("sleeper_draft_id") or session.get("sleeper_league_id")):
+                _sync_sleeper_once()
+        except Exception as exc:
+            update_session(sync_message=f"Sleeper poll delayed: {str(exc)[:120]}")
 
 
 def _player(player_id: str) -> dict[str, Any]:
@@ -121,9 +143,26 @@ def _draft_state(session_id: str = "tonight") -> dict[str, Any]:
         calculation = recommend(session, events)
         calculation["calculationMs"] = round((time.perf_counter() - started) * 1000, 1)
         _state_cache[session_id] = (cache_key, calculation)
+    board_players = load_board()
+    by_id = {str(p["playerId"]): p for p in board_players}
+    by_name = {_normalize(p.get("name", "")): p for p in board_players}
+
+    enriched_events = []
+    for ev in events:
+        item = dict(ev)
+        match = by_id.get(str(ev.get("player_id"))) or by_name.get(_normalize(ev.get("player_name", "")))
+        if match:
+            item["adp"] = match.get("adp")
+            item["projectedPoints"] = match.get("projectedPoints")
+            item["vorp"] = match.get("vorp")
+            item["tier"] = match.get("tier")
+            item["marketRank"] = match.get("marketRank")
+            item["team"] = match.get("team")
+        enriched_events.append(item)
+
     return {
         "session": session,
-        "events": events,
+        "events": enriched_events,
         "draft": calculation,
         "sources": latest_snapshots(settings.publication_id),
         "news": latest_rotowire_items()[:12],
@@ -210,7 +249,7 @@ def dossier(player_id: str) -> dict[str, Any]:
     state = _draft_state()
     player = next((candidate for candidate in state["draft"].get("available", []) if str(candidate["playerId"]) == str(player_id)), None)
     if not player:
-        raise HTTPException(status_code=404, detail="Player is not available on the current board")
+        player = _player(player_id)
     return player_dossier(player)
 
 
@@ -219,7 +258,7 @@ def ai_take(player_id: str) -> dict[str, Any]:
     state = _draft_state()
     player = next((candidate for candidate in state["draft"].get("available", []) if str(candidate["playerId"]) == str(player_id)), None)
     if not player:
-        raise HTTPException(status_code=404, detail="Player is not available on the current board")
+        player = _player(player_id)
     return player_take("tonight", player)
 
 
@@ -272,6 +311,15 @@ def reset_manual_rehearsal() -> dict[str, Any]:
     if any(event["source"] != "rehearsal" for event in events):
         raise HTTPException(status_code=409, detail="Only an all-rehearsal ledger can be cleared automatically.")
     cleared = clear_events_by_source("tonight", "rehearsal")
+    _state_cache.clear()
+    state = _draft_state()
+    return {"cleared": cleared, "state": state, "analysisExport": export_chatgpt_packet(state)}
+
+
+@app.post("/api/draft/reset")
+def reset_draft() -> dict[str, Any]:
+    """Clear all picks from the draft ledger to start a fresh draft."""
+    cleared = clear_all_events("tonight")
     _state_cache.clear()
     state = _draft_state()
     return {"cleared": cleared, "state": state, "analysisExport": export_chatgpt_packet(state)}
@@ -378,6 +426,121 @@ def _sync_yahoo_once() -> dict[str, Any]:
         return {"imported": imported, "mismatches": mismatches}
     except Exception:
         raise
+
+
+def _sync_sleeper_once() -> dict[str, Any]:
+    session = get_session()
+    draft_id = session.get("sleeper_draft_id")
+    if not draft_id and session.get("sleeper_league_id"):
+        try:
+            league = sleeper.fetch_league(session["sleeper_league_id"])
+            draft_id = str(league.get("draft_id") or "")
+            if draft_id:
+                update_session(sleeper_draft_id=draft_id)
+        except Exception:
+            pass
+    if not draft_id:
+        raise HTTPException(status_code=400, detail="No Sleeper draft connected.")
+
+    picks = sleeper.fetch_picks(draft_id)
+    local_board = load_board()
+    board_by_sleeper = {str(player.get("sleeperId") or player.get("playerId")): player for player in local_board}
+    normalize = lambda val: re.sub(r"[^a-z0-9]", "", (val or "").lower())
+    board_by_name = {normalize(p["name"]): p for p in local_board}
+
+    existing = {event["pick_no"]: event for event in list_events()}
+    imported = 0
+    changed = False
+    for pick in picks:
+        p_no = int(pick.get("pick_no") or 1)
+        sid = str(pick.get("player_id") or "")
+        player = board_by_sleeper.get(sid)
+        if not player:
+            meta = pick.get("metadata") or {}
+            full_name = f"{meta.get('first_name', '')} {meta.get('last_name', '')}".strip()
+            player = board_by_name.get(normalize(full_name))
+        if not player:
+            continue
+        previous = existing.get(p_no)
+        if previous and str(previous["player_id"]) == str(player["playerId"]):
+            continue
+        slot = int(pick.get("draft_slot") or snake_slot(p_no, int(session["num_teams"])))
+        add_event("tonight", player, slot, "sleeper", p_no, f"sleeper:{draft_id}:{p_no}")
+        imported += 1
+        changed = True
+
+    msg = f"Sleeper synchronized {len(picks)} picks" if picks else "Sleeper draft live (awaiting picks)"
+    update_session(sync_mode="sleeper", sync_message=msg, last_sleeper_sync=utc_now())
+    _state_cache.clear()
+    if changed:
+        _write_chatgpt_packet()
+    return {"imported": imported, "totalPicks": len(picks)}
+
+
+@app.post("/api/sleeper/preview")
+def sleeper_preview(body: SleeperPreviewBody) -> dict[str, Any]:
+    try:
+        return sleeper.inspect_sleeper_league_or_draft(body.targetId)
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/api/sleeper/connect")
+def sleeper_connect(body: SleeperConnectBody) -> dict[str, Any]:
+    try:
+        details = sleeper.inspect_sleeper_league_or_draft(body.targetId)
+        user_slot = body.userSlot or 1
+        if body.username and not body.userSlot:
+            norm_target = re.sub(r"[^a-z0-9]", "", body.username.lower())
+            for opt in details["userOptions"]:
+                if norm_target in re.sub(r"[^a-z0-9]", "", opt["displayName"].lower()):
+                    user_slot = opt["slot"]
+                    break
+
+        league_settings = {
+            "draftClockSeconds": 90,
+            "keeperManagementEnabled": False,
+            "userSlotConfirmed": True,
+            "roundsConfirmed": True,
+            "sleeperDraftId": details["draftId"],
+            "sleeperLeagueId": details["leagueId"],
+        }
+        update_session(
+            league_name=details["leagueName"],
+            sleeper_league_id=details["leagueId"],
+            sleeper_draft_id=details["draftId"],
+            num_teams=details["numTeams"],
+            rounds=details["rounds"],
+            user_slot=user_slot,
+            scoring_format=details["scoringFormat"],
+            scoring_json=details["scoringRules"],
+            roster_slots_json=details["rosterSlots"],
+            league_settings_json=league_settings,
+            sync_mode="sleeper",
+            sync_message=f"Connected to {details['leagueName']} on Sleeper",
+        )
+        clear_all_events("tonight")
+        _state_cache.clear()
+        if details["draftId"]:
+            try:
+                _sync_sleeper_once()
+            except Exception:
+                pass
+        return {"connected": True, "details": details, "state": _draft_state()}
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/api/sleeper/sync")
+def sleeper_sync() -> dict[str, Any]:
+    try:
+        result = _sync_sleeper_once()
+        return {**result, "state": _draft_state()}
+    except HTTPException:
+        raise
+    except Exception as exc:
+        update_session(sync_message=f"Sleeper sync delayed: {str(exc)[:140]}")
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
 @app.post("/api/chat")

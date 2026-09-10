@@ -39,7 +39,10 @@ import draftRecapJson from "./generated/draft-recap.json";
 import weeklyRecapJson from "./generated/weekly-recap.json";
 import powerRankingsJson from "./generated/power-rankings.json";
 import matchupsWeek1Json from "./generated/matchups-week1.json";
-import { api, DraftPlayer, DraftState, PlayerAiTake, PlayerDossier } from "./draft-api";
+import { api, DraftPlayer, DraftState, PlayerAiTake, PlayerDossier, SleeperLeaguePreview } from "./draft-api";
+import { TurnDecisionMatrix } from "./TurnDecisionMatrix";
+import { askAiStrategist } from "./ai-strategist";
+import JohnnysJerksApp from "./JohnnysJerksApp";
 
 type WeeklyMatchup = {
   week: number;
@@ -763,6 +766,25 @@ function AppHeader({ onMenu }: { onMenu: () => void }) {
     <header className="masthead">
       <img className="league-seal" src="./assets/app/league-seal.png" alt="Ape’s Mac Salad league seal" />
       <p className="masthead__name">Ape’s Mac Salad · Dynasty</p>
+      <a
+        href="#draft-room"
+        style={{
+          marginLeft: "auto",
+          marginRight: "0.75rem",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "6px",
+          padding: "5px 12px",
+          background: "#00ceb8",
+          color: "#0c1514",
+          fontWeight: 700,
+          fontSize: "0.85rem",
+          borderRadius: "6px",
+          textDecoration: "none",
+        }}
+      >
+        <Lightning size={16} weight="fill" /> Moosey’s Mommy Draft Desk
+      </a>
       <button className="icon-button" type="button" aria-label="Open methodology" onClick={onMenu}>
         <List size={29} weight="regular" aria-hidden="true" />
       </button>
@@ -2352,17 +2374,23 @@ function DraftRoomScreen() {
   const [question, setQuestion] = useState("");
   const [chatReply, setChatReply] = useState("Ask “Who are the sleepers?” for price, momentum, news, and scarcity signals. The desk never invents a depth-chart report.");
   const [showSetup, setShowSetup] = useState(false);
+  const [showWarRoom, setShowWarRoom] = useState(true);
   const [correctionPick, setCorrectionPick] = useState("");
   const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null);
   const [aiTakes, setAiTakes] = useState<Record<string, PlayerAiTake>>({});
   const [credentials, setCredentials] = useState({ yahooClientId: "", yahooClientSecret: "", fantasyProsKey: "" });
   const [oauth, setOauth] = useState({ code: "", state: "", url: "" });
   const [leagueOptions, setLeagueOptions] = useState<Array<{ leagueKey: string; name: string }>>([]);
+  const [sleeperTargetId, setSleeperTargetId] = useState("");
+  const [sleeperUsername, setSleeperUsername] = useState("");
   const [draftShape, setDraftShape] = useState<{ leagueKey: string; leagueName: string; userSlot: number; numTeams: number; rounds: number; scoringFormat: "standard" | "half-ppr" | "ppr"; scoring: Array<Record<string, unknown>>; rosterSlots: Array<Record<string, unknown>> }>({ leagueKey: "", leagueName: "Moosey’s Mommy", userSlot: 1, numTeams: 12, rounds: 16, scoringFormat: "half-ppr", scoring: [], rosterSlots: [] });
   const stateQuery = useQuery({
     queryKey: ["draft-state"],
     queryFn: () => api<DraftState>("/api/draft/state"),
-    refetchInterval: (query) => query.state.data?.session.sync_mode === "yahoo" ? 4000 : 20000,
+    refetchInterval: (query) => {
+      const mode = query.state.data?.session.sync_mode;
+      return mode === "sleeper" ? 2500 : mode === "yahoo" ? 4000 : 20000;
+    },
   });
   const state = stateQuery.data;
   const dossierQuery = useQuery({
@@ -2393,12 +2421,33 @@ function DraftRoomScreen() {
   });
   const rehearsalMutation = useMutation({ mutationFn: () => api("/api/draft/rehearsal", { method: "POST" }), onSuccess: refresh });
   const resetRehearsalMutation = useMutation({ mutationFn: () => api("/api/draft/rehearsal/reset", { method: "POST" }), onSuccess: refresh });
+  const resetDraftMutation = useMutation({ mutationFn: () => api("/api/draft/reset", { method: "POST" }), onSuccess: refresh });
   const yahooMutation = useMutation({ mutationFn: () => api("/api/yahoo/sync", { method: "POST" }), onSuccess: refresh });
+  const sleeperMutation = useMutation({ mutationFn: () => api("/api/sleeper/sync", { method: "POST" }), onSuccess: refresh });
+  const sleeperPreviewMutation = useMutation({
+    mutationFn: (targetId: string) => api<SleeperLeaguePreview>("/api/sleeper/preview", { method: "POST", body: JSON.stringify({ targetId }) }),
+  });
+  const sleeperConnectMutation = useMutation({
+    mutationFn: (payload: { targetId: string; userSlot?: number; username?: string }) => api("/api/sleeper/connect", { method: "POST", body: JSON.stringify(payload) }),
+    onSuccess: () => { setShowSetup(false); refresh(); },
+  });
   const sourcesMutation = useMutation({ mutationFn: () => api("/api/sources/refresh", { method: "POST" }), onSuccess: refresh });
   const exportMutation = useMutation({ mutationFn: () => api<{ htmlPath: string; jsonPath: string }>("/api/offline/export", { method: "POST" }) });
   const analysisExportMutation = useMutation({ mutationFn: () => api<{ markdownPath: string; jsonPath: string }>("/api/analysis/export", { method: "POST" }) });
   const chatMutation = useMutation({
-    mutationFn: () => api<{ reply: string; provider: string; reason?: string }>("/api/chat", { method: "POST", body: JSON.stringify({ question }) }),
+    mutationFn: async () => {
+      if (state) {
+        try {
+          const directReply = await askAiStrategist(state, question);
+          if (directReply) {
+            return { reply: directReply, provider: "gemini-3.8-flash" };
+          }
+        } catch (err) {
+          console.warn("Direct strategist call failed, falling back to /api/chat", err);
+        }
+      }
+      return api<{ reply: string; provider: string; reason?: string }>("/api/chat", { method: "POST", body: JSON.stringify({ question }) });
+    },
     onSuccess: (response) => { setChatReply(response.reply); setQuestion(""); },
   });
   const setupMutation = useMutation({
@@ -2485,7 +2534,7 @@ function DraftRoomScreen() {
     if (isCorrecting) correctionMutation.mutate({ player, pickNo: correctionNumber });
     else pickMutation.mutate(player);
   };
-  const actionError = pickMutation.error || correctionMutation.error || undoMutation.error || rehearsalMutation.error || resetRehearsalMutation.error || yahooMutation.error || sourcesMutation.error || analysisExportMutation.error || aiTakeMutation.error;
+  const actionError = pickMutation.error || correctionMutation.error || undoMutation.error || rehearsalMutation.error || resetRehearsalMutation.error || yahooMutation.error || sleeperMutation.error || sleeperPreviewMutation.error || sleeperConnectMutation.error || sourcesMutation.error || analysisExportMutation.error || aiTakeMutation.error;
   return (
     <div className="draft-room">
       <header className="draft-topbar">
@@ -2498,21 +2547,50 @@ function DraftRoomScreen() {
           <strong>Pick {state.draft.currentPick} · Round {state.draft.currentRound}</strong>
         </div>
         <div className="draft-status">
-          <span className={`source-dot ${state.session.sync_mode === "yahoo" ? "is-fresh" : "is-manual"}`} />
-          <div><strong>{state.session.sync_mode === "yahoo" ? "Yahoo live" : "Manual safe mode"}</strong><small>{state.session.sync_message}</small></div>
+          <span className={`source-dot ${state.session.sync_mode === "sleeper" || state.session.sync_mode === "yahoo" ? "is-fresh" : "is-manual"}`} />
+          <div><strong>{state.session.sync_mode === "sleeper" ? "Sleeper live" : state.session.sync_mode === "yahoo" ? "Yahoo live" : "Manual safe mode"}</strong><small>{state.session.sync_message}</small></div>
         </div>
         <button className="draft-icon-button" type="button" onClick={() => setShowSetup((value) => !value)} aria-label="Open setup"><Gear size={23} /></button>
       </header>
 
       {showSetup ? (
         <section className="draft-setup" aria-label="Draft setup">
-          <div><p className="draft-kicker">Private local setup</p><h2>Set manual fallback or connect Yahoo</h2><p>Manual Safe Mode needs no credentials. Yahoo credentials stay only on this laptop and are never added to the public build.</p></div>
-          <label>Yahoo client ID<input type="password" value={credentials.yahooClientId} onChange={(event) => setCredentials({ ...credentials, yahooClientId: event.target.value })} /></label>
-          <label>Yahoo client secret<input type="password" value={credentials.yahooClientSecret} onChange={(event) => setCredentials({ ...credentials, yahooClientSecret: event.target.value })} /></label>
-          <label>FantasyPros prototype key<input type="password" value={credentials.fantasyProsKey} onChange={(event) => setCredentials({ ...credentials, fantasyProsKey: event.target.value })} /></label>
-          <button type="button" className="draft-button draft-button--primary" disabled={!credentials.yahooClientId || !credentials.yahooClientSecret || setupMutation.isPending} onClick={() => setupMutation.mutate()}>Save & open Yahoo</button>
+          <div><p className="draft-kicker">Private local setup</p><h2>Connect Sleeper or Yahoo, or use Manual Safe Mode</h2><p>Credentials and tokens stay only on this computer and are never committed to public releases.</p></div>
+          <div className="draft-manual-shape" style={{ borderColor: "#00ceb8" }}>
+            <div><p className="draft-kicker" style={{ color: "#00ceb8" }}>Sleeper Integration</p><strong>Connect Sleeper League or Draft Room</strong><small>Enter your Sleeper League ID (e.g. from the league URL) or Draft ID. Auto-imports teams, scoring, and streams live picks.</small></div>
+            <label>Sleeper League or Draft ID<input value={sleeperTargetId} onChange={(event) => setSleeperTargetId(event.target.value)} placeholder="e.g. 1312209616372772864" /></label>
+            <label>Sleeper Username (optional, auto-picks your slot)<input value={sleeperUsername} onChange={(event) => setSleeperUsername(event.target.value)} placeholder="e.g. your_sleeper_username" /></label>
+            <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
+              <button type="button" className="draft-button" disabled={!sleeperTargetId.trim() || sleeperPreviewMutation.isPending} onClick={() => sleeperPreviewMutation.mutate(sleeperTargetId.trim())}>{sleeperPreviewMutation.isPending ? "Inspecting…" : "Preview Sleeper"}</button>
+              <button type="button" className="draft-button draft-button--primary" disabled={!sleeperTargetId.trim() || sleeperConnectMutation.isPending} onClick={() => sleeperConnectMutation.mutate({ targetId: sleeperTargetId.trim(), username: sleeperUsername.trim() || undefined })}>{sleeperConnectMutation.isPending ? "Connecting…" : "Connect Sleeper Live"}</button>
+            </div>
+            {sleeperPreviewMutation.data ? (
+              <div style={{ marginTop: "0.6rem", padding: "0.6rem", background: "rgba(0,206,184,0.08)", borderRadius: "6px" }}>
+                <strong>{sleeperPreviewMutation.data.leagueName}</strong> ({sleeperPreviewMutation.data.numTeams} teams, {sleeperPreviewMutation.data.rounds} rounds, {sleeperPreviewMutation.data.scoringFormat.toUpperCase()})
+                {sleeperPreviewMutation.data.userOptions.length ? (
+                  <div style={{ marginTop: "0.4rem" }}>
+                    <small style={{ display: "block", marginBottom: "0.2rem" }}>Select your team slot:</small>
+                    {sleeperPreviewMutation.data.userOptions.map((opt) => (
+                      <button key={opt.slot} type="button" className="draft-button" style={{ margin: "2px", fontSize: "0.8rem", padding: "3px 8px" }} onClick={() => sleeperConnectMutation.mutate({ targetId: sleeperTargetId.trim(), userSlot: opt.slot })}>
+                        Slot {opt.slot}: {opt.displayName}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
           <div className="draft-manual-shape">
-            <div><p className="draft-kicker">Manual Safe Mode</p><strong>Lock tonight’s draft shape</strong><small>These values drive snake order, roster replacement levels, and the recommendation engine until Yahoo is approved.</small></div>
+            <div><p className="draft-kicker">Yahoo Fantasy</p><strong>Connect Yahoo League</strong></div>
+            <label>Yahoo client ID<input type="password" value={credentials.yahooClientId} onChange={(event) => setCredentials({ ...credentials, yahooClientId: event.target.value })} /></label>
+            <label>Yahoo client secret<input type="password" value={credentials.yahooClientSecret} onChange={(event) => setCredentials({ ...credentials, yahooClientSecret: event.target.value })} /></label>
+            <label>FantasyPros prototype key<input type="password" value={credentials.fantasyProsKey} onChange={(event) => setCredentials({ ...credentials, fantasyProsKey: event.target.value })} /></label>
+            <button type="button" className="draft-button draft-button--primary" disabled={!credentials.yahooClientId || !credentials.yahooClientSecret || setupMutation.isPending} onClick={() => setupMutation.mutate()}>Save & open Yahoo</button>
+            {oauth.url ? <><label>Yahoo verification code<input value={oauth.code} onChange={(event) => setOauth({ ...oauth, code: event.target.value })} /></label><button type="button" className="draft-button" disabled={!oauth.code || oauthMutation.isPending} onClick={() => oauthMutation.mutate()}>Finish Yahoo connection</button></> : null}
+            {leagueOptions.length ? <div className="draft-league-options"><span>Select tonight’s league</span>{leagueOptions.map((league) => <button type="button" key={league.leagueKey} onClick={() => leagueMutation.mutate(league)}>{league.name}</button>)}</div> : null}
+          </div>
+          <div className="draft-manual-shape">
+            <div><p className="draft-kicker">Manual Safe Mode</p><strong>Lock tonight’s draft shape</strong><small>These values drive snake order, roster replacement levels, and the recommendation engine.</small></div>
             <label>League name<input value={draftShape.leagueName} onChange={(event) => setDraftShape({ ...draftShape, leagueName: event.target.value })} /></label>
             <label>Teams<input type="number" min="4" max="32" value={draftShape.numTeams} onChange={(event) => setDraftShape({ ...draftShape, numTeams: Number(event.target.value) })} /></label>
             <label>Your draft slot<input type="number" min="1" max={draftShape.numTeams} value={draftShape.userSlot} onChange={(event) => setDraftShape({ ...draftShape, userSlot: Number(event.target.value) })} /></label>
@@ -2520,23 +2598,26 @@ function DraftRoomScreen() {
             <label>Scoring<select value={draftShape.scoringFormat} onChange={(event) => setDraftShape({ ...draftShape, scoringFormat: event.target.value as "standard" | "half-ppr" | "ppr" })}><option value="standard">Standard</option><option value="half-ppr">Half PPR</option><option value="ppr">PPR</option></select></label>
             <button type="button" className="draft-button draft-button--primary" disabled={manualSafeModeMutation.isPending} onClick={() => manualSafeModeMutation.mutate()}>Activate Manual Safe Mode</button>
           </div>
-          {oauth.url ? <><label>Yahoo verification code<input value={oauth.code} onChange={(event) => setOauth({ ...oauth, code: event.target.value })} /></label><button type="button" className="draft-button" disabled={!oauth.code || oauthMutation.isPending} onClick={() => oauthMutation.mutate()}>Finish Yahoo connection</button></> : null}
-          {leagueOptions.length ? <div className="draft-league-options"><span>Select tonight’s league</span>{leagueOptions.map((league) => <button type="button" key={league.leagueKey} onClick={() => leagueMutation.mutate(league)}>{league.name}</button>)}</div> : null}
-          {draftShape.leagueKey ? <><label>Your draft slot<input type="number" min="1" max={draftShape.numTeams} value={draftShape.userSlot} onChange={(event) => setDraftShape({ ...draftShape, userSlot: Number(event.target.value) })} /></label><label>Rounds<input type="number" min="1" max="40" value={draftShape.rounds} onChange={(event) => setDraftShape({ ...draftShape, rounds: Number(event.target.value) })} /></label><button type="button" className="draft-button draft-button--primary" onClick={() => shapeMutation.mutate()}>Use {draftShape.leagueName}</button></> : null}
-          {(setupMutation.error || oauthMutation.error || leagueMutation.error || shapeMutation.error) ? <p className="draft-error">{String(setupMutation.error || oauthMutation.error || leagueMutation.error || shapeMutation.error)}</p> : null}
+          {(setupMutation.error || oauthMutation.error || leagueMutation.error || shapeMutation.error || sleeperPreviewMutation.error || sleeperConnectMutation.error) ? <p className="draft-error">{String(setupMutation.error || oauthMutation.error || leagueMutation.error || shapeMutation.error || sleeperPreviewMutation.error || sleeperConnectMutation.error)}</p> : null}
         </section>
       ) : null}
 
       <section className="draft-controlbar">
-        <p className="draft-rule-summary"><strong>{state.session.league_name}</strong> · {state.session.num_teams} teams · {draftClockSeconds ? `${draftClockSeconds}-second clock` : "clock not confirmed"} · half PPR + custom Yahoo scoring{keeperToolsEnabled ? " · keeper tools enabled" : ""} · {userSlotConfirmed ? `your slot ${state.session.user_slot}` : "your slot pending"} · {roundsConfirmed ? `${state.session.rounds} rounds` : "round count pending"}</p>
+        <p className="draft-rule-summary"><strong>{state.session.league_name}</strong> · {state.session.num_teams} teams · {draftClockSeconds ? `${draftClockSeconds}-second clock` : "clock not confirmed"} · {state.session.scoring_format ? state.session.scoring_format.toUpperCase() : "HALF-PPR"}{keeperToolsEnabled ? " · keeper tools enabled" : ""} · {userSlotConfirmed ? `your slot ${state.session.user_slot}` : "your slot pending"} · {roundsConfirmed ? `${state.session.rounds} rounds` : "round count pending"}</p>
         <div className="draft-controlbar__actions">
-          <button type="button" className="draft-button" onClick={() => yahooMutation.mutate()} disabled={yahooMutation.isPending}><ArrowClockwise size={17} /> Sync Yahoo</button>
+          {state.session.sync_mode === "sleeper" ? (
+            <button type="button" className="draft-button draft-button--primary" onClick={() => sleeperMutation.mutate()} disabled={sleeperMutation.isPending}><ArrowClockwise size={17} /> Sync Sleeper</button>
+          ) : (
+            <button type="button" className="draft-button" onClick={() => yahooMutation.mutate()} disabled={yahooMutation.isPending}><ArrowClockwise size={17} /> Sync Yahoo</button>
+          )}
+          <button type="button" className={`draft-button ${showWarRoom ? "draft-button--primary" : ""}`} onClick={() => setShowWarRoom(!showWarRoom)}><Sparkle size={17} /> {showWarRoom ? "Hide AI War Room" : "AI War Room"}</button>
           <button type="button" className="draft-button" onClick={() => sourcesMutation.mutate()} disabled={sourcesMutation.isPending}><CloudArrowDown size={17} /> Refresh sources</button>
           <button type="button" className="draft-button" onClick={() => undoMutation.mutate()} disabled={!state.events.length || undoMutation.isPending}>Undo last</button>
           <button type="button" className="draft-button" onClick={() => exportMutation.mutate()} disabled={exportMutation.isPending}>Export backup</button>
           <button type="button" className="draft-button" onClick={() => analysisExportMutation.mutate()} disabled={analysisExportMutation.isPending}>Export ChatGPT packet</button>
           {!state.events.length ? <button type="button" className="draft-button" onClick={() => rehearsalMutation.mutate()} disabled={rehearsalMutation.isPending}>Run 6-pick rehearsal</button> : null}
           {state.events.length && state.events.every((event) => event.source === "rehearsal") ? <button type="button" className="draft-button" onClick={() => resetRehearsalMutation.mutate()} disabled={resetRehearsalMutation.isPending}>Clear rehearsal</button> : null}
+          {state.events.length ? <button type="button" className="draft-button" style={{ color: "#ef5350", borderColor: "#ef5350" }} onClick={() => { if (window.confirm("Clear all picks from the draft board and start fresh?")) resetDraftMutation.mutate(); }} disabled={resetDraftMutation.isPending}>Reset draft</button> : null}
         </div>
         <label className={`draft-correction ${isCorrecting ? "is-active" : ""}`}>Correct pick<input type="number" min="1" value={correctionPick} onChange={(event) => setCorrectionPick(event.target.value)} placeholder="#" />{isCorrecting ? <button type="button" onClick={() => setCorrectionPick("")}>Cancel</button> : null}</label>
         <div className="draft-strategy" aria-label="Draft strategy">
@@ -2549,12 +2630,19 @@ function DraftRoomScreen() {
         {actionError ? <p className="draft-error">{String(actionError)}</p> : null}
       </section>
 
+      {showWarRoom ? <TurnDecisionMatrix state={state} onSelectPlayer={setSelectedPlayerId} /> : null}
+
       <main className="draft-grid">
         <section className="draft-recommendations">
           <div className="draft-section-title"><div><p className="draft-kicker">Best incremental value</p><h1>{primary ? <button type="button" className="draft-player-trigger draft-player-trigger--headline" onClick={() => setSelectedPlayerId(primary.playerId)}>{primary.name}</button> : "No player available"}</h1></div><span>{state.draft.calculationMs} ms</span></div>
           {primary ? (
             <article className="draft-primary-card">
               <div className="draft-player-line"><span className={`position-chip pos-${primary.position.toLowerCase()}`}>{primary.position}</span><strong>{primary.team}</strong><small>Tier {primary.tier}</small></div>
+              {primary.riskBadge && primary.riskLevel !== "clean" ? (
+                <div style={{ padding: "6px 10px", background: primary.isCritical ? "#ffebee" : "#fff8e1", color: primary.isCritical ? "#c62828" : "#e65100", borderRadius: "6px", fontWeight: "bold", fontSize: "0.85rem", margin: "6px 0", border: `1px solid ${primary.isCritical ? "#ef5350" : "#ffb74d"}` }}>
+                  {primary.riskBadge}
+                </div>
+              ) : null}
               <div className="draft-score-grid"><div><span>Utility</span><strong>{primary.utility.toFixed(1)}</strong></div><div><span>Increment</span><strong>+{primary.incrementalValue?.toFixed(1)}</strong></div><div><span>VORP</span><strong>{primary.vorp > 0 ? "+" : ""}{primary.vorp}</strong></div><div><span>Pos. drop</span><strong>{primary.samePositionDropoff > 0 ? "+" : ""}{primary.samePositionDropoff}</strong></div><div><span>Need</span><strong>{primary.rosterNeed ? "Yes" : "Luxury"}</strong></div></div>
               <div className="survival-strip">{primary.survival.map((point) => <div key={point.pick}><span>There at {point.pick}</span><strong>{pct(point.probability)}</strong><i><b style={{ width: pct(point.probability) }} /></i></div>)}</div>
               <p>{primary.news}</p>
@@ -2585,22 +2673,22 @@ function DraftRoomScreen() {
           </div>
           <div className="draft-table-wrap">
             <table className="draft-table">
-              <thead><tr><th scope="col" title="Click a player name to open the complete dossier, sources, and draft case.">Player</th><th scope="col" title="Market-based tier: a compact grouping of similarly valued players.">Tier</th><th scope="col" title="Current FantasyCalc market-value rank. Lower is more valuable.">Market</th><th scope="col" title="Fantasy Football Calculator average draft position: the expected overall pick where this player is selected.">ADP</th><th scope="col" title="Internal market-derived point baseline. It is not yet an exact custom-Yahoo stat-line projection.">Baseline</th><th scope="col" title="Value over replacement at the player’s position in this 14-team roster format.">VORP</th><th scope="col" title="Chance the player remains available at your next selection, from the seeded draft simulation. Pending until your draft slot is confirmed.">Next pick</th><th scope="col" title="Current matched RotoWire RSS metadata signal. Hover the icon for the exact meaning.">Signal</th><th scope="col" title="A cached Recommendation, Upside, and Risk summary. It uses Vertex Gemini when GCP is ready, otherwise a labelled deterministic fallback.">AI take</th><th scope="col" title="Record the player as the current pick, or replace the selected correction pick.">Action</th></tr></thead>
-              <tbody>{players.map((player) => { const take = aiTakes[player.playerId]; const taking = aiTakeMutation.isPending && aiTakeMutation.variables?.playerId === player.playerId; return <tr key={player.playerId}><td><button type="button" className="draft-player-trigger" onClick={() => setSelectedPlayerId(player.playerId)}>{player.name}</button><span><i className={`position-chip pos-${player.position.toLowerCase()}`}>{player.position}</i>{player.team}</span></td><td>{player.tier}</td><td>#{player.marketRank}</td><td>{player.adp.toFixed(1)}</td><td>{player.projectedPoints.toFixed(1)}</td><td className={player.vorp >= 0 ? "is-positive" : ""}>{player.vorp > 0 ? "+" : ""}{player.vorp}</td><td>{pct(player.survival[0]?.probability)}</td><td><span className={`draft-signal ${player.newsRisk === "clear" ? "is-clear" : "is-watch"}`} title={signalDescription(player)} role="img" aria-label={signalDescription(player)}>{player.newsRisk === "clear" ? <CheckCircle size={18} weight="fill" /> : <Warning size={18} weight="fill" />}</span></td><td className="draft-table__ai">{take ? <button type="button" className="draft-ai-take" title={`${take.provider === "deterministic" ? "Deterministic fallback" : `Vertex AI: ${take.provider}`}. ${take.summary}`} onClick={() => setSelectedPlayerId(player.playerId)}><Sparkle size={15} weight="fill" /><span>{take.summary}</span><small>{take.provider === "deterministic" ? "Fallback" : "Vertex AI"}{take.cached ? " · cached" : ""}</small></button> : <button type="button" className="draft-ai-take draft-ai-take--generate" title="Generate a short Recommendation, Upside, and Risk summary for this player. Uses Vertex AI when available." onClick={() => aiTakeMutation.mutate(player)} disabled={taking}><Sparkle size={15} weight="fill" /> {taking ? "Generating…" : "Generate"}</button>}</td><td><button type="button" onClick={() => recordPlayer(player)}>{isCorrecting ? "Correct" : "Record"}</button></td></tr>; })}</tbody>
+              <thead><tr><th scope="col" title="Click a player name to open the complete dossier, sources, and draft case.">Player</th><th scope="col" title="Market-based tier: a compact grouping of similarly valued players.">Tier</th><th scope="col" title="Current FantasyCalc market-value rank. Lower is more valuable.">Market</th><th scope="col" title="Fantasy Football Calculator average draft position: the expected overall pick where this player is selected.">ADP</th><th scope="col" title={`Statistical baseline projections calibrated for ${state.session.league_name} scoring rules.`}>Baseline</th><th scope="col" title={`Value over replacement at the player’s position calibrated for your ${state.session.num_teams}-team roster format.`}>VORP</th><th scope="col" title="Chance the player remains available at your next selection, from the seeded draft simulation. Pending until your draft slot is confirmed.">Next pick</th><th scope="col" title="Current matched RotoWire RSS metadata signal. Hover the icon for the exact meaning.">Signal</th><th scope="col" title="A cached Recommendation, Upside, and Risk summary. It uses Vertex Gemini when GCP is ready, otherwise a labelled deterministic fallback.">AI take</th><th scope="col" title="Record the player as the current pick, or replace the selected correction pick.">Action</th></tr></thead>
+              <tbody>{players.map((player) => { const take = aiTakes[player.playerId]; const taking = aiTakeMutation.isPending && aiTakeMutation.variables?.playerId === player.playerId; return <tr key={player.playerId} style={player.isCritical ? { opacity: 0.7, background: "rgba(239, 83, 80, 0.05)" } : undefined}><td><button type="button" className="draft-player-trigger" onClick={() => setSelectedPlayerId(player.playerId)}>{player.name}</button><span><i className={`position-chip pos-${player.position.toLowerCase()}`}>{player.position}</i>{player.team}</span>{player.isCritical ? <small style={{ display: "block", color: "#c62828", fontWeight: "bold", fontSize: "0.75rem", marginTop: "2px" }}>{player.riskBadge || "⛔ DO NOT DRAFT"}</small> : player.riskLevel === "high" ? <small style={{ display: "block", color: "#e65100", fontWeight: "bold", fontSize: "0.75rem", marginTop: "2px" }}>{player.riskBadge}</small> : null}</td><td>{player.tier}</td><td>#{player.marketRank}</td><td>{player.adp.toFixed(1)}</td><td>{player.projectedPoints.toFixed(1)}</td><td className={player.vorp >= 0 ? "is-positive" : ""}>{player.vorp > 0 ? "+" : ""}{player.vorp}</td><td>{pct(player.survival[0]?.probability)}</td><td><span className={`draft-signal ${player.isCritical ? "is-watch" : player.newsRisk === "clear" ? "is-clear" : "is-watch"}`} title={player.isCritical ? "Critical: Do Not Draft" : signalDescription(player)} role="img" aria-label={signalDescription(player)}>{player.newsRisk === "clear" && !player.isCritical ? <CheckCircle size={18} weight="fill" /> : <Warning size={18} weight="fill" />}</span></td><td className="draft-table__ai">{take ? <button type="button" className="draft-ai-take" title={`${take.provider === "deterministic" ? "Deterministic fallback" : `Vertex AI: ${take.provider}`}. ${take.summary}`} onClick={() => setSelectedPlayerId(player.playerId)}><Sparkle size={15} weight="fill" /><span>{take.summary}</span><small>{take.provider === "deterministic" ? "Fallback" : "Vertex AI"}{take.cached ? " · cached" : ""}</small></button> : <button type="button" className="draft-ai-take draft-ai-take--generate" title="Generate a short Recommendation, Upside, and Risk summary for this player. Uses Vertex AI when available." onClick={() => aiTakeMutation.mutate(player)} disabled={taking}><Sparkle size={15} weight="fill" /> {taking ? "Generating…" : "Generate"}</button>}</td><td><button type="button" onClick={() => recordPlayer(player)}>{isCorrecting ? "Correct" : "Record"}</button></td></tr>; })}</tbody>
             </table>
           </div>
         </section>
 
         <aside className="draft-rail">
           <section><p className="draft-kicker">Roster build</p><h2>Your construction</h2><div className="roster-counts">{["QB", "RB", "WR", "TE", "K", "DST"].map((pos) => <div key={pos}><span>{pos}</span><strong>{state.draft.rosterCounts[pos] || 0}</strong></div>)}</div><p>Next turns: {state.draft.nextUserPicks.length ? state.draft.nextUserPicks.join(" · ") : "draft complete"}</p></section>
-          <section><p className="draft-kicker">Source health</p><h2>{state.draft.projectionLabel}</h2>{state.sources.length ? state.sources.map((source) => <div className="source-row" key={source.provider}><span className={`source-dot ${source.status === "fresh" ? "is-fresh" : ""}`} /><div><strong>{source.provider.replaceAll("-", " ")}</strong><small>{source.detail || source.status}</small><em>{sourceScope[source.provider] || "Local source metadata."}</em></div></div>) : <p>Refresh sources to create tonight’s snapshots.</p>}<p className="draft-qualitative-note">One numeric projection feed is not connected yet, so the room accurately labels this as an internal baseline plus market signals.</p></section>
+          <section><p className="draft-kicker">Source health</p><h2>{state.draft.projectionLabel}</h2>{state.sources.length ? state.sources.map((source) => <div className="source-row" key={source.provider}><span className={`source-dot ${source.status === "fresh" ? "is-fresh" : ""}`} /><div><strong>{source.provider.replaceAll("-", " ")}</strong><small>{source.detail || source.status}</small><em>{sourceScope[source.provider] || "Local source metadata."}</em></div></div>) : <p>Refresh sources to create tonight’s snapshots.</p>}<p className="draft-qualitative-note">Scoring and baseline calculations are dynamically calibrated for your {state.session.num_teams}-team roster format.</p></section>
           <section><p className="draft-kicker">Sleeper radar</p><h2>Situation signals</h2><p className="draft-qualitative-note">{state.draft.qualitativeMethod}</p>{state.draft.sleeperRadar.length ? <div className="sleeper-radar">{state.draft.sleeperRadar.slice(0, 4).map((player) => <article key={`${player.name}-${player.team}`}><div><strong>{player.name}</strong><span>{player.position} · {player.team}</span></div><b>ADP {player.adp.toFixed(1)}</b><p>{player.qualitative.reasons.slice(0, 2).join("; ")}.</p>{player.newsRisk !== "clear" ? <small>{player.news}</small> : null}</article>)}</div> : <p>No later-round market-discount signals are available on this board.</p>}</section>
           <section><p className="draft-kicker">Pick ledger</p><h2>{state.events.length} picks recorded</h2><ol className="draft-ledger">{state.events.slice(-8).reverse().map((event) => <li key={event.event_id}><span>{event.pick_no}</span><div><strong>{event.player_name}</strong><small>Team {event.team_slot} · {event.source}</small></div></li>)}</ol></section>
-          {state.news.length ? <section><p className="draft-kicker">Reporter wire</p><h2>RotoWire RSS headlines</h2><p className="draft-qualitative-note">Open a headline for its full source context. The assistant stores only the permitted metadata shown here.</p>{state.news.slice(0, 5).map((item) => <a className="news-row" key={item.sourceUrl} href={item.sourceUrl} target="_blank" rel="noreferrer"><strong>{item.headline}</strong><small>{item.reporter || "RotoWire"}</small></a>)}</section> : null}
+          {state.news.length ? <section><p className="draft-kicker">Reporter wire</p><h2>RotoWire RSS headlines</h2><p className="draft-qualitative-note">Open a headline for its full source context. The assistant stores only the permitted metadata shown here.</p>{state.news.slice(0, 5).map((item, index) => <a className="news-row" key={`${item.sourceUrl || item.headline}-${index}`} href={item.sourceUrl} target="_blank" rel="noreferrer"><strong>{item.headline}</strong><small>{item.reporter || "RotoWire"}</small></a>)}</section> : null}
         </aside>
       </main>
-      {selectedPlayerId ? <div className="draft-dossier-backdrop" role="presentation" onMouseDown={() => setSelectedPlayerId(null)}><article className="draft-dossier" role="dialog" aria-modal="true" aria-label="Player dossier" onMouseDown={(event) => event.stopPropagation()}><button type="button" className="draft-dossier__close" onClick={() => setSelectedPlayerId(null)} aria-label="Close player dossier"><X size={20} /></button>{dossierQuery.isLoading ? <p>Building player dossier…</p> : null}{dossierQuery.isError ? <p className="draft-error">Unable to load this player dossier. The board may have changed—try again.</p> : null}{dossierQuery.data ? <><p className="draft-kicker">Player dossier</p><div className="draft-dossier__title"><div><h2>{dossierQuery.data.player.name}</h2><span>{dossierQuery.data.player.position} · {dossierQuery.data.player.team} · Tier {dossierQuery.data.player.tier}</span></div><b>ADP {dossierQuery.data.player.adp.toFixed(1)}</b></div><div className="draft-dossier__metrics"><span>Baseline <strong>{dossierQuery.data.player.projectedPoints.toFixed(1)}</strong></span><span>VORP <strong>{dossierQuery.data.player.vorp > 0 ? "+" : ""}{dossierQuery.data.player.vorp}</strong></span><span>Utility <strong>{dossierQuery.data.player.utility.toFixed(1)}</strong></span><span>30d <strong>{dossierQuery.data.player.qualitative?.trend30Day && dossierQuery.data.player.qualitative.trend30Day > 0 ? "+" : ""}{dossierQuery.data.player.qualitative?.trend30Day ?? "—"}</strong></span></div><section><h3>Consensus desk</h3><p>{dossierQuery.data.marketSynthesis}</p></section><section><h3>Expert-commentary coverage</h3><p>{dossierQuery.data.commentaryCoverage}</p></section><section><h3>The positive case</h3><ul>{dossierQuery.data.positiveCase.map((item) => <li key={item}>{item}</li>)}</ul></section><section><h3>What could go wrong</h3><ul>{dossierQuery.data.cautions.map((item) => <li key={item}>{item}</li>)}</ul></section><section><h3>Draft desk takeaway</h3><p>{dossierQuery.data.draftTakeaway}</p>{dossierQuery.data.player.newsUrl ? <a className="draft-dossier__news" href={dossierQuery.data.player.newsUrl} target="_blank" rel="noreferrer">Open linked {dossierQuery.data.player.newsReporter || "RotoWire"} headline</a> : null}</section><p className="draft-dossier__boundary">{dossierQuery.data.sourceBoundary}</p><button type="button" className="draft-button draft-button--primary" onClick={() => { recordPlayer(dossierQuery.data.player); setSelectedPlayerId(null); }} disabled={pickMutation.isPending || correctionMutation.isPending}>{isCorrecting ? `Correct pick ${correctionNumber}` : `Record at pick ${state.draft.currentPick}`}</button></> : null}</article></div> : null}
-      <footer className="draft-footnote">{state.draft.simulations.toLocaleString()} seeded simulations · {state.draft.projectionLabel} · Picks are never submitted to Yahoo</footer>
+      {selectedPlayerId ? <div className="draft-dossier-backdrop" role="presentation" onMouseDown={() => setSelectedPlayerId(null)}><article className="draft-dossier" role="dialog" aria-modal="true" aria-label="Player dossier" onMouseDown={(event) => event.stopPropagation()}><button type="button" className="draft-dossier__close" onClick={() => setSelectedPlayerId(null)} aria-label="Close player dossier"><X size={20} /></button>{dossierQuery.isLoading ? <p>Building player dossier…</p> : null}{dossierQuery.isError ? <p className="draft-error">Unable to load this player dossier. The board may have changed—try again.</p> : null}{dossierQuery.data ? <><p className="draft-kicker">Player dossier</p><div className="draft-dossier__title"><div><h2>{dossierQuery.data.player.name}</h2><span>{dossierQuery.data.player.position} · {dossierQuery.data.player.team} · Tier {dossierQuery.data.player.tier}</span></div><b>ADP {dossierQuery.data.player.adp.toFixed(1)}</b></div>{dossierQuery.data.player.isCritical || dossierQuery.data.player.riskLevel === "critical" ? <div style={{ padding: "0.75rem", background: "#ffebee", border: "1px solid #ef5350", borderRadius: "6px", color: "#c62828", margin: "0.6rem 0" }}><strong style={{ display: "block", fontSize: "0.95rem" }}>{dossierQuery.data.player.riskBadge || "⛔ DO NOT DRAFT: OUT FOR SEASON / SUSPENDED"}</strong><p style={{ margin: "0.25rem 0 0 0", fontSize: "0.85rem" }}>{dossierQuery.data.player.newsDetails || dossierQuery.data.player.news}</p></div> : dossierQuery.data.player.riskLevel === "high" ? <div style={{ padding: "0.6rem", background: "#fff8e1", border: "1px solid #ffb74d", borderRadius: "6px", color: "#e65100", margin: "0.6rem 0" }}><strong style={{ display: "block", fontSize: "0.9rem" }}>{dossierQuery.data.player.riskBadge}</strong><p style={{ margin: "0.25rem 0 0 0", fontSize: "0.85rem" }}>{dossierQuery.data.player.newsDetails || dossierQuery.data.player.news}</p></div> : null}<div className="draft-dossier__metrics"><span>Baseline <strong>{dossierQuery.data.player.projectedPoints.toFixed(1)}</strong></span><span>VORP <strong>{dossierQuery.data.player.vorp > 0 ? "+" : ""}{dossierQuery.data.player.vorp}</strong></span><span>Utility <strong>{dossierQuery.data.player.utility.toFixed(1)}</strong></span><span>30d <strong>{dossierQuery.data.player.qualitative?.trend30Day && dossierQuery.data.player.qualitative.trend30Day > 0 ? "+" : ""}{dossierQuery.data.player.qualitative?.trend30Day ?? "—"}</strong></span></div><section><h3>Consensus desk</h3><p>{dossierQuery.data.marketSynthesis}</p></section><section><h3>Expert-commentary coverage</h3><p>{dossierQuery.data.commentaryCoverage}</p></section><section><h3>The positive case</h3><ul>{dossierQuery.data.positiveCase.map((item) => <li key={item}>{item}</li>)}</ul></section><section><h3>What could go wrong</h3><ul>{dossierQuery.data.cautions.map((item) => <li key={item}>{item}</li>)}</ul></section><section><h3>Draft desk takeaway</h3><p>{dossierQuery.data.draftTakeaway}</p>{dossierQuery.data.player.newsUrl ? <a className="draft-dossier__news" href={dossierQuery.data.player.newsUrl} target="_blank" rel="noreferrer">Open linked {dossierQuery.data.player.newsReporter || "RotoWire"} headline</a> : null}</section><p className="draft-dossier__boundary">{dossierQuery.data.sourceBoundary}</p><button type="button" className="draft-button draft-button--primary" onClick={() => { recordPlayer(dossierQuery.data.player); setSelectedPlayerId(null); }} disabled={pickMutation.isPending || correctionMutation.isPending}>{isCorrecting ? `Correct pick ${correctionNumber}` : `Record at pick ${state.draft.currentPick}`}</button></> : null}</article></div> : null}
+      <footer className="draft-footnote">{state.draft.simulations.toLocaleString()} seeded simulations · {state.draft.projectionLabel} · Live picks sync from Sleeper or Yahoo</footer>
     </div>
   );
 }
@@ -2623,7 +2711,9 @@ function MoosePublication() {
 
 function routeFromHash(): Route {
   const value = window.location.hash.replace(/^#\/?/, "");
-  if (value === "draft-room" || value === "draft") return { kind: "draftRoom" };
+  if (!value || value === "draft-room" || value === "draft" || value === "moose" || value === "mooseys-mommy") {
+    return { kind: "draftRoom" };
+  }
   if (value === "methodology") return { kind: "methodology" };
   if (value.startsWith("matchup-")) {
     const matchupId = Number(value.slice("matchup-".length));
@@ -2650,7 +2740,7 @@ function routeFromHash(): Route {
     return { kind: "nav", id: value };
   }
   if (value === "almanac") return { kind: "nav", id: "analysis" };
-  return { kind: "nav", id: "analysis" };
+  return { kind: "draftRoom" };
 }
 
 function routeHash(route: Route) {
@@ -2720,6 +2810,7 @@ export default function Prototype() {
 
   if (route.kind === "draftRoom") return <DraftRoomApp />;
   if (publicationId === "mooseys-mommy") return <MoosePublication />;
+  if (publicationId === "johnnys-jerks" || window.location.hash.startsWith("#johnny")) return <JohnnysJerksApp />;
 
   return (
     <div className="site-shell">

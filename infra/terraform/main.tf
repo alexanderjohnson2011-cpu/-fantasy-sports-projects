@@ -155,6 +155,14 @@ resource "google_cloud_run_v2_job" "capture_job" {
   }
 }
 
+# Allow Cloud Scheduler (invoking with ams_capture identity) to run the capture job
+resource "google_cloud_run_v2_job_iam_member" "capture_job_invoker" {
+  name     = google_cloud_run_v2_job.capture_job.name
+  location = var.region
+  role     = "roles/run.invoker"
+  member   = "serviceAccount:${google_service_account.ams_capture.email}"
+}
+
 # 7. Cloud Scheduler Entry (P0-7): Daily 06:00 America/Los_Angeles
 resource "google_cloud_scheduler_job" "daily_capture" {
   name        = "ams-daily-capture"
@@ -301,5 +309,41 @@ resource "google_project_iam_member" "pipeline_job_user" {
 
 output "ci_service_account" {
   value       = google_service_account.ams_pipeline.email
-  description = "Create a key for this account and store it as the GCP_SA_KEY repository secret"
+  description = "Service account used for GitHub Actions CI"
+}
+
+# ---------------------------------------------------------------------------
+# Workload Identity Federation for GitHub Actions CI (Option 1)
+# ---------------------------------------------------------------------------
+
+resource "google_iam_workload_identity_pool" "github_pool" {
+  workload_identity_pool_id = "github-actions-pool"
+  display_name              = "GitHub Actions Pool"
+  description               = "Identity pool for GitHub Actions CI/CD workflows"
+}
+
+resource "google_iam_workload_identity_pool_provider" "github_provider" {
+  workload_identity_pool_id          = google_iam_workload_identity_pool.github_pool.workload_identity_pool_id
+  workload_identity_pool_provider_id = "github-actions-provider"
+  display_name                       = "GitHub Actions Provider"
+  attribute_mapping = {
+    "google.subject"       = "assertion.sub"
+    "attribute.actor"      = "assertion.actor"
+    "attribute.repository" = "assertion.repository"
+  }
+  attribute_condition = "assertion.repository == 'alexanderjohnson2011-cpu/-fantasy-sports-projects'"
+  oidc {
+    issuer_uri = "https://token.actions.githubusercontent.com"
+  }
+}
+
+resource "google_service_account_iam_member" "pipeline_wif_impersonation" {
+  service_account_id = google_service_account.ams_pipeline.name
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_pool.name}/attribute.repository/alexanderjohnson2011-cpu/-fantasy-sports-projects"
+}
+
+output "workload_identity_provider" {
+  value       = google_iam_workload_identity_pool_provider.github_provider.name
+  description = "Workload identity provider resource name for GitHub Actions"
 }

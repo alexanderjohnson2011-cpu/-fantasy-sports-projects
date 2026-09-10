@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).resolve().parent
+PROVIDER_REGISTRY_PATH = HERE / "provider_registry.json"
 FORBIDDEN_KEYS = {
     "manager", "managername", "owner", "ownerid", "userid", "yahooid", "yahookey",
     "clientsecret", "refreshtoken", "accesstoken", "oauth", "chat", "chathistory",
@@ -17,9 +18,47 @@ FORBIDDEN_KEYS = {
 }
 
 
-def sanitize(value: Any) -> Any:
+def _provider_registry() -> dict[str, dict[str, Any]]:
+    """Index the versioned provider policy by ID and compatibility alias."""
+    raw = json.loads(PROVIDER_REGISTRY_PATH.read_text(encoding="utf-8"))
+    indexed: dict[str, dict[str, Any]] = {}
+    for provider in raw["providers"]:
+        indexed[provider["id"]] = provider
+        for alias in provider.get("aliases", []):
+            indexed[alias] = provider
+    return indexed
+
+
+def source_is_public(provider_id: str | None, publication_id: str | None = None) -> bool:
+    """Return whether a provider is allowed in this publication's release.
+
+    Input data cannot self-authorize with ``publicAllowed: true``. The
+    repository policy is the release gate, and an unknown provider is private
+    by default.
+    """
+    if not provider_id:
+        return False
+    policy = _provider_registry().get(provider_id)
+    if not policy or policy.get("publicAllowed") is not True:
+        return False
+    scope = policy.get("publicationScope")
+    consumers = policy.get("consumers", [])
+    return scope == "shared" or publication_id is None or scope == publication_id or publication_id in consumers
+
+
+def _sanitize_sources(items: list[Any], publication_id: str | None) -> list[Any]:
+    return [
+        sanitize(item, publication_id)
+        for item in items
+        if isinstance(item, dict)
+        and item.get("publicAllowed") is not False
+        and source_is_public(item.get("provider") or item.get("providerId"), publication_id)
+    ]
+
+
+def sanitize(value: Any, publication_id: str | None = None) -> Any:
     if isinstance(value, list):
-        return [sanitize(item) for item in value]
+        return [sanitize(item, publication_id) for item in value]
     if not isinstance(value, dict):
         return value
     result = {}
@@ -28,13 +67,13 @@ def sanitize(value: Any) -> Any:
         if normalized in FORBIDDEN_KEYS:
             continue
         if key == "sources" and isinstance(child, list):
-            result[key] = [sanitize(item) for item in child if item.get("publicAllowed") is True]
+            result[key] = _sanitize_sources(child, publication_id)
             continue
         if key == "news" and isinstance(child, list):
             allowed = ("headline", "publishedAt", "sourceUrl", "reporter", "provider")
             result[key] = [{field: item[field] for field in allowed if field in item} for item in child]
             continue
-        result[key] = sanitize(child)
+        result[key] = sanitize(child, publication_id)
     return result
 
 
@@ -51,10 +90,10 @@ def assert_private_fields_absent(value: Any, path: str = "$") -> None:
 
 
 def build(publication_id: str, input_path: Path, output_dir: Path) -> tuple[Path, Path]:
-    if publication_id not in {"apes-mac-salad", "mooseys-mommy"}:
+    if publication_id not in {"apes-mac-salad", "johnnys-jerks", "mooseys-mommy"}:
         raise ValueError("Unknown publication ID")
     source = json.loads(input_path.read_text(encoding="utf-8"))
-    data = sanitize(source)
+    data = sanitize(source, publication_id)
     assert_private_fields_absent(data)
     generated_at = datetime.now(timezone.utc).isoformat()
     release_id = hashlib.sha256((publication_id + generated_at).encode()).hexdigest()[:12]
