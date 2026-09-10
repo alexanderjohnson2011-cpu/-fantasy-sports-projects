@@ -27,8 +27,7 @@ try:
 except ImportError:
     BQ_AVAILABLE = False
 
-KEY_PATH = r"C:\Users\alexa\Documents\Codex\Apes Mac Salad\apes-mac-salad-0d52b5a00417.json"
-PROJECT_ID = "apes-mac-salad"
+PROJECT_ID = os.environ.get("GCP_PROJECT", "apes-mac-salad")
 SLEEPER_WORK_DIR = os.path.abspath(os.path.dirname(__file__))
 if os.path.exists(os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "src")):
     ALMANAC_DIR = os.path.dirname(SLEEPER_WORK_DIR)
@@ -36,7 +35,16 @@ else:
     ALMANAC_DIR = os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ape-invitational-almanac")
 OUTPUT_JSON_PATH = os.path.join(ALMANAC_DIR, "src", "generated", "forecast-insights.json")
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = KEY_PATH
+# Dynamic credentials resolution without hardcoded local machine paths
+if "GOOGLE_APPLICATION_CREDENTIALS" not in os.environ:
+    candidate_keys = [
+        os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ams-pipeline-key.json"),
+        os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "apes-mac-salad-0d52b5a00417.json"),
+    ]
+    for ck in candidate_keys:
+        if os.path.exists(ck):
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ck
+            break
 
 # 12 Teams Roster Baseline Mapping
 TEAM_NAMES = {

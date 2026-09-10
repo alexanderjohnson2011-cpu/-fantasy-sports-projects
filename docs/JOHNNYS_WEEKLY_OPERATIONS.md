@@ -4,9 +4,9 @@
 
 Johnny's Jerks has one repeatable local refresh command:
 
-```powershell
-cd "C:\Users\alexa\Documents\Codex\Apes Mac Salad\apes-mac-salad-codex-handoff\ape-invitational-almanac"
-npm run refresh:johnny
+```bash
+cd /path/to/ape-invitational-almanac
+npm run pipeline:johnny
 ```
 
 That command:

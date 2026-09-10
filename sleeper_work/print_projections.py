@@ -6,10 +6,18 @@ Prints live season projections from BigQuery dataset `apes-mac-salad.analytics`.
 import os
 from google.cloud import bigquery
 
-KEY_PATH = r"C:\Users\alexa\Documents\Codex\Apes Mac Salad\apes-mac-salad-0d52b5a00417.json"
-PROJECT_ID = "apes-mac-salad"
+PROJECT_ID = os.environ.get("GCP_PROJECT", "apes-mac-salad")
+SLEEPER_WORK_DIR = os.path.dirname(__file__)
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = KEY_PATH
+if "GOOGLE_APPLICATION_CREDENTIALS" not in os.environ:
+    candidate_keys = [
+        os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "ams-pipeline-key.json"),
+        os.path.join(os.path.dirname(SLEEPER_WORK_DIR), "apes-mac-salad-0d52b5a00417.json"),
+    ]
+    for ck in candidate_keys:
+        if os.path.exists(ck):
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ck
+            break
 
 def main():
     client = bigquery.Client(project=PROJECT_ID)
