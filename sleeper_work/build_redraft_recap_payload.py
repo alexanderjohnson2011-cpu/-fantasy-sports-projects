@@ -952,11 +952,16 @@ def build_redraft_matchups(team_data, power_rankings, week):
     def player_projection(player):
         return round(float(player.get("projectedPoints", 0.0) or 0.0) / 17.0, 1)
 
-    def lineup_side(team, profile):
+    now = datetime.now(timezone.utc)
+    matchup_by_roster = {m.get("roster_id"): m for m in raw_matchups}
+
+    def lineup_side(team, profile, raw_matchup):
         starters = [player for player in team.get("roster", []) if player.get("isStarter")]
         starters.sort(key=lambda player: ({"QB": 0, "RB": 1, "WR": 2, "TE": 3, "K": 4, "DEF": 5}.get(player.get("position"), 6), -float(player.get("projectedPoints", 0.0) or 0.0)))
         counts = {}
         lineup = []
+        players_points = raw_matchup.get("players_points", {}) if raw_matchup else {}
+
         for player in starters:
             position = player.get("position") or "FLEX"
             counts[position] = counts.get(position, 0) + 1
@@ -969,24 +974,72 @@ def build_redraft_matchups(team_data, power_rankings, week):
                 matchup_label = "Schedule unavailable"
             weekly = player_projection(player)
             status = player.get("injuryStatus") or "Healthy"
+
+            pid = str(player.get("playerId") or "")
+            kickoff_iso = game.get("kickoffAt") if game else None
+            game_started = False
+            if kickoff_iso:
+                try:
+                    k_dt = datetime.fromisoformat(kickoff_iso)
+                    if k_dt.tzinfo is None:
+                        k_dt = k_dt.replace(tzinfo=timezone.utc)
+                    game_started = (now >= k_dt)
+                except Exception:
+                    pass
+
+            has_played = False
+            actual_pts = None
+            delta = None
+            performance = "upcoming"
+
+            if (pid in players_points and float(players_points[pid]) > 0.0) or game_started:
+                has_played = True
+                actual_pts = round(float(players_points.get(pid, 0.0)), 2)
+                delta = round(actual_pts - weekly, 1)
+                if delta <= -3.0:
+                    performance = "underperformed"
+                    status_note = f"Final · {actual_pts:.1f} pts ({delta:+.1f} vs {weekly:.1f} proj)"
+                elif delta >= 3.0:
+                    performance = "overperformed"
+                    status_note = f"Final · {actual_pts:.1f} pts ({delta:+.1f} vs {weekly:.1f} proj)"
+                else:
+                    performance = "met_projection"
+                    status_note = f"Final · {actual_pts:.1f} pts (on pace)"
+            else:
+                status_note = f"Upcoming · Projected {weekly:.1f} pts"
+
             note = (
                 player.get("medicalNote")
-                if status not in ("Healthy", "Active", "") and player.get("medicalNote")
-                else f"{weekly:.1f}-point model share in this lineup; {status.lower()} entering Week {week}."
+                if status not in ("Healthy", "Active", "") and player.get("medicalNote") and not has_played
+                else (status_note if has_played else f"{weekly:.1f}-point model share in this lineup; {status.lower()} entering Week {week}.")
             )
+
             lineup.append({
                 "slot": f"{position}{counts[position] if position in ('RB', 'WR') else ''}",
                 "player": player.get("player"),
+                "playerId": pid,
                 "position": position,
                 "nflTeam": nfl_team,
                 "projectedPoints": weekly,
+                "hasPlayed": has_played,
+                "actualPoints": actual_pts,
+                "delta": delta,
+                "performance": performance,
+                "statusNote": status_note,
                 "matchup": matchup_label,
-                "kickoff": game.get("timeLabel") if game else "TBD",
+                "kickoff": "Final" if has_played else (game.get("timeLabel") if game else "TBD"),
                 "network": game.get("network") if game else "TBD",
                 "injuryStatus": status,
                 "note": note,
             })
+
         star = max(starters, key=lambda player: float(player.get("projectedPoints", 0.0) or 0.0), default={})
+        starters_played = [p for p in lineup if p["hasPlayed"]]
+        starters_remaining = [p for p in lineup if not p["hasPlayed"]]
+        actual_score = round(sum(p["actualPoints"] for p in starters_played), 2)
+        remaining_projected = round(sum(p["projectedPoints"] for p in starters_remaining), 1)
+        live_projected = round(actual_score + remaining_projected, 1)
+
         return {
             "rosterId": team.get("rosterId"),
             "name": team.get("teamName"),
@@ -995,6 +1048,11 @@ def build_redraft_matchups(team_data, power_rankings, week):
             "powerScore": profile.get("powerScore"),
             "grade": profile.get("grade"),
             "projected": profile.get("weeklyProjection"),
+            "actualScore": actual_score,
+            "remainingProjected": remaining_projected,
+            "liveProjectedTotal": live_projected,
+            "startersPlayedCount": len(starters_played),
+            "startersRemainingCount": len(starters_remaining),
             "keyPlayer": star.get("player", "TBD"),
             "keyPlayerProjection": player_projection(star) if star else 0.0,
             "starters": lineup,
@@ -1019,14 +1077,33 @@ def build_redraft_matchups(team_data, power_rankings, week):
         profile_2 = power_by_roster.get(roster_2)
         if not team_1 or not team_2 or not profile_1 or not profile_2:
             continue
-        side_1 = lineup_side(team_1, profile_1)
-        side_2 = lineup_side(team_2, profile_2)
-        projection_diff = round(side_1["projected"] - side_2["projected"], 1)
-        favorite = side_1 if projection_diff >= 0 else side_2
-        underdog = side_2 if projection_diff >= 0 else side_1
-        spread = abs(projection_diff)
-        side_1["winProbability"] = round(clamp(50.0 + projection_diff * 2.4, 18.0, 82.0), 1)
+
+        raw_1 = matchup_by_roster.get(roster_1, pair[0])
+        raw_2 = matchup_by_roster.get(roster_2, pair[1])
+        side_1 = lineup_side(team_1, profile_1, raw_1)
+        side_2 = lineup_side(team_2, profile_2, raw_2)
+
+        has_live_results = (side_1["startersPlayedCount"] > 0 or side_2["startersPlayedCount"] > 0)
+
+        # Opening spread and win probability
+        opening_diff = round(side_1["projected"] - side_2["projected"], 1)
+        opening_spread = abs(opening_diff)
+        opening_fav = side_1 if opening_diff >= 0 else side_2
+        side_1["winProbability"] = round(clamp(50.0 + opening_diff * 2.4, 18.0, 82.0), 1)
         side_2["winProbability"] = round(100.0 - side_1["winProbability"], 1)
+
+        # Live spread and win probability
+        live_diff = round(side_1["liveProjectedTotal"] - side_2["liveProjectedTotal"], 1)
+        live_spread = abs(live_diff)
+        live_fav = side_1 if live_diff >= 0 else side_2
+        live_dog = side_2 if live_diff >= 0 else side_1
+        side_1["liveWinProbability"] = round(clamp(50.0 + live_diff * 2.8, 5.0, 95.0), 1)
+        side_2["liveWinProbability"] = round(100.0 - side_1["liveWinProbability"], 1)
+
+        # Active spread / favorite
+        favorite = live_fav if has_live_results else opening_fav
+        underdog = live_dog if has_live_results else (side_2 if opening_fav == side_1 else side_1)
+        spread = live_spread if has_live_results else opening_spread
 
         positional_edges = []
         for position, label in (("QB", "Quarterback"), ("RB", "Running backs"), ("WR", "Wide receivers"), ("TE", "Tight end"), ("K", "Kicker"), ("DEF", "Defense")):
@@ -1041,6 +1118,84 @@ def build_redraft_matchups(team_data, power_rankings, week):
                 "narrative": f"The model gives {advantage} the {label.lower()} edge." if margin else f"The {label.lower()} projection is effectively even.",
             })
         largest_edge = max(positional_edges, key=lambda edge: float(edge["margin"].replace("+", "").replace(" pts", "")) if edge["margin"] != "Even" else 0.0)
+        edge_value = lambda edge: float(edge["margin"].replace("+", "").replace(" pts", "")) if edge["margin"] != "Even" else 0.0
+        favorite_edges = [edge for edge in positional_edges if edge["advantage"] == favorite["name"]]
+        underdog_edges = [edge for edge in positional_edges if edge["advantage"] == underdog["name"]]
+        favorite_edge = max(favorite_edges, key=edge_value, default=largest_edge)
+        underdog_edge = max(underdog_edges, key=edge_value, default=None)
+
+        # Dynamic Game Shift Analysis
+        game_shift = None
+        if has_live_results:
+            played_starters = [
+                (side_1["name"], p) for p in side_1["starters"] if p["hasPlayed"]
+            ] + [
+                (side_2["name"], p) for p in side_2["starters"] if p["hasPlayed"]
+            ]
+            underperformers = sorted([item for item in played_starters if item[1]["delta"] is not None and item[1]["delta"] <= -3.0], key=lambda x: x[1]["delta"])
+            overperformers = sorted([item for item in played_starters if item[1]["delta"] is not None and item[1]["delta"] >= 3.0], key=lambda x: -x[1]["delta"])
+
+            shift_parts = []
+            if underperformers and overperformers:
+                team_u, p_u = underperformers[0]
+                team_o, p_o = overperformers[0]
+                headline = f"{p_u['player']} underperformed ({p_u['delta']:+.1f}) while {p_o['player']} surged ({p_o['delta']:+.1f}); dynamic shifted {live_fav['name']} -{live_spread:.1f}"
+                shift_parts.append(
+                    f"Early game action shifted the matchup baseline: {team_o}'s {p_o['player']} surged with {p_o['actualPoints']:.1f} pts ({p_o['delta']:+.1f} vs proj), while {team_u}'s {p_u['player']} underperformed with {p_u['actualPoints']:.1f} pts ({p_u['delta']:+.1f} vs {p_u['projectedPoints']:.1f} proj)."
+                )
+            elif underperformers:
+                team_u, p_u = underperformers[0]
+                headline = f"{p_u['player']} underperformed baseline ({p_u['delta']:+.1f} pts); {team_u} trails live pace"
+                shift_parts.append(
+                    f"Early game action shifted the matchup dynamic: {p_u['player']} posted {p_u['actualPoints']:.1f} points against an expected {p_u['projectedPoints']:.1f} ({p_u['delta']:+.1f}), putting {team_u} behind schedule."
+                )
+            elif overperformers:
+                team_o, p_o = overperformers[0]
+                headline = f"{p_o['player']} erupted for {p_o['actualPoints']:.1f} pts ({p_o['delta']:+.1f}); {team_o} grabs early control"
+                shift_parts.append(
+                    f"Early game momentum swung sharply: {p_o['player']} scored {p_o['actualPoints']:.1f} points ({p_o['delta']:+.1f} above projection), boosting {team_o}'s live outlook to {live_fav['liveProjectedTotal']:.1f} projected pts."
+                )
+            else:
+                headline = f"Early games complete; {live_fav['name']} holds a {live_spread:.1f}-point live projected edge"
+                shift_parts.append(
+                    f"Starters who played performed roughly in line with model baselines. {live_fav['name']} is live projected for {live_fav['liveProjectedTotal']:.1f} against {live_dog['name']}'s {live_dog['liveProjectedTotal']:.1f}."
+                )
+
+            shift_parts.append(
+                f"{side_1['name']} has {side_1['actualScore']:.1f} pts logged with {side_1['startersRemainingCount']} starters remaining (live projection: {side_1['liveProjectedTotal']:.1f}). {side_2['name']} has {side_2['actualScore']:.1f} pts with {side_2['startersRemainingCount']} starters remaining (live projection: {side_2['liveProjectedTotal']:.1f})."
+            )
+            shift_summary = " ".join(shift_parts)
+            flavor = f"Dynamic shift: {headline}. Current live line stands at {live_fav['name']} -{live_spread:.1f}."
+
+            game_shift = {
+                "hasLiveResults": True,
+                "headline": headline,
+                "shiftSummary": shift_summary,
+                "liveFavorite": live_fav["name"],
+                "liveSpread": live_spread,
+                "liveSpreadLabel": f"{live_fav['name']} -{live_spread:.1f} (Live)",
+                "liveImpliedTotal": round(side_1["liveProjectedTotal"] + side_2["liveProjectedTotal"], 1),
+                "keyPerformers": [
+                    {
+                        "team": team_name,
+                        "player": p["player"],
+                        "position": p["position"],
+                        "actualPoints": p["actualPoints"],
+                        "projectedPoints": p["projectedPoints"],
+                        "delta": p["delta"],
+                        "performance": p["performance"],
+                    }
+                    for team_name, p in played_starters
+                ]
+            }
+        else:
+            if spread <= 2.0:
+                flavor = f"A true coin flip: {favorite['keyPlayer']} gives {favorite['name']} the narrow baseline, but one lineup decision can swing the whole week."
+            elif spread <= 8.0:
+                counter = f"its {underdog_edge['category'].lower()} advantage" if 'underdog_edge' in locals() and underdog_edge else f"a ceiling game from {underdog['keyPlayer']}"
+                flavor = f"{favorite['name']} enters ahead behind {favorite['keyPlayer']}; {underdog['name']} can flip it through {counter}."
+            else:
+                flavor = f"{favorite['name']} has room for error. {underdog['name']} needs an outlier from {underdog['keyPlayer']} and a win in the {largest_edge['category'].lower()} battle."
 
         viewing_games = {}
         for side_key, side in (("team1", side_1), ("team2", side_2)):
@@ -1060,7 +1215,8 @@ def build_redraft_matchups(team_data, power_rankings, week):
                     "team2Points": 0.0,
                 })
                 viewing_games[key][f"{side_key}Starters"].append(f"{starter['player']} ({starter['position']})")
-                viewing_games[key][f"{side_key}Points"] += starter["projectedPoints"]
+                viewing_games[key][f"{side_key}Points"] += (starter["actualPoints"] if starter["hasPlayed"] else starter["projectedPoints"])
+
         tv_schedule = []
         for game in sorted(viewing_games.values(), key=lambda item: item["kickoffAt"]):
             stake = round(game.pop("team1Points") + game.pop("team2Points"), 1)
@@ -1072,9 +1228,9 @@ def build_redraft_matchups(team_data, power_rankings, week):
                 "leverageLevel": leverage,
                 "fantasyPointsAtStake": stake,
                 "windowAnalysis": (
-                    f"{leader} has the larger starter footprint in this game; {stake:.1f} projected fantasy points are exposed to the result."
+                    f"{leader} has the larger starter footprint in this game; {stake:.1f} fantasy points at stake."
                     if leader
-                    else f"Both sides have the same starter footprint in this game; {stake:.1f} projected fantasy points are exposed to the result."
+                    else f"Both sides have equal starter exposure in this game; {stake:.1f} fantasy points at stake."
                 ),
             })
             tv_schedule.append(game)
@@ -1083,43 +1239,53 @@ def build_redraft_matchups(team_data, power_rankings, week):
         for side in (side_1, side_2):
             if side["injuryFlags"]:
                 injury_variable.append(f"{side['name']} carries {len(side['injuryFlags'])} active roster health flag(s).")
-        key_variables = [
-            f"{side_1['keyPlayer']} ({side_1['keyPlayerProjection']:.1f}) and {side_2['keyPlayer']} ({side_2['keyPlayerProjection']:.1f}) are the headline scorers.",
-            f"The largest positional separation is {largest_edge['category'].lower()}: {largest_edge['advantage']} {largest_edge['margin']}.",
-            f"{underdog['name']} needs its {underdog['strongestRoom']} strength to beat projection to erase a {spread:.1f}-point gap.",
-        ] + injury_variable
-        crucial_window = max(tv_schedule, key=lambda game: game["fantasyPointsAtStake"], default=None)
-        edge_value = lambda edge: float(edge["margin"].replace("+", "").replace(" pts", "")) if edge["margin"] != "Even" else 0.0
-        favorite_edges = [edge for edge in positional_edges if edge["advantage"] == favorite["name"]]
-        underdog_edges = [edge for edge in positional_edges if edge["advantage"] == underdog["name"]]
-        favorite_edge = max(favorite_edges, key=edge_value, default=largest_edge)
-        underdog_edge = max(underdog_edges, key=edge_value, default=None)
-        if spread <= 2.0:
-            flavor = f"A true coin flip: {favorite['keyPlayer']} gives {favorite['name']} the narrow baseline, but one lineup decision can swing the whole week."
-        elif spread <= 8.0:
-            counter = f"its {underdog_edge['category'].lower()} advantage" if underdog_edge else f"a ceiling game from {underdog['keyPlayer']}"
-            flavor = f"{favorite['name']} enters ahead behind {favorite['keyPlayer']}; {underdog['name']} can flip it through {counter}."
+
+        if has_live_results:
+            key_variables = [
+                f"Live projected totals: {side_1['name']} {side_1['liveProjectedTotal']:.1f} ({side_1['actualScore']:.1f} logged) vs {side_2['name']} {side_2['liveProjectedTotal']:.1f} ({side_2['actualScore']:.1f} logged).",
+                f"Active line: {live_fav['name']} -{live_spread:.1f} ({live_fav['liveWinProbability']}% win probability).",
+                f"Remaining starters: {side_1['name']} {side_1['startersRemainingCount']} to play · {side_2['name']} {side_2['startersRemainingCount']} to play.",
+            ] + injury_variable
         else:
-            flavor = f"{favorite['name']} has room for error. {underdog['name']} needs an outlier from {underdog['keyPlayer']} and a win in the {largest_edge['category'].lower()} battle."
+            key_variables = [
+                f"{side_1['keyPlayer']} ({side_1['keyPlayerProjection']:.1f}) and {side_2['keyPlayer']} ({side_2['keyPlayerProjection']:.1f}) are the headline scorers.",
+                f"The largest positional separation is {largest_edge['category'].lower()}: {largest_edge['advantage']} {largest_edge['margin']}.",
+                f"{underdog['name']} needs its {underdog['strongestRoom']} strength to beat projection to erase a {spread:.1f}-point gap.",
+            ] + injury_variable
+
+        crucial_window = max(tv_schedule, key=lambda g: g["fantasyPointsAtStake"], default=None)
         window_sentence = (
-            f"The heaviest viewing window is {crucial_window['gameMatchup']} on {crucial_window['network']} with {crucial_window['fantasyPointsAtStake']:.1f} projected points at stake."
+            f"The heaviest viewing window is {crucial_window['gameMatchup']} on {crucial_window['network']} with {crucial_window['fantasyPointsAtStake']:.1f} points at stake."
             if crucial_window else "Broadcast leverage will update when NFL schedule mapping is available."
         )
+
         matchup_cards.append({
             "matchupId": matchup_id,
             "week": week,
             "title": f"{side_1['name']} vs {side_2['name']}",
-            "subtitle": f"Power #{side_1['powerRank']} meets Power #{side_2['powerRank']} in a {spread:.1f}-point opening line.",
+            "subtitle": (
+                f"Live Update: {live_fav['name']} -{live_spread:.1f} live line ({side_1['actualScore']:.1f} vs {side_2['actualScore']:.1f} on board)"
+                if has_live_results
+                else f"Power #{side_1['powerRank']} meets Power #{side_2['powerRank']} in a {spread:.1f}-point opening line."
+            ),
             "isMarquee": False,
+            "hasLiveResults": has_live_results,
             "team1": side_1,
             "team2": side_2,
-            "spread": spread,
-            "spreadLabel": f"{favorite['name']} -{spread:.1f}",
-            "impliedTotal": round(side_1["projected"] + side_2["projected"], 1),
+            "spread": live_spread if has_live_results else spread,
+            "spreadLabel": f"{live_fav['name']} -{live_spread:.1f} (Live)" if has_live_results else f"{favorite['name']} -{spread:.1f}",
+            "openingSpreadLabel": f"{opening_fav['name']} -{opening_spread:.1f}",
+            "impliedTotal": round(side_1["liveProjectedTotal"] + side_2["liveProjectedTotal"], 1) if has_live_results else round(side_1["projected"] + side_2["projected"], 1),
+            "openingImpliedTotal": round(side_1["projected"] + side_2["projected"], 1),
             "flavor": flavor,
+            "gameShift": game_shift,
             "tacticalAnalysis": {
-                "headline": f"{favorite['keyPlayer']} sets the pace; {underdog['keyPlayer']} carries the counterpunch",
-                "breakdown": f"The current-season model separates these teams by {spread:.1f} points, with {favorite['name']} holding its cleanest advantage at {favorite_edge['category'].lower()} ({favorite_edge['margin']}). {underdog['name']}'s best answer runs through the {underdog['strongestRoom']} room. {window_sentence}",
+                "headline": game_shift["headline"] if game_shift else f"{favorite['keyPlayer']} sets the pace; {underdog['keyPlayer']} carries the counterpunch",
+                "breakdown": (
+                    f"{game_shift['shiftSummary']} {window_sentence}"
+                    if game_shift
+                    else f"The current-season model separates these teams by {spread:.1f} points, with {favorite['name']} holding its cleanest advantage at {favorite_edge['category'].lower()} ({favorite_edge['margin']}). {underdog['name']}'s best answer runs through the {underdog['strongestRoom']} room. {window_sentence}"
+                ),
                 "keyVariables": key_variables,
             },
             "positionalEdges": positional_edges,
@@ -1129,17 +1295,26 @@ def build_redraft_matchups(team_data, power_rankings, week):
     if matchup_cards:
         marquee = min(matchup_cards, key=lambda matchup: matchup["team1"]["powerRank"] + matchup["team2"]["powerRank"])
         marquee["isMarquee"] = True
+
+    matchup_payload = {
+        "season": SEASON,
+        "week": week,
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "scheduleSource": nfl_schedule.get("source", {}),
+        "sleeperSource": f"https://api.sleeper.app/v1/league/{LEAGUE_ID}/matchups/{week}",
+        "matchups": matchup_cards,
+    }
+
     out_file = OUT_DIR / "matchups-current.json"
     with open(out_file, "w", encoding="utf-8") as f:
-        json.dump({
-            "season": SEASON,
-            "week": week,
-            "generatedAt": datetime.now(timezone.utc).isoformat(),
-            "scheduleSource": nfl_schedule.get("source", {}),
-            "sleeperSource": f"https://api.sleeper.app/v1/league/{LEAGUE_ID}/matchups/{week}",
-            "matchups": matchup_cards,
-        }, f, indent=2)
-    print(f"Exported Johnny's Jerks Week {week} Matchups to {out_file}")
+        json.dump(matchup_payload, f, indent=2)
+
+    # Also save week-specific archive copy
+    week_file = OUT_DIR / f"matchups-week{week}.json"
+    with open(week_file, "w", encoding="utf-8") as f:
+        json.dump(matchup_payload, f, indent=2)
+
+    print(f"Exported Johnny's Jerks Week {week} Matchups to {out_file} and {week_file}")
 
 
 def build_redraft_forecast(team_data, power_rankings, sleeper_schedule):

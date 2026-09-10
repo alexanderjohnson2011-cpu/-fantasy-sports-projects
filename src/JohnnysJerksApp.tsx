@@ -3,7 +3,7 @@ import "./johnnys-jerks.css";
 import { CapriSunIcon, LifeSaverIcon } from "./components/johnny/CapriSunLifeSaver";
 import draftRecapJson from "./generated/johnnys-jerks/draft-recap.json";
 import powerRankingsJson from "./generated/johnnys-jerks/power-rankings.json";
-import matchupsJson from "./generated/johnnys-jerks/matchups-week1.json";
+import matchupsJson from "./generated/johnnys-jerks/matchups-current.json";
 import forecastJson from "./generated/johnnys-jerks/forecast-insights.json";
 
 type TabId = "recap" | "power" | "matchups" | "forecast" | "cooler" | "methodology";
@@ -373,36 +373,65 @@ export default function JohnnysJerksApp() {
 
             <div>
               {matchups.matchups.map((m: any) => (
-                <div key={m.matchupId} className="jj-matchup-card">
-                  <div className="jj-matchup-team">
-                    <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>{m.team1.manager}</span>
-                    <strong style={{ fontSize: "1.2rem", color: "#ffffff" }}>{m.team1.name}</strong>
-                    <div style={{ marginTop: "0.35rem", fontSize: "0.85rem", color: "#38bdf8" }}>
-                      Projected: <strong>{m.team1.projected} pts</strong> (Grade: {m.team1.grade})
-                    </div>
-                    <span style={{ fontSize: "0.75rem", color: "#facc15", marginTop: "0.2rem" }}>
-                      Key: {m.team1.keyPlayer}
+                <div key={m.matchupId} className="jj-matchup-card" style={{ display: "flex", flexDirection: "column", gap: "0.8rem", padding: "1.2rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: m.hasLiveResults ? "#f43f5e" : "#38bdf8" }}>
+                      {m.hasLiveResults ? "● Live Game Action" : (m.isMarquee ? "Marquee Matchup" : `Matchup 0${m.matchupId}`)}
+                    </span>
+                    <span className="jj-spread-label" style={{ background: m.hasLiveResults ? "rgba(244, 63, 94, 0.15)" : undefined, color: m.hasLiveResults ? "#f43f5e" : undefined }}>
+                      {m.spreadLabel}
                     </span>
                   </div>
 
-                  <div className="jj-matchup-vs">
-                    <span className="jj-vs-badge">VS</span>
-                    <span className="jj-spread-label">{m.spreadLabel}</span>
-                    <span style={{ fontSize: "0.7rem", color: "#94a3b8", marginTop: "0.2rem" }}>
-                      O/U: {m.impliedTotal}
-                    </span>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: "1rem" }}>
+                    <div className="jj-matchup-team">
+                      <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>{m.team1.manager}</span>
+                      <strong style={{ fontSize: "1.2rem", color: "#ffffff" }}>{m.team1.name}</strong>
+                      <div style={{ marginTop: "0.35rem", fontSize: "0.85rem", color: "#38bdf8" }}>
+                        {m.team1.actualScore > 0 ? (
+                          <>
+                            <strong style={{ color: "#f43f5e" }}>{m.team1.actualScore.toFixed(1)} live</strong> ({m.team1.liveProjectedTotal} proj)
+                          </>
+                        ) : (
+                          <>Projected: <strong>{m.team1.projected} pts</strong></>
+                        )}
+                      </div>
+                      <span style={{ fontSize: "0.75rem", color: "#facc15", marginTop: "0.2rem" }}>
+                        {m.hasLiveResults ? `${m.team1.liveWinProbability}% live odds` : `Key: ${m.team1.keyPlayer}`}
+                      </span>
+                    </div>
+
+                    <div className="jj-matchup-vs">
+                      <span className="jj-vs-badge">VS</span>
+                      <span style={{ fontSize: "0.7rem", color: "#94a3b8", marginTop: "0.2rem" }}>
+                        O/U: {m.impliedTotal}
+                      </span>
+                    </div>
+
+                    <div className="jj-matchup-team right">
+                      <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>{m.team2.manager}</span>
+                      <strong style={{ fontSize: "1.2rem", color: "#ffffff" }}>{m.team2.name}</strong>
+                      <div style={{ marginTop: "0.35rem", fontSize: "0.85rem", color: "#38bdf8" }}>
+                        {m.team2.actualScore > 0 ? (
+                          <>
+                            <strong style={{ color: "#f43f5e" }}>{m.team2.actualScore.toFixed(1)} live</strong> ({m.team2.liveProjectedTotal} proj)
+                          </>
+                        ) : (
+                          <>Projected: <strong>{m.team2.projected} pts</strong></>
+                        )}
+                      </div>
+                      <span style={{ fontSize: "0.75rem", color: "#facc15", marginTop: "0.2rem" }}>
+                        {m.hasLiveResults ? `${m.team2.liveWinProbability}% live odds` : `Key: ${m.team2.keyPlayer}`}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="jj-matchup-team right">
-                    <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>{m.team2.manager}</span>
-                    <strong style={{ fontSize: "1.2rem", color: "#ffffff" }}>{m.team2.name}</strong>
-                    <div style={{ marginTop: "0.35rem", fontSize: "0.85rem", color: "#38bdf8" }}>
-                      Projected: <strong>{m.team2.projected} pts</strong> (Grade: {m.team2.grade})
+                  {m.gameShift && (
+                    <div style={{ background: "rgba(15, 23, 42, 0.6)", borderRadius: 6, padding: "0.6rem 0.8rem", borderLeft: "3px solid #f43f5e", fontSize: "0.8rem", color: "#cbd5e1", lineHeight: 1.4 }}>
+                      <strong style={{ color: "#ffffff", display: "block", marginBottom: 2 }}>{m.gameShift.headline}</strong>
+                      {m.gameShift.shiftSummary}
                     </div>
-                    <span style={{ fontSize: "0.75rem", color: "#facc15", marginTop: "0.2rem" }}>
-                      Key: {m.team2.keyPlayer}
-                    </span>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>

@@ -525,13 +525,13 @@ export default function JohnnysPrototype() {
                   >
                     <div className="matchup-card-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
                       <div>
-                        <span className="matchup-num-tag" style={{ fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 700, color: "var(--rust)" }}>
-                          {m.isMarquee ? "Marquee matchup" : `Matchup 0${m.matchupId}`}
+                        <span className="matchup-num-tag" style={{ fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 700, color: m.hasLiveResults ? "#dc2626" : "var(--rust)" }}>
+                          {m.hasLiveResults ? "● Live Game Action" : (m.isMarquee ? "Marquee matchup" : `Matchup 0${m.matchupId}`)}
                         </span>
                         <h3 style={{ margin: "4px 0 0", font: "600 1.25rem/1.1 var(--serif)" }}>{m.team1.name} vs {m.team2.name}</h3>
                       </div>
                       <div className="matchup-odds-pills" style={{ display: "flex", gap: 6 }}>
-                        <span className="card-spread-pill" style={{ background: "var(--paper-deep)", padding: "3px 8px", borderRadius: 4, fontSize: "0.75rem", fontWeight: 700 }}>{m.spreadLabel}</span>
+                        <span className="card-spread-pill" style={{ background: m.hasLiveResults ? "rgba(220, 38, 38, 0.1)" : "var(--paper-deep)", color: m.hasLiveResults ? "#b91c1c" : "inherit", padding: "3px 8px", borderRadius: 4, fontSize: "0.75rem", fontWeight: 700 }}>{m.spreadLabel}</span>
                         <span className="card-ou-pill" style={{ background: "var(--paper-deep)", padding: "3px 8px", borderRadius: 4, fontSize: "0.75rem", fontWeight: 700 }}>O/U {m.impliedTotal}</span>
                       </div>
                     </div>
@@ -542,21 +542,33 @@ export default function JohnnysPrototype() {
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <div>
                           <strong>{m.team1.name}</strong>
-                          <small style={{ display: "block", color: "var(--ink-soft)" }}>Power #{m.team1.powerRank} · {m.team1.winProbability}% · {displayPlayerName(m.team1.keyPlayer)}</small>
+                          <small style={{ display: "block", color: "var(--ink-soft)" }}>
+                            Power #{m.team1.powerRank} · {m.hasLiveResults ? `${m.team1.liveWinProbability}% live` : `${m.team1.winProbability}%`} · {displayPlayerName(m.team1.keyPlayer)}
+                          </small>
                         </div>
                         <div style={{ textAlign: "right" }}>
-                          <strong style={{ display: "block", fontSize: "1.1rem" }}>{sleeperLive.byRoster[String(m.team1.rosterId)] ? `${sleeperLive.byRoster[String(m.team1.rosterId)].points.toFixed(1)} live` : `${m.team1.projected} pts`}</strong>
-                          {sleeperLive.byRoster[String(m.team1.rosterId)] ? <small style={{ color: "var(--ink-soft)" }}>{m.team1.projected} projected</small> : null}
+                          <strong style={{ display: "block", fontSize: "1.1rem" }}>
+                            {m.team1.actualScore > 0 ? `${m.team1.actualScore.toFixed(1)} live` : (sleeperLive.byRoster[String(m.team1.rosterId)] ? `${sleeperLive.byRoster[String(m.team1.rosterId)].points.toFixed(1)} live` : `${m.team1.projected} pts`)}
+                          </strong>
+                          <small style={{ color: "var(--ink-soft)" }}>
+                            {m.team1.startersPlayedCount > 0 ? `${m.team1.liveProjectedTotal} live proj` : `${m.team1.projected} projected`}
+                          </small>
                         </div>
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <div>
                           <strong>{m.team2.name}</strong>
-                          <small style={{ display: "block", color: "var(--ink-soft)" }}>Power #{m.team2.powerRank} · {m.team2.winProbability}% · {displayPlayerName(m.team2.keyPlayer)}</small>
+                          <small style={{ display: "block", color: "var(--ink-soft)" }}>
+                            Power #{m.team2.powerRank} · {m.hasLiveResults ? `${m.team2.liveWinProbability}% live` : `${m.team2.winProbability}%`} · {displayPlayerName(m.team2.keyPlayer)}
+                          </small>
                         </div>
                         <div style={{ textAlign: "right" }}>
-                          <strong style={{ display: "block", fontSize: "1.1rem" }}>{sleeperLive.byRoster[String(m.team2.rosterId)] ? `${sleeperLive.byRoster[String(m.team2.rosterId)].points.toFixed(1)} live` : `${m.team2.projected} pts`}</strong>
-                          {sleeperLive.byRoster[String(m.team2.rosterId)] ? <small style={{ color: "var(--ink-soft)" }}>{m.team2.projected} projected</small> : null}
+                          <strong style={{ display: "block", fontSize: "1.1rem" }}>
+                            {m.team2.actualScore > 0 ? `${m.team2.actualScore.toFixed(1)} live` : (sleeperLive.byRoster[String(m.team2.rosterId)] ? `${sleeperLive.byRoster[String(m.team2.rosterId)].points.toFixed(1)} live` : `${m.team2.projected} pts`)}
+                          </strong>
+                          <small style={{ color: "var(--ink-soft)" }}>
+                            {m.team2.startersPlayedCount > 0 ? `${m.team2.liveProjectedTotal} live proj` : `${m.team2.projected} projected`}
+                          </small>
                         </div>
                       </div>
                     </div>
@@ -895,26 +907,59 @@ function MatchupDeepDiveScreen({ matchup, liveScores, onBack }: { matchup: any; 
       <div className="app-screen detail-screen web-screen">
         <main className="detail-page">
           <section className="team-hero">
-            <p className="eyebrow">{matchup.isMarquee ? "Marquee matchup" : `Matchup 0${matchup.matchupId}`} · O/U {matchup.impliedTotal}</p>
-            <span className="team-hero__label">Opening line</span>
-            <div style={{ font: "600 clamp(2rem, 7vw, 4.6rem)/0.95 var(--serif)", color: "var(--rust)", margin: "8px 0" }}>{matchup.spreadLabel}</div>
+            <p className="eyebrow">{matchup.hasLiveResults ? "● Live Game Action" : (matchup.isMarquee ? "Marquee matchup" : `Matchup 0${matchup.matchupId}`)} · O/U {matchup.impliedTotal}</p>
+            <span className="team-hero__label">{matchup.hasLiveResults ? "Active live line" : "Opening line"}</span>
+            <div style={{ font: "600 clamp(2rem, 7vw, 4.6rem)/0.95 var(--serif)", color: matchup.hasLiveResults ? "#dc2626" : "var(--rust)", margin: "8px 0" }}>{matchup.spreadLabel}</div>
             <h1>{matchup.tacticalAnalysis.headline}</h1>
             <p>{matchup.tacticalAnalysis.breakdown}</p>
           </section>
 
+          {matchup.gameShift ? (
+            <section className="detail-block" style={{ background: "rgba(220, 38, 38, 0.04)", border: "1px solid rgba(220, 38, 38, 0.2)", borderRadius: 10, padding: 18 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#b91c1c", fontWeight: 700, fontSize: "0.8rem", textTransform: "uppercase" }}>
+                <Lightning size={18} weight="fill" />
+                <span>Post-Game Shift Intelligence</span>
+              </div>
+              <h3 style={{ font: "600 1.35rem/1.2 var(--serif)", margin: "8px 0 6px" }}>{matchup.gameShift.headline}</h3>
+              <p style={{ margin: "0 0 12px", color: "var(--ink-soft)", fontSize: "0.88rem", lineHeight: 1.5 }}>{matchup.gameShift.shiftSummary}</p>
+              {matchup.gameShift.keyPerformers && matchup.gameShift.keyPerformers.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {matchup.gameShift.keyPerformers.map((kp: any) => (
+                    <span
+                      key={kp.player}
+                      style={{
+                        fontSize: "0.76rem",
+                        fontWeight: 600,
+                        padding: "3px 8px",
+                        borderRadius: 4,
+                        background: kp.performance === "underperformed" ? "rgba(220, 38, 38, 0.1)" : kp.performance === "overperformed" ? "rgba(22, 163, 74, 0.1)" : "var(--paper)",
+                        color: kp.performance === "underperformed" ? "#b91c1c" : kp.performance === "overperformed" ? "#15803d" : "inherit",
+                        border: "1px solid var(--hairline)",
+                      }}
+                    >
+                      {kp.player} ({kp.team}): {kp.actualPoints} pts ({kp.delta > 0 ? `+${kp.delta}` : kp.delta} vs proj)
+                    </span>
+                  ))}
+                </div>
+              )}
+            </section>
+          ) : null}
+
           <section className="detail-block">
-            <div className="detail-title"><span>01</span><h2>Projected tale of the tape</h2></div>
+            <div className="detail-title"><span>01</span><h2>{matchup.hasLiveResults ? "Live & projected tale of the tape" : "Projected tale of the tape"}</h2></div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: 14, marginTop: 16 }}>
               {teams.map((team: any) => (
-                <div key={team.rosterId} style={{ background: "var(--paper-deep)", padding: 18, borderRadius: 10, borderTop: team.winProbability >= 50 ? "4px solid var(--rust)" : "4px solid var(--hairline)" }}>
+                <div key={team.rosterId} style={{ background: "var(--paper-deep)", padding: 18, borderRadius: 10, borderTop: (matchup.hasLiveResults ? (team.liveWinProbability || team.winProbability) : team.winProbability) >= 50 ? "4px solid var(--rust)" : "4px solid var(--hairline)" }}>
                   <span style={{ color: "var(--ink-soft)", fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 700 }}>Power #{team.powerRank} · Grade {team.grade}</span>
                   <h3 style={{ font: "600 1.5rem var(--serif)", margin: "5px 0 12px" }}>{team.name}</h3>
                   <div className="grade-compare" style={{ marginTop: 0 }}>
-                    <div><span>Projected</span><strong>{team.projected}</strong><small>fantasy points</small></div>
-                    <div><span>Win odds</span><strong>{team.winProbability}%</strong><small>opening model</small></div>
-                    {liveScores.week === matchup.week && liveScores.byRoster[String(team.rosterId)] ? (
-                      <div><span>Live</span><strong>{liveScores.byRoster[String(team.rosterId)].points.toFixed(1)}</strong><small>refreshes every 60 sec</small></div>
-                    ) : null}
+                    {team.startersPlayedCount > 0 ? (
+                      <div><span>Live score</span><strong style={{ color: "var(--rust)" }}>{team.actualScore.toFixed(1)}</strong><small>{team.startersPlayedCount} played</small></div>
+                    ) : (
+                      <div><span>Projected</span><strong>{team.projected}</strong><small>opening pts</small></div>
+                    )}
+                    <div><span>Live finish</span><strong>{team.liveProjectedTotal || team.projected}</strong><small>projected total</small></div>
+                    <div><span>Win odds</span><strong>{team.liveWinProbability || team.winProbability}%</strong><small>{team.startersPlayedCount > 0 ? "live odds" : "opening model"}</small></div>
                   </div>
                   <p style={{ margin: "12px 0 0", color: "var(--ink-soft)", fontSize: "0.85rem" }}><strong style={{ color: "var(--ink)" }}>{displayPlayerName(team.keyPlayer)}</strong> is the projected scoring anchor at {team.keyPlayerProjection} points.</p>
                 </div>
@@ -969,16 +1014,44 @@ function MatchupDeepDiveScreen({ matchup, liveScores, onBack }: { matchup: any; 
           </section>
 
           <section className="detail-block picks-audit">
-            <div className="detail-title"><span>04</span><h2>Projected starters</h2></div>
+            <div className="detail-title"><span>04</span><h2>{matchup.hasLiveResults ? "Starters & live box score" : "Projected starters"}</h2></div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))", gap: 18, marginTop: 16 }}>
               {teams.map((team: any) => (
                 <div key={team.rosterId}>
-                  <h3 style={{ font: "600 1.3rem var(--serif)", margin: "0 0 8px" }}>{team.name}</h3>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+                    <h3 style={{ font: "600 1.3rem var(--serif)", margin: 0 }}>{team.name}</h3>
+                    {team.startersPlayedCount > 0 && (
+                      <span style={{ fontSize: "0.8rem", color: "var(--rust)", fontWeight: 700 }}>
+                        {team.actualScore.toFixed(1)} pts logged ({team.startersRemainingCount} left)
+                      </span>
+                    )}
+                  </div>
                   {team.starters.map((player: any) => (
                     <div key={`${team.rosterId}-${player.slot}`} style={{ display: "grid", gridTemplateColumns: "44px 1fr auto", gap: 8, alignItems: "center", padding: "8px 0", borderBottom: "1px solid var(--hairline)" }}>
                       <span className={`position-chip pos-${player.position.toLowerCase()}`}>{player.slot}</span>
-                      <div><strong style={{ fontSize: "0.88rem" }}>{displayPlayerName(player.player)}</strong><small style={{ display: "block", color: "var(--ink-soft)" }}>{player.nflTeam} {player.matchup} · {player.kickoff}</small></div>
-                      <strong>{player.projectedPoints.toFixed(1)}</strong>
+                      <div>
+                        <strong style={{ fontSize: "0.88rem" }}>{displayPlayerName(player.player)}</strong>
+                        <small style={{ display: "block", color: "var(--ink-soft)" }}>
+                          {player.nflTeam} {player.matchup} · {player.kickoff}
+                        </small>
+                      </div>
+                      <div style={{ textAlign: "right" }}>
+                        {player.hasPlayed ? (
+                          <>
+                            <strong style={{ display: "block", fontSize: "0.92rem", color: player.performance === "overperformed" ? "#16a34a" : player.performance === "underperformed" ? "#dc2626" : "inherit" }}>
+                              {player.actualPoints.toFixed(1)} pts
+                            </strong>
+                            <small style={{ display: "block", fontSize: "0.72rem", color: player.performance === "overperformed" ? "#16a34a" : player.performance === "underperformed" ? "#dc2626" : "var(--ink-soft)" }}>
+                              {player.delta > 0 ? `+${player.delta.toFixed(1)}` : player.delta.toFixed(1)} vs proj
+                            </small>
+                          </>
+                        ) : (
+                          <>
+                            <strong style={{ display: "block", fontSize: "0.92rem" }}>{player.projectedPoints.toFixed(1)}</strong>
+                            <small style={{ display: "block", fontSize: "0.72rem", color: "var(--ink-soft)" }}>proj</small>
+                          </>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
