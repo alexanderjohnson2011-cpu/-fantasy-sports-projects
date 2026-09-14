@@ -2,7 +2,7 @@
   "simulationsCount": 10000,
   "randomSeed": 20260909,
   "modelVersion": "johnnys-forecast-v4",
-  "generatedAt": "2026-09-13T17:12:16.998148+00:00",
+  "generatedAt": "2026-09-14T19:00:34.596606+00:00",
   "methodology": "Seeded weekly-score Monte Carlo using the current-season lineup mean, team-specific volatility, all 14 official Sleeper regular-season pairing weeks, active live game scores, and a six-team playoff bracket.",
   "scheduleBasis": "Official Sleeper schedule active for all 14 regular-season weeks (84 scheduled matchups). Synchronized directly from Sleeper League #1401673232670539776.",
   "scheduleSource": {
@@ -38,12 +38,12 @@
         "color": "#1b5e20",
         "powerRank": 2,
         "preSeasonWins": 9.3,
-        "currentWins": 8.4,
-        "delta": -0.9,
+        "currentWins": 9.4,
+        "delta": 0.1,
         "points": [
           9.3,
-          9.2,
-          8.4
+          9.3,
+          9.4
         ]
       },
       {
@@ -53,27 +53,12 @@
         "color": "#7e22ce",
         "powerRank": 3,
         "preSeasonWins": 9.0,
-        "currentWins": 8.2,
-        "delta": -0.8,
+        "currentWins": 9.1,
+        "delta": 0.1,
         "points": [
           9.0,
           9.0,
-          8.2
-        ]
-      },
-      {
-        "rosterId": 4,
-        "teamName": "Team kong58",
-        "managerName": "kong58",
-        "color": "#c2410c",
-        "powerRank": 4,
-        "preSeasonWins": 7.7,
-        "currentWins": 8.2,
-        "delta": 0.5,
-        "points": [
-          7.7,
-          7.7,
-          8.2
+          9.1
         ]
       },
       {
@@ -83,12 +68,12 @@
         "color": "#b45309",
         "powerRank": 8,
         "preSeasonWins": 8.5,
-        "currentWins": 8.1,
-        "delta": -0.4,
+        "currentWins": 8.6,
+        "delta": 0.1,
         "points": [
           8.5,
           8.5,
-          8.1
+          8.6
         ]
       },
       {
@@ -119,6 +104,21 @@
           6.9,
           6.9,
           7.6
+        ]
+      },
+      {
+        "rosterId": 4,
+        "teamName": "Team kong58",
+        "managerName": "kong58",
+        "color": "#c2410c",
+        "powerRank": 4,
+        "preSeasonWins": 7.7,
+        "currentWins": 7.2,
+        "delta": -0.5,
+        "points": [
+          7.7,
+          7.7,
+          7.2
         ]
       },
       {
@@ -158,12 +158,12 @@
         "color": "#3f6212",
         "powerRank": 5,
         "preSeasonWins": 6.0,
-        "currentWins": 6.4,
-        "delta": 0.4,
+        "currentWins": 6.6,
+        "delta": 0.6,
         "points": [
           6.0,
           6.0,
-          6.4
+          6.6
         ]
       },
       {
@@ -173,12 +173,12 @@
         "color": "#0e7490",
         "powerRank": 11,
         "preSeasonWins": 6.6,
-        "currentWins": 6.3,
-        "delta": -0.3,
+        "currentWins": 6.1,
+        "delta": -0.5,
         "points": [
           6.6,
           6.6,
-          6.3
+          6.1
         ]
       },
       {
@@ -188,12 +188,12 @@
         "color": "#9f1239",
         "powerRank": 10,
         "preSeasonWins": 5.3,
-        "currentWins": 5.9,
-        "delta": 0.6,
+        "currentWins": 5.0,
+        "delta": -0.3,
         "points": [
           5.3,
           5.3,
-          5.9
+          5.0
         ]
       },
       {
@@ -203,12 +203,12 @@
         "color": "#475569",
         "powerRank": 12,
         "preSeasonWins": 2.1,
-        "currentWins": 2.2,
-        "delta": 0.1,
+        "currentWins": 1.7,
+        "delta": -0.4,
         "points": [
           2.1,
           2.1,
-          2.2
+          1.7
         ]
       }
     ],
@@ -250,14 +250,14 @@
       "managerName": "arkinsjt",
       "powerRank": 2,
       "powerScore": 92.6,
-      "expectedWins": 8.4,
+      "expectedWins": 9.4,
       "preSeasonExpectedWins": 9.3,
-      "winDelta": -0.9,
-      "expectedLosses": 5.6,
-      "playoffProbability": 80.7,
-      "championshipProbability": 21.8,
-      "lastPlaceProbability": 0.1,
-      "medianSeed": 4,
+      "winDelta": 0.1,
+      "expectedLosses": 4.6,
+      "playoffProbability": 92.2,
+      "championshipProbability": 26.0,
+      "lastPlaceProbability": 0.0,
+      "medianSeed": 3,
       "outlook": "Front-line bye contender with a championship path.",
       "color": "#1b5e20",
       "trajectory": [
@@ -265,23 +265,23 @@
           "milestone": "Pre-Season Baseline",
           "date": "2026-09-01",
           "expectedWins": 9.3,
-          "playoffOdds": 80.7,
+          "playoffOdds": 92.2,
           "rank": 2,
           "event": "Draft Audit Baseline"
         },
         {
           "milestone": "Week 1 Kickoff",
           "date": "2026-09-09",
-          "expectedWins": 9.2,
-          "playoffOdds": 80.7,
+          "expectedWins": 9.3,
+          "playoffOdds": 92.2,
           "rank": 2,
           "event": "Pre-game Line Set"
         },
         {
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
-          "expectedWins": 8.4,
-          "playoffOdds": 80.7,
+          "expectedWins": 9.4,
+          "playoffOdds": 92.2,
           "rank": 2,
           "event": "NE @ SEA Game Impact"
         }
@@ -449,14 +449,14 @@
       "managerName": "Gnomeington",
       "powerRank": 3,
       "powerScore": 88.5,
-      "expectedWins": 8.2,
+      "expectedWins": 9.1,
       "preSeasonExpectedWins": 9.0,
-      "winDelta": -0.8,
-      "expectedLosses": 5.8,
-      "playoffProbability": 75.7,
-      "championshipProbability": 17.4,
-      "lastPlaceProbability": 0.1,
-      "medianSeed": 5,
+      "winDelta": 0.1,
+      "expectedLosses": 4.9,
+      "playoffProbability": 88.3,
+      "championshipProbability": 21.2,
+      "lastPlaceProbability": 0.0,
+      "medianSeed": 3,
       "outlook": "Front-line bye contender with a championship path.",
       "color": "#7e22ce",
       "trajectory": [
@@ -464,7 +464,7 @@
           "milestone": "Pre-Season Baseline",
           "date": "2026-09-01",
           "expectedWins": 9.0,
-          "playoffOdds": 75.7,
+          "playoffOdds": 88.3,
           "rank": 3,
           "event": "Draft Audit Baseline"
         },
@@ -472,15 +472,15 @@
           "milestone": "Week 1 Kickoff",
           "date": "2026-09-09",
           "expectedWins": 9.0,
-          "playoffOdds": 75.7,
+          "playoffOdds": 88.3,
           "rank": 3,
           "event": "Pre-game Line Set"
         },
         {
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
-          "expectedWins": 8.2,
-          "playoffOdds": 75.7,
+          "expectedWins": 9.1,
+          "playoffOdds": 88.3,
           "rank": 3,
           "event": "NE @ SEA Game Impact"
         }
@@ -643,226 +643,27 @@
       ]
     },
     {
-      "rosterId": 4,
-      "teamName": "Team kong58",
-      "managerName": "kong58",
-      "powerRank": 4,
-      "powerScore": 83.2,
-      "expectedWins": 8.2,
-      "preSeasonExpectedWins": 7.7,
-      "winDelta": 0.5,
-      "expectedLosses": 5.8,
-      "playoffProbability": 73.3,
-      "championshipProbability": 10.2,
-      "lastPlaceProbability": 0.1,
-      "medianSeed": 5,
-      "outlook": "Live playoff contender whose weekly variance will decide seeding.",
-      "color": "#c2410c",
-      "trajectory": [
-        {
-          "milestone": "Pre-Season Baseline",
-          "date": "2026-09-01",
-          "expectedWins": 7.7,
-          "playoffOdds": 73.3,
-          "rank": 4,
-          "event": "Draft Audit Baseline"
-        },
-        {
-          "milestone": "Week 1 Kickoff",
-          "date": "2026-09-09",
-          "expectedWins": 7.7,
-          "playoffOdds": 73.3,
-          "rank": 4,
-          "event": "Pre-game Line Set"
-        },
-        {
-          "milestone": "Week 1 Live Action",
-          "date": "2026-09-10",
-          "expectedWins": 8.2,
-          "playoffOdds": 73.3,
-          "rank": 4,
-          "event": "NE @ SEA Game Impact"
-        }
-      ],
-      "weeklySchedule": [
-        {
-          "week": 1,
-          "opponentRosterId": 5,
-          "opponentName": "Team arkinsjt",
-          "opponentManager": "arkinsjt",
-          "winProbability": 35.2,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 126.8,
-          "spread": -7.3,
-          "spreadLabel": "-7.3 pts"
-        },
-        {
-          "week": 2,
-          "opponentRosterId": 12,
-          "opponentName": "rLee3D",
-          "opponentManager": "rLee3D",
-          "winProbability": 63.2,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 113.0,
-          "spread": 6.5,
-          "spreadLabel": "+6.5 pts"
-        },
-        {
-          "week": 3,
-          "opponentRosterId": 1,
-          "opponentName": "Team jccbraves99",
-          "opponentManager": "jccbraves99",
-          "winProbability": 60.1,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 114.6,
-          "spread": 4.9,
-          "spreadLabel": "+4.9 pts"
-        },
-        {
-          "week": 4,
-          "opponentRosterId": 3,
-          "opponentName": "Team DRockefeller",
-          "opponentManager": "DRockefeller",
-          "winProbability": 52.1,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 118.5,
-          "spread": 1.0,
-          "spreadLabel": "+1.0 pts"
-        },
-        {
-          "week": 5,
-          "opponentRosterId": 6,
-          "opponentName": "Team Gnomeington",
-          "opponentManager": "Gnomeington",
-          "winProbability": 38.5,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 125.1,
-          "spread": -5.6,
-          "spreadLabel": "-5.6 pts"
-        },
-        {
-          "week": 6,
-          "opponentRosterId": 7,
-          "opponentName": "Team bubberdubber",
-          "opponentManager": "bubberdubber",
-          "winProbability": 44.6,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 122.1,
-          "spread": -2.6,
-          "spreadLabel": "-2.6 pts"
-        },
-        {
-          "week": 7,
-          "opponentRosterId": 11,
-          "opponentName": "Texas Tunas",
-          "opponentManager": "mdwelch11",
-          "winProbability": 58.7,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 115.3,
-          "spread": 4.2,
-          "spreadLabel": "+4.2 pts"
-        },
-        {
-          "week": 8,
-          "opponentRosterId": 8,
-          "opponentName": "Team mannyrsox24",
-          "opponentManager": "mannyrsox24",
-          "winProbability": 39.7,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 124.5,
-          "spread": -5.0,
-          "spreadLabel": "-5.0 pts"
-        },
-        {
-          "week": 9,
-          "opponentRosterId": 9,
-          "opponentName": "Team mtrebing31",
-          "opponentManager": "mtrebing31",
-          "winProbability": 59.1,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 115.1,
-          "spread": 4.4,
-          "spreadLabel": "+4.4 pts"
-        },
-        {
-          "week": 10,
-          "opponentRosterId": 2,
-          "opponentName": "Gridiron Gorillas",
-          "opponentManager": "sduda351",
-          "winProbability": 92.7,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 89.0,
-          "spread": 30.5,
-          "spreadLabel": "+30.5 pts"
-        },
-        {
-          "week": 11,
-          "opponentRosterId": 10,
-          "opponentName": "Team akwelch3492",
-          "opponentManager": "akwelch3492",
-          "winProbability": 69.7,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 109.5,
-          "spread": 10.0,
-          "spreadLabel": "+10.0 pts"
-        },
-        {
-          "week": 12,
-          "opponentRosterId": 5,
-          "opponentName": "Team arkinsjt",
-          "opponentManager": "arkinsjt",
-          "winProbability": 35.2,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 126.8,
-          "spread": -7.3,
-          "spreadLabel": "-7.3 pts"
-        },
-        {
-          "week": 13,
-          "opponentRosterId": 12,
-          "opponentName": "rLee3D",
-          "opponentManager": "rLee3D",
-          "winProbability": 63.2,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 113.0,
-          "spread": 6.5,
-          "spreadLabel": "+6.5 pts"
-        },
-        {
-          "week": 14,
-          "opponentRosterId": 1,
-          "opponentName": "Team jccbraves99",
-          "opponentManager": "jccbraves99",
-          "winProbability": 60.1,
-          "projectedScore": 119.5,
-          "opponentProjectedScore": 114.6,
-          "spread": 4.9,
-          "spreadLabel": "+4.9 pts"
-        }
-      ]
-    },
-    {
       "rosterId": 7,
       "teamName": "Team bubberdubber",
       "managerName": "bubberdubber",
       "powerRank": 8,
       "powerScore": 76.3,
-      "expectedWins": 8.1,
+      "expectedWins": 8.6,
       "preSeasonExpectedWins": 8.5,
-      "winDelta": -0.4,
-      "expectedLosses": 5.9,
-      "playoffProbability": 71.3,
-      "championshipProbability": 12.1,
-      "lastPlaceProbability": 0.2,
-      "medianSeed": 5,
-      "outlook": "Live playoff contender whose weekly variance will decide seeding.",
+      "winDelta": 0.1,
+      "expectedLosses": 5.4,
+      "playoffProbability": 80.0,
+      "championshipProbability": 13.3,
+      "lastPlaceProbability": 0.1,
+      "medianSeed": 4,
+      "outlook": "Front-line bye contender with a championship path.",
       "color": "#b45309",
       "trajectory": [
         {
           "milestone": "Pre-Season Baseline",
           "date": "2026-09-01",
           "expectedWins": 8.5,
-          "playoffOdds": 71.3,
+          "playoffOdds": 80.0,
           "rank": 8,
           "event": "Draft Audit Baseline"
         },
@@ -870,15 +671,15 @@
           "milestone": "Week 1 Kickoff",
           "date": "2026-09-09",
           "expectedWins": 8.5,
-          "playoffOdds": 71.3,
+          "playoffOdds": 80.0,
           "rank": 8,
           "event": "Pre-game Line Set"
         },
         {
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
-          "expectedWins": 8.1,
-          "playoffOdds": 71.3,
+          "expectedWins": 8.6,
+          "playoffOdds": 80.0,
           "rank": 8,
           "event": "NE @ SEA Game Impact"
         }
@@ -1050,9 +851,9 @@
       "preSeasonExpectedWins": 9.7,
       "winDelta": -1.7,
       "expectedLosses": 6.0,
-      "playoffProbability": 85.3,
-      "championshipProbability": 20.4,
-      "lastPlaceProbability": 0.1,
+      "playoffProbability": 85.0,
+      "championshipProbability": 18.8,
+      "lastPlaceProbability": 0.0,
       "medianSeed": 4,
       "outlook": "Front-line bye contender with a championship path.",
       "color": "#0284c7",
@@ -1061,7 +862,7 @@
           "milestone": "Pre-Season Baseline",
           "date": "2026-09-01",
           "expectedWins": 9.7,
-          "playoffOdds": 85.3,
+          "playoffOdds": 85.0,
           "rank": 1,
           "event": "Draft Audit Baseline"
         },
@@ -1069,7 +870,7 @@
           "milestone": "Week 1 Kickoff",
           "date": "2026-09-09",
           "expectedWins": 9.6,
-          "playoffOdds": 85.3,
+          "playoffOdds": 85.0,
           "rank": 1,
           "event": "Pre-game Line Set"
         },
@@ -1077,7 +878,7 @@
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
           "expectedWins": 8.0,
-          "playoffOdds": 85.3,
+          "playoffOdds": 85.0,
           "rank": 1,
           "event": "NE @ SEA Game Impact"
         }
@@ -1249,9 +1050,9 @@
       "preSeasonExpectedWins": 6.9,
       "winDelta": 0.7,
       "expectedLosses": 6.4,
-      "playoffProbability": 58.7,
-      "championshipProbability": 7.6,
-      "lastPlaceProbability": 0.4,
+      "playoffProbability": 56.8,
+      "championshipProbability": 6.1,
+      "lastPlaceProbability": 0.2,
       "medianSeed": 6,
       "outlook": "Live playoff contender whose weekly variance will decide seeding.",
       "color": "#b91c1c",
@@ -1260,7 +1061,7 @@
           "milestone": "Pre-Season Baseline",
           "date": "2026-09-01",
           "expectedWins": 6.9,
-          "playoffOdds": 58.7,
+          "playoffOdds": 56.8,
           "rank": 7,
           "event": "Draft Audit Baseline"
         },
@@ -1268,7 +1069,7 @@
           "milestone": "Week 1 Kickoff",
           "date": "2026-09-09",
           "expectedWins": 6.9,
-          "playoffOdds": 58.7,
+          "playoffOdds": 56.8,
           "rank": 7,
           "event": "Pre-game Line Set"
         },
@@ -1276,7 +1077,7 @@
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
           "expectedWins": 7.6,
-          "playoffOdds": 58.7,
+          "playoffOdds": 56.8,
           "rank": 7,
           "event": "NE @ SEA Game Impact"
         }
@@ -1439,6 +1240,205 @@
       ]
     },
     {
+      "rosterId": 4,
+      "teamName": "Team kong58",
+      "managerName": "kong58",
+      "powerRank": 4,
+      "powerScore": 83.2,
+      "expectedWins": 7.2,
+      "preSeasonExpectedWins": 7.7,
+      "winDelta": -0.5,
+      "expectedLosses": 6.8,
+      "playoffProbability": 50.3,
+      "championshipProbability": 5.4,
+      "lastPlaceProbability": 0.2,
+      "medianSeed": 6,
+      "outlook": "Live playoff contender whose weekly variance will decide seeding.",
+      "color": "#c2410c",
+      "trajectory": [
+        {
+          "milestone": "Pre-Season Baseline",
+          "date": "2026-09-01",
+          "expectedWins": 7.7,
+          "playoffOdds": 50.3,
+          "rank": 4,
+          "event": "Draft Audit Baseline"
+        },
+        {
+          "milestone": "Week 1 Kickoff",
+          "date": "2026-09-09",
+          "expectedWins": 7.7,
+          "playoffOdds": 50.3,
+          "rank": 4,
+          "event": "Pre-game Line Set"
+        },
+        {
+          "milestone": "Week 1 Live Action",
+          "date": "2026-09-10",
+          "expectedWins": 7.2,
+          "playoffOdds": 50.3,
+          "rank": 4,
+          "event": "NE @ SEA Game Impact"
+        }
+      ],
+      "weeklySchedule": [
+        {
+          "week": 1,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 35.2,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 126.8,
+          "spread": -7.3,
+          "spreadLabel": "-7.3 pts"
+        },
+        {
+          "week": 2,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 63.2,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 113.0,
+          "spread": 6.5,
+          "spreadLabel": "+6.5 pts"
+        },
+        {
+          "week": 3,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 60.1,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 114.6,
+          "spread": 4.9,
+          "spreadLabel": "+4.9 pts"
+        },
+        {
+          "week": 4,
+          "opponentRosterId": 3,
+          "opponentName": "Team DRockefeller",
+          "opponentManager": "DRockefeller",
+          "winProbability": 52.1,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 118.5,
+          "spread": 1.0,
+          "spreadLabel": "+1.0 pts"
+        },
+        {
+          "week": 5,
+          "opponentRosterId": 6,
+          "opponentName": "Team Gnomeington",
+          "opponentManager": "Gnomeington",
+          "winProbability": 38.5,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 125.1,
+          "spread": -5.6,
+          "spreadLabel": "-5.6 pts"
+        },
+        {
+          "week": 6,
+          "opponentRosterId": 7,
+          "opponentName": "Team bubberdubber",
+          "opponentManager": "bubberdubber",
+          "winProbability": 44.6,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 122.1,
+          "spread": -2.6,
+          "spreadLabel": "-2.6 pts"
+        },
+        {
+          "week": 7,
+          "opponentRosterId": 11,
+          "opponentName": "Texas Tunas",
+          "opponentManager": "mdwelch11",
+          "winProbability": 58.7,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 115.3,
+          "spread": 4.2,
+          "spreadLabel": "+4.2 pts"
+        },
+        {
+          "week": 8,
+          "opponentRosterId": 8,
+          "opponentName": "Team mannyrsox24",
+          "opponentManager": "mannyrsox24",
+          "winProbability": 39.7,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 124.5,
+          "spread": -5.0,
+          "spreadLabel": "-5.0 pts"
+        },
+        {
+          "week": 9,
+          "opponentRosterId": 9,
+          "opponentName": "Team mtrebing31",
+          "opponentManager": "mtrebing31",
+          "winProbability": 59.1,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 115.1,
+          "spread": 4.4,
+          "spreadLabel": "+4.4 pts"
+        },
+        {
+          "week": 10,
+          "opponentRosterId": 2,
+          "opponentName": "Gridiron Gorillas",
+          "opponentManager": "sduda351",
+          "winProbability": 92.7,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 89.0,
+          "spread": 30.5,
+          "spreadLabel": "+30.5 pts"
+        },
+        {
+          "week": 11,
+          "opponentRosterId": 10,
+          "opponentName": "Team akwelch3492",
+          "opponentManager": "akwelch3492",
+          "winProbability": 69.7,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 109.5,
+          "spread": 10.0,
+          "spreadLabel": "+10.0 pts"
+        },
+        {
+          "week": 12,
+          "opponentRosterId": 5,
+          "opponentName": "Team arkinsjt",
+          "opponentManager": "arkinsjt",
+          "winProbability": 35.2,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 126.8,
+          "spread": -7.3,
+          "spreadLabel": "-7.3 pts"
+        },
+        {
+          "week": 13,
+          "opponentRosterId": 12,
+          "opponentName": "rLee3D",
+          "opponentManager": "rLee3D",
+          "winProbability": 63.2,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 113.0,
+          "spread": 6.5,
+          "spreadLabel": "+6.5 pts"
+        },
+        {
+          "week": 14,
+          "opponentRosterId": 1,
+          "opponentName": "Team jccbraves99",
+          "opponentManager": "jccbraves99",
+          "winProbability": 60.1,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 114.6,
+          "spread": 4.9,
+          "spreadLabel": "+4.9 pts"
+        }
+      ]
+    },
+    {
       "rosterId": 9,
       "teamName": "Team mtrebing31",
       "managerName": "mtrebing31",
@@ -1448,9 +1448,9 @@
       "preSeasonExpectedWins": 6.7,
       "winDelta": 0.4,
       "expectedLosses": 6.9,
-      "playoffProbability": 45.1,
-      "championshipProbability": 3.4,
-      "lastPlaceProbability": 0.6,
+      "playoffProbability": 45.5,
+      "championshipProbability": 3.3,
+      "lastPlaceProbability": 0.3,
       "medianSeed": 7,
       "outlook": "Needs favorable close-game outcomes to climb into the bracket.",
       "color": "#4338ca",
@@ -1459,7 +1459,7 @@
           "milestone": "Pre-Season Baseline",
           "date": "2026-09-01",
           "expectedWins": 6.7,
-          "playoffOdds": 45.1,
+          "playoffOdds": 45.5,
           "rank": 6,
           "event": "Draft Audit Baseline"
         },
@@ -1467,7 +1467,7 @@
           "milestone": "Week 1 Kickoff",
           "date": "2026-09-09",
           "expectedWins": 6.7,
-          "playoffOdds": 45.1,
+          "playoffOdds": 45.5,
           "rank": 6,
           "event": "Pre-game Line Set"
         },
@@ -1475,7 +1475,7 @@
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
           "expectedWins": 7.1,
-          "playoffOdds": 45.1,
+          "playoffOdds": 45.5,
           "rank": 6,
           "event": "NE @ SEA Game Impact"
         }
@@ -1647,9 +1647,9 @@
       "preSeasonExpectedWins": 7.2,
       "winDelta": -0.4,
       "expectedLosses": 7.2,
-      "playoffProbability": 36.2,
-      "championshipProbability": 2.6,
-      "lastPlaceProbability": 1.1,
+      "playoffProbability": 36.5,
+      "championshipProbability": 2.5,
+      "lastPlaceProbability": 0.5,
       "medianSeed": 7,
       "outlook": "Needs favorable close-game outcomes to climb into the bracket.",
       "color": "#0f766e",
@@ -1658,7 +1658,7 @@
           "milestone": "Pre-Season Baseline",
           "date": "2026-09-01",
           "expectedWins": 7.2,
-          "playoffOdds": 36.2,
+          "playoffOdds": 36.5,
           "rank": 9,
           "event": "Draft Audit Baseline"
         },
@@ -1666,7 +1666,7 @@
           "milestone": "Week 1 Kickoff",
           "date": "2026-09-09",
           "expectedWins": 7.2,
-          "playoffOdds": 36.2,
+          "playoffOdds": 36.5,
           "rank": 9,
           "event": "Pre-game Line Set"
         },
@@ -1674,7 +1674,7 @@
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
           "expectedWins": 6.8,
-          "playoffOdds": 36.2,
+          "playoffOdds": 36.5,
           "rank": 9,
           "event": "NE @ SEA Game Impact"
         }
@@ -1842,14 +1842,14 @@
       "managerName": "rLee3D",
       "powerRank": 5,
       "powerScore": 81.1,
-      "expectedWins": 6.4,
+      "expectedWins": 6.6,
       "preSeasonExpectedWins": 6.0,
-      "winDelta": 0.4,
-      "expectedLosses": 7.6,
-      "playoffProbability": 28.4,
-      "championshipProbability": 1.8,
-      "lastPlaceProbability": 1.7,
-      "medianSeed": 8,
+      "winDelta": 0.6,
+      "expectedLosses": 7.4,
+      "playoffProbability": 33.8,
+      "championshipProbability": 1.9,
+      "lastPlaceProbability": 0.5,
+      "medianSeed": 7,
       "outlook": "Needs favorable close-game outcomes to climb into the bracket.",
       "color": "#3f6212",
       "trajectory": [
@@ -1857,7 +1857,7 @@
           "milestone": "Pre-Season Baseline",
           "date": "2026-09-01",
           "expectedWins": 6.0,
-          "playoffOdds": 28.4,
+          "playoffOdds": 33.8,
           "rank": 5,
           "event": "Draft Audit Baseline"
         },
@@ -1865,15 +1865,15 @@
           "milestone": "Week 1 Kickoff",
           "date": "2026-09-09",
           "expectedWins": 6.0,
-          "playoffOdds": 28.4,
+          "playoffOdds": 33.8,
           "rank": 5,
           "event": "Pre-game Line Set"
         },
         {
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
-          "expectedWins": 6.4,
-          "playoffOdds": 28.4,
+          "expectedWins": 6.6,
+          "playoffOdds": 33.8,
           "rank": 5,
           "event": "NE @ SEA Game Impact"
         }
@@ -2041,13 +2041,13 @@
       "managerName": "jccbraves99",
       "powerRank": 11,
       "powerScore": 74.5,
-      "expectedWins": 6.3,
+      "expectedWins": 6.1,
       "preSeasonExpectedWins": 6.6,
-      "winDelta": -0.3,
-      "expectedLosses": 7.7,
-      "playoffProbability": 27.5,
-      "championshipProbability": 2.1,
-      "lastPlaceProbability": 1.8,
+      "winDelta": -0.5,
+      "expectedLosses": 7.9,
+      "playoffProbability": 23.8,
+      "championshipProbability": 1.5,
+      "lastPlaceProbability": 1.0,
       "medianSeed": 8,
       "outlook": "Needs favorable close-game outcomes to climb into the bracket.",
       "color": "#0e7490",
@@ -2056,7 +2056,7 @@
           "milestone": "Pre-Season Baseline",
           "date": "2026-09-01",
           "expectedWins": 6.6,
-          "playoffOdds": 27.5,
+          "playoffOdds": 23.8,
           "rank": 11,
           "event": "Draft Audit Baseline"
         },
@@ -2064,15 +2064,15 @@
           "milestone": "Week 1 Kickoff",
           "date": "2026-09-09",
           "expectedWins": 6.6,
-          "playoffOdds": 27.5,
+          "playoffOdds": 23.8,
           "rank": 11,
           "event": "Pre-game Line Set"
         },
         {
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
-          "expectedWins": 6.3,
-          "playoffOdds": 27.5,
+          "expectedWins": 6.1,
+          "playoffOdds": 23.8,
           "rank": 11,
           "event": "NE @ SEA Game Impact"
         }
@@ -2240,14 +2240,14 @@
       "managerName": "akwelch3492",
       "powerRank": 10,
       "powerScore": 75.9,
-      "expectedWins": 5.9,
+      "expectedWins": 5.0,
       "preSeasonExpectedWins": 5.3,
-      "winDelta": 0.6,
-      "expectedLosses": 8.1,
-      "playoffProbability": 17.8,
-      "championshipProbability": 0.7,
-      "lastPlaceProbability": 3.0,
-      "medianSeed": 9,
+      "winDelta": -0.3,
+      "expectedLosses": 9.0,
+      "playoffProbability": 7.7,
+      "championshipProbability": 0.2,
+      "lastPlaceProbability": 3.5,
+      "medianSeed": 10,
       "outlook": "Needs favorable close-game outcomes to climb into the bracket.",
       "color": "#9f1239",
       "trajectory": [
@@ -2255,7 +2255,7 @@
           "milestone": "Pre-Season Baseline",
           "date": "2026-09-01",
           "expectedWins": 5.3,
-          "playoffOdds": 17.8,
+          "playoffOdds": 7.7,
           "rank": 10,
           "event": "Draft Audit Baseline"
         },
@@ -2263,15 +2263,15 @@
           "milestone": "Week 1 Kickoff",
           "date": "2026-09-09",
           "expectedWins": 5.3,
-          "playoffOdds": 17.8,
+          "playoffOdds": 7.7,
           "rank": 10,
           "event": "Pre-game Line Set"
         },
         {
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
-          "expectedWins": 5.9,
-          "playoffOdds": 17.8,
+          "expectedWins": 5.0,
+          "playoffOdds": 7.7,
           "rank": 10,
           "event": "NE @ SEA Game Impact"
         }
@@ -2439,13 +2439,13 @@
       "managerName": "sduda351",
       "powerRank": 12,
       "powerScore": 66.2,
-      "expectedWins": 2.2,
+      "expectedWins": 1.7,
       "preSeasonExpectedWins": 2.1,
-      "winDelta": 0.1,
-      "expectedLosses": 11.8,
+      "winDelta": -0.4,
+      "expectedLosses": 12.3,
       "playoffProbability": 0.0,
       "championshipProbability": 0.0,
-      "lastPlaceProbability": 90.9,
+      "lastPlaceProbability": 93.7,
       "medianSeed": 12,
       "outlook": "Needs favorable close-game outcomes to climb into the bracket.",
       "color": "#475569",
@@ -2469,7 +2469,7 @@
         {
           "milestone": "Week 1 Live Action",
           "date": "2026-09-10",
-          "expectedWins": 2.2,
+          "expectedWins": 1.7,
           "playoffOdds": 0.0,
           "rank": 12,
           "event": "NE @ SEA Game Impact"
