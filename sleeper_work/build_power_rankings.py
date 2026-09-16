@@ -324,10 +324,28 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    from google.cloud import bigquery
-    client = bigquery.Client(project=PROJECT)
+    key_candidates = [
+        os.path.join(ROOT, "ams-pipeline-key.json"),
+        os.path.join(os.path.dirname(ROOT), "ams-pipeline-key.json"),
+        r"c:\Users\alexa\Documents\Codex\Apes Mac Salad\ams-pipeline-key.json",
+    ]
+    if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"):
+        for kp in key_candidates:
+            if os.path.exists(kp):
+                os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = kp
+                break
 
     week = args.week
+    if week is None:
+        try:
+            import urllib.request
+            req = urllib.request.Request("https://api.sleeper.app/v1/state/nfl", headers={"User-Agent": "ApesMacSalad/2.0"})
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                st = json.loads(resp.read().decode("utf-8"))
+                week = int(st.get("week") or 2)
+        except Exception:
+            pass
+
     if week is None:
         import raw_source
         state, _ = raw_source.newest_capture(
@@ -337,6 +355,17 @@ def main():
         if (state or {}).get("season_type") == "pre":
             week = 0                      # preseason rankings sit at week 0
     print("ranking week: %d" % week)
+
+    client = None
+    try:
+        from google.cloud import bigquery
+        client = bigquery.Client(project=PROJECT)
+    except Exception as e:
+        print("  [WARN] BigQuery client init failed: %s" % e)
+        if os.path.exists(OUT):
+            print("  Keeping existing power-rankings.json payload.")
+            return 0
+        raise
 
     rosters, values, positions, prior = load_inputs(client)
     print("  rosters %d | valued players %d | positions %d"

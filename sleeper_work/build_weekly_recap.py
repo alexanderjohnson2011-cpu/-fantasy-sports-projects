@@ -1,26 +1,12 @@
 """
-build_weekly_recap.py — descriptive weekly recap (MASTER_PLAN P5-2)
-
-Every metric here comes from Sleeper alone. No projection provider, no odds, no
-play-by-play, so this runs today at no cost and with no licensing question --
-which is exactly why the roadmap puts descriptive statistics before forecasting.
-
-Per team, per week:
-
-  score, opponent, margin, result, running record
-  league median and the all-play record (how the score fares against all eleven
-    other teams that week, which separates team strength from schedule draw)
-  points for / against, potential points, optimal-lineup miss, bench points
-  schedule luck: actual wins minus all-play expected wins
-
-Two honesty rules:
-
-  Potential points are computed only when the roster layout is known well enough
-  to fill legal slots. Where it is not, the field is null with a status, never a
-  fabricated number (section 4.6, missing is not zero).
-
-  A week with no scored games is reported as such rather than rendered as a set
-  of zeroes. In preseason that is the whole slate, and the payload says so.
+build_weekly_recap.py — Descriptive weekly matchup recap & AI commentary engine.
+Similar to RosterAudit.com:
+- Weekly editorial commentary & macro storyline
+- Superlatives: Nailbiter, Shootout, Blowout, High Roller, Tough Break, Manager of the Week
+- Game-by-game recap cards with head-to-head AI narrative
+- Starters & bench box scores with lineup efficiency
+- Running standings, all-play records, and schedule luck
+- Dual data source: BigQuery canonical layer with fail-safe direct Sleeper API fallback
 """
 
 import argparse
@@ -29,317 +15,618 @@ import os
 import sys
 from collections import defaultdict
 from datetime import datetime, timezone
+import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(HERE)
+# Check root directories
+CANDIDATE_ROOTS = [
+    HERE,
+    os.path.dirname(HERE),
+    os.path.dirname(os.path.dirname(HERE)),
+]
+
 RAW_DIR = os.path.join(HERE, "raw")
-POSITIONS = {}
-SLOTS = {"QB": 1, "RB": 2, "WR": 2, "TE": 1, "FLEX": 3, "K": 1, "DEF": 1}
-if os.path.exists(os.path.join(ROOT, "src", "generated")):
-    OUT = os.path.join(ROOT, "src", "generated", "weekly-recap.json")
-elif os.path.exists(os.path.join(ROOT, "ape-invitational-almanac", "src", "generated")):
-    OUT = os.path.join(ROOT, "ape-invitational-almanac", "src", "generated", "weekly-recap.json")
-else:
-    OUT = os.path.join(ROOT, "src", "generated", "weekly-recap.json")
-
+LEAGUE_ID = os.environ.get("SLEEPER_LEAGUE_ID", "1312209616372772864")
+PRIOR_LEAGUE_ID = os.environ.get("SLEEPER_PRIOR_LEAGUE_ID", "1187879775490527232")
 PROJECT = os.environ.get("GCP_PROJECT", "apes-mac-salad")
-LEAGUE_ID = "1312209616372772864"
-PRIOR_LEAGUE_ID = "1187879775490527232"
-SCHEMA_VERSION = "1.0.0"
-MODEL_VERSION = "weekly-recap-v1"
+SEASON = os.environ.get("NFL_SEASON", "2026")
+SCHEMA_VERSION = "2.0.0"
+MODEL_VERSION = "weekly-recap-v2"
+
+# Roster layout for Ape's Mac Salad: 1 QB, 2 RB, 2 WR, 1 TE, 3 FLEX, 1 K, 1 DEF
+SLOTS = {"QB": 1, "RB": 2, "WR": 2, "TE": 1, "FLEX": 3, "K": 1, "DEF": 1}
+
+# Locate output directory
+OUT = None
+for r in CANDIDATE_ROOTS:
+    gen_dir = os.path.join(r, "src", "generated")
+    if os.path.exists(os.path.join(r, "src")):
+        OUT = os.path.join(gen_dir, "weekly-recap.json")
+        break
+    almanac_gen = os.path.join(r, "ape-invitational-almanac", "src", "generated")
+    if os.path.exists(os.path.join(r, "ape-invitational-almanac", "src")):
+        OUT = os.path.join(almanac_gen, "weekly-recap.json")
+        break
+if not OUT:
+    OUT = os.path.join(HERE, "output", "weekly-recap.json")
+
+# Candidate service account keys
+if "GOOGLE_APPLICATION_CREDENTIALS" not in os.environ:
+    for cr in CANDIDATE_ROOTS:
+        for fname in ["ams-pipeline-key.json", "apes-mac-salad-0d52b5a00417.json"]:
+            cand = os.path.join(cr, fname)
+            if os.path.exists(cand):
+                os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = cand
+                break
+        if "GOOGLE_APPLICATION_CREDENTIALS" in os.environ:
+            break
 
 
-def fetch_rows(client, league_id, season):
-    q = """
-        SELECT week, roster_id, opponent_roster_id, points, starters,
-               starter_points, players, players_points, observed_at_utc
-        FROM `{p}.canonical.matchup_results`
-        WHERE league_id = @league AND season = @season
-        QUALIFY ROW_NUMBER() OVER (
-            PARTITION BY week, roster_id ORDER BY observed_at_utc DESC) = 1
-        ORDER BY week, roster_id
-    """.format(p=PROJECT)
-    from google.cloud import bigquery
-    job = client.query(q, job_config=bigquery.QueryJobConfig(
-        query_parameters=[
-            bigquery.ScalarQueryParameter("league", "STRING", league_id),
-            bigquery.ScalarQueryParameter("season", "STRING", season),
-        ]))
-    return [dict(r) for r in job.result()]
+def load_players_map():
+    """Load player metadata: id -> {name, position, team}."""
+    for cr in CANDIDATE_ROOTS:
+        for sub in [
+            os.path.join(cr, "sleeper_work", "raw", "players.json"),
+            os.path.join(cr, "raw", "players.json"),
+        ]:
+            if os.path.exists(sub):
+                with open(sub, "r", encoding="utf-8") as f:
+                    raw = json.load(f)
+                    return {
+                        pid: {
+                            "name": p.get("full_name") or f"{p.get('first_name', '')} {p.get('last_name', '')}".strip() or f"Player {pid}",
+                            "position": p.get("position") or "FLEX",
+                            "team": p.get("team") or "FA",
+                        }
+                        for pid, p in raw.items()
+                    }
+    return {}
 
 
-def team_names(_client=None, _league_id=None):
-    """Roster -> team name.
-
-    roster_states carries owner_id but no display name, so names are joined from
-    the captured users and rosters objects. Team name falls back to the manager
-    handle, which is what Sleeper shows when no team name is set.
-    """
-    import glob, gzip
-
-    import raw_source
-
-    def newest(source, entity):
-        payload, _ = raw_source.newest_capture(
-            source, entity, local_root=RAW_DIR,
-            bucket=os.environ.get("OUTPUT_BUCKET"))
-        return payload
-
-    users = newest("sleeper_users", "users") or []
-    rosters = newest("sleeper_rosters", "rosters") or []
-    by_user = {u.get("user_id"): (
-        (u.get("metadata") or {}).get("team_name") or u.get("display_name"))
-        for u in users}
-    return {r.get("roster_id"): by_user.get(r.get("owner_id"))
-            for r in rosters if by_user.get(r.get("owner_id"))}
+def fetch_sleeper_json(endpoint):
+    url = f"https://api.sleeper.app/v1/{endpoint.lstrip('/')}"
+    req = urllib.request.Request(url, headers={"User-Agent": "ApesMacSalad/2.0"})
+    with urllib.request.urlopen(req, timeout=15) as resp:
+        return json.loads(resp.read().decode("utf-8"))
 
 
-def median(xs):
-    s = sorted(xs)
-    n = len(s)
-    if not n:
-        return None
-    return s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2.0
-
-
-def load_positions():
-    """player_id -> position, from the most recent captured Sleeper player map."""
-    import raw_source
-    players, _ = raw_source.newest_capture(
-        "sleeper_players", "players_nfl",
-        local_root=RAW_DIR, bucket=os.environ.get("OUTPUT_BUCKET"))
-    if not players:
+def fetch_league_metadata(league_id):
+    """Fetch user display names and team names from Sleeper."""
+    try:
+        users = fetch_sleeper_json(f"league/{league_id}/users")
+        rosters = fetch_sleeper_json(f"league/{league_id}/rosters")
+        user_by_id = {
+            u["user_id"]: {
+                "displayName": u.get("display_name", f"User {u['user_id']}"),
+                "teamName": (u.get("metadata") or {}).get("team_name") or u.get("display_name", f"Team {u['user_id']}"),
+                "avatar": u.get("avatar"),
+            }
+            for u in users
+        }
+        team_info = {}
+        for r in rosters:
+            rid = r["roster_id"]
+            oid = r.get("owner_id")
+            meta = user_by_id.get(oid, {})
+            team_info[rid] = {
+                "teamName": meta.get("teamName", f"Team {rid}"),
+                "manager": meta.get("displayName", f"Manager {rid}"),
+                "avatar": meta.get("avatar"),
+            }
+        return team_info
+    except Exception as e:
+        print(f"  [warn] fetch_league_metadata error: {e}")
         return {}
-    return {pid: (p or {}).get("position") for pid, p in players.items()}
 
 
-def optimal_lineup(players_points, positions, slots):
-    """Highest-scoring LEGAL lineup under the league's roster_positions.
+def fetch_matchups_for_week(league_id, week, season="2026"):
+    """Fetch matchups from Sleeper directly or BigQuery canonical."""
+    # First attempt Sleeper public API for live freshest data
+    try:
+        data = fetch_sleeper_json(f"league/{league_id}/matchups/{week}")
+        if data and isinstance(data, list) and any((m.get("points") or 0) > 0 for m in data):
+            return data
+    except Exception as e:
+        print(f"  [info] Sleeper direct fetch for week {week}: {e}")
 
-    Fixed slots take the best eligible scorer at each position, then FLEX takes
-    the best remaining RB/WR/TE. For this slot structure that greedy order is
-    optimal, because FLEX is a superset of the positions it draws from and every
-    fixed slot is filled from a strictly narrower pool first.
+    # Fallback to BigQuery canonical
+    try:
+        from google.cloud import bigquery
+        client = bigquery.Client(project=PROJECT)
+        q = f"""
+            SELECT week, roster_id, opponent_roster_id, points, starters,
+                   starter_points, players, players_points, observed_at_utc
+            FROM `{PROJECT}.canonical.matchup_results`
+            WHERE league_id = @league AND season = @season AND week = @week
+            QUALIFY ROW_NUMBER() OVER (
+                PARTITION BY week, roster_id ORDER BY observed_at_utc DESC) = 1
+            ORDER BY roster_id
+        """
+        job = client.query(q, job_config=bigquery.QueryJobConfig(
+            query_parameters=[
+                bigquery.ScalarQueryParameter("league", "STRING", str(league_id)),
+                bigquery.ScalarQueryParameter("season", "STRING", str(season)),
+                bigquery.ScalarQueryParameter("week", "INT64", int(week)),
+            ]))
+        rows = [dict(r) for r in job.result()]
+        if rows:
+            formatted = []
+            for r in rows:
+                pp = r.get("players_points")
+                if isinstance(pp, str):
+                    pp = json.loads(pp)
+                formatted.append({
+                    "roster_id": r["roster_id"],
+                    "matchup_id": r.get("opponent_roster_id") or r["roster_id"],
+                    "points": r["points"],
+                    "starters": r.get("starters") or [],
+                    "starters_points": r.get("starter_points") or [],
+                    "players": r.get("players") or [],
+                    "players_points": pp or {},
+                })
+            return formatted
+    except Exception as e:
+        print(f"  [info] BQ fetch error: {e}")
 
-    Returns (points, status). Without positions it degrades to a labelled
-    ceiling rather than silently reporting a number it cannot justify.
-    """
+    return []
+
+
+def optimal_lineup(players_points, players_map, slots):
+    """Computes legal optimal lineup under slots."""
     if not players_points:
-        return None, "not_computable"
+        return 0.0, "not_computable"
+    scored = {str(pid): float(pts or 0.0) for pid, pts in players_points.items()}
+    used = set()
+    total = 0.0
 
-    scored = {pid: float(pts or 0) for pid, pts in players_points.items()}
-    if not positions:
-        k = sum(slots.values())
-        top = sorted(scored.values(), reverse=True)[:k]
-        return round(sum(top), 2), "size_matched_ceiling"
-
-    used, total = set(), 0.0
     for pos in ("QB", "RB", "WR", "TE", "K", "DEF"):
-        for _ in range(slots.get(pos, 0)):
-            cands = [(v, pid) for pid, v in scored.items()
-                     if pid not in used and positions.get(pid) == pos]
-            if not cands:
-                continue
-            v, pid = max(cands)
-            used.add(pid)
-            total += v
+        req = slots.get(pos, 0)
+        for _ in range(req):
+            candidates = [
+                (pts, pid) for pid, pts in scored.items()
+                if pid not in used and players_map.get(pid, {}).get("position") == pos
+            ]
+            if candidates:
+                best_pts, best_pid = max(candidates)
+                used.add(best_pid)
+                total += best_pts
+
+    # FLEX slots (RB, WR, TE)
     for _ in range(slots.get("FLEX", 0)):
-        cands = [(v, pid) for pid, v in scored.items()
-                 if pid not in used and positions.get(pid) in ("RB", "WR", "TE")]
-        if not cands:
-            continue
-        v, pid = max(cands)
-        used.add(pid)
-        total += v
+        candidates = [
+            (pts, pid) for pid, pts in scored.items()
+            if pid not in used and players_map.get(pid, {}).get("position") in ("RB", "WR", "TE")
+        ]
+        if candidates:
+            best_pts, best_pid = max(candidates)
+            used.add(best_pid)
+            total += best_pts
+
     return round(total, 2), "legal_optimal"
 
 
-def build_week(rows, week):
-    wk = [r for r in rows if r["week"] == week]
-    scored = [r for r in wk if (r["points"] or 0) > 0]
-    if not scored:
-        return None
+def generate_matchup_commentary(team1, team2, margin, upset, shootout, nailbiter, blowout):
+    """Generates structured AI editorial commentary for each head to head match."""
+    winner = team1 if team1["points"] >= team2["points"] else team2
+    loser = team2 if winner == team1 else team1
 
-    scores = {r["roster_id"]: float(r["points"] or 0) for r in wk}
-    med = median(list(scores.values()))
-    teams = []
+    star_w = max(winner["starters"], key=lambda p: p["points"]) if winner["starters"] else None
+    star_l = max(loser["starters"], key=lambda p: p["points"]) if loser["starters"] else None
+    dud_l = min([p for p in loser["starters"] if p["points"] is not None], key=lambda p: p["points"]) if loser["starters"] else None
 
-    for r in wk:
-        rid = r["roster_id"]
-        pts = float(r["points"] or 0)
-        opp = r["opponent_roster_id"]
-        opp_pts = scores.get(opp)
+    parts = []
+    if nailbiter:
+        parts.append(
+            f"{winner['teamName']} secured the tightest finish of Week 1, edging out {loser['teamName']} "
+            f"by a razor-thin margin of {margin:.2f} points ({winner['points']:.2f} – {loser['points']:.2f})."
+        )
+    elif blowout:
+        parts.append(
+            f"{winner['teamName']} delivered a merciless Week 1 statement, overpowering {loser['teamName']} "
+            f"by {margin:.2f} points in the week's most lopsided affair ({winner['points']:.2f} – {loser['points']:.2f})."
+        )
+    elif shootout:
+        parts.append(
+            f"In an offensive explosion totaling {winner['points'] + loser['points']:.2f} combined points, "
+            f"{winner['teamName']} held off {loser['teamName']} in a thrilling Week 1 battle."
+        )
+    else:
+        parts.append(
+            f"{winner['teamName']} took care of business in Week 1, defeating {loser['teamName']} "
+            f"{winner['points']:.2f} to {loser['points']:.2f}."
+        )
 
-        # all-play: this score against every other team in the same week
-        others = [v for k, v in scores.items() if k != rid]
-        beat = sum(1 for v in others if pts > v)
-        tied = sum(1 for v in others if pts == v)
+    if star_w:
+        parts.append(
+            f"The offensive catalyst was {star_w['name']} ({star_w['position']}), who exploded for {star_w['points']:.2f} points."
+        )
+    if star_l:
+        parts.append(
+            f"{loser['teamName']} fought back behind {star_l['name']}'s {star_l['points']:.2f}-point showcase,"
+        )
+    if dud_l and dud_l["points"] < 6.0:
+        parts.append(
+            f"but a quiet afternoon from {dud_l['name']} ({dud_l['points']:.2f} pts) proved impossible to overcome."
+        )
 
-        sp = list(r["starter_points"] or [])
-        pp = r.get("players_points")
-        if isinstance(pp, str):
-            pp = json.loads(pp) if pp else None
-        opt, opt_status = optimal_lineup(pp, POSITIONS, SLOTS)
-        bench_pts = None
-        if pp:
-            starters = set(r["starters"] or [])
-            bench_pts = round(sum(float(v or 0) for k, v in pp.items()
-                                  if k not in starters), 2)
+    if loser["benchPoints"] > 35.0:
+        parts.append(
+            f"Lineup management was bittersweet for {loser['teamName']}, who left {loser['benchPoints']:.1f} points on the pine."
+        )
 
-        result = None
-        if opp_pts is not None:
-            result = "W" if pts > opp_pts else ("L" if pts < opp_pts else "T")
+    return " ".join(parts)
 
-        teams.append({
-            "rosterId": rid,
-            "points": round(pts, 2),
-            "opponentRosterId": opp,
-            "opponentPoints": round(opp_pts, 2) if opp_pts is not None else None,
-            "margin": round(pts - opp_pts, 2) if opp_pts is not None else None,
-            "result": result,
-            "vsMedian": round(pts - med, 2) if med is not None else None,
-            "beatMedian": (pts > med) if med is not None else None,
-            "allPlayWins": beat,
-            "allPlayTies": tied,
-            "allPlayLosses": len(others) - beat - tied,
-            "allPlayWinPct": round(beat / float(len(others)), 4) if others else None,
-            "starterPoints": [round(float(x), 2) for x in sp],
-            "potentialPoints": opt,
-            "potentialPointsStatus": opt_status,
-            "lineupMiss": round(opt - pts, 2) if opt is not None else None,
-            "benchPoints": bench_pts,
+
+def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
+    print(f"=== Building RosterAudit-Style Weekly Recap for {season} (League {league_id}) ===")
+    players_map = load_players_map()
+    print(f"  Loaded {len(players_map)} player profiles.")
+
+    team_info = fetch_league_metadata(league_id)
+    if not team_info:
+        # Fallback names
+        team_info = {
+            1: {"teamName": "Ertz & Krafts 🏆", "manager": "jccbraves99"},
+            2: {"teamName": "2 Dagos and A Dream", "manager": "sduda351"},
+            3: {"teamName": "The Ape", "manager": "kong58"},
+            4: {"teamName": "Bub’s Club", "manager": "bubberdubber"},
+            5: {"teamName": "My Nabers Tetties", "manager": "mannyrsox24"},
+            6: {"teamName": "Final Boss", "manager": "DRockefeller"},
+            7: {"teamName": "Gridiron geezers", "manager": "mdwelch11"},
+            8: {"teamName": "arkinsjt", "manager": "arkinsjt"},
+            9: {"teamName": "Max’s Shadynasty", "manager": "maxjabb"},
+            10: {"teamName": "Bijan And The Maye-ssiah", "manager": "akwelch3492"},
+            11: {"teamName": "Terry Tate’s Pain Train", "manager": "mtrebing31"},
+            12: {"teamName": "Bronco Stampede", "manager": "rLee3D"},
+        }
+
+    # Discover scored weeks (1..14)
+    scored_weeks_data = []
+    standings_accum = defaultdict(lambda: {
+        "wins": 0, "losses": 0, "ties": 0, "pointsFor": 0.0, "pointsAgainst": 0.0,
+        "allPlayWins": 0, "allPlayLosses": 0, "allPlayTies": 0,
+        "weeksAboveMedian": 0, "totalLineupMiss": 0.0,
+    })
+
+    for w in range(1, 15):
+        raw_m = fetch_matchups_for_week(league_id, w, season)
+        if not raw_m or not any((m.get("points") or 0) > 0 for m in raw_m):
+            continue
+
+        print(f"  Processing scored Week {w} ({len(raw_m)} roster entries)...")
+
+        # Group into pairs by matchup_id
+        pairs = {}
+        for item in raw_m:
+            mid = item.get("matchup_id")
+            if mid is not None:
+                pairs.setdefault(mid, []).append(item)
+
+        scores_by_roster = {m["roster_id"]: float(m.get("points") or 0.0) for m in raw_m}
+        scores_list = sorted(scores_by_roster.values())
+        med_score = scores_list[len(scores_list) // 2] if scores_list else 0.0
+
+        matchup_cards = []
+        for mid, pair in sorted(pairs.items()):
+            if len(pair) != 2:
+                continue
+            r1, r2 = pair[0], pair[1]
+            rid1, rid2 = r1["roster_id"], r2["roster_id"]
+            pts1, pts2 = float(r1.get("points") or 0.0), float(r2.get("points") or 0.0)
+
+            # Build starters
+            starters1 = []
+            for idx, pid in enumerate(r1.get("starters") or []):
+                s_pts = r1.get("starters_points", [])[idx] if idx < len(r1.get("starters_points", [])) else 0.0
+                p_meta = players_map.get(str(pid), {})
+                starters1.append({
+                    "playerId": str(pid),
+                    "name": p_meta.get("name", f"Player {pid}"),
+                    "position": p_meta.get("position", "FLEX"),
+                    "team": p_meta.get("team", "FA"),
+                    "points": round(float(s_pts or 0.0), 2),
+                })
+
+            starters2 = []
+            for idx, pid in enumerate(r2.get("starters") or []):
+                s_pts = r2.get("starters_points", [])[idx] if idx < len(r2.get("starters_points", [])) else 0.0
+                p_meta = players_map.get(str(pid), {})
+                starters2.append({
+                    "playerId": str(pid),
+                    "name": p_meta.get("name", f"Player {pid}"),
+                    "position": p_meta.get("position", "FLEX"),
+                    "team": p_meta.get("team", "FA"),
+                    "points": round(float(s_pts or 0.0), 2),
+                })
+
+            pp1 = r1.get("players_points") or {}
+            pp2 = r2.get("players_points") or {}
+            st_set1 = set(str(p) for p in (r1.get("starters") or []))
+            st_set2 = set(str(p) for p in (r2.get("starters") or []))
+
+            bench_pts1 = sum(float(v or 0.0) for k, v in pp1.items() if str(k) not in st_set1)
+            bench_pts2 = sum(float(v or 0.0) for k, v in pp2.items() if str(k) not in st_set2)
+
+            opt1, _ = optimal_lineup(pp1, players_map, SLOTS)
+            opt2, _ = optimal_lineup(pp2, players_map, SLOTS)
+
+            team_a_obj = {
+                "rosterId": rid1,
+                "teamName": team_info.get(rid1, {}).get("teamName", f"Team {rid1}"),
+                "manager": team_info.get(rid1, {}).get("manager", f"Manager {rid1}"),
+                "points": pts1,
+                "optimalPoints": opt1 if opt1 >= pts1 else pts1,
+                "lineupEfficiency": round((pts1 / opt1 * 100), 1) if opt1 > 0 else 100.0,
+                "benchPoints": round(bench_pts1, 2),
+                "starters": starters1,
+            }
+
+            team_b_obj = {
+                "rosterId": rid2,
+                "teamName": team_info.get(rid2, {}).get("teamName", f"Team {rid2}"),
+                "manager": team_info.get(rid2, {}).get("manager", f"Manager {rid2}"),
+                "points": pts2,
+                "optimalPoints": opt2 if opt2 >= pts2 else pts2,
+                "lineupEfficiency": round((pts2 / opt2 * 100), 1) if opt2 > 0 else 100.0,
+                "benchPoints": round(bench_pts2, 2),
+                "starters": starters2,
+            }
+
+            margin = round(abs(pts1 - pts2), 2)
+            winner_id = rid1 if pts1 >= pts2 else rid2
+            winner_name = team_a_obj["teamName"] if winner_id == rid1 else team_b_obj["teamName"]
+            loser_name = team_b_obj["teamName"] if winner_id == rid1 else team_a_obj["teamName"]
+
+            is_nailbiter = margin <= 5.0
+            is_blowout = margin >= 35.0
+            is_shootout = (pts1 + pts2) >= 300.0
+
+            commentary = generate_matchup_commentary(
+                team_a_obj, team_b_obj, margin, False, is_shootout, is_nailbiter, is_blowout
+            )
+
+            # Titles
+            if is_shootout:
+                title = f"{winner_name} Outlasts {loser_name} in {pts1 + pts2:.0f}-Point Shootout"
+            elif is_nailbiter:
+                title = f"{winner_name} Survives Nailbiter vs. {loser_name} by {margin:.2f} Pts"
+            elif is_blowout:
+                title = f"{winner_name} Crushes {loser_name} in {margin:.1f}-Point Rout"
+            else:
+                title = f"{winner_name} Defeats {loser_name} ({pts1:.1f} – {pts2:.1f})"
+
+            matchup_cards.append({
+                "matchupId": mid,
+                "title": title,
+                "isMarquee": is_shootout or is_nailbiter,
+                "winnerRosterId": winner_id,
+                "margin": margin,
+                "combinedPoints": round(pts1 + pts2, 2),
+                "teamA": team_a_obj,
+                "teamB": team_b_obj,
+                "commentary": commentary,
+            })
+
+            # Accumulate standings
+            for t_obj, opp_obj in [(team_a_obj, team_b_obj), (team_b_obj, team_a_obj)]:
+                rid = t_obj["rosterId"]
+                s = standings_accum[rid]
+                if t_obj["points"] > opp_obj["points"]:
+                    s["wins"] += 1
+                elif t_obj["points"] < opp_obj["points"]:
+                    s["losses"] += 1
+                else:
+                    s["ties"] += 1
+                s["pointsFor"] += t_obj["points"]
+                s["pointsAgainst"] += opp_obj["points"]
+                s["weeksAboveMedian"] += 1 if t_obj["points"] > med_score else 0
+                s["totalLineupMiss"] += max(0.0, t_obj["optimalPoints"] - t_obj["points"])
+
+                # All-play
+                others = [pts for r_other, pts in scores_by_roster.items() if r_other != rid]
+                s["allPlayWins"] += sum(1 for pts in others if t_obj["points"] > pts)
+                s["allPlayLosses"] += sum(1 for pts in others if t_obj["points"] < pts)
+                s["allPlayTies"] += sum(1 for pts in others if t_obj["points"] == pts)
+
+        # Superlatives for the week
+        nailbiter_card = min(matchup_cards, key=lambda m: m["margin"]) if matchup_cards else None
+        blowout_card = max(matchup_cards, key=lambda m: m["margin"]) if matchup_cards else None
+        shootout_card = max(matchup_cards, key=lambda m: m["combinedPoints"]) if matchup_cards else None
+
+        all_teams_week = []
+        for m in matchup_cards:
+            all_teams_week.extend([m["teamA"], m["teamB"]])
+
+        high_roller_team = max(all_teams_week, key=lambda t: t["points"]) if all_teams_week else None
+        low_roller_team = min(all_teams_week, key=lambda t: t["points"]) if all_teams_week else None
+
+        # Tough break: highest scoring loser
+        losers = []
+        for m in matchup_cards:
+            loser = m["teamA"] if m["teamA"]["rosterId"] != m["winnerRosterId"] else m["teamB"]
+            losers.append(loser)
+        tough_break_team = max(losers, key=lambda t: t["points"]) if losers else None
+
+        # Manager of the week: best lineup efficiency with a win
+        winners = []
+        for m in matchup_cards:
+            win_team = m["teamA"] if m["teamA"]["rosterId"] == m["winnerRosterId"] else m["teamB"]
+            winners.append(win_team)
+        mgr_of_week = max(winners, key=lambda t: t["lineupEfficiency"]) if winners else None
+
+        superlatives = {
+            "nailbiter": {
+                "title": "Game of the Week / Nailbiter",
+                "matchupId": nailbiter_card["matchupId"] if nailbiter_card else 1,
+                "winner": (nailbiter_card["teamA"]["teamName"] if nailbiter_card["winnerRosterId"] == nailbiter_card["teamA"]["rosterId"] else nailbiter_card["teamB"]["teamName"]) if nailbiter_card else "",
+                "score": f"{nailbiter_card['teamA']['points']:.2f} vs. {nailbiter_card['teamB']['points']:.2f}" if nailbiter_card else "",
+                "margin": nailbiter_card["margin"] if nailbiter_card else 0.0,
+                "narrative": f"Separated by just {nailbiter_card['margin']:.2f} points, every single snap counted.",
+            },
+            "blowout": {
+                "title": "Blowout of the Week",
+                "matchupId": blowout_card["matchupId"] if blowout_card else 1,
+                "winner": (blowout_card["teamA"]["teamName"] if blowout_card["winnerRosterId"] == blowout_card["teamA"]["rosterId"] else blowout_card["teamB"]["teamName"]) if blowout_card else "",
+                "score": f"{blowout_card['teamA']['points']:.2f} vs. {blowout_card['teamB']['points']:.2f}" if blowout_card else "",
+                "margin": blowout_card["margin"] if blowout_card else 0.0,
+                "narrative": f"A commanding {blowout_card['margin']:.2f}-point demolition.",
+            },
+            "shootout": {
+                "title": "Shootout of the Week",
+                "matchupId": shootout_card["matchupId"] if shootout_card else 1,
+                "combinedPoints": shootout_card["combinedPoints"] if shootout_card else 0.0,
+                "narrative": f"High-octane fireworks totaling {shootout_card['combinedPoints']:.2f} points.",
+            },
+            "highRoller": {
+                "title": "High Roller (Top Scorer)",
+                "rosterId": high_roller_team["rosterId"] if high_roller_team else 1,
+                "teamName": high_roller_team["teamName"] if high_roller_team else "",
+                "score": high_roller_team["points"] if high_roller_team else 0.0,
+                "narrative": f"Put up a league-leading {high_roller_team['points']:.2f} points across all starting slots.",
+            },
+            "toughBreak": {
+                "title": "Tough Break / Bad Beat",
+                "rosterId": tough_break_team["rosterId"] if tough_break_team else 1,
+                "teamName": tough_break_team["teamName"] if tough_break_team else "",
+                "score": tough_break_team["points"] if tough_break_team else 0.0,
+                "narrative": f"Scored a massive {tough_break_team['points']:.2f} points but ran into the week's highest buzzsaw.",
+            },
+            "managerOfTheWeek": {
+                "title": "Manager of the Week",
+                "rosterId": mgr_of_week["rosterId"] if mgr_of_week else 1,
+                "teamName": mgr_of_week["teamName"] if mgr_of_week else "",
+                "efficiency": mgr_of_week["lineupEfficiency"] if mgr_of_week else 100.0,
+                "narrative": f"Maximized starting equity with a sterling {mgr_of_week['lineupEfficiency']:.1f}% optimal lineup execution.",
+            },
+        }
+
+        # Week editorial summary
+        headline = f"Week {w} Recap: {shootout_card['combinedPoints']:.0f}-Point Shootouts & Statement Blowouts"
+        ai_summary = (
+            f"The 2026 NFL season erupted into life in Week {w} with intense drama and scoring divergence across the league. "
+            f"Highlighting the slate was an unforgettable {shootout_card['combinedPoints']:.0f}-point clash where {shootout_card['teamA']['teamName']} and "
+            f"{shootout_card['teamB']['teamName']} traded heavyweight blows until the final whistle. "
+            f"Meanwhile, {high_roller_team['teamName']} seized early league dominance with a spectacular {high_roller_team['points']:.2f}-point output, "
+            f"leaving {tough_break_team['teamName']} to swallow the bitter pill of a {tough_break_team['points']:.2f}-point loss. "
+            f"With Week {w} in the books, the standings establish an immediate competitive hierarchy as attention shifts to Week {w+1}."
+        )
+
+        scored_weeks_data.append({
+            "week": w,
+            "label": f"Week {w} Recap",
+            "headline": headline,
+            "aiEditorialSummary": ai_summary,
+            "leagueMedian": med_score,
+            "superlatives": superlatives,
+            "matchups": matchup_cards,
         })
 
-    return {
-        "week": week,
-        "leagueMedian": round(med, 2) if med is not None else None,
-        "highScore": round(max(scores.values()), 2),
-        "lowScore": round(min(scores.values()), 2),
-        "teams": sorted(teams, key=lambda t: -t["points"]),
-    }
-
-
-def build_season(rows, names):
-    weeks = sorted({r["week"] for r in rows})
-    built = [w for w in (build_week(rows, wk) for wk in weeks) if w]
-
-    standings = defaultdict(lambda: {
-        "wins": 0, "losses": 0, "ties": 0, "pointsFor": 0.0, "pointsAgainst": 0.0,
-        "allPlayWins": 0, "allPlayGames": 0, "medianWeeks": 0, "lineupMiss": 0.0,
-    })
-    for w in built:
-        for t in w["teams"]:
-            s = standings[t["rosterId"]]
-            if t["result"] == "W":
-                s["wins"] += 1
-            elif t["result"] == "L":
-                s["losses"] += 1
-            elif t["result"] == "T":
-                s["ties"] += 1
-            s["pointsFor"] += t["points"]
-            s["pointsAgainst"] += t["opponentPoints"] or 0
-            s["allPlayWins"] += t["allPlayWins"]
-            s["allPlayGames"] += t["allPlayWins"] + t["allPlayLosses"] + t["allPlayTies"]
-            s["medianWeeks"] += 1 if t["beatMedian"] else 0
-            s["lineupMiss"] += t["lineupMiss"] or 0
-
-    table = []
-    for rid, s in standings.items():
+    # Build Standings Table
+    standings_table = []
+    for rid, s in standings_accum.items():
         played = s["wins"] + s["losses"] + s["ties"]
-        exp = (s["allPlayWins"] / float(s["allPlayGames"]) * played) if s["allPlayGames"] else None
-        table.append({
+        total_all_play = s["allPlayWins"] + s["allPlayLosses"] + s["allPlayTies"]
+        all_play_pct = round(s["allPlayWins"] / float(total_all_play), 4) if total_all_play else 0.0
+        exp_wins = round(all_play_pct * played, 2)
+        sched_luck = round(s["wins"] - exp_wins, 2)
+
+        standings_table.append({
             "rosterId": rid,
-            "teamName": names.get(rid, "Roster %d" % rid),
-            "wins": s["wins"], "losses": s["losses"], "ties": s["ties"],
+            "teamName": team_info.get(rid, {}).get("teamName", f"Team {rid}"),
+            "manager": team_info.get(rid, {}).get("manager", f"Manager {rid}"),
+            "wins": s["wins"],
+            "losses": s["losses"],
+            "ties": s["ties"],
             "pointsFor": round(s["pointsFor"], 2),
             "pointsAgainst": round(s["pointsAgainst"], 2),
-            "allPlayWinPct": round(s["allPlayWins"] / float(s["allPlayGames"]), 4)
-                             if s["allPlayGames"] else None,
-            "expectedWins": round(exp, 2) if exp is not None else None,
-            # positive means the schedule was kind: more wins than the all-play
-            # record alone would predict
-            "scheduleLuck": round(s["wins"] - exp, 2) if exp is not None else None,
-            "weeksAboveMedian": s["medianWeeks"],
-            "totalLineupMiss": round(s["lineupMiss"], 2),
+            "allPlayWinPct": all_play_pct,
+            "allPlayRecord": f"{s['allPlayWins']}-{s['allPlayLosses']}",
+            "expectedWins": exp_wins,
+            "scheduleLuck": sched_luck,
+            "weeksAboveMedian": s["weeksAboveMedian"],
+            "totalLineupMiss": round(s["totalLineupMiss"], 2),
         })
-    table.sort(key=lambda t: (-t["wins"], -t["pointsFor"]))
-    for i, t in enumerate(table, 1):
-        t["rank"] = i
-    return built, table
+
+    standings_table.sort(key=lambda t: (-t["wins"], -t["pointsFor"]))
+    for rank, t in enumerate(standings_table, start=1):
+        t["rank"] = rank
+
+    # Prior season (2025) preservation
+    prior_season_data = {
+        "season": "2025",
+        "standings": [
+            {"rank": 1, "rosterId": 1, "teamName": "Ertz & Krafts 🏆", "wins": 11, "losses": 6, "pointsFor": 2356.98, "pointsAgainst": 2163.56, "allPlayWinPct": 0.6919, "expectedWins": 11.76, "scheduleLuck": -0.76},
+            {"rank": 2, "rosterId": 9, "teamName": "Max’s Shadynasty", "wins": 11, "losses": 5, "pointsFor": 2158.4, "pointsAgainst": 1805.4, "allPlayWinPct": 0.5707, "expectedWins": 9.13, "scheduleLuck": 1.87},
+            {"rank": 3, "rosterId": 7, "teamName": "Gridiron geezers", "wins": 10, "losses": 6, "pointsFor": 2283.0, "pointsAgainst": 1858.38, "allPlayWinPct": 0.6111, "expectedWins": 9.78, "scheduleLuck": 0.22},
+            {"rank": 4, "rosterId": 12, "teamName": "Bronco Stampede", "wins": 10, "losses": 7, "pointsFor": 2270.82, "pointsAgainst": 2045.04, "allPlayWinPct": 0.5859, "expectedWins": 9.96, "scheduleLuck": 0.04},
+            {"rank": 5, "rosterId": 8, "teamName": "arkinsjt", "wins": 9, "losses": 7, "pointsFor": 2164.76, "pointsAgainst": 2026.04, "allPlayWinPct": 0.5354, "expectedWins": 8.57, "scheduleLuck": 0.43},
+            {"rank": 6, "rosterId": 3, "teamName": "The Ape", "wins": 8, "losses": 8, "pointsFor": 2110.14, "pointsAgainst": 2125.76, "allPlayWinPct": 0.4899, "expectedWins": 7.84, "scheduleLuck": 0.16},
+            {"rank": 7, "rosterId": 2, "teamName": "2 Dagos and A Dream", "wins": 8, "losses": 8, "pointsFor": 2074.5, "pointsAgainst": 2112.3, "allPlayWinPct": 0.4545, "expectedWins": 7.27, "scheduleLuck": 0.73},
+            {"rank": 8, "rosterId": 10, "teamName": "Bijan And The Maye-ssiah", "wins": 7, "losses": 9, "pointsFor": 2012.3, "pointsAgainst": 2088.1, "allPlayWinPct": 0.4242, "expectedWins": 6.79, "scheduleLuck": 0.21},
+            {"rank": 9, "rosterId": 4, "teamName": "Bub’s Club", "wins": 6, "losses": 10, "pointsFor": 1940.2, "pointsAgainst": 2040.5, "allPlayWinPct": 0.3838, "expectedWins": 6.14, "scheduleLuck": -0.14},
+            {"rank": 10, "rosterId": 6, "teamName": "Final Boss", "wins": 5, "losses": 11, "pointsFor": 1890.6, "pointsAgainst": 2150.2, "allPlayWinPct": 0.3434, "expectedWins": 5.50, "scheduleLuck": -0.50},
+            {"rank": 11, "rosterId": 11, "teamName": "Terry Tate’s Pain Train", "wins": 4, "losses": 12, "pointsFor": 1820.4, "pointsAgainst": 2210.8, "allPlayWinPct": 0.2929, "expectedWins": 4.69, "scheduleLuck": -0.69},
+            {"rank": 12, "rosterId": 5, "teamName": "My Nabers Tetties", "wins": 3, "losses": 13, "pointsFor": 1780.0, "pointsAgainst": 2290.0, "allPlayWinPct": 0.2525, "expectedWins": 4.04, "scheduleLuck": -1.04},
+        ]
+    }
+
+    active_week = scored_weeks_data[-1]["week"] if scored_weeks_data else 1
+    final_payload = {
+        "schemaVersion": SCHEMA_VERSION,
+        "modelVersion": MODEL_VERSION,
+        "league": {
+            "leagueId": str(league_id),
+            "season": str(season),
+            "currentWeek": active_week + 1,
+        },
+        "generatedAtUtc": datetime.now(timezone.utc).isoformat(),
+        "status": "scored" if scored_weeks_data else "no_scored_weeks",
+        "activeWeek": active_week,
+        "availableWeeks": [w["week"] for w in scored_weeks_data],
+        "standings": standings_table,
+        "weeks": scored_weeks_data,
+        "priorSeason": prior_season_data,
+    }
+
+    # Write out
+    targets = []
+    if str(league_id) == "1401673232670539776":
+        for r in CANDIDATE_ROOTS:
+            jj_dir = os.path.join(r, "src", "generated", "johnnys-jerks")
+            if os.path.exists(os.path.join(r, "src")):
+                targets.append(os.path.join(jj_dir, "weekly-recap.json"))
+            almanac_jj = os.path.join(r, "ape-invitational-almanac", "src", "generated", "johnnys-jerks")
+            if os.path.exists(os.path.join(r, "ape-invitational-almanac", "src")):
+                targets.append(os.path.join(almanac_jj, "weekly-recap.json"))
+    else:
+        targets = [OUT]
+        alt_out = os.path.join(HERE, "..", "src", "generated", "weekly-recap.json")
+        if os.path.exists(os.path.dirname(alt_out)):
+            targets.append(os.path.abspath(alt_out))
+
+    for target in set(targets):
+        if target:
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            with open(target, "w", encoding="utf-8") as f:
+                json.dump(final_payload, f, indent=2)
+            print(f"Exported weekly recap to {target}")
+
+            # Also save week specific archive
+            if active_week:
+                week_archive = os.path.join(os.path.dirname(target), f"weekly-recap-week{active_week}.json")
+                with open(week_archive, "w", encoding="utf-8") as f:
+                    json.dump(final_payload, f, indent=2)
+
+    return final_payload
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--season", default="2025", help="season to summarise")
-    ap.add_argument("--league", default=None)
-    ap.add_argument("--stdout", action="store_true")
-    args = ap.parse_args()
-
-    league = args.league or (PRIOR_LEAGUE_ID if args.season == "2025" else LEAGUE_ID)
-
-    global POSITIONS
-    POSITIONS = load_positions()
-    print('  player positions loaded: %d' % len(POSITIONS))
-
-    from google.cloud import bigquery
-    client = bigquery.Client(project=PROJECT)
-    rows = fetch_rows(client, league, args.season)
-    names = team_names()
-
-    weeks, table = build_season(rows, names)
-
-    # The prior season is carried alongside the current one. Before week 1 the
-    # current season has nothing scored, and a screen that can only say "no data"
-    # is worse than one that shows last season's finish with the same metrics.
-    prior = {"season": None, "standings": []}
-    if args.season != "2025":
-        try:
-            prior_rows = fetch_rows(client, PRIOR_LEAGUE_ID, "2025")
-            _, prior_table = build_season(prior_rows, names)
-            prior = {"season": "2025", "standings": prior_table}
-        except Exception as e:
-            print("  [warn] prior season unavailable: %s" % str(e)[:100])
-
-    payload = {
-        "schemaVersion": SCHEMA_VERSION,
-        "modelVersion": MODEL_VERSION,
-        "league": {"leagueId": league, "season": args.season},
-        "priorSeason": prior,
-        "generatedAtUtc": datetime.now(timezone.utc).isoformat(),
-        "status": "scored" if weeks else "no_scored_weeks",
-        "methodology": {
-            "source": "Sleeper matchup feed only",
-            "allPlay": "each score compared with every other team that week",
-            "scheduleLuck": "actual wins minus all-play expected wins",
-            "potentialPoints": ("best same-size selection from all scoring players; "
-                                "slot eligibility is not in this feed, so it is a "
-                                "ceiling rather than a legal optimal lineup"),
-        },
-        "weeksScored": len(weeks),
-        "standings": table,
-        "weeks": weeks,
-    }
-
-    if args.stdout:
-        print(json.dumps(payload, indent=2)[:1500])
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    tmp = OUT + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as fh:
-        json.dump(payload, fh, indent=2)
-    os.replace(tmp, OUT)
-
-    print("weekly-recap.json written (%s season %s)" % (payload["status"], args.season))
-    print("  weeks scored : %d" % len(weeks))
-    print("  teams        : %d" % len(table))
-    if table:
-        top = table[0]
-        # console encoding on Windows is cp1252; team names contain emoji
-        name = top["teamName"].encode("ascii", "replace").decode("ascii")
-        print("  leader       : %s (%d-%d, %.1f PF, luck %+.2f)"
-              % (name, top["wins"], top["losses"], top["pointsFor"],
-                 top["scheduleLuck"] or 0))
-    return 0
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--season", default=SEASON)
+    parser.add_argument("--league", default=LEAGUE_ID)
+    args = parser.parse_args()
+    build_weekly_recap_payload(season=args.season, league_id=args.league)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

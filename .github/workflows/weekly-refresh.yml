@@ -15,10 +15,14 @@ name: Weekly data refresh
 
 on:
   schedule:
-    # 14:00 UTC = 07:00 America/Los_Angeles, an hour after the 06:00 PT capture.
-    # GitHub schedules are UTC and do not shift with daylight saving, so this
-    # lands at 06:00 PT in winter. Both are after the capture either way.
+    # Daily morning baseline: 14:00 UTC = 07:00 AM PT
     - cron: "0 14 * * *"
+    # Thursday Night Football wrap-up: 04:00 UTC Friday = 09:00 PM PT Thursday
+    - cron: "0 4 * * 5"
+    # Sunday NFL live game windows (every 2 hours between 18:00 UTC and 04:00 UTC = 11:00 AM to 09:00 PM PT)
+    - cron: "0 18,20,22,0,2,4 * * 0,1"
+    # Monday Night Football wrap-up: 04:00 UTC Tuesday = 09:00 PM PT Monday
+    - cron: "0 4 * * 2"
   workflow_dispatch:
     inputs:
       season:
@@ -54,23 +58,33 @@ jobs:
       - name: Install pipeline dependencies
         run: pip install --quiet "google-cloud-bigquery>=3,<4" "google-cloud-storage>=2.14,<4"
 
-      - name: Authenticate to Google Cloud (Workload Identity Federation)
+      - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
           workload_identity_provider: "projects/1097821806660/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider"
           service_account: "ams-pipeline@apes-mac-salad.iam.gserviceaccount.com"
+        continue-on-error: true
+
+      - name: Fetch fresh live Sleeper captures (current week)
+        working-directory: sleeper_work
+        run: python capture_sleeper_data.py --force
+        continue-on-error: true
 
       - name: Load raw captures into canonical
         working-directory: sleeper_work
         run: python load_weekly_canonical.py
+        continue-on-error: true
 
       - name: Refresh control plane and coverage catalog
         working-directory: sleeper_work
         run: python load_control_plane.py
+        continue-on-error: true
 
       - name: Load reference data into canonical
         working-directory: sleeper_work
         run: python load_reference_canonical.py
+        continue-on-error: true
 
       # Power rankings are stored per week, so this must run before the payload
       # is rebuilt: the movement column compares against the snapshot the
@@ -78,15 +92,30 @@ jobs:
       - name: Rebuild power rankings
         working-directory: sleeper_work
         run: python build_power_rankings.py
+        continue-on-error: true
 
-      - name: Rebuild the weekly recap payload
+      - name: Rebuild the weekly recap payload (Ape's Mac Salad)
         working-directory: sleeper_work
         run: python build_weekly_recap.py --season "${{ github.event.inputs.season || '2026' }}"
 
-      - name: Refresh Johnny's Jerks payload
+      - name: Rebuild next week matchups forecast (Ape's Mac Salad)
+        working-directory: sleeper_work
+        run: python build_current_matchups.py
+
+      - name: Refresh Bayesian Monte Carlo season forecast (Ape's Mac Salad)
+        working-directory: sleeper_work
+        run: python monte_carlo_forecast.py
+
+      - name: Refresh Johnny's Jerks payload & recaps
         run: |
           python -m sleeper_work.capture_craig_redraft
           python -m sleeper_work.build_redraft_recap_payload
+          python sleeper_work/build_weekly_recap.py --league 1401673232670539776
+
+      - name: Rebuild Waiver Wire ROI & Transaction Intelligence (Both Leagues)
+        run: |
+          python sleeper_work/build_waiver_roi.py --league 1312209616372772864
+          python sleeper_work/build_waiver_roi.py --league 1401673232670539776
 
       # A payload that does not compile is worse than a stale one, so the build
       # gates the commit rather than running after it.

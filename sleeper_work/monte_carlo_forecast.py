@@ -348,6 +348,25 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
     # Track head-to-head matchup win counts: (w_idx, t1, t2) -> wins
     matchup_wins = {}
     
+    # Load completed weeks from weekly-recap.json to lock in real-world results
+    completed_weeks = {}
+    recap_path = os.path.join(ALMANAC_DIR, "src", "generated", "weekly-recap.json")
+    if os.path.exists(recap_path):
+        try:
+            with open(recap_path, "r", encoding="utf-8") as f:
+                rec_data = json.load(f)
+                for w_obj in rec_data.get("weeks", []):
+                    w_num = w_obj.get("week")
+                    scores = {}
+                    for m_card in w_obj.get("matchups", []):
+                        scores[m_card["teamA"]["rosterId"]] = m_card["teamA"]["points"]
+                        scores[m_card["teamB"]["rosterId"]] = m_card["teamB"]["points"]
+                    if scores:
+                        completed_weeks[w_num] = scores
+            print(f"  Locked in actual scores for {len(completed_weeks)} completed regular season week(s): {list(completed_weeks.keys())}")
+        except Exception as e:
+            print(f"  [warn] Could not load completed weeks: {e}")
+
     # Pre-generate random weekly scores: shape (simulations, weeks, num_teams)
     means = np.array([team_ratings[t][0] for t in team_ids])
     stds = np.array([team_ratings[t][1] for t in team_ids])
@@ -364,11 +383,17 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
         sim_pf = np.zeros(num_teams, dtype=float)
         
         for w_idx, (week_num, matchups) in enumerate(schedule):
+            is_completed = week_num in completed_weeks
+            actuals = completed_weeks.get(week_num, {})
             for t1, t2 in matchups:
                 idx1 = team_idx_map[t1]
                 idx2 = team_idx_map[t2]
-                s1 = weekly_scores[sim, w_idx, idx1]
-                s2 = weekly_scores[sim, w_idx, idx2]
+                if is_completed and t1 in actuals and t2 in actuals:
+                    s1 = actuals[t1]
+                    s2 = actuals[t2]
+                else:
+                    s1 = weekly_scores[sim, w_idx, idx1]
+                    s2 = weekly_scores[sim, w_idx, idx2]
                 
                 sim_pf[idx1] += s1
                 sim_pf[idx2] += s2

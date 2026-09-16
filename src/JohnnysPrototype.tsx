@@ -7,9 +7,12 @@ import {
   ChartLineUp,
   CheckCircle,
   ClockCounterClockwise,
+  CurrencyDollar,
   Football,
   Info,
   Lightning,
+  List,
+  Newspaper,
   Sparkle,
   Television,
   Trophy,
@@ -27,6 +30,8 @@ import "@fontsource/ibm-plex-sans-condensed/600.css";
 import "./prototype.css";
 
 import draftRecapJson from "./generated/johnnys-jerks/draft-recap.json";
+import weeklyRecapJson from "./generated/johnnys-jerks/weekly-recap.json";
+import waiverAnalysisJson from "./generated/johnnys-jerks/waiver-wire-analysis.json";
 import powerRankingsJson from "./generated/johnnys-jerks/power-rankings.json";
 import matchupsCurrentJson from "./generated/johnnys-jerks/matchups-current.json";
 import forecastInsightsJson from "./generated/johnnys-jerks/forecast-insights.json";
@@ -37,12 +42,19 @@ const JOHNNYS_LEAGUE_ID = "1401673232670539776";
 
 type SleeperLiveSnapshot = {
   week: number;
-  byRoster: Record<string, { matchupId: number; points: number }>;
+  byRoster: Record<string, {
+    matchupId: number;
+    points: number;
+    startersPlayed?: number;
+    liveProjectedTotal?: number;
+    liveWinProb?: number;
+  }>;
   refreshedAt?: string;
   error?: string;
+  isLiveAction?: boolean;
 };
 
-type NavId = "analysis" | "power" | "matchups" | "forecast" | "hall";
+type NavId = "dashboard" | "recaps" | "matchups" | "waivers" | "power" | "forecast" | "hall" | "analysis";
 
 type Route =
   | { kind: "nav"; id: NavId }
@@ -53,11 +65,14 @@ type Route =
   | { kind: "methodology" };
 
 const navItems: Array<{ id: NavId; label: string; icon: typeof BookOpenText }> = [
-  { id: "analysis", label: "Draft Recap", icon: BookOpenText },
-  { id: "power", label: "Power Rankings", icon: ChartLineUp },
+  { id: "dashboard", label: "Front Page", icon: Newspaper },
+  { id: "recaps", label: "Recaps", icon: ClockCounterClockwise },
   { id: "matchups", label: "Matchups", icon: Football },
+  { id: "waivers", label: "Waivers & ROI", icon: CurrencyDollar },
+  { id: "power", label: "Power Rankings", icon: ChartLineUp },
   { id: "forecast", label: "Season Forecast", icon: Lightning },
   { id: "hall", label: "The Cooler 🏆", icon: Trophy },
+  { id: "analysis", label: "Draft Analysis", icon: BookOpenText },
 ];
 
 function draftCycleGrade(team: any) {
@@ -139,11 +154,74 @@ function useSleeperLiveScores(): SleeperLiveSnapshot {
         const matchupResponse = await fetch(`https://api.sleeper.app/v1/league/${JOHNNYS_LEAGUE_ID}/matchups/${week}`, { signal: activeController.signal });
         if (!matchupResponse.ok) throw new Error(`Matchup feed returned ${matchupResponse.status}`);
         const rows = await matchupResponse.json();
-        const byRoster = Object.fromEntries((Array.isArray(rows) ? rows : []).map((row: any) => [
-          String(row.roster_id),
-          { matchupId: Number(row.matchup_id), points: Number(row.points || 0) },
-        ]));
-        if (!cancelled) setSnapshot({ week, byRoster, refreshedAt: new Date().toISOString() });
+        if (!Array.isArray(rows)) return;
+
+        let hasAnyPoints = false;
+        const byRoster: Record<string, any> = {};
+        const grouped: Record<number, any[]> = {};
+
+        for (const r of rows) {
+          if (r.matchup_id) {
+            grouped[r.matchup_id] = grouped[r.matchup_id] || [];
+            grouped[r.matchup_id].push(r);
+          }
+          const pts = Number(r.points || 0);
+          if (pts > 0) hasAnyPoints = true;
+          const sp = r.starters_points || [];
+          const playedCount = sp.filter((p: number) => p > 0).length;
+          byRoster[String(r.roster_id)] = {
+            matchupId: Number(r.matchup_id),
+            points: pts,
+            startersPlayed: playedCount,
+          };
+        }
+
+        for (const [, pair] of Object.entries(grouped)) {
+          if (pair.length === 2) {
+            const r1 = pair[0];
+            const r2 = pair[1];
+            const p1 = Number(r1.points || 0);
+            const p2 = Number(r2.points || 0);
+            const sp1 = r1.starters_points || [];
+            const sp2 = r2.starters_points || [];
+            const played1 = sp1.filter((p: number) => p > 0).length;
+            const played2 = sp2.filter((p: number) => p > 0).length;
+            const rem1 = Math.max(0, (r1.starters?.length || 9) - played1);
+            const rem2 = Math.max(0, (r2.starters?.length || 9) - played2);
+
+            const remProj1 = rem1 * 11.5;
+            const remProj2 = rem2 * 11.5;
+            const liveProj1 = p1 + remProj1;
+            const liveProj2 = p2 + remProj2;
+
+            const remVariance = Math.sqrt(rem1 * 40.0 + rem2 * 40.0);
+            const diff = liveProj1 - liveProj2;
+            let winProb1 = 50.0;
+            if (remVariance > 0.1) {
+              winProb1 = Math.round(100.0 / (1.0 + Math.pow(10, -diff / Math.max(12, remVariance * 1.6))));
+            } else {
+              winProb1 = p1 > p2 ? 100 : (p1 < p2 ? 0 : 50);
+            }
+            const winProb2 = 100 - winProb1;
+
+            byRoster[String(r1.roster_id)] = {
+              matchupId: Number(r1.matchup_id),
+              points: p1,
+              startersPlayed: played1,
+              liveProjectedTotal: Math.round(liveProj1 * 10) / 10,
+              liveWinProb: winProb1,
+            };
+            byRoster[String(r2.roster_id)] = {
+              matchupId: Number(r2.matchup_id),
+              points: p2,
+              startersPlayed: played2,
+              liveProjectedTotal: Math.round(liveProj2 * 10) / 10,
+              liveWinProb: winProb2,
+            };
+          }
+        }
+
+        if (!cancelled) setSnapshot({ week, byRoster, refreshedAt: new Date().toISOString(), isLiveAction: hasAnyPoints });
       } catch (error) {
         if (!cancelled && (error as Error).name !== "AbortError") {
           setSnapshot((current) => ({ ...current, error: (error as Error).message }));
@@ -168,6 +246,781 @@ function useSleeperLiveScores(): SleeperLiveSnapshot {
   return snapshot;
 }
 
+type StandingRow = {
+  rosterId: number; teamName: string; wins: number; losses: number; ties: number;
+  pointsFor: number; pointsAgainst: number; allPlayWinPct: number | null;
+  expectedWins: number | null; scheduleLuck: number | null;
+  weeksAboveMedian: number; totalLineupMiss: number; rank: number;
+};
+
+function StandingsTable({ rows }: { rows: StandingRow[] }) {
+  return (
+    <div className="standings-scroll">
+      <table className="standings">
+        <thead>
+          <tr>
+            <th>#</th><th>Team</th><th>W-L</th><th>PF</th>
+            <th>All-play</th><th>Exp. W</th><th>Luck</th><th>Left on bench</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.rosterId}>
+              <td className="num">{row.rank}</td>
+              <td>{row.teamName}</td>
+              <td className="num">{row.wins}&ndash;{row.losses}{row.ties ? `–${row.ties}` : ""}</td>
+              <td className="num">{Math.round(row.pointsFor)}</td>
+              <td className="num">
+                {row.allPlayWinPct != null ? `${Math.round(row.allPlayWinPct * 100)}%` : "—"}
+              </td>
+              <td className="num">{row.expectedWins ?? "—"}</td>
+              <td className={`num ${row.scheduleLuck != null ? (row.scheduleLuck > 0 ? "luck-good" : row.scheduleLuck < 0 ? "luck-bad" : "") : ""}`}>
+                {row.scheduleLuck != null
+                  ? `${row.scheduleLuck > 0 ? "+" : ""}${row.scheduleLuck.toFixed(1)}`
+                  : "—"}
+              </td>
+              <td className="num">{Math.round(row.totalLineupMiss)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function RecapsScreen() {
+  const recapData = weeklyRecapJson;
+  const [selectedWeek, setSelectedWeek] = useState<number>(recapData.activeWeek || 1);
+  const [expandedMatchup, setExpandedMatchup] = useState<number | null>(null);
+
+  const currentWeekRecap = recapData.weeks?.find((w: any) => w.week === selectedWeek) || recapData.weeks?.[0];
+  const superlatives = currentWeekRecap?.superlatives;
+
+  return (
+    <div className="app-screen section-screen web-screen recaps-screen-container">
+      <main className="section-page">
+        <p className="eyebrow">Official Weekly Matchup Audit & AI Highlights</p>
+        <h1>Matchup Recaps</h1>
+        <p className="section-deck">
+          Game-by-game breakdowns, AI tactical commentary, box scores with lineup efficiency, and weekly superlatives modeled directly on RosterAudit™.
+        </p>
+
+        {/* Week Selector */}
+        <div className="recaps-week-picker">
+          <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--ink-soft)" }}>Select Week:</span>
+          {recapData.availableWeeks?.map((wk: number) => (
+            <button
+              key={wk}
+              type="button"
+              className={`week-btn ${selectedWeek === wk ? "active" : ""}`}
+              onClick={() => setSelectedWeek(wk)}
+            >
+              Week 0{wk}
+            </button>
+          ))}
+        </div>
+
+        {/* Lead Editorial Card */}
+        {currentWeekRecap ? (
+          <div className="recaps-editorial-card">
+            <h3>{currentWeekRecap.headline}</h3>
+            <p>{currentWeekRecap.aiEditorialSummary}</p>
+          </div>
+        ) : null}
+
+        {/* Superlatives Grid */}
+        {superlatives ? (
+          <div className="superlatives-section">
+            <div className="superlatives-section-title">
+              <Sparkle size={16} weight="fill" /> Weekly Superlatives & Highlights
+            </div>
+            <div className="superlatives-grid">
+              {superlatives.nailbiter && (
+                <div className="superlative-item">
+                  <div className="superlative-header">
+                    <span className="superlative-tag">⚡ Nailbiter of the Week</span>
+                    <span className="superlative-metric">{superlatives.nailbiter.margin} pt margin</span>
+                  </div>
+                  <h4>{superlatives.nailbiter.winner}</h4>
+                  <p className="superlative-narrative">{superlatives.nailbiter.score} · {superlatives.nailbiter.narrative}</p>
+                </div>
+              )}
+              {superlatives.shootout && (
+                <div className="superlative-item">
+                  <div className="superlative-header">
+                    <span className="superlative-tag">🔥 Shootout of the Week</span>
+                    <span className="superlative-metric">{superlatives.shootout.combinedPoints} combined pts</span>
+                  </div>
+                  <h4>Matchup 0{superlatives.shootout.matchupId}</h4>
+                  <p className="superlative-narrative">{superlatives.shootout.narrative}</p>
+                </div>
+              )}
+              {superlatives.blowout && (
+                <div className="superlative-item">
+                  <div className="superlative-header">
+                    <span className="superlative-tag">🔨 Blowout of the Week</span>
+                    <span className="superlative-metric">+{superlatives.blowout.margin} pt margin</span>
+                  </div>
+                  <h4>{superlatives.blowout.winner}</h4>
+                  <p className="superlative-narrative">{superlatives.blowout.score} · {superlatives.blowout.narrative}</p>
+                </div>
+              )}
+              {superlatives.highRoller && (
+                <div className="superlative-item">
+                  <div className="superlative-header">
+                    <span className="superlative-tag">👑 High Roller (Top Scorer)</span>
+                    <span className="superlative-metric">{superlatives.highRoller.score} pts</span>
+                  </div>
+                  <h4>{superlatives.highRoller.teamName}</h4>
+                  <p className="superlative-narrative">{superlatives.highRoller.narrative}</p>
+                </div>
+              )}
+              {superlatives.toughBreak && (
+                <div className="superlative-item">
+                  <div className="superlative-header">
+                    <span className="superlative-tag">💔 Tough Break / Bad Beat</span>
+                    <span className="superlative-metric">{superlatives.toughBreak.score} pts</span>
+                  </div>
+                  <h4>{superlatives.toughBreak.teamName}</h4>
+                  <p className="superlative-narrative">{superlatives.toughBreak.narrative}</p>
+                </div>
+              )}
+              {superlatives.managerOfTheWeek && (
+                <div className="superlative-item">
+                  <div className="superlative-header">
+                    <span className="superlative-tag">🧠 Manager of the Week</span>
+                    <span className="superlative-metric">{superlatives.managerOfTheWeek.efficiency}% optimal</span>
+                  </div>
+                  <h4>{superlatives.managerOfTheWeek.teamName}</h4>
+                  <p className="superlative-narrative">{superlatives.managerOfTheWeek.narrative}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : null}
+
+        {/* 6 Matchup Cards with AI Narrative & Box Scores */}
+        <div className="recap-matchups-section">
+          <div className="superlatives-section-title">
+            <Football size={16} weight="fill" /> Game-by-Game Head-to-Head Audits
+          </div>
+          <div className="recap-matchups-grid">
+            {currentWeekRecap?.matchups?.map((m: any) => {
+              const isWinnerA = m.winnerRosterId === m.teamA.rosterId;
+              const isExpanded = expandedMatchup === m.matchupId;
+              return (
+                <div key={m.matchupId} className="recap-matchup-card">
+                  <div className="recap-matchup-header">
+                    <div>
+                      <span className="superlative-tag" style={{ color: "var(--ink-soft)" }}>
+                        {m.isMarquee ? "★ Marquee Matchup" : `Matchup 0${m.matchupId}`}
+                      </span>
+                      <h3>{m.title}</h3>
+                    </div>
+                    <span className="superlative-metric">{m.margin.toFixed(2)} pt margin</span>
+                  </div>
+
+                  <div className="recap-clash-row">
+                    {/* Team A */}
+                    <div className={`recap-team-box ${isWinnerA ? "winner" : ""}`}>
+                      <div className="recap-team-top">
+                        <span className="recap-team-name">{m.teamA.teamName}</span>
+                        <span className="recap-team-score">{m.teamA.points.toFixed(2)}</span>
+                      </div>
+                      <div className="recap-team-meta">
+                        <span>{m.teamA.manager}</span>
+                        <span>{m.teamA.lineupEfficiency}% efficiency · {m.teamA.benchPoints.toFixed(1)} bench pts</span>
+                      </div>
+                    </div>
+
+                    {/* VS */}
+                    <div className="recap-vs-divider">
+                      <span className="recap-vs-badge">VS</span>
+                      <span className="recap-margin-badge">{isWinnerA ? `+${m.margin.toFixed(2)}` : `-${m.margin.toFixed(2)}`}</span>
+                    </div>
+
+                    {/* Team B */}
+                    <div className={`recap-team-box ${!isWinnerA ? "winner" : ""}`}>
+                      <div className="recap-team-top">
+                        <span className="recap-team-name">{m.teamB.teamName}</span>
+                        <span className="recap-team-score">{m.teamB.points.toFixed(2)}</span>
+                      </div>
+                      <div className="recap-team-meta">
+                        <span>{m.teamB.manager}</span>
+                        <span>{m.teamB.lineupEfficiency}% efficiency · {m.teamB.benchPoints.toFixed(1)} bench pts</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="recap-commentary-text">{m.commentary}</p>
+
+                  <button
+                    type="button"
+                    className="recap-boxscore-toggle"
+                    onClick={() => setExpandedMatchup(isExpanded ? null : m.matchupId)}
+                  >
+                    <List size={14} />
+                    <span>{isExpanded ? "Hide Full Box Score" : "View Full Box Score & Starter Points"}</span>
+                  </button>
+
+                  {isExpanded ? (
+                    <div className="recap-boxscore-container">
+                      <div>
+                        <h5 style={{ margin: "0 0 8px", fontFamily: "var(--sans)", fontSize: "0.85rem", fontWeight: 700 }}>
+                          {m.teamA.teamName} Starters ({m.teamA.points.toFixed(2)} pts)
+                        </h5>
+                        <table className="boxscore-subtable">
+                          <thead>
+                            <tr>
+                              <th className="pos-col">Pos</th>
+                              <th>Player</th>
+                              <th className="pts-col">Pts</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {m.teamA.starters?.map((p: any) => (
+                              <tr key={p.playerId}>
+                                <td className="pos-col">{p.position}</td>
+                                <td>{p.name} <small style={{ color: "var(--ink-soft)" }}>({p.team})</small></td>
+                                <td className="pts-col">{p.points.toFixed(2)}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h5 style={{ margin: "0 0 8px", fontFamily: "var(--sans)", fontSize: "0.85rem", fontWeight: 700 }}>
+                          {m.teamB.teamName} Starters ({m.teamB.points.toFixed(2)} pts)
+                        </h5>
+                        <table className="boxscore-subtable">
+                          <thead>
+                            <tr>
+                              <th className="pos-col">Pos</th>
+                              <th>Player</th>
+                              <th className="pts-col">Pts</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {m.teamB.starters?.map((p: any) => (
+                              <tr key={p.playerId}>
+                                <td className="pos-col">{p.position}</td>
+                                <td>{p.name} <small style={{ color: "var(--ink-soft)" }}>({p.team})</small></td>
+                                <td className="pts-col">{p.points.toFixed(2)}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Updated Standings Table */}
+        <div style={{ marginTop: "36px" }}>
+          <div className="superlatives-section-title">
+            <Trophy size={16} weight="fill" /> Official League Standings & Efficiency After Week {selectedWeek}
+          </div>
+          <StandingsTable rows={recapData.standings as any} />
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function FrontPageDashboard({
+  onNavigate,
+  onMatchup,
+}: {
+  onNavigate: (id: NavId) => void;
+  onMatchup?: (matchupId: number) => void;
+}) {
+  const currentMatchups = matchupsCurrentJson;
+  const currentWeek = currentMatchups.week || 2;
+  const matchupsList = (currentMatchups.matchups as any[]) || [];
+  const marqueeMatchup = matchupsList.find((m) => m.isMarquee) || matchupsList[0];
+  const waiverData = waiverAnalysisJson;
+  const recapData = weeklyRecapJson;
+  const week1Recap = recapData.weeks?.find((w: any) => w.week === 1) || recapData.weeks?.[0];
+  const superlatives = week1Recap?.superlatives;
+  const forecast = forecastInsightsJson;
+
+  const marqueeCrucialTV = marqueeMatchup?.tvSchedule?.find((s: any) => s.isCrucial) || marqueeMatchup?.tvSchedule?.[0];
+  const standingsRows = recapData.standings || [];
+  const avgLeagueScore = standingsRows.length
+    ? (standingsRows.reduce((acc: number, r: any) => acc + (r.pointsFor || 0), 0) / standingsRows.length).toFixed(1)
+    : "124.6";
+
+  return (
+    <div className="app-screen section-screen web-screen frontpage-dashboard-container">
+      <main className="section-page">
+        {/* Front Page Masthead */}
+        <header className="frontpage-masthead">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--hairline)", paddingBottom: 8, marginBottom: 14 }}>
+            <span style={{ fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--ink-soft)" }}>
+              Vol. I · 2026 Redraft Almanac · NFL Week 0{currentWeek} Active
+            </span>
+            <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--rust)" }}>
+              Official League Dashboard & Intelligence
+            </span>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <img src="./assets/johnny/capri_sun_lifesaver.jpg" alt="" style={{ width: 54, height: 54, borderRadius: 8, objectFit: "cover" }} />
+              <div>
+                <p className="eyebrow" style={{ margin: 0 }}>Craig Invitational Post-Draft Almanac</p>
+                <h1 style={{ font: "600 clamp(2.2rem, 6vw, 3.4rem)/0.95 var(--serif)", margin: "4px 0 0" }}>Johnny’s Jerks</h1>
+              </div>
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <span style={{ fontSize: "0.85rem", color: "var(--ink-soft)", display: "block" }}>12 Teams · Half-PPR · 16 Rounds · Daily Sync</span>
+              <span style={{ fontSize: "0.75rem", color: "#2e7d32", fontWeight: 700 }}>● Automated Tuesday Refresh Active</span>
+            </div>
+          </div>
+        </header>
+
+        {/* 1. Macro Trends Strip */}
+        <div className="macro-trends-strip">
+          <div className="macro-trend-card accent-green">
+            <span className="macro-trend-label">Week 01 Scoring Pace</span>
+            <div className="macro-trend-value">{avgLeagueScore} pts</div>
+            <p className="macro-trend-desc">League average team output; {superlatives?.highRoller?.teamName || "rLee3D"} set the high watermark.</p>
+          </div>
+          <div className="macro-trend-card accent-rust">
+            <span className="macro-trend-label">Week {currentWeek} Marquee Spread</span>
+            <div className="macro-trend-value">{marqueeMatchup?.spreadLabel || "±2.5 pts"}</div>
+            <p className="macro-trend-desc">Headliner clash: {marqueeMatchup?.team1?.name} vs {marqueeMatchup?.team2?.name}.</p>
+          </div>
+          <div className="macro-trend-card accent-gold">
+            <span className="macro-trend-label">Waiver Wire Outlay</span>
+            <div className="macro-trend-value">${waiverData.summary?.totalFaabSpent || 0} FAAB</div>
+            <p className="macro-trend-desc">{waiverData.summary?.totalMoves || 0} total moves executed across the league.</p>
+          </div>
+          <div className="macro-trend-card">
+            <span className="macro-trend-label">Simulated Title Favorite</span>
+            <div className="macro-trend-value">{forecast.teams?.[0]?.teamName || "Title Favorite"}</div>
+            <p className="macro-trend-desc">Projected for {forecast.teams?.[0]?.expectedWins || 9.2}W with {forecast.teams?.[0]?.championshipProbability || 24}% title odds.</p>
+          </div>
+        </div>
+
+        {/* 2. Game of the Week Hero Callout */}
+        {marqueeMatchup ? (
+          <section className="gotw-hero-card">
+            <div className="gotw-eyebrow">
+              <span className="gotw-tag">★ Game of the Week · Marquee Showdown</span>
+              {marqueeCrucialTV ? (
+                <span className="gotw-tv-pill">
+                  <Television size={16} weight="duotone" />
+                  {marqueeCrucialTV.timeSlot || marqueeCrucialTV.window} ({marqueeCrucialTV.network}) · {marqueeCrucialTV.fantasyPointsAtStake} pts at stake
+                </span>
+              ) : null}
+            </div>
+
+            <div className="gotw-clash-header">
+              <div className="gotw-team-box">
+                <span className="gotw-team-name">{marqueeMatchup.team1?.name}</span>
+                <div className="gotw-team-meta">
+                  <span>Power #{marqueeMatchup.team1?.powerRank}</span>
+                  <strong>{marqueeMatchup.team1?.projected?.toFixed(1)} projected</strong>
+                </div>
+              </div>
+              <div className="gotw-vs-circle">VS</div>
+              <div className="gotw-team-box">
+                <span className="gotw-team-name">{marqueeMatchup.team2?.name}</span>
+                <div className="gotw-team-meta">
+                  <span>Power #{marqueeMatchup.team2?.powerRank}</span>
+                  <strong>{marqueeMatchup.team2?.projected?.toFixed(1)} projected</strong>
+                </div>
+              </div>
+            </div>
+
+            <p className="gotw-narrative">
+              {marqueeMatchup.tacticalPreview?.keyStoryline || marqueeMatchup.flavor || "The premier showdown of the week features critical playoff seeding implications and high star-power matchups."}
+            </p>
+
+            <div className="gotw-cta-bar">
+              <div className="gotw-odds-pills">
+                <span className="gotw-pill">{marqueeMatchup.spreadLabel}</span>
+                <span className="gotw-pill">O/U {marqueeMatchup.impliedTotal}</span>
+                <span className="gotw-pill" style={{ color: "#2e7d32" }}>
+                  {marqueeMatchup.team1?.winProbability}% win prob ({marqueeMatchup.team1?.name?.slice(0, 10)})
+                </span>
+              </div>
+              <button
+                type="button"
+                className="gotw-link-btn"
+                onClick={() => {
+                  if (onMatchup) onMatchup(marqueeMatchup.matchupId);
+                  else onNavigate("matchups");
+                }}
+              >
+                <span>Full Tactical Preview & TV Schedule</span>
+                <ArrowRight size={16} />
+              </button>
+            </div>
+          </section>
+        ) : null}
+
+        {/* 3. Executive Briefings Split Grid (Waivers + Recaps) */}
+        <div className="frontpage-split-grid">
+          {/* Waiver Wire Pulse Card */}
+          <div className="dashboard-briefing-card">
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span className="macro-trend-label" style={{ color: "var(--rust)" }}>
+                  <CurrencyDollar size={14} style={{ verticalAlign: "text-bottom" }} /> Waiver Wire Executive Pulse
+                </span>
+                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--ink-soft)" }}>
+                  {waiverData.summary?.activeClaimCount} Transactions
+                </span>
+              </div>
+              <h3>Transaction Trends & Move ROI</h3>
+              <p>
+                Franchises have invested <strong>${waiverData.summary?.totalFaabSpent} FAAB</strong> yielding <strong>{waiverData.summary?.totalPickupPoints} fantasy points</strong>.
+                Top value heist: <strong>{waiverData.summary?.topPickupOverall?.player}</strong> ({waiverData.summary?.topPickupOverall?.manager}, {waiverData.summary?.topPickupOverall?.points} pts).
+              </p>
+              {(waiverData.spotlightNarratives as any[])?.[0] ? (
+                <div style={{ background: "var(--paper-deep)", padding: "10px 12px", borderRadius: 6, fontSize: "0.82rem", borderLeft: "3px solid var(--rust)" }}>
+                  <strong>{(waiverData.spotlightNarratives as any[])[0].title}:</strong> {(waiverData.spotlightNarratives as any[])[0].narrative}
+                </div>
+              ) : null}
+            </div>
+            <div style={{ marginTop: 16 }}>
+              <button type="button" className="gotw-link-btn" onClick={() => onNavigate("waivers")}>
+                <span>Open Waiver Wire & Full ROI Ledger</span>
+                <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
+
+          {/* Recaps & Standings Pulse Card */}
+          <div className="dashboard-briefing-card">
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span className="macro-trend-label" style={{ color: "#2e7d32" }}>
+                  <ClockCounterClockwise size={14} style={{ verticalAlign: "text-bottom" }} /> Weekly Recap & Standings
+                </span>
+                <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--ink-soft)" }}>
+                  Week 01 Official Audit
+                </span>
+              </div>
+              <h3>{week1Recap?.headline || "Week 1 Matchup Audit"}</h3>
+              <p>
+                {week1Recap?.aiEditorialSummary?.slice(0, 160) || "The opening week of the redraft season delivered fireworks, nailbiters, and major managerial decisions."}...
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "12px 0 0" }}>
+                {superlatives?.nailbiter && (
+                  <span className="gotw-pill" style={{ fontSize: "0.75rem" }}>
+                    ⚡ Nailbiter: {superlatives.nailbiter.winner} (+{superlatives.nailbiter.margin} pt)
+                  </span>
+                )}
+                {superlatives?.highRoller && (
+                  <span className="gotw-pill" style={{ fontSize: "0.75rem" }}>
+                    👑 High Roller: {superlatives.highRoller.teamName} ({superlatives.highRoller.score} pts)
+                  </span>
+                )}
+              </div>
+            </div>
+            <div style={{ marginTop: 16 }}>
+              <button type="button" className="gotw-link-btn" onClick={() => onNavigate("recaps")}>
+                <span>View Full Matchup Recaps & Box Scores</span>
+                <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. Complete Edition Navigation Gateway */}
+        <div style={{ marginTop: 32 }}>
+          <div className="superlatives-section-title">
+            <BookOpenText size={16} weight="fill" /> Full Publication Directory
+          </div>
+          <div className="portal-nav-grid">
+            <div className="portal-card" onClick={() => onNavigate("recaps")}>
+              <div className="portal-card-top"><ClockCounterClockwise size={22} weight="duotone" /><ArrowRight size={16} /></div>
+              <h4>Matchup Recaps</h4>
+              <p>RosterAudit™ superlatives, AI game commentary, box scores, and standings.</p>
+            </div>
+            <div className="portal-card" onClick={() => onNavigate("matchups")}>
+              <div className="portal-card-top"><Football size={22} weight="duotone" /><ArrowRight size={16} /></div>
+              <h4>Week {currentWeek} Matchups</h4>
+              <p>Head-to-head tactical previews, projected spreads, and NFL broadcast schedule.</p>
+            </div>
+            <div className="portal-card" onClick={() => onNavigate("waivers")}>
+              <div className="portal-card-top"><CurrencyDollar size={22} weight="duotone" /><ArrowRight size={16} /></div>
+              <h4>Waivers & Move ROI</h4>
+              <p>FAAB velocity, manager bidding archetypes, immediate Sunday debuts, and season ROI.</p>
+            </div>
+            <div className="portal-card" onClick={() => onNavigate("power")}>
+              <div className="portal-card-top"><ChartLineUp size={22} weight="duotone" /><ArrowRight size={16} /></div>
+              <h4>Power Rankings</h4>
+              <p>In-season roster viability graded on starters, depth, and star ceiling.</p>
+            </div>
+            <div className="portal-card" onClick={() => onNavigate("forecast")}>
+              <div className="portal-card-top"><Lightning size={22} weight="duotone" /><ArrowRight size={16} /></div>
+              <h4>Season Forecast</h4>
+              <p>10,000-run Bayesian Monte Carlo simulation updating playoff & title odds.</p>
+            </div>
+            <div className="portal-card" onClick={() => onNavigate("hall")}>
+              <div className="portal-card-top"><Trophy size={22} weight="duotone" /><ArrowRight size={16} /></div>
+              <h4>The Cooler 🏆</h4>
+              <p>Permanent league record, draft honors, and Capri Sun & Life Saver winner.</p>
+            </div>
+            <div className="portal-card" onClick={() => onNavigate("analysis")}>
+              <div className="portal-card-top"><BookOpenText size={22} weight="duotone" /><ArrowRight size={16} /></div>
+              <h4>Draft Almanac</h4>
+              <p>16-round draft ledger, pick value surplus benchmarks, and draft grades.</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function WaiverWireScreen() {
+  const waiverData = waiverAnalysisJson;
+  const [posFilter, setPosFilter] = useState<string>("ALL");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const filteredLedger = (waiverData.roiLedger || []).filter((item: any) => {
+    const matchesPos = posFilter === "ALL" || item.position === posFilter;
+    const q = searchQuery.toLowerCase();
+    const matchesSearch = !q || item.playerName.toLowerCase().includes(q) || item.manager.toLowerCase().includes(q) || item.teamName.toLowerCase().includes(q);
+    return matchesPos && matchesSearch;
+  });
+
+  return (
+    <div className="app-screen section-screen web-screen waiver-screen-container">
+      <main className="section-page">
+        <p className="eyebrow">Transaction Intelligence & FAAB Efficiency Audit</p>
+        <h1>Waiver Wire & Move ROI</h1>
+        <p className="section-deck">
+          Auditing every waiver claim, free agent signing, and trade acquisition. Evaluated on immediate debut impact, starting lineup frequency, points scored post-pickup, and cumulative points per FAAB dollar.
+        </p>
+
+        {/* 1. Executive Stats Banner */}
+        <div className="waiver-stats-banner">
+          <div className="waiver-stat-box">
+            <span className="waiver-stat-label">Total Transactions</span>
+            <div className="waiver-stat-num">{waiverData.summary?.totalMoves || 0}</div>
+            <span className="waiver-stat-sub">{waiverData.summary?.activeClaimCount || 0} completed player adds</span>
+          </div>
+          <div className="waiver-stat-box">
+            <span className="waiver-stat-label">Total FAAB Committed</span>
+            <div className="waiver-stat-num">${waiverData.summary?.totalFaabSpent || 0}</div>
+            <span className="waiver-stat-sub">Across 12 franchise budgets</span>
+          </div>
+          <div className="waiver-stat-box">
+            <span className="waiver-stat-label">Points from Pickups</span>
+            <div className="waiver-stat-num">{waiverData.summary?.totalPickupPoints?.toFixed(1) || "0.0"} pts</div>
+            <span className="waiver-stat-sub">Delivered to active rosters</span>
+          </div>
+          <div className="waiver-stat-box">
+            <span className="waiver-stat-label">Top Value Heist</span>
+            <div className="waiver-stat-num" style={{ fontSize: "1.3rem" }}>
+              {waiverData.summary?.topPickupOverall?.player || "None"}
+            </div>
+            <span className="waiver-stat-sub">
+              {waiverData.summary?.topPickupOverall?.manager} · {waiverData.summary?.topPickupOverall?.points} pts (${waiverData.summary?.topPickupOverall?.bid})
+            </span>
+          </div>
+        </div>
+
+        {/* 2. Spotlight Narrative Stories */}
+        {waiverData.spotlightNarratives?.length ? (
+          <div style={{ marginBottom: 36 }}>
+            <div className="superlatives-section-title">
+              <Sparkle size={16} weight="fill" /> Breakthrough Franchise Wire Stories
+            </div>
+            <div className="spotlight-narratives-grid">
+              {waiverData.spotlightNarratives.map((s: any, idx: number) => (
+                <div key={idx} className="spotlight-narrative-card">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                    <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--rust)" }}>
+                      {s.title}
+                    </span>
+                    <span className="gotw-pill" style={{ fontSize: "0.7rem" }}>{s.impactLevel} Impact</span>
+                  </div>
+                  <p>{s.narrative}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        {/* 3. Manager Transaction Profiles & FAAB Gauges */}
+        <div style={{ marginBottom: 36 }}>
+          <div className="superlatives-section-title">
+            <UsersThree size={16} weight="fill" /> Manager Bidding Archetypes & FAAB Velocity
+          </div>
+          <div className="manager-profiles-grid">
+            {waiverData.managerProfiles?.map((m: any) => (
+              <div key={m.rosterId} className="manager-profile-card">
+                <div className="manager-profile-header">
+                  <div>
+                    <strong>{m.teamName}</strong>
+                    <small>{m.manager}</small>
+                  </div>
+                  <span className="archetype-chip">{m.archetype}</span>
+                </div>
+
+                <div className="faab-meter-wrap">
+                  <div className="faab-meter-label">
+                    <span>FAAB Remaining: ${m.faabRemaining}</span>
+                    <span>Spent: ${m.faabSpent} / $100</span>
+                  </div>
+                  <div className="faab-meter-bar">
+                    <div className="faab-meter-fill" style={{ width: `${Math.max(0, Math.min(100, m.faabRemaining))}%` }} />
+                  </div>
+                </div>
+
+                <div className="manager-profile-stats">
+                  <div>
+                    <span>Total Moves</span>
+                    <strong>{m.totalMoves} ({m.waiverCount} W / {m.freeAgentCount} FA)</strong>
+                  </div>
+                  <div>
+                    <span>Points Yield</span>
+                    <strong>{m.pointsContributed?.toFixed(1)} pts</strong>
+                  </div>
+                  <div>
+                    <span>Top Add</span>
+                    <strong>{m.topPickup?.name || "—"}</strong>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 4. Last Week's Immediate Impact */}
+        {waiverData.immediateImpact?.length ? (
+          <div style={{ marginBottom: 36 }}>
+            <div className="superlatives-section-title">
+              <ClockCounterClockwise size={16} weight="fill" /> Immediate Impact: Recent Waiver Debut Audits
+            </div>
+            <p className="section-deck" style={{ fontSize: "0.85rem", margin: "0 0 16px" }}>
+              Did the latest claims pay off on Sunday? Tracking immediate fantasy output in their team debut.
+            </p>
+            <div className="immediate-impact-grid">
+              {waiverData.immediateImpact.map((item: any, idx: number) => {
+                const verdictClass = item.immediateVerdict.includes("Boom") ? "boom" : (
+                  item.immediateVerdict.includes("Flex") ? "flex" : (
+                    item.immediateVerdict.includes("Stash") ? "stash" : "miss"
+                  )
+                );
+                return (
+                  <div key={idx} className="immediate-impact-card">
+                    <div className="immediate-card-top">
+                      <span className="immediate-card-title">{item.playerName}</span>
+                      <span className="gotw-pill">{item.position} · {item.nflTeam}</span>
+                    </div>
+                    <div className="immediate-card-manager">
+                      Acquired by <strong>{item.manager}</strong> ({item.type.toUpperCase()}: ${item.bid})
+                    </div>
+                    <div className="immediate-score-row">
+                      <span>
+                        Debut: <strong>{item.debutPoints.toFixed(1)} pts</strong> {item.startedInDebut ? "(Started)" : "(Benched)"}
+                      </span>
+                      <span className={`verdict-tag ${verdictClass}`}>{item.immediateVerdict}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
+
+        {/* 5. Complete Season Move ROI Ledger Table */}
+        <div style={{ marginTop: 24 }}>
+          <div className="superlatives-section-title">
+            <CurrencyDollar size={16} weight="fill" /> Season-Long Move ROI Ledger
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, margin: "14px 0" }}>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {["ALL", "RB", "WR", "TE", "QB", "DEF", "K"].map((pos) => (
+                <button
+                  key={pos}
+                  type="button"
+                  className={`week-btn ${posFilter === pos ? "active" : ""}`}
+                  onClick={() => setPosFilter(pos)}
+                  style={{ padding: "4px 10px", fontSize: "0.78rem" }}
+                >
+                  {pos}
+                </button>
+              ))}
+            </div>
+            <input
+              type="text"
+              placeholder="Search player, manager, team..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                padding: "6px 12px",
+                borderRadius: 6,
+                border: "1px solid var(--hairline)",
+                background: "var(--paper)",
+                color: "var(--ink)",
+                fontFamily: "var(--sans)",
+                fontSize: "0.85rem",
+                width: 240,
+              }}
+            />
+          </div>
+
+          <div className="roi-table-wrap">
+            <table className="roi-table">
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>Pos</th>
+                  <th>Manager</th>
+                  <th>Acquired</th>
+                  <th>Cost</th>
+                  <th>Starts</th>
+                  <th>Pts Scored</th>
+                  <th>Pts / $</th>
+                  <th>Current Franchise Role</th>
+                  <th>Verdict</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredLedger.map((row: any, idx: number) => (
+                  <tr key={idx}>
+                    <td><strong>{row.playerName}</strong> <small style={{ color: "var(--ink-soft)" }}>({row.nflTeam})</small></td>
+                    <td><span className="gotw-pill" style={{ fontSize: "0.72rem" }}>{row.position}</span></td>
+                    <td>{row.manager}</td>
+                    <td>Wk {row.acquiredWeek} ({row.type.toUpperCase()})</td>
+                    <td>${row.bid}</td>
+                    <td>{row.startsCount}</td>
+                    <td style={{ fontWeight: 700, color: row.totalPoints > 0 ? "#2e7d32" : "inherit" }}>
+                      {row.totalPoints.toFixed(1)}
+                    </td>
+                    <td>{row.pointsPerDollar > 0 ? `${row.pointsPerDollar}x` : "—"}</td>
+                    <td style={{ fontWeight: row.currentRole.includes("Leading") ? 700 : 400, color: row.currentRole.includes("Leading") ? "#1b5e20" : "inherit" }}>
+                      {row.currentRole}
+                    </td>
+                    <td>
+                      <span className={`roi-badge ${row.verdictClass}`}>
+                        {row.verdictBadge}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
 export default function JohnnysPrototype() {
   const [route, setRoute] = useState<Route>(() => routeFromHash());
   const [activeNav, setActiveNav] = useState<NavId>(() => {
@@ -176,7 +1029,8 @@ export default function JohnnysPrototype() {
     if (initial.kind === "powerTeam") return "power";
     if (initial.kind === "matchup") return "matchups";
     if (initial.kind === "forecastTeam") return "forecast";
-    return "analysis";
+    if (initial.kind === "team" || initial.kind === "methodology") return "analysis";
+    return "dashboard";
   });
 
   useEffect(() => {
@@ -255,7 +1109,7 @@ export default function JohnnysPrototype() {
       `}</style>
       {/* Site Navigation Sidebar / Topbar */}
       <nav className="bottom-nav" aria-label="Primary">
-        <div className="site-nav__brand" onClick={() => go({ kind: "nav", id: "analysis" })} style={{ cursor: "pointer" }}>
+        <div className="site-nav__brand" onClick={() => go({ kind: "nav", id: "dashboard" })} style={{ cursor: "pointer" }}>
           <img src="./assets/johnny/capri_sun_lifesaver.jpg" alt="Johnny's Jerks emblem" style={{ width: 32, height: 32, borderRadius: 6, objectFit: "cover" }} />
           <span>Johnny’s Jerks</span>
         </div>
@@ -453,6 +1307,12 @@ export default function JohnnysPrototype() {
               </main>
             </div>
           </>
+        ) : route.kind === "nav" && route.id === "dashboard" ? (
+          <FrontPageDashboard onNavigate={(id) => go({ kind: "nav", id })} onMatchup={(matchupId) => go({ kind: "matchup", matchupId })} />
+        ) : route.kind === "nav" && route.id === "waivers" ? (
+          <WaiverWireScreen />
+        ) : route.kind === "nav" && route.id === "recaps" ? (
+          <RecapsScreen />
         ) : route.kind === "nav" && route.id === "power" ? (
           <div className="app-screen section-screen web-screen">
             <main className="section-page">
@@ -1253,11 +2113,15 @@ function routeFromHash(): Route {
     const rosterId = Number(value.slice("forecast-team-".length));
     return { kind: "forecastTeam", rosterId };
   }
+  if (value === "recaps" || value === "recap") return { kind: "nav", id: "recaps" };
+  if (value === "waivers" || value === "waiver" || value === "roi") return { kind: "nav", id: "waivers" };
   if (value === "power" || value === "power-rankings") return { kind: "nav", id: "power" };
   if (value === "matchups") return { kind: "nav", id: "matchups" };
   if (value === "forecast") return { kind: "nav", id: "forecast" };
   if (value === "hall" || value === "cooler") return { kind: "nav", id: "hall" };
-  return { kind: "nav", id: "analysis" };
+  if (value === "analysis" || value === "draft" || value === "almanac" || value === "draft-analysis") return { kind: "nav", id: "analysis" };
+  if (value === "dashboard" || value === "front" || value === "home") return { kind: "nav", id: "dashboard" };
+  return { kind: "nav", id: "dashboard" };
 }
 
 function routeHash(route: Route) {
@@ -1266,5 +2130,7 @@ function routeHash(route: Route) {
   if (route.kind === "matchup") return `#matchup-${route.matchupId}`;
   if (route.kind === "forecastTeam") return `#forecast-team-${route.rosterId}`;
   if (route.kind === "methodology") return "#methodology";
+  if (route.id === "dashboard") return "#dashboard";
+  if (route.id === "waivers") return "#waivers";
   return route.id === "analysis" ? "#analysis" : `#${route.id}`;
 }
