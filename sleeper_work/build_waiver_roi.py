@@ -90,6 +90,200 @@ def determine_roi_badge(points, starts, bid):
     return "Depth Flier", "badge-flier"
 
 
+def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, players_map, current_week):
+    trade_evaluations = []
+    total_players_traded = set()
+    total_picks_traded = 0
+    total_faab_traded = 0
+
+    sorted_trades = sorted(trade_transactions, key=lambda x: x.get("created") or 0, reverse=True)
+
+    for tx in sorted_trades:
+        tx_id = tx.get("transaction_id")
+        created_ts = tx.get("created") or 0
+        leg = int(tx.get("leg") or 1)
+        rids = tx.get("roster_ids") or []
+        adds = tx.get("adds") or {}
+        drops = tx.get("drops") or {}
+        draft_picks = tx.get("draft_picks") or []
+        waiver_budget = tx.get("waiver_budget") or []
+
+        date_str = (
+            datetime.datetime.fromtimestamp(created_ts / 1000.0, datetime.timezone.utc).strftime("%b %d, %Y")
+            if created_ts else "Pre-Season"
+        )
+
+        total_picks_traded += len(draft_picks)
+        teams_evaluation = []
+
+        for rid in rids:
+            r_info = roster_info.get(rid, {"manager": f"Manager {rid}", "teamName": f"Team {rid}"})
+
+            # Players received by rid
+            rec_pids = [str(pid) for pid, to_r in adds.items() if to_r == rid]
+            rec_players = []
+            pts_rec = 0.0
+            starts_rec = 0
+            for pid in rec_pids:
+                total_players_traded.add(pid)
+                p_meta = players_map.get(pid, {"name": f"Player {pid}", "position": "FLEX", "team": "FA"})
+                p_pts = 0.0
+                p_starts = 0
+                for wk in range(leg, current_week + 1):
+                    w_m = weekly_matchups.get(wk, {}).get(rid)
+                    if w_m:
+                        w_pts = float((w_m.get("players_points") or {}).get(pid) or 0.0)
+                        p_pts += w_pts
+                        if pid in (w_m.get("starters") or []):
+                            p_starts += 1
+                pts_rec += p_pts
+                starts_rec += p_starts
+                rec_players.append({
+                    "id": pid,
+                    "name": p_meta["name"],
+                    "position": p_meta["position"],
+                    "nflTeam": p_meta["team"],
+                    "points": round(p_pts, 1),
+                    "starts": p_starts,
+                })
+
+            # Players sent by rid
+            sent_pids = [str(pid) for pid, from_r in drops.items() if from_r == rid]
+            sent_players = []
+            pts_sent = 0.0
+            starts_sent = 0
+            other_rids = [o_r for o_r in rids if o_r != rid]
+            for pid in sent_pids:
+                total_players_traded.add(pid)
+                p_meta = players_map.get(pid, {"name": f"Player {pid}", "position": "FLEX", "team": "FA"})
+                p_pts = 0.0
+                p_starts = 0
+                for o_rid in other_rids:
+                    for wk in range(leg, current_week + 1):
+                        w_m = weekly_matchups.get(wk, {}).get(o_rid)
+                        if w_m:
+                            w_pts = float((w_m.get("players_points") or {}).get(pid) or 0.0)
+                            p_pts += w_pts
+                            if pid in (w_m.get("starters") or []):
+                                p_starts += 1
+                pts_sent += p_pts
+                starts_sent += p_starts
+                sent_players.append({
+                    "id": pid,
+                    "name": p_meta["name"],
+                    "position": p_meta["position"],
+                    "nflTeam": p_meta["team"],
+                    "points": round(p_pts, 1),
+                    "starts": p_starts,
+                })
+
+            # Picks received
+            rec_picks = []
+            for pick in draft_picks:
+                if pick.get("owner_id") == rid:
+                    orig_r = pick.get("roster_id")
+                    via_note = f" (via {roster_info.get(orig_r, {}).get('teamName')})" if orig_r != pick.get("previous_owner_id") and orig_r in roster_info else ""
+                    rec_picks.append(f"{pick.get('season')} Round {pick.get('round')}{via_note}")
+
+            # Picks sent
+            sent_picks = []
+            for pick in draft_picks:
+                if pick.get("previous_owner_id") == rid:
+                    orig_r = pick.get("roster_id")
+                    via_note = f" (via {roster_info.get(orig_r, {}).get('teamName')})" if orig_r != rid and orig_r in roster_info else ""
+                    sent_picks.append(f"{pick.get('season')} Round {pick.get('round')}{via_note}")
+
+            # FAAB
+            rec_faab = sum(wb.get("amount", 0) for wb in waiver_budget if wb.get("receiver") == rid)
+            sent_faab = sum(wb.get("amount", 0) for wb in waiver_budget if wb.get("sender") == rid)
+            total_faab_traded += rec_faab
+
+            net_pts = round(pts_rec - pts_sent, 1)
+            net_starts = starts_rec - starts_sent
+
+            teams_evaluation.append({
+                "rosterId": rid,
+                "teamName": r_info["teamName"],
+                "manager": r_info["manager"],
+                "receivedPlayers": rec_players,
+                "sentPlayers": sent_players,
+                "receivedPicks": rec_picks,
+                "sentPicks": sent_picks,
+                "receivedFaab": rec_faab,
+                "sentFaab": sent_faab,
+                "totalPointsReceived": round(pts_rec, 1),
+                "totalPointsSent": round(pts_sent, 1),
+                "startsReceived": starts_rec,
+                "startsSent": starts_sent,
+                "netPoints": net_pts,
+                "netStarts": net_starts,
+            })
+
+            # Record in manager profile
+            if rid in roster_info:
+                roster_info[rid].setdefault("tradesCount", 0)
+                roster_info[rid]["tradesCount"] += 1
+
+        # Determine Deal Verdict
+        if len(teams_evaluation) >= 2:
+            t1, t2 = teams_evaluation[0], teams_evaluation[1]
+            diff = t1["netPoints"]
+            if len(t1["receivedPicks"]) > len(t1["sentPicks"]) and len(t2["receivedPlayers"]) > len(t1["receivedPlayers"]):
+                verdict = f"Rebuild vs Contender ({t2['teamName']} Win-Now Push)"
+                verdict_class = "badge-rebuild"
+            elif len(t2["receivedPicks"]) > len(t2["sentPicks"]) and len(t1["receivedPlayers"]) > len(t2["receivedPlayers"]):
+                verdict = f"Rebuild vs Contender ({t1['teamName']} Win-Now Push)"
+                verdict_class = "badge-rebuild"
+            elif diff >= 10.0:
+                verdict = f"Clear Production Advantage: {t1['teamName']} (+{diff} pts)"
+                verdict_class = "badge-win"
+            elif diff <= -10.0:
+                verdict = f"Clear Production Advantage: {t2['teamName']} (+{abs(diff)} pts)"
+                verdict_class = "badge-win"
+            elif abs(diff) < 5.0 and (t1["totalPointsReceived"] > 0 or t2["totalPointsReceived"] > 0):
+                verdict = "Balanced Win-Win Production Swap"
+                verdict_class = "badge-even"
+            else:
+                verdict = "Strategic Asset Re-allocation"
+                verdict_class = "badge-flier"
+
+            headline = f"{t1['teamName']} & {t2['teamName']} Deal"
+            t1_rec_summary = ", ".join([p["name"] for p in t1["receivedPlayers"]] + t1["receivedPicks"] + ([f"${t1['receivedFaab']} FAAB"] if t1["receivedFaab"] else [])) or "Draft Capital"
+            t2_rec_summary = ", ".join([p["name"] for p in t2["receivedPlayers"]] + t2["receivedPicks"] + ([f"${t2['receivedFaab']} FAAB"] if t2["receivedFaab"] else [])) or "Draft Capital"
+
+            analysis = (
+                f"{t1['teamName']} acquired {t1_rec_summary} ({t1['totalPointsReceived']} pts post-trade), "
+                f"while {t2['teamName']} received {t2_rec_summary} ({t2['totalPointsReceived']} pts post-trade). "
+                f"Net scoring margin currently stands at {diff:+.1f} points."
+            )
+        else:
+            verdict = "Completed Deal"
+            verdict_class = "badge-flier"
+            headline = "League Trade Completed"
+            analysis = "Multi-team transaction executed."
+
+        trade_evaluations.append({
+            "tradeId": tx_id,
+            "leg": leg,
+            "date": date_str,
+            "created": created_ts,
+            "teams": teams_evaluation,
+            "verdict": verdict,
+            "verdictClass": verdict_class,
+            "headline": headline,
+            "analysis": analysis,
+        })
+
+    trade_summary = {
+        "totalTrades": len(trade_evaluations),
+        "totalPlayersTraded": len(total_players_traded),
+        "totalPicksTraded": total_picks_traded,
+        "totalFaabTraded": total_faab_traded,
+    }
+
+    return trade_evaluations, trade_summary
+
+
 def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
     print(f"=== Running Waiver Wire ROI Analytics for League {league_id} ===")
     is_johnny = (str(league_id) == JOHNNYS_LEAGUE_ID)
@@ -150,15 +344,20 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
         except Exception as e:
             print(f"  Warning fetching matchups for week {wk}: {e}")
 
-    # Filter complete transactions that added players
+    # Filter complete transactions that added players (STRICTLY waivers & free agent pickups)
     completed_adds = []
+    trade_transactions = []
     for tx in all_transactions:
         if tx.get("status") != "complete":
             continue
+        tx_type = tx.get("type") or "free_agent"
+        if tx_type == "trade":
+            trade_transactions.append(tx)
+            continue
+
         adds = tx.get("adds")
         if not adds:
             continue
-        tx_type = tx.get("type") or "free_agent"
         bid = int((tx.get("settings") or {}).get("waiver_bid") or 0)
         leg = int(tx.get("leg") or 1)
         created_ts = tx.get("created") or 0
@@ -328,6 +527,11 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
     # Sort ledger by totalPoints descending
     roi_ledger.sort(key=lambda x: x["totalPoints"], reverse=True)
 
+    # Process trade evaluations separately with dedicated two-sided comparative logic
+    trade_evaluations, trade_summary = process_trade_evaluations(
+        trade_transactions, roster_info, weekly_matchups, players_map, current_week
+    )
+
     # Compile manager profiles
     manager_profiles = []
     total_league_faab_spent = 0
@@ -353,6 +557,7 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
             "totalMoves": m["movesCount"],
             "waiverCount": m["waiverCount"],
             "freeAgentCount": m["freeAgentCount"],
+            "tradesCount": m.get("tradesCount", 0),
             "pointsContributed": round(m["totalPointsContributed"], 2),
             "starterPoints": round(m["starterPointsContributed"], 2),
             "archetype": archetype,
@@ -373,7 +578,7 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
     spotlight_narratives = []
     leading_role_pickups = [p for p in roi_ledger if "Leading" in p["currentRole"] and p["isStillRostered"]]
     for p in leading_role_pickups[:3]:
-        tx_label = "waiver claim" if p["type"] == "waiver" else ("free agent add" if p["type"] == "free_agent" else "trade acquisition")
+        tx_label = "waiver claim" if p["type"] == "waiver" else "free agent add"
         spotlight_narratives.append({
             "title": f"Franchise Role Promotion: {p['playerName']}",
             "manager": p["manager"],
@@ -390,7 +595,7 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
     manny_pickups = [p for p in roi_ledger if "mannyrsox24" in p["manager"].lower()]
     if manny_pickups and not any("mannyrsox24" in s["manager"].lower() for s in spotlight_narratives):
         mp = manny_pickups[0]
-        tx_label = "waivers" if mp["type"] == "waiver" else ("free agency" if mp["type"] == "free_agent" else "trade")
+        tx_label = "waivers" if mp["type"] == "waiver" else "free agency"
         spotlight_narratives.append({
             "title": f"Mannyrsox24 Wire Strategy: {mp['playerName']}",
             "manager": mp["manager"],
@@ -420,6 +625,7 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
             "totalPickupPoints": round(total_points_from_pickups, 2),
             "activeClaimCount": len(completed_adds),
             "avgPointsPerDollar": round(total_points_from_pickups / max(1, total_league_faab_spent), 2) if total_league_faab_spent > 0 else 0.0,
+            "totalTrades": trade_summary["totalTrades"],
             "topPickupOverall": {
                 "player": top_overall["playerName"],
                 "manager": top_overall["manager"],
@@ -433,12 +639,14 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
         "immediateImpact": immediate_impact_list[:12],
         "roiLedger": roi_ledger[:40],
         "spotlightNarratives": spotlight_narratives,
+        "tradeSummary": trade_summary,
+        "tradeEvaluations": trade_evaluations,
     }
 
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
 
-    print(f"[OK] Saved waiver analysis ({len(roi_ledger)} records) to {out_file}")
+    print(f"[OK] Saved waiver analysis ({len(roi_ledger)} waiver/FA moves, {len(trade_evaluations)} trades) to {out_file}")
     return payload
 
 

@@ -6320,4 +6320,313 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   color: var(--ink-soft, rgba(11, 51, 41, 0.6));
 }
 
+/* ----------------------------------------------------
+   Transaction Subnav & Trade Audit Desk
+---------------------------------------------------- */
+.transaction-subnav-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--hairline, rgba(11, 51, 41, 0.18));
+  padding-bottom: 12px;
+}
+
+.transaction-subnav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.25));
+  border-radius: 6px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.7));
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.transaction-subnav-btn:hover {
+  background: rgba(11, 51, 41, 0.04);
+  color: var(--ink, #0b3329);
+}
+
+.transaction-subnav-btn.is-active {
+  background: var(--ink, #0b3329);
+  color: var(--paper, #fbf7ee);
+  border-color: var(--ink, #0b3329);
+}
+
+.transaction-subnav-btn .count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  background: rgba(11, 51, 41, 0.12);
+  color: inherit;
+}
+
+.transaction-subnav-btn.is-active .count-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Trade Audit Cards */
+.trade-audits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 18px;
+}
+
+.trade-audit-card {
+  background: var(--paper, #fbf7ee);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.18));
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.trade-audit-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.trade-audit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: rgba(11, 51, 41, 0.04);
+  border-bottom: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
+}
+
+.trade-audit-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.7));
+}
+
+.trade-audit-meta .trade-week-pill {
+  padding: 2px 8px;
+  background: var(--ink, #0b3329);
+  color: var(--paper, #fbf7ee);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.trade-verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.trade-verdict-badge.badge-win {
+  background: rgba(46, 125, 50, 0.15);
+  color: #1b5e20;
+  border: 1px solid rgba(46, 125, 50, 0.35);
+}
+
+.trade-verdict-badge.badge-even {
+  background: rgba(2, 136, 209, 0.12);
+  color: #0277bd;
+  border: 1px solid rgba(2, 136, 209, 0.3);
+}
+
+.trade-verdict-badge.badge-rebuild {
+  background: rgba(196, 67, 34, 0.12);
+  color: #c44322;
+  border: 1px solid rgba(196, 67, 34, 0.3);
+}
+
+.trade-verdict-badge.badge-flier {
+  background: rgba(11, 51, 41, 0.08);
+  color: var(--ink, #0b3329);
+}
+
+.trade-sides-wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  padding: 18px;
+}
+
+@media (max-width: 768px) {
+  .trade-sides-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+.trade-side-box {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
+  border-radius: 6px;
+  padding: 14px;
+}
+
+.trade-team-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  border-bottom: 1px dashed var(--hairline, rgba(11, 51, 41, 0.15));
+  padding-bottom: 8px;
+}
+
+.trade-team-title {
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink, #0b3329);
+}
+
+.trade-team-manager {
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.8rem;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.65));
+}
+
+.trade-asset-section {
+  margin-bottom: 12px;
+}
+
+.trade-asset-label {
+  display: block;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.6));
+  margin-bottom: 6px;
+}
+
+.trade-asset-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.trade-player-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  background: var(--paper-deep, #f4efe4);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.15));
+  border-radius: 5px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink, #0b3329);
+}
+
+.trade-pos-tag {
+  display: inline-block;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: var(--ink, #0b3329);
+  color: var(--paper, #fbf7ee);
+}
+
+.trade-pts-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1b5e20;
+}
+
+.trade-pick-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  background: rgba(196, 67, 34, 0.08);
+  border: 1px solid rgba(196, 67, 34, 0.25);
+  border-radius: 5px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #c44322;
+}
+
+.trade-faab-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 9px;
+  background: rgba(46, 125, 50, 0.08);
+  border: 1px solid rgba(46, 125, 50, 0.25);
+  border-radius: 5px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.trade-net-return-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.85rem;
+}
+
+.trade-net-delta {
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.trade-net-delta.is-positive {
+  background: rgba(46, 125, 50, 0.15);
+  color: #1b5e20;
+}
+
+.trade-net-delta.is-negative {
+  background: rgba(185, 28, 28, 0.12);
+  color: #b91c1c;
+}
+
+.trade-net-delta.is-even {
+  background: rgba(11, 51, 41, 0.08);
+  color: var(--ink, #0b3329);
+}
+
+.trade-audit-narrative {
+  padding: 12px 18px;
+  background: rgba(11, 51, 41, 0.02);
+  border-top: 1px solid var(--hairline, rgba(11, 51, 41, 0.1));
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 0.98rem;
+  font-style: italic;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.8));
+  line-height: 1.45;
+}
+
+
 

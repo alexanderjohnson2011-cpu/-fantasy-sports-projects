@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ArrowClockwise,
   ArrowRight,
+  ArrowsLeftRight,
   BookOpenText,
   ChartBar,
   ChartLineUp,
@@ -1866,6 +1867,7 @@ function FrontPageDashboard({
 
 function WaiverWireScreen() {
   const waiverData = waiverAnalysisJson;
+  const [activeSubTab, setActiveSubTab] = useState<"waivers" | "trades">("waivers");
   const [posFilter, setPosFilter] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -1876,229 +1878,404 @@ function WaiverWireScreen() {
     return matchesPos && matchesSearch;
   });
 
+  const tradeEvaluations = (waiverData as any).tradeEvaluations || [];
+  const tradeSummary = (waiverData as any).tradeSummary || {
+    totalTrades: 0,
+    totalPlayersTraded: 0,
+    totalPicksTraded: 0,
+    totalFaabTraded: 0,
+  };
+
   return (
     <div className="app-screen section-screen web-screen waiver-screen-container">
       <main className="section-page">
-        <p className="eyebrow">Transaction Intelligence & FAAB Efficiency Audit</p>
-        <h1>Waiver Wire & Move ROI</h1>
+        <p className="eyebrow">Transaction Intelligence & Asset Movement Audit</p>
+        <h1>Transactions & Asset Audits</h1>
         <p className="section-deck">
-          Auditing every waiver claim, free agent signing, and trade acquisition. Evaluated on immediate debut impact, starting lineup frequency, points scored post-pickup, and cumulative points per FAAB dollar.
+          Auditing every waiver claim, free agent signing, and multi-asset trade. Evaluated on immediate debut impact, starting lineup frequency, net scoring yield, and asset ROI.
         </p>
 
-        {/* 1. Executive Stats Banner */}
-        <div className="waiver-stats-banner">
-          <div className="waiver-stat-box">
-            <span className="waiver-stat-label">Total Transactions</span>
-            <div className="waiver-stat-num">{waiverData.summary?.totalMoves || 0}</div>
-            <span className="waiver-stat-sub">{waiverData.summary?.activeClaimCount || 0} completed player adds</span>
-          </div>
-          <div className="waiver-stat-box">
-            <span className="waiver-stat-label">Total FAAB Committed</span>
-            <div className="waiver-stat-num">${waiverData.summary?.totalFaabSpent || 0}</div>
-            <span className="waiver-stat-sub">Across 12 franchise budgets</span>
-          </div>
-          <div className="waiver-stat-box">
-            <span className="waiver-stat-label">Points from Pickups</span>
-            <div className="waiver-stat-num">{waiverData.summary?.totalPickupPoints?.toFixed(1) || "0.0"} pts</div>
-            <span className="waiver-stat-sub">Delivered to active rosters</span>
-          </div>
-          <div className="waiver-stat-box">
-            <span className="waiver-stat-label">Top Value Heist</span>
-            <div className="waiver-stat-num" style={{ fontSize: "1.3rem" }}>
-              {waiverData.summary?.topPickupOverall?.player || "None"}
-            </div>
-            <span className="waiver-stat-sub">
-              {waiverData.summary?.topPickupOverall?.manager} · {waiverData.summary?.topPickupOverall?.points} pts (${waiverData.summary?.topPickupOverall?.bid})
-            </span>
-          </div>
+        {/* Sub-Navigation Toggle: Pure Waivers vs Trade Audits */}
+        <div className="transaction-subnav-container">
+          <button
+            type="button"
+            className={`transaction-subnav-btn ${activeSubTab === "waivers" ? "is-active" : ""}`}
+            onClick={() => setActiveSubTab("waivers")}
+          >
+            <CurrencyDollar size={18} weight={activeSubTab === "waivers" ? "bold" : "regular"} />
+            <span>Waiver Wire & FAAB</span>
+            <span className="count-badge">{waiverData.roiLedger?.length || 0}</span>
+          </button>
+          <button
+            type="button"
+            className={`transaction-subnav-btn ${activeSubTab === "trades" ? "is-active" : ""}`}
+            onClick={() => setActiveSubTab("trades")}
+          >
+            <ArrowsLeftRight size={18} weight={activeSubTab === "trades" ? "bold" : "regular"} />
+            <span>Trade Evaluations & Deal Audits</span>
+            <span className="count-badge">{tradeSummary.totalTrades || 0}</span>
+          </button>
         </div>
 
-        {/* 2. Spotlight Narrative Stories */}
-        {waiverData.spotlightNarratives?.length ? (
-          <div style={{ marginBottom: 36 }}>
-            <div className="superlatives-section-title">
-              <Sparkle size={16} weight="fill" /> Breakthrough Franchise Wire Stories
+        {activeSubTab === "waivers" ? (
+          <>
+            {/* 1. Executive Stats Banner */}
+            <div className="waiver-stats-banner">
+              <div className="waiver-stat-box">
+                <span className="waiver-stat-label">Total Transactions</span>
+                <div className="waiver-stat-num">{waiverData.summary?.totalMoves || 0}</div>
+                <span className="waiver-stat-sub">{waiverData.summary?.activeClaimCount || 0} completed player adds</span>
+              </div>
+              <div className="waiver-stat-box">
+                <span className="waiver-stat-label">Total FAAB Committed</span>
+                <div className="waiver-stat-num">${waiverData.summary?.totalFaabSpent || 0}</div>
+                <span className="waiver-stat-sub">Across 12 franchise budgets</span>
+              </div>
+              <div className="waiver-stat-box">
+                <span className="waiver-stat-label">Points from Pickups</span>
+                <div className="waiver-stat-num">{waiverData.summary?.totalPickupPoints?.toFixed(1) || "0.0"} pts</div>
+                <span className="waiver-stat-sub">Delivered to active rosters</span>
+              </div>
+              <div className="waiver-stat-box">
+                <span className="waiver-stat-label">Top Value Heist</span>
+                <div className="waiver-stat-num" style={{ fontSize: "1.3rem" }}>
+                  {waiverData.summary?.topPickupOverall?.player || "None"}
+                </div>
+                <span className="waiver-stat-sub">
+                  {waiverData.summary?.topPickupOverall?.manager} · {waiverData.summary?.topPickupOverall?.points} pts (${waiverData.summary?.topPickupOverall?.bid})
+                </span>
+              </div>
             </div>
-            <div className="spotlight-narratives-grid">
-              {waiverData.spotlightNarratives.map((s: any, idx: number) => (
-                <div key={idx} className="spotlight-narrative-card">
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-                    <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--rust)" }}>
-                      {s.title}
-                    </span>
-                    <span className="gotw-pill" style={{ fontSize: "0.7rem" }}>{s.impactLevel} Impact</span>
-                  </div>
-                  <p>{s.narrative}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : null}
 
-        {/* 3. Manager Transaction Profiles & FAAB Gauges */}
-        <div style={{ marginBottom: 36 }}>
-          <div className="superlatives-section-title">
-            <UsersThree size={16} weight="fill" /> Manager Bidding Archetypes & FAAB Velocity
-          </div>
-          <div className="manager-profiles-grid">
-            {waiverData.managerProfiles?.map((m: any) => (
-              <div key={m.rosterId} className="manager-profile-card">
-                <div className="manager-profile-header">
-                  <div>
-                    <strong>{m.teamName}</strong>
-                    <small>{m.manager}</small>
-                  </div>
-                  <span className="archetype-chip">{m.archetype}</span>
+            {/* 2. Spotlight Narrative Stories */}
+            {waiverData.spotlightNarratives?.length ? (
+              <div style={{ marginBottom: 36 }}>
+                <div className="superlatives-section-title">
+                  <Sparkle size={16} weight="fill" /> Breakthrough Franchise Wire Stories
                 </div>
-
-                <div className="faab-meter-wrap">
-                  <div className="faab-meter-label">
-                    <span>FAAB Remaining: ${m.faabRemaining}</span>
-                    <span>Spent: ${m.faabSpent} / $100</span>
-                  </div>
-                  <div className="faab-meter-bar">
-                    <div className="faab-meter-fill" style={{ width: `${Math.max(0, Math.min(100, m.faabRemaining))}%` }} />
-                  </div>
-                </div>
-
-                <div className="manager-profile-stats">
-                  <div>
-                    <span>Total Moves</span>
-                    <strong>{m.totalMoves} ({m.waiverCount} W / {m.freeAgentCount} FA)</strong>
-                  </div>
-                  <div>
-                    <span>Points Yield</span>
-                    <strong>{m.pointsContributed?.toFixed(1)} pts</strong>
-                  </div>
-                  <div>
-                    <span>Top Add</span>
-                    <strong>{m.topPickup?.name || "—"}</strong>
-                  </div>
+                <div className="spotlight-narratives-grid">
+                  {waiverData.spotlightNarratives.map((s: any, idx: number) => (
+                    <div key={idx} className="spotlight-narrative-card">
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                        <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--rust)" }}>
+                          {s.title}
+                        </span>
+                        <span className="gotw-pill" style={{ fontSize: "0.7rem" }}>{s.impactLevel} Impact</span>
+                      </div>
+                      <p>{s.narrative}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+            ) : null}
 
-        {/* 4. Last Week's Immediate Impact */}
-        {waiverData.immediateImpact?.length ? (
-          <div style={{ marginBottom: 36 }}>
-            <div className="superlatives-section-title">
-              <ClockCounterClockwise size={16} weight="fill" /> Immediate Impact: Recent Waiver Debut Audits
-            </div>
-            <p className="section-deck" style={{ fontSize: "0.85rem", margin: "0 0 16px" }}>
-              Did the latest claims pay off on Sunday? Tracking immediate fantasy output in their team debut.
-            </p>
-            <div className="immediate-impact-grid">
-              {waiverData.immediateImpact.map((item: any, idx: number) => {
-                const verdictClass = item.immediateVerdict.includes("Boom") ? "boom" : (
-                  item.immediateVerdict.includes("Flex") ? "flex" : (
-                    item.immediateVerdict.includes("Stash") ? "stash" : "miss"
-                  )
-                );
-                return (
-                  <div key={idx} className="immediate-impact-card">
-                    <div className="immediate-card-top">
-                      <span className="immediate-card-title">{item.playerName}</span>
-                      <span className="gotw-pill">{item.position} · {item.nflTeam}</span>
+            {/* 3. Manager Transaction Profiles & FAAB Gauges */}
+            <div style={{ marginBottom: 36 }}>
+              <div className="superlatives-section-title">
+                <UsersThree size={16} weight="fill" /> Manager Bidding Archetypes & FAAB Velocity
+              </div>
+              <div className="manager-profiles-grid">
+                {waiverData.managerProfiles?.map((m: any) => (
+                  <div key={m.rosterId} className="manager-profile-card">
+                    <div className="manager-profile-header">
+                      <div>
+                        <strong>{m.teamName}</strong>
+                        <small>{m.manager}</small>
+                      </div>
+                      <span className="archetype-chip">{m.archetype}</span>
                     </div>
-                    <div className="immediate-card-manager">
-                      Acquired by <strong>{item.manager}</strong> ({item.type.toUpperCase()}: ${item.bid})
+
+                    <div className="faab-meter-wrap">
+                      <div className="faab-meter-label">
+                        <span>FAAB Remaining: ${m.faabRemaining}</span>
+                        <span>Spent: ${m.faabSpent} / $100</span>
+                      </div>
+                      <div className="faab-meter-bar">
+                        <div className="faab-meter-fill" style={{ width: `${Math.max(0, Math.min(100, m.faabRemaining))}%` }} />
+                      </div>
                     </div>
-                    <div className="immediate-score-row">
-                      <span>
-                        Debut: <strong>{item.debutPoints.toFixed(1)} pts</strong> {item.startedInDebut ? "(Started)" : "(Benched)"}
-                      </span>
-                      <span className={`verdict-tag ${verdictClass}`}>{item.immediateVerdict}</span>
+
+                    <div className="manager-profile-stats">
+                      <div>
+                        <span>Total Moves</span>
+                        <strong>{m.totalMoves} ({m.waiverCount} W / {m.freeAgentCount} FA)</strong>
+                      </div>
+                      <div>
+                        <span>Points Yield</span>
+                        <strong>{m.pointsContributed?.toFixed(1)} pts</strong>
+                      </div>
+                      <div>
+                        <span>Top Add</span>
+                        <strong>{m.topPickup?.name || "—"}</strong>
+                      </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
-          </div>
-        ) : null}
-
-        {/* 5. Complete Season Move ROI Ledger Table */}
-        <div style={{ marginTop: 24 }}>
-          <div className="superlatives-section-title">
-            <CurrencyDollar size={16} weight="fill" /> Season-Long Move ROI Ledger
-          </div>
-
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, margin: "14px 0" }}>
-            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-              {["ALL", "RB", "WR", "TE", "QB", "DEF", "K"].map((pos) => (
-                <button
-                  key={pos}
-                  type="button"
-                  className={`week-btn ${posFilter === pos ? "active" : ""}`}
-                  onClick={() => setPosFilter(pos)}
-                  style={{ padding: "4px 10px", fontSize: "0.78rem" }}
-                >
-                  {pos}
-                </button>
-              ))}
-            </div>
-            <input
-              type="text"
-              placeholder="Search player, manager, team..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                padding: "6px 12px",
-                borderRadius: 6,
-                border: "1px solid var(--hairline)",
-                background: "var(--paper)",
-                color: "var(--ink)",
-                fontFamily: "var(--sans)",
-                fontSize: "0.85rem",
-                width: 240,
-              }}
-            />
-          </div>
-
-          <div className="roi-table-wrap">
-            <table className="roi-table">
-              <thead>
-                <tr>
-                  <th>Player</th>
-                  <th>Pos</th>
-                  <th>Manager</th>
-                  <th>Acquired</th>
-                  <th>Cost</th>
-                  <th>Starts</th>
-                  <th>Pts Scored</th>
-                  <th>Pts / $</th>
-                  <th>Current Franchise Role</th>
-                  <th>Verdict</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredLedger.map((row: any, idx: number) => (
-                  <tr key={idx}>
-                    <td><strong>{row.playerName}</strong> <small style={{ color: "var(--ink-soft)" }}>({row.nflTeam})</small></td>
-                    <td><span className="gotw-pill" style={{ fontSize: "0.72rem" }}>{row.position}</span></td>
-                    <td>{row.manager}</td>
-                    <td>Wk {row.acquiredWeek} ({row.type.toUpperCase()})</td>
-                    <td>${row.bid}</td>
-                    <td>{row.startsCount}</td>
-                    <td style={{ fontWeight: 700, color: row.totalPoints > 0 ? "#2e7d32" : "inherit" }}>
-                      {row.totalPoints.toFixed(1)}
-                    </td>
-                    <td>{row.pointsPerDollar > 0 ? `${row.pointsPerDollar}x` : "—"}</td>
-                    <td style={{ fontWeight: row.currentRole.includes("Leading") ? 700 : 400, color: row.currentRole.includes("Leading") ? "#1b5e20" : "inherit" }}>
-                      {row.currentRole}
-                    </td>
-                    <td>
-                      <span className={`roi-badge ${row.verdictClass}`}>
-                        {row.verdictBadge}
-                      </span>
-                    </td>
-                  </tr>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+              </div>
+            </div>
+
+            {/* 4. Last Week's Immediate Impact */}
+            {waiverData.immediateImpact?.length ? (
+              <div style={{ marginBottom: 36 }}>
+                <div className="superlatives-section-title">
+                  <ClockCounterClockwise size={16} weight="fill" /> Immediate Impact: Recent Waiver Debut Audits
+                </div>
+                <p className="section-deck" style={{ fontSize: "0.85rem", margin: "0 0 16px" }}>
+                  Did the latest claims pay off on Sunday? Tracking immediate fantasy output in their team debut.
+                </p>
+                <div className="immediate-impact-grid">
+                  {waiverData.immediateImpact.map((item: any, idx: number) => {
+                    const verdictClass = item.immediateVerdict.includes("Boom") ? "boom" : (
+                      item.immediateVerdict.includes("Flex") ? "flex" : (
+                        item.immediateVerdict.includes("Stash") ? "stash" : "miss"
+                      )
+                    );
+                    return (
+                      <div key={idx} className="immediate-impact-card">
+                        <div className="immediate-card-top">
+                          <span className="immediate-card-title">{item.playerName}</span>
+                          <span className="gotw-pill">{item.position} · {item.nflTeam}</span>
+                        </div>
+                        <div className="immediate-card-manager">
+                          Acquired by <strong>{item.manager}</strong> ({item.type.toUpperCase()}: ${item.bid})
+                        </div>
+                        <div className="immediate-score-row">
+                          <span>
+                            Debut: <strong>{item.debutPoints.toFixed(1)} pts</strong> {item.startedInDebut ? "(Started)" : "(Benched)"}
+                          </span>
+                          <span className={`verdict-tag ${verdictClass}`}>{item.immediateVerdict}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : null}
+
+            {/* 5. Complete Season Move ROI Ledger Table */}
+            <div style={{ marginTop: 24 }}>
+              <div className="superlatives-section-title">
+                <CurrencyDollar size={16} weight="fill" /> Season-Long Move ROI Ledger
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, margin: "14px 0" }}>
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                  {["ALL", "RB", "WR", "TE", "QB", "DEF", "K"].map((pos) => (
+                    <button
+                      key={pos}
+                      type="button"
+                      className={`week-btn ${posFilter === pos ? "active" : ""}`}
+                      onClick={() => setPosFilter(pos)}
+                      style={{ padding: "4px 10px", fontSize: "0.78rem" }}
+                    >
+                      {pos}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search player, manager, team..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    padding: "6px 12px",
+                    borderRadius: 6,
+                    border: "1px solid var(--hairline)",
+                    background: "var(--paper)",
+                    color: "var(--ink)",
+                    fontFamily: "var(--sans)",
+                    fontSize: "0.85rem",
+                    width: 240,
+                  }}
+                />
+              </div>
+
+              <div className="roi-table-wrap">
+                <table className="roi-table">
+                  <thead>
+                    <tr>
+                      <th>Player</th>
+                      <th>Pos</th>
+                      <th>Manager</th>
+                      <th>Acquired</th>
+                      <th>Cost</th>
+                      <th>Starts</th>
+                      <th>Pts Scored</th>
+                      <th>Pts / $</th>
+                      <th>Current Franchise Role</th>
+                      <th>Verdict</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredLedger.map((row: any, idx: number) => (
+                      <tr key={idx}>
+                        <td><strong>{row.playerName}</strong> <small style={{ color: "var(--ink-soft)" }}>({row.nflTeam})</small></td>
+                        <td><span className="gotw-pill" style={{ fontSize: "0.72rem" }}>{row.position}</span></td>
+                        <td>{row.manager}</td>
+                        <td>Wk {row.acquiredWeek} ({row.type.toUpperCase()})</td>
+                        <td>${row.bid}</td>
+                        <td>{row.startsCount}</td>
+                        <td style={{ fontWeight: 700, color: row.totalPoints > 0 ? "#2e7d32" : "inherit" }}>
+                          {row.totalPoints.toFixed(1)}
+                        </td>
+                        <td>{row.pointsPerDollar > 0 ? `${row.pointsPerDollar}x` : "—"}</td>
+                        <td style={{ fontWeight: row.currentRole.includes("Leading") ? 700 : 400, color: row.currentRole.includes("Leading") ? "#1b5e20" : "inherit" }}>
+                          {row.currentRole}
+                        </td>
+                        <td>
+                          <span className={`roi-badge ${row.verdictClass}`}>
+                            {row.verdictBadge}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Trade Audits View */}
+            <div className="waiver-stats-banner">
+              <div className="waiver-stat-box">
+                <span className="waiver-stat-label">Total Deals Completed</span>
+                <div className="waiver-stat-num">{tradeSummary.totalTrades}</div>
+                <span className="waiver-stat-sub">Across 12 league franchises</span>
+              </div>
+              <div className="waiver-stat-box">
+                <span className="waiver-stat-label">Players Relocated</span>
+                <div className="waiver-stat-num">{tradeSummary.totalPlayersTraded}</div>
+                <span className="waiver-stat-sub">Moved between active rosters</span>
+              </div>
+              <div className="waiver-stat-box">
+                <span className="waiver-stat-label">Future Draft Picks</span>
+                <div className="waiver-stat-num">{tradeSummary.totalPicksTraded}</div>
+                <span className="waiver-stat-sub">Dynasty draft capital exchanged</span>
+              </div>
+              <div className="waiver-stat-box">
+                <span className="waiver-stat-label">FAAB Re-Routed</span>
+                <div className="waiver-stat-num" style={{ fontSize: "1.3rem" }}>
+                  ${tradeSummary.totalFaabTraded}
+                </div>
+                <span className="waiver-stat-sub">Budget currency included in deals</span>
+              </div>
+            </div>
+
+            {tradeEvaluations.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "48px 24px", background: "var(--paper)", border: "1px dashed var(--hairline)", borderRadius: 8, margin: "24px 0" }}>
+                <ArrowsLeftRight size={44} style={{ color: "var(--ink-soft)", opacity: 0.5, marginBottom: 12 }} />
+                <h3 style={{ font: "600 1.25rem var(--serif)", margin: "0 0 8px" }}>No Completed Trades on the Wire</h3>
+                <p style={{ color: "var(--ink-soft)", fontSize: "0.9rem", maxWidth: 500, margin: "0 auto", lineHeight: 1.4 }}>
+                  The Trade Evaluation Desk is live and actively monitoring league activity. When franchises agree to player, draft pick, or FAAB exchanges, comprehensive forensic evaluations and net point audits will automatically display here.
+                </p>
+              </div>
+            ) : (
+              <div className="trade-audits-list">
+                <div className="superlatives-section-title" style={{ marginTop: 8 }}>
+                  <ArrowsLeftRight size={16} weight="bold" /> Completed Deal Audits & Net Asset Production
+                </div>
+                <p className="section-deck" style={{ fontSize: "0.85rem", margin: "0 0 16px" }}>
+                  Auditing both sides of every completed trade: players acquired vs surrendered, draft picks exchanged, post-trade fantasy points delivered, and net scoring margin.
+                </p>
+
+                {tradeEvaluations.map((trade: any) => (
+                  <div key={trade.tradeId} className="trade-audit-card">
+                    <div className="trade-audit-header">
+                      <div className="trade-audit-meta">
+                        <span className="trade-week-pill">Week {trade.leg}</span>
+                        <span>{trade.date}</span>
+                      </div>
+                      <span className={`trade-verdict-badge ${trade.verdictClass}`}>
+                        {trade.verdict}
+                      </span>
+                    </div>
+
+                    <div className="trade-sides-wrapper">
+                      {trade.teams.map((t: any, tidx: number) => {
+                        const netDiff = t.netPoints;
+                        const isPos = netDiff > 0;
+                        const isNeg = netDiff < 0;
+                        return (
+                          <div key={tidx} className="trade-side-box">
+                            <div className="trade-team-header">
+                              <div className="trade-team-title">{t.teamName}</div>
+                              <div className="trade-team-manager">{t.manager}</div>
+                            </div>
+
+                            {/* Received Assets */}
+                            <div className="trade-asset-section">
+                              <span className="trade-asset-label">Acquired Assets</span>
+                              <div className="trade-asset-chips">
+                                {t.receivedPlayers.map((p: any) => (
+                                  <span key={p.id} className="trade-player-chip">
+                                    <span className="trade-pos-tag">{p.position}</span>
+                                    <span>{p.name}</span>
+                                    <span className="trade-pts-tag">+{p.points.toFixed(1)} pts ({p.starts} st)</span>
+                                  </span>
+                                ))}
+                                {t.receivedPicks.map((pick: string, pidx: number) => (
+                                  <span key={pidx} className="trade-pick-chip">
+                                    🎟️ {pick}
+                                  </span>
+                                ))}
+                                {t.receivedFaab > 0 && (
+                                  <span className="trade-faab-chip">
+                                    💰 +${t.receivedFaab} FAAB
+                                  </span>
+                                )}
+                                {!t.receivedPlayers.length && !t.receivedPicks.length && !t.receivedFaab && (
+                                  <span style={{ fontSize: "0.8rem", color: "var(--ink-soft)" }}>None</span>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Sent Assets */}
+                            <div className="trade-asset-section">
+                              <span className="trade-asset-label">Surrendered Assets</span>
+                              <div className="trade-asset-chips">
+                                {t.sentPlayers.map((p: any) => (
+                                  <span key={p.id} className="trade-player-chip" style={{ opacity: 0.85 }}>
+                                    <span className="trade-pos-tag" style={{ background: "#666" }}>{p.position}</span>
+                                    <span>{p.name}</span>
+                                    <span style={{ fontSize: "0.75rem", color: "var(--ink-soft)" }}>({p.points.toFixed(1)} pts)</span>
+                                  </span>
+                                ))}
+                                {t.sentPicks.map((pick: string, pidx: number) => (
+                                  <span key={pidx} className="trade-pick-chip" style={{ opacity: 0.85 }}>
+                                    🎟️ {pick}
+                                  </span>
+                                ))}
+                                {t.sentFaab > 0 && (
+                                  <span className="trade-faab-chip" style={{ opacity: 0.85 }}>
+                                    💰 -${t.sentFaab} FAAB
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Net return strip */}
+                            <div className="trade-net-return-strip">
+                              <span>Post-Trade Yield: <strong>{t.totalPointsReceived.toFixed(1)} pts</strong> ({t.startsReceived} st)</span>
+                              <span className={`trade-net-delta ${isPos ? "is-positive" : isNeg ? "is-negative" : "is-even"}`}>
+                                Net: {netDiff > 0 ? `+${netDiff.toFixed(1)}` : netDiff.toFixed(1)} pts
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Editorial narrative */}
+                    <div className="trade-audit-narrative">
+                      {trade.analysis}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </main>
     </div>
   );
