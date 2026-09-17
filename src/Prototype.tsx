@@ -57,6 +57,11 @@ type WeeklyMatchup = {
   week: number;
   opponentRosterId: number;
   opponentName: string;
+  isCompleted?: boolean;
+  result?: string | null;
+  actualScore?: number | null;
+  opponentActualScore?: number | null;
+  scoreDiff?: number | null;
   winProbability: number;
   projectedScore: number;
   opponentProjectedScore: number;
@@ -189,6 +194,13 @@ type TeamForecast = {
   powerDeltaLabel?: string;
   powerConnectionNarrative?: string;
   modelFactors?: ModelFactors;
+  actualWins?: number;
+  actualLosses?: number;
+  actualPoints?: number;
+  rosExpectedWins?: number;
+  rosExpectedLosses?: number;
+  completedWeeks?: number[];
+  remainingWeeks?: number;
   expectedWins: number;
   expectedLosses: number;
   expectedPointsFor: number;
@@ -3895,7 +3907,11 @@ function ForecastTeamScreen({ team }: { team: Team }) {
             <div className="forecast-record-callout">
               <span className="record-label">Expected Record</span>
               <strong>{fc.expectedWins}–{fc.expectedLosses}</strong>
-              <small>{fc.expectedPointsFor.toFixed(0)} Projected PF</small>
+              <small>
+                {fc.actualWins !== undefined && fc.completedWeeks && fc.completedWeeks.length > 0
+                  ? `${fc.actualWins}–${fc.actualLosses} Actual · +${fc.rosExpectedWins}W ROS`
+                  : `${fc.expectedPointsFor.toFixed(0)} Projected PF`}
+              </small>
             </div>
           </div>
 
@@ -4139,6 +4155,46 @@ function ForecastTeamScreen({ team }: { team: Team }) {
 
           <div className="schedule-matrix-grid">
             {schedule.map((game) => {
+              if (game.isCompleted) {
+                const isWin = game.result === "W";
+                return (
+                  <div className="schedule-matchup-card" key={game.week}>
+                    <div className="matchup-card-top">
+                      <span className="week-badge">Week {game.week} · FINAL</span>
+                      <span
+                        className="spread-pill"
+                        style={{
+                          background: isWin ? "#e8edea" : "#fbf0ec",
+                          color: isWin ? "#2e7d32" : "var(--rust)",
+                          fontWeight: 700,
+                        }}
+                      >
+                        {isWin ? "WIN" : game.result === "L" ? "LOSS" : "TIE"}
+                      </span>
+                    </div>
+                    <div className="matchup-opponent-row">
+                      <span>vs</span>
+                      <strong>{game.opponentName}</strong>
+                    </div>
+                    <div className="matchup-scores-row">
+                      <strong>Score: {game.actualScore?.toFixed(1)} – {game.opponentActualScore?.toFixed(1)}</strong>
+                    </div>
+                    <div className="matchup-prob-section">
+                      <div className="matchup-prob-header">
+                        <span>Outcome</span>
+                        <strong style={{ color: isWin ? "#2e7d32" : "var(--rust)" }}>
+                          {isWin
+                            ? `Won by +${(game.scoreDiff ?? 0).toFixed(1)} pts`
+                            : `Lost by ${(game.scoreDiff ?? 0).toFixed(1)} pts`}
+                        </strong>
+                      </div>
+                      <div className="matchup-prob-bar">
+                        <b style={{ width: "100%", background: isWin ? "#2e7d32" : "var(--rust)" }} />
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
               const isFavored = game.winProbability >= 50.0;
               const probColor = game.winProbability >= 65 ? "var(--ink)" : game.winProbability >= 45 ? "#b45309" : "var(--rust)";
               return (

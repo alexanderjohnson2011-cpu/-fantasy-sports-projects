@@ -2917,7 +2917,13 @@ function ForecastTeamScreen({ team }: { team: any }) {
             </div>
           )}
           <h1>{team.outlook}</h1>
-          <p>The model centers this roster at {team.expectedWins}-{team.expectedLosses} (Pre-Season: {team.preSeasonExpectedWins ?? team.expectedWins}W), then replays weekly scoring volatility and a six-team playoff bracket across {forecastInsightsJson.simulationsCount.toLocaleString()} seeded seasons.</p>
+          <p>
+            Expected regular-season record: <strong>{team.expectedWins}–{team.expectedLosses}</strong>
+            {team.completedWeeks && team.completedWeeks.length > 0 ? (
+              <span> ({team.actualWins}–{team.actualLosses} actual through Week {team.completedWeeks[team.completedWeeks.length - 1]} + {team.rosExpectedWins}W rest-of-season)</span>
+            ) : null}
+            . Replaying weekly scoring volatility and a six-team playoff bracket across {forecastInsightsJson.simulationsCount.toLocaleString()} seeded simulations.
+          </p>
         </section>
 
         {team.trajectory && team.trajectory.length > 0 && (
@@ -2969,40 +2975,86 @@ function ForecastTeamScreen({ team }: { team: any }) {
           <section className="detail-block">
             <div className="detail-title"><span>03</span><h2>14-Week Matchup Schedule</h2></div>
             <p className="detail-explainer">
-              Each simulated 10,000-run season tests this roster across all official regular-season Sleeper pairings:
+              Each simulated 10,000-run season locks in completed real-world box scores and tests remaining regular-season Sleeper pairings:
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "8px", marginTop: "12px" }}>
-              {team.weeklySchedule.map((w: any) => (
-                <div
-                  key={w.week}
-                  style={{
-                    padding: "8px 12px",
-                    background: "var(--paper-deep)",
-                    border: "1px solid var(--hairline)",
-                    borderRadius: 6,
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <div>
-                    <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "var(--ink-soft)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-                      Week {w.week}
-                    </span>
-                    <strong style={{ display: "block", fontSize: "0.85rem", color: "var(--ink)" }}>
-                      vs {w.opponentManager}
-                    </strong>
+              {team.weeklySchedule.map((w: any) => {
+                if (w.isCompleted) {
+                  const isWin = w.result === "W";
+                  return (
+                    <div
+                      key={w.week}
+                      style={{
+                        padding: "8px 12px",
+                        background: "var(--paper-deep)",
+                        border: "1px solid var(--hairline)",
+                        borderRadius: 6,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div>
+                        <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "var(--ink-soft)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                          Week {w.week} · FINAL
+                        </span>
+                        <strong style={{ display: "block", fontSize: "0.85rem", color: "var(--ink)" }}>
+                          vs {w.opponentManager || w.opponentName}
+                        </strong>
+                      </div>
+                      <div style={{ textAlign: "right" }}>
+                        <span
+                          style={{
+                            display: "inline-block",
+                            padding: "2px 6px",
+                            borderRadius: 4,
+                            fontWeight: 700,
+                            fontSize: "0.75rem",
+                            background: isWin ? "#e8edea" : "#fbf0ec",
+                            color: isWin ? "#2e7d32" : "var(--rust)",
+                          }}
+                        >
+                          {isWin ? "WIN" : w.result === "L" ? "LOSS" : "TIE"}
+                        </span>
+                        <span style={{ display: "block", fontSize: "0.72rem", fontWeight: 600, color: "var(--ink)", marginTop: 2 }}>
+                          {w.actualScore?.toFixed(1)} – {w.opponentActualScore?.toFixed(1)}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <div
+                    key={w.week}
+                    style={{
+                      padding: "8px 12px",
+                      background: "var(--paper-deep)",
+                      border: "1px solid var(--hairline)",
+                      borderRadius: 6,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>
+                      <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "var(--ink-soft)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                        Week {w.week}
+                      </span>
+                      <strong style={{ display: "block", fontSize: "0.85rem", color: "var(--ink)" }}>
+                        vs {w.opponentManager || w.opponentName}
+                      </strong>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <span style={{ fontSize: "0.8rem", fontWeight: 700, color: w.winProbability >= 50 ? "#2e7d32" : "var(--rust)" }}>
+                        {w.winProbability}% win
+                      </span>
+                      <span style={{ display: "block", fontSize: "0.68rem", color: "var(--ink-soft)" }}>
+                        {w.spreadLabel}
+                      </span>
+                    </div>
                   </div>
-                  <div style={{ textAlign: "right" }}>
-                    <span style={{ fontSize: "0.8rem", fontWeight: 700, color: w.winProbability >= 50 ? "#2e7d32" : "var(--rust)" }}>
-                      {w.winProbability}% win
-                    </span>
-                    <span style={{ display: "block", fontSize: "0.68rem", color: "var(--ink-soft)" }}>
-                      {w.spreadLabel}
-                    </span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </section>
         )}

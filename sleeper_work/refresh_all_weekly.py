@@ -101,6 +101,10 @@ def refresh_all(week=None, season="2026"):
             "Ape's Mac Salad: Upcoming Matchups & TV Kickoff Slate",
             ["-m", "sleeper_work.build_current_matchups"],
         ),
+        (
+            "Ape's Mac Salad: Bayesian Monte Carlo Season Forecast",
+            ["-m", "sleeper_work.monte_carlo_forecast"],
+        ),
     ]
 
     # If Johnny's redraft payload builder exists, refresh that too

@@ -350,6 +350,12 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
     
     # Load completed weeks from weekly-recap.json to lock in real-world results
     completed_weeks = {}
+    completed_matchups_data = {}
+    actual_wins = {t: 0.0 for t in team_ids}
+    actual_losses = {t: 0.0 for t in team_ids}
+    actual_ties = {t: 0.0 for t in team_ids}
+    actual_pf = {t: 0.0 for t in team_ids}
+
     recap_path = os.path.join(ALMANAC_DIR, "src", "generated", "weekly-recap.json")
     if os.path.exists(recap_path):
         try:
@@ -359,8 +365,55 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
                     w_num = w_obj.get("week")
                     scores = {}
                     for m_card in w_obj.get("matchups", []):
-                        scores[m_card["teamA"]["rosterId"]] = m_card["teamA"]["points"]
-                        scores[m_card["teamB"]["rosterId"]] = m_card["teamB"]["points"]
+                        tA = m_card["teamA"]["rosterId"]
+                        tB = m_card["teamB"]["rosterId"]
+                        sA = float(m_card["teamA"]["points"])
+                        sB = float(m_card["teamB"]["points"])
+                        scores[tA] = sA
+                        scores[tB] = sB
+                        actual_pf[tA] += sA
+                        actual_pf[tB] += sB
+
+                        diffA = round(sA - sB, 2)
+                        diffB = round(sB - sA, 2)
+
+                        if sA > sB:
+                            actual_wins[tA] += 1.0
+                            actual_losses[tB] += 1.0
+                            resA, resB = "W", "L"
+                        elif sB > sA:
+                            actual_wins[tB] += 1.0
+                            actual_losses[tA] += 1.0
+                            resA, resB = "L", "W"
+                        else:
+                            actual_ties[tA] += 1.0
+                            actual_ties[tB] += 1.0
+                            actual_wins[tA] += 0.5
+                            actual_wins[tB] += 0.5
+                            actual_losses[tA] += 0.5
+                            actual_losses[tB] += 0.5
+                            resA, resB = "T", "T"
+
+                        nameA = TEAM_NAMES.get(tA, f"Team {tA}")
+                        nameB = TEAM_NAMES.get(tB, f"Team {tB}")
+
+                        completed_matchups_data[(w_num, tA)] = {
+                            "opponentRosterId": tB,
+                            "opponentName": nameB,
+                            "actualScore": sA,
+                            "opponentActualScore": sB,
+                            "result": resA,
+                            "scoreDiff": diffA,
+                        }
+                        completed_matchups_data[(w_num, tB)] = {
+                            "opponentRosterId": tA,
+                            "opponentName": nameA,
+                            "actualScore": sB,
+                            "opponentActualScore": sA,
+                            "result": resB,
+                            "scoreDiff": diffB,
+                        }
+
                     if scores:
                         completed_weeks[w_num] = scores
             print(f"  Locked in actual scores for {len(completed_weeks)} completed regular season week(s): {list(completed_weeks.keys())}")
@@ -379,21 +432,17 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
     )
     
     for sim in range(simulations):
-        sim_wins = np.zeros(num_teams, dtype=int)
-        sim_pf = np.zeros(num_teams, dtype=float)
+        sim_wins = np.array([actual_wins[t] for t in team_ids], dtype=float)
+        sim_pf = np.array([actual_pf[t] for t in team_ids], dtype=float)
         
         for w_idx, (week_num, matchups) in enumerate(schedule):
-            is_completed = week_num in completed_weeks
-            actuals = completed_weeks.get(week_num, {})
+            if week_num in completed_weeks:
+                continue
             for t1, t2 in matchups:
                 idx1 = team_idx_map[t1]
                 idx2 = team_idx_map[t2]
-                if is_completed and t1 in actuals and t2 in actuals:
-                    s1 = actuals[t1]
-                    s2 = actuals[t2]
-                else:
-                    s1 = weekly_scores[sim, w_idx, idx1]
-                    s2 = weekly_scores[sim, w_idx, idx2]
+                s1 = weekly_scores[sim, w_idx, idx1]
+                s2 = weekly_scores[sim, w_idx, idx2]
                 
                 sim_pf[idx1] += s1
                 sim_pf[idx2] += s2
@@ -549,21 +598,46 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
                     opp_id = t2 if t1 == t else t1
                     opp_name = TEAM_NAMES.get(opp_id, f"Team {opp_id}")
                     w_count = matchup_wins.get((w_idx, t, opp_id), 0)
-                    win_pct = round((w_count / simulations) * 100.0, 1)
+                    rem_sims = simulations if week_num not in completed_weeks else 1
+                    win_pct = round((w_count / rem_sims) * 100.0, 1) if week_num not in completed_weeks else 0.0
                     t_mean = round(team_ratings[t][0], 1)
                     opp_mean = round(team_ratings[opp_id][0], 1)
                     spread = round(t_mean - opp_mean, 1)
-                    
-                    weekly_schedule.append({
-                        "week": week_num,
-                        "opponentRosterId": opp_id,
-                        "opponentName": opp_name,
-                        "winProbability": win_pct,
-                        "projectedScore": t_mean,
-                        "opponentProjectedScore": opp_mean,
-                        "spread": spread,
-                        "spreadLabel": f"{'+' if spread > 0 else ''}{spread} pts"
-                    })
+
+                    if week_num in completed_weeks and (week_num, t) in completed_matchups_data:
+                        c_match = completed_matchups_data[(week_num, t)]
+                        res_val = c_match["result"]
+                        weekly_schedule.append({
+                            "week": week_num,
+                            "opponentRosterId": opp_id,
+                            "opponentName": opp_name,
+                            "isCompleted": True,
+                            "result": res_val,
+                            "actualScore": round(c_match["actualScore"], 2),
+                            "opponentActualScore": round(c_match["opponentActualScore"], 2),
+                            "scoreDiff": c_match["scoreDiff"],
+                            "winProbability": 100.0 if res_val == "W" else 0.0,
+                            "projectedScore": round(c_match["actualScore"], 1),
+                            "opponentProjectedScore": round(c_match["opponentActualScore"], 1),
+                            "spread": spread,
+                            "spreadLabel": "FINAL"
+                        })
+                    else:
+                        weekly_schedule.append({
+                            "week": week_num,
+                            "opponentRosterId": opp_id,
+                            "opponentName": opp_name,
+                            "isCompleted": False,
+                            "result": None,
+                            "actualScore": None,
+                            "opponentActualScore": None,
+                            "scoreDiff": None,
+                            "winProbability": win_pct,
+                            "projectedScore": t_mean,
+                            "opponentProjectedScore": opp_mean,
+                            "spread": spread,
+                            "spreadLabel": f"{'+' if spread > 0 else ''}{spread} pts"
+                        })
                     
         team_name = TEAM_NAMES.get(t, f"Team {t}")
         p_rank = power_ranks.get(t, proj_rank)
@@ -591,6 +665,13 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
             conn_note = f"Simulated finish (#{proj_rank}, Exp Seed {exp_seed}) trails static Power Rank (#{p_rank}) because although roster depth is strong on paper, regular-season schedule clusters and weekly score variance produce occasional tight losses."
         else:
             conn_note = f"Simulated finish (#{proj_rank}, Exp Seed {exp_seed}) perfectly matches static Power Rank (#{p_rank}), indicating high correlation between composite roster viability and 14-week schedule outcomes."
+
+        act_w = actual_wins[t]
+        act_l = actual_losses[t]
+        completed_count = len(completed_weeks)
+        remaining_weeks_count = 14 - completed_count
+        ros_w = round(max(0.0, exp_wins - act_w), 1)
+        ros_l = round(max(0.0, float(remaining_weeks_count) - ros_w), 1)
             
         projections[str(t)] = {
             "rosterId": t,
@@ -604,6 +685,13 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
             "powerDeltaLabel": delta_label,
             "powerConnectionNarrative": conn_note,
             "modelFactors": team_model_factors[t],
+            "actualWins": int(act_w) if act_w.is_integer() else act_w,
+            "actualLosses": int(act_l) if act_l.is_integer() else act_l,
+            "actualPoints": round(actual_pf[t], 2),
+            "rosExpectedWins": ros_w,
+            "rosExpectedLosses": ros_l,
+            "completedWeeks": sorted(list(completed_weeks.keys())),
+            "remainingWeeks": remaining_weeks_count,
             "expectedWins": exp_wins,
             "expectedLosses": exp_losses,
             "expectedPointsFor": exp_pf,

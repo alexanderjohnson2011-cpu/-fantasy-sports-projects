@@ -960,6 +960,10 @@ def build_redraft_recap():
         if sim:
             row["projectedWins"] = sim["expectedWins"]
             row["projectedLosses"] = sim["expectedLosses"]
+            row["actualWins"] = sim.get("actualWins", 0)
+            row["actualLosses"] = sim.get("actualLosses", 0)
+            row["rosExpectedWins"] = sim.get("rosExpectedWins", sim["expectedWins"])
+            row["rosExpectedLosses"] = sim.get("rosExpectedLosses", sim["expectedLosses"])
             row["preSeasonWins"] = sim.get("preSeasonExpectedWins", sim["expectedWins"])
             row["winDelta"] = sim.get("winDelta", 0.0)
             row["playoffProbability"] = sim["playoffProbability"]
@@ -1628,6 +1632,77 @@ def build_redraft_forecast(team_data, power_rankings, sleeper_schedule, current_
     if len(schedule) != regular_season_weeks:
         raise ValueError(f"Expected {regular_season_weeks} Sleeper schedule weeks, found {len(schedule)}")
 
+    # Load finalized completed weeks and real-world box scores
+    completed_weeks = {}
+    completed_matchup_results = {}
+    actual_wins = {roster_id: 0.0 for roster_id in roster_ids}
+    actual_losses = {roster_id: 0.0 for roster_id in roster_ids}
+    actual_ties = {roster_id: 0.0 for roster_id in roster_ids}
+    actual_points = {roster_id: 0.0 for roster_id in roster_ids}
+
+    team_by_roster = {team["rosterId"]: team for team in team_data}
+
+    for w_idx, weekly_pairs in enumerate(schedule, start=1):
+        if w_idx >= current_week:
+            continue
+        m_list = load_week_matchups(w_idx)
+        scores_by_rid = {}
+        for m in m_list:
+            rid = m.get("roster_id")
+            pts = float(m.get("points") or 0.0)
+            if rid:
+                scores_by_rid[rid] = pts
+
+        # Week is completed if all teams have finalized non-zero scores
+        if len(scores_by_rid) == len(roster_ids) and all(p > 0.0 for p in scores_by_rid.values()):
+            completed_weeks[w_idx] = scores_by_rid
+            for left, right in weekly_pairs:
+                s_left = scores_by_rid.get(left, 0.0)
+                s_right = scores_by_rid.get(right, 0.0)
+                actual_points[left] += s_left
+                actual_points[right] += s_right
+
+                diff_left = round(s_left - s_right, 2)
+                diff_right = round(s_right - s_left, 2)
+
+                if s_left > s_right:
+                    actual_wins[left] += 1.0
+                    actual_losses[right] += 1.0
+                    res_left, res_right = "W", "L"
+                elif s_right > s_left:
+                    actual_wins[right] += 1.0
+                    actual_losses[left] += 1.0
+                    res_left, res_right = "L", "W"
+                else:
+                    actual_ties[left] += 1.0
+                    actual_ties[right] += 1.0
+                    actual_wins[left] += 0.5
+                    actual_wins[right] += 0.5
+                    actual_losses[left] += 0.5
+                    actual_losses[right] += 0.5
+                    res_left, res_right = "T", "T"
+
+                completed_matchup_results[(w_idx, left)] = {
+                    "opponentRosterId": right,
+                    "opponentName": team_by_roster[right]["teamName"],
+                    "opponentManager": team_by_roster[right]["managerName"],
+                    "actualScore": s_left,
+                    "opponentActualScore": s_right,
+                    "result": res_left,
+                    "scoreDiff": diff_left,
+                }
+                completed_matchup_results[(w_idx, right)] = {
+                    "opponentRosterId": left,
+                    "opponentName": team_by_roster[left]["teamName"],
+                    "opponentManager": team_by_roster[left]["managerName"],
+                    "actualScore": s_right,
+                    "opponentActualScore": s_left,
+                    "result": res_right,
+                    "scoreDiff": diff_right,
+                }
+
+    print(f"  Anchored Johnny's Jerks Monte Carlo to {len(completed_weeks)} completed week(s): {sorted(list(completed_weeks.keys()))}")
+
     # Extract live game status from current week matchups
     live_state = {}
     if matchup_payload and "matchups" in matchup_payload:
@@ -1670,9 +1745,13 @@ def build_redraft_forecast(team_data, power_rankings, sleeper_schedule, current_
         return left if s_left >= s_right else right
 
     for _ in range(simulations):
-        wins = {roster_id: 0 for roster_id in roster_ids}
-        points = {roster_id: 0.0 for roster_id in roster_ids}
+        wins = {roster_id: actual_wins[roster_id] for roster_id in roster_ids}
+        points = {roster_id: actual_points[roster_id] for roster_id in roster_ids}
         for w_idx, weekly_pairs in enumerate(schedule):
+            week_num = w_idx + 1
+            if week_num in completed_weeks:
+                # Already captured in actual_wins and actual_points
+                continue
             for left, right in weekly_pairs:
                 left_score = weekly_score_live(left, w_idx)
                 right_score = weekly_score_live(right, w_idx)
@@ -1698,8 +1777,6 @@ def build_redraft_forecast(team_data, power_rankings, sleeper_schedule, current_
         totals[champion]["titles"] += 1
         totals[seeded[-1]]["last"] += 1
 
-    team_by_roster = {team["rosterId"]: team for team in team_data}
-
     # Map out the 14-week regular season schedule for each team from official Sleeper pairings
     schedule_by_team = {rid: [] for rid in roster_ids}
     for w_idx, weekly_pairs in enumerate(schedule, start=1):
@@ -1708,32 +1785,79 @@ def build_redraft_forecast(team_data, power_rankings, sleeper_schedule, current_
             p_right = profile_by_id[right]["weeklyProjection"]
             spread_left = round(p_left - p_right, 1)
             win_prob_left = round(100.0 / (1.0 + math.exp(-spread_left / 12.0)), 1)
-
-            schedule_by_team[left].append({
-                "week": w_idx,
-                "opponentRosterId": right,
-                "opponentName": team_by_roster[right]["teamName"],
-                "opponentManager": team_by_roster[right]["managerName"],
-                "winProbability": win_prob_left,
-                "projectedScore": round(p_left, 1),
-                "opponentProjectedScore": round(p_right, 1),
-                "spread": spread_left,
-                "spreadLabel": f"+{spread_left} pts" if spread_left > 0 else f"{spread_left} pts",
-            })
-
             spread_right = round(p_right - p_left, 1)
             win_prob_right = round(100.0 - win_prob_left, 1)
-            schedule_by_team[right].append({
-                "week": w_idx,
-                "opponentRosterId": left,
-                "opponentName": team_by_roster[left]["teamName"],
-                "opponentManager": team_by_roster[left]["managerName"],
-                "winProbability": win_prob_right,
-                "projectedScore": round(p_right, 1),
-                "opponentProjectedScore": round(p_left, 1),
-                "spread": spread_right,
-                "spreadLabel": f"+{spread_right} pts" if spread_right > 0 else f"{spread_right} pts",
-            })
+
+            if w_idx in completed_weeks:
+                c_left = completed_matchup_results[(w_idx, left)]
+                schedule_by_team[left].append({
+                    "week": w_idx,
+                    "opponentRosterId": right,
+                    "opponentName": c_left["opponentName"],
+                    "opponentManager": c_left["opponentManager"],
+                    "isCompleted": True,
+                    "result": c_left["result"],
+                    "actualScore": round(c_left["actualScore"], 2),
+                    "opponentActualScore": round(c_left["opponentActualScore"], 2),
+                    "scoreDiff": c_left["scoreDiff"],
+                    "winProbability": 100.0 if c_left["result"] == "W" else 0.0,
+                    "projectedScore": round(p_left, 1),
+                    "opponentProjectedScore": round(p_right, 1),
+                    "spread": spread_left,
+                    "spreadLabel": "FINAL",
+                })
+
+                c_right = completed_matchup_results[(w_idx, right)]
+                schedule_by_team[right].append({
+                    "week": w_idx,
+                    "opponentRosterId": left,
+                    "opponentName": c_right["opponentName"],
+                    "opponentManager": c_right["opponentManager"],
+                    "isCompleted": True,
+                    "result": c_right["result"],
+                    "actualScore": round(c_right["actualScore"], 2),
+                    "opponentActualScore": round(c_right["opponentActualScore"], 2),
+                    "scoreDiff": c_right["scoreDiff"],
+                    "winProbability": 100.0 if c_right["result"] == "W" else 0.0,
+                    "projectedScore": round(p_right, 1),
+                    "opponentProjectedScore": round(p_left, 1),
+                    "spread": spread_right,
+                    "spreadLabel": "FINAL",
+                })
+            else:
+                schedule_by_team[left].append({
+                    "week": w_idx,
+                    "opponentRosterId": right,
+                    "opponentName": team_by_roster[right]["teamName"],
+                    "opponentManager": team_by_roster[right]["managerName"],
+                    "isCompleted": False,
+                    "result": None,
+                    "actualScore": None,
+                    "opponentActualScore": None,
+                    "scoreDiff": None,
+                    "winProbability": win_prob_left,
+                    "projectedScore": round(p_left, 1),
+                    "opponentProjectedScore": round(p_right, 1),
+                    "spread": spread_left,
+                    "spreadLabel": f"+{spread_left} pts" if spread_left > 0 else f"{spread_left} pts",
+                })
+
+                schedule_by_team[right].append({
+                    "week": w_idx,
+                    "opponentRosterId": left,
+                    "opponentName": team_by_roster[left]["teamName"],
+                    "opponentManager": team_by_roster[left]["managerName"],
+                    "isCompleted": False,
+                    "result": None,
+                    "actualScore": None,
+                    "opponentActualScore": None,
+                    "scoreDiff": None,
+                    "winProbability": win_prob_right,
+                    "projectedScore": round(p_right, 1),
+                    "opponentProjectedScore": round(p_left, 1),
+                    "spread": spread_right,
+                    "spreadLabel": f"+{spread_right} pts" if spread_right > 0 else f"{spread_right} pts",
+                })
 
     projections = []
     for profile in profiles:
@@ -1741,6 +1865,14 @@ def build_redraft_forecast(team_data, power_rankings, sleeper_schedule, current_
         sim_wins = round(totals[roster_id]["wins"] / simulations, 1)
         pre_season_wins = PRE_SEASON_BASELINE_WINS.get(roster_id, sim_wins)
         expected_wins = sim_wins
+
+        act_w = actual_wins[roster_id]
+        act_l = actual_losses[roster_id]
+        completed_count = len(completed_weeks)
+        remaining_weeks_count = regular_season_weeks - completed_count
+        ros_w = round(max(0.0, expected_wins - act_w), 1)
+        ros_l = round(max(0.0, float(remaining_weeks_count) - ros_w), 1)
+        expected_losses = round(float(regular_season_weeks) - expected_wins, 1)
 
         win_delta = round(expected_wins - pre_season_wins, 1)
         playoff_probability = round(totals[roster_id]["playoffs"] / simulations * 100.0, 1)
@@ -1786,10 +1918,17 @@ def build_redraft_forecast(team_data, power_rankings, sleeper_schedule, current_
             "managerName": team_by_roster[roster_id]["managerName"],
             "powerRank": profile["rank"],
             "powerScore": profile["powerScore"],
+            "actualWins": int(act_w) if act_w.is_integer() else act_w,
+            "actualLosses": int(act_l) if act_l.is_integer() else act_l,
+            "actualPoints": round(actual_points[roster_id], 2),
+            "rosExpectedWins": ros_w,
+            "rosExpectedLosses": ros_l,
+            "completedWeeks": sorted(list(completed_weeks.keys())),
+            "remainingWeeks": remaining_weeks_count,
             "expectedWins": expected_wins,
             "preSeasonExpectedWins": pre_season_wins,
             "winDelta": win_delta,
-            "expectedLosses": round(float(regular_season_weeks) - expected_wins, 1),
+            "expectedLosses": expected_losses,
             "playoffProbability": playoff_probability,
             "championshipProbability": title_probability,
             "lastPlaceProbability": last_probability,
