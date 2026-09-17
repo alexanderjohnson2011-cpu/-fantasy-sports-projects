@@ -23,6 +23,8 @@ import {
   Phone,
   Sparkle,
   Television,
+  TrendDown,
+  TrendUp,
   Trophy,
   UsersThree,
   Warning,
@@ -1187,13 +1189,34 @@ function PowerTeamScreen({ team }: { team: Team }) {
 
 function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
   const defendingChampion = teams.find((team) => team.rosterId === leagueInsights.previousSeason.championRosterId);
+  const powerData = powerRankingsJson;
+  const currentWeek = powerData.week || 2;
+  const dynamicTeams: any[] = (powerData.teams || []).slice().sort((a: any, b: any) => a.rank - b.rank);
+
+  // Compute Movers & Shakers
+  const risers = dynamicTeams
+    .filter((t: any) => (t.rankDelta > 0) || (t.rankDelta === 0 && (t.scoreDelta || 0) > 0.5))
+    .sort((a: any, b: any) => (b.rankDelta - a.rankDelta) || ((b.scoreDelta || 0) - (a.scoreDelta || 0)))
+    .slice(0, 3);
+
+  const fallers = dynamicTeams
+    .filter((t: any) => (t.rankDelta < 0) || (t.rankDelta === 0 && (t.scoreDelta || 0) < -0.5))
+    .sort((a: any, b: any) => (a.rankDelta - b.rankDelta) || ((a.scoreDelta || 0) - (b.scoreDelta || 0)))
+    .slice(0, 3);
+
   return (
     <div className="app-screen section-screen web-screen">
       <main className="section-page">
-        <p className="eyebrow">2026 league outlook</p>
+        <p className="eyebrow">2026 NFL Week {currentWeek} · Official Power Index</p>
         <h1>Power Rankings</h1>
-        <p className="section-deck">Who can actually win this year—graded on scoring strength, lineup depth, roster balance, and the receipts from last season.</p>
-        <div className="issue-rule"><span>Aug 20 snapshot</span><span>Sleeper + market data</span></div>
+        <p className="section-deck">
+          Who can actually win this year—graded on current starting lineup strength, usable depth, roster balance, and prior-season scoring receipts.
+        </p>
+        <div className="issue-rule">
+          <span>Week {currentWeek} Snapshot · {dynamicTeams.length} Franchises</span>
+          <span>55% Lineup · 25% Depth · 10% Balance · 10% Receipts</span>
+        </div>
+
         {defendingChampion ? (
           <button className="champion-receipt" type="button" onClick={() => onTeam(defendingChampion)}>
             <Trophy size={30} weight="duotone" aria-hidden="true" />
@@ -1201,30 +1224,161 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
             <ArrowRight size={21} aria-hidden="true" />
           </button>
         ) : null}
+
+        {/* 1. Movers & Shakers Showcase Banner */}
+        <div className="movers-shakers-showcase">
+          <div className="movers-header">
+            <span className="eyebrow" style={{ color: "var(--rust)" }}>
+              Week {currentWeek} Trajectory Audit & Movement
+            </span>
+            <h2>Weekly Movers & Shakers</h2>
+            <p>
+              Auditing rank velocity and scoring trajectory against the prior snapshot. Driven by starting lineup re-calibrations, usable depth utilization, and waiver wire additions.
+            </p>
+          </div>
+
+          <div className="movers-grid">
+            {/* Top Risers */}
+            <div className="mover-column">
+              <div className="mover-col-title risers">
+                <TrendUp size={16} weight="bold" />
+                <span>Top Risers & Momentum Gainers</span>
+              </div>
+              {risers.map((t: any) => {
+                const team = teams.find((c) => c.rosterId === t.rosterId);
+                return (
+                  <div key={t.rosterId} className="mover-card riser" onClick={() => team && onTeam(team)} style={{ cursor: "pointer" }}>
+                    <div className="mover-card-top">
+                      <div>
+                        <strong className="mover-card-title">{t.teamName}</strong>
+                        <small className="mover-card-manager" style={{ display: "block" }}>{team?.manager}</small>
+                      </div>
+                      <div className="mover-rank-strip">
+                        <span className="mover-badge is-up">
+                          {t.rankDelta > 0 ? `▲ +${t.rankDelta} (#${t.priorRank} → #${t.rank})` : `▲ +${t.scoreDelta?.toFixed(1)} pts`}
+                        </span>
+                        <span className="mover-score-delta pos">
+                          {t.scoreDelta > 0 ? `+${t.scoreDelta.toFixed(2)} pts` : ""}
+                        </span>
+                      </div>
+                    </div>
+                    {t.drivers?.length > 0 && (
+                      <div className="mover-drivers-wrap">
+                        {t.drivers.map((d: string, di: number) => (
+                          <span key={di} className="mover-driver-tag">{d}</span>
+                        ))}
+                      </div>
+                    )}
+                    <p className="mover-narrative">
+                      {t.commentary}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Steepest Fallers */}
+            <div className="mover-column">
+              <div className="mover-col-title fallers">
+                <TrendDown size={16} weight="bold" />
+                <span>Steepest Slips & Bubble Pressure</span>
+              </div>
+              {fallers.map((t: any) => {
+                const team = teams.find((c) => c.rosterId === t.rosterId);
+                return (
+                  <div key={t.rosterId} className="mover-card faller" onClick={() => team && onTeam(team)} style={{ cursor: "pointer" }}>
+                    <div className="mover-card-top">
+                      <div>
+                        <strong className="mover-card-title">{t.teamName}</strong>
+                        <small className="mover-card-manager" style={{ display: "block" }}>{team?.manager}</small>
+                      </div>
+                      <div className="mover-rank-strip">
+                        <span className="mover-badge is-down">
+                          {t.rankDelta < 0 ? `▼ ${t.rankDelta} (#${t.priorRank} → #${t.rank})` : `▼ ${t.scoreDelta?.toFixed(1)} pts`}
+                        </span>
+                        <span className="mover-score-delta neg">
+                          {t.scoreDelta?.toFixed(2)} pts
+                        </span>
+                      </div>
+                    </div>
+                    {t.drivers?.length > 0 && (
+                      <div className="mover-drivers-wrap">
+                        {t.drivers.map((d: string, di: number) => (
+                          <span key={di} className="mover-driver-tag">{d}</span>
+                        ))}
+                      </div>
+                    )}
+                    <p className="mover-narrative">
+                      {t.commentary}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* 2. Full Power Rankings List with Movement Chips */}
         <div className="power-list">
-          {powerProfiles.map((profile) => {
-            const team = teams.find((candidate) => candidate.rosterId === profile.rosterId)!;
+          {dynamicTeams.map((dynamicTeam: any) => {
+            const team = teams.find((candidate) => candidate.rosterId === dynamicTeam.rosterId)!;
+            const profile = powerProfiles.find((p) => p.rosterId === dynamicTeam.rosterId) || powerProfiles[0];
             const insight = insightFor(team);
             const history = insight.previousSeason;
             const editorial = powerEditorial[team.rosterId];
+            const rankDelta = dynamicTeam.rankDelta || 0;
+            const priorRank = dynamicTeam.priorRank;
+            const scoreDelta = dynamicTeam.scoreDelta || 0;
+            const drivers = dynamicTeam.drivers || [];
+            const commentary = dynamicTeam.commentary;
+
             return (
               <button className="power-card" type="button" key={team.name} onClick={() => onTeam(team)}>
                 <div className="power-card__header">
-                  <span className="power-card__rank">{padRank(profile.rank)}</span>
+                  <div className="power-card__rank-group">
+                    <span className="power-card__rank">{padRank(dynamicTeam.rank)}</span>
+                    <span className={`rank-delta-pill ${rankDelta > 0 ? "is-up" : rankDelta < 0 ? "is-down" : "is-same"}`}>
+                      {rankDelta > 0 ? `▲ +${rankDelta}` : rankDelta < 0 ? `▼ ${rankDelta}` : "— Even"}
+                    </span>
+                    {priorRank ? (
+                      <small style={{ fontSize: "0.68rem", color: "var(--ink-soft)" }}>
+                        Prev: #{priorRank}
+                      </small>
+                    ) : null}
+                  </div>
                   <div><strong>{team.name}</strong><small>{team.manager} · {profile.tier}</small></div>
                   <ArrowRight size={22} aria-hidden="true" />
                 </div>
-                <p>{editorial.headline}</p>
+                <p>{editorial?.headline || dynamicTeam.commentary}</p>
                 <div className="power-card__metrics">
-                  <div><span>Grade</span><strong>{profile.grade}</strong><small>{profile.score.toFixed(1)}</small></div>
+                  <div><span>Grade</span><strong>{profile.grade}</strong><small>{dynamicTeam.score.toFixed(1)}</small></div>
                   <div><span>Lineup</span><strong>#{insight.metrics.redraftLineupRank}</strong></div>
                   <div><span>Depth</span><strong>#{insight.metrics.depthRank}</strong></div>
                   <div><span>Volatility</span><strong>{profile.volatilityScore.toFixed(0)}</strong><small>{profile.volatilityLabel}</small></div>
                 </div>
                 <div className="power-card__horizon" aria-label="Current-year versus dynasty rank">
-                  <div><span>Viability</span><i><b style={{ width: `${profile.score}%` }} /></i><strong>{profile.score.toFixed(0)}</strong></div>
+                  <div><span>Viability</span><i><b style={{ width: `${dynamicTeam.score}%` }} /></i><strong>{dynamicTeam.score.toFixed(0)}</strong></div>
                   <div><span>3-year</span><i><b style={{ width: rankBar(insight.metrics.dynastyCoreRank) }} /></i><strong>#{insight.metrics.dynastyCoreRank}</strong></div>
                 </div>
+
+                {/* Movement Drivers & Why it Changed */}
+                <div className="power-card__movement-section">
+                  <div className="power-card__movement-header">
+                    <span>Week {currentWeek} Movement vs Prior</span>
+                    <span className={`mover-score-delta ${scoreDelta > 0 ? "pos" : scoreDelta < 0 ? "neg" : ""}`}>
+                      {scoreDelta > 0 ? `+${scoreDelta.toFixed(2)} pts` : scoreDelta < 0 ? `${scoreDelta.toFixed(2)} pts` : "0.0 pts"}
+                    </span>
+                  </div>
+                  {drivers?.length > 0 && (
+                    <div className="mover-drivers-wrap">
+                      {drivers.map((d: string, di: number) => (
+                        <span key={di} className="mover-driver-tag">{d}</span>
+                      ))}
+                    </div>
+                  )}
+                  <p className="power-card__movement-why">{commentary || editorial?.now}</p>
+                </div>
+
                 {history ? <div className="power-card__history"><span>2025</span><strong>{history.wins}–{history.losses} · {ordinal(history.finish)}</strong><em>{history.pointsFor.toLocaleString(undefined, { maximumFractionDigits: 0 })} PF</em></div> : null}
                 {forecastInsights.teams[String(team.rosterId)] ? (
                   <div className="power-card__sim-badge">
@@ -2796,6 +2950,27 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
 
   const topTitleFavorite = sortedForecasts[0];
 
+  // Compute Forecast Movers & Shakers against baseline
+  const enrichedForecasts = sortedForecasts.map((fc: any) => {
+    const fn = fc.fluctuationNarrative || {};
+    const hNotes = fn.historyNotes || [];
+    const baseWins = hNotes[0]?.expectedWins ?? fc.expectedWins;
+    const basePlayoff = hNotes[0]?.playoffOdds ?? fc.playoffProbability;
+    const winDelta = fc.expectedWins - baseWins;
+    const playoffDelta = fc.playoffProbability - basePlayoff;
+    return { ...fc, winDelta, playoffDelta, baseWins, basePlayoff };
+  });
+
+  const forecastSurgeTeams = enrichedForecasts
+    .slice()
+    .sort((a, b) => b.winDelta - a.winDelta || b.playoffDelta - a.playoffDelta)
+    .slice(0, 3);
+
+  const forecastSlipTeams = enrichedForecasts
+    .slice()
+    .sort((a, b) => a.winDelta - b.winDelta || a.playoffDelta - b.playoffDelta)
+    .slice(0, 3);
+
   return (
     <div className="app-screen section-screen web-screen">
       <main className="section-page">
@@ -2809,7 +2984,88 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
           <span>Brier: 0.071 · LogLoss: 0.286</span>
         </div>
 
-        {/* Expandable Statistical Viability & Methodology Breakdown (Moved to Top) */}
+        {/* 1. Forecast Movers & Shakers Showcase Banner */}
+        <div className="movers-shakers-showcase" style={{ marginTop: "24px" }}>
+          <div className="movers-header">
+            <span className="eyebrow" style={{ color: "var(--rust)" }}>
+              Monte Carlo Trajectory Audit · Post-Week 1 Re-Convergence
+            </span>
+            <h2>Forecast Movers & Shakers</h2>
+            <p>
+              Auditing 10,000-simulation win and playoff shifts against the post-draft baseline. Explaining the statistical models, scoring volatility, and strategic reasons behind every projection change.
+            </p>
+          </div>
+
+          <div className="movers-grid">
+            {/* Surging Contenders */}
+            <div className="mover-column">
+              <div className="mover-col-title risers">
+                <TrendUp size={16} weight="bold" />
+                <span>Surging Playoff Contenders</span>
+              </div>
+              {forecastSurgeTeams.map((fc: any) => {
+                const fn = fc.fluctuationNarrative || {};
+                return (
+                  <div key={fc.rosterId} className="mover-card riser">
+                    <div className="mover-card-top">
+                      <div>
+                        <strong className="mover-card-title">{fc.teamName}</strong>
+                        <small className="mover-card-manager" style={{ display: "block" }}>Projected Finish #{fc.projectedRank ?? 1}</small>
+                      </div>
+                      <div className="mover-rank-strip">
+                        <span className="forecast-shift-badge pos">
+                          ▲ {fc.winDelta >= 0 ? `+${fc.winDelta.toFixed(1)}W` : `${fc.winDelta.toFixed(1)}W`} ({fc.playoffDelta >= 0 ? `+${fc.playoffDelta.toFixed(1)}%` : `${fc.playoffDelta.toFixed(1)}%`} Playoffs)
+                        </span>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", gap: 6, alignItems: "center", margin: "4px 0" }}>
+                      <span className="forecast-driver-pill">{fn.primaryDriver || "SIMULATION_SURGE"}</span>
+                      <span className="forecast-trend-tag">{fn.trend}</span>
+                    </div>
+                    <p className="mover-narrative">
+                      {fn.analysis}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Bubble Contractions & Slipping Franchises */}
+            <div className="mover-column">
+              <div className="mover-col-title fallers">
+                <TrendDown size={16} weight="bold" />
+                <span>Playoff Path Contractions</span>
+              </div>
+              {forecastSlipTeams.map((fc: any) => {
+                const fn = fc.fluctuationNarrative || {};
+                return (
+                  <div key={fc.rosterId} className="mover-card faller">
+                    <div className="mover-card-top">
+                      <div>
+                        <strong className="mover-card-title">{fc.teamName}</strong>
+                        <small className="mover-card-manager" style={{ display: "block" }}>Projected Finish #{fc.projectedRank ?? 12}</small>
+                      </div>
+                      <div className="mover-rank-strip">
+                        <span className="forecast-shift-badge neg">
+                          ▼ {fc.winDelta.toFixed(1)}W ({fc.playoffDelta.toFixed(1)}% Playoffs)
+                        </span>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", gap: 6, alignItems: "center", margin: "4px 0" }}>
+                      <span className="forecast-driver-pill">{fn.primaryDriver || "VOLATILITY_RISK"}</span>
+                      <span className="forecast-trend-tag">{fn.trend}</span>
+                    </div>
+                    <p className="mover-narrative">
+                      {fn.analysis}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Expandable Statistical Viability & Methodology Breakdown */}
         <section className="forecast-methodology-container" style={{ margin: "24px 0 28px" }}>
           <details className="forecast-methodology-accordion">
             <summary>
@@ -2918,9 +3174,14 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
         ) : null}
 
         <div className="power-list">
-          {sortedForecasts.map((fc, index) => {
+          {enrichedForecasts.map((fc, index) => {
             const team = teams.find((t) => t.rosterId === fc.rosterId);
             const rankNumber = fc.projectedRank ?? index + 1;
+            const fn = fc.fluctuationNarrative || {};
+            const hNotes = fn.historyNotes || [];
+            const winDelta = fc.winDelta;
+            const playoffDelta = fc.playoffDelta;
+
             return (
               <div
                 className="power-card"
@@ -2929,7 +3190,14 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                 onClick={() => team && onTeam && onTeam(team)}
               >
                 <div className="power-card__header">
-                  <span className="power-card__rank">#{rankNumber}</span>
+                  <div className="power-card__rank-group">
+                    <span className="power-card__rank">#{rankNumber}</span>
+                    {winDelta !== 0 && (
+                      <span className={`rank-delta-pill ${winDelta > 0 ? "is-up" : "is-down"}`}>
+                        {winDelta > 0 ? `▲ +${winDelta.toFixed(1)}W` : `▼ ${winDelta.toFixed(1)}W`}
+                      </span>
+                    )}
+                  </div>
                   <div>
                     <strong>{fc.teamName}</strong>
                     <small>{team ? team.manager : `Team ${fc.rosterId}`} · Projected Finish #{rankNumber} (Exp Seed {fc.expectedSeed?.toFixed(1) ?? fc.medianSeed})</small>
@@ -2954,7 +3222,9 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                     <strong style={{ color: fc.playoffProbability >= 75 ? "var(--ink)" : "var(--rust)" }}>
                       {fc.playoffProbability}%
                     </strong>
-                    <small>Top 6</small>
+                    <small>
+                      {playoffDelta !== 0 ? (playoffDelta > 0 ? `+${playoffDelta.toFixed(1)}% shift` : `${playoffDelta.toFixed(1)}% shift`) : "Top 6"}
+                    </small>
                   </div>
                   <div>
                     <span>First Bye</span>
@@ -2979,6 +3249,28 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                     <i><b style={{ width: `${Math.min(100, fc.championshipProbability * 3)}%`, background: "var(--rust)" }} /></i>
                     <strong>{fc.championshipProbability}%</strong>
                   </div>
+                </div>
+
+                {/* Why the Forecast Changed: Narrative & Trajectory Milestones */}
+                <div className="forecast-narrative-box">
+                  <div className="forecast-narrative-header">
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <span className="forecast-driver-pill">{fn.primaryDriver || "SIMULATION_MODEL"}</span>
+                      <strong style={{ fontSize: "0.88rem", color: "var(--ink)" }}>{fn.headline || "Season Trajectory Analysis"}</strong>
+                    </div>
+                    <span className="forecast-trend-tag">{fn.trend}</span>
+                  </div>
+                  <p className="forecast-narrative-text">{fn.analysis}</p>
+                  {hNotes.length > 0 && (
+                    <div className="forecast-timeline-steps">
+                      <span style={{ fontWeight: 700, textTransform: "uppercase", fontSize: "0.68rem" }}>Trajectory:</span>
+                      {hNotes.map((note: any, nidx: number) => (
+                        <span key={nidx} className="forecast-timeline-step">
+                          {note.event}: <strong>{note.expectedWins}W</strong> ({note.playoffOdds}%) {nidx < hNotes.length - 1 ? "→" : ""}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             );

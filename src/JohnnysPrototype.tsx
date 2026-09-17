@@ -16,6 +16,8 @@ import {
   Newspaper,
   Sparkle,
   Television,
+  TrendDown,
+  TrendUp,
   Trophy,
   UsersThree,
   Warning,
@@ -1504,6 +1506,89 @@ export default function JohnnysPrototype() {
                 <span>50% lineup · 25% depth · 15% ceiling · 10% balance</span>
               </div>
 
+              {/* Movers & Shakers Showcase Banner */}
+              {(() => {
+                const timelineTeams = (powerRankingsJson as any).trendTimeline?.teams || [];
+                const johnnyRisers = timelineTeams
+                  .filter((t: any) => t.rankDelta > 0)
+                  .sort((a: any, b: any) => b.rankDelta - a.rankDelta)
+                  .slice(0, 3);
+                const johnnyFallers = timelineTeams
+                  .filter((t: any) => t.rankDelta < 0)
+                  .sort((a: any, b: any) => a.rankDelta - b.rankDelta)
+                  .slice(0, 3);
+
+                if (!johnnyRisers.length && !johnnyFallers.length) return null;
+
+                return (
+                  <div className="movers-shakers-showcase">
+                    <div className="movers-header">
+                      <span className="eyebrow" style={{ color: "var(--rust)" }}>
+                        Milestone Movement Audit & Trajectory Shifts
+                      </span>
+                      <h2>Weekly Movers & Shakers</h2>
+                      <p>
+                        Auditing rank velocity and scoring trajectory against the pre-season draft baseline. Driven by live player scoring, starting lineup efficiency, and usable depth.
+                      </p>
+                    </div>
+
+                    <div className="movers-grid">
+                      {/* Top Risers */}
+                      <div className="mover-column">
+                        <div className="mover-col-title risers">
+                          <TrendUp size={16} weight="bold" />
+                          <span>Top Risers & Momentum Gainers</span>
+                        </div>
+                        {johnnyRisers.map((t: any) => (
+                          <div key={t.rosterId} className="mover-card riser" onClick={() => go({ kind: "powerTeam", rosterId: t.rosterId })} style={{ cursor: "pointer" }}>
+                            <div className="mover-card-top">
+                              <div>
+                                <strong className="mover-card-title">{t.teamName}</strong>
+                                <small className="mover-card-manager" style={{ display: "block" }}>{t.managerName}</small>
+                              </div>
+                              <div className="mover-rank-strip">
+                                <span className="mover-badge is-up">
+                                  ▲ +{t.rankDelta} (#{t.preSeasonRank} → #{t.currentRank})
+                                </span>
+                              </div>
+                            </div>
+                            <p className="mover-narrative">
+                              {t.commentary}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Steepest Fallers */}
+                      <div className="mover-column">
+                        <div className="mover-col-title fallers">
+                          <TrendDown size={16} weight="bold" />
+                          <span>Steepest Slips & Depth Pressure</span>
+                        </div>
+                        {johnnyFallers.map((t: any) => (
+                          <div key={t.rosterId} className="mover-card faller" onClick={() => go({ kind: "powerTeam", rosterId: t.rosterId })} style={{ cursor: "pointer" }}>
+                            <div className="mover-card-top">
+                              <div>
+                                <strong className="mover-card-title">{t.teamName}</strong>
+                                <small className="mover-card-manager" style={{ display: "block" }}>{t.managerName}</small>
+                              </div>
+                              <div className="mover-rank-strip">
+                                <span className="mover-badge is-down">
+                                  ▼ {t.rankDelta} (#{t.preSeasonRank} → #{t.currentRank})
+                                </span>
+                              </div>
+                            </div>
+                            <p className="mover-narrative">
+                              {t.commentary}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
               {(powerRankingsJson as any).trendTimeline && (
                 <div style={{ marginBottom: "1.75rem" }}>
                   <PowerTrajectoryChart
@@ -1517,10 +1602,26 @@ export default function JohnnysPrototype() {
               <div className="power-list">
                 {power.map((team: any) => {
                   const sim = forecast.teams.find((entry: any) => entry.rosterId === team.rosterId);
+                  const timelineTeam = (powerRankingsJson as any).trendTimeline?.teams?.find((t: any) => t.rosterId === team.rosterId);
+                  const rankDelta = timelineTeam?.rankDelta ?? 0;
+                  const preRank = timelineTeam?.preSeasonRank;
+
                   return (
                     <button className="power-card" type="button" key={team.rosterId} onClick={() => go({ kind: "powerTeam", rosterId: team.rosterId })}>
                       <div className="power-card__header">
-                        <span className="power-card__rank">{padRank(team.rank)}</span>
+                        <div className="power-card__rank-group">
+                          <span className="power-card__rank">{padRank(team.rank)}</span>
+                          {timelineTeam && (
+                            <span className={`rank-delta-pill ${rankDelta > 0 ? "is-up" : rankDelta < 0 ? "is-down" : "is-same"}`}>
+                              {rankDelta > 0 ? `▲ +${rankDelta}` : rankDelta < 0 ? `▼ ${rankDelta}` : "— Even"}
+                            </span>
+                          )}
+                          {preRank ? (
+                            <small style={{ fontSize: "0.68rem", color: "var(--ink-soft)" }}>
+                              Prev: #{preRank}
+                            </small>
+                          ) : null}
+                        </div>
                         <div><strong>{team.teamName}</strong><small>{team.managerName} · {team.tier}</small></div>
                         <ArrowRight size={22} aria-hidden="true" />
                       </div>
@@ -1535,6 +1636,20 @@ export default function JohnnysPrototype() {
                         <div><span>Viability</span><i><b style={{ width: `${team.powerScore}%` }} /></i><strong>{team.powerScore.toFixed(0)}</strong></div>
                         <div><span>Star ceiling</span><i><b style={{ width: `${team.components.star.score}%` }} /></i><strong>#{team.components.star.rank}</strong></div>
                       </div>
+
+                      {/* Movement Commentary */}
+                      {timelineTeam?.commentary && (
+                        <div className="power-card__movement-section">
+                          <div className="power-card__movement-header">
+                            <span>Movement vs Pre-Season</span>
+                            <span className={`mover-score-delta ${rankDelta > 0 ? "pos" : rankDelta < 0 ? "neg" : ""}`}>
+                              {rankDelta > 0 ? `▲ Up ${rankDelta} spots` : rankDelta < 0 ? `▼ Down ${Math.abs(rankDelta)} spots` : "Unchanged"}
+                            </span>
+                          </div>
+                          <p className="power-card__movement-why">{timelineTeam.commentary}</p>
+                        </div>
+                      )}
+
                       {sim ? (
                         <div className="power-card__sim-badge">
                           <span>Simulation outlook</span>
@@ -1657,6 +1772,116 @@ export default function JohnnysPrototype() {
                 <span>{forecast.simulationsCount.toLocaleString()} Seeded Simulations</span>
                 <span>Random seed {forecast.randomSeed}</span>
               </div>
+
+              {/* Forecast Movers & Shakers Showcase Banner */}
+              {(() => {
+                const jfRisers = [...forecast.teams]
+                  .filter((t: any) => (t.winDelta ?? 0) > 0)
+                  .sort((a: any, b: any) => (b.winDelta ?? 0) - (a.winDelta ?? 0))
+                  .slice(0, 3);
+                const jfFallers = [...forecast.teams]
+                  .filter((t: any) => (t.winDelta ?? 0) < 0)
+                  .sort((a: any, b: any) => (a.winDelta ?? 0) - (b.winDelta ?? 0))
+                  .slice(0, 3);
+
+                if (!jfRisers.length && !jfFallers.length) return null;
+
+                return (
+                  <div className="movers-shakers-showcase">
+                    <div className="movers-header">
+                      <span className="eyebrow" style={{ color: "var(--rust)" }}>
+                        10,000-Run Monte Carlo Velocity & Playoff Shifts
+                      </span>
+                      <h2>Forecast Movers & Shakers</h2>
+                      <p>
+                        Tracking expected win and playoff probability shifts against the pre-season baseline across 10,000 seeded simulations. Explaining why team trajectories are rising or falling.
+                      </p>
+                    </div>
+
+                    <div className="movers-grid">
+                      {/* Surging Contenders */}
+                      <div className="mover-column">
+                        <div className="mover-col-title risers">
+                          <TrendUp size={16} weight="bold" />
+                          <span>Surging Win Projections</span>
+                        </div>
+                        {jfRisers.map((team: any) => (
+                          <div key={team.rosterId} className="mover-card riser" onClick={() => go({ kind: "forecastTeam", rosterId: team.rosterId })} style={{ cursor: "pointer" }}>
+                            <div className="mover-card-top">
+                              <div>
+                                <strong className="mover-card-title">{team.teamName}</strong>
+                                <small className="mover-card-manager" style={{ display: "block" }}>{team.managerName} · Exp Finish #{team.medianSeed}</small>
+                              </div>
+                              <div className="mover-rank-strip">
+                                <span className="forecast-shift-badge pos">
+                                  ▲ +{team.winDelta.toFixed(1)}W ({team.playoffProbability}% Playoffs)
+                                </span>
+                              </div>
+                            </div>
+                            <div style={{ display: "flex", gap: 6, alignItems: "center", margin: "4px 0" }}>
+                              <span className="forecast-driver-pill">LIVE_SCORING_SURGE</span>
+                              <span className="forecast-trend-tag">SURGING</span>
+                            </div>
+                            <p className="mover-narrative">
+                              {team.outlook}
+                            </p>
+                            {team.trajectory?.length > 0 && (
+                              <div className="forecast-timeline-steps" style={{ marginTop: 6 }}>
+                                <span style={{ fontWeight: 700, textTransform: "uppercase", fontSize: "0.68rem" }}>Trajectory:</span>
+                                {team.trajectory.map((step: any, sIdx: number) => (
+                                  <span key={sIdx} className="forecast-timeline-step">
+                                    {step.milestone}: <strong>{step.expectedWins}W</strong> ({step.playoffOdds}%) {sIdx < team.trajectory.length - 1 ? "→" : ""}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Slipping Projections */}
+                      <div className="mover-column">
+                        <div className="mover-col-title fallers">
+                          <TrendDown size={16} weight="bold" />
+                          <span>Downward Projections & Risk</span>
+                        </div>
+                        {jfFallers.map((team: any) => (
+                          <div key={team.rosterId} className="mover-card faller" onClick={() => go({ kind: "forecastTeam", rosterId: team.rosterId })} style={{ cursor: "pointer" }}>
+                            <div className="mover-card-top">
+                              <div>
+                                <strong className="mover-card-title">{team.teamName}</strong>
+                                <small className="mover-card-manager" style={{ display: "block" }}>{team.managerName} · Exp Finish #{team.medianSeed}</small>
+                              </div>
+                              <div className="mover-rank-strip">
+                                <span className="forecast-shift-badge neg">
+                                  ▼ {team.winDelta.toFixed(1)}W ({team.playoffProbability}% Playoffs)
+                                </span>
+                              </div>
+                            </div>
+                            <div style={{ display: "flex", gap: 6, alignItems: "center", margin: "4px 0" }}>
+                              <span className="forecast-driver-pill">EFFICIENCY_CONTRACTION</span>
+                              <span className="forecast-trend-tag">SLIPPING</span>
+                            </div>
+                            <p className="mover-narrative">
+                              {team.outlook}
+                            </p>
+                            {team.trajectory?.length > 0 && (
+                              <div className="forecast-timeline-steps" style={{ marginTop: 6 }}>
+                                <span style={{ fontWeight: 700, textTransform: "uppercase", fontSize: "0.68rem" }}>Trajectory:</span>
+                                {team.trajectory.map((step: any, sIdx: number) => (
+                                  <span key={sIdx} className="forecast-timeline-step">
+                                    {step.milestone}: <strong>{step.expectedWins}W</strong> ({step.playoffOdds}%) {sIdx < team.trajectory.length - 1 ? "→" : ""}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
 
               {(forecast as any).trendTimeline && (
                 <div style={{ marginBottom: "1.5rem" }}>
@@ -2197,11 +2422,39 @@ function ForecastTeamScreen({ team }: { team: any }) {
           <p className="eyebrow">Power rank #{team.powerRank} · {team.managerName}</p>
           <span className="team-hero__label">Median simulated seed</span>
           <div className="team-hero__grade">#{team.medianSeed}</div>
+          {team.winDelta !== undefined && team.winDelta !== 0 && (
+            <div style={{ marginTop: 8 }}>
+              <span className={`rank-delta-pill ${team.winDelta > 0 ? "is-up" : "is-down"}`}>
+                {team.winDelta > 0 ? `▲ +${team.winDelta.toFixed(1)}W vs Pre-Season` : `▼ ${team.winDelta.toFixed(1)}W vs Pre-Season`}
+              </span>
+            </div>
+          )}
           <h1>{team.outlook}</h1>
-          <p>The model centers this roster at {team.expectedWins}-{team.expectedLosses}, then replays weekly scoring volatility and a six-team playoff bracket across {forecastInsightsJson.simulationsCount.toLocaleString()} seeded seasons.</p>
+          <p>The model centers this roster at {team.expectedWins}-{team.expectedLosses} (Pre-Season: {team.preSeasonExpectedWins ?? team.expectedWins}W), then replays weekly scoring volatility and a six-team playoff bracket across {forecastInsightsJson.simulationsCount.toLocaleString()} seeded seasons.</p>
         </section>
+
+        {team.trajectory && team.trajectory.length > 0 && (
+          <section className="detail-block">
+            <div className="detail-title"><span>01</span><h2>Projection Trajectory & Milestones</h2></div>
+            <p className="detail-explainer">Tracking the evolution of this team’s expected wins and playoff odds through pre-season and live scoring events.</p>
+            <div style={{ display: "grid", gap: 10, marginTop: 14 }}>
+              {team.trajectory.map((step: any, sIdx: number) => (
+                <div key={sIdx} style={{ background: "var(--paper-deep)", padding: "12px 16px", borderRadius: 8, borderLeft: "3px solid var(--rust)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <strong style={{ fontSize: "0.95rem" }}>{step.milestone}</strong>
+                    <span style={{ fontSize: "0.75rem", color: "var(--ink-soft)" }}>{step.date}</span>
+                  </div>
+                  <div style={{ fontSize: "0.85rem", color: "var(--ink)", marginTop: 4 }}>
+                    <span>Event: <strong>{step.event}</strong></span> · <span>Proj Wins: <strong style={{ color: "#2e7d32" }}>{step.expectedWins}W</strong></span> · <span>Playoff Odds: <strong>{step.playoffOdds}%</strong></span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         <section className="detail-block">
-          <div className="detail-title"><span>01</span><h2>Range of outcomes</h2></div>
+          <div className="detail-title"><span>02</span><h2>Range of outcomes</h2></div>
           <div className="grade-compare">
             <div><span>Playoffs</span><strong>{team.playoffProbability}%</strong><small>Any playoff berth</small></div>
             <div><span>Championship</span><strong>{team.championshipProbability}%</strong><small>Wins playoff bracket</small></div>
