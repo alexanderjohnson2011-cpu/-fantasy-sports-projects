@@ -408,6 +408,90 @@ def generate_trade_team_commentary(team, opponent_team=None):
         )
 
 
+def generate_franchise_transaction_commentary(
+    manager, team_name, archetype, moves_count, faab_spent, faab_remaining,
+    pts_contributed, starter_pts, top_pickup, m_trades, net_trade_pts, net_trade_vorp, net_dynasty_delta
+):
+    parts = []
+    num_trades = len(m_trades)
+
+    if moves_count == 0 and num_trades == 0:
+        return (
+            f"{manager} has remained entirely dormant on the transaction wire, executing 0 moves and 0 trades. "
+            f"By preserving 100% of their $100 FAAB budget, {team_name} is banking entirely on draft-day roster construction, "
+            f"maintaining full bidding leverage for late-season emergencies."
+        )
+
+    if num_trades > 0 and moves_count > 0:
+        activity_str = f"executed an active dual-market playbook with {moves_count} waiver/FA claim(s) and {num_trades} trade(s)"
+    elif num_trades > 0:
+        activity_str = f"focused their roster tuning on the trade block with {num_trades} completed deal(s) while bypassing the waiver wire"
+    else:
+        activity_str = f"relied exclusively on the waiver wire, executing {moves_count} move(s) with zero trades logged"
+
+    parts.append(f"{manager} ({team_name}) has {activity_str} operating under a {archetype} archetype.")
+
+    # 2. Waiver Wire Impact
+    if moves_count > 0:
+        top_name = top_pickup.get("name") if top_pickup else None
+        top_pts = top_pickup.get("points", 0.0) if top_pickup else 0.0
+        top_bid = top_pickup.get("bid", 0) if top_pickup else 0
+
+        waiver_benefit = []
+        if starter_pts > 0:
+            waiver_benefit.append(f"delivering {starter_pts:.1f} points directly into the active starting lineup ({pts_contributed:.1f} total pts across roster)")
+        elif pts_contributed > 0:
+            waiver_benefit.append(f"generating {pts_contributed:.1f} points of bench depth and injury insulation")
+        else:
+            waiver_benefit.append("accumulating speculative depth awaiting offensive opportunity")
+
+        if top_name and top_pts > 0:
+            waiver_benefit.append(f"headlined by {top_name} ({top_pts:.1f} pts, ${top_bid} bid)")
+
+        spend_str = f"${faab_spent} FAAB committed with ${faab_remaining} preserved" if faab_spent > 0 else "zero FAAB spent ($100 budget intact)"
+        parts.append(f"On waivers ({spend_str}), acquisitions have paid off by {', '.join(waiver_benefit)}.")
+    else:
+        parts.append(f"On the wire, they preserved their full $100 FAAB balance with zero claims.")
+
+    # 3. Trade Impact
+    if num_trades > 0:
+        trade_benefit = []
+        if net_trade_pts > 0:
+            trade_benefit.append(f"a positive on-field scoring yield of +{net_trade_pts:.1f} net points")
+        elif net_trade_pts < 0:
+            trade_benefit.append(f"an on-field scoring concession of {net_trade_pts:.1f} net points")
+
+        if net_trade_vorp > 0:
+            trade_benefit.append(f"+{net_trade_vorp:+.1f} net VORP")
+        elif net_trade_vorp < 0:
+            trade_benefit.append(f"{net_trade_vorp:+.1f} net VORP")
+
+        if net_dynasty_delta and abs(net_dynasty_delta) > 50:
+            if net_dynasty_delta > 0:
+                trade_benefit.append(f"a +{net_dynasty_delta:,} dynasty equity surplus")
+            else:
+                trade_benefit.append(f"a {net_dynasty_delta:,} dynasty equity adjustment")
+
+        if trade_benefit:
+            parts.append(f"Through dealmaking, their trades have generated {', '.join(trade_benefit)}.")
+        else:
+            parts.append(f"Their {num_trades} trade(s) represent neutral realignment swaps balancing positional needs.")
+    elif num_trades == 0:
+        parts.append("They have not completed any trades, keeping their original drafted roster structure and draft capital intact.")
+
+    # 4. Overall Benefit Verdict
+    total_net_benefit = pts_contributed + (net_trade_pts if num_trades > 0 else 0)
+    if total_net_benefit >= 15.0 or (net_dynasty_delta and net_dynasty_delta >= 400):
+        verdict = "Overall, their in-season moves have significantly strengthened franchise competitive viability."
+    elif total_net_benefit > 0 or faab_remaining >= 85:
+        verdict = "Overall, their transactions represent cost-effective roster enhancement with substantial budget flexibility retained."
+    else:
+        verdict = "Overall, their moves have served as modest depth stabilization, though future production will dictate long-term payoff."
+
+    parts.append(verdict)
+    return " ".join(parts)
+
+
 def calc_vorp(points, starts, position):
     base_per_game = POS_BASELINES.get(position, 6.5)
     return round(points - (starts * base_per_game), 1)
@@ -1375,6 +1459,17 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026", week=None):
         top_pickup = sorted_m_pickups[0] if sorted_m_pickups else None
         archetype = determine_manager_archetype(m["movesCount"], faab_spent, m["waiverCount"])
 
+        m_trades = [t for t in trade_evaluations if any(team.get("rosterId") == rid for team in t.get("teams", []))]
+        net_trade_pts = round(sum(next((team.get("netPoints", 0.0) for team in t.get("teams", []) if team.get("rosterId") == rid), 0.0) for t in m_trades), 1)
+        net_trade_vorp = round(sum(next((team.get("netVorp", 0.0) for team in t.get("teams", []) if team.get("rosterId") == rid), 0.0) for t in m_trades), 1)
+        net_dynasty_delta = sum(next((team.get("netDynastyDelta") or team.get("netDynastyEquity") or 0 for team in t.get("teams", []) if team.get("rosterId") == rid), 0) for t in m_trades)
+
+        commentary = generate_franchise_transaction_commentary(
+            m["manager"], m["teamName"], archetype, m["movesCount"], faab_spent, max(0, 100 - faab_spent),
+            m["totalPointsContributed"], m["starterPointsContributed"], top_pickup, m_trades,
+            net_trade_pts, net_trade_vorp, net_dynasty_delta
+        )
+
         manager_profiles.append({
             "rosterId": rid,
             "manager": m["manager"],
@@ -1384,10 +1479,14 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026", week=None):
             "totalMoves": m["movesCount"],
             "waiverCount": m["waiverCount"],
             "freeAgentCount": m["freeAgentCount"],
-            "tradesCount": m.get("tradesCount", 0),
+            "tradesCount": len(m_trades),
+            "netTradePoints": net_trade_pts,
+            "netTradeVorp": net_trade_vorp,
+            "netDynastyDelta": net_dynasty_delta,
             "pointsContributed": round(m["totalPointsContributed"], 2),
             "starterPoints": round(m["starterPointsContributed"], 2),
             "archetype": archetype,
+            "commentary": commentary,
             "topPickup": {
                 "name": top_pickup["playerName"],
                 "position": top_pickup["position"],

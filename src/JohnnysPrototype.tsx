@@ -41,6 +41,7 @@ import matchupsCurrentJson from "./generated/johnnys-jerks/matchups-current.json
 import forecastInsightsJson from "./generated/johnnys-jerks/forecast-insights.json";
 import TrajectoryChart from "./components/johnny/TrajectoryChart";
 import PowerTrajectoryChart from "./components/johnny/PowerTrajectoryChart";
+import TeamTransactionDossier from "./components/TeamTransactionDossier";
 
 const JOHNNYS_LEAGUE_ID = "1401673232670539776";
 
@@ -1031,6 +1032,7 @@ function WaiverWireScreen() {
   const [posFilter, setPosFilter] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedPickupId, setExpandedPickupId] = useState<string | null>(null);
+  const [selectedRosterId, setSelectedRosterId] = useState<number | null>(null);
 
   const filteredLedger = (waiverData.roiLedger || []).filter((item: any) => {
     const matchesPos = posFilter === "ALL" || item.position === posFilter;
@@ -1135,44 +1137,84 @@ function WaiverWireScreen() {
               <div className="superlatives-section-title">
                 <UsersThree size={16} weight="fill" /> Manager Bidding Archetypes & FAAB Velocity
               </div>
+              <p className="section-deck" style={{ fontSize: "0.85rem", margin: "0 0 16px" }}>
+                Click on any team card below to open their complete Franchise Transaction Dossier with all waiver adds, trades, and executive commentary detailing franchise benefit.
+              </p>
               <div className="manager-profiles-grid">
-                {waiverData.managerProfiles?.map((m: any) => (
-                  <div key={m.rosterId} className="manager-profile-card">
-                    <div className="manager-profile-header">
-                      <div>
-                        <strong>{m.teamName}</strong>
-                        <small>{m.manager}</small>
+                {waiverData.managerProfiles?.map((m: any) => {
+                  const isSelected = selectedRosterId === m.rosterId;
+                  return (
+                    <div
+                      key={m.rosterId}
+                      className={`manager-profile-card is-clickable ${isSelected ? "is-active-card" : ""}`}
+                      onClick={() => {
+                        const nextId = isSelected ? null : m.rosterId;
+                        setSelectedRosterId(nextId);
+                        if (nextId) {
+                          setTimeout(() => {
+                            document.getElementById("team-dossier-panel")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                          }, 60);
+                        }
+                      }}
+                      role="button"
+                      tabIndex={0}
+                      aria-pressed={isSelected}
+                    >
+                      <div className="manager-profile-header">
+                        <div>
+                          <strong>{m.teamName}</strong>
+                          <small>{m.manager}</small>
+                        </div>
+                        <span className="archetype-chip">{m.archetype}</span>
                       </div>
-                      <span className="archetype-chip">{m.archetype}</span>
-                    </div>
 
-                    <div className="faab-meter-wrap">
-                      <div className="faab-meter-label">
-                        <span>FAAB Remaining: ${m.faabRemaining}</span>
-                        <span>Spent: ${m.faabSpent} / $100</span>
+                      <div className="faab-meter-wrap">
+                        <div className="faab-meter-label">
+                          <span>FAAB Remaining: ${m.faabRemaining}</span>
+                          <span>Spent: ${m.faabSpent} / $100</span>
+                        </div>
+                        <div className="faab-meter-bar">
+                          <div className="faab-meter-fill" style={{ width: `${Math.max(0, Math.min(100, m.faabRemaining))}%` }} />
+                        </div>
                       </div>
-                      <div className="faab-meter-bar">
-                        <div className="faab-meter-fill" style={{ width: `${Math.max(0, Math.min(100, m.faabRemaining))}%` }} />
-                      </div>
-                    </div>
 
-                    <div className="manager-profile-stats">
-                      <div>
-                        <span>Total Moves</span>
-                        <strong>{m.totalMoves} ({m.waiverCount} W / {m.freeAgentCount} FA)</strong>
+                      <div className="manager-profile-stats">
+                        <div>
+                          <span>Total Moves</span>
+                          <strong>{m.totalMoves} ({m.waiverCount} W / {m.freeAgentCount} FA)</strong>
+                        </div>
+                        <div>
+                          <span>Points Yield</span>
+                          <strong>{m.pointsContributed?.toFixed(1)} pts</strong>
+                        </div>
+                        <div>
+                          <span>Top Add</span>
+                          <strong>{m.topPickup?.name || "—"}</strong>
+                        </div>
                       </div>
-                      <div>
-                        <span>Points Yield</span>
-                        <strong>{m.pointsContributed?.toFixed(1)} pts</strong>
-                      </div>
-                      <div>
-                        <span>Top Add</span>
-                        <strong>{m.topPickup?.name || "—"}</strong>
+
+                      <div className="manager-card-dossier-cta">
+                        <span>{isSelected ? "Viewing Dossier" : "Inspect Team Dossier & Moves"}</span>
+                        <ArrowRight size={12} weight="bold" />
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
+
+              {/* Franchise Transaction Dossier Panel */}
+              {selectedRosterId && (() => {
+                const selProfile = waiverData.managerProfiles?.find((m: any) => m.rosterId === selectedRosterId);
+                if (!selProfile) return null;
+                return (
+                  <TeamTransactionDossier
+                    profile={selProfile}
+                    allMoves={waiverData.roiLedger || []}
+                    allTrades={tradeEvaluations}
+                    onClose={() => setSelectedRosterId(null)}
+                  />
+                );
+              })()}
             </div>
 
             {/* 4. Last Week's Immediate Impact */}

@@ -8085,3 +8085,448 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   font-weight: 800;
   margin-left: 8px;
 }
+
+/* ==========================================================================
+   Interactive Team Transaction Dossier & Clickable Manager Cards
+   ========================================================================== */
+
+.manager-profile-card.is-clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  position: relative;
+}
+
+.manager-profile-card.is-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 16px rgba(11, 51, 41, 0.1);
+  border-color: var(--ink, #0b3329);
+}
+
+.manager-profile-card.is-active-card {
+  border: 2px solid var(--rust, #c44322);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(196, 67, 34, 0.18), 0 5px 16px rgba(11, 51, 41, 0.08);
+}
+
+.manager-card-dossier-cta {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--hairline, rgba(11, 51, 41, 0.12));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--rust, #c44322);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.manager-profile-card.is-active-card .manager-card-dossier-cta {
+  color: var(--ink, #0b3329);
+}
+
+.team-dossier-panel {
+  background: var(--paper, #f6f2e9);
+  border: 2px solid var(--ink, #0b3329);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 20px 0 36px;
+  box-shadow: 0 6px 24px rgba(11, 51, 41, 0.09);
+  animation: dossierFadeIn 0.22s ease-out;
+}
+
+@keyframes dossierFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.team-dossier-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--hairline, rgba(11, 51, 41, 0.15));
+  padding-bottom: 16px;
+}
+
+.team-dossier-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rust, #c44322);
+  margin-bottom: 4px;
+}
+
+.team-dossier-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.team-dossier-title {
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink, #0b3329);
+  line-height: 1.1;
+}
+
+.team-dossier-manager {
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.84rem;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.75));
+  margin-top: 4px;
+}
+
+.team-dossier-close-btn {
+  background: var(--paper-deep, #eae3d7);
+  border: 1px solid rgba(11, 51, 41, 0.15);
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--ink, #0b3329);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.team-dossier-close-btn:hover {
+  background: var(--ink, #0b3329);
+  color: var(--paper, #fbf7ee);
+  border-color: var(--ink, #0b3329);
+}
+
+.team-dossier-commentary-banner {
+  background: #ffffff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
+  border-left: 4px solid var(--rust, #c44322);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.team-dossier-commentary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.team-dossier-commentary-tag {
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--rust, #c44322);
+}
+
+.team-dossier-verified-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #1b5e20;
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.team-dossier-commentary-text {
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.12rem;
+  line-height: 1.5;
+  color: var(--ink, #0b3329);
+  margin: 0;
+}
+
+.team-dossier-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.team-dossier-metric-card {
+  background: var(--paper-deep, #f4efe4);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+}
+
+.team-dossier-metric-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.65));
+  margin-bottom: 4px;
+}
+
+.team-dossier-metric-val {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ink, #0b3329);
+  line-height: 1.1;
+}
+
+.team-dossier-metric-val.is-pos {
+  color: #1b5e20;
+}
+
+.team-dossier-metric-val.is-neg {
+  color: #b91c1c;
+}
+
+.team-dossier-metric-sub {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.7));
+}
+
+.team-dossier-metric-footnote {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.65));
+  margin-top: 4px;
+}
+
+.team-dossier-subnav {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--hairline, rgba(11, 51, 41, 0.15));
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.team-dossier-subnav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.15));
+  background: var(--paper-deep, #eae3d7);
+  color: var(--ink, #0b3329);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.team-dossier-subnav-btn:hover {
+  border-color: var(--ink, #0b3329);
+}
+
+.team-dossier-subnav-btn.is-active {
+  background: var(--ink, #0b3329);
+  color: var(--paper, #fbf7ee);
+  border-color: var(--ink, #0b3329);
+}
+
+.team-dossier-subnav-btn .count-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: rgba(11, 51, 41, 0.12);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.team-dossier-subnav-btn.is-active .count-badge {
+  background: rgba(251, 247, 238, 0.25);
+  color: #fff;
+}
+
+.team-dossier-section {
+  margin-bottom: 26px;
+}
+
+.team-dossier-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.team-dossier-section-header h3 {
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink, #0b3329);
+}
+
+.team-dossier-empty {
+  padding: 24px;
+  text-align: center;
+  background: rgba(11, 51, 41, 0.03);
+  border: 1px dashed var(--hairline, rgba(11, 51, 41, 0.15));
+  border-radius: 8px;
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.7));
+}
+
+.team-dossier-moves-list,
+.team-dossier-trades-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.team-dossier-move-card,
+.team-dossier-trade-card {
+  background: #ffffff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.12));
+  border-radius: 8px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+}
+
+.team-dossier-move-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.team-dossier-player-headline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.team-dossier-player-name {
+  font-size: 1.05rem;
+  color: var(--ink, #0b3329);
+  font-weight: 800;
+  display: block;
+}
+
+.team-dossier-player-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.nfl-team-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.7));
+  text-transform: uppercase;
+}
+
+.acquired-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--rust, #c44322);
+}
+
+.team-dossier-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-dossier-grade-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.7));
+  letter-spacing: 0.04em;
+}
+
+.team-dossier-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+  padding: 10px 0;
+  border-top: 1px dashed var(--hairline, rgba(11, 51, 41, 0.1));
+  border-bottom: 1px dashed var(--hairline, rgba(11, 51, 41, 0.1));
+  font-size: 0.76rem;
+}
+
+.dossier-stat-item span {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.6));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dossier-stat-item strong {
+  font-size: 0.88rem;
+  color: var(--ink, #0b3329);
+}
+
+.team-dossier-move-commentary {
+  margin-top: 10px;
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--ink, #0b3329);
+}
+
+.team-dossier-move-commentary strong {
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--rust, #c44322);
+  margin-right: 4px;
+}
+
+.team-dossier-trade-card .trade-audit-header {
+  margin-bottom: 12px;
+}
+
+.trade-partner-label {
+  font-size: 0.78rem;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.75));
+  margin-left: 6px;
+}
+
+.trade-partner-label strong {
+  color: var(--ink, #0b3329);
+}
+
+.team-dossier-trade-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
