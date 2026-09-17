@@ -6,7 +6,7 @@
     "season": "2026",
     "currentWeek": 2
   },
-  "generatedAtUtc": "2026-09-17T04:16:58.469466+00:00",
+  "generatedAtUtc": "2026-09-17T15:02:28.299594+00:00",
   "status": "scored",
   "activeWeek": 1,
   "availableWeeks": [
@@ -283,6 +283,8 @@
             "teamName": "Ertz & Krafts \ud83c\udfc6",
             "manager": "jccbraves99",
             "points": 169.64,
+            "projectedPoints": 130.57,
+            "weeklyGrade": "A+",
             "optimalPoints": 184.1,
             "lineupEfficiency": 92.1,
             "benchPoints": 70.44,
@@ -292,77 +294,224 @@
                 "name": "Bo Nix",
                 "position": "QB",
                 "team": "DEN",
-                "points": 6.44
+                "points": 6.44,
+                "projectedPoints": 17.0,
+                "deltaVsProj": -10.56,
+                "sharePct": 3.8,
+                "boxSummary": "131 pass yds, 1 TD, 1 INT; 2 rush yds on 3 carries",
+                "stats": {
+                  "passYds": 131,
+                  "rushYds": 2,
+                  "recYds": 0,
+                  "totalTds": 1,
+                  "passTds": 1,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "3198",
                 "name": "Derrick Henry",
                 "position": "RB",
                 "team": "BAL",
-                "points": 34.8
+                "points": 34.8,
+                "projectedPoints": 14.74,
+                "deltaVsProj": 20.06,
+                "sharePct": 20.5,
+                "boxSummary": "144 rush yds on 24 carries, 3 TD; 1 rec for 19 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 144,
+                  "recYds": 19,
+                  "totalTds": 3,
+                  "passTds": 0,
+                  "rushTds": 3,
+                  "recTds": 0
+                },
+                "rank": 1
               },
               {
                 "playerId": "6790",
                 "name": "D'Andre Swift",
                 "position": "RB",
                 "team": "CHI",
-                "points": 31.9
+                "points": 31.9,
+                "projectedPoints": 12.28,
+                "deltaVsProj": 19.62,
+                "sharePct": 18.8,
+                "boxSummary": "124 rush yds on 18 carries, 3 TD; 1 rec for 10 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 124,
+                  "recYds": 10,
+                  "totalTds": 3,
+                  "passTds": 0,
+                  "rushTds": 3,
+                  "recTds": 0
+                },
+                "rank": 2
               },
               {
                 "playerId": "8144",
                 "name": "Chris Olave",
                 "position": "WR",
                 "team": "NO",
-                "points": 23.2
+                "points": 23.2,
+                "projectedPoints": 13.14,
+                "deltaVsProj": 10.06,
+                "sharePct": 13.7,
+                "boxSummary": "10 rec for 182 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 182,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 3
               },
               {
                 "playerId": "8148",
                 "name": "Jameson Williams",
                 "position": "WR",
                 "team": "DET",
-                "points": 6.5
+                "points": 6.5,
+                "projectedPoints": 12.05,
+                "deltaVsProj": -5.55,
+                "sharePct": 3.8,
+                "boxSummary": "4 rec for 45 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 45,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "8130",
                 "name": "Trey McBride",
                 "position": "TE",
                 "team": "ARI",
-                "points": 20.0
+                "points": 20.0,
+                "projectedPoints": 11.01,
+                "deltaVsProj": 8.99,
+                "sharePct": 11.8,
+                "boxSummary": "9 rec for 95 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 95,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 4
               },
               {
                 "playerId": "4983",
                 "name": "DJ Moore",
                 "position": "WR",
                 "team": "BUF",
-                "points": 18.5
+                "points": 18.5,
+                "projectedPoints": 8.95,
+                "deltaVsProj": 9.55,
+                "sharePct": 10.9,
+                "boxSummary": "5 rec for 100 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 100,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                }
               },
               {
                 "playerId": "12514",
                 "name": "Emeka Egbuka",
                 "position": "WR",
                 "team": "TB",
-                "points": 8.8
+                "points": 8.8,
+                "projectedPoints": 11.02,
+                "deltaVsProj": -2.22,
+                "sharePct": 5.2,
+                "boxSummary": "5 rec for 63 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 63,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "4866",
                 "name": "Saquon Barkley",
                 "position": "RB",
                 "team": "PHI",
-                "points": 8.5
+                "points": 8.5,
+                "projectedPoints": 15.09,
+                "deltaVsProj": -6.59,
+                "sharePct": 5.0,
+                "boxSummary": "83 rush yds on 15 carries; 1 rec for -3 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 83,
+                  "recYds": -3,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "11792",
                 "name": "Will Reichard",
                 "position": "K",
                 "team": "MIN",
-                "points": 7.0
+                "points": 7.0,
+                "projectedPoints": 6.56,
+                "deltaVsProj": 0.44,
+                "sharePct": 4.1,
+                "boxSummary": "1/1 FG",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "PHI",
                 "name": "Philadelphia Eagles",
                 "position": "DEF",
                 "team": "PHI",
-                "points": 4.0
+                "points": 4.0,
+                "projectedPoints": 8.73,
+                "deltaVsProj": -4.73,
+                "sharePct": 2.4,
+                "boxSummary": "4.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               }
             ]
           },
@@ -371,6 +520,8 @@
             "teamName": "Max\u2019s Shadynasty",
             "manager": "maxjabb",
             "points": 93.0,
+            "projectedPoints": 122.65,
+            "weeklyGrade": "C-",
             "optimalPoints": 113.9,
             "lineupEfficiency": 81.7,
             "benchPoints": 70.04,
@@ -380,81 +531,542 @@
                 "name": "Trevor Lawrence",
                 "position": "QB",
                 "team": "JAX",
-                "points": 26.1
+                "points": 26.1,
+                "projectedPoints": 18.59,
+                "deltaVsProj": 7.51,
+                "sharePct": 28.1,
+                "boxSummary": "245 pass yds, 4 TD; 3 rush yds on 2 carries",
+                "stats": {
+                  "passYds": 245,
+                  "rushYds": 3,
+                  "recYds": 0,
+                  "totalTds": 4,
+                  "passTds": 4,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 1
               },
               {
                 "playerId": "7543",
                 "name": "Travis Etienne",
                 "position": "RB",
                 "team": "NO",
-                "points": 11.3
+                "points": 11.3,
+                "projectedPoints": 14.18,
+                "deltaVsProj": -2.88,
+                "sharePct": 12.2,
+                "boxSummary": "46 rush yds on 9 carries; 7 rec for 32 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 46,
+                  "recYds": 32,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 3
               },
               {
                 "playerId": "12490",
                 "name": "Bhayshul Tuten",
                 "position": "RB",
                 "team": "JAX",
-                "points": 9.3
+                "points": 9.3,
+                "projectedPoints": 9.73,
+                "deltaVsProj": -0.43,
+                "sharePct": 10.0,
+                "boxSummary": "66 rush yds on 15 carries; 1 rec for 22 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 66,
+                  "recYds": 22,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "7564",
                 "name": "Ja'Marr Chase",
                 "position": "WR",
                 "team": "CIN",
-                "points": 2.2
+                "points": 2.2,
+                "projectedPoints": 16.97,
+                "deltaVsProj": -14.77,
+                "sharePct": 2.4,
+                "boxSummary": "2 rec for 12 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 12,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "8146",
                 "name": "Garrett Wilson",
                 "position": "WR",
                 "team": "NYJ",
-                "points": 10.9
+                "points": 10.9,
+                "projectedPoints": 12.32,
+                "deltaVsProj": -1.42,
+                "sharePct": 11.7,
+                "boxSummary": "6 rec for 79 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 79,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
               },
               {
                 "playerId": "8110",
                 "name": "Jake Ferguson",
                 "position": "TE",
                 "team": "DAL",
-                "points": 1.6
+                "points": 1.6,
+                "projectedPoints": 6.96,
+                "deltaVsProj": -5.36,
+                "sharePct": 1.7,
+                "boxSummary": "2 rec for 6 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 6,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "10213",
                 "name": "Tre Tucker",
                 "position": "WR",
                 "team": "LV",
-                "points": 3.7
+                "points": 3.7,
+                "projectedPoints": 8.78,
+                "deltaVsProj": -5.08,
+                "sharePct": 4.0,
+                "boxSummary": "2 rec for 27 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 27,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "12512",
                 "name": "Quinshon Judkins",
                 "position": "RB",
                 "team": "CLE",
-                "points": 6.0
+                "points": 6.0,
+                "projectedPoints": 9.91,
+                "deltaVsProj": -3.91,
+                "sharePct": 6.5,
+                "boxSummary": "33 rush yds on 12 carries; 2 rec for 17 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 33,
+                  "recYds": 17,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "2216",
                 "name": "Mike Evans",
                 "position": "WR",
                 "team": "SF",
-                "points": 13.9
+                "points": 13.9,
+                "projectedPoints": 10.79,
+                "deltaVsProj": 3.11,
+                "sharePct": 14.9,
+                "boxSummary": "6 rec for 49 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 49,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 2
               },
               {
                 "playerId": "12015",
                 "name": "Harrison Mevis",
                 "position": "K",
                 "team": "LAR",
-                "points": 1.0
+                "points": 1.0,
+                "projectedPoints": 7.03,
+                "deltaVsProj": -6.03,
+                "sharePct": 1.1,
+                "boxSummary": "1.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "BAL",
                 "name": "Baltimore Ravens",
                 "position": "DEF",
                 "team": "BAL",
-                "points": 7.0
+                "points": 7.0,
+                "projectedPoints": 7.39,
+                "deltaVsProj": -0.39,
+                "sharePct": 7.5,
+                "boxSummary": "7.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               }
             ]
           },
-          "commentary": "Total domination from the opening snap: Ertz & Krafts \ud83c\udfc6 steamrolled Max\u2019s Shadynasty by 76.64 points in the slate's most lopsided affair (169.64 \u2013 93.00). Derrick Henry put on an absolute clinic, finding paydirt 3 times (144 rush yds on 24 carries, 3 TD; 1 rec for 19 yds) to rack up a monstrous 34.80 points. Max\u2019s Shadynasty countered behind Trevor Lawrence's valiant 245 pass yds, 4 TD; 3 rush yds on 2 carries (26.10 pts), but a quiet outing from Harrison Mevis (1.0 pts) severely capped their comeback bid. Max\u2019s Shadynasty had plenty of reserve ammunition with 70.0 bench points, but optimal roster deployment remained elusive."
+          "commentary": "Total domination from the opening snap: Ertz & Krafts \ud83c\udfc6 steamrolled Max\u2019s Shadynasty by 76.64 points in the slate's most lopsided affair (169.64 \u2013 93.00). Derrick Henry put on an absolute clinic, finding paydirt 3 times (144 rush yds on 24 carries, 3 TD; 1 rec for 19 yds) to rack up a monstrous 34.80 points. Max\u2019s Shadynasty countered behind Trevor Lawrence's valiant 245 pass yds, 4 TD; 3 rush yds on 2 carries (26.10 pts), but a quiet outing from Harrison Mevis (1.0 pts) severely capped their comeback bid. Max\u2019s Shadynasty had plenty of reserve ammunition with 70.0 bench points, but optimal roster deployment remained elusive.",
+          "deepDive": {
+            "headline": "Ertz & Krafts \ud83c\udfc6's A+ Performance Leaves Max\u2019s Shadynasty in the Dust!",
+            "story": [
+              "In a thrilling Week 1 showdown, Ertz & Krafts \ud83c\udfc6 emerged victorious over Max\u2019s Shadynasty with a score of 169.64 to 93.00, seizing decisive control during Sunday's explosive early window. Ertz & Krafts \ud83c\udfc6 certainly earned their A+ grade (+39.07 vs 130.57 projected), while Max\u2019s Shadynasty might want to consider a remedial course in fantasy football after snagging a C- (-29.65 vs 122.65 projected). A brutal underperformance that leaves their coaching staff scrambling for answers.",
+              "Ertz & Krafts \ud83c\udfc6's shining star was Derrick Henry, who decided to take the week off from being merely 'good' and scored a whopping 34.80 points (144 rush yds on 24 carries, 3 TD; 1 rec for 19 yds)\u2014beating their projection by 20.06 points. Meanwhile, Philadelphia Eagles must have been auditioning for a role in a horror film with a dismal 4.00 points (4.0 pts), falling short of projection like a bad stand-up comedian. Over on Max\u2019s Shadynasty, Trevor Lawrence managed to shine through the gloom with 26.10 points (245 pass yds, 4 TD; 3 rush yds on 2 carries), but it seems Harrison Mevis took a vacation with just 1.00 points (1.0 pts)\u2014did they even show up?",
+              "With this win, Ertz & Krafts \ud83c\udfc6 moves to a glorious 1-0-0 record and sits comfortably at #2 in the standings, while Max\u2019s Shadynasty, poor souls, find themselves languishing at #11 with a record of 0-1-0. It's clear that Ertz & Krafts \ud83c\udfc6 is riding high, while Max\u2019s Shadynasty is still trying to figure out how to get off the ground. Will Max\u2019s Shadynasty ever find their way back into the game, or will they just keep practicing their sad trombone sounds?",
+              "Next week, Ertz & Krafts \ud83c\udfc6 faces off against Bronco Stampede, and they might want to keep the momentum going\u2014after all, you can't win them all if you don't win the first one! As for Max\u2019s Shadynasty, they'll be up against The Ape, and it's high time they take a long, hard look at their lineup. Maybe try to start players who actually show up to play? Just a thought!"
+            ],
+            "teamAGrade": "A+",
+            "teamBGrade": "C-",
+            "teamAProjected": 130.57,
+            "teamBProjected": 122.65,
+            "teamARecord": "1-0-0",
+            "teamBRecord": "0-1-0",
+            "teamARank": 2,
+            "teamBRank": 11,
+            "nextOpponentA": {
+              "rosterId": 12,
+              "teamName": "Bronco Stampede"
+            },
+            "nextOpponentB": {
+              "rosterId": 3,
+              "teamName": "The Ape"
+            },
+            "mvp": {
+              "playerId": "3198",
+              "name": "Derrick Henry",
+              "position": "RB",
+              "team": "BAL",
+              "points": 34.8,
+              "projectedPoints": 14.74,
+              "deltaVsProj": 20.06,
+              "sharePct": 20.5,
+              "boxSummary": "144 rush yds on 24 carries, 3 TD; 1 rec for 19 yds",
+              "stats": {
+                "passYds": 0,
+                "rushYds": 144,
+                "recYds": 19,
+                "totalTds": 3,
+                "passTds": 0,
+                "rushTds": 3,
+                "recTds": 0
+              },
+              "fantasyTeamName": "Ertz & Krafts \ud83c\udfc6"
+            },
+            "topPlayersA": [
+              {
+                "playerId": "3198",
+                "name": "Derrick Henry",
+                "position": "RB",
+                "team": "BAL",
+                "points": 34.8,
+                "projectedPoints": 14.74,
+                "deltaVsProj": 20.06,
+                "sharePct": 20.5,
+                "boxSummary": "144 rush yds on 24 carries, 3 TD; 1 rec for 19 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 144,
+                  "recYds": 19,
+                  "totalTds": 3,
+                  "passTds": 0,
+                  "rushTds": 3,
+                  "recTds": 0
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "6790",
+                "name": "D'Andre Swift",
+                "position": "RB",
+                "team": "CHI",
+                "points": 31.9,
+                "projectedPoints": 12.28,
+                "deltaVsProj": 19.62,
+                "sharePct": 18.8,
+                "boxSummary": "124 rush yds on 18 carries, 3 TD; 1 rec for 10 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 124,
+                  "recYds": 10,
+                  "totalTds": 3,
+                  "passTds": 0,
+                  "rushTds": 3,
+                  "recTds": 0
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "8144",
+                "name": "Chris Olave",
+                "position": "WR",
+                "team": "NO",
+                "points": 23.2,
+                "projectedPoints": 13.14,
+                "deltaVsProj": 10.06,
+                "sharePct": 13.7,
+                "boxSummary": "10 rec for 182 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 182,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "8130",
+                "name": "Trey McBride",
+                "position": "TE",
+                "team": "ARI",
+                "points": 20.0,
+                "projectedPoints": 11.01,
+                "deltaVsProj": 8.99,
+                "sharePct": 11.8,
+                "boxSummary": "9 rec for 95 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 95,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 4
+              }
+            ],
+            "topPlayersB": [
+              {
+                "playerId": "7523",
+                "name": "Trevor Lawrence",
+                "position": "QB",
+                "team": "JAX",
+                "points": 26.1,
+                "projectedPoints": 18.59,
+                "deltaVsProj": 7.51,
+                "sharePct": 28.1,
+                "boxSummary": "245 pass yds, 4 TD; 3 rush yds on 2 carries",
+                "stats": {
+                  "passYds": 245,
+                  "rushYds": 3,
+                  "recYds": 0,
+                  "totalTds": 4,
+                  "passTds": 4,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "2216",
+                "name": "Mike Evans",
+                "position": "WR",
+                "team": "SF",
+                "points": 13.9,
+                "projectedPoints": 10.79,
+                "deltaVsProj": 3.11,
+                "sharePct": 14.9,
+                "boxSummary": "6 rec for 49 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 49,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "7543",
+                "name": "Travis Etienne",
+                "position": "RB",
+                "team": "NO",
+                "points": 11.3,
+                "projectedPoints": 14.18,
+                "deltaVsProj": -2.88,
+                "sharePct": 12.2,
+                "boxSummary": "46 rush yds on 9 carries; 7 rec for 32 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 46,
+                  "recYds": 32,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "8146",
+                "name": "Garrett Wilson",
+                "position": "WR",
+                "team": "NYJ",
+                "points": 10.9,
+                "projectedPoints": 12.32,
+                "deltaVsProj": -1.42,
+                "sharePct": 11.7,
+                "boxSummary": "6 rec for 79 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 79,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
+              }
+            ],
+            "positionBreakdown": [
+              {
+                "category": "QB",
+                "teamAPoints": 6.44,
+                "teamBPoints": 26.1,
+                "margin": 19.66,
+                "advantage": "Max\u2019s Shadynasty"
+              },
+              {
+                "category": "RB",
+                "teamAPoints": 75.2,
+                "teamBPoints": 26.6,
+                "margin": 48.6,
+                "advantage": "Ertz & Krafts \ud83c\udfc6"
+              },
+              {
+                "category": "WR",
+                "teamAPoints": 57.0,
+                "teamBPoints": 30.7,
+                "margin": 26.3,
+                "advantage": "Ertz & Krafts \ud83c\udfc6"
+              },
+              {
+                "category": "TE",
+                "teamAPoints": 20.0,
+                "teamBPoints": 1.6,
+                "margin": 18.4,
+                "advantage": "Ertz & Krafts \ud83c\udfc6"
+              },
+              {
+                "category": "K",
+                "teamAPoints": 7.0,
+                "teamBPoints": 1.0,
+                "margin": 6.0,
+                "advantage": "Ertz & Krafts \ud83c\udfc6"
+              },
+              {
+                "category": "DEF",
+                "teamAPoints": 4.0,
+                "teamBPoints": 7.0,
+                "margin": 3.0,
+                "advantage": "Max\u2019s Shadynasty"
+              }
+            ],
+            "timeline": [
+              {
+                "window": "Thursday",
+                "timeLabel": "Thu Night",
+                "teamAPoints": 0,
+                "teamBPoints": 14.9,
+                "cumA": 0.0,
+                "cumB": 14.9,
+                "leader": "Max\u2019s Shadynasty",
+                "margin": 14.9
+              },
+              {
+                "window": "Sun Early",
+                "timeLabel": "Sun 1:00 PM",
+                "teamAPoints": 123.7,
+                "teamBPoints": 72.8,
+                "cumA": 123.7,
+                "cumB": 87.7,
+                "leader": "Ertz & Krafts \ud83c\udfc6",
+                "margin": 36.0
+              },
+              {
+                "window": "Sun Late",
+                "timeLabel": "Sun 4:25 PM",
+                "teamAPoints": 39.5,
+                "teamBPoints": 3.7,
+                "cumA": 163.2,
+                "cumB": 91.4,
+                "leader": "Ertz & Krafts \ud83c\udfc6",
+                "margin": 71.8
+              },
+              {
+                "window": "Sun Night",
+                "timeLabel": "Sun 8:20 PM",
+                "teamAPoints": 0,
+                "teamBPoints": 1.6,
+                "cumA": 163.2,
+                "cumB": 93.0,
+                "leader": "Ertz & Krafts \ud83c\udfc6",
+                "margin": 70.2
+              },
+              {
+                "window": "Monday",
+                "timeLabel": "Mon Night",
+                "teamAPoints": 6.44,
+                "teamBPoints": 0,
+                "cumA": 169.64,
+                "cumB": 93.0,
+                "leader": "Ertz & Krafts \ud83c\udfc6",
+                "margin": 76.64
+              }
+            ]
+          }
         },
         {
           "matchupId": 2,
@@ -468,6 +1080,8 @@
             "teamName": "The Ape",
             "manager": "sduda351",
             "points": 152.26,
+            "projectedPoints": 124.22,
+            "weeklyGrade": "A+",
             "optimalPoints": 154.46,
             "lineupEfficiency": 98.6,
             "benchPoints": 42.9,
@@ -477,77 +1091,224 @@
                 "name": "Lamar Jackson",
                 "position": "QB",
                 "team": "BAL",
-                "points": 24.96
+                "points": 24.96,
+                "projectedPoints": 19.56,
+                "deltaVsProj": 5.4,
+                "sharePct": 16.4,
+                "boxSummary": "324 pass yds, 1 TD; 40 rush yds on 7 carries, 1 TD",
+                "stats": {
+                  "passYds": 324,
+                  "rushYds": 40,
+                  "recYds": 0,
+                  "totalTds": 2,
+                  "passTds": 1,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 2
               },
               {
                 "playerId": "8138",
                 "name": "James Cook",
                 "position": "RB",
                 "team": "BUF",
-                "points": 8.4
+                "points": 8.4,
+                "projectedPoints": 15.11,
+                "deltaVsProj": -6.71,
+                "sharePct": 5.5,
+                "boxSummary": "57 rush yds on 13 carries; 3 rec for 12 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 57,
+                  "recYds": 12,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "12481",
                 "name": "Cam Skattebo",
                 "position": "RB",
                 "team": "NYG",
-                "points": 14.1
+                "points": 14.1,
+                "projectedPoints": 13.87,
+                "deltaVsProj": 0.23,
+                "sharePct": 9.3,
+                "boxSummary": "81 rush yds on 18 carries, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 81,
+                  "recYds": 0,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 4
               },
               {
                 "playerId": "6794",
                 "name": "Justin Jefferson",
                 "position": "WR",
                 "team": "MIN",
-                "points": 27.2
+                "points": 27.2,
+                "projectedPoints": 14.32,
+                "deltaVsProj": 12.88,
+                "sharePct": 17.9,
+                "boxSummary": "8 rec for 92 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 92,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 1
               },
               {
                 "playerId": "8112",
                 "name": "Drake London",
                 "position": "WR",
                 "team": "ATL",
-                "points": 4.5
+                "points": 4.5,
+                "projectedPoints": 11.69,
+                "deltaVsProj": -7.19,
+                "sharePct": 3.0,
+                "boxSummary": "6 rush yds on 1 carries; 2 rec for 29 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 6,
+                  "recYds": 29,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "5012",
                 "name": "Mark Andrews",
                 "position": "TE",
                 "team": "BAL",
-                "points": 6.9
+                "points": 6.9,
+                "projectedPoints": 8.35,
+                "deltaVsProj": -1.45,
+                "sharePct": 4.5,
+                "boxSummary": "4 rec for 49 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 49,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "9997",
                 "name": "Zay Flowers",
                 "position": "WR",
                 "team": "BAL",
-                "points": 23.5
+                "points": 23.5,
+                "projectedPoints": 12.79,
+                "deltaVsProj": 10.71,
+                "sharePct": 15.4,
+                "boxSummary": "5 rec for 150 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 150,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 3
               },
               {
                 "playerId": "9482",
                 "name": "Michael Mayer",
                 "position": "TE",
                 "team": "LV",
-                "points": 6.2
+                "points": 6.2,
+                "projectedPoints": 6.65,
+                "deltaVsProj": -0.45,
+                "sharePct": 4.1,
+                "boxSummary": "6 rec for 32 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 32,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "2449",
                 "name": "Stefon Diggs",
                 "position": "WR",
                 "team": "WAS",
-                "points": 13.5
+                "points": 13.5,
+                "projectedPoints": 7.99,
+                "deltaVsProj": 5.51,
+                "sharePct": 8.9,
+                "boxSummary": "4 rec for 55 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 55,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                }
               },
               {
                 "playerId": "11786",
                 "name": "Cam Little",
                 "position": "K",
                 "team": "JAX",
-                "points": 12.0
+                "points": 12.0,
+                "projectedPoints": 6.52,
+                "deltaVsProj": 5.48,
+                "sharePct": 7.9,
+                "boxSummary": "2/2 FG",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "DET",
                 "name": "Detroit Lions",
                 "position": "DEF",
                 "team": "DET",
-                "points": 11.0
+                "points": 11.0,
+                "projectedPoints": 7.37,
+                "deltaVsProj": 3.63,
+                "sharePct": 7.2,
+                "boxSummary": "11.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               }
             ]
           },
@@ -556,6 +1317,8 @@
             "teamName": "Terry Tate\u2019s Pain Train",
             "manager": "mannyrsox24",
             "points": 115.72,
+            "projectedPoints": 125.33,
+            "weeklyGrade": "B-",
             "optimalPoints": 123.92,
             "lineupEfficiency": 93.4,
             "benchPoints": 57.66,
@@ -565,81 +1328,532 @@
                 "name": "Jalen Hurts",
                 "position": "QB",
                 "team": "PHI",
-                "points": 24.72
+                "points": 24.72,
+                "projectedPoints": 20.83,
+                "deltaVsProj": 3.89,
+                "sharePct": 21.4,
+                "boxSummary": "203 pass yds, 3 TD; 46 rush yds on 7 carries",
+                "stats": {
+                  "passYds": 203,
+                  "rushYds": 46,
+                  "recYds": 0,
+                  "totalTds": 3,
+                  "passTds": 3,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 1
               },
               {
                 "playerId": "7588",
                 "name": "Javonte Williams",
                 "position": "RB",
                 "team": "DAL",
-                "points": 21.7
+                "points": 21.7,
+                "projectedPoints": 15.99,
+                "deltaVsProj": 5.71,
+                "sharePct": 18.8,
+                "boxSummary": "41 rush yds on 12 carries, 1 TD; 5 rec for 31 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 41,
+                  "recYds": 31,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 1
+                },
+                "rank": 2
               },
               {
                 "playerId": "7021",
                 "name": "Rico Dowdle",
                 "position": "RB",
                 "team": "PIT",
-                "points": 3.1
+                "points": 3.1,
+                "projectedPoints": 11.3,
+                "deltaVsProj": -8.2,
+                "sharePct": 2.7,
+                "boxSummary": "15 rush yds on 8 carries; 2 rec for 6 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 15,
+                  "recYds": 6,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "7569",
                 "name": "Nico Collins",
                 "position": "WR",
                 "team": "HOU",
-                "points": 17.7
+                "points": 17.7,
+                "projectedPoints": 13.65,
+                "deltaVsProj": 4.05,
+                "sharePct": 15.3,
+                "boxSummary": "7 rush yds on 1 carries; 7 rec for 75 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 7,
+                  "recYds": 75,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 3
               },
               {
                 "playerId": "5927",
                 "name": "Terry McLaurin",
                 "position": "WR",
                 "team": "WAS",
-                "points": 2.4
+                "points": 2.4,
+                "projectedPoints": 9.87,
+                "deltaVsProj": -7.47,
+                "sharePct": 2.1,
+                "boxSummary": "2 rec for 14 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 14,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "12518",
                 "name": "Tyler Warren",
                 "position": "TE",
                 "team": "IND",
-                "points": 8.8
+                "points": 8.8,
+                "projectedPoints": 11.04,
+                "deltaVsProj": -2.24,
+                "sharePct": 7.6,
+                "boxSummary": "3 rec for 13 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 13,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                }
               },
               {
                 "playerId": "13286",
                 "name": "Jadarian Price",
                 "position": "RB",
                 "team": "SEA",
-                "points": 6.8
+                "points": 6.8,
+                "projectedPoints": 9.25,
+                "deltaVsProj": -2.45,
+                "sharePct": 5.9,
+                "boxSummary": "52 rush yds on 10 carries; 2 rec for 6 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 52,
+                  "recYds": 6,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "11628",
                 "name": "Marvin Harrison",
                 "position": "WR",
                 "team": "ARI",
-                "points": 3.8
+                "points": 3.8,
+                "projectedPoints": 8.11,
+                "deltaVsProj": -4.31,
+                "sharePct": 3.3,
+                "boxSummary": "1 rec for 33 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 33,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "9500",
                 "name": "Josh Downs",
                 "position": "WR",
                 "team": "IND",
-                "points": 4.7
+                "points": 4.7,
+                "projectedPoints": 9.69,
+                "deltaVsProj": -4.99,
+                "sharePct": 4.1,
+                "boxSummary": "2 rec for 37 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 37,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "3451",
                 "name": "Ka'imi Fairbairn",
                 "position": "K",
                 "team": "HOU",
-                "points": 9.0
+                "points": 9.0,
+                "projectedPoints": 6.79,
+                "deltaVsProj": 2.21,
+                "sharePct": 7.8,
+                "boxSummary": "1/1 FG",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "SEA",
                 "name": "Seattle Seahawks",
                 "position": "DEF",
                 "team": "SEA",
-                "points": 13.0
+                "points": 13.0,
+                "projectedPoints": 8.81,
+                "deltaVsProj": 4.19,
+                "sharePct": 11.2,
+                "boxSummary": "13.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
               }
             ]
           },
-          "commentary": "Total domination from the opening snap: The Ape steamrolled Terry Tate\u2019s Pain Train by 36.54 points in the slate's most lopsided affair (152.26 \u2013 115.72). The Ape rode an explosive outing from Justin Jefferson, who logged two touchdowns (8 rec for 92 yds, 2 TD) to establish early separation. Terry Tate\u2019s Pain Train countered behind Jalen Hurts's valiant 203 pass yds, 3 TD; 46 rush yds on 7 carries (24.72 pts), but a quiet outing from Terry McLaurin (2 rec for 14 yds) severely capped their comeback bid. Managerial execution was razor-sharp for The Ape, capturing a sterling 98.6% of their roster's maximum scoring capacity."
+          "commentary": "Total domination from the opening snap: The Ape steamrolled Terry Tate\u2019s Pain Train by 36.54 points in the slate's most lopsided affair (152.26 \u2013 115.72). The Ape rode an explosive outing from Justin Jefferson, who logged two touchdowns (8 rec for 92 yds, 2 TD) to establish early separation. Terry Tate\u2019s Pain Train countered behind Jalen Hurts's valiant 203 pass yds, 3 TD; 46 rush yds on 7 carries (24.72 pts), but a quiet outing from Terry McLaurin (2 rec for 14 yds) severely capped their comeback bid. Managerial execution was razor-sharp for The Ape, capturing a sterling 98.6% of their roster's maximum scoring capacity.",
+          "deepDive": {
+            "headline": "The Ape's A+ Performance Leaves Terry Tate\u2019s Pain Train in the Dust!",
+            "story": [
+              "In a thrilling Week 1 showdown, The Ape emerged victorious over Terry Tate\u2019s Pain Train with a score of 152.26 to 115.72, seizing decisive control during Sunday's explosive early window. The Ape certainly earned their A+ grade (+28.04 vs 124.22 projected), while Terry Tate\u2019s Pain Train might want to consider a remedial course in fantasy football after snagging a B- (-9.61 vs 125.33 projected). Back to the drawing board for a lineup that sputtered when the lights were brightest.",
+              "The Ape's shining star was Justin Jefferson, who decided to take the week off from being merely 'good' and scored a whopping 27.20 points (8 rec for 92 yds, 2 TD)\u2014beating their projection by 12.88 points. Meanwhile, Drake London must have been auditioning for a role in a horror film with a dismal 4.50 points (6 rush yds on 1 carries; 2 rec for 29 yds), falling short of projection like a bad stand-up comedian. Over on Terry Tate\u2019s Pain Train, Jalen Hurts managed to shine through the gloom with 24.72 points (203 pass yds, 3 TD; 46 rush yds on 7 carries), but it seems Terry McLaurin took a vacation with just 2.40 points (2 rec for 14 yds)\u2014did they even show up?",
+              "With this win, The Ape moves to a glorious 1-0-0 record and sits comfortably at #4 in the standings, while Terry Tate\u2019s Pain Train, poor souls, find themselves languishing at #9 with a record of 0-1-0. It's clear that The Ape is riding high, while Terry Tate\u2019s Pain Train is still trying to figure out how to get off the ground. Will Terry Tate\u2019s Pain Train ever find their way back into the game, or will they just keep practicing their sad trombone sounds?",
+              "Next week, The Ape faces off against Max\u2019s Shadynasty, and they might want to keep the momentum going\u2014after all, you can't win them all if you don't win the first one! As for Terry Tate\u2019s Pain Train, they'll be up against My Nabers Tetties, and it's high time they take a long, hard look at their lineup. Maybe try to start players who actually show up to play? Just a thought!"
+            ],
+            "teamAGrade": "A+",
+            "teamBGrade": "B-",
+            "teamAProjected": 124.22,
+            "teamBProjected": 125.33,
+            "teamARecord": "1-0-0",
+            "teamBRecord": "0-1-0",
+            "teamARank": 4,
+            "teamBRank": 9,
+            "nextOpponentA": {
+              "rosterId": 9,
+              "teamName": "Max\u2019s Shadynasty"
+            },
+            "nextOpponentB": {
+              "rosterId": 5,
+              "teamName": "My Nabers Tetties"
+            },
+            "mvp": {
+              "playerId": "6794",
+              "name": "Justin Jefferson",
+              "position": "WR",
+              "team": "MIN",
+              "points": 27.2,
+              "projectedPoints": 14.32,
+              "deltaVsProj": 12.88,
+              "sharePct": 17.9,
+              "boxSummary": "8 rec for 92 yds, 2 TD",
+              "stats": {
+                "passYds": 0,
+                "rushYds": 0,
+                "recYds": 92,
+                "totalTds": 2,
+                "passTds": 0,
+                "rushTds": 0,
+                "recTds": 2
+              },
+              "fantasyTeamName": "The Ape"
+            },
+            "topPlayersA": [
+              {
+                "playerId": "6794",
+                "name": "Justin Jefferson",
+                "position": "WR",
+                "team": "MIN",
+                "points": 27.2,
+                "projectedPoints": 14.32,
+                "deltaVsProj": 12.88,
+                "sharePct": 17.9,
+                "boxSummary": "8 rec for 92 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 92,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "4881",
+                "name": "Lamar Jackson",
+                "position": "QB",
+                "team": "BAL",
+                "points": 24.96,
+                "projectedPoints": 19.56,
+                "deltaVsProj": 5.4,
+                "sharePct": 16.4,
+                "boxSummary": "324 pass yds, 1 TD; 40 rush yds on 7 carries, 1 TD",
+                "stats": {
+                  "passYds": 324,
+                  "rushYds": 40,
+                  "recYds": 0,
+                  "totalTds": 2,
+                  "passTds": 1,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "9997",
+                "name": "Zay Flowers",
+                "position": "WR",
+                "team": "BAL",
+                "points": 23.5,
+                "projectedPoints": 12.79,
+                "deltaVsProj": 10.71,
+                "sharePct": 15.4,
+                "boxSummary": "5 rec for 150 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 150,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "12481",
+                "name": "Cam Skattebo",
+                "position": "RB",
+                "team": "NYG",
+                "points": 14.1,
+                "projectedPoints": 13.87,
+                "deltaVsProj": 0.23,
+                "sharePct": 9.3,
+                "boxSummary": "81 rush yds on 18 carries, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 81,
+                  "recYds": 0,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 4
+              }
+            ],
+            "topPlayersB": [
+              {
+                "playerId": "6904",
+                "name": "Jalen Hurts",
+                "position": "QB",
+                "team": "PHI",
+                "points": 24.72,
+                "projectedPoints": 20.83,
+                "deltaVsProj": 3.89,
+                "sharePct": 21.4,
+                "boxSummary": "203 pass yds, 3 TD; 46 rush yds on 7 carries",
+                "stats": {
+                  "passYds": 203,
+                  "rushYds": 46,
+                  "recYds": 0,
+                  "totalTds": 3,
+                  "passTds": 3,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "7588",
+                "name": "Javonte Williams",
+                "position": "RB",
+                "team": "DAL",
+                "points": 21.7,
+                "projectedPoints": 15.99,
+                "deltaVsProj": 5.71,
+                "sharePct": 18.8,
+                "boxSummary": "41 rush yds on 12 carries, 1 TD; 5 rec for 31 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 41,
+                  "recYds": 31,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 1
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "7569",
+                "name": "Nico Collins",
+                "position": "WR",
+                "team": "HOU",
+                "points": 17.7,
+                "projectedPoints": 13.65,
+                "deltaVsProj": 4.05,
+                "sharePct": 15.3,
+                "boxSummary": "7 rush yds on 1 carries; 7 rec for 75 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 7,
+                  "recYds": 75,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "SEA",
+                "name": "Seattle Seahawks",
+                "position": "DEF",
+                "team": "SEA",
+                "points": 13.0,
+                "projectedPoints": 8.81,
+                "deltaVsProj": 4.19,
+                "sharePct": 11.2,
+                "boxSummary": "13.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
+              }
+            ],
+            "positionBreakdown": [
+              {
+                "category": "QB",
+                "teamAPoints": 24.96,
+                "teamBPoints": 24.72,
+                "margin": 0.24,
+                "advantage": "The Ape"
+              },
+              {
+                "category": "RB",
+                "teamAPoints": 22.5,
+                "teamBPoints": 31.6,
+                "margin": 9.1,
+                "advantage": "Terry Tate\u2019s Pain Train"
+              },
+              {
+                "category": "WR",
+                "teamAPoints": 68.7,
+                "teamBPoints": 28.6,
+                "margin": 40.1,
+                "advantage": "The Ape"
+              },
+              {
+                "category": "TE",
+                "teamAPoints": 13.1,
+                "teamBPoints": 8.8,
+                "margin": 4.3,
+                "advantage": "The Ape"
+              },
+              {
+                "category": "K",
+                "teamAPoints": 12.0,
+                "teamBPoints": 9.0,
+                "margin": 3.0,
+                "advantage": "The Ape"
+              },
+              {
+                "category": "DEF",
+                "teamAPoints": 11.0,
+                "teamBPoints": 13.0,
+                "margin": 2.0,
+                "advantage": "Terry Tate\u2019s Pain Train"
+              }
+            ],
+            "timeline": [
+              {
+                "window": "Wednesday",
+                "timeLabel": "Wed Kickoff",
+                "teamAPoints": 0,
+                "teamBPoints": 19.8,
+                "cumA": 0.0,
+                "cumB": 19.8,
+                "leader": "Terry Tate\u2019s Pain Train",
+                "margin": 19.8
+              },
+              {
+                "window": "Sun Early",
+                "timeLabel": "Sun 1:00 PM",
+                "teamAPoints": 91.26,
+                "teamBPoints": 43.3,
+                "cumA": 91.26,
+                "cumB": 63.1,
+                "leader": "The Ape",
+                "margin": 28.16
+              },
+              {
+                "window": "Sun Late",
+                "timeLabel": "Sun 4:25 PM",
+                "teamAPoints": 46.9,
+                "teamBPoints": 30.92,
+                "cumA": 138.16,
+                "cumB": 94.02,
+                "leader": "The Ape",
+                "margin": 44.14
+              },
+              {
+                "window": "Sun Night",
+                "timeLabel": "Sun 8:20 PM",
+                "teamAPoints": 14.1,
+                "teamBPoints": 21.7,
+                "cumA": 152.26,
+                "cumB": 115.72,
+                "leader": "The Ape",
+                "margin": 36.54
+              }
+            ]
+          }
         },
         {
           "matchupId": 3,
@@ -653,6 +1867,8 @@
             "teamName": "Bijan And The Maye-ssiah",
             "manager": "jcflash59",
             "points": 169.32,
+            "projectedPoints": 135.75,
+            "weeklyGrade": "A+",
             "optimalPoints": 189.46,
             "lineupEfficiency": 89.4,
             "benchPoints": 86.66,
@@ -662,77 +1878,224 @@
                 "name": "Drake Maye",
                 "position": "QB",
                 "team": "NE",
-                "points": 12.82
+                "points": 12.82,
+                "projectedPoints": 19.67,
+                "deltaVsProj": -6.85,
+                "sharePct": 7.6,
+                "boxSummary": "178 pass yds, 1 TD, 3 INT; 47 rush yds on 7 carries",
+                "stats": {
+                  "passYds": 178,
+                  "rushYds": 47,
+                  "recYds": 0,
+                  "totalTds": 1,
+                  "passTds": 1,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "9509",
                 "name": "Bijan Robinson",
                 "position": "RB",
                 "team": "ATL",
-                "points": 27.3
+                "points": 27.3,
+                "projectedPoints": 17.24,
+                "deltaVsProj": 10.06,
+                "sharePct": 16.1,
+                "boxSummary": "83 rush yds on 21 carries; 8 rec for 90 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 83,
+                  "recYds": 90,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 2
               },
               {
                 "playerId": "9224",
                 "name": "Chase Brown",
                 "position": "RB",
                 "team": "CIN",
-                "points": 16.3
+                "points": 16.3,
+                "projectedPoints": 14.94,
+                "deltaVsProj": 1.36,
+                "sharePct": 9.6,
+                "boxSummary": "56 rush yds on 16 carries, 1 TD; 5 rec for 22 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 56,
+                  "recYds": 22,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "7547",
                 "name": "Amon-Ra St. Brown",
                 "position": "WR",
                 "team": "DET",
-                "points": 23.7
+                "points": 23.7,
+                "projectedPoints": 16.56,
+                "deltaVsProj": 7.14,
+                "sharePct": 14.0,
+                "boxSummary": "10 rec for 67 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 67,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 3
               },
               {
                 "playerId": "8167",
                 "name": "Christian Watson",
                 "position": "WR",
                 "team": "GB",
-                "points": 29.7
+                "points": 29.7,
+                "projectedPoints": 10.76,
+                "deltaVsProj": 18.94,
+                "sharePct": 17.5,
+                "boxSummary": "6 rec for 147 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 147,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 1
               },
               {
                 "playerId": "12517",
                 "name": "Colston Loveland",
                 "position": "TE",
                 "team": "CHI",
-                "points": 0.0
+                "points": 0.0,
+                "projectedPoints": 11.23,
+                "deltaVsProj": -11.23,
+                "sharePct": 0.0,
+                "boxSummary": "0 catches on 2 tgts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "12489",
                 "name": "RJ Harvey",
                 "position": "RB",
                 "team": "DEN",
-                "points": 6.1
+                "points": 6.1,
+                "projectedPoints": 8.24,
+                "deltaVsProj": -2.14,
+                "sharePct": 3.6,
+                "boxSummary": "18 rush yds on 3 carries; 4 rec for 23 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 18,
+                  "recYds": 23,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "7611",
                 "name": "Rhamondre Stevenson",
                 "position": "RB",
                 "team": "NE",
-                "points": 12.0
+                "points": 12.0,
+                "projectedPoints": 14.96,
+                "deltaVsProj": -2.96,
+                "sharePct": 7.1,
+                "boxSummary": "51 rush yds on 18 carries; 5 rec for 44 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 51,
+                  "recYds": 44,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "12534",
                 "name": "Kyle Monangai",
                 "position": "RB",
                 "team": "CHI",
-                "points": 19.4
+                "points": 19.4,
+                "projectedPoints": 6.71,
+                "deltaVsProj": 12.69,
+                "sharePct": 11.5,
+                "boxSummary": "100 rush yds on 10 carries, 1 TD; 2 rec for 24 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 100,
+                  "recYds": 24,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 4
               },
               {
                 "playerId": "2747",
                 "name": "Jason Myers",
                 "position": "K",
                 "team": "SEA",
-                "points": 7.0
+                "points": 7.0,
+                "projectedPoints": 6.9,
+                "deltaVsProj": 0.1,
+                "sharePct": 4.1,
+                "boxSummary": "2/2 FG",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "LV",
                 "name": "Las Vegas Raiders",
                 "position": "DEF",
                 "team": "LV",
-                "points": 15.0
+                "points": 15.0,
+                "projectedPoints": 8.54,
+                "deltaVsProj": 6.46,
+                "sharePct": 8.9,
+                "boxSummary": "15.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               }
             ]
           },
@@ -741,6 +2104,8 @@
             "teamName": "Bronco Stampede",
             "manager": "5FinkleRay",
             "points": 177.16,
+            "projectedPoints": 135.41,
+            "weeklyGrade": "A+",
             "optimalPoints": 182.66,
             "lineupEfficiency": 97.0,
             "benchPoints": 67.42,
@@ -750,81 +2115,552 @@
                 "name": "Josh Allen",
                 "position": "QB",
                 "team": "BUF",
-                "points": 35.66
+                "points": 35.66,
+                "projectedPoints": 19.37,
+                "deltaVsProj": 16.29,
+                "sharePct": 20.1,
+                "boxSummary": "334 pass yds, 2 TD; 23 rush yds on 6 carries, 2 TD",
+                "stats": {
+                  "passYds": 334,
+                  "rushYds": 23,
+                  "recYds": 0,
+                  "totalTds": 4,
+                  "passTds": 2,
+                  "rushTds": 2,
+                  "recTds": 0
+                },
+                "rank": 1
               },
               {
                 "playerId": "8150",
                 "name": "Kyren Williams",
                 "position": "RB",
                 "team": "LAR",
-                "points": 14.0
+                "points": 14.0,
+                "projectedPoints": 13.54,
+                "deltaVsProj": 0.46,
+                "sharePct": 7.9,
+                "boxSummary": "41 rush yds on 11 carries, 1 TD; 3 rec for 24 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 41,
+                  "recYds": 24,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "8151",
                 "name": "Kenneth Walker",
                 "position": "RB",
                 "team": "KC",
-                "points": 32.6
+                "points": 32.6,
+                "projectedPoints": 12.29,
+                "deltaVsProj": 20.31,
+                "sharePct": 18.4,
+                "boxSummary": "173 rush yds on 23 carries, 1 TD; 3 rec for 18 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 173,
+                  "recYds": 18,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 1
+                },
+                "rank": 2
               },
               {
                 "playerId": "9493",
                 "name": "Puka Nacua",
                 "position": "WR",
                 "team": "LAR",
-                "points": 9.9
+                "points": 9.9,
+                "projectedPoints": 17.18,
+                "deltaVsProj": -7.28,
+                "sharePct": 5.6,
+                "boxSummary": "5 rec for 74 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 74,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "9488",
                 "name": "Jaxon Smith-Njigba",
                 "position": "WR",
                 "team": "SEA",
-                "points": 22.2
+                "points": 22.2,
+                "projectedPoints": 16.28,
+                "deltaVsProj": 5.92,
+                "sharePct": 12.5,
+                "boxSummary": "8 rec for 122 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 122,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 4
               },
               {
                 "playerId": "8131",
                 "name": "Isaiah Likely",
                 "position": "TE",
                 "team": "NYG",
-                "points": 23.8
+                "points": 23.8,
+                "projectedPoints": 8.43,
+                "deltaVsProj": 15.37,
+                "sharePct": 13.4,
+                "boxSummary": "8 rec for 78 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 78,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 3
               },
               {
                 "playerId": "7525",
                 "name": "DeVonta Smith",
                 "position": "WR",
                 "team": "PHI",
-                "points": 6.8
+                "points": 6.8,
+                "projectedPoints": 13.05,
+                "deltaVsProj": -6.25,
+                "sharePct": 3.8,
+                "boxSummary": "3 rec for 53 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 53,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "11635",
                 "name": "Ladd McConkey",
                 "position": "WR",
                 "team": "LAC",
-                "points": 16.7
+                "points": 16.7,
+                "projectedPoints": 10.84,
+                "deltaVsProj": 5.86,
+                "sharePct": 9.4,
+                "boxSummary": "5 rec for 82 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 82,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                }
               },
               {
                 "playerId": "11631",
                 "name": "Brian Thomas",
                 "position": "WR",
                 "team": "JAX",
-                "points": 5.5
+                "points": 5.5,
+                "projectedPoints": 8.78,
+                "deltaVsProj": -3.28,
+                "sharePct": 3.1,
+                "boxSummary": "3 rec for 40 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 40,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "6083",
                 "name": "Matt Gay",
                 "position": "K",
                 "team": "LV",
-                "points": 10.0
+                "points": 10.0,
+                "projectedPoints": 7.62,
+                "deltaVsProj": 2.38,
+                "sharePct": 5.6,
+                "boxSummary": "2/2 FG",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "TEN",
                 "name": "Tennessee Titans",
                 "position": "DEF",
                 "team": "TEN",
-                "points": 0.0
+                "points": 0.0,
+                "projectedPoints": 8.03,
+                "deltaVsProj": -8.03,
+                "sharePct": 0.0,
+                "boxSummary": "0.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               }
             ]
           },
-          "commentary": "In an electrifying 346.48-point shootout, Bronco Stampede outslugged Bijan And The Maye-ssiah in a breathtaking Week 1 showcase. Josh Allen put on an absolute clinic, finding paydirt 4 times (334 pass yds, 2 TD; 23 rush yds on 6 carries, 2 TD) to rack up a monstrous 35.66 points. Bijan And The Maye-ssiah countered behind Christian Watson's valiant 6 rec for 147 yds, 2 TD (29.70 pts), but were doomed by a disastrous goose egg from Colston Loveland (0 catches on 2 tgts). While Bijan And The Maye-ssiah's sideline reserves generated 86.7 points, the active starting lineup couldn't find the necessary rhythm."
+          "commentary": "In an electrifying 346.48-point shootout, Bronco Stampede outslugged Bijan And The Maye-ssiah in a breathtaking Week 1 showcase. Josh Allen put on an absolute clinic, finding paydirt 4 times (334 pass yds, 2 TD; 23 rush yds on 6 carries, 2 TD) to rack up a monstrous 35.66 points. Bijan And The Maye-ssiah countered behind Christian Watson's valiant 6 rec for 147 yds, 2 TD (29.70 pts), but were doomed by a disastrous goose egg from Colston Loveland (0 catches on 2 tgts). While Bijan And The Maye-ssiah's sideline reserves generated 86.7 points, the active starting lineup couldn't find the necessary rhythm.",
+          "deepDive": {
+            "headline": "Bronco Stampede Outslugs Bijan And The Maye-ssiah in Wild 346.5-Point Shootout (A+)",
+            "story": [
+              "In a thrilling Week 1 showdown, Bronco Stampede emerged victorious over Bijan And The Maye-ssiah with a score of 177.16 to 169.32, snatching the lead as early as Thursday night. Bronco Stampede certainly earned their A+ grade (+41.75 vs 135.41 projected), while Bijan And The Maye-ssiah might want to consider a remedial course in fantasy football after snagging a A+ (+33.57 vs 135.75 projected). A cruel scheduling buzzsaw for a high-scoring effort, but a loss is still a loss in the ledger.",
+              "Bronco Stampede's shining star was Josh Allen, who decided to take the week off from being merely 'good' and scored a whopping 35.66 points (334 pass yds, 2 TD; 23 rush yds on 6 carries, 2 TD)\u2014beating their projection by 16.29 points. Meanwhile, Tennessee Titans must have been auditioning for a role in a horror film with a dismal 0.00 points (0.0 pts), falling short of projection like a bad stand-up comedian. Over on Bijan And The Maye-ssiah, Christian Watson managed to shine through the gloom with 29.70 points (6 rec for 147 yds, 2 TD), but it seems Colston Loveland took a vacation with just 0.00 points (0 catches on 2 tgts)\u2014did they even show up?",
+              "With this win, Bronco Stampede moves to a glorious 1-0-0 record and sits comfortably at #1 in the standings, while Bijan And The Maye-ssiah, poor souls, find themselves languishing at #7 with a record of 0-1-0. It's clear that Bronco Stampede is riding high, while Bijan And The Maye-ssiah is still trying to figure out how to get off the ground. Will Bijan And The Maye-ssiah ever find their way back into the game, or will they just keep practicing their sad trombone sounds?",
+              "Next week, Bronco Stampede faces off against Ertz & Krafts \ud83c\udfc6, and they might want to keep the momentum going\u2014after all, you can't win them all if you don't win the first one! As for Bijan And The Maye-ssiah, they'll be up against Final Boss, and it's high time they take a long, hard look at their lineup. Maybe try to start players who actually show up to play? Just a thought!"
+            ],
+            "teamAGrade": "A+",
+            "teamBGrade": "A+",
+            "teamAProjected": 135.75,
+            "teamBProjected": 135.41,
+            "teamARecord": "0-1-0",
+            "teamBRecord": "1-0-0",
+            "teamARank": 7,
+            "teamBRank": 1,
+            "nextOpponentA": {
+              "rosterId": 6,
+              "teamName": "Final Boss"
+            },
+            "nextOpponentB": {
+              "rosterId": 1,
+              "teamName": "Ertz & Krafts \ud83c\udfc6"
+            },
+            "mvp": {
+              "playerId": "4984",
+              "name": "Josh Allen",
+              "position": "QB",
+              "team": "BUF",
+              "points": 35.66,
+              "projectedPoints": 19.37,
+              "deltaVsProj": 16.29,
+              "sharePct": 20.1,
+              "boxSummary": "334 pass yds, 2 TD; 23 rush yds on 6 carries, 2 TD",
+              "stats": {
+                "passYds": 334,
+                "rushYds": 23,
+                "recYds": 0,
+                "totalTds": 4,
+                "passTds": 2,
+                "rushTds": 2,
+                "recTds": 0
+              },
+              "fantasyTeamName": "Bronco Stampede"
+            },
+            "topPlayersA": [
+              {
+                "playerId": "8167",
+                "name": "Christian Watson",
+                "position": "WR",
+                "team": "GB",
+                "points": 29.7,
+                "projectedPoints": 10.76,
+                "deltaVsProj": 18.94,
+                "sharePct": 17.5,
+                "boxSummary": "6 rec for 147 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 147,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "9509",
+                "name": "Bijan Robinson",
+                "position": "RB",
+                "team": "ATL",
+                "points": 27.3,
+                "projectedPoints": 17.24,
+                "deltaVsProj": 10.06,
+                "sharePct": 16.1,
+                "boxSummary": "83 rush yds on 21 carries; 8 rec for 90 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 83,
+                  "recYds": 90,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "7547",
+                "name": "Amon-Ra St. Brown",
+                "position": "WR",
+                "team": "DET",
+                "points": 23.7,
+                "projectedPoints": 16.56,
+                "deltaVsProj": 7.14,
+                "sharePct": 14.0,
+                "boxSummary": "10 rec for 67 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 67,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "12534",
+                "name": "Kyle Monangai",
+                "position": "RB",
+                "team": "CHI",
+                "points": 19.4,
+                "projectedPoints": 6.71,
+                "deltaVsProj": 12.69,
+                "sharePct": 11.5,
+                "boxSummary": "100 rush yds on 10 carries, 1 TD; 2 rec for 24 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 100,
+                  "recYds": 24,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 4
+              }
+            ],
+            "topPlayersB": [
+              {
+                "playerId": "4984",
+                "name": "Josh Allen",
+                "position": "QB",
+                "team": "BUF",
+                "points": 35.66,
+                "projectedPoints": 19.37,
+                "deltaVsProj": 16.29,
+                "sharePct": 20.1,
+                "boxSummary": "334 pass yds, 2 TD; 23 rush yds on 6 carries, 2 TD",
+                "stats": {
+                  "passYds": 334,
+                  "rushYds": 23,
+                  "recYds": 0,
+                  "totalTds": 4,
+                  "passTds": 2,
+                  "rushTds": 2,
+                  "recTds": 0
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "8151",
+                "name": "Kenneth Walker",
+                "position": "RB",
+                "team": "KC",
+                "points": 32.6,
+                "projectedPoints": 12.29,
+                "deltaVsProj": 20.31,
+                "sharePct": 18.4,
+                "boxSummary": "173 rush yds on 23 carries, 1 TD; 3 rec for 18 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 173,
+                  "recYds": 18,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 1
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "8131",
+                "name": "Isaiah Likely",
+                "position": "TE",
+                "team": "NYG",
+                "points": 23.8,
+                "projectedPoints": 8.43,
+                "deltaVsProj": 15.37,
+                "sharePct": 13.4,
+                "boxSummary": "8 rec for 78 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 78,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "9488",
+                "name": "Jaxon Smith-Njigba",
+                "position": "WR",
+                "team": "SEA",
+                "points": 22.2,
+                "projectedPoints": 16.28,
+                "deltaVsProj": 5.92,
+                "sharePct": 12.5,
+                "boxSummary": "8 rec for 122 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 122,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 4
+              }
+            ],
+            "positionBreakdown": [
+              {
+                "category": "QB",
+                "teamAPoints": 12.82,
+                "teamBPoints": 35.66,
+                "margin": 22.84,
+                "advantage": "Bronco Stampede"
+              },
+              {
+                "category": "RB",
+                "teamAPoints": 81.1,
+                "teamBPoints": 46.6,
+                "margin": 34.5,
+                "advantage": "Bijan And The Maye-ssiah"
+              },
+              {
+                "category": "WR",
+                "teamAPoints": 53.4,
+                "teamBPoints": 61.1,
+                "margin": 7.7,
+                "advantage": "Bronco Stampede"
+              },
+              {
+                "category": "TE",
+                "teamAPoints": 0.0,
+                "teamBPoints": 23.8,
+                "margin": 23.8,
+                "advantage": "Bronco Stampede"
+              },
+              {
+                "category": "K",
+                "teamAPoints": 7.0,
+                "teamBPoints": 10.0,
+                "margin": 3.0,
+                "advantage": "Bronco Stampede"
+              },
+              {
+                "category": "DEF",
+                "teamAPoints": 15.0,
+                "teamBPoints": 0.0,
+                "margin": 15.0,
+                "advantage": "Bijan And The Maye-ssiah"
+              }
+            ],
+            "timeline": [
+              {
+                "window": "Wednesday",
+                "timeLabel": "Wed Kickoff",
+                "teamAPoints": 31.82,
+                "teamBPoints": 22.2,
+                "cumA": 31.82,
+                "cumB": 22.2,
+                "leader": "Bijan And The Maye-ssiah",
+                "margin": 9.62
+              },
+              {
+                "window": "Thursday",
+                "timeLabel": "Thu Night",
+                "teamAPoints": 0,
+                "teamBPoints": 23.9,
+                "cumA": 31.82,
+                "cumB": 46.1,
+                "leader": "Bronco Stampede",
+                "margin": 14.28
+              },
+              {
+                "window": "Sun Early",
+                "timeLabel": "Sun 1:00 PM",
+                "teamAPoints": 86.7,
+                "teamBPoints": 41.16,
+                "cumA": 118.52,
+                "cumB": 87.26,
+                "leader": "Bijan And The Maye-ssiah",
+                "margin": 31.26
+              },
+              {
+                "window": "Sun Late",
+                "timeLabel": "Sun 4:25 PM",
+                "teamAPoints": 44.7,
+                "teamBPoints": 33.5,
+                "cumA": 163.22,
+                "cumB": 120.76,
+                "leader": "Bijan And The Maye-ssiah",
+                "margin": 42.46
+              },
+              {
+                "window": "Sun Night",
+                "timeLabel": "Sun 8:20 PM",
+                "teamAPoints": 0,
+                "teamBPoints": 23.8,
+                "cumA": 163.22,
+                "cumB": 144.56,
+                "leader": "Bijan And The Maye-ssiah",
+                "margin": 18.66
+              },
+              {
+                "window": "Monday",
+                "timeLabel": "Mon Night",
+                "teamAPoints": 6.1,
+                "teamBPoints": 32.6,
+                "cumA": 169.32,
+                "cumB": 177.16,
+                "leader": "Bronco Stampede",
+                "margin": 7.84
+              }
+            ]
+          }
         },
         {
           "matchupId": 4,
@@ -838,6 +2674,8 @@
             "teamName": "My Nabers Tetties",
             "manager": "DRockefeller",
             "points": 67.86,
+            "projectedPoints": 98.0,
+            "weeklyGrade": "C-",
             "optimalPoints": 85.4,
             "lineupEfficiency": 79.5,
             "benchPoints": 52.7,
@@ -847,77 +2685,224 @@
                 "name": "Joe Burrow",
                 "position": "QB",
                 "team": "CIN",
-                "points": 15.16
+                "points": 15.16,
+                "projectedPoints": 20.92,
+                "deltaVsProj": -5.76,
+                "sharePct": 22.3,
+                "boxSummary": "254 pass yds, 1 TD, 1 INT; 20 rush yds on 5 carries",
+                "stats": {
+                  "passYds": 254,
+                  "rushYds": 20,
+                  "recYds": 0,
+                  "totalTds": 1,
+                  "passTds": 1,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 1
               },
               {
                 "playerId": "8154",
                 "name": "Brian Robinson",
                 "position": "RB",
                 "team": "ATL",
-                "points": 3.1
+                "points": 3.1,
+                "projectedPoints": 4.22,
+                "deltaVsProj": -1.12,
+                "sharePct": 4.6,
+                "boxSummary": "31 rush yds on 9 carries",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 31,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "13337",
                 "name": "Emmett Johnson",
                 "position": "RB",
                 "team": "KC",
-                "points": 7.8
+                "points": 7.8,
+                "projectedPoints": 2.93,
+                "deltaVsProj": 4.87,
+                "sharePct": 11.5,
+                "boxSummary": "24 rush yds on 8 carries; 2 rec for 44 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 24,
+                  "recYds": 44,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
               },
               {
                 "playerId": "12519",
                 "name": "Luther Burden",
                 "position": "WR",
                 "team": "CHI",
-                "points": 7.0
+                "points": 7.0,
+                "projectedPoints": 10.78,
+                "deltaVsProj": -3.78,
+                "sharePct": 10.3,
+                "boxSummary": "2 rush yds on 1 carries; 5 rec for 63 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 2,
+                  "recYds": 63,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "12526",
                 "name": "Tetairoa McMillan",
                 "position": "WR",
                 "team": "CAR",
-                "points": 8.0
+                "points": 8.0,
+                "projectedPoints": 12.57,
+                "deltaVsProj": -4.57,
+                "sharePct": 11.8,
+                "boxSummary": "5 rec for 75 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 75,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 3
               },
               {
                 "playerId": "7553",
                 "name": "Kyle Pitts",
                 "position": "TE",
                 "team": "ATL",
-                "points": 0.0
+                "points": 0.0,
+                "projectedPoints": 7.72,
+                "deltaVsProj": -7.72,
+                "sharePct": 0.0,
+                "boxSummary": "0 catches on 1 tgts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "11632",
                 "name": "Malik Nabers",
                 "position": "WR",
                 "team": "NYG",
-                "points": 9.9
+                "points": 9.9,
+                "projectedPoints": 10.63,
+                "deltaVsProj": -0.73,
+                "sharePct": 14.6,
+                "boxSummary": "6 rec for 69 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 69,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 2
               },
               {
                 "playerId": "13298",
                 "name": "KC Concepcion",
                 "position": "WR",
                 "team": "CLE",
-                "points": 5.8
+                "points": 5.8,
+                "projectedPoints": 7.12,
+                "deltaVsProj": -1.32,
+                "sharePct": 8.5,
+                "boxSummary": "15 rush yds on 3 carries; 4 rec for 43 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 15,
+                  "recYds": 43,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "3214",
                 "name": "Hunter Henry",
                 "position": "TE",
                 "team": "NE",
-                "points": 4.1
+                "points": 4.1,
+                "projectedPoints": 7.61,
+                "deltaVsProj": -3.51,
+                "sharePct": 6.0,
+                "boxSummary": "3 rec for 26 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 26,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "11533",
                 "name": "Brandon Aubrey",
                 "position": "K",
                 "team": "DAL",
-                "points": 1.0
+                "points": 1.0,
+                "projectedPoints": 6.81,
+                "deltaVsProj": -5.81,
+                "sharePct": 1.5,
+                "boxSummary": "1.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "NE",
                 "name": "New England Patriots",
                 "position": "DEF",
                 "team": "NE",
-                "points": 6.0
+                "points": 6.0,
+                "projectedPoints": 6.69,
+                "deltaVsProj": -0.69,
+                "sharePct": 8.8,
+                "boxSummary": "6.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               }
             ]
           },
@@ -926,6 +2911,8 @@
             "teamName": "arkinsjt",
             "manager": "arkinsjt",
             "points": 157.46,
+            "projectedPoints": 127.72,
+            "weeklyGrade": "A+",
             "optimalPoints": 162.76,
             "lineupEfficiency": 96.7,
             "benchPoints": 46.72,
@@ -935,81 +2922,542 @@
                 "name": "Caleb Williams",
                 "position": "QB",
                 "team": "CHI",
-                "points": 37.26
+                "points": 37.26,
+                "projectedPoints": 18.33,
+                "deltaVsProj": 18.93,
+                "sharePct": 23.7,
+                "boxSummary": "269 pass yds, 2 TD; 65 rush yds on 10 carries, 2 TD",
+                "stats": {
+                  "passYds": 269,
+                  "rushYds": 65,
+                  "recYds": 0,
+                  "totalTds": 4,
+                  "passTds": 2,
+                  "rushTds": 2,
+                  "recTds": 0
+                },
+                "rank": 1
               },
               {
                 "playerId": "11584",
                 "name": "Bucky Irving",
                 "position": "RB",
                 "team": "TB",
-                "points": 16.8
+                "points": 16.8,
+                "projectedPoints": 13.46,
+                "deltaVsProj": 3.34,
+                "sharePct": 10.7,
+                "boxSummary": "45 rush yds on 8 carries, 1 TD; 7 rec for 48 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 45,
+                  "recYds": 48,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 3
               },
               {
                 "playerId": "5892",
                 "name": "David Montgomery",
                 "position": "RB",
                 "team": "HOU",
-                "points": 27.4
+                "points": 27.4,
+                "projectedPoints": 14.19,
+                "deltaVsProj": 13.21,
+                "sharePct": 17.4,
+                "boxSummary": "60 rush yds on 20 carries, 2 TD; 3 rec for 19 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 60,
+                  "recYds": 19,
+                  "totalTds": 3,
+                  "passTds": 0,
+                  "rushTds": 2,
+                  "recTds": 1
+                },
+                "rank": 2
               },
               {
                 "playerId": "6786",
                 "name": "CeeDee Lamb",
                 "position": "WR",
                 "team": "DAL",
-                "points": 12.9
+                "points": 12.9,
+                "projectedPoints": 13.12,
+                "deltaVsProj": -0.22,
+                "sharePct": 8.2,
+                "boxSummary": "5 rec for 44 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 44,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                }
               },
               {
                 "playerId": "5859",
                 "name": "A.J. Brown",
                 "position": "WR",
                 "team": "NE",
-                "points": 4.1
+                "points": 4.1,
+                "projectedPoints": 14.13,
+                "deltaVsProj": -10.03,
+                "sharePct": 2.6,
+                "boxSummary": "3 rec for 26 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 26,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "1466",
                 "name": "Travis Kelce",
                 "position": "TE",
                 "team": "KC",
-                "points": 8.6
+                "points": 8.6,
+                "projectedPoints": 7.38,
+                "deltaVsProj": 1.22,
+                "sharePct": 5.5,
+                "boxSummary": "3 rec for 71 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 71,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "6801",
                 "name": "Tee Higgins",
                 "position": "WR",
                 "team": "CIN",
-                "points": 7.4
+                "points": 7.4,
+                "projectedPoints": 13.74,
+                "deltaVsProj": -6.34,
+                "sharePct": 4.7,
+                "boxSummary": "3 rec for 59 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 59,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "11620",
                 "name": "Rome Odunze",
                 "position": "WR",
                 "team": "CHI",
-                "points": 6.2
+                "points": 6.2,
+                "projectedPoints": 9.33,
+                "deltaVsProj": -3.13,
+                "sharePct": 3.9,
+                "boxSummary": "2 rec for 52 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 52,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "9487",
                 "name": "Parker Washington",
                 "position": "WR",
                 "team": "JAX",
-                "points": 16.8
+                "points": 16.8,
+                "projectedPoints": 10.19,
+                "deltaVsProj": 6.61,
+                "sharePct": 10.7,
+                "boxSummary": "5 rec for 83 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 83,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 4
               },
               {
                 "playerId": "12711",
                 "name": "Tyler Loop",
                 "position": "K",
                 "team": "BAL",
-                "points": 14.0
+                "points": 14.0,
+                "projectedPoints": 7.05,
+                "deltaVsProj": 6.95,
+                "sharePct": 8.9,
+                "boxSummary": "2/2 FG",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "CHI",
                 "name": "Chicago Bears",
                 "position": "DEF",
                 "team": "CHI",
-                "points": 6.0
+                "points": 6.0,
+                "projectedPoints": 6.8,
+                "deltaVsProj": -0.8,
+                "sharePct": 3.8,
+                "boxSummary": "6.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               }
             ]
           },
-          "commentary": "A thorough, one-sided beatdown: arkinsjt fired on all cylinders while dismantling My Nabers Tetties in an emphatic 89.60-point rout. Caleb Williams put on an absolute clinic, finding paydirt 4 times (269 pass yds, 2 TD; 65 rush yds on 10 carries, 2 TD) to rack up a monstrous 37.26 points. My Nabers Tetties countered behind Joe Burrow's valiant 254 pass yds, 1 TD, 1 INT; 20 rush yds on 5 carries (15.16 pts), but were doomed by a disastrous goose egg from Kyle Pitts (0 catches on 1 tgts). Managerial execution was razor-sharp for arkinsjt, capturing a sterling 96.7% of their roster's maximum scoring capacity."
+          "commentary": "A thorough, one-sided beatdown: arkinsjt fired on all cylinders while dismantling My Nabers Tetties in an emphatic 89.60-point rout. Caleb Williams put on an absolute clinic, finding paydirt 4 times (269 pass yds, 2 TD; 65 rush yds on 10 carries, 2 TD) to rack up a monstrous 37.26 points. My Nabers Tetties countered behind Joe Burrow's valiant 254 pass yds, 1 TD, 1 INT; 20 rush yds on 5 carries (15.16 pts), but were doomed by a disastrous goose egg from Kyle Pitts (0 catches on 1 tgts). Managerial execution was razor-sharp for arkinsjt, capturing a sterling 96.7% of their roster's maximum scoring capacity.",
+          "deepDive": {
+            "headline": "arkinsjt's A+ Performance Leaves My Nabers Tetties in the Dust!",
+            "story": [
+              "In a thrilling Week 1 showdown, arkinsjt emerged victorious over My Nabers Tetties with a score of 157.46 to 67.86, seizing decisive control during Sunday's explosive early window. arkinsjt certainly earned their A+ grade (+29.74 vs 127.72 projected), while My Nabers Tetties might want to consider a remedial course in fantasy football after snagging a C- (-30.14 vs 98.00 projected). A brutal underperformance that leaves their coaching staff scrambling for answers.",
+              "arkinsjt's shining star was Caleb Williams, who decided to take the week off from being merely 'good' and scored a whopping 37.26 points (269 pass yds, 2 TD; 65 rush yds on 10 carries, 2 TD)\u2014beating their projection by 18.93 points. Meanwhile, A.J. Brown must have been auditioning for a role in a horror film with a dismal 4.10 points (3 rec for 26 yds), falling short of projection like a bad stand-up comedian. Over on My Nabers Tetties, Joe Burrow managed to shine through the gloom with 15.16 points (254 pass yds, 1 TD, 1 INT; 20 rush yds on 5 carries), but it seems Kyle Pitts took a vacation with just 0.00 points (0 catches on 1 tgts)\u2014did they even show up?",
+              "With this win, arkinsjt moves to a glorious 1-0-0 record and sits comfortably at #3 in the standings, while My Nabers Tetties, poor souls, find themselves languishing at #12 with a record of 0-1-0. It's clear that arkinsjt is riding high, while My Nabers Tetties is still trying to figure out how to get off the ground. Will My Nabers Tetties ever find their way back into the game, or will they just keep practicing their sad trombone sounds?",
+              "Next week, arkinsjt faces off against Gridiron geezers, and they might want to keep the momentum going\u2014after all, you can't win them all if you don't win the first one! As for My Nabers Tetties, they'll be up against Terry Tate\u2019s Pain Train, and it's high time they take a long, hard look at their lineup. Maybe try to start players who actually show up to play? Just a thought!"
+            ],
+            "teamAGrade": "C-",
+            "teamBGrade": "A+",
+            "teamAProjected": 98.0,
+            "teamBProjected": 127.72,
+            "teamARecord": "0-1-0",
+            "teamBRecord": "1-0-0",
+            "teamARank": 12,
+            "teamBRank": 3,
+            "nextOpponentA": {
+              "rosterId": 11,
+              "teamName": "Terry Tate\u2019s Pain Train"
+            },
+            "nextOpponentB": {
+              "rosterId": 7,
+              "teamName": "Gridiron geezers"
+            },
+            "mvp": {
+              "playerId": "11560",
+              "name": "Caleb Williams",
+              "position": "QB",
+              "team": "CHI",
+              "points": 37.26,
+              "projectedPoints": 18.33,
+              "deltaVsProj": 18.93,
+              "sharePct": 23.7,
+              "boxSummary": "269 pass yds, 2 TD; 65 rush yds on 10 carries, 2 TD",
+              "stats": {
+                "passYds": 269,
+                "rushYds": 65,
+                "recYds": 0,
+                "totalTds": 4,
+                "passTds": 2,
+                "rushTds": 2,
+                "recTds": 0
+              },
+              "fantasyTeamName": "arkinsjt"
+            },
+            "topPlayersA": [
+              {
+                "playerId": "6770",
+                "name": "Joe Burrow",
+                "position": "QB",
+                "team": "CIN",
+                "points": 15.16,
+                "projectedPoints": 20.92,
+                "deltaVsProj": -5.76,
+                "sharePct": 22.3,
+                "boxSummary": "254 pass yds, 1 TD, 1 INT; 20 rush yds on 5 carries",
+                "stats": {
+                  "passYds": 254,
+                  "rushYds": 20,
+                  "recYds": 0,
+                  "totalTds": 1,
+                  "passTds": 1,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "11632",
+                "name": "Malik Nabers",
+                "position": "WR",
+                "team": "NYG",
+                "points": 9.9,
+                "projectedPoints": 10.63,
+                "deltaVsProj": -0.73,
+                "sharePct": 14.6,
+                "boxSummary": "6 rec for 69 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 69,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "12526",
+                "name": "Tetairoa McMillan",
+                "position": "WR",
+                "team": "CAR",
+                "points": 8.0,
+                "projectedPoints": 12.57,
+                "deltaVsProj": -4.57,
+                "sharePct": 11.8,
+                "boxSummary": "5 rec for 75 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 75,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "13337",
+                "name": "Emmett Johnson",
+                "position": "RB",
+                "team": "KC",
+                "points": 7.8,
+                "projectedPoints": 2.93,
+                "deltaVsProj": 4.87,
+                "sharePct": 11.5,
+                "boxSummary": "24 rush yds on 8 carries; 2 rec for 44 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 24,
+                  "recYds": 44,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
+              }
+            ],
+            "topPlayersB": [
+              {
+                "playerId": "11560",
+                "name": "Caleb Williams",
+                "position": "QB",
+                "team": "CHI",
+                "points": 37.26,
+                "projectedPoints": 18.33,
+                "deltaVsProj": 18.93,
+                "sharePct": 23.7,
+                "boxSummary": "269 pass yds, 2 TD; 65 rush yds on 10 carries, 2 TD",
+                "stats": {
+                  "passYds": 269,
+                  "rushYds": 65,
+                  "recYds": 0,
+                  "totalTds": 4,
+                  "passTds": 2,
+                  "rushTds": 2,
+                  "recTds": 0
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "5892",
+                "name": "David Montgomery",
+                "position": "RB",
+                "team": "HOU",
+                "points": 27.4,
+                "projectedPoints": 14.19,
+                "deltaVsProj": 13.21,
+                "sharePct": 17.4,
+                "boxSummary": "60 rush yds on 20 carries, 2 TD; 3 rec for 19 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 60,
+                  "recYds": 19,
+                  "totalTds": 3,
+                  "passTds": 0,
+                  "rushTds": 2,
+                  "recTds": 1
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "11584",
+                "name": "Bucky Irving",
+                "position": "RB",
+                "team": "TB",
+                "points": 16.8,
+                "projectedPoints": 13.46,
+                "deltaVsProj": 3.34,
+                "sharePct": 10.7,
+                "boxSummary": "45 rush yds on 8 carries, 1 TD; 7 rec for 48 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 45,
+                  "recYds": 48,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "9487",
+                "name": "Parker Washington",
+                "position": "WR",
+                "team": "JAX",
+                "points": 16.8,
+                "projectedPoints": 10.19,
+                "deltaVsProj": 6.61,
+                "sharePct": 10.7,
+                "boxSummary": "5 rec for 83 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 83,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 4
+              }
+            ],
+            "positionBreakdown": [
+              {
+                "category": "QB",
+                "teamAPoints": 15.16,
+                "teamBPoints": 37.26,
+                "margin": 22.1,
+                "advantage": "arkinsjt"
+              },
+              {
+                "category": "RB",
+                "teamAPoints": 10.9,
+                "teamBPoints": 44.2,
+                "margin": 33.3,
+                "advantage": "arkinsjt"
+              },
+              {
+                "category": "WR",
+                "teamAPoints": 30.7,
+                "teamBPoints": 47.4,
+                "margin": 16.7,
+                "advantage": "arkinsjt"
+              },
+              {
+                "category": "TE",
+                "teamAPoints": 4.1,
+                "teamBPoints": 8.6,
+                "margin": 4.5,
+                "advantage": "arkinsjt"
+              },
+              {
+                "category": "K",
+                "teamAPoints": 1.0,
+                "teamBPoints": 14.0,
+                "margin": 13.0,
+                "advantage": "arkinsjt"
+              },
+              {
+                "category": "DEF",
+                "teamAPoints": 6.0,
+                "teamBPoints": 6.0,
+                "margin": 0.0,
+                "advantage": "Even"
+              }
+            ],
+            "timeline": [
+              {
+                "window": "Wednesday",
+                "timeLabel": "Wed Kickoff",
+                "teamAPoints": 10.1,
+                "teamBPoints": 4.1,
+                "cumA": 10.1,
+                "cumB": 4.1,
+                "leader": "My Nabers Tetties",
+                "margin": 6.0
+              },
+              {
+                "window": "Sun Early",
+                "timeLabel": "Sun 1:00 PM",
+                "teamAPoints": 39.06,
+                "teamBPoints": 131.86,
+                "cumA": 49.16,
+                "cumB": 135.96,
+                "leader": "arkinsjt",
+                "margin": 86.8
+              },
+              {
+                "window": "Sun Late",
+                "timeLabel": "Sun 4:25 PM",
+                "teamAPoints": 0,
+                "teamBPoints": 0,
+                "cumA": 49.16,
+                "cumB": 135.96,
+                "leader": "arkinsjt",
+                "margin": 86.8
+              },
+              {
+                "window": "Sun Night",
+                "timeLabel": "Sun 8:20 PM",
+                "teamAPoints": 10.9,
+                "teamBPoints": 12.9,
+                "cumA": 60.06,
+                "cumB": 148.86,
+                "leader": "arkinsjt",
+                "margin": 88.8
+              },
+              {
+                "window": "Monday",
+                "timeLabel": "Mon Night",
+                "teamAPoints": 7.8,
+                "teamBPoints": 8.6,
+                "cumA": 67.86,
+                "cumB": 157.46,
+                "leader": "arkinsjt",
+                "margin": 89.6
+              }
+            ]
+          }
         },
         {
           "matchupId": 5,
@@ -1023,6 +3471,8 @@
             "teamName": "2 Dagos and A Dream ",
             "manager": "TGamby",
             "points": 142.58,
+            "projectedPoints": 126.05,
+            "weeklyGrade": "A",
             "optimalPoints": 166.18,
             "lineupEfficiency": 85.8,
             "benchPoints": 52.54,
@@ -1032,77 +3482,224 @@
                 "name": "Jordan Love",
                 "position": "QB",
                 "team": "GB",
-                "points": 20.48
+                "points": 20.48,
+                "projectedPoints": 15.71,
+                "deltaVsProj": 4.77,
+                "sharePct": 14.4,
+                "boxSummary": "387 pass yds, 2 TD, 1 INT",
+                "stats": {
+                  "passYds": 387,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 2,
+                  "passTds": 2,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
               },
               {
                 "playerId": "9221",
                 "name": "Jahmyr Gibbs",
                 "position": "RB",
                 "team": "DET",
-                "points": 31.1
+                "points": 31.1,
+                "projectedPoints": 19.74,
+                "deltaVsProj": 11.36,
+                "sharePct": 21.8,
+                "boxSummary": "156 rush yds on 29 carries, 2 TD; 5 rec for 30 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 156,
+                  "recYds": 30,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 2,
+                  "recTds": 0
+                },
+                "rank": 1
               },
               {
                 "playerId": "6813",
                 "name": "Jonathan Taylor",
                 "position": "RB",
                 "team": "IND",
-                "points": 23.6
+                "points": 23.6,
+                "projectedPoints": 17.1,
+                "deltaVsProj": 6.5,
+                "sharePct": 16.6,
+                "boxSummary": "98 rush yds on 19 carries, 2 TD; 3 rec for 23 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 98,
+                  "recYds": 23,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 2,
+                  "recTds": 0
+                },
+                "rank": 3
               },
               {
                 "playerId": "9754",
                 "name": "Quentin Johnston",
                 "position": "WR",
                 "team": "LAC",
-                "points": 2.7
+                "points": 2.7,
+                "projectedPoints": 9.25,
+                "deltaVsProj": -6.55,
+                "sharePct": 1.9,
+                "boxSummary": "2 rec for 17 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 17,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "10222",
                 "name": "Jayden Reed",
                 "position": "WR",
                 "team": "GB",
-                "points": 3.5
+                "points": 3.5,
+                "projectedPoints": 9.98,
+                "deltaVsProj": -6.48,
+                "sharePct": 2.5,
+                "boxSummary": "3 rec for 20 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 20,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "12506",
                 "name": "Harold Fannin",
                 "position": "TE",
                 "team": "CLE",
-                "points": 3.1
+                "points": 3.1,
+                "projectedPoints": 8.39,
+                "deltaVsProj": -5.29,
+                "sharePct": 2.2,
+                "boxSummary": "2 rec for 21 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 21,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "12527",
                 "name": "Ashton Jeanty",
                 "position": "RB",
                 "team": "LV",
-                "points": 29.7
+                "points": 29.7,
+                "projectedPoints": 14.38,
+                "deltaVsProj": 15.32,
+                "sharePct": 20.8,
+                "boxSummary": "102 rush yds on 23 carries; 6 rec for 45 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 102,
+                  "recYds": 45,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 2
               },
               {
                 "playerId": "5967",
                 "name": "Tony Pollard",
                 "position": "RB",
                 "team": "TEN",
-                "points": 3.9
+                "points": 3.9,
+                "projectedPoints": 10.46,
+                "deltaVsProj": -6.56,
+                "sharePct": 2.7,
+                "boxSummary": "35 rush yds on 7 carries; 1 rec for -1 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 35,
+                  "recYds": -1,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "10236",
                 "name": "Dalton Kincaid",
                 "position": "TE",
                 "team": "BUF",
-                "points": 15.5
+                "points": 15.5,
+                "projectedPoints": 6.81,
+                "deltaVsProj": 8.69,
+                "sharePct": 10.9,
+                "boxSummary": "5 rec for 130 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 130,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "11539",
                 "name": "Jake Bates",
                 "position": "K",
                 "team": "DET",
-                "points": 7.0
+                "points": 7.0,
+                "projectedPoints": 7.2,
+                "deltaVsProj": -0.2,
+                "sharePct": 4.9,
+                "boxSummary": "1/1 FG",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "LAR",
                 "name": "Los Angeles Rams",
                 "position": "DEF",
                 "team": "LAR",
-                "points": 2.0
+                "points": 2.0,
+                "projectedPoints": 7.03,
+                "deltaVsProj": -5.03,
+                "sharePct": 1.4,
+                "boxSummary": "2.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               }
             ]
           },
@@ -1111,6 +3708,8 @@
             "teamName": "Final Boss",
             "manager": "OldManBacala",
             "points": 138.56,
+            "projectedPoints": 106.42,
+            "weeklyGrade": "A+",
             "optimalPoints": 165.46,
             "lineupEfficiency": 83.7,
             "benchPoints": 60.44,
@@ -1120,81 +3719,552 @@
                 "name": "Patrick Mahomes",
                 "position": "QB",
                 "team": "KC",
-                "points": 22.66
+                "points": 22.66,
+                "projectedPoints": 15.03,
+                "deltaVsProj": 7.63,
+                "sharePct": 16.4,
+                "boxSummary": "184 pass yds, 2 TD, 1 INT; 23 rush yds on 7 carries, 1 TD",
+                "stats": {
+                  "passYds": 184,
+                  "rushYds": 23,
+                  "recYds": 0,
+                  "totalTds": 3,
+                  "passTds": 2,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 2
               },
               {
                 "playerId": "7594",
                 "name": "Chuba Hubbard",
                 "position": "RB",
                 "team": "CAR",
-                "points": 22.2
+                "points": 22.2,
+                "projectedPoints": 9.96,
+                "deltaVsProj": 12.24,
+                "sharePct": 16.0,
+                "boxSummary": "49 rush yds on 10 carries, 1 TD; 3 rec for 38 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 49,
+                  "recYds": 38,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 1
+                },
+                "rank": 3
               },
               {
                 "playerId": "6806",
                 "name": "J.K. Dobbins",
                 "position": "RB",
                 "team": "DEN",
-                "points": 3.6
+                "points": 3.6,
+                "projectedPoints": 9.17,
+                "deltaVsProj": -5.57,
+                "sharePct": 2.6,
+                "boxSummary": "36 rush yds on 8 carries",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 36,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "8137",
                 "name": "George Pickens",
                 "position": "WR",
                 "team": "DAL",
-                "points": 4.3
+                "points": 4.3,
+                "projectedPoints": 12.98,
+                "deltaVsProj": -8.68,
+                "sharePct": 3.1,
+                "boxSummary": "3 rec for 28 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 28,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "13279",
                 "name": "Carnell Tate",
                 "position": "WR",
                 "team": "TEN",
-                "points": 5.8
+                "points": 5.8,
+                "projectedPoints": 8.87,
+                "deltaVsProj": -3.07,
+                "sharePct": 4.2,
+                "boxSummary": "4 rec for 38 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 38,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "9484",
                 "name": "Tucker Kraft",
                 "position": "TE",
                 "team": "GB",
-                "points": 8.0
+                "points": 8.0,
+                "projectedPoints": 8.68,
+                "deltaVsProj": -0.68,
+                "sharePct": 5.8,
+                "boxSummary": "3 rec for 65 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 65,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "6819",
                 "name": "Michael Pittman",
                 "position": "WR",
                 "team": "PIT",
-                "points": 7.3
+                "points": 7.3,
+                "projectedPoints": 8.29,
+                "deltaVsProj": -0.99,
+                "sharePct": 5.3,
+                "boxSummary": "3 rec for 58 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 58,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "8676",
                 "name": "Rashid Shaheed",
                 "position": "WR",
                 "team": "SEA",
-                "points": 0.9
+                "points": 0.9,
+                "projectedPoints": 7.64,
+                "deltaVsProj": -6.74,
+                "sharePct": 0.6,
+                "boxSummary": "1 rec for 4 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 4,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "11646",
                 "name": "Jalen Coker",
                 "position": "WR",
                 "team": "CAR",
-                "points": 29.8
+                "points": 29.8,
+                "projectedPoints": 9.82,
+                "deltaVsProj": 19.98,
+                "sharePct": 21.5,
+                "boxSummary": "8 rec for 138 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 138,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 1
               },
               {
                 "playerId": "7839",
                 "name": "Evan McPherson",
                 "position": "K",
                 "team": "CIN",
-                "points": 19.0
+                "points": 19.0,
+                "projectedPoints": 6.84,
+                "deltaVsProj": 12.16,
+                "sharePct": 13.7,
+                "boxSummary": "4/4 FG",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
               },
               {
                 "playerId": "JAX",
                 "name": "Jacksonville Jaguars",
                 "position": "DEF",
                 "team": "JAX",
-                "points": 15.0
+                "points": 15.0,
+                "projectedPoints": 9.14,
+                "deltaVsProj": 5.86,
+                "sharePct": 10.8,
+                "boxSummary": "15.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               }
             ]
           },
-          "commentary": "Down to the final whistle: 2 Dagos and A Dream  fended off a relentless comeback by Final Boss to seal a nail-biting 4.02-point triumph (142.58 \u2013 138.56). Jahmyr Gibbs provided the decisive spark, hitting the end zone twice as part of a 156 rush yds on 29 carries, 2 TD; 5 rec for 30 yds (31.10 pts) performance. Final Boss countered behind Jalen Coker's valiant 8 rec for 138 yds, 2 TD (29.80 pts), but a quiet outing from Rashid Shaheed (1 rec for 4 yds) severely capped their comeback bid. Managerial second-guessing will sting all week for Final Boss: leaving 60.4 bench points unplayed cost them a matchup decided by mere single digits."
+          "commentary": "Down to the final whistle: 2 Dagos and A Dream  fended off a relentless comeback by Final Boss to seal a nail-biting 4.02-point triumph (142.58 \u2013 138.56). Jahmyr Gibbs provided the decisive spark, hitting the end zone twice as part of a 156 rush yds on 29 carries, 2 TD; 5 rec for 30 yds (31.10 pts) performance. Final Boss countered behind Jalen Coker's valiant 8 rec for 138 yds, 2 TD (29.80 pts), but a quiet outing from Rashid Shaheed (1 rec for 4 yds) severely capped their comeback bid. Managerial second-guessing will sting all week for Final Boss: leaving 60.4 bench points unplayed cost them a matchup decided by mere single digits.",
+          "deepDive": {
+            "headline": "2 Dagos and A Dream  Survives Nail-Biter vs. Final Boss in 4.02-Point Thriller",
+            "story": [
+              "In a thrilling Week 1 showdown, 2 Dagos and A Dream  emerged victorious over Final Boss with a score of 142.58 to 138.56, snatching the lead as early as Thursday night. 2 Dagos and A Dream  certainly earned their A grade (+16.53 vs 126.05 projected), while Final Boss might want to consider a remedial course in fantasy football after snagging a A+ (+32.14 vs 106.42 projected). An agonizing defeat that came down to the razor-thin final plays of the weekend.",
+              "2 Dagos and A Dream 's shining star was Jahmyr Gibbs, who decided to take the week off from being merely 'good' and scored a whopping 31.10 points (156 rush yds on 29 carries, 2 TD; 5 rec for 30 yds)\u2014beating their projection by 11.36 points. Meanwhile, Los Angeles Rams must have been auditioning for a role in a horror film with a dismal 2.00 points (2.0 pts), falling short of projection like a bad stand-up comedian. Over on Final Boss, Jalen Coker managed to shine through the gloom with 29.80 points (8 rec for 138 yds, 2 TD), but it seems Rashid Shaheed took a vacation with just 0.90 points (1 rec for 4 yds)\u2014did they even show up?",
+              "With this win, 2 Dagos and A Dream  moves to a glorious 1-0-0 record and sits comfortably at #5 in the standings, while Final Boss, poor souls, find themselves languishing at #8 with a record of 0-1-0. It's clear that 2 Dagos and A Dream  is riding high, while Final Boss is still trying to figure out how to get off the ground. Will Final Boss ever find their way back into the game, or will they just keep practicing their sad trombone sounds?",
+              "Next week, 2 Dagos and A Dream  faces off against Bub\u2019s Club, and they might want to keep the momentum going\u2014after all, you can't win them all if you don't win the first one! As for Final Boss, they'll be up against Bijan And The Maye-ssiah, and it's high time they take a long, hard look at their lineup. Maybe try to start players who actually show up to play? Just a thought!"
+            ],
+            "teamAGrade": "A",
+            "teamBGrade": "A+",
+            "teamAProjected": 126.05,
+            "teamBProjected": 106.42,
+            "teamARecord": "1-0-0",
+            "teamBRecord": "0-1-0",
+            "teamARank": 5,
+            "teamBRank": 8,
+            "nextOpponentA": {
+              "rosterId": 4,
+              "teamName": "Bub\u2019s Club"
+            },
+            "nextOpponentB": {
+              "rosterId": 10,
+              "teamName": "Bijan And The Maye-ssiah"
+            },
+            "mvp": {
+              "playerId": "9221",
+              "name": "Jahmyr Gibbs",
+              "position": "RB",
+              "team": "DET",
+              "points": 31.1,
+              "projectedPoints": 19.74,
+              "deltaVsProj": 11.36,
+              "sharePct": 21.8,
+              "boxSummary": "156 rush yds on 29 carries, 2 TD; 5 rec for 30 yds",
+              "stats": {
+                "passYds": 0,
+                "rushYds": 156,
+                "recYds": 30,
+                "totalTds": 2,
+                "passTds": 0,
+                "rushTds": 2,
+                "recTds": 0
+              },
+              "fantasyTeamName": "2 Dagos and A Dream "
+            },
+            "topPlayersA": [
+              {
+                "playerId": "9221",
+                "name": "Jahmyr Gibbs",
+                "position": "RB",
+                "team": "DET",
+                "points": 31.1,
+                "projectedPoints": 19.74,
+                "deltaVsProj": 11.36,
+                "sharePct": 21.8,
+                "boxSummary": "156 rush yds on 29 carries, 2 TD; 5 rec for 30 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 156,
+                  "recYds": 30,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 2,
+                  "recTds": 0
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "12527",
+                "name": "Ashton Jeanty",
+                "position": "RB",
+                "team": "LV",
+                "points": 29.7,
+                "projectedPoints": 14.38,
+                "deltaVsProj": 15.32,
+                "sharePct": 20.8,
+                "boxSummary": "102 rush yds on 23 carries; 6 rec for 45 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 102,
+                  "recYds": 45,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "6813",
+                "name": "Jonathan Taylor",
+                "position": "RB",
+                "team": "IND",
+                "points": 23.6,
+                "projectedPoints": 17.1,
+                "deltaVsProj": 6.5,
+                "sharePct": 16.6,
+                "boxSummary": "98 rush yds on 19 carries, 2 TD; 3 rec for 23 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 98,
+                  "recYds": 23,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 2,
+                  "recTds": 0
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "6804",
+                "name": "Jordan Love",
+                "position": "QB",
+                "team": "GB",
+                "points": 20.48,
+                "projectedPoints": 15.71,
+                "deltaVsProj": 4.77,
+                "sharePct": 14.4,
+                "boxSummary": "387 pass yds, 2 TD, 1 INT",
+                "stats": {
+                  "passYds": 387,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 2,
+                  "passTds": 2,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
+              }
+            ],
+            "topPlayersB": [
+              {
+                "playerId": "11646",
+                "name": "Jalen Coker",
+                "position": "WR",
+                "team": "CAR",
+                "points": 29.8,
+                "projectedPoints": 9.82,
+                "deltaVsProj": 19.98,
+                "sharePct": 21.5,
+                "boxSummary": "8 rec for 138 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 138,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "4046",
+                "name": "Patrick Mahomes",
+                "position": "QB",
+                "team": "KC",
+                "points": 22.66,
+                "projectedPoints": 15.03,
+                "deltaVsProj": 7.63,
+                "sharePct": 16.4,
+                "boxSummary": "184 pass yds, 2 TD, 1 INT; 23 rush yds on 7 carries, 1 TD",
+                "stats": {
+                  "passYds": 184,
+                  "rushYds": 23,
+                  "recYds": 0,
+                  "totalTds": 3,
+                  "passTds": 2,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "7594",
+                "name": "Chuba Hubbard",
+                "position": "RB",
+                "team": "CAR",
+                "points": 22.2,
+                "projectedPoints": 9.96,
+                "deltaVsProj": 12.24,
+                "sharePct": 16.0,
+                "boxSummary": "49 rush yds on 10 carries, 1 TD; 3 rec for 38 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 49,
+                  "recYds": 38,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 1
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "7839",
+                "name": "Evan McPherson",
+                "position": "K",
+                "team": "CIN",
+                "points": 19.0,
+                "projectedPoints": 6.84,
+                "deltaVsProj": 12.16,
+                "sharePct": 13.7,
+                "boxSummary": "4/4 FG",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
+              }
+            ],
+            "positionBreakdown": [
+              {
+                "category": "QB",
+                "teamAPoints": 20.48,
+                "teamBPoints": 22.66,
+                "margin": 2.18,
+                "advantage": "Final Boss"
+              },
+              {
+                "category": "RB",
+                "teamAPoints": 88.3,
+                "teamBPoints": 25.8,
+                "margin": 62.5,
+                "advantage": "2 Dagos and A Dream "
+              },
+              {
+                "category": "WR",
+                "teamAPoints": 6.2,
+                "teamBPoints": 48.1,
+                "margin": 41.9,
+                "advantage": "Final Boss"
+              },
+              {
+                "category": "TE",
+                "teamAPoints": 18.6,
+                "teamBPoints": 8.0,
+                "margin": 10.6,
+                "advantage": "2 Dagos and A Dream "
+              },
+              {
+                "category": "K",
+                "teamAPoints": 7.0,
+                "teamBPoints": 19.0,
+                "margin": 12.0,
+                "advantage": "Final Boss"
+              },
+              {
+                "category": "DEF",
+                "teamAPoints": 2.0,
+                "teamBPoints": 15.0,
+                "margin": 13.0,
+                "advantage": "Final Boss"
+              }
+            ],
+            "timeline": [
+              {
+                "window": "Wednesday",
+                "timeLabel": "Wed Kickoff",
+                "teamAPoints": 0,
+                "teamBPoints": 0.9,
+                "cumA": 0.0,
+                "cumB": 0.9,
+                "leader": "Final Boss",
+                "margin": 0.9
+              },
+              {
+                "window": "Thursday",
+                "timeLabel": "Thu Night",
+                "teamAPoints": 2.0,
+                "teamBPoints": 0,
+                "cumA": 2.0,
+                "cumB": 0.9,
+                "leader": "2 Dagos and A Dream ",
+                "margin": 1.1
+              },
+              {
+                "window": "Sun Early",
+                "timeLabel": "Sun 1:00 PM",
+                "teamAPoints": 84.2,
+                "teamBPoints": 99.1,
+                "cumA": 86.2,
+                "cumB": 100.0,
+                "leader": "Final Boss",
+                "margin": 13.8
+              },
+              {
+                "window": "Sun Late",
+                "timeLabel": "Sun 4:25 PM",
+                "teamAPoints": 56.38,
+                "teamBPoints": 8.0,
+                "cumA": 142.58,
+                "cumB": 108.0,
+                "leader": "2 Dagos and A Dream ",
+                "margin": 34.58
+              },
+              {
+                "window": "Sun Night",
+                "timeLabel": "Sun 8:20 PM",
+                "teamAPoints": 0,
+                "teamBPoints": 4.3,
+                "cumA": 142.58,
+                "cumB": 112.3,
+                "leader": "2 Dagos and A Dream ",
+                "margin": 30.28
+              },
+              {
+                "window": "Monday",
+                "timeLabel": "Mon Night",
+                "teamAPoints": 0,
+                "teamBPoints": 26.26,
+                "cumA": 142.58,
+                "cumB": 138.56,
+                "leader": "2 Dagos and A Dream ",
+                "margin": 4.02
+              }
+            ]
+          }
         },
         {
           "matchupId": 6,
@@ -1208,6 +4278,8 @@
             "teamName": "Bub\u2019s Club",
             "manager": "bubberdubber",
             "points": 121.44,
+            "projectedPoints": 114.17,
+            "weeklyGrade": "A-",
             "optimalPoints": 167.74,
             "lineupEfficiency": 72.4,
             "benchPoints": 127.34,
@@ -1217,77 +4289,224 @@
                 "name": "Jared Goff",
                 "position": "QB",
                 "team": "DET",
-                "points": 16.44
+                "points": 16.44,
+                "projectedPoints": 18.96,
+                "deltaVsProj": -2.52,
+                "sharePct": 13.5,
+                "boxSummary": "206 pass yds, 2 TD; 2 rush yds on 2 carries",
+                "stats": {
+                  "passYds": 206,
+                  "rushYds": 2,
+                  "recYds": 0,
+                  "totalTds": 2,
+                  "passTds": 2,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
               },
               {
                 "playerId": "11583",
                 "name": "Jonathon Brooks",
                 "position": "RB",
                 "team": "CAR",
-                "points": 6.7
+                "points": 6.7,
+                "projectedPoints": 8.85,
+                "deltaVsProj": -2.15,
+                "sharePct": 5.5,
+                "boxSummary": "14 rush yds on 4 carries; 1 rec for 48 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 14,
+                  "recYds": 48,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "8155",
                 "name": "Breece Hall",
                 "position": "RB",
                 "team": "NYJ",
-                "points": 18.8
+                "points": 18.8,
+                "projectedPoints": 14.37,
+                "deltaVsProj": 4.43,
+                "sharePct": 15.5,
+                "boxSummary": "102 rush yds on 22 carries, 1 TD; 2 rec for 16 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 102,
+                  "recYds": 16,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 3
               },
               {
                 "playerId": "7526",
                 "name": "Jaylen Waddle",
                 "position": "WR",
                 "team": "DEN",
-                "points": 0.7
+                "points": 0.7,
+                "projectedPoints": 11.69,
+                "deltaVsProj": -10.99,
+                "sharePct": 0.6,
+                "boxSummary": "1 rec for 2 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 2,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "12501",
                 "name": "Matthew Golden",
                 "position": "WR",
                 "team": "GB",
-                "points": 12.5
+                "points": 12.5,
+                "projectedPoints": 7.46,
+                "deltaVsProj": 5.04,
+                "sharePct": 10.3,
+                "boxSummary": "6 rec for 95 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 95,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "10859",
                 "name": "Sam LaPorta",
                 "position": "TE",
                 "team": "DET",
-                "points": 7.3
+                "points": 7.3,
+                "projectedPoints": 11.14,
+                "deltaVsProj": -3.84,
+                "sharePct": 6.0,
+                "boxSummary": "5 rec for 48 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 48,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "13287",
                 "name": "Jeremiyah Love",
                 "position": "RB",
                 "team": "ARI",
-                "points": 12.0
+                "points": 12.0,
+                "projectedPoints": 10.44,
+                "deltaVsProj": 1.56,
+                "sharePct": 9.9,
+                "boxSummary": "41 rush yds on 11 carries, 1 TD; 2 rec for 9 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 41,
+                  "recYds": 9,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "11624",
                 "name": "Xavier Worthy",
                 "position": "WR",
                 "team": "KC",
-                "points": 3.3
+                "points": 3.3,
+                "projectedPoints": 6.8,
+                "deltaVsProj": -3.5,
+                "sharePct": 2.7,
+                "boxSummary": "3 rec for 18 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 18,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "5022",
                 "name": "Dallas Goedert",
                 "position": "TE",
                 "team": "PHI",
-                "points": 21.7
+                "points": 21.7,
+                "projectedPoints": 8.14,
+                "deltaVsProj": 13.56,
+                "sharePct": 17.9,
+                "boxSummary": "4 rec for 77 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 77,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 1
               },
               {
                 "playerId": "8259",
                 "name": "Cameron Dicker",
                 "position": "K",
                 "team": "LAC",
-                "points": 2.0
+                "points": 2.0,
+                "projectedPoints": 7.11,
+                "deltaVsProj": -5.11,
+                "sharePct": 1.6,
+                "boxSummary": "2.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "PIT",
                 "name": "Pittsburgh Steelers",
                 "position": "DEF",
                 "team": "PIT",
-                "points": 20.0
+                "points": 20.0,
+                "projectedPoints": 9.21,
+                "deltaVsProj": 10.79,
+                "sharePct": 16.5,
+                "boxSummary": "20.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 2
               }
             ]
           },
@@ -1296,6 +4515,8 @@
             "teamName": "Gridiron geezers",
             "manager": "kong58",
             "points": 105.4,
+            "projectedPoints": 123.33,
+            "weeklyGrade": "C+",
             "optimalPoints": 128.8,
             "lineupEfficiency": 81.8,
             "benchPoints": 63.4,
@@ -1305,81 +4526,542 @@
                 "name": "Brock Purdy",
                 "position": "QB",
                 "team": "SF",
-                "points": 22.1
+                "points": 22.1,
+                "projectedPoints": 18.45,
+                "deltaVsProj": 3.65,
+                "sharePct": 21.0,
+                "boxSummary": "205 pass yds, 3 TD, 1 INT; 29 rush yds on 5 carries",
+                "stats": {
+                  "passYds": 205,
+                  "rushYds": 29,
+                  "recYds": 0,
+                  "totalTds": 3,
+                  "passTds": 3,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 1
               },
               {
                 "playerId": "4034",
                 "name": "Christian McCaffrey",
                 "position": "RB",
                 "team": "SF",
-                "points": 11.3
+                "points": 11.3,
+                "projectedPoints": 17.12,
+                "deltaVsProj": -5.82,
+                "sharePct": 10.7,
+                "boxSummary": "68 rush yds on 10 carries; 5 rec for 20 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 68,
+                  "recYds": 20,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 3
               },
               {
                 "playerId": "9226",
                 "name": "De'Von Achane",
                 "position": "RB",
                 "team": "MIA",
-                "points": 8.6
+                "points": 8.6,
+                "projectedPoints": 14.84,
+                "deltaVsProj": -6.24,
+                "sharePct": 8.2,
+                "boxSummary": "36 rush yds on 11 carries; 4 rec for 30 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 36,
+                  "recYds": 30,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "2133",
                 "name": "Davante Adams",
                 "position": "WR",
                 "team": "LAR",
-                "points": 4.1
+                "points": 4.1,
+                "projectedPoints": 10.58,
+                "deltaVsProj": -6.48,
+                "sharePct": 3.9,
+                "boxSummary": "3 rec for 26 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 26,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "5872",
                 "name": "Deebo Samuel",
                 "position": "WR",
                 "team": "SF",
-                "points": 15.0
+                "points": 15.0,
+                "projectedPoints": 8.37,
+                "deltaVsProj": 6.63,
+                "sharePct": 14.2,
+                "boxSummary": "12 rush yds on 1 carries; 6 rec for 48 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 12,
+                  "recYds": 48,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 2
               },
               {
                 "playerId": "4217",
                 "name": "George Kittle",
                 "position": "TE",
                 "team": "SF",
-                "points": 2.2
+                "points": 2.2,
+                "projectedPoints": 8.2,
+                "deltaVsProj": -6.0,
+                "sharePct": 2.1,
+                "boxSummary": "2 rec for 12 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 12,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "12507",
                 "name": "Omarion Hampton",
                 "position": "RB",
                 "team": "LAC",
-                "points": 8.3
+                "points": 8.3,
+                "projectedPoints": 14.2,
+                "deltaVsProj": -5.9,
+                "sharePct": 7.9,
+                "boxSummary": "43 rush yds on 12 carries, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 43,
+                  "recYds": 0,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "8228",
                 "name": "Jaylen Warren",
                 "position": "RB",
                 "team": "PIT",
-                "points": 7.8
+                "points": 7.8,
+                "projectedPoints": 11.98,
+                "deltaVsProj": -4.18,
+                "sharePct": 7.4,
+                "boxSummary": "46 rush yds on 10 carries; 5 rec for 27 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 46,
+                  "recYds": 27,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "4199",
                 "name": "Aaron Jones",
                 "position": "RB",
                 "team": "MIN",
-                "points": 10.0
+                "points": 10.0,
+                "projectedPoints": 7.83,
+                "deltaVsProj": 2.17,
+                "sharePct": 9.5,
+                "boxSummary": "40 rush yds on 12 carries, 1 TD; 0 catches on 1 tgts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 40,
+                  "recYds": 0,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 4
               },
               {
                 "playerId": "12713",
                 "name": "Andy Borregales",
                 "position": "K",
                 "team": "NE",
-                "points": 6.0
+                "points": 6.0,
+                "projectedPoints": 6.1,
+                "deltaVsProj": -0.1,
+                "sharePct": 5.7,
+                "boxSummary": "1/1 FG",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               },
               {
                 "playerId": "SF",
                 "name": "San Francisco 49ers",
                 "position": "DEF",
                 "team": "SF",
-                "points": 10.0
+                "points": 10.0,
+                "projectedPoints": 5.66,
+                "deltaVsProj": 4.34,
+                "sharePct": 9.5,
+                "boxSummary": "10.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                }
               }
             ]
           },
-          "commentary": "Methodical execution propelled Bub\u2019s Club to victory over Gridiron geezers (121.44 \u2013 105.40). Dallas Goedert provided the decisive spark, hitting the end zone twice as part of a 4 rec for 77 yds, 2 TD (21.70 pts) performance. Gridiron geezers countered behind Brock Purdy's valiant 205 pass yds, 3 TD, 1 INT; 29 rush yds on 5 carries (22.10 pts), but a quiet outing from George Kittle (2 rec for 12 yds) severely capped their comeback bid. While Gridiron geezers's sideline reserves generated 63.4 points, the active starting lineup couldn't find the necessary rhythm."
+          "commentary": "Methodical execution propelled Bub\u2019s Club to victory over Gridiron geezers (121.44 \u2013 105.40). Dallas Goedert provided the decisive spark, hitting the end zone twice as part of a 4 rec for 77 yds, 2 TD (21.70 pts) performance. Gridiron geezers countered behind Brock Purdy's valiant 205 pass yds, 3 TD, 1 INT; 29 rush yds on 5 carries (22.10 pts), but a quiet outing from George Kittle (2 rec for 12 yds) severely capped their comeback bid. While Gridiron geezers's sideline reserves generated 63.4 points, the active starting lineup couldn't find the necessary rhythm.",
+          "deepDive": {
+            "headline": "Bub\u2019s Club Earns A- Marks in Decisive Week 1 Victory over Gridiron geezers",
+            "story": [
+              "In a thrilling Week 1 showdown, Bub\u2019s Club emerged victorious over Gridiron geezers with a score of 121.44 to 105.40, taking over during the furious Sunday afternoon late slate. Bub\u2019s Club certainly earned their A- grade (+7.27 vs 114.17 projected), while Gridiron geezers might want to consider a remedial course in fantasy football after snagging a C+ (-17.93 vs 123.33 projected). Back to the drawing board for a lineup that sputtered when the lights were brightest.",
+              "Bub\u2019s Club's shining star was Brock Purdy, who decided to take the week off from being merely 'good' and scored a whopping 22.10 points (205 pass yds, 3 TD, 1 INT; 29 rush yds on 5 carries)\u2014beating their projection by 3.65 points. Meanwhile, Jaylen Waddle must have been auditioning for a role in a horror film with a dismal 0.70 points (1 rec for 2 yds), falling short of projection like a bad stand-up comedian. Over on Gridiron geezers, Brock Purdy managed to shine through the gloom with 22.10 points (205 pass yds, 3 TD, 1 INT; 29 rush yds on 5 carries), but it seems George Kittle took a vacation with just 2.20 points (2 rec for 12 yds)\u2014did they even show up?",
+              "With this win, Bub\u2019s Club moves to a glorious 1-0-0 record and sits comfortably at #6 in the standings, while Gridiron geezers, poor souls, find themselves languishing at #10 with a record of 0-1-0. It's clear that Bub\u2019s Club is riding high, while Gridiron geezers is still trying to figure out how to get off the ground. Will Gridiron geezers ever find their way back into the game, or will they just keep practicing their sad trombone sounds?",
+              "Next week, Bub\u2019s Club faces off against 2 Dagos and A Dream , and they might want to keep the momentum going\u2014after all, you can't win them all if you don't win the first one! As for Gridiron geezers, they'll be up against arkinsjt, and it's high time they take a long, hard look at their lineup. Maybe try to start players who actually show up to play? Just a thought!"
+            ],
+            "teamAGrade": "A-",
+            "teamBGrade": "C+",
+            "teamAProjected": 114.17,
+            "teamBProjected": 123.33,
+            "teamARecord": "1-0-0",
+            "teamBRecord": "0-1-0",
+            "teamARank": 6,
+            "teamBRank": 10,
+            "nextOpponentA": {
+              "rosterId": 2,
+              "teamName": "2 Dagos and A Dream "
+            },
+            "nextOpponentB": {
+              "rosterId": 8,
+              "teamName": "arkinsjt"
+            },
+            "mvp": {
+              "playerId": "8183",
+              "name": "Brock Purdy",
+              "position": "QB",
+              "team": "SF",
+              "points": 22.1,
+              "projectedPoints": 18.45,
+              "deltaVsProj": 3.65,
+              "sharePct": 21.0,
+              "boxSummary": "205 pass yds, 3 TD, 1 INT; 29 rush yds on 5 carries",
+              "stats": {
+                "passYds": 205,
+                "rushYds": 29,
+                "recYds": 0,
+                "totalTds": 3,
+                "passTds": 3,
+                "rushTds": 0,
+                "recTds": 0
+              },
+              "fantasyTeamName": "Gridiron geezers"
+            },
+            "topPlayersA": [
+              {
+                "playerId": "5022",
+                "name": "Dallas Goedert",
+                "position": "TE",
+                "team": "PHI",
+                "points": 21.7,
+                "projectedPoints": 8.14,
+                "deltaVsProj": 13.56,
+                "sharePct": 17.9,
+                "boxSummary": "4 rec for 77 yds, 2 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 77,
+                  "totalTds": 2,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 2
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "PIT",
+                "name": "Pittsburgh Steelers",
+                "position": "DEF",
+                "team": "PIT",
+                "points": 20.0,
+                "projectedPoints": 9.21,
+                "deltaVsProj": 10.79,
+                "sharePct": 16.5,
+                "boxSummary": "20.0 pts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 0,
+                  "recYds": 0,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "8155",
+                "name": "Breece Hall",
+                "position": "RB",
+                "team": "NYJ",
+                "points": 18.8,
+                "projectedPoints": 14.37,
+                "deltaVsProj": 4.43,
+                "sharePct": 15.5,
+                "boxSummary": "102 rush yds on 22 carries, 1 TD; 2 rec for 16 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 102,
+                  "recYds": 16,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "3163",
+                "name": "Jared Goff",
+                "position": "QB",
+                "team": "DET",
+                "points": 16.44,
+                "projectedPoints": 18.96,
+                "deltaVsProj": -2.52,
+                "sharePct": 13.5,
+                "boxSummary": "206 pass yds, 2 TD; 2 rush yds on 2 carries",
+                "stats": {
+                  "passYds": 206,
+                  "rushYds": 2,
+                  "recYds": 0,
+                  "totalTds": 2,
+                  "passTds": 2,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 4
+              }
+            ],
+            "topPlayersB": [
+              {
+                "playerId": "8183",
+                "name": "Brock Purdy",
+                "position": "QB",
+                "team": "SF",
+                "points": 22.1,
+                "projectedPoints": 18.45,
+                "deltaVsProj": 3.65,
+                "sharePct": 21.0,
+                "boxSummary": "205 pass yds, 3 TD, 1 INT; 29 rush yds on 5 carries",
+                "stats": {
+                  "passYds": 205,
+                  "rushYds": 29,
+                  "recYds": 0,
+                  "totalTds": 3,
+                  "passTds": 3,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 1
+              },
+              {
+                "playerId": "5872",
+                "name": "Deebo Samuel",
+                "position": "WR",
+                "team": "SF",
+                "points": 15.0,
+                "projectedPoints": 8.37,
+                "deltaVsProj": 6.63,
+                "sharePct": 14.2,
+                "boxSummary": "12 rush yds on 1 carries; 6 rec for 48 yds, 1 TD",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 12,
+                  "recYds": 48,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 1
+                },
+                "rank": 2
+              },
+              {
+                "playerId": "4034",
+                "name": "Christian McCaffrey",
+                "position": "RB",
+                "team": "SF",
+                "points": 11.3,
+                "projectedPoints": 17.12,
+                "deltaVsProj": -5.82,
+                "sharePct": 10.7,
+                "boxSummary": "68 rush yds on 10 carries; 5 rec for 20 yds",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 68,
+                  "recYds": 20,
+                  "totalTds": 0,
+                  "passTds": 0,
+                  "rushTds": 0,
+                  "recTds": 0
+                },
+                "rank": 3
+              },
+              {
+                "playerId": "4199",
+                "name": "Aaron Jones",
+                "position": "RB",
+                "team": "MIN",
+                "points": 10.0,
+                "projectedPoints": 7.83,
+                "deltaVsProj": 2.17,
+                "sharePct": 9.5,
+                "boxSummary": "40 rush yds on 12 carries, 1 TD; 0 catches on 1 tgts",
+                "stats": {
+                  "passYds": 0,
+                  "rushYds": 40,
+                  "recYds": 0,
+                  "totalTds": 1,
+                  "passTds": 0,
+                  "rushTds": 1,
+                  "recTds": 0
+                },
+                "rank": 4
+              }
+            ],
+            "positionBreakdown": [
+              {
+                "category": "QB",
+                "teamAPoints": 16.44,
+                "teamBPoints": 22.1,
+                "margin": 5.66,
+                "advantage": "Gridiron geezers"
+              },
+              {
+                "category": "RB",
+                "teamAPoints": 37.5,
+                "teamBPoints": 46.0,
+                "margin": 8.5,
+                "advantage": "Gridiron geezers"
+              },
+              {
+                "category": "WR",
+                "teamAPoints": 16.5,
+                "teamBPoints": 19.1,
+                "margin": 2.6,
+                "advantage": "Gridiron geezers"
+              },
+              {
+                "category": "TE",
+                "teamAPoints": 29.0,
+                "teamBPoints": 2.2,
+                "margin": 26.8,
+                "advantage": "Bub\u2019s Club"
+              },
+              {
+                "category": "K",
+                "teamAPoints": 2.0,
+                "teamBPoints": 6.0,
+                "margin": 4.0,
+                "advantage": "Gridiron geezers"
+              },
+              {
+                "category": "DEF",
+                "teamAPoints": 20.0,
+                "teamBPoints": 10.0,
+                "margin": 10.0,
+                "advantage": "Bub\u2019s Club"
+              }
+            ],
+            "timeline": [
+              {
+                "window": "Wednesday",
+                "timeLabel": "Wed Kickoff",
+                "teamAPoints": 0,
+                "teamBPoints": 6.0,
+                "cumA": 0.0,
+                "cumB": 6.0,
+                "leader": "Gridiron geezers",
+                "margin": 6.0
+              },
+              {
+                "window": "Thursday",
+                "timeLabel": "Thu Night",
+                "teamAPoints": 0,
+                "teamBPoints": 64.7,
+                "cumA": 0.0,
+                "cumB": 70.7,
+                "leader": "Gridiron geezers",
+                "margin": 70.7
+              },
+              {
+                "window": "Sun Early",
+                "timeLabel": "Sun 1:00 PM",
+                "teamAPoints": 69.24,
+                "teamBPoints": 7.8,
+                "cumA": 69.24,
+                "cumB": 78.5,
+                "leader": "Gridiron geezers",
+                "margin": 9.26
+              },
+              {
+                "window": "Sun Late",
+                "timeLabel": "Sun 4:25 PM",
+                "teamAPoints": 48.2,
+                "teamBPoints": 26.9,
+                "cumA": 117.44,
+                "cumB": 105.4,
+                "leader": "Bub\u2019s Club",
+                "margin": 12.04
+              },
+              {
+                "window": "Monday",
+                "timeLabel": "Mon Night",
+                "teamAPoints": 4.0,
+                "teamBPoints": 0,
+                "cumA": 121.44,
+                "cumB": 105.4,
+                "leader": "Bub\u2019s Club",
+                "margin": 16.04
+              }
+            ]
+          }
         }
       ]
     }

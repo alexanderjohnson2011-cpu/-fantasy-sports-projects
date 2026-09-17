@@ -462,57 +462,297 @@ function RecapsScreen() {
                     className="recap-boxscore-toggle"
                     onClick={() => setExpandedMatchup(isExpanded ? null : m.matchupId)}
                   >
-                    <List size={14} />
-                    <span>{isExpanded ? "Hide Full Box Score" : "View Full Box Score & Starter Points"}</span>
+                    <BookOpenText size={14} />
+                    <span>{isExpanded ? "Collapse Matchup Deep Dive" : "Inside the Matchup · Deep Dive, Stats & Full Box Score"}</span>
                   </button>
 
                   {isExpanded ? (
-                    <div className="recap-boxscore-container">
-                      <div>
-                        <h5 style={{ margin: "0 0 8px", fontFamily: "var(--sans)", fontSize: "0.85rem", fontWeight: 700 }}>
-                          {m.teamA.teamName} Starters ({m.teamA.points.toFixed(2)} pts)
-                        </h5>
-                        <table className="boxscore-subtable">
-                          <thead>
-                            <tr>
-                              <th className="pos-col">Pos</th>
-                              <th>Player</th>
-                              <th className="pts-col">Pts</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {m.teamA.starters?.map((p: any) => (
-                              <tr key={p.playerId}>
-                                <td className="pos-col">{p.position}</td>
-                                <td>{p.name} <small style={{ color: "var(--ink-soft)" }}>({p.team})</small></td>
-                                <td className="pts-col">{p.points.toFixed(2)}</td>
-                              </tr>
+                    <div className="deepdive-container">
+                      {/* 1. Tale of the tape weekly grade strip */}
+                      {m.deepDive ? (
+                        <div className="deepdive-grade-strip">
+                          <div className={`grade-team-card ${isWinnerA ? "winner" : ""}`}>
+                            <div className="grade-pill-badge">{m.deepDive.teamAGrade || "B"}</div>
+                            <div className="grade-team-info">
+                              <strong>{m.teamA.teamName}</strong>
+                              <span>{m.deepDive.teamARecord} · Standings #{m.deepDive.teamARank}</span>
+                              <small>{m.teamA.points.toFixed(2)} pts (proj {m.deepDive.teamAProjected?.toFixed(1) || m.teamA.points.toFixed(1)})</small>
+                            </div>
+                          </div>
+                          <div className="grade-vs-divider">VS</div>
+                          <div className={`grade-team-card ${!isWinnerA ? "winner" : ""}`}>
+                            <div className="grade-pill-badge">{m.deepDive.teamBGrade || "B"}</div>
+                            <div className="grade-team-info">
+                              <strong>{m.teamB.teamName}</strong>
+                              <span>{m.deepDive.teamBRecord} · Standings #{m.deepDive.teamBRank}</span>
+                              <small>{m.teamB.points.toFixed(2)} pts (proj {m.deepDive.teamBProjected?.toFixed(1) || m.teamB.points.toFixed(1)})</small>
+                            </div>
+                          </div>
+                        </div>
+                      ) : null}
+
+                      {/* 2. Journalistic 4-Paragraph Story */}
+                      {m.deepDive?.story?.length ? (
+                        <article className="deepdive-story-article">
+                          <div className="deepdive-story-tag">
+                            <Sparkle size={15} weight="fill" /> Matchup Recap Summary & Deep Dive
+                          </div>
+                          <h4 className="deepdive-story-headline">{m.deepDive.headline || m.title}</h4>
+                          <div className="deepdive-story-paragraphs">
+                            {m.deepDive.story.map((paragraph: string, pIdx: number) => (
+                              <p key={pIdx} className="deepdive-story-p">{paragraph}</p>
                             ))}
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h5 style={{ margin: "0 0 8px", fontFamily: "var(--sans)", fontSize: "0.85rem", fontWeight: 700 }}>
-                          {m.teamB.teamName} Starters ({m.teamB.points.toFixed(2)} pts)
-                        </h5>
-                        <table className="boxscore-subtable">
-                          <thead>
-                            <tr>
-                              <th className="pos-col">Pos</th>
-                              <th>Player</th>
-                              <th className="pts-col">Pts</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {m.teamB.starters?.map((p: any) => (
-                              <tr key={p.playerId}>
-                                <td className="pos-col">{p.position}</td>
-                                <td>{p.name} <small style={{ color: "var(--ink-soft)" }}>({p.team})</small></td>
-                                <td className="pts-col">{p.points.toFixed(2)}</td>
-                              </tr>
+                          </div>
+                        </article>
+                      ) : null}
+
+                      {/* 3. Matchup Player of the Week MVP */}
+                      {m.deepDive?.mvp && (
+                        <div className="deepdive-mvp-card">
+                          <div className="mvp-card-header">
+                            <span className="mvp-tag">★ Matchup Player of the Week</span>
+                            <span className="mvp-team-tag">{m.deepDive.mvp.fantasyTeamName}</span>
+                          </div>
+                          <div className="mvp-hero-row">
+                            <div className="mvp-player-meta">
+                              <div className="mvp-avatar-circle">{m.deepDive.mvp.position}</div>
+                              <div>
+                                <h4>{m.deepDive.mvp.name}</h4>
+                                <span>{m.deepDive.mvp.position} · {m.deepDive.mvp.team} · {m.deepDive.mvp.sharePct}% of team scoring</span>
+                              </div>
+                            </div>
+                            <div className="mvp-score-callout">
+                              <strong>{m.deepDive.mvp.points.toFixed(2)}</strong>
+                              <small>pts ({m.deepDive.mvp.deltaVsProj > 0 ? `+${m.deepDive.mvp.deltaVsProj.toFixed(1)}` : m.deepDive.mvp.deltaVsProj.toFixed(1)} vs proj)</small>
+                            </div>
+                          </div>
+                          <div className="mvp-stat-tiles">
+                            <div className="mvp-stat-tile">
+                              <span>Passing</span>
+                              <strong>{m.deepDive.mvp.stats?.passYds || 0} yds</strong>
+                              <small>{m.deepDive.mvp.stats?.passTds || 0} TD</small>
+                            </div>
+                            <div className="mvp-stat-tile">
+                              <span>Rushing</span>
+                              <strong>{m.deepDive.mvp.stats?.rushYds || 0} yds</strong>
+                              <small>{m.deepDive.mvp.stats?.rushTds || 0} TD</small>
+                            </div>
+                            <div className="mvp-stat-tile">
+                              <span>Receiving</span>
+                              <strong>{m.deepDive.mvp.stats?.recYds || 0} yds</strong>
+                              <small>{m.deepDive.mvp.stats?.recTds || 0} TD</small>
+                            </div>
+                            <div className="mvp-stat-tile highlight">
+                              <span>Total Output</span>
+                              <strong>{m.deepDive.mvp.stats?.totalTds || 0} Total TDs</strong>
+                              <small>{m.deepDive.mvp.points.toFixed(1)} fantasy pts</small>
+                            </div>
+                          </div>
+                          <p className="mvp-summary-line">{m.deepDive.mvp.boxSummary}</p>
+                        </div>
+                      )}
+
+                      {/* 4. Top Player Comparison */}
+                      {m.deepDive?.topPlayersA?.length ? (
+                        <div>
+                          <div className="deepdive-section-subheading">
+                            <UsersThree size={16} weight="duotone" /> Top Player Comparison
+                          </div>
+                          <div className="top-players-grid">
+                            <div className="top-players-col">
+                              <h5>{m.teamA.teamName} Top Performers</h5>
+                              <div className="top-players-list">
+                                {m.deepDive.topPlayersA.map((p: any) => (
+                                  <div key={p.playerId} className="top-player-row">
+                                    <span className="top-rank-badge">#{p.rank}</span>
+                                    <div className="top-player-name-col">
+                                      <strong>{p.name}</strong>
+                                      <small>{p.position} · {p.team}</small>
+                                    </div>
+                                    <div className="top-player-pts-col">
+                                      <strong>{p.points.toFixed(2)}</strong>
+                                      <span className="share-pill">{p.sharePct}%</span>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="top-players-col">
+                              <h5>{m.teamB.teamName} Top Performers</h5>
+                              <div className="top-players-list">
+                                {m.deepDive.topPlayersB?.map((p: any) => (
+                                  <div key={p.playerId} className="top-player-row">
+                                    <span className="top-rank-badge">#{p.rank}</span>
+                                    <div className="top-player-name-col">
+                                      <strong>{p.name}</strong>
+                                      <small>{p.position} · {p.team}</small>
+                                    </div>
+                                    <div className="top-player-pts-col">
+                                      <strong>{p.points.toFixed(2)}</strong>
+                                      <span className="share-pill">{p.sharePct}%</span>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ) : null}
+
+                      {/* 5. Points By Position Room */}
+                      {m.deepDive?.positionBreakdown?.length ? (
+                        <div>
+                          <div className="deepdive-section-subheading">
+                            <ChartBar size={16} weight="duotone" /> Points By Position Room
+                          </div>
+                          <div className="position-breakdown-table">
+                            {m.deepDive.positionBreakdown.map((row: any) => {
+                              const isEdgeA = row.advantage === m.teamA.teamName;
+                              const isEdgeB = row.advantage === m.teamB.teamName;
+                              const total = (row.teamAPoints + row.teamBPoints) || 1;
+                              const pctA = Math.round((row.teamAPoints / total) * 100);
+                              return (
+                                <div key={row.category} className="pos-row-card">
+                                  <div className="pos-label-col">
+                                    <span className="pos-code-badge">{row.category}</span>
+                                    <span className={`pos-edge-tag ${isEdgeA ? "edge-a" : isEdgeB ? "edge-b" : ""}`}>
+                                      {row.advantage === "Even" ? "Even" : `+${row.margin} ${row.advantage}`}
+                                    </span>
+                                  </div>
+                                  <div className="pos-bar-wrapper">
+                                    <span className="pos-pts-val">{row.teamAPoints.toFixed(1)}</span>
+                                    <div className="pos-dual-bar">
+                                      <div className="pos-fill fill-a" style={{ width: `${pctA}%` }} />
+                                      <div className="pos-fill fill-b" style={{ width: `${100 - pctA}%` }} />
+                                    </div>
+                                    <span className="pos-pts-val">{row.teamBPoints.toFixed(1)}</span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ) : null}
+
+                      {/* 6. Matchup Timeline */}
+                      {m.deepDive?.timeline?.length ? (
+                        <div>
+                          <div className="deepdive-section-subheading">
+                            <ClockCounterClockwise size={16} weight="duotone" /> Matchup Timeline & Weekend Flow
+                          </div>
+                          <div className="timeline-strip">
+                            {m.deepDive.timeline.map((win: any, wIdx: number) => (
+                              <div key={wIdx} className="timeline-node">
+                                <div className="timeline-time-label">{win.timeLabel || win.window}</div>
+                                <div className="timeline-score-box">
+                                  <div className="team-cum-row">
+                                    <small>{m.teamA.teamName.slice(0, 11)}</small>
+                                    <strong>{win.cumA.toFixed(1)}</strong>
+                                    <span className="win-gain">+{win.teamAPoints.toFixed(1)}</span>
+                                  </div>
+                                  <div className="team-cum-row">
+                                    <small>{m.teamB.teamName.slice(0, 11)}</small>
+                                    <strong>{win.cumB.toFixed(1)}</strong>
+                                    <span className="win-gain">+{win.teamBPoints.toFixed(1)}</span>
+                                  </div>
+                                </div>
+                                <div className="timeline-leader-pill">
+                                  {win.leader === "Tied" ? "All Square" : `Led by ${win.leader.slice(0, 11)}`}
+                                </div>
+                              </div>
                             ))}
-                          </tbody>
-                        </table>
+                          </div>
+                        </div>
+                      ) : null}
+
+                      {/* 7. Next Week Lookahead */}
+                      {(m.deepDive?.nextOpponentA || m.deepDive?.nextOpponentB) && (
+                        <div className="deepdive-lookahead-banner">
+                          <span className="lookahead-label">Next Week On Tap:</span>
+                          <div className="lookahead-matches">
+                            {m.deepDive.nextOpponentA && (
+                              <div className="lookahead-match-pill">
+                                <strong>{m.teamA.teamName}</strong> vs <span>{m.deepDive.nextOpponentA.teamName}</span>
+                              </div>
+                            )}
+                            {m.deepDive.nextOpponentB && (
+                              <div className="lookahead-match-pill">
+                                <strong>{m.teamB.teamName}</strong> vs <span>{m.deepDive.nextOpponentB.teamName}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* 8. Full Starters & Box Scores */}
+                      <div>
+                        <div className="deepdive-section-subheading">
+                          <Football size={16} weight="duotone" /> Full Starting Lineup Box Scores
+                        </div>
+                        <div className="recap-boxscore-container" style={{ marginTop: 6, paddingTop: 0, borderTop: "none" }}>
+                          <div>
+                            <h5 style={{ margin: "0 0 8px", fontFamily: "var(--sans)", fontSize: "0.85rem", fontWeight: 700 }}>
+                              {m.teamA.teamName} Starters ({m.teamA.points.toFixed(2)} pts)
+                            </h5>
+                            <table className="boxscore-subtable">
+                              <thead>
+                                <tr>
+                                  <th className="pos-col">Pos</th>
+                                  <th>Player & Box Line</th>
+                                  <th className="pts-col">Pts (% Share)</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {m.teamA.starters?.map((p: any) => (
+                                  <tr key={p.playerId}>
+                                    <td className="pos-col">{p.position}</td>
+                                    <td>
+                                      <strong>{p.name}</strong> <small style={{ color: "var(--ink-soft)" }}>({p.team})</small>
+                                      {p.boxSummary && <span className="boxscore-stat-line">{p.boxSummary}</span>}
+                                    </td>
+                                    <td className="pts-col">
+                                      <div className="boxscore-pts-detail">
+                                        <strong>{p.points.toFixed(2)}</strong>
+                                        <small>{p.sharePct}% {p.deltaVsProj ? `(${p.deltaVsProj > 0 ? "+" : ""}${p.deltaVsProj.toFixed(1)})` : ""}</small>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                          <div>
+                            <h5 style={{ margin: "0 0 8px", fontFamily: "var(--sans)", fontSize: "0.85rem", fontWeight: 700 }}>
+                              {m.teamB.teamName} Starters ({m.teamB.points.toFixed(2)} pts)
+                            </h5>
+                            <table className="boxscore-subtable">
+                              <thead>
+                                <tr>
+                                  <th className="pos-col">Pos</th>
+                                  <th>Player & Box Line</th>
+                                  <th className="pts-col">Pts (% Share)</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {m.teamB.starters?.map((p: any) => (
+                                  <tr key={p.playerId}>
+                                    <td className="pos-col">{p.position}</td>
+                                    <td>
+                                      <strong>{p.name}</strong> <small style={{ color: "var(--ink-soft)" }}>({p.team})</small>
+                                      {p.boxSummary && <span className="boxscore-stat-line">{p.boxSummary}</span>}
+                                    </td>
+                                    <td className="pts-col">
+                                      <div className="boxscore-pts-detail">
+                                        <strong>{p.points.toFixed(2)}</strong>
+                                        <small>{p.sharePct}% {p.deltaVsProj ? `(${p.deltaVsProj > 0 ? "+" : ""}${p.deltaVsProj.toFixed(1)})` : ""}</small>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ) : null}

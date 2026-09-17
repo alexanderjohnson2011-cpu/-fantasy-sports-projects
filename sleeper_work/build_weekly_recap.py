@@ -465,6 +465,237 @@ def generate_matchup_commentary(team1, team2, margin, upset, shootout, nailbiter
     )
 
 
+def fetch_nfl_projections(season="2026", week=1):
+    """Fetches real NFL player projections from Sleeper for the specified week."""
+    try:
+        url = f"https://api.sleeper.app/v1/projections/nfl/regular/{season}/{week}"
+        req = urllib.request.Request(url, headers={"User-Agent": "ApesMacSalad/2.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            if isinstance(data, dict):
+                return {
+                    str(pid): float(p.get("pts_half_ppr") or p.get("pts_ppr") or p.get("pts_std") or 0.0)
+                    for pid, p in data.items()
+                }
+    except Exception as e:
+        print(f"  [warn] Could not fetch NFL projections for {season} W{week}: {e}")
+    return {}
+
+
+def load_nfl_window_map(season="2026", week=1):
+    """Maps NFL team abbreviation to standard game window string."""
+    for cr in CANDIDATE_ROOTS:
+        cand = os.path.join(cr, "sleeper_work", "fixtures", f"nfl_schedule_{season}_week_{week}.json")
+        if os.path.exists(cand):
+            try:
+                with open(cand, "r", encoding="utf-8") as f:
+                    sched = json.load(f)
+                mapping = {}
+                for g in sched.get("games", []):
+                    tl = g.get("timeLabel", "")
+                    if "Wednesday" in tl:
+                        w = "Wednesday"
+                    elif "Thursday" in tl:
+                        w = "Thursday"
+                    elif "Sunday" in tl and "1:00 PM" in tl:
+                        w = "Sun Early"
+                    elif "Sunday" in tl and "4:25 PM" in tl:
+                        w = "Sun Late"
+                    elif "Sunday" in tl and ("8:20 PM" in tl or "Night" in tl):
+                        w = "Sun Night"
+                    elif "Monday" in tl:
+                        w = "Monday"
+                    else:
+                        w = "Sun Early"
+                    mapping[g.get("away", "")] = w
+                    mapping[g.get("home", "")] = w
+                return mapping
+            except Exception as e:
+                print(f"  [warn] Schedule fixture load error: {e}")
+    return {}
+
+
+def fetch_next_week_pairings(league_id, current_week, season="2026"):
+    """Fetches next week's matchup pairings from Sleeper for lookahead previews."""
+    next_week = current_week + 1
+    try:
+        data = fetch_sleeper_json(f"league/{league_id}/matchups/{next_week}")
+        if data and isinstance(data, list):
+            pairs = {}
+            for m in data:
+                mid = m.get("matchup_id")
+                rid = m.get("roster_id")
+                if mid is not None and rid is not None:
+                    pairs.setdefault(mid, []).append(rid)
+            opp_map = {}
+            for mid, rids in pairs.items():
+                if len(rids) == 2:
+                    opp_map[rids[0]] = rids[1]
+                    opp_map[rids[1]] = rids[0]
+            return opp_map
+    except Exception as e:
+        print(f"  [warn] Could not fetch next week pairings: {e}")
+    return {}
+
+
+def calculate_weekly_grade(actual, projected, median_score):
+    """Calculates weekly letter grade (A+ through F) based on output vs projection & league median."""
+    diff = actual - projected
+    if actual >= projected + 20.0 or actual >= median_score + 25.0:
+        return "A+"
+    elif actual >= projected + 12.0 or actual >= median_score + 15.0:
+        return "A"
+    elif actual >= projected + 5.0 or actual >= median_score + 8.0:
+        return "A-"
+    elif actual >= projected or actual >= median_score:
+        return "B+"
+    elif actual >= projected - 6.0:
+        return "B"
+    elif actual >= projected - 12.0:
+        return "B-"
+    elif actual >= projected - 18.0:
+        return "C+"
+    elif actual >= projected - 25.0:
+        return "C"
+    elif actual >= projected - 32.0:
+        return "C-"
+    elif actual >= projected - 40.0:
+        return "D+"
+    elif actual >= projected - 50.0:
+        return "D"
+    else:
+        return "F"
+
+
+def generate_yahoo_deep_dive_story(
+    winner_name, loser_name, winner_pts, loser_pts, winner_proj, loser_proj,
+    winner_grade, loser_grade, winner_record, loser_record, winner_rank, loser_rank,
+    next_opp_winner, next_opp_loser,
+    w_mvp, w_dud, l_star, l_dud,
+    timeline, margin, week=1, is_shootout=False, is_nailbiter=False, is_blowout=False
+):
+    """
+    Generates a witty, 4-paragraph journalistic deep dive story modeled directly on Yahoo Fantasy's Matchup Recap Summary:
+    1. The Game & Weekly Grades (final score vs projection, timeline takeover, grades, playful roasts).
+    2. Shining Stars, Horror Shows & Vacationing Duds (real NFL box scores, TDs, yards vs projection).
+    3. Standings, Record Shifts & Momentum (records, place in standings, trajectory).
+    4. Lookahead to Next Week (upcoming opponent preview, strategic advice).
+    """
+    winner_diff = round(winner_pts - winner_proj, 2)
+    loser_diff = round(loser_pts - loser_proj, 2)
+
+    # Lead takeover timing from timeline
+    lead_timing = "taking control early and never looking back"
+    if timeline:
+        first_lead_win = None
+        for t in timeline:
+            if t.get("leader") == winner_name:
+                first_lead_win = t.get("window")
+                break
+        if first_lead_win == "Wednesday":
+            lead_timing = "taking the lead as early as Wednesday night's opener"
+        elif first_lead_win == "Thursday":
+            lead_timing = "snatching the lead as early as Thursday night"
+        elif first_lead_win == "Sun Early":
+            lead_timing = "seizing decisive control during Sunday's explosive early window"
+        elif first_lead_win == "Sun Late":
+            lead_timing = "taking over during the furious Sunday afternoon late slate"
+        elif first_lead_win == "Sun Night":
+            lead_timing = "surging into the driver's seat under the lights of Sunday Night Football"
+        elif first_lead_win == "Monday":
+            lead_timing = "mounting a dramatic fourth-quarter comeback on Monday Night Football"
+
+    # Headline
+    if is_blowout:
+        headline = f"{winner_name}'s {winner_grade} Performance Leaves {loser_name} in the Dust!"
+    elif is_shootout:
+        headline = f"{winner_name} Outslugs {loser_name} in Wild {winner_pts + loser_pts:.1f}-Point Shootout ({winner_grade})"
+    elif is_nailbiter:
+        headline = f"{winner_name} Survives Nail-Biter vs. {loser_name} in {margin:.2f}-Point Thriller"
+    elif winner_diff >= 15.0:
+        headline = f"{winner_name} Crushes Projections in Emphatic Week {week} Triumph over {loser_name}"
+    else:
+        headline = f"{winner_name} Earns {winner_grade} Marks in Decisive Week {week} Victory over {loser_name}"
+
+    # Roasts for paragraph 1
+    if loser_grade in ("D+", "D", "F"):
+        roast = "Maybe they should stick to playing checkers?"
+    elif loser_diff <= -20.0:
+        roast = "A brutal underperformance that leaves their coaching staff scrambling for answers."
+    elif is_nailbiter:
+        roast = "An agonizing defeat that came down to the razor-thin final plays of the weekend."
+    elif loser_pts >= 140.0:
+        roast = "A cruel scheduling buzzsaw for a high-scoring effort, but a loss is still a loss in the ledger."
+    else:
+        roast = "Back to the drawing board for a lineup that sputtered when the lights were brightest."
+
+    # Paragraph 1
+    p1 = (
+        f"In a thrilling Week {week} showdown, {winner_name} emerged victorious over {loser_name} "
+        f"with a score of {winner_pts:.2f} to {loser_pts:.2f}, {lead_timing}. "
+        f"{winner_name} certainly earned their {winner_grade} grade ({'+' if winner_diff >= 0 else ''}{winner_diff:.2f} vs {winner_proj:.2f} projected), "
+        f"while {loser_name} might want to consider a remedial course in fantasy football after snagging a {loser_grade} "
+        f"({'+' if loser_diff >= 0 else ''}{loser_diff:.2f} vs {loser_proj:.2f} projected). {roast}"
+    )
+
+    # Paragraph 2
+    w_star_name = w_mvp["name"]
+    w_star_pts = w_mvp["points"]
+    w_star_box = w_mvp.get("boxSummary", f"{w_star_pts:.1f} pts")
+    w_star_delta = w_mvp.get("deltaVsProj", 0.0)
+
+    p2_parts = [
+        f"{winner_name}'s shining star was {w_star_name}, who decided to take the week off from being merely 'good' "
+        f"and scored a whopping {w_star_pts:.2f} points ({w_star_box})—beating their projection by {abs(w_star_delta):.2f} points."
+    ]
+
+    if w_dud and w_dud.get("points", 99.0) < 8.0:
+        p2_parts.append(
+            f"Meanwhile, {w_dud['name']} must have been auditioning for a role in a horror film with a dismal {w_dud['points']:.2f} points "
+            f"({w_dud.get('boxSummary', '')}), falling short of projection like a bad stand-up comedian."
+        )
+
+    if l_star:
+        p2_parts.append(
+            f"Over on {loser_name}, {l_star['name']} managed to shine through the gloom with {l_star['points']:.2f} points "
+            f"({l_star.get('boxSummary', '')}),"
+        )
+    if l_dud and l_dud.get("points", 99.0) < 6.0:
+        p2_parts.append(
+            f"but it seems {l_dud['name']} took a vacation with just {l_dud['points']:.2f} points "
+            f"({l_dud.get('boxSummary', '')})—did they even show up?"
+        )
+    elif l_dud:
+        p2_parts.append(
+            f"though {l_dud['name']} proved costly by falling flat with just {l_dud['points']:.2f} points."
+        )
+
+    p2 = " ".join(p2_parts)
+
+    # Paragraph 3
+    p3 = (
+        f"With this win, {winner_name} moves to a glorious {winner_record} record and sits comfortably at #{winner_rank} in the standings, "
+        f"while {loser_name}, poor souls, find themselves languishing at #{loser_rank} with a record of {loser_record}. "
+        f"It's clear that {winner_name} is riding high, while {loser_name} is still trying to figure out how to get off the ground. "
+        f"Will {loser_name} ever find their way back into the game, or will they just keep practicing their sad trombone sounds?"
+    )
+
+    # Paragraph 4
+    next_opp_w_str = next_opp_winner or "their next challenger"
+    next_opp_l_str = next_opp_loser or "their upcoming foe"
+    p4 = (
+        f"Next week, {winner_name} faces off against {next_opp_w_str}, and they might want to keep the momentum going—"
+        f"after all, you can't win them all if you don't win the first one! "
+        f"As for {loser_name}, they'll be up against {next_opp_l_str}, and it's high time they take a long, hard look at their lineup. "
+        f"Maybe try to start players who actually show up to play? Just a thought!"
+    )
+
+    return {
+        "headline": headline,
+        "story": [p1, p2, p3, p4]
+    }
+
+
 def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
     print(f"=== Building RosterAudit-Style Weekly Recap for {season} (League {league_id}) ===")
     players_map = load_players_map()
@@ -509,7 +740,10 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             continue
 
         nfl_stats = fetch_nfl_stats(season, w)
-        print(f"  Processing scored Week {w} ({len(raw_m)} roster entries, {len(nfl_stats)} NFL player stats loaded)...")
+        projections = fetch_nfl_projections(season, w)
+        window_map = load_nfl_window_map(season, w)
+        next_pairings = fetch_next_week_pairings(league_id, w, season)
+        print(f"  Processing scored Week {w} ({len(raw_m)} roster entries, {len(nfl_stats)} NFL stats, {len(projections)} projections)...")
 
         # Group into pairs by matchup_id
         pairs = {}
@@ -530,29 +764,61 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             rid1, rid2 = r1["roster_id"], r2["roster_id"]
             pts1, pts2 = float(r1.get("points") or 0.0), float(r2.get("points") or 0.0)
 
-            # Build starters
+            # Build enriched starters
             starters1 = []
             for idx, pid in enumerate(r1.get("starters") or []):
-                s_pts = r1.get("starters_points", [])[idx] if idx < len(r1.get("starters_points", [])) else 0.0
+                s_pts = round(float(r1.get("starters_points", [])[idx] or 0.0), 2) if idx < len(r1.get("starters_points", [])) else 0.0
                 p_meta = players_map.get(str(pid), {})
+                p_proj = round(float(projections.get(str(pid), 10.0)), 2)
+                p_delta = round(s_pts - p_proj, 2)
+                p_box = format_player_box_stat(str(pid), p_meta.get("name", f"Player {pid}"), p_meta.get("position", "FLEX"), s_pts, nfl_stats, p_meta)
                 starters1.append({
                     "playerId": str(pid),
                     "name": p_meta.get("name", f"Player {pid}"),
                     "position": p_meta.get("position", "FLEX"),
                     "team": p_meta.get("team", "FA"),
-                    "points": round(float(s_pts or 0.0), 2),
+                    "points": s_pts,
+                    "projectedPoints": p_proj,
+                    "deltaVsProj": p_delta,
+                    "sharePct": round((s_pts / pts1 * 100) if pts1 > 0 else 0.0, 1),
+                    "boxSummary": p_box["box_summary"],
+                    "stats": {
+                        "passYds": p_box["pass_yd"],
+                        "rushYds": p_box["rush_yd"],
+                        "recYds": p_box["rec_yd"],
+                        "totalTds": p_box["total_td"],
+                        "passTds": p_box["pass_td"],
+                        "rushTds": p_box["rush_td"],
+                        "recTds": p_box["rec_td"],
+                    }
                 })
 
             starters2 = []
             for idx, pid in enumerate(r2.get("starters") or []):
-                s_pts = r2.get("starters_points", [])[idx] if idx < len(r2.get("starters_points", [])) else 0.0
+                s_pts = round(float(r2.get("starters_points", [])[idx] or 0.0), 2) if idx < len(r2.get("starters_points", [])) else 0.0
                 p_meta = players_map.get(str(pid), {})
+                p_proj = round(float(projections.get(str(pid), 10.0)), 2)
+                p_delta = round(s_pts - p_proj, 2)
+                p_box = format_player_box_stat(str(pid), p_meta.get("name", f"Player {pid}"), p_meta.get("position", "FLEX"), s_pts, nfl_stats, p_meta)
                 starters2.append({
                     "playerId": str(pid),
                     "name": p_meta.get("name", f"Player {pid}"),
                     "position": p_meta.get("position", "FLEX"),
                     "team": p_meta.get("team", "FA"),
-                    "points": round(float(s_pts or 0.0), 2),
+                    "points": s_pts,
+                    "projectedPoints": p_proj,
+                    "deltaVsProj": p_delta,
+                    "sharePct": round((s_pts / pts2 * 100) if pts2 > 0 else 0.0, 1),
+                    "boxSummary": p_box["box_summary"],
+                    "stats": {
+                        "passYds": p_box["pass_yd"],
+                        "rushYds": p_box["rush_yd"],
+                        "recYds": p_box["rec_yd"],
+                        "totalTds": p_box["total_td"],
+                        "passTds": p_box["pass_td"],
+                        "rushTds": p_box["rush_td"],
+                        "recTds": p_box["rec_td"],
+                    }
                 })
 
             pp1 = r1.get("players_points") or {}
@@ -566,11 +832,18 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             opt1, _ = optimal_lineup(pp1, players_map, SLOTS)
             opt2, _ = optimal_lineup(pp2, players_map, SLOTS)
 
+            proj1 = round(sum(p["projectedPoints"] for p in starters1), 2)
+            proj2 = round(sum(p["projectedPoints"] for p in starters2), 2)
+            grade1 = calculate_weekly_grade(pts1, proj1, med_score)
+            grade2 = calculate_weekly_grade(pts2, proj2, med_score)
+
             team_a_obj = {
                 "rosterId": rid1,
                 "teamName": team_info.get(rid1, {}).get("teamName", f"Team {rid1}"),
                 "manager": team_info.get(rid1, {}).get("manager", f"Manager {rid1}"),
                 "points": pts1,
+                "projectedPoints": proj1,
+                "weeklyGrade": grade1,
                 "optimalPoints": opt1 if opt1 >= pts1 else pts1,
                 "lineupEfficiency": round((pts1 / opt1 * 100), 1) if opt1 > 0 else 100.0,
                 "benchPoints": round(bench_pts1, 2),
@@ -582,6 +855,8 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
                 "teamName": team_info.get(rid2, {}).get("teamName", f"Team {rid2}"),
                 "manager": team_info.get(rid2, {}).get("manager", f"Manager {rid2}"),
                 "points": pts2,
+                "projectedPoints": proj2,
+                "weeklyGrade": grade2,
                 "optimalPoints": opt2 if opt2 >= pts2 else pts2,
                 "lineupEfficiency": round((pts2 / opt2 * 100), 1) if opt2 > 0 else 100.0,
                 "benchPoints": round(bench_pts2, 2),
@@ -644,6 +919,183 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
                 s["allPlayWins"] += sum(1 for pts in others if t_obj["points"] > pts)
                 s["allPlayLosses"] += sum(1 for pts in others if t_obj["points"] < pts)
                 s["allPlayTies"] += sum(1 for pts in others if t_obj["points"] == pts)
+
+        # Standings ranks & records up to Week w
+        standings_ranked = sorted(
+            standings_accum.items(),
+            key=lambda item: (item[1]["wins"], item[1]["pointsFor"]),
+            reverse=True
+        )
+        rank_by_roster = {rid: rank + 1 for rank, (rid, _) in enumerate(standings_ranked)}
+        record_by_roster = {
+            rid: f"{data['wins']}-{data['losses']}-{data['ties']}"
+            for rid, data in standings_accum.items()
+        }
+
+        timeline_order = ["Wednesday", "Thursday", "Sun Early", "Sun Late", "Sun Night", "Monday"]
+        time_labels = {
+            "Wednesday": "Wed Kickoff",
+            "Thursday": "Thu Night",
+            "Sun Early": "Sun 1:00 PM",
+            "Sun Late": "Sun 4:25 PM",
+            "Sun Night": "Sun 8:20 PM",
+            "Monday": "Mon Night"
+        }
+
+        # Attach deepDive object to each matchup card
+        for card in matchup_cards:
+            t_a = card["teamA"]
+            t_b = card["teamB"]
+            rid1 = t_a["rosterId"]
+            rid2 = t_b["rosterId"]
+            pts1 = t_a["points"]
+            pts2 = t_b["points"]
+            proj1 = t_a.get("projectedPoints", pts1)
+            proj2 = t_b.get("projectedPoints", pts2)
+            grade1 = t_a.get("weeklyGrade", "B")
+            grade2 = t_b.get("weeklyGrade", "B")
+            is_win_a = pts1 >= pts2
+            w_id = rid1 if is_win_a else rid2
+            l_id = rid2 if is_win_a else rid1
+            w_name = t_a["teamName"] if is_win_a else t_b["teamName"]
+            l_name = t_b["teamName"] if is_win_a else t_a["teamName"]
+            w_pts = pts1 if is_win_a else pts2
+            l_pts = pts2 if is_win_a else pts1
+            w_proj = proj1 if is_win_a else proj2
+            l_proj = proj2 if is_win_a else proj1
+            w_grade = grade1 if is_win_a else grade2
+            l_grade = grade2 if is_win_a else grade1
+            w_starters = t_a["starters"] if is_win_a else t_b["starters"]
+            l_starters = t_b["starters"] if is_win_a else t_a["starters"]
+
+            # Top players
+            top_a = sorted(t_a["starters"], key=lambda p: p["points"], reverse=True)[:4]
+            top_b = sorted(t_b["starters"], key=lambda p: p["points"], reverse=True)[:4]
+            for r_idx, p in enumerate(top_a):
+                p["rank"] = r_idx + 1
+            for r_idx, p in enumerate(top_b):
+                p["rank"] = r_idx + 1
+
+            all_starters = t_a["starters"] + t_b["starters"]
+            mvp_player = max(all_starters, key=lambda p: p["points"]) if all_starters else (t_a["starters"][0] if t_a["starters"] else None)
+
+            # Winner dud & loser dud
+            w_dud_cands = [p for p in w_starters if p.get("projectedPoints", 0) >= 5.0]
+            w_dud = min(w_dud_cands, key=lambda p: p["points"]) if w_dud_cands else (min(w_starters, key=lambda p: p["points"]) if w_starters else None)
+            l_star = max(l_starters, key=lambda p: p["points"]) if l_starters else None
+            l_dud_cands = [p for p in l_starters if p.get("projectedPoints", 0) >= 5.0]
+            l_dud = min(l_dud_cands, key=lambda p: p["points"]) if l_dud_cands else (min(l_starters, key=lambda p: p["points"]) if l_starters else None)
+
+            # Positional Breakdown
+            pos_breakdown = []
+            for pos in ["QB", "RB", "WR", "TE", "K", "DEF"]:
+                p_a = round(sum(p["points"] for p in t_a["starters"] if p["position"] == pos), 2)
+                p_b = round(sum(p["points"] for p in t_b["starters"] if p["position"] == pos), 2)
+                diff = round(abs(p_a - p_b), 2)
+                edge = t_a["teamName"] if p_a > p_b else (t_b["teamName"] if p_b > p_a else "Even")
+                pos_breakdown.append({
+                    "category": pos,
+                    "teamAPoints": p_a,
+                    "teamBPoints": p_b,
+                    "margin": diff,
+                    "advantage": edge
+                })
+
+            # Timeline
+            cum_a = 0.0
+            cum_b = 0.0
+            timeline_entries = []
+            for win in timeline_order:
+                pts_a_win = round(sum(p["points"] for p in t_a["starters"] if window_map.get(p.get("team", ""), "Sun Early") == win), 2)
+                pts_b_win = round(sum(p["points"] for p in t_b["starters"] if window_map.get(p.get("team", ""), "Sun Early") == win), 2)
+                cum_a = round(cum_a + pts_a_win, 2)
+                cum_b = round(cum_b + pts_b_win, 2)
+                if pts_a_win > 0 or pts_b_win > 0 or win in ("Sun Early", "Sun Late"):
+                    leader = t_a["teamName"] if cum_a > cum_b else (t_b["teamName"] if cum_b > cum_a else "Tied")
+                    timeline_entries.append({
+                        "window": win,
+                        "timeLabel": time_labels.get(win, win),
+                        "teamAPoints": pts_a_win,
+                        "teamBPoints": pts_b_win,
+                        "cumA": cum_a,
+                        "cumB": cum_b,
+                        "leader": leader,
+                        "margin": round(abs(cum_a - cum_b), 2)
+                    })
+
+            # Next opponents
+            next_rid_a = next_pairings.get(rid1)
+            next_rid_b = next_pairings.get(rid2)
+            next_opp_a = team_info.get(next_rid_a, {}).get("teamName", f"Team {next_rid_a}") if next_rid_a else None
+            next_opp_b = team_info.get(next_rid_b, {}).get("teamName", f"Team {next_rid_b}") if next_rid_b else None
+            next_opp_winner = next_opp_a if is_win_a else next_opp_b
+            next_opp_loser = next_opp_b if is_win_a else next_opp_a
+
+            # Story
+            yahoo_story = generate_yahoo_deep_dive_story(
+                winner_name=w_name,
+                loser_name=l_name,
+                winner_pts=w_pts,
+                loser_pts=l_pts,
+                winner_proj=w_proj,
+                loser_proj=l_proj,
+                winner_grade=w_grade,
+                loser_grade=l_grade,
+                winner_record=record_by_roster.get(w_id, "1-0-0"),
+                loser_record=record_by_roster.get(l_id, "0-1-0"),
+                winner_rank=rank_by_roster.get(w_id, 1),
+                loser_rank=rank_by_roster.get(l_id, 12),
+                next_opp_winner=next_opp_winner,
+                next_opp_loser=next_opp_loser,
+                w_mvp=mvp_player,
+                w_dud=w_dud,
+                l_star=l_star,
+                l_dud=l_dud,
+                timeline=timeline_entries,
+                margin=card["margin"],
+                week=w,
+                is_shootout=(pts1 + pts2) >= 300.0,
+                is_nailbiter=card["margin"] <= 5.0,
+                is_blowout=card["margin"] >= 35.0
+            )
+
+            card["deepDive"] = {
+                "headline": yahoo_story["headline"],
+                "story": yahoo_story["story"],
+                "teamAGrade": grade1,
+                "teamBGrade": grade2,
+                "teamAProjected": proj1,
+                "teamBProjected": proj2,
+                "teamARecord": record_by_roster.get(rid1, "1-0-0"),
+                "teamBRecord": record_by_roster.get(rid2, "0-1-0"),
+                "teamARank": rank_by_roster.get(rid1, 1),
+                "teamBRank": rank_by_roster.get(rid2, 12),
+                "nextOpponentA": {
+                    "rosterId": next_rid_a,
+                    "teamName": next_opp_a
+                } if next_rid_a else None,
+                "nextOpponentB": {
+                    "rosterId": next_rid_b,
+                    "teamName": next_opp_b
+                } if next_rid_b else None,
+                "mvp": {
+                    "playerId": mvp_player.get("playerId", ""),
+                    "name": mvp_player.get("name", "MVP"),
+                    "position": mvp_player.get("position", "FLEX"),
+                    "team": mvp_player.get("team", "FA"),
+                    "points": mvp_player.get("points", 0.0),
+                    "projectedPoints": mvp_player.get("projectedPoints", 0.0),
+                    "deltaVsProj": mvp_player.get("deltaVsProj", 0.0),
+                    "sharePct": mvp_player.get("sharePct", 0.0),
+                    "boxSummary": mvp_player.get("boxSummary", ""),
+                    "stats": mvp_player.get("stats", {}),
+                    "fantasyTeamName": t_a["teamName"] if mvp_player in t_a["starters"] else t_b["teamName"]
+                } if mvp_player else None,
+                "topPlayersA": top_a,
+                "topPlayersB": top_b,
+                "positionBreakdown": pos_breakdown,
+                "timeline": timeline_entries
+            }
 
         # Superlatives for the week
         nailbiter_card = min(matchup_cards, key=lambda m: m["margin"]) if matchup_cards else None
