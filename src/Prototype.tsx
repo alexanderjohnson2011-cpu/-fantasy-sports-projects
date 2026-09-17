@@ -2366,8 +2366,23 @@ function WaiverWireScreen() {
                                 {t.receivedPlayers.map((p: any) => (
                                   <span key={p.id} className="trade-player-chip">
                                     <span className="trade-pos-tag">{p.position}</span>
-                                    <span>{p.name}</span>
+                                    <span className="trade-player-name">{p.name}</span>
                                     <span className="trade-pts-tag">+{p.points.toFixed(1)} pts ({p.starts} st)</span>
+                                    {p.vorp !== undefined && (
+                                      <span className={`trade-vorp-tag ${p.vorp >= 0 ? "is-pos" : "is-neg"}`} title="Value Over Replacement Player (VORP)">
+                                        {p.vorp > 0 ? `+${p.vorp.toFixed(1)}` : p.vorp.toFixed(1)} VORP
+                                      </span>
+                                    )}
+                                    {p.dynastyValue ? (
+                                      <span className="trade-dynasty-chip" title={`Overall Dynasty Rank #${p.dynastyRank || "N/A"}`}>
+                                        <span className="trade-dynasty-val">{p.dynastyValue.toLocaleString()} val</span>
+                                        {p.dynastyDelta !== undefined && p.dynastyDelta !== 0 && (
+                                          <span className={`trade-dynasty-delta ${p.dynastyDelta > 0 ? "is-up" : "is-down"}`}>
+                                            {p.dynastyDelta > 0 ? `▲ +${p.dynastyDelta}` : `▼ ${p.dynastyDelta}`}
+                                          </span>
+                                        )}
+                                      </span>
+                                    ) : null}
                                   </span>
                                 ))}
                                 {t.receivedPicks.map((pick: string, pidx: number) => {
@@ -2376,7 +2391,7 @@ function WaiverWireScreen() {
                                   return (
                                     <span key={pidx} className="trade-pick-chip">
                                       <span>🎟️ {pick}</span>
-                                      {dp && (
+                                      {dp ? (
                                         <span className="trade-drafted-player">
                                           <span className="trade-drafted-arrow">➔</span>
                                           <span className="trade-drafted-slot">#{dp.pickSlot}</span>
@@ -2387,7 +2402,28 @@ function WaiverWireScreen() {
                                           ) : (
                                             <span className="trade-drafted-pts is-zero">0.0 pts</span>
                                           )}
+                                          {dp.vorp !== undefined && (
+                                            <span className={`trade-vorp-tag ${dp.vorp >= 0 ? "is-pos" : "is-neg"}`} title="Rookie VORP">
+                                              {dp.vorp > 0 ? `+${dp.vorp.toFixed(1)}` : dp.vorp.toFixed(1)} VORP
+                                            </span>
+                                          )}
+                                          {dp.dynastyValue ? (
+                                            <span className="trade-dynasty-chip" title={`Rookie Dynasty Rank #${dp.dynastyRank || "N/A"}`}>
+                                              <span className="trade-dynasty-val">{dp.dynastyValue.toLocaleString()} val</span>
+                                              {dp.dynastyDelta !== undefined && dp.dynastyDelta !== 0 && (
+                                                <span className={`trade-dynasty-delta ${dp.dynastyDelta > 0 ? "is-up" : "is-down"}`}>
+                                                  {dp.dynastyDelta > 0 ? `▲ +${dp.dynastyDelta}` : `▼ ${dp.dynastyDelta}`}
+                                                </span>
+                                              )}
+                                            </span>
+                                          ) : null}
                                         </span>
+                                      ) : (
+                                        detail?.dynastyValue ? (
+                                          <span className="trade-dynasty-chip" style={{ marginLeft: 4 }} title="Consensus Future Pick Market Value">
+                                            <span className="trade-dynasty-val">{detail.dynastyValue.toLocaleString()} val</span>
+                                          </span>
+                                        ) : null
                                       )}
                                     </span>
                                   );
@@ -2408,10 +2444,20 @@ function WaiverWireScreen() {
                               <span className="trade-asset-label">Surrendered Assets</span>
                               <div className="trade-asset-chips">
                                 {t.sentPlayers.map((p: any) => (
-                                  <span key={p.id} className="trade-player-chip" style={{ opacity: 0.85 }}>
+                                  <span key={p.id} className="trade-player-chip is-surrendered">
                                     <span className="trade-pos-tag" style={{ background: "#666" }}>{p.position}</span>
-                                    <span>{p.name}</span>
+                                    <span className="trade-player-name">{p.name}</span>
                                     <span style={{ fontSize: "0.75rem", color: "var(--ink-soft)" }}>({p.points.toFixed(1)} pts)</span>
+                                    {p.vorp !== undefined && (
+                                      <span className="trade-vorp-tag is-surrendered" title="Surrendered VORP">
+                                        {p.vorp > 0 ? `+${p.vorp.toFixed(1)}` : p.vorp.toFixed(1)} VORP
+                                      </span>
+                                    )}
+                                    {p.dynastyValue ? (
+                                      <span className="trade-dynasty-chip is-surrendered" title="Surrendered Market Value">
+                                        <span className="trade-dynasty-val">{p.dynastyValue.toLocaleString()} val</span>
+                                      </span>
+                                    ) : null}
                                   </span>
                                 ))}
                                 {t.sentPicks.map((pick: string, pidx: number) => {
@@ -2420,7 +2466,7 @@ function WaiverWireScreen() {
                                   return (
                                     <span key={pidx} className="trade-pick-chip is-surrendered">
                                       <span>🎟️ {pick}</span>
-                                      {dp && (
+                                      {dp ? (
                                         <span className="trade-drafted-player">
                                           <span className="trade-drafted-arrow">➔</span>
                                           <span className="trade-drafted-slot">#{dp.pickSlot}</span>
@@ -2431,7 +2477,18 @@ function WaiverWireScreen() {
                                           ) : (
                                             <span className="trade-drafted-pts is-zero">0.0 pts</span>
                                           )}
+                                          {dp.dynastyValue ? (
+                                            <span className="trade-dynasty-chip is-surrendered">
+                                              <span className="trade-dynasty-val">{dp.dynastyValue.toLocaleString()} val</span>
+                                            </span>
+                                          ) : null}
                                         </span>
+                                      ) : (
+                                        detail?.dynastyValue ? (
+                                          <span className="trade-dynasty-chip is-surrendered" style={{ marginLeft: 4 }}>
+                                            <span className="trade-dynasty-val">{detail.dynastyValue.toLocaleString()} val</span>
+                                          </span>
+                                        ) : null
                                       )}
                                     </span>
                                   );
@@ -2444,36 +2501,62 @@ function WaiverWireScreen() {
                               </div>
                             </div>
 
-                            {/* Net return strip */}
+                            {/* Multi-Pillar Net Return Strip */}
                             <div className="trade-net-return-strip">
-                              <div>
-                                <span>
-                                  {t.totalRealizedPoints !== undefined && t.rookiePointsReceived > 0 ? (
-                                    <>Realized Yield: <strong>{t.totalRealizedPoints.toFixed(1)} pts</strong> ({t.totalRealizedStarts} st)</>
-                                  ) : (
-                                    <>Post-Trade Yield: <strong>{t.totalPointsReceived.toFixed(1)} pts</strong> ({t.startsReceived} st)</>
-                                  )}
-                                </span>
-                                {t.rookiePointsReceived > 0 && (
-                                  <span className="trade-rookie-yield-sub">
-                                    {" "}(+{t.rookiePointsReceived.toFixed(1)} pts from rookies)
+                              <div className="trade-return-details">
+                                <div className="trade-return-row">
+                                  <span className="trade-return-label">On-Field:</span>
+                                  <span className="trade-return-value">
+                                    {t.totalRealizedPoints !== undefined && t.rookiePointsReceived > 0 ? (
+                                      <><strong>{t.totalRealizedPoints.toFixed(1)} pts</strong> ({t.totalRealizedStarts} st)</>
+                                    ) : (
+                                      <><strong>{t.totalPointsReceived.toFixed(1)} pts</strong> ({t.startsReceived} st)</>
+                                    )}
                                   </span>
+                                  {t.totalVorp !== undefined && (
+                                    <span className={`trade-return-vorp ${t.totalVorp >= 0 ? "is-pos" : "is-neg"}`}>
+                                      ({t.totalVorp > 0 ? `+${t.totalVorp.toFixed(1)}` : t.totalVorp.toFixed(1)} VORP)
+                                    </span>
+                                  )}
+                                </div>
+
+                                {t.totalDynastyValue !== undefined && t.totalDynastyValue > 0 && (
+                                  <div className="trade-return-row">
+                                    <span className="trade-return-label">Dynasty Equity:</span>
+                                    <span className="trade-return-value">
+                                      <strong>{t.totalDynastyValue.toLocaleString()} val</strong>
+                                    </span>
+                                    {t.totalDynastyDelta !== undefined && t.totalDynastyDelta !== 0 && (
+                                      <span className={`trade-equity-delta ${t.totalDynastyDelta > 0 ? "is-up" : "is-down"}`}>
+                                        ({t.totalDynastyDelta > 0 ? `▲ +${t.totalDynastyDelta}` : `▼ ${t.totalDynastyDelta}`} trend)
+                                      </span>
+                                    )}
+                                    {t.netDynastyEquity !== undefined && (
+                                      <span className={`trade-net-equity-tag ${t.netDynastyEquity >= 0 ? "is-surplus" : "is-deficit"}`}>
+                                        Net: {t.netDynastyEquity > 0 ? `+${t.netDynastyEquity.toLocaleString()}` : t.netDynastyEquity.toLocaleString()}
+                                      </span>
+                                    )}
+                                  </div>
                                 )}
+
                                 {t.strategicRole && (
-                                  <div style={{ fontSize: "0.74rem", color: "var(--ink-soft)", marginTop: 2, fontWeight: 600 }}>
+                                  <div className="trade-strategic-role-tag">
                                     {t.strategicRole}
                                   </div>
                                 )}
                               </div>
-                              {t.statusBadge ? (
-                                <span className={`trade-net-delta is-${t.statusType || (isPos ? "positive" : isNeg ? "negative" : "even")}`}>
-                                  {t.statusBadge}
-                                </span>
-                              ) : (
-                                <span className={`trade-net-delta ${isPos ? "is-positive" : isNeg ? "is-negative" : "is-even"}`}>
-                                  Net: {netDiff > 0 ? `+${netDiff.toFixed(1)}` : netDiff.toFixed(1)} pts
-                                </span>
-                              )}
+
+                              <div className="trade-badge-col">
+                                {t.statusBadge ? (
+                                  <span className={`trade-net-delta is-${t.statusType || (isPos ? "positive" : isNeg ? "negative" : "even")}`}>
+                                    {t.statusBadge}
+                                  </span>
+                                ) : (
+                                  <span className={`trade-net-delta ${isPos ? "is-positive" : isNeg ? "is-negative" : "is-even"}`}>
+                                    Net: {netDiff > 0 ? `+${netDiff.toFixed(1)}` : netDiff.toFixed(1)} pts
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
                         );

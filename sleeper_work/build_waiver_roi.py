@@ -16,6 +16,7 @@ Outputs:
 
 import argparse
 import datetime
+import gzip
 import json
 import os
 import sys
@@ -102,7 +103,126 @@ def classify_pick(pick_str):
         return {"round": 4, "tier": "Tier 4", "tierName": "Roster Flier", "equityScore": 15}
 
 
-def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, players_map, current_week, draft_selections=None, roster_to_slot=None):
+# FantasyCalc baseline valuations for traded future picks
+PICK_VALUES_AUG = {
+    "2027 round 1": 2800,
+    "2027 round 2": 1500,
+    "2027 round 3": 1000,
+    "2027 round 4": 800,
+    "2026 round 1": 3100,
+    "2026 round 2": 1600,
+    "2026 round 3": 1100,
+    "2026 round 4": 850,
+}
+
+PICK_VALUES_SEP = {
+    "2027 round 1": 2907,
+    "2027 round 2": 1549,
+    "2027 round 3": 1057,
+    "2027 round 4": 841,
+    "2026 round 1": 3100,
+    "2026 round 2": 1600,
+    "2026 round 3": 1100,
+    "2026 round 4": 850,
+}
+
+# Positional VORP baselines per active starting game (12-team start 1QB/2RB/3WR/1TE/2FLEX)
+POS_BASELINES = {
+    "QB": 13.0,
+    "RB": 6.0,
+    "WR": 7.0,
+    "TE": 4.5,
+    "FLEX": 6.5,
+}
+
+
+def calc_vorp(points, starts, position):
+    base_per_game = POS_BASELINES.get(position, 6.5)
+    return round(points - (starts * base_per_game), 1)
+
+
+def load_dynasty_snapshots():
+    p_aug = os.path.join(PROJECT_ROOT, "sleeper_work", "raw", "source=fantasycalc_dynasty", "season=2026", "week=00", "date=2026-08-22", "as_of=20260822T000000Z", "fantasycalc_dynasty.json.gz")
+    p_sep = os.path.join(PROJECT_ROOT, "sleeper_work", "raw", "source=fantasycalc_dynasty", "season=2026", "week=00", "date=2026-09-16", "as_of=20260916T000000Z", "fantasycalc_dynasty.json.gz")
+
+    aug_map = {}
+    sep_map = {}
+
+    if os.path.exists(p_aug):
+        try:
+            with gzip.open(p_aug, "rt", encoding="utf-8") as f:
+                for item in json.load(f):
+                    p = item.get("player", {})
+                    name = p.get("name", "").lower()
+                    sid = str(p.get("sleeperId") or "")
+                    rec = {"val": item.get("value", 0), "rank": item.get("overallRank", 999)}
+                    if name:
+                        aug_map[name] = rec
+                    if sid:
+                        aug_map[sid] = rec
+        except Exception as e:
+            print(f"  Warning loading August dynasty snapshot: {e}")
+
+    if os.path.exists(p_sep):
+        try:
+            with gzip.open(p_sep, "rt", encoding="utf-8") as f:
+                for item in json.load(f):
+                    p = item.get("player", {})
+                    name = p.get("name", "").lower()
+                    sid = str(p.get("sleeperId") or "")
+                    rec = {"val": item.get("value", 0), "rank": item.get("overallRank", 999)}
+                    if name:
+                        sep_map[name] = rec
+                    if sid:
+                        sep_map[sid] = rec
+        except Exception as e:
+            print(f"  Warning loading September dynasty snapshot: {e}")
+
+    return aug_map, sep_map
+
+
+def get_dynasty_profile(name, sleeper_id=None, pick_str=None, aug_map=None, sep_map=None):
+    aug_map = aug_map or {}
+    sep_map = sep_map or {}
+
+    if pick_str:
+        p_clean = pick_str.lower()
+        if "round 1" in p_clean:
+            key = "2027 round 1" if "2027" in p_clean else "2026 round 1"
+        elif "round 2" in p_clean:
+            key = "2027 round 2" if "2027" in p_clean else "2026 round 2"
+        elif "round 3" in p_clean:
+            key = "2027 round 3" if "2027" in p_clean else "2026 round 3"
+        else:
+            key = "2027 round 4" if "2027" in p_clean else "2026 round 4"
+        a_val = PICK_VALUES_AUG.get(key, 1000)
+        s_val = PICK_VALUES_SEP.get(key, 1000)
+        return {
+            "augVal": a_val,
+            "sepVal": s_val,
+            "valDelta": s_val - a_val,
+            "rank": 999,
+            "rankDelta": 0,
+        }
+
+    s_rec = sep_map.get(str(sleeper_id or "")) or sep_map.get((name or "").lower(), {})
+    a_rec = aug_map.get(str(sleeper_id or "")) or aug_map.get((name or "").lower(), {})
+    s_val = s_rec.get("val", 1000)
+    a_val = a_rec.get("val", s_val)
+    s_rank = s_rec.get("rank", 999)
+    a_rank = a_rec.get("rank", s_rank)
+    rank_delta = (a_rank - s_rank) if (a_rank < 900 and s_rank < 900) else 0
+
+    return {
+        "augVal": a_val,
+        "sepVal": s_val,
+        "valDelta": s_val - a_val,
+        "rank": s_rank,
+        "rankDelta": rank_delta,
+    }
+
+
+def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, players_map, current_week, draft_selections=None, roster_to_slot=None, aug_map=None, sep_map=None):
     trade_evaluations = []
     total_players_traded = set()
     total_picks_traded = 0
@@ -157,6 +277,8 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                             p_starts += 1
                 pts_rec += p_pts
                 starts_rec += p_starts
+                p_vorp = calc_vorp(p_pts, p_starts, p_meta["position"])
+                p_prof = get_dynasty_profile(p_meta["name"], pid, aug_map=aug_map, sep_map=sep_map)
                 rec_players.append({
                     "id": pid,
                     "name": p_meta["name"],
@@ -164,6 +286,11 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                     "nflTeam": p_meta["team"],
                     "points": round(p_pts, 1),
                     "starts": p_starts,
+                    "vorp": p_vorp,
+                    "dynastyValue": p_prof["sepVal"],
+                    "dynastyDelta": p_prof["valDelta"],
+                    "dynastyRank": p_prof["rank"],
+                    "rankDelta": p_prof["rankDelta"],
                 })
 
             # Players sent by rid
@@ -187,6 +314,8 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                                 p_starts += 1
                 pts_sent += p_pts
                 starts_sent += p_starts
+                p_vorp = calc_vorp(p_pts, p_starts, p_meta["position"])
+                p_prof = get_dynasty_profile(p_meta["name"], pid, aug_map=aug_map, sep_map=sep_map)
                 sent_players.append({
                     "id": pid,
                     "name": p_meta["name"],
@@ -194,6 +323,11 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                     "nflTeam": p_meta["team"],
                     "points": round(p_pts, 1),
                     "starts": p_starts,
+                    "vorp": p_vorp,
+                    "dynastyValue": p_prof["sepVal"],
+                    "dynastyDelta": p_prof["valDelta"],
+                    "dynastyRank": p_prof["rank"],
+                    "rankDelta": p_prof["rankDelta"],
                 })
 
             # Picks received
@@ -212,7 +346,23 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                         rnd = int(pick.get("round") or 1)
                         sel = draft_selections.get((rnd, slot))
                         if sel:
-                            p_class["draftedPlayer"] = sel
+                            dp_copy = dict(sel)
+                            dp_prof = get_dynasty_profile(dp_copy["playerName"], dp_copy["playerId"], aug_map=aug_map, sep_map=sep_map)
+                            dp_copy["vorp"] = calc_vorp(dp_copy["points"], dp_copy["starts"], dp_copy["position"])
+                            dp_copy["dynastyValue"] = dp_prof["sepVal"]
+                            dp_copy["dynastyDelta"] = dp_prof["valDelta"]
+                            dp_copy["dynastyRank"] = dp_prof["rank"]
+                            dp_copy["rankDelta"] = dp_prof["rankDelta"]
+                            p_class["draftedPlayer"] = dp_copy
+                            p_class["dynastyValue"] = dp_prof["sepVal"]
+                            p_class["dynastyDelta"] = dp_prof["valDelta"]
+                            p_class["dynastyRank"] = dp_prof["rank"]
+                    if "dynastyValue" not in p_class:
+                        pick_prof = get_dynasty_profile("", pick_str=pick_str, aug_map=aug_map, sep_map=sep_map)
+                        p_class["dynastyValue"] = pick_prof["sepVal"]
+                        p_class["dynastyDelta"] = pick_prof["valDelta"]
+                        p_class["dynastyRank"] = 999
+                        p_class["rankDelta"] = 0
                     rec_picks_details.append(p_class)
 
             # Picks sent
@@ -231,7 +381,23 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                         rnd = int(pick.get("round") or 1)
                         sel = draft_selections.get((rnd, slot))
                         if sel:
-                            p_class["draftedPlayer"] = sel
+                            dp_copy = dict(sel)
+                            dp_prof = get_dynasty_profile(dp_copy["playerName"], dp_copy["playerId"], aug_map=aug_map, sep_map=sep_map)
+                            dp_copy["vorp"] = calc_vorp(dp_copy["points"], dp_copy["starts"], dp_copy["position"])
+                            dp_copy["dynastyValue"] = dp_prof["sepVal"]
+                            dp_copy["dynastyDelta"] = dp_prof["valDelta"]
+                            dp_copy["dynastyRank"] = dp_prof["rank"]
+                            dp_copy["rankDelta"] = dp_prof["rankDelta"]
+                            p_class["draftedPlayer"] = dp_copy
+                            p_class["dynastyValue"] = dp_prof["sepVal"]
+                            p_class["dynastyDelta"] = dp_prof["valDelta"]
+                            p_class["dynastyRank"] = dp_prof["rank"]
+                    if "dynastyValue" not in p_class:
+                        pick_prof = get_dynasty_profile("", pick_str=pick_str, aug_map=aug_map, sep_map=sep_map)
+                        p_class["dynastyValue"] = pick_prof["sepVal"]
+                        p_class["dynastyDelta"] = pick_prof["valDelta"]
+                        p_class["dynastyRank"] = 999
+                        p_class["rankDelta"] = 0
                     sent_picks_details.append(p_class)
 
             # FAAB
@@ -245,8 +411,11 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
             # Realized rookie production from traded picks
             rec_rookie_pts = sum(p.get("draftedPlayer", {}).get("points", 0.0) for p in rec_picks_details)
             rec_rookie_starts = sum(p.get("draftedPlayer", {}).get("starts", 0) for p in rec_picks_details)
+            rec_rookie_vorp = sum(p.get("draftedPlayer", {}).get("vorp", 0.0) for p in rec_picks_details)
+
             sent_rookie_pts = sum(p.get("draftedPlayer", {}).get("points", 0.0) for p in sent_picks_details)
             sent_rookie_starts = sum(p.get("draftedPlayer", {}).get("starts", 0) for p in sent_picks_details)
+            sent_rookie_vorp = sum(p.get("draftedPlayer", {}).get("vorp", 0.0) for p in sent_picks_details)
 
             total_realized_pts = round(pts_rec + rec_rookie_pts, 1)
             total_realized_starts = starts_rec + rec_rookie_starts
@@ -255,14 +424,36 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
             realized_net_pts = round(total_realized_pts - total_realized_sent_pts, 1)
             realized_net_starts = total_realized_starts - total_realized_sent_starts
 
+            # VORP Totals
+            total_rec_vorp = round(sum(p["vorp"] for p in rec_players) + rec_rookie_vorp, 1)
+            total_sent_vorp = round(sum(p["vorp"] for p in sent_players) + sent_rookie_vorp, 1)
+            net_vorp = round(total_rec_vorp - total_sent_vorp, 1)
+
+            # Dynasty Valuation Totals
+            total_rec_dynasty_val = sum(p.get("dynastyValue", 0) for p in rec_players) + sum(p.get("dynastyValue", 0) for p in rec_picks_details)
+            total_rec_dynasty_delta = sum(p.get("dynastyDelta", 0) for p in rec_players) + sum(p.get("dynastyDelta", 0) for p in rec_picks_details)
+            total_sent_dynasty_val = sum(p.get("dynastyValue", 0) for p in sent_players) + sum(p.get("dynastyValue", 0) for p in sent_picks_details)
+            total_sent_dynasty_delta = sum(p.get("dynastyDelta", 0) for p in sent_players) + sum(p.get("dynastyDelta", 0) for p in sent_picks_details)
+            net_dynasty_equity = total_rec_dynasty_val - total_sent_dynasty_val
+
             has_major_picks_rec = any(p["round"] in [1, 2] for p in rec_picks_details)
             has_major_picks_sent = any(p["round"] in [1, 2] for p in sent_picks_details)
 
-            # Two-dimensional role & status classification
-            if has_major_picks_rec and not has_major_picks_sent and pts_rec <= pts_sent:
+            # Two-dimensional role & status classification incorporating VORP and Dynasty Equity
+            if net_dynasty_equity >= 350 and pts_rec <= pts_sent:
+                role = "Dynasty Equity Surplus"
+                badge = f"+{net_dynasty_equity} Market Equity 📈"
+                top_rnd = min((p["round"] for p in rec_picks_details), default=1)
+                drafted_names = [p["draftedPlayer"]["playerName"] for p in rec_picks_details if p.get("draftedPlayer")]
+                if rec_rookie_pts > 0 and drafted_names:
+                    status_text = f"+{net_dynasty_equity} val ({drafted_names[0]})"
+                else:
+                    status_text = f"+{net_dynasty_equity} Market Surplus"
+                status_type = "capital"
+            elif has_major_picks_rec and not has_major_picks_sent and pts_rec <= pts_sent:
                 role = "Future Capital Haul"
                 badge = "Capital Stockpile 📦"
-                top_rnd = min(p["round"] for p in rec_picks_details)
+                top_rnd = min((p["round"] for p in rec_picks_details), default=1)
                 drafted_names = [p["draftedPlayer"]["playerName"] for p in rec_picks_details if p.get("draftedPlayer")]
                 if rec_rookie_pts > 0 and drafted_names:
                     status_text = f"+{rec_rookie_pts:.1f} pts via {drafted_names[0]}"
@@ -271,12 +462,12 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                 status_type = "capital"
             elif has_major_picks_sent and not has_major_picks_rec and (pts_rec >= pts_sent or starts_rec >= 1):
                 role = "Win-Now Contender Push"
-                badge = "Win-Now Firepower 🚀"
+                badge = f"Win-Now (+{total_rec_vorp:+.1f} VORP)" if total_rec_vorp > 0 else "Win-Now Firepower 🚀"
                 status_text = f"{net_pts:+.1f} pts ({starts_rec} st)"
                 status_type = "win-now"
             elif net_pts >= 8.0:
                 role = "Production Advantage"
-                badge = f"Scoring Lead (+{net_pts:.1f} pts)"
+                badge = f"Scoring Lead (+{net_pts:.1f} pts, {total_rec_vorp:+.1f} VORP)"
                 status_text = f"+{net_pts:.1f} pts ({starts_rec} st)"
                 status_type = "positive"
             elif net_pts <= -8.0 and not rec_picks_details:
@@ -286,7 +477,7 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                 status_type = "negative"
             elif rec_picks_details and not rec_players and not sent_players:
                 role = "Draft Equity Realignment"
-                badge = "Draft Capital Exchanged"
+                badge = f"Capital Swap ({net_dynasty_equity:+d} val)"
                 status_text = f"{len(rec_picks_details)} Pick{'s' if len(rec_picks_details) > 1 else ''} Acquired"
                 status_type = "neutral"
             else:
@@ -318,6 +509,14 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                 "startsSent": starts_sent,
                 "netPoints": net_pts,
                 "netStarts": net_starts,
+                "totalVorp": total_rec_vorp,
+                "sentVorp": total_sent_vorp,
+                "netVorp": net_vorp,
+                "totalDynastyValue": total_rec_dynasty_val,
+                "totalDynastyDelta": total_rec_dynasty_delta,
+                "totalDynastyValueSent": total_sent_dynasty_val,
+                "totalDynastyDeltaSent": total_sent_dynasty_delta,
+                "netDynastyEquity": net_dynasty_equity,
                 "strategicRole": role,
                 "statusBadge": badge,
                 "statusText": status_text,
@@ -336,49 +535,50 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
             r_diff = t1.get("realizedNetPoints", diff)
 
             if tx_id == "1394813522348609536":  # Olave deal
-                verdict = "Win-Now WR1 vs Rookie Draft Haul (Jadarian Price)"
+                verdict = "Win-Now WR1 (+9.2 VORP) vs Dynasty Equity Haul (+893 Val Margin)"
                 verdict_class = "badge-win-now"
-                headline = "Olave Powers Up Title Run; Terry Tate Capitalizes with Jadarian Price"
+                headline = "Olave Drives Title Ambitions (+9.2 VORP); Terry Tate Locks In +893 Net Market Equity with Jadarian Price"
                 analysis = (
-                    "Ertz & Krafts surrendered both the 1.04 pick (which became Seahawks starting RB Jadarian Price, +6.8 pts, 2 starts) "
-                    "and the 2.12 pick (Raiders RB Mike Washington, +4.1 pts) to land WR1 anchor Chris Olave (+23.2 pts in 2 starts) for an "
-                    "aggressive title defense. By converting future picks into Seattle's starting running back in Price and RB depth in Washington, "
-                    "Terry Tate’s Pain Train has already realized 14.3 total points from the package, narrowing the on-field scoring margin to "
-                    "-8.9 points while securing a franchise rookie cornerstone."
+                    "A multi-dimensional dynasty blockbuster: Ertz & Krafts secured immediate WR1 firepower in Chris Olave (+9.2 VORP, 23.2 pts in 2 starts, #25 overall dynasty rank) "
+                    "to anchor an aggressive championship run. However, forensic valuation reveals Terry Tate’s Pain Train actually captured a **+893 net dynasty market equity advantage** "
+                    "(6,670 package val acquired vs 5,777 surrendered). Terry Tate selected Seahawks starting running back Jadarian Price at Pick 1.04 (3,621 market value) "
+                    "and added Raiders RB Mike Washington (Pick 2.12, 1,765 val), realizing 14.3 total points while locking down a premier young backfield tandem."
                 )
             elif tx_id == "1394733669339377664":  # Tucker Kraft for 2026 1st
-                verdict = "Tucker Kraft Flipped for 1.04 Pick (Jadarian Price)"
+                verdict = "TE Tucker Kraft (3,057 Val) Flipped for Pick 1.04 (Jadarian Price, 3,621 Val)"
                 verdict_class = "badge-capital"
-                headline = "Ertz & Krafts Leverages Tucker Kraft into 1.04 Draft Asset"
+                headline = "Ertz & Krafts Parlays Tucker Kraft into 1.04 Asset (Jadarian Price) Before Olave Mega-Deal"
                 analysis = (
-                    "A high-stakes asset conversion: Final Boss parted with the 1.04 draft pick (subsequently used to select Seahawks starting "
-                    "RB Jadarian Price) to immediately stabilize tight end with Tucker Kraft (+8.0 pts in 2 starts). Ertz & Krafts capitalized "
-                    "on peak depth value, taking the 1.04 asset and parlaying it hours later into Chris Olave."
+                    "A textbook dynasty equity pivot: Final Boss surrendered the 1.04 draft pick (which became Seahawks starter Jadarian Price, 3,621 dynasty value) "
+                    "to immediately stabilize starting tight end with Tucker Kraft (3,057 val, -1.0 VORP, 8.0 pts). Ertz & Krafts capitalized on peak asset liquidity, "
+                    "capturing the 1.04 asset and parlaying it hours later into Chris Olave."
                 )
             elif tx_id == "1394086707485212672":  # Coker for 2027 2nd
-                verdict = "Breakout Wideout Yields 2027 2nd Round Capital"
+                verdict = "Breakout WR (+22.8 VORP, +634 Market Surge) for 2027 2nd"
                 verdict_class = "badge-capital"
-                headline = "Final Boss Bets on Jalen Coker; Ertz & Krafts Banks Future 2nd"
+                headline = "Final Boss Strikes Gold on Jalen Coker (+22.8 VORP, +634 Market Value Surge)"
                 analysis = (
-                    "Final Boss struck gold on immediate offensive firepower, acquiring Jalen Coker as he exploded for 29.8 fantasy points and "
-                    "a starting nod. Ertz & Krafts surrendered the early production margin (-29.8 pts) in exchange for an impactful 2027 2nd round draft asset."
+                    "Final Boss executed a masterclass in buy-low scouting, acquiring Jalen Coker right before his monster 29.8-point starting breakout (+22.8 VORP). "
+                    "Since the trade, Coker's dynasty market value has skyrocketed by +634 (from 1,549 to 2,183, surging 51 spots to #86 overall), giving Final Boss a landslide "
+                    "+634 market equity gain on top of explosive starting yield. Ertz & Krafts banked a 2027 2nd round pick (1,549 market value)."
                 )
             elif tx_id == "1392291944566108160":  # Monty/Marks for 1st & 3rd
-                verdict = "Backfield Firepower for Pick 1.12 (Ja'Kobi Lane)"
+                verdict = "Workhorse Backfield (+18.9 VORP, +402 Val) for Pick 1.12 (Ja'Kobi Lane)"
                 verdict_class = "badge-capital"
-                headline = "arkinsjt Unleashes Veteran Thunder; The Ape Drafts Ja'Kobi Lane at 1.12"
+                headline = "arkinsjt Unleashes Starting RB Thunder (+18.9 VORP); The Ape Drafts Ja'Kobi Lane at 1.12"
                 analysis = (
-                    "arkinsjt dealt the 1.12 rookie draft selection (Ravens WR Ja'Kobi Lane, +1.6 pts) and a 2027 3rd rounder to acquire starting "
-                    "workhorses David Montgomery and Woody Marks (+31.9 pts in 2 starts). The trade provided arkinsjt an immediate +30.3 point scoring surge, "
-                    "while The Ape brought in Lane as developmental wideout depth."
+                    "arkinsjt dealt the 1.12 selection (Ravens rookie WR Ja'Kobi Lane, 1,150 val) and a 2027 3rd (1,057 val) to acquire starting workhorses David Montgomery "
+                    "and Woody Marks. The veteran tandem generated +18.9 combined VORP and 31.9 points in 2 starts, while Montgomery appreciated by +402 in dynasty value "
+                    "(now 2,902 val, #67 overall). arkinsjt holds a commanding +30.3 on-field scoring advantage and a +1,387 package equity surplus."
                 )
             elif tx_id == "1357798524346978304":  # Dart/Likely blockbuster
-                verdict = "Massive Production Advantage: Bronco Stampede (+43.9 pts)"
+                verdict = "Dominant Starter Production: Bronco Stampede (+32.9 Net VORP, +43.9 Pts)"
                 verdict_class = "badge-win"
-                headline = "Dart & Likely Eruption Hands Bronco Stampede Early Triumph"
+                headline = "Dart & Likely Explosions Hand Bronco Stampede +32.9 Net VORP Advantage"
                 analysis = (
-                    "A blockbuster pre-season swap that has heavily rewarded Bronco Stampede: Jaxson Dart and Isaiah Likely have combined for 50.4 starting points, "
-                    "creating a dominant +43.9 net scoring advantage over The Ape’s multi-player return (6.5 pts)."
+                    "A blockbuster pre-season swap that has heavily rewarded Bronco Stampede: Isaiah Likely (+19.3 VORP, 28.3 pts in 2 starts, 2,850 val) and Jaxson Dart "
+                    "(+13.6 VORP, 22.1 pts) generated an elite +32.9 net VORP advantage over The Ape’s multi-player return (6.5 pts, -7.5 VORP across Isaiah Bond, DJ Moore, "
+                    "and Tyler Warren)."
                 )
             elif tx_id == "1400517332358463488":  # Slayton/Najee/Thornton for Bateman/Wicks/pick
                 verdict = "Multi-Player Depth Realignment"
@@ -427,21 +627,21 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                 if (t1["statusType"] == "capital" and t2["statusType"] == "win-now") or (t2["statusType"] == "capital" and t1["statusType"] == "win-now"):
                     cap_team = t1 if t1["statusType"] == "capital" else t2
                     win_team = t2 if t1["statusType"] == "capital" else t1
-                    verdict = f"Dynasty Capital Haul ({cap_team['teamName']}) vs Win-Now Push ({win_team['teamName']})"
+                    verdict = f"Dynasty Equity ({cap_team['teamName']}) vs Win-Now Push ({win_team['teamName']})"
                     verdict_class = "badge-capital"
-                    headline = f"{cap_team['teamName']} Banks Capital; {win_team['teamName']} Adds Firepower"
-                    analysis = f"{win_team['teamName']} acquired immediate on-field production ({win_team['totalPointsReceived']} pts), while {cap_team['teamName']} bolstered long-term equity with draft capital ({len(cap_team['receivedPicks'])} picks)."
+                    headline = f"{cap_team['teamName']} Banks Capital ({cap_team.get('netDynastyEquity', 0):+d} val); {win_team['teamName']} Adds Firepower"
+                    analysis = f"{win_team['teamName']} acquired immediate on-field production ({win_team['totalPointsReceived']} pts, {win_team.get('totalVorp', 0):+.1f} VORP), while {cap_team['teamName']} gained long-term equity with draft capital and market value ({cap_team.get('netDynastyEquity', 0):+d} net equity)."
                 elif abs(diff) >= 10.0:
                     lead_team = t1 if diff > 0 else t2
-                    verdict = f"Clear Production Advantage: {lead_team['teamName']} (+{abs(diff):.1f} pts)"
+                    verdict = f"Clear Production Advantage: {lead_team['teamName']} (+{abs(diff):.1f} pts, {lead_team.get('totalVorp', 0):+.1f} VORP)"
                     verdict_class = "badge-win"
-                    headline = f"{lead_team['teamName']} Surges to On-Field Advantage"
-                    analysis = f"{lead_team['teamName']} holds a commanding +{abs(diff):.1f} net point advantage in on-field production delivered to date."
+                    headline = f"{lead_team['teamName']} Surges to On-Field & VORP Advantage"
+                    analysis = f"{lead_team['teamName']} holds a commanding +{abs(diff):.1f} net point advantage ({lead_team.get('netVorp', 0):+.1f} net VORP) in on-field production delivered to date."
                 else:
-                    verdict = "Balanced Production Swap"
+                    verdict = "Balanced Production & Equity Swap"
                     verdict_class = "badge-even"
                     headline = f"{t1['teamName']} & {t2['teamName']} Asset Exchange"
-                    analysis = f"Both franchises exchanged players and assets with net scoring closely balanced ({diff:+.1f} pts margin)."
+                    analysis = f"Both franchises exchanged players and assets with net scoring closely balanced ({diff:+.1f} pts margin, {t1.get('netDynastyEquity', 0):+d} val equity margin)."
         else:
             verdict = "Completed Deal"
             verdict_class = "badge-flier"
@@ -768,10 +968,14 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
     except Exception as e:
         print(f"  Warning fetching draft information: {e}")
 
+    # Load FantasyCalc dynasty snapshots for valuation and market trend tracking
+    aug_map, sep_map = load_dynasty_snapshots()
+
     # Process trade evaluations separately with dedicated two-sided comparative logic
     trade_evaluations, trade_summary = process_trade_evaluations(
         trade_transactions, roster_info, weekly_matchups, players_map, current_week,
-        draft_selections=draft_selections, roster_to_slot=roster_to_slot
+        draft_selections=draft_selections, roster_to_slot=roster_to_slot,
+        aug_map=aug_map, sep_map=sep_map,
     )
 
     # Compile manager profiles
