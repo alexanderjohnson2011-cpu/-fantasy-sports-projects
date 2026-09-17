@@ -136,6 +136,278 @@ POS_BASELINES = {
 }
 
 
+def calculate_waiver_grade(total_pts, starter_pts, starts_count, bid, tx_type, current_role, is_still_rostered, position):
+    """
+    Computes a letter grade (A+ through F), numerical score, css class, and title for a waiver/FA move.
+    """
+    score = 50.0
+
+    # 1. Starting Lineup Impact (up to +35 pts)
+    if starts_count >= 2:
+        score += min(35.0, 20.0 + starter_pts * 0.6)
+    elif starts_count == 1:
+        score += min(28.0, 14.0 + starter_pts * 0.7)
+    else:
+        score += min(10.0, total_pts * 0.5)
+
+    # 2. Points Scored (up to +15 pts)
+    if total_pts >= 25.0:
+        score += 15.0
+    elif total_pts >= 15.0:
+        score += 10.0
+    elif total_pts >= 8.0:
+        score += 6.0
+    elif total_pts > 0:
+        score += 3.0
+
+    # 3. FAAB Cost / Capital Efficiency (+15 to -25 pts)
+    if tx_type == "free_agent" or bid == 0:
+        if total_pts >= 10.0 or starts_count >= 1:
+            score += 15.0
+        elif total_pts > 0:
+            score += 10.0
+        else:
+            score += 5.0
+    else:
+        bid_val = max(1, bid)
+        pts_per_dollar = total_pts / bid_val
+        if pts_per_dollar >= 2.0 and total_pts >= 14:
+            score += 15.0
+        elif pts_per_dollar >= 1.0:
+            score += 10.0
+        elif pts_per_dollar >= 0.5:
+            score += 5.0
+        elif bid >= 25 and starts_count == 0 and total_pts < 5:
+            score -= 22.0
+        elif bid >= 15 and total_pts == 0:
+            score -= 16.0
+        elif bid >= 10 and total_pts < 3:
+            score -= 10.0
+
+    # 4. Role & Retention (+10 to -15 pts)
+    if "Leading" in current_role:
+        score += 10.0
+    elif "Starting" in current_role:
+        score += 7.0
+    elif "Bench" in current_role and is_still_rostered:
+        score += 3.0
+    elif not is_still_rostered:
+        if starts_count >= 1 and total_pts >= 8.0:
+            score += 0.0
+        elif total_pts == 0 and bid >= 5:
+            score -= 15.0
+        else:
+            score -= 8.0
+
+    score = max(5.0, min(99.0, score))
+
+    if score >= 91:
+        return "A+", round(score, 1), "grade-a-plus", "League-Winning Masterstroke"
+    elif score >= 85:
+        return "A", round(score, 1), "grade-a", "High-Yield Smash"
+    elif score >= 80:
+        return "A-", round(score, 1), "grade-a", "Quality Starter Addition"
+    elif score >= 75:
+        return "B+", round(score, 1), "grade-b-plus", "Impact Starter Value"
+    elif score >= 70:
+        return "B", round(score, 1), "grade-b", "Solid Contributor"
+    elif score >= 65:
+        return "B-", round(score, 1), "grade-b", "Capable Depth Asset"
+    elif score >= 60:
+        return "C+", round(score, 1), "grade-c-plus", "Viable Bench Stash"
+    elif score >= 52:
+        return "C", round(score, 1), "grade-c", "Modest Reserve Stash"
+    elif score >= 45:
+        return "C-", round(score, 1), "grade-c", "Low-Yield Hold"
+    elif score >= 38:
+        return "D+", round(score, 1), "grade-d", "Disappointing Return"
+    elif score >= 30:
+        return "D", round(score, 1), "grade-d", "Costly Underperformer"
+    else:
+        return "F", round(score, 1), "grade-f", "Capital Bust / Wasted FAAB"
+
+
+def generate_waiver_commentary(player_name, pos, nfl_team, manager, acquired_week, tx_type, bid, total_pts, starts_count, starter_pts, current_role, is_still_rostered, grade, grade_title):
+    cost_str = f"${bid} FAAB claim" if tx_type == "waiver" and bid > 0 else "$0 free agent add"
+    team_tag = f" ({nfl_team})" if nfl_team and nfl_team != "FA" else ""
+
+    if grade in ("A+", "A", "A-"):
+        if starts_count >= 1:
+            pts_ratio = f" ({round(total_pts / max(1, bid), 1)}x pts/dollar)" if bid > 0 else " on zero dollar risk"
+            return (
+                f"A home run transaction for {manager}. Landing {player_name}{team_tag} via {cost_str} in Week {acquired_week} paid off immediately with "
+                f"{starter_pts:.1f} starting fantasy points across {starts_count} start(s){pts_ratio}. Now holding down the role of {current_role}, this move represents elite wire execution."
+            )
+        else:
+            return (
+                f"Outstanding proactive acquisition by {manager}. Snagging {player_name}{team_tag} via {cost_str} has generated {total_pts:.1f} bench points, "
+                f"establishing crucial high-ceiling insurance and vaulting into {current_role} status."
+            )
+    elif grade in ("B+", "B", "B-"):
+        if starts_count >= 1:
+            return (
+                f"A reliable starting fill-in for {manager}. {player_name}{team_tag} was acquired via {cost_str} and delivered {starter_pts:.1f} points in {starts_count} starting assignment(s). "
+                f"A dependable lineup solution that satisfied a critical roster need as {current_role}."
+            )
+        else:
+            return (
+                f"Solid developmental depth for {manager}. Adding {player_name}{team_tag} via {cost_str} shores up positional depth behind active starters, "
+                f"providing a stable stash as {current_role}."
+            )
+    elif grade in ("C+", "C", "C-"):
+        if is_still_rostered:
+            return (
+                f"Speculative bench flyer for {manager}. Acquired via {cost_str} in Week {acquired_week}, {player_name}{team_tag} has logged {starts_count} start(s) and {total_pts:.1f} total points. "
+                f"Currently rostered as {current_role}, waiting on a path to expanded volume."
+            )
+        else:
+            return (
+                f"Short-term depth maneuver for {manager}. {player_name}{team_tag} was picked up via {cost_str} and subsequently cut after contributing {total_pts:.1f} points. Low risk, modest outcome."
+            )
+    else:
+        if bid >= 10:
+            return (
+                f"Costly budget misfire for {manager}. Committing {cost_str} for {player_name}{team_tag} has yielded just {total_pts:.1f} points and {starts_count} starts to date. "
+                f"A substantial FAAB commitment that has severely underperformed expectations."
+            )
+        else:
+            return (
+                f"Empty flyer for {manager}. {player_name}{team_tag} failed to provide on-field utility ({total_pts:.1f} pts in {starts_count} starts) after being acquired via {cost_str}."
+            )
+
+
+def calculate_trade_team_grade(team, opponent_team=None):
+    """
+    Computes a letter grade (A+ through F), numerical score, css class, and title for a team's side of a trade.
+    """
+    score = 65.0
+    net_pts = team.get("realizedNetPoints", team.get("netPoints", 0.0))
+    net_vorp = team.get("netVorp", 0.0)
+    net_equity = team.get("netDynastyEquity", 0)
+    starts = team.get("totalRealizedStarts", team.get("startsReceived", 0))
+    strat_role = team.get("strategicRole", "")
+    has_picks_rec = bool(team.get("receivedPicksDetails"))
+
+    # 1. On-field / VORP yield
+    if net_vorp >= 15.0:
+        score += 20.0
+    elif net_vorp >= 8.0:
+        score += 15.0
+    elif net_vorp >= 3.0:
+        score += 10.0
+    elif net_vorp <= -10.0 and not has_picks_rec:
+        score -= 15.0
+    elif net_vorp <= -5.0 and not has_picks_rec:
+        score -= 8.0
+
+    if net_pts >= 25.0:
+        score += 12.0
+    elif net_pts >= 12.0:
+        score += 8.0
+    elif net_pts <= -20.0 and not has_picks_rec:
+        score -= 12.0
+
+    # 2. Dynasty Market Equity Capture
+    if net_equity >= 600:
+        score += 20.0
+    elif net_equity >= 300:
+        score += 14.0
+    elif net_equity >= 100:
+        score += 8.0
+    elif net_equity <= -600 and net_vorp < 5.0:
+        score -= 16.0
+    elif net_equity <= -300 and net_vorp < 0.0:
+        score -= 10.0
+
+    # 3. Starts & Utility
+    if starts >= 2 and net_pts > 0:
+        score += 8.0
+    elif starts == 0 and not has_picks_rec and net_equity < 0:
+        score -= 8.0
+
+    # 4. Strategic Alignment
+    if "Win-Now" in strat_role and (starts >= 1 or net_pts >= 10.0):
+        score += 8.0
+    if "Dynasty Equity" in strat_role and net_equity > 0:
+        score += 8.0
+    if "Future Capital Haul" in strat_role and has_picks_rec:
+        score += 6.0
+
+    score = max(10.0, min(99.0, score))
+
+    if score >= 91:
+        return "A+", round(score, 1), "grade-a-plus", "Franchise-Altering Masterstroke"
+    elif score >= 85:
+        return "A", round(score, 1), "grade-a", "Elite Value Acquisition"
+    elif score >= 80:
+        return "A-", round(score, 1), "grade-a", "Strong Positive Return"
+    elif score >= 75:
+        return "B+", round(score, 1), "grade-b-plus", "Net Value Gain"
+    elif score >= 70:
+        return "B", round(score, 1), "grade-b", "Solid Strategic Move"
+    elif score >= 65:
+        return "B-", round(score, 1), "grade-b", "Acceptable Equity Exchange"
+    elif score >= 60:
+        return "C+", round(score, 1), "grade-c-plus", "Modest Rebuild Exchange"
+    elif score >= 52:
+        return "C", round(score, 1), "grade-c", "Even Market Swap"
+    elif score >= 45:
+        return "C-", round(score, 1), "grade-c", "Slight Value Deficit"
+    elif score >= 38:
+        return "D+", round(score, 1), "grade-d", "Disadvantageous Return"
+    elif score >= 30:
+        return "D", round(score, 1), "grade-d", "Severe Capital Drain"
+    else:
+        return "F", round(score, 1), "grade-f", "Disastrous Fleecing"
+
+
+def generate_trade_team_commentary(team, opponent_team=None):
+    mgr = team.get("manager", "Manager")
+    team_name = team.get("teamName", "Team")
+    net_pts = team.get("realizedNetPoints", team.get("netPoints", 0.0))
+    net_vorp = team.get("netVorp", 0.0)
+    net_eq = team.get("netDynastyEquity", 0)
+    starts = team.get("totalRealizedStarts", team.get("startsReceived", 0))
+    rec_players = team.get("receivedPlayers", [])
+    rec_picks = team.get("receivedPicksDetails", [])
+
+    rec_names = [p["name"] for p in rec_players]
+    if rec_picks:
+        for p in rec_picks:
+            if p.get("draftedPlayer"):
+                rec_names.append(f"{p['draftedPlayer']['playerName']} (Pick #{p['draftedPlayer']['pickSlot']})")
+            else:
+                rec_names.append(f"Pick (Rd {p['round']})")
+
+    rec_summary = ", ".join(rec_names[:3]) or "assets"
+
+    if net_eq >= 300 and net_pts <= 0:
+        return (
+            f"{mgr} capitalized on premier asset liquidity by landing {rec_summary}. While relinquishing immediate on-field production, "
+            f"{team_name} secured a commanding +{net_eq:,} dynasty market equity surplus, successfully pivoting high-value capital into foundational long-term assets."
+        )
+    elif net_vorp >= 8.0 and net_pts >= 10.0:
+        return (
+            f"An aggressive championship maneuver for {mgr}. Injecting {rec_summary} into the lineup delivered immediate high-end yield: "
+            f"+{net_pts:.1f} net points and +{net_vorp:+.1f} net VORP across {starts} start(s), decisively tilting weekly matchup odds in {team_name}'s favor."
+        )
+    elif net_eq < -200 and net_pts < -5.0:
+        return (
+            f"A challenging early ledger for {mgr}. Surrendering {rec_summary} has left {team_name} facing an on-field deficit ({net_pts:.1f} net pts, {net_vorp:+.1f} VORP) "
+            f"and a -{abs(net_eq):,} dynasty equity margin. Future asset maturation will be vital to salvage long-term return."
+        )
+    elif rec_picks and not rec_players:
+        return (
+            f"A forward-looking capital play by {mgr}. Banking {rec_summary} bolstered {team_name}'s future draft inventory with {net_eq:+d} market equity, "
+            f"positioning the franchise for upcoming draft board flexibility."
+        )
+    else:
+        return (
+            f"A calculated strategic realignment for {mgr}. {team_name} secured {rec_summary}, balancing on-field scoring margin ({net_pts:+.1f} pts) "
+            f"with roster depth requirements ({net_eq:+d} net market equity)."
+        )
+
+
 def calc_vorp(points, starts, position):
     base_per_game = POS_BASELINES.get(position, 6.5)
     return round(points - (starts * base_per_game), 1)
@@ -528,6 +800,17 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                 roster_info[rid].setdefault("tradesCount", 0)
                 roster_info[rid]["tradesCount"] += 1
 
+        # Compute baseline trade grade and commentary for every team in the deal
+        for idx, t in enumerate(teams_evaluation):
+            other_t = teams_evaluation[1 - idx] if len(teams_evaluation) == 2 else None
+            t_grade, t_score, t_class, t_title = calculate_trade_team_grade(t, other_t)
+            t_comm = generate_trade_team_commentary(t, other_t)
+            t["grade"] = t_grade
+            t["gradeScore"] = t_score
+            t["gradeClass"] = t_class
+            t["gradeTitle"] = t_title
+            t["commentary"] = t_comm
+
         # Determine Deal Verdict and Expressive Editorial Analysis with Drafted Rookies Incorporated
         if len(teams_evaluation) >= 2:
             t1, t2 = teams_evaluation[0], teams_evaluation[1]
@@ -535,6 +818,16 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
             r_diff = t1.get("realizedNetPoints", diff)
 
             if tx_id == "1394813522348609536":  # Olave deal
+                t1["grade"] = "A"
+                t1["gradeTitle"] = "Championship WR1 Firepower"
+                t1["gradeClass"] = "grade-a"
+                t1["commentary"] = "Ertz & Krafts paid a premium in young running back capital, but landed a blue-chip WR1 in Chris Olave who instantly anchors their championship title defense with +9.2 VORP and 23.2 points across two starts. When contending for rings, top-tier starting firepower justifies surrendering futures."
+
+                t2["grade"] = "A+"
+                t2["gradeTitle"] = "Dynasty Equity Masterclass"
+                t2["gradeClass"] = "grade-a-plus"
+                t2["commentary"] = "A masterclass in extracting maximum dynasty equity. Terry Tate surrendered Olave but captured a massive +893 net market surplus, drafting Seattle's explosive rookie starter Jadarian Price at Pick 1.04 (3,621 val) and adding Mike Washington (1,765 val) and Tyjae Spears to lock down an elite young backfield pipeline."
+
                 verdict = "Win-Now WR1 (+9.2 VORP) vs Dynasty Equity Haul (+893 Val Margin)"
                 verdict_class = "badge-win-now"
                 headline = "Olave Drives Title Ambitions (+9.2 VORP); Terry Tate Locks In +893 Net Market Equity with Jadarian Price"
@@ -545,6 +838,16 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                     "and added Raiders RB Mike Washington (Pick 2.12, 1,765 val), realizing 14.3 total points while locking down a premier young backfield tandem."
                 )
             elif tx_id == "1394733669339377664":  # Tucker Kraft for 2026 1st
+                t1["grade"] = "A"
+                t1["gradeTitle"] = "Peak Asset Liquidity Win"
+                t1["gradeClass"] = "grade-a"
+                t1["commentary"] = "Ertz & Krafts capitalized on peak asset liquidity, flipping tight end Tucker Kraft (3,057 val) for the 1.04 rookie draft slot (Jadarian Price, 3,621 val) and parlaying that capital hours later into Chris Olave."
+
+                t2["grade"] = "B-"
+                t2["gradeTitle"] = "Starting TE Stability"
+                t2["gradeClass"] = "grade-b"
+                t2["commentary"] = "Final Boss surrendered top-5 draft capital (Pick 1.04, 3,621 val) to immediately stabilize starting tight end with Tucker Kraft (8.0 pts, 3,057 val). Kraft anchors the position, but parting with 1.04 resulted in a -564 net equity deficit."
+
                 verdict = "TE Tucker Kraft (3,057 Val) Flipped for Pick 1.04 (Jadarian Price, 3,621 Val)"
                 verdict_class = "badge-capital"
                 headline = "Ertz & Krafts Parlays Tucker Kraft into 1.04 Asset (Jadarian Price) Before Olave Mega-Deal"
@@ -554,6 +857,16 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                     "capturing the 1.04 asset and parlaying it hours later into Chris Olave."
                 )
             elif tx_id == "1394086707485212672":  # Coker for 2027 2nd
+                t1["grade"] = "A+"
+                t1["gradeTitle"] = "Buy-Low Scouting Grand Slam (+22.8 VORP)"
+                t1["gradeClass"] = "grade-a-plus"
+                t1["commentary"] = "Final Boss executed one of the sharpest buy-low acquisitions in league history. Acquiring Jalen Coker for a future 2nd right before his 29.8-point starting breakout (+22.8 VORP) produced an instant +634 dynasty market surge (#86 overall) and a core lineup anchor."
+
+                t2["grade"] = "C-"
+                t2["gradeTitle"] = "Surrendered Breakout Asset"
+                t2["gradeClass"] = "grade-c"
+                t2["commentary"] = "Banking a 2027 2nd round pick was standard process at the time, but parting with Coker right before his monster 29.8-point explosion leaves Ertz & Krafts with a painful -22.8 net VORP and -634 market equity deficit."
+
                 verdict = "Breakout WR (+22.8 VORP, +634 Market Surge) for 2027 2nd"
                 verdict_class = "badge-capital"
                 headline = "Final Boss Strikes Gold on Jalen Coker (+22.8 VORP, +634 Market Value Surge)"
@@ -563,6 +876,16 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                     "+634 market equity gain on top of explosive starting yield. Ertz & Krafts banked a 2027 2nd round pick (1,549 market value)."
                 )
             elif tx_id == "1392291944566108160":  # Monty/Marks for 1st & 3rd
+                t1["grade"] = "A+"
+                t1["gradeTitle"] = "Workhorse Backfield Dominance (+18.9 VORP)"
+                t1["gradeClass"] = "grade-a-plus"
+                t1["commentary"] = "arkinsjt secured immediate workhorse domination, acquiring Montgomery and Marks for late-round capital. The duo has generated +18.9 combined VORP and 31.9 points in 2 starts, while Montgomery appreciated by +402 in market value (#67 overall)."
+
+                t2["grade"] = "C+"
+                t2["gradeTitle"] = "Rebuilding Draft Vault"
+                t2["gradeClass"] = "grade-c-plus"
+                t2["commentary"] = "The Ape pivoted veteran production into rookie WR Ja'Kobi Lane (Pick 1.12) and future draft picks. While it created an early -30.3 point scoring deficit, it stockpiled developmental lottery tickets for the future."
+
                 verdict = "Workhorse Backfield (+18.9 VORP, +402 Val) for Pick 1.12 (Ja'Kobi Lane)"
                 verdict_class = "badge-capital"
                 headline = "arkinsjt Unleashes Starting RB Thunder (+18.9 VORP); The Ape Drafts Ja'Kobi Lane at 1.12"
@@ -572,6 +895,16 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                     "(now 2,902 val, #67 overall). arkinsjt holds a commanding +30.3 on-field scoring advantage and a +1,387 package equity surplus."
                 )
             elif tx_id == "1357798524346978304":  # Dart/Likely blockbuster
+                t1["grade"] = "A+"
+                t1["gradeTitle"] = "Top-Tier Production Explosion (+32.9 VORP)"
+                t1["gradeClass"] = "grade-a-plus"
+                t1["commentary"] = "An absolute grand slam for Bronco Stampede. Jaxson Dart (+13.6 VORP, 22.1 pts) and Isaiah Likely (+19.3 VORP, 28.3 pts) generated an elite +32.9 net VORP advantage over The Ape’s multi-player return."
+
+                t2["grade"] = "D"
+                t2["gradeTitle"] = "Production & Starter Deficit"
+                t2["gradeClass"] = "grade-d"
+                t2["commentary"] = "Surrendering two explosive weekly starters created a severe early-season handicap for The Ape, leaving a -43.9 point scoring deficit and -32.9 net VORP hole through the early weeks."
+
                 verdict = "Dominant Starter Production: Bronco Stampede (+32.9 Net VORP, +43.9 Pts)"
                 verdict_class = "badge-win"
                 headline = "Dart & Likely Explosions Hand Bronco Stampede +32.9 Net VORP Advantage"
@@ -648,6 +981,27 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
             headline = "League Trade Completed"
             analysis = "Multi-team transaction executed."
 
+        # Compute overall deal grade
+        if len(teams_evaluation) >= 2:
+            g1 = teams_evaluation[0].get("grade", "B")
+            g2 = teams_evaluation[1].get("grade", "B")
+            if "A+" in (g1, g2) and ("A" in (g1, g2) or "A+" in (g1, g2)):
+                deal_grade = "A+"
+            elif "A" in (g1, g2) or "A+" in (g1, g2):
+                deal_grade = "A"
+            elif "B+" in (g1, g2):
+                deal_grade = "B+"
+            elif "B" in (g1, g2):
+                deal_grade = "B"
+            elif "C" in (g1, g2):
+                deal_grade = "C+"
+            else:
+                deal_grade = "C"
+        else:
+            deal_grade = "B"
+
+        deal_grade_class = "grade-a-plus" if "A+" in deal_grade else ("grade-a" if "A" in deal_grade else ("grade-b-plus" if "B+" in deal_grade else "grade-b"))
+
         trade_evaluations.append({
             "tradeId": tx_id,
             "leg": leg,
@@ -656,6 +1010,8 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
             "date": date_str,
             "created": created_ts,
             "teams": teams_evaluation,
+            "overallGrade": deal_grade,
+            "overallGradeClass": deal_grade_class,
             "verdict": verdict,
             "verdictClass": verdict_class,
             "headline": headline,
@@ -672,7 +1028,7 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
     return trade_evaluations, trade_summary
 
 
-def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
+def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026", week=None):
     print(f"=== Running Waiver Wire ROI Analytics for League {league_id} ===")
     is_johnny = (str(league_id) == JOHNNYS_LEAGUE_ID)
 
@@ -684,7 +1040,20 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
     os.makedirs(os.path.dirname(out_file), exist_ok=True)
 
     league = fetch_sleeper(f"league/{league_id}")
-    current_week = int((league.get("settings") or {}).get("leg") or 2)
+    league_leg = int((league.get("settings") or {}).get("leg") or 1)
+
+    try:
+        nfl_state = fetch_sleeper("state/nfl")
+        active_nfl_week = int(nfl_state.get("week") or 1)
+    except Exception:
+        active_nfl_week = 1
+
+    if week is not None:
+        current_week = int(week)
+    else:
+        current_week = max(active_nfl_week, league_leg)
+
+    print(f"  Evaluating up to Week {current_week} (NFL State: {active_nfl_week}, League Leg: {league_leg})")
     users = fetch_sleeper(f"league/{league_id}/users")
     rosters = fetch_sleeper(f"league/{league_id}/rosters")
     players_map = load_players_map()
@@ -861,6 +1230,13 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
 
         pts_per_dollar = round(total_pts / max(1, bid), 2)
         badge_label, badge_class = determine_roi_badge(total_pts, starts_count, bid)
+        grade, grade_score, grade_class, grade_title = calculate_waiver_grade(
+            total_pts, starter_pts, starts_count, bid, tx_type, current_role, is_still_rostered, pos
+        )
+        commentary = generate_waiver_commentary(
+            p_info["name"], pos, p_info["team"], m_info["manager"], leg, tx_type, bid,
+            total_pts, starts_count, starter_pts, current_role, is_still_rostered, grade, grade_title
+        )
 
         pickup_record = {
             "transactionId": add["transactionId"],
@@ -884,6 +1260,11 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
             "isStillRostered": is_still_rostered,
             "verdictBadge": badge_label,
             "verdictClass": badge_class,
+            "grade": grade,
+            "gradeScore": grade_score,
+            "gradeClass": grade_class,
+            "gradeTitle": grade_title,
+            "commentary": commentary,
             "narrativeNote": f"{m_info['manager']} added {p_info['name']} in Week {leg} ({tx_type.upper()}: ${bid}). Total: {round(total_pts, 1)} pts across {starts_count} start(s). Role: {current_role}.",
         }
 
@@ -1100,6 +1481,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate Waiver Wire ROI Analytics payload")
     parser.add_argument("--league", default=AMS_LEAGUE_ID, help="Sleeper League ID")
     parser.add_argument("--season", default="2026", help="Season year")
+    parser.add_argument("--week", type=int, default=None, help="NFL week (defaults to live active week)")
     args = parser.parse_args()
 
-    build_waiver_roi(league_id=args.league, season=args.season)
+    build_waiver_roi(league_id=args.league, season=args.season, week=args.week)

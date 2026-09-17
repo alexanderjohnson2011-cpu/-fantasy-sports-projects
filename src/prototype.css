@@ -7852,5 +7852,236 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   color: var(--ink, #0b3329);
 }
 
+/* ==========================================================================
+   Waiver Wire & Trade Evaluation Letter Grades & Forensic Commentary Styles
+   ========================================================================== */
 
+.grade-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 4px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-align: center;
+  box-sizing: border-box;
+}
 
+.grade-pill.grade-a-plus {
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #81c784;
+}
+
+.grade-pill.grade-a {
+  background: #f1f8e9;
+  color: #2e7d32;
+  border: 1px solid #aed581;
+}
+
+.grade-pill.grade-b-plus,
+.grade-pill.grade-b {
+  background: #e0f2f1;
+  color: #004d40;
+  border: 1px solid #80cbc4;
+}
+
+.grade-pill.grade-c-plus,
+.grade-pill.grade-c {
+  background: #fff8e1;
+  color: #b78103;
+  border: 1px solid #ffe082;
+}
+
+.grade-pill.grade-d {
+  background: #fff3e0;
+  color: #e65100;
+  border: 1px solid #ffcc80;
+}
+
+.grade-pill.grade-f {
+  background: #ffebee;
+  color: #b71c1c;
+  border: 1px solid #ef9a9a;
+}
+
+.roi-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--paper-deep, #f4efe4);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.15));
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ink, #0b3329);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.roi-expand-btn:hover {
+  background: var(--ink, #0b3329);
+  color: var(--paper, #fbf7ee);
+  border-color: var(--ink, #0b3329);
+}
+
+.roi-expand-btn.is-active {
+  background: var(--ink, #0b3329);
+  color: var(--gold, #c8963e);
+  border-color: var(--ink, #0b3329);
+}
+
+.roi-expanded-row {
+  background: #faf7ef !important;
+}
+
+.roi-drawer {
+  padding: 14px 18px;
+  margin: 4px 0 8px;
+  background: #fff;
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.15));
+  border-left: 4px solid var(--gold, #c8963e);
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.roi-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.roi-drawer-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.roi-drawer-title {
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--ink, #0b3329);
+}
+
+.roi-drawer-commentary {
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--ink, #0b3329);
+  margin: 0 0 10px;
+}
+
+.roi-drawer-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  border-top: 1px dashed var(--hairline, rgba(11, 51, 41, 0.12));
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.78rem;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.7));
+}
+
+.roi-drawer-stats strong {
+  color: var(--ink, #0b3329);
+}
+
+.trade-team-grade-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+}
+
+.trade-team-grade-chip.grade-a-plus {
+  background: #e8f5e9;
+  border: 1px solid #81c784;
+}
+
+.trade-team-grade-chip.grade-a {
+  background: #f1f8e9;
+  border: 1px solid #aed581;
+}
+
+.trade-team-grade-chip.grade-b-plus,
+.trade-team-grade-chip.grade-b {
+  background: #e0f2f1;
+  border: 1px solid #80cbc4;
+}
+
+.trade-team-grade-chip.grade-c-plus,
+.trade-team-grade-chip.grade-c {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+}
+
+.trade-team-grade-chip.grade-d {
+  background: #fff3e0;
+  border: 1px solid #ffcc80;
+}
+
+.trade-team-grade-chip.grade-f {
+  background: #ffebee;
+  border: 1px solid #ef9a9a;
+}
+
+.trade-grade-letter {
+  font-size: 0.92rem;
+  font-weight: 900;
+  color: var(--ink, #0b3329);
+}
+
+.trade-grade-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft, rgba(11, 51, 41, 0.75));
+}
+
+.trade-team-commentary {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--paper-deep, #f4efe4);
+  border-left: 3px solid var(--ink, #0b3329);
+  border-radius: 4px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--ink, #0b3329);
+}
+
+.trade-team-commentary strong {
+  color: var(--rust, #c44322);
+  margin-right: 4px;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+}
+
+.trade-overall-grade-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-left: 8px;
+}

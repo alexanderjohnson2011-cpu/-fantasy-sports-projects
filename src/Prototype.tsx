@@ -8,6 +8,7 @@ import {
   BookOpenText,
   ChartBar,
   ChartLineUp,
+  ChatCircleDots,
   CheckCircle,
   ClockCounterClockwise,
   CloudArrowDown,
@@ -2264,6 +2265,7 @@ function WaiverWireScreen() {
   const [activeSubTab, setActiveSubTab] = useState<"waivers" | "trades">("waivers");
   const [posFilter, setPosFilter] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [expandedPickupId, setExpandedPickupId] = useState<string | null>(null);
 
   const filteredLedger = (waiverData.roiLedger || []).filter((item: any) => {
     const matchesPos = posFilter === "ALL" || item.position === posFilter;
@@ -2488,6 +2490,7 @@ function WaiverWireScreen() {
                 <table className="roi-table">
                   <thead>
                     <tr>
+                      <th>Grade</th>
                       <th>Player</th>
                       <th>Pos</th>
                       <th>Manager</th>
@@ -2497,35 +2500,74 @@ function WaiverWireScreen() {
                       <th>Pts Scored</th>
                       <th>Pts / $</th>
                       <th>Current Franchise Role</th>
-                      <th>Verdict</th>
+                      <th>Audit</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredLedger.map((row: any, idx: number) => (
-                      <tr key={idx}>
-                        <td><strong>{row.playerName}</strong> <small style={{ color: "var(--ink-soft)" }}>({row.nflTeam})</small></td>
-                        <td><span className="gotw-pill" style={{ fontSize: "0.72rem" }}>{row.position}</span></td>
-                        <td>{row.manager}</td>
-                        <td>Wk {row.acquiredWeek} ({row.type.toUpperCase()})</td>
-                        <td>${row.bid}</td>
-                        <td>{row.startsCount}</td>
-                        <td style={{ fontWeight: 700, color: row.totalPoints > 0 ? "#2e7d32" : "inherit" }}>
-                          {row.totalPoints.toFixed(1)}
-                        </td>
-                        <td>{row.pointsPerDollar > 0 ? `${row.pointsPerDollar}x` : "—"}</td>
-                        <td style={{ fontWeight: row.currentRole.includes("Leading") ? 700 : 400, color: row.currentRole.includes("Leading") ? "#1b5e20" : "inherit" }}>
-                          {row.currentRole}
-                        </td>
-                        <td>
-                          <span className={`roi-badge ${row.verdictClass}`}>
-                            {row.verdictBadge}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
+                    {filteredLedger.map((row: any, idx: number) => {
+                      const rowKey = `${row.transactionId || idx}-${row.playerId}`;
+                      const isExpanded = expandedPickupId === rowKey;
+                      return (
+                        <tr key={idx} className={isExpanded ? "roi-expanded-row" : ""}>
+                          <td>
+                            <span className={`grade-pill ${row.gradeClass || "grade-c"}`} title={row.gradeTitle || "Grade"}>
+                              {row.grade || "C"}
+                            </span>
+                          </td>
+                          <td><strong>{row.playerName}</strong> <small style={{ color: "var(--ink-soft)" }}>({row.nflTeam})</small></td>
+                          <td><span className="gotw-pill" style={{ fontSize: "0.72rem" }}>{row.position}</span></td>
+                          <td>{row.manager}</td>
+                          <td>Wk {row.acquiredWeek} ({row.type.toUpperCase()})</td>
+                          <td>${row.bid}</td>
+                          <td>{row.startsCount}</td>
+                          <td style={{ fontWeight: 700, color: row.totalPoints > 0 ? "#2e7d32" : "inherit" }}>
+                            {row.totalPoints.toFixed(1)}
+                          </td>
+                          <td>{row.pointsPerDollar > 0 ? `${row.pointsPerDollar}x` : "—"}</td>
+                          <td style={{ fontWeight: row.currentRole.includes("Leading") ? 700 : 400, color: row.currentRole.includes("Leading") ? "#1b5e20" : "inherit" }}>
+                            {row.currentRole}
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              className={`roi-expand-btn ${isExpanded ? "is-active" : ""}`}
+                              onClick={() => setExpandedPickupId(isExpanded ? null : rowKey)}
+                            >
+                              <ChatCircleDots size={13} weight="bold" />
+                              <span>{isExpanded ? "Hide" : "Audit"}</span>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
+
+              {/* Forensic Audit Drawer for currently selected pickup */}
+              {expandedPickupId && (() => {
+                const sel = filteredLedger.find((r: any, idx: number) => `${r.transactionId || idx}-${r.playerId}` === expandedPickupId);
+                if (!sel) return null;
+                return (
+                  <div className="roi-drawer" style={{ marginTop: 16 }}>
+                    <div className="roi-drawer-header">
+                      <div className="roi-drawer-title-wrap">
+                        <span className={`grade-pill ${sel.gradeClass || "grade-c"}`}>{sel.grade || "C"}</span>
+                        <span className="roi-drawer-title">{sel.playerName} ({sel.position} · {sel.nflTeam}) · {sel.gradeTitle || "Move Evaluation"}</span>
+                      </div>
+                      <span className={`roi-badge ${sel.verdictClass}`}>{sel.verdictBadge}</span>
+                    </div>
+                    <p className="roi-drawer-commentary">{sel.commentary || sel.narrativeNote}</p>
+                    <div className="roi-drawer-stats">
+                      <span>Manager: <strong>{sel.manager}</strong> ({sel.teamName})</span>
+                      <span>Acquired: <strong>{sel.type.toUpperCase()} (${sel.bid} FAAB)</strong> in Week {sel.acquiredWeek}</span>
+                      <span>Production: <strong>{sel.totalPoints.toFixed(1)} pts</strong> ({sel.startsCount} starts, {sel.starterPoints?.toFixed(1) || "0.0"} starting pts)</span>
+                      <span>Yield per $: <strong>{sel.pointsPerDollar > 0 ? `${sel.pointsPerDollar}x` : "N/A"}</strong></span>
+                      <span>Role: <strong>{sel.currentRole}</strong> ({sel.isStillRostered ? "On Roster" : "Cut"})</span>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </>
         ) : (
@@ -2581,6 +2623,11 @@ function WaiverWireScreen() {
                           {trade.period || (trade.isPreseason ? "Preseason" : `Week ${trade.leg}`)}
                         </span>
                         <span>{trade.date}</span>
+                        {trade.overallGrade && (
+                          <span className={`grade-pill ${trade.overallGradeClass || "grade-b"}`} style={{ height: 22, fontSize: "0.74rem", padding: "0 6px" }}>
+                            Deal: {trade.overallGrade}
+                          </span>
+                        )}
                       </div>
                       <span className={`trade-verdict-badge ${trade.verdictClass}`}>
                         {trade.verdict}
@@ -2595,8 +2642,16 @@ function WaiverWireScreen() {
                         return (
                           <div key={tidx} className="trade-side-box">
                             <div className="trade-team-header">
-                              <div className="trade-team-title">{t.teamName}</div>
-                              <div className="trade-team-manager">{t.manager}</div>
+                              <div>
+                                <div className="trade-team-title">{t.teamName}</div>
+                                <div className="trade-team-manager">{t.manager}</div>
+                              </div>
+                              {t.grade && (
+                                <div className={`trade-team-grade-chip ${t.gradeClass || "grade-b"}`}>
+                                  <span className="trade-grade-letter">{t.grade}</span>
+                                  <span className="trade-grade-title">{t.gradeTitle}</span>
+                                </div>
+                              )}
                             </div>
 
                             {/* Received Assets */}
@@ -2798,6 +2853,13 @@ function WaiverWireScreen() {
                                 )}
                               </div>
                             </div>
+
+                            {/* Franchise Specific Forensic Commentary */}
+                            {t.commentary && (
+                              <div className="trade-team-commentary">
+                                <strong>Franchise Trade Audit:</strong> {t.commentary}
+                              </div>
+                            )}
                           </div>
                         );
                       })}
