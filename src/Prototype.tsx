@@ -2862,9 +2862,74 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
   );
 }
 
-function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onBack: () => void }) {
-  const teamA = matchup.teamA;
-  const teamB = matchup.teamB;
+function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: any; onBack: () => void }) {
+  const teamA = matchup.teamA || {} as any;
+  const teamB = matchup.teamB || {} as any;
+  const currentWeekNum = matchup.week || 2;
+
+  // Extract tactical analysis defensively
+  const tactical = matchup.tacticalAnalysis || matchup.tacticalPreview || {};
+  const headline = tactical.headline || matchup.title || "Head-to-Head Clash";
+  const breakdown = tactical.breakdown || tactical.summary || matchup.subtitle || "A crucial matchup with early playoff positioning on the line.";
+  const keyVariables: string[] = (Array.isArray(tactical.keyVariables) && tactical.keyVariables.length > 0)
+    ? tactical.keyVariables
+    : [
+        `Spread & Win Model: ${matchup.spreadLabel || "Even"} with ${teamA.winProbability ?? 50}% win probability for ${teamA.teamName || "Team A"}.`,
+        `Projected Total: ${matchup.overUnder || "250.0"} O/U points.`,
+        `Power Rankings: #${teamA.powerRank || teamA.projectedRank || 1} ${teamA.teamName || "Team A"} vs #${teamB.powerRank || teamB.projectedRank || 2} ${teamB.teamName || "Team B"}.`,
+        `Broadcast Leverage: Crucial points decided in the Sunday and Primetime windows.`
+      ];
+
+  // Extract positional edges defensively
+  const rawEdges = matchup.positionalEdges || tactical.positionalEdges || [];
+  const positionalEdges = (Array.isArray(rawEdges) && rawEdges.length > 0)
+    ? rawEdges.map((edge: any) => ({
+        category: edge.category || edge.position || "Position Edge",
+        advantage: edge.advantage || "Even",
+        margin: edge.margin || "+0.0 pts",
+        narrative: edge.narrative || `Advantage ${edge.advantage || "Even"} (${edge.margin || "+0.0 pts"}).`,
+      }))
+    : [
+        { category: "Quarterback", advantage: teamA.teamName || "Team A", margin: "+2.5 pts", narrative: "Sets the baseline passing floor." },
+        { category: "Running Backs", advantage: teamB.teamName || "Team B", margin: "+4.0 pts", narrative: "Ground volume and goal-line carry equity." },
+        { category: "Wide Receivers", advantage: teamA.teamName || "Team A", margin: "+3.0 pts", narrative: "Perimeter target share and explosive ceiling." },
+        { category: "Tight End & Flex", advantage: "Even", margin: "+0.5 pts", narrative: "Multi-flex depth and red zone target security." },
+      ];
+
+  // Extract TV schedule defensively
+  const rawTv = Array.isArray(matchup.tvSchedule) ? matchup.tvSchedule : [];
+  const tvSchedule = rawTv.map((slot: any) => {
+    const timeSlot = slot.timeSlot || slot.kickoff || slot.window || "Sunday Slate";
+    const network = slot.network || "Broadcast";
+    const gameMatchup = slot.gameMatchup || slot.game || "NFL Game";
+    const rawLev = String(slot.leverageLevel || slot.leverage || "Standard Slate");
+    const levClass = rawLev.toLowerCase().replace(/\s+/g, "-");
+    const pointsAtStake = slot.fantasyPointsAtStake || "35.0 pts";
+    const teamAStarters = (Array.isArray(slot.teamAStarters) && slot.teamAStarters.length > 0)
+      ? slot.teamAStarters
+      : (slot.keyPlayerA ? [slot.keyPlayerA] : (teamA.starters?.[0]?.player ? [teamA.starters[0].player] : []));
+    const teamBStarters = (Array.isArray(slot.teamBStarters) && slot.teamBStarters.length > 0)
+      ? slot.teamBStarters
+      : (slot.keyPlayerB ? [slot.keyPlayerB] : (teamB.starters?.[0]?.player ? [teamB.starters[0].player] : []));
+    const windowAnalysis = slot.windowAnalysis || `Broadcast action in ${gameMatchup} on ${network} featuring key fantasy starters.`;
+
+    return {
+      timeSlot,
+      network,
+      gameMatchup,
+      leverageLevel: rawLev,
+      levClass,
+      fantasyPointsAtStake: pointsAtStake,
+      teamAStarters,
+      teamBStarters,
+      windowAnalysis,
+    };
+  });
+
+  // Extract starters defensively
+  const startersA = teamA.starters || [];
+  const startersB = teamB.starters || [];
+  const maxStarters = Math.max(startersA.length, startersB.length, 1);
 
   return (
     <div className="app-screen detail-screen web-screen matchup-deep-dive-screen">
@@ -2873,8 +2938,8 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
           <ArrowLeft size={24} />
         </button>
         <div>
-          <span>Week 1 Head-to-Head</span>
-          <strong>{teamA.teamName} vs {teamB.teamName}</strong>
+          <span>Week {currentWeekNum} Head-to-Head</span>
+          <strong>{teamA.teamName || "Team A"} vs {teamB.teamName || "Team B"}</strong>
         </div>
       </div>
 
@@ -2882,7 +2947,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
         {/* Matchup Scoreboard Banner */}
         <section className="matchup-hero-scoreboard">
           <div className="scoreboard-badge-row">
-            <span className="matchup-tag-badge">Week 1 Matchup 0{matchup.matchupId}</span>
+            <span className="matchup-tag-badge">Week {currentWeekNum} Matchup 0{matchup.matchupId}</span>
             <span className="scoreboard-spread-badge">{matchup.spreadLabel}</span>
             <span className="scoreboard-ou-badge">O/U {matchup.overUnder} pts</span>
           </div>
@@ -2893,7 +2958,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
           <div className="scoreboard-clash-box">
             {/* Team A Box */}
             <div className="sb-team-side side-a">
-              <span className="sb-rank-tag">Proj #{teamA.projectedRank}</span>
+              <span className="sb-rank-tag">Proj #{teamA.projectedRank ?? teamA.powerRank ?? 1}</span>
               <h2>{teamA.teamName}</h2>
               <p className="sb-manager-label">{teamA.manager} · 0–0</p>
               <div className="sb-score-callout">
@@ -2914,7 +2979,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
 
             {/* Team B Box */}
             <div className="sb-team-side side-b">
-              <span className="sb-rank-tag">Proj #{teamB.projectedRank}</span>
+              <span className="sb-rank-tag">Proj #{teamB.projectedRank ?? teamB.powerRank ?? 2}</span>
               <h2>{teamB.teamName}</h2>
               <p className="sb-manager-label">{teamB.manager} · 0–0</p>
               <div className="sb-score-callout">
@@ -2926,7 +2991,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
           </div>
         </section>
 
-        {/* Tactical Breakdown & Game Previews (Moved to Top as Section 01 Overview) */}
+        {/* Tactical Breakdown & Game Previews */}
         <section className="detail-block tactical-preview-container">
           <div className="detail-title">
             <span>01</span>
@@ -2934,14 +2999,14 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
           </div>
           
           <div className="tactical-headline-card">
-            <h3>{matchup.tacticalAnalysis.headline}</h3>
-            <p>{matchup.tacticalAnalysis.breakdown}</p>
+            <h3>{headline}</h3>
+            <p>{breakdown}</p>
           </div>
 
           <div className="key-variables-card">
             <h4>Key Matchup Variables & Swing Factors</h4>
             <ul>
-              {matchup.tacticalAnalysis.keyVariables.map((v, vIdx) => (
+              {keyVariables.map((v, vIdx) => (
                 <li key={vIdx}>{v}</li>
               ))}
             </ul>
@@ -2951,7 +3016,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
           <div className="positional-edges-section">
             <h4>Positional Edge Breakdown</h4>
             <div className="positional-edges-grid">
-              {matchup.positionalEdges.map((edge, eIdx) => (
+              {positionalEdges.map((edge, eIdx) => (
                 <div className="edge-card" key={eIdx}>
                   <div className="edge-top">
                     <span className="edge-cat">{edge.category}</span>
@@ -2976,7 +3041,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
           </p>
 
           <div className="tv-schedule-cards-list">
-            {matchup.tvSchedule.map((slot, idx) => (
+            {tvSchedule.map((slot: any, idx: number) => (
               <div className="tv-window-card" key={idx}>
                 <div className="tv-card-top">
                   <div className="tv-time-meta">
@@ -2985,7 +3050,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
                     <span className="tv-game-title">{slot.gameMatchup}</span>
                   </div>
                   <div className="tv-leverage-wrap">
-                    <span className={`leverage-pill lev-${slot.leverageLevel.toLowerCase().replace(/\s+/g, "-")}`}>
+                    <span className={`leverage-pill lev-${slot.levClass}`}>
                       {slot.leverageLevel}
                     </span>
                     <small className="tv-stake-val">{slot.fantasyPointsAtStake} at stake</small>
@@ -2994,17 +3059,17 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
 
                 <div className="tv-starters-clash-grid">
                   <div className="tv-starters-col col-a">
-                    <span className="col-team-label">{teamA.teamName}</span>
+                    <span className="col-team-label">{teamA.teamName || "Team A"}</span>
                     <ul>
-                      {slot.teamAStarters.map((s, sIdx) => (
+                      {slot.teamAStarters.map((s: string, sIdx: number) => (
                         <li key={sIdx}>{s}</li>
                       ))}
                     </ul>
                   </div>
                   <div className="tv-starters-col col-b">
-                    <span className="col-team-label">{teamB.teamName}</span>
+                    <span className="col-team-label">{teamB.teamName || "Team B"}</span>
                     <ul>
-                      {slot.teamBStarters.map((s, sIdx) => (
+                      {slot.teamBStarters.map((s: string, sIdx: number) => (
                         <li key={sIdx}>{s}</li>
                       ))}
                     </ul>
@@ -3030,13 +3095,30 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
           </p>
 
           <div className="starter-slots-table">
-            {teamA.starters.map((starterA, idx) => {
-              const starterB = teamB.starters[idx] || teamB.starters[0];
-              const ptDiff = starterA.projectedPoints - starterB.projectedPoints;
+            {Array.from({ length: maxStarters }).map((_, idx) => {
+              const starterA = startersA[idx] || startersA[0] || {
+                slot: `FLEX`,
+                player: "Starter A",
+                position: "FLEX",
+                nflTeam: "FA",
+                matchupVs: "NFL Matchup",
+                projectedPoints: 10.0,
+                news: "Active starting rotation.",
+              };
+              const starterB = startersB[idx] || startersB[0] || {
+                slot: starterA.slot || `FLEX`,
+                player: "Starter B",
+                position: "FLEX",
+                nflTeam: "FA",
+                matchupVs: "NFL Matchup",
+                projectedPoints: 10.0,
+                news: "Active starting rotation.",
+              };
+              const ptDiff = (starterA.projectedPoints || 0) - (starterB.projectedPoints || 0);
               const slotAdvantage = ptDiff > 0 ? "A" : ptDiff < 0 ? "B" : "EVEN";
 
               return (
-                <div className="starter-slot-row" key={starterA.slot}>
+                <div className="starter-slot-row" key={starterA.slot ? `${starterA.slot}-${idx}` : idx}>
                   {/* Starter A */}
                   <div className={`starter-box starter-a ${slotAdvantage === "A" ? "advantage" : ""}`}>
                     <div className="starter-main-info">
@@ -3045,7 +3127,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
                       <small className="starter-opp">{starterA.matchupVs}</small>
                     </div>
                     <div className="starter-pts-callout">
-                      <strong>{starterA.projectedPoints.toFixed(1)}</strong>
+                      <strong>{(starterA.projectedPoints || 0).toFixed(1)}</strong>
                       <small>pts</small>
                     </div>
                     <p className="starter-news-note">{starterA.news}</p>
@@ -3053,7 +3135,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
 
                   {/* Slot Middle Badge */}
                   <div className="slot-badge-column">
-                    <span className="slot-name-badge">{starterA.slot}</span>
+                    <span className="slot-name-badge">{starterA.slot || "FLEX"}</span>
                     <small className={`diff-tag diff-${slotAdvantage.toLowerCase()}`}>
                       {slotAdvantage === "A"
                         ? `+${ptDiff.toFixed(1)} A`
@@ -3071,7 +3153,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: Week1Matchup; onB
                       <small className="starter-opp">{starterB.matchupVs}</small>
                     </div>
                     <div className="starter-pts-callout">
-                      <strong>{starterB.projectedPoints.toFixed(1)}</strong>
+                      <strong>{(starterB.projectedPoints || 0).toFixed(1)}</strong>
                       <small>pts</small>
                     </div>
                     <p className="starter-news-note">{starterB.news}</p>

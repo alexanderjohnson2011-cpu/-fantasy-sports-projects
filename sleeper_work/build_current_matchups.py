@@ -204,16 +204,61 @@ def build_current_matchups():
         n_meta = matchup_narratives.get(mid, (f"Matchup {mid}", "Head-to-Head Clash", "Crucial conference matchup with early playoff positioning on the line."))
         is_marquee = (mid == 2) or (p_rank1 + p_rank2 <= 7)
 
+        tactical_breakdown = (
+            f"{info1.get('teamName')} ({pts1} projected) battles {info2.get('teamName')} ({pts2} projected) "
+            f"in a decisive Week {current_week} clash. {n_meta[2]} "
+            f"{'Spread favors ' + info1.get('teamName') if diff >= 0 else 'Spread favors ' + info2.get('teamName')} with an Over/Under total of {round(pts1 + pts2, 1)} points."
+        )
+        tactical_key_vars = [
+            f"Spread & Win Model: {spread_label} with {prob1}% win odds for {info1.get('teamName')}.",
+            f"QB Anchor Duel: {starters1[0]['player'] if starters1 else 'QB1'} ({starters1[0]['projectedPoints'] if starters1 else 17.5} pts) meets {starters2[0]['player'] if starters2 else 'QB2'} ({starters2[0]['projectedPoints'] if starters2 else 17.5} pts).",
+            f"Power Ranking Separation: #{p_rank1} {info1.get('teamName')} vs #{p_rank2} {info2.get('teamName')}.",
+            f"Primetime Leverage: Decisive scoring decided across Sunday afternoon and primetime windows.",
+        ]
+
+        pos_edges = [
+            {
+                "category": "Quarterback",
+                "advantage": info1["teamName"] if pts1 >= pts2 else info2["teamName"],
+                "margin": "+3.4 pts",
+                "narrative": f"{starters1[0]['player'] if starters1 else 'QB1'} sets the passing baseline for {info1['teamName'] if pts1 >= pts2 else info2['teamName']}.",
+            },
+            {
+                "category": "Running Backs",
+                "advantage": info1["teamName"] if diff > 0 else info2["teamName"],
+                "margin": "+5.2 pts",
+                "narrative": "Ground volume and goal-line carry equity provide critical scoring stability.",
+            },
+            {
+                "category": "Wide Receivers",
+                "advantage": info2["teamName"] if diff > 0 else info1["teamName"],
+                "margin": "+2.1 pts",
+                "narrative": "Perimeter target share and deep-threat explosive spike potential.",
+            },
+            {
+                "category": "Tight End & Flex",
+                "advantage": info1["teamName"] if mid % 2 == 0 else info2["teamName"],
+                "margin": "+4.0 pts",
+                "narrative": "Middle-of-the-field safety valve targets and multi-flex roster depth.",
+            },
+        ]
+
         tv_sched = [
             {
+                "timeSlot": f"{tv['window']} ({tv['kickoff']})",
                 "window": tv["window"],
                 "kickoff": tv["kickoff"],
                 "network": tv["network"],
+                "gameMatchup": tv["game"],
                 "game": tv["game"],
-                "fantasyPointsAtStake": f"{round(pts1 * 0.18 + pts2 * 0.18, 1)} pts",
+                "leverageLevel": "CRITICAL" if i in (0, 4) else ("HIGH" if i in (1, 3) else "MEDIUM"),
                 "leverage": "High Leverage" if i in (0, 4, 5) else "Standard Slate",
+                "fantasyPointsAtStake": f"{round(pts1 * 0.18 + pts2 * 0.18, 1)} pts",
+                "teamAStarters": [starters1[i % len(starters1)]["player"]] if starters1 else ["Starter A"],
+                "teamBStarters": [starters2[i % len(starters2)]["player"]] if starters2 else ["Starter B"],
                 "keyPlayerA": starters1[i % len(starters1)]["player"] if starters1 else "Starter A",
                 "keyPlayerB": starters2[i % len(starters2)]["player"] if starters2 else "Starter B",
+                "windowAnalysis": f"Crucial viewing window featuring {starters1[i % len(starters1)]['player'] if starters1 else 'Starter A'} and {starters2[i % len(starters2)]['player'] if starters2 else 'Starter B'} in {tv['game']} on {tv['network']}.",
             }
             for i, tv in enumerate(tv_templates)
         ]
@@ -224,6 +269,7 @@ def build_current_matchups():
             "title": n_meta[1],
             "subtitle": f"{info1.get('teamName')} vs. {info2.get('teamName')}",
             "isMarquee": is_marquee,
+            "spread": round(-diff, 1),
             "spreadLabel": spread_label,
             "overUnder": round(pts1 + pts2, 1),
             "teamA": {
@@ -248,15 +294,18 @@ def build_current_matchups():
                 "impliedTotal": pts2,
                 "starters": starters2,
             },
+            "tacticalAnalysis": {
+                "headline": n_meta[2],
+                "breakdown": tactical_breakdown,
+                "keyVariables": tactical_key_vars,
+            },
             "tacticalPreview": {
                 "headline": n_meta[2],
-                "positionalEdges": [
-                    {"position": "QB", "advantage": info1["teamName"] if pts1 >= pts2 else info2["teamName"], "margin": "+3.4 pts"},
-                    {"position": "RB", "advantage": info1["teamName"] if diff > 0 else info2["teamName"], "margin": "+5.2 pts"},
-                    {"position": "WR", "advantage": info2["teamName"] if diff > 0 else info1["teamName"], "margin": "+2.1 pts"},
-                    {"position": "TE", "advantage": info1["teamName"] if mid == 2 else info2["teamName"], "margin": "+4.0 pts"},
-                ],
+                "breakdown": tactical_breakdown,
+                "keyVariables": tactical_key_vars,
+                "positionalEdges": pos_edges,
             },
+            "positionalEdges": pos_edges,
             "tvSchedule": tv_sched,
         }
         matchup_cards.append(card)
