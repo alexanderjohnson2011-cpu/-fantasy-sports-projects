@@ -45,6 +45,7 @@ jobs:
     env:
       GCP_PROJECT: apes-mac-salad
       OUTPUT_BUCKET: apes-mac-salad-raw-prod
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
     steps:
       - name: Check out repository

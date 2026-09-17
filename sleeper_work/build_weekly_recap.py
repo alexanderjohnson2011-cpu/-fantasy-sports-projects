@@ -13,6 +13,7 @@ import argparse
 import json
 import os
 import sys
+import random
 from collections import defaultdict
 from datetime import datetime, timezone
 import urllib.request
@@ -23,6 +24,7 @@ CANDIDATE_ROOTS = [
     HERE,
     os.path.dirname(HERE),
     os.path.dirname(os.path.dirname(HERE)),
+    os.path.dirname(os.path.dirname(os.path.dirname(HERE))),
 ]
 
 RAW_DIR = os.path.join(HERE, "raw")
@@ -205,56 +207,262 @@ def optimal_lineup(players_points, players_map, slots):
     return round(total, 2), "legal_optimal"
 
 
-def generate_matchup_commentary(team1, team2, margin, upset, shootout, nailbiter, blowout):
-    """Generates structured AI editorial commentary for each head to head match."""
+def fetch_nfl_stats(season="2026", week=1):
+    """Fetches real NFL box score statistics from Sleeper for the specified week."""
+    try:
+        url = f"https://api.sleeper.app/v1/stats/nfl/regular/{season}/{week}"
+        req = urllib.request.Request(url, headers={"User-Agent": "ApesMacSalad/2.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            if isinstance(data, dict):
+                return data
+    except Exception as e:
+        print(f"  [warn] Could not fetch real NFL stats for {season} W{week}: {e}")
+    return {}
+
+
+def format_player_box_stat(pid, name, pos, pts, nfl_stats, p_meta):
+    """Formats player stats into real box score line (yards, TDs, catches, targets, injuries)."""
+    st = nfl_stats.get(str(pid), {}) if nfl_stats else {}
+    details = []
+    pass_yd = int(st.get("pass_yd") or 0)
+    pass_td = int(st.get("pass_td") or 0)
+    pass_int = int(st.get("pass_int") or 0)
+    rush_yd = int(st.get("rush_yd") or 0)
+    rush_td = int(st.get("rush_td") or 0)
+    rush_att = int(st.get("rush_att") or 0)
+    rec = int(st.get("rec") or 0)
+    rec_yd = int(st.get("rec_yd") or 0)
+    rec_td = int(st.get("rec_td") or 0)
+    rec_tgt = int(st.get("rec_tgt") or 0)
+    fgm = st.get("fgm")
+    fga = st.get("fga")
+    injury = p_meta.get("injury_status") or p_meta.get("injury_notes") or ""
+
+    if pass_yd or pass_td:
+        p_str = f"{pass_yd} pass yds, {pass_td} TD"
+        if pass_int:
+            p_str += f", {pass_int} INT"
+        details.append(p_str)
+    if rush_yd or rush_td:
+        r_str = f"{rush_yd} rush yds"
+        if rush_att:
+            r_str += f" on {rush_att} carries"
+        if rush_td:
+            r_str += f", {rush_td} TD"
+        details.append(r_str)
+    if rec or rec_tgt or rec_td:
+        if rec == 0 and rec_tgt > 0:
+            details.append(f"0 catches on {rec_tgt} tgts")
+        else:
+            rc_str = f"{rec} rec for {rec_yd} yds"
+            if rec_td:
+                rc_str += f", {rec_td} TD"
+            details.append(rc_str)
+    if fgm is not None and fga is not None and (fgm > 0 or fga > 0):
+        details.append(f"{int(fgm)}/{int(fga)} FG")
+
+    box_summary = "; ".join(details) if details else f"{pts:.1f} pts"
+    return {
+        "name": name,
+        "pos": pos,
+        "pts": pts,
+        "box_summary": box_summary,
+        "pass_td": pass_td,
+        "rush_td": rush_td,
+        "rec_td": rec_td,
+        "total_td": pass_td + rush_td + rec_td,
+        "pass_yd": pass_yd,
+        "rush_yd": rush_yd,
+        "rec_yd": rec_yd,
+        "rec": rec,
+        "pass_int": pass_int,
+        "injury": injury,
+        "is_goose_egg": pts <= 0.5,
+    }
+
+
+def call_gemini_api(prompt, api_key=None, model="gemini-1.5-flash"):
+    """Calls Google Gemini API for bespoke journalistic fantasy commentary if API key is provided."""
+    key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+    if not key:
+        return None
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "temperature": 0.85,
+            "maxOutputTokens": 320
+        }
+    }
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={"Content-Type": "application/json"}
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            candidate = data.get("candidates", [{}])[0]
+            content = candidate.get("content", {}).get("parts", [{}])[0].get("text", "")
+            if content:
+                # Strip wrapping quotes or markdown bold headers if any
+                clean = content.strip().strip('"').strip("'")
+                return clean
+    except Exception as e:
+        print(f"  [info] Gemini API call skipped/fallback: {e}")
+    return None
+
+
+def generate_expressive_commentary(winner, loser, margin, is_shootout, is_nailbiter, is_blowout, week, nfl_stats=None, players_map=None):
+    """Generates varied, expressive editorial commentary sourcing real NFL box scores, game events, and news."""
+    nfl_stats = nfl_stats or {}
+    players_map = players_map or {}
+
+    w_starters = [
+        format_player_box_stat(p["playerId"], p["name"], p["position"], p["points"], nfl_stats, players_map.get(str(p["playerId"]), {}))
+        for p in winner.get("starters", [])
+    ]
+    l_starters = [
+        format_player_box_stat(p["playerId"], p["name"], p["position"], p["points"], nfl_stats, players_map.get(str(p["playerId"]), {}))
+        for p in loser.get("starters", [])
+    ]
+
+    star_w = max(w_starters, key=lambda p: p["pts"]) if w_starters else None
+    star_l = max(l_starters, key=lambda p: p["pts"]) if l_starters else None
+    dud_l = min(l_starters, key=lambda p: p["pts"]) if l_starters else None
+
+    # Deterministic yet diverse pseudo-random seed per matchup
+    seed_val = int(winner["points"] * 100 + loser["points"] * 10)
+    rng = random.Random(seed_val)
+
+    # 1. Opening Hook based on archetype
+    openers_shootout = [
+        f"In an electrifying {winner['points'] + loser['points']:.2f}-point shootout, {winner['teamName']} outslugged {loser['teamName']} in a breathtaking Week {week} showcase.",
+        f"Pure offensive pyrotechnics defined this contest as {winner['teamName']} and {loser['teamName']} traded haymakers in a wild {winner['points'] + loser['points']:.2f}-point offensive spectacle.",
+        f"Fantasy fireworks erupted as {winner['teamName']} held off a furious push from {loser['teamName']} in a {winner['points'] + loser['points']:.2f}-point heavyweight collision."
+    ]
+    openers_nailbiter = [
+        f"{winner['teamName']} survived an absolute heart-stopper, edging {loser['teamName']} by a razor-thin {margin:.2f} points ({winner['points']:.2f} – {loser['points']:.2f}) in a wire-to-wire thriller.",
+        f"Down to the final whistle: {winner['teamName']} fended off a relentless comeback by {loser['teamName']} to seal a nail-biting {margin:.2f}-point triumph ({winner['points']:.2f} – {loser['points']:.2f}).",
+        f"A game of inches and late-game sweat: {winner['teamName']} hung on for dear life, turning back {loser['teamName']} by just {margin:.2f} points in Week {week}'s closest finish."
+    ]
+    openers_blowout = [
+        f"{winner['teamName']} staged a ruthless Week {week} clinic, blowing past {loser['teamName']} in a commanding {margin:.2f}-point demolition ({winner['points']:.2f} – {loser['points']:.2f}).",
+        f"Total domination from the opening snap: {winner['teamName']} steamrolled {loser['teamName']} by {margin:.2f} points in the slate's most lopsided affair ({winner['points']:.2f} – {loser['points']:.2f}).",
+        f"A thorough, one-sided beatdown: {winner['teamName']} fired on all cylinders while dismantling {loser['teamName']} in an emphatic {margin:.2f}-point rout."
+    ]
+    openers_standard = [
+        f"{winner['teamName']} established firm control in Week {week}, defeating {loser['teamName']} {winner['points']:.2f} to {loser['points']:.2f}.",
+        f"Methodical execution propelled {winner['teamName']} to victory over {loser['teamName']} ({winner['points']:.2f} – {loser['points']:.2f}).",
+        f"{winner['teamName']} notched a well-earned Week {week} victory, turning away {loser['teamName']} by {margin:.2f} points."
+    ]
+
+    if is_shootout:
+        p1 = rng.choice(openers_shootout)
+    elif is_nailbiter:
+        p1 = rng.choice(openers_nailbiter)
+    elif is_blowout:
+        p1 = rng.choice(openers_blowout)
+    else:
+        p1 = rng.choice(openers_standard)
+
+    # 2. Winner Star Performer highlighting real NFL stats
+    w_star_phrases = []
+    if star_w:
+        if star_w["total_td"] >= 3:
+            w_star_phrases = [
+                f"{star_w['name']} put on an absolute clinic, finding paydirt {star_w['total_td']} times ({star_w['box_summary']}) to rack up a monstrous {star_w['pts']:.2f} points.",
+                f"The driving force was a vintage {star_w['name']} masterclass, as he erupted for {star_w['total_td']} touchdowns ({star_w['box_summary']}) and {star_w['pts']:.2f} points.",
+            ]
+        elif star_w["pos"] == "QB" and star_w["pass_yd"] >= 300:
+            w_star_phrases = [
+                f"{star_w['name']} shredded opposing coverage through the air, carving out {star_w['box_summary']} ({star_w['pts']:.2f} pts) in a commanding aerial showcase.",
+                f"Under center, {star_w['name']} was nearly flawless, dropping dimes all afternoon for {star_w['box_summary']} to lead the charge.",
+            ]
+        elif star_w["total_td"] >= 2:
+            w_star_phrases = [
+                f"{star_w['name']} provided the decisive spark, hitting the end zone twice as part of a {star_w['box_summary']} ({star_w['pts']:.2f} pts) performance.",
+                f"{winner['teamName']} rode an explosive outing from {star_w['name']}, who logged two touchdowns ({star_w['box_summary']}) to establish early separation.",
+            ]
+        else:
+            w_star_phrases = [
+                f"Leading the charge was {star_w['name']}, who piled up {star_w['box_summary']} on his way to a team-high {star_w['pts']:.2f} points.",
+                f"{star_w['name']} provided the offensive anchor, pacing the squad with {star_w['box_summary']} ({star_w['pts']:.2f} pts).",
+            ]
+    p2 = rng.choice(w_star_phrases) if w_star_phrases else ""
+
+    # 3. Loser Star & Dud / Injury Context
+    p3_parts = []
+    if star_l:
+        p3_parts.append(f"{loser['teamName']} countered behind {star_l['name']}'s valiant {star_l['box_summary']} ({star_l['pts']:.2f} pts)")
+
+    if dud_l and dud_l["pts"] < 5.0:
+        if dud_l["is_goose_egg"]:
+            p3_parts.append(f"but were doomed by a disastrous goose egg from {dud_l['name']} ({dud_l['box_summary']})")
+        elif dud_l["injury"]:
+            p3_parts.append(f"but couldn't overcome an injury-limited showing from {dud_l['name']} ({dud_l['box_summary']}, battling {dud_l['injury']})")
+        elif dud_l["pass_int"] >= 2:
+            p3_parts.append(f"but were severely undermined by {dud_l['name']}'s {dud_l['pass_int']} costly turnovers ({dud_l['box_summary']})")
+        else:
+            p3_parts.append(f"but a quiet outing from {dud_l['name']} ({dud_l['box_summary']}) severely capped their comeback bid")
+
+    p3 = ", ".join(p3_parts) + "." if p3_parts else ""
+
+    # 4. Tactical Bench / Lineup Analysis (NEVER "bittersweet" or "points on the pine")
+    p4 = ""
+    loser_bench = loser.get("benchPoints", 0.0)
+    if is_nailbiter and loser_bench > margin:
+        bench_lines = [
+            f"Managerial second-guessing will sting all week for {loser['teamName']}: leaving {loser_bench:.1f} bench points unplayed cost them a matchup decided by mere single digits.",
+            f"An agonizing Sunday in the coach's box for {loser['teamName']}, who watched {loser_bench:.1f} unused points pile up on the sidelines while falling by just {margin:.2f}.",
+        ]
+        p4 = rng.choice(bench_lines)
+    elif loser_bench > 60.0:
+        bench_lines = [
+            f"{loser['teamName']} had plenty of reserve ammunition with {loser_bench:.1f} bench points, but optimal roster deployment remained elusive.",
+            f"While {loser['teamName']}'s sideline reserves generated {loser_bench:.1f} points, the active starting lineup couldn't find the necessary rhythm.",
+        ]
+        p4 = rng.choice(bench_lines)
+    elif winner.get("lineupEfficiency", 0) >= 95.0:
+        p4 = f"Managerial execution was razor-sharp for {winner['teamName']}, capturing a sterling {winner['lineupEfficiency']:.1f}% of their roster's maximum scoring capacity."
+
+    full_commentary = " ".join([p for p in [p1, p2, p3, p4] if p])
+    return full_commentary
+
+
+def generate_matchup_commentary(team1, team2, margin, upset, shootout, nailbiter, blowout, week=1, nfl_stats=None, players_map=None):
+    """Generates rich AI editorial commentary for each head to head match, supporting Gemini and real box scores."""
     winner = team1 if team1["points"] >= team2["points"] else team2
     loser = team2 if winner == team1 else team1
 
-    star_w = max(winner["starters"], key=lambda p: p["points"]) if winner["starters"] else None
-    star_l = max(loser["starters"], key=lambda p: p["points"]) if loser["starters"] else None
-    dud_l = min([p for p in loser["starters"] if p["points"] is not None], key=lambda p: p["points"]) if loser["starters"] else None
+    # Attempt Gemini API first if key configured
+    key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+    if key:
+        w_stars = [f"{p['name']} ({p['position']}): {p['points']} pts" for p in winner.get("starters", [])[:3]]
+        l_stars = [f"{p['name']} ({p['position']}): {p['points']} pts" for p in loser.get("starters", [])[:3]]
+        gemini_prompt = (
+            f"You are a sharp, witty fantasy football journalist for a high-stakes league. "
+            f"Write a 3-4 sentence recap of this Week {week} fantasy matchup.\n"
+            f"Winner: {winner['teamName']} ({winner['points']:.2f} pts)\n"
+            f"Loser: {loser['teamName']} ({loser['points']:.2f} pts)\n"
+            f"Margin: {margin:.2f} pts ({'Shootout' if shootout else 'Nailbiter' if nailbiter else 'Blowout' if blowout else 'Standard'})\n"
+            f"Winner key starters: {', '.join(w_stars)}\n"
+            f"Loser key starters: {', '.join(l_stars)}\n"
+            f"Winner bench: {winner.get('benchPoints', 0):.1f} pts ({winner.get('lineupEfficiency', 0):.1f}% efficiency)\n"
+            f"Loser bench: {loser.get('benchPoints', 0):.1f} pts ({loser.get('lineupEfficiency', 0):.1f}% efficiency)\n"
+            f"Instructions: Highlight real NFL game events (TD catches, rushing touchdowns, turnovers, injury limitations). "
+            f"Critique coaching decisions without clichés. DO NOT use 'bittersweet', 'points on the pine', 'offensive catalyst', or 'exploded for'. "
+            f"Keep it engaging, analytical, and under 90 words."
+        )
+        gemini_result = call_gemini_api(gemini_prompt, key)
+        if gemini_result and len(gemini_result) > 50:
+            return gemini_result
 
-    parts = []
-    if nailbiter:
-        parts.append(
-            f"{winner['teamName']} secured the tightest finish of Week 1, edging out {loser['teamName']} "
-            f"by a razor-thin margin of {margin:.2f} points ({winner['points']:.2f} – {loser['points']:.2f})."
-        )
-    elif blowout:
-        parts.append(
-            f"{winner['teamName']} delivered a merciless Week 1 statement, overpowering {loser['teamName']} "
-            f"by {margin:.2f} points in the week's most lopsided affair ({winner['points']:.2f} – {loser['points']:.2f})."
-        )
-    elif shootout:
-        parts.append(
-            f"In an offensive explosion totaling {winner['points'] + loser['points']:.2f} combined points, "
-            f"{winner['teamName']} held off {loser['teamName']} in a thrilling Week 1 battle."
-        )
-    else:
-        parts.append(
-            f"{winner['teamName']} took care of business in Week 1, defeating {loser['teamName']} "
-            f"{winner['points']:.2f} to {loser['points']:.2f}."
-        )
-
-    if star_w:
-        parts.append(
-            f"The offensive catalyst was {star_w['name']} ({star_w['position']}), who exploded for {star_w['points']:.2f} points."
-        )
-    if star_l:
-        parts.append(
-            f"{loser['teamName']} fought back behind {star_l['name']}'s {star_l['points']:.2f}-point showcase,"
-        )
-    if dud_l and dud_l["points"] < 6.0:
-        parts.append(
-            f"but a quiet afternoon from {dud_l['name']} ({dud_l['points']:.2f} pts) proved impossible to overcome."
-        )
-
-    if loser["benchPoints"] > 35.0:
-        parts.append(
-            f"Lineup management was bittersweet for {loser['teamName']}, who left {loser['benchPoints']:.1f} points on the pine."
-        )
-
-    return " ".join(parts)
+    # Expressive multi-archetype generator with real box scores
+    return generate_expressive_commentary(
+        winner, loser, margin, shootout, nailbiter, blowout, week, nfl_stats, players_map
+    )
 
 
 def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
@@ -288,12 +496,20 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
         "weeksAboveMedian": 0, "totalLineupMiss": 0.0,
     })
 
-    for w in range(1, 15):
+    try:
+        nfl_state = fetch_sleeper_json("state/nfl")
+        active_nfl_week = int(nfl_state.get("week") or 1)
+    except Exception:
+        active_nfl_week = 1
+
+    max_check_week = min(14, max(1, active_nfl_week))
+    for w in range(1, max_check_week + 1):
         raw_m = fetch_matchups_for_week(league_id, w, season)
         if not raw_m or not any((m.get("points") or 0) > 0 for m in raw_m):
             continue
 
-        print(f"  Processing scored Week {w} ({len(raw_m)} roster entries)...")
+        nfl_stats = fetch_nfl_stats(season, w)
+        print(f"  Processing scored Week {w} ({len(raw_m)} roster entries, {len(nfl_stats)} NFL player stats loaded)...")
 
         # Group into pairs by matchup_id
         pairs = {}
@@ -382,7 +598,8 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             is_shootout = (pts1 + pts2) >= 300.0
 
             commentary = generate_matchup_commentary(
-                team_a_obj, team_b_obj, margin, False, is_shootout, is_nailbiter, is_blowout
+                team_a_obj, team_b_obj, margin, False, is_shootout, is_nailbiter, is_blowout,
+                week=w, nfl_stats=nfl_stats, players_map=players_map
             )
 
             # Titles
@@ -500,16 +717,42 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             },
         }
 
-        # Week editorial summary
-        headline = f"Week {w} Recap: {shootout_card['combinedPoints']:.0f}-Point Shootouts & Statement Blowouts"
-        ai_summary = (
-            f"The 2026 NFL season erupted into life in Week {w} with intense drama and scoring divergence across the league. "
-            f"Highlighting the slate was an unforgettable {shootout_card['combinedPoints']:.0f}-point clash where {shootout_card['teamA']['teamName']} and "
-            f"{shootout_card['teamB']['teamName']} traded heavyweight blows until the final whistle. "
-            f"Meanwhile, {high_roller_team['teamName']} seized early league dominance with a spectacular {high_roller_team['points']:.2f}-point output, "
-            f"leaving {tough_break_team['teamName']} to swallow the bitter pill of a {tough_break_team['points']:.2f}-point loss. "
-            f"With Week {w} in the books, the standings establish an immediate competitive hierarchy as attention shifts to Week {w+1}."
-        )
+        # Week editorial summary (Gemini or Expressive Engine)
+        gemini_sum = None
+        key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+        if key:
+            sum_prompt = (
+                f"You are the senior editorial analyst for a premier fantasy football league.\n"
+                f"Write an insightful, expressive headline (under 12 words) and a 3-4 sentence recap of Week {w}.\n"
+                f"Slate Highlights:\n"
+                f"- Top Scorer: {high_roller_team['teamName']} ({high_roller_team['points']:.2f} pts)\n"
+                f"- Shootout: {shootout_card['teamA']['teamName']} vs. {shootout_card['teamB']['teamName']} ({shootout_card['combinedPoints']:.2f} combined pts)\n"
+                f"- Toughest loss: {tough_break_team['teamName']} dropped a match despite putting up {tough_break_team['points']:.2f} pts\n"
+                f"- Top manager efficiency: {mgr_of_week['teamName']} ({mgr_of_week['lineupEfficiency']:.1f}% optimal)\n"
+                f"Output strictly valid JSON in this shape: {{\"headline\": \"...\", \"summary\": \"...\"}}"
+            )
+            raw_json = call_gemini_api(sum_prompt, key)
+            if raw_json:
+                try:
+                    parsed = json.loads(raw_json)
+                    if parsed.get("headline") and parsed.get("summary"):
+                        gemini_sum = parsed
+                except Exception:
+                    pass
+
+        if gemini_sum:
+            headline = gemini_sum["headline"]
+            ai_summary = gemini_sum["summary"]
+        else:
+            headline = f"Week {w} Recap: {shootout_card['combinedPoints']:.0f}-Point Heavyweight Clashes & Statement Wins"
+            ai_summary = (
+                f"Week {w} launched the 2026 campaign with unforgettable high-stakes drama and wild scoring separation across the board. "
+                f"Headlining the action was a breathless {shootout_card['combinedPoints']:.0f}-point shootout where {shootout_card['teamA']['teamName']} and "
+                f"{shootout_card['teamB']['teamName']} pushed each other to the absolute limit. "
+                f"{high_roller_team['teamName']} claimed the high-water mark with an electric {high_roller_team['points']:.2f}-point eruption, "
+                f"while {tough_break_team['teamName']} absorbed the ultimate bad beat after posting {tough_break_team['points']:.2f} points in defeat. "
+                f"With managerial efficiency separating early contenders from the pack, Week {w+1} promises immediate tactical recalibration."
+            )
 
         scored_weeks_data.append({
             "week": w,
