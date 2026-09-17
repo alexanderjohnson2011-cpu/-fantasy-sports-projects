@@ -2370,11 +2370,28 @@ function WaiverWireScreen() {
                                     <span className="trade-pts-tag">+{p.points.toFixed(1)} pts ({p.starts} st)</span>
                                   </span>
                                 ))}
-                                {t.receivedPicks.map((pick: string, pidx: number) => (
-                                  <span key={pidx} className="trade-pick-chip">
-                                    🎟️ {pick}
-                                  </span>
-                                ))}
+                                {t.receivedPicks.map((pick: string, pidx: number) => {
+                                  const detail = t.receivedPicksDetails?.[pidx];
+                                  const dp = detail?.draftedPlayer;
+                                  return (
+                                    <span key={pidx} className="trade-pick-chip">
+                                      <span>🎟️ {pick}</span>
+                                      {dp && (
+                                        <span className="trade-drafted-player">
+                                          <span className="trade-drafted-arrow">➔</span>
+                                          <span className="trade-drafted-slot">#{dp.pickSlot}</span>
+                                          <strong className="trade-drafted-name">{dp.playerName}</strong>
+                                          <span className="trade-drafted-pos">{dp.position}</span>
+                                          {dp.points > 0 ? (
+                                            <span className="trade-drafted-pts">+{dp.points.toFixed(1)} pts ({dp.starts} st)</span>
+                                          ) : (
+                                            <span className="trade-drafted-pts is-zero">0.0 pts</span>
+                                          )}
+                                        </span>
+                                      )}
+                                    </span>
+                                  );
+                                })}
                                 {t.receivedFaab > 0 && (
                                   <span className="trade-faab-chip">
                                     💰 +${t.receivedFaab} FAAB
@@ -2397,11 +2414,28 @@ function WaiverWireScreen() {
                                     <span style={{ fontSize: "0.75rem", color: "var(--ink-soft)" }}>({p.points.toFixed(1)} pts)</span>
                                   </span>
                                 ))}
-                                {t.sentPicks.map((pick: string, pidx: number) => (
-                                  <span key={pidx} className="trade-pick-chip is-surrendered">
-                                    🎟️ {pick}
-                                  </span>
-                                ))}
+                                {t.sentPicks.map((pick: string, pidx: number) => {
+                                  const detail = t.sentPicksDetails?.[pidx];
+                                  const dp = detail?.draftedPlayer;
+                                  return (
+                                    <span key={pidx} className="trade-pick-chip is-surrendered">
+                                      <span>🎟️ {pick}</span>
+                                      {dp && (
+                                        <span className="trade-drafted-player">
+                                          <span className="trade-drafted-arrow">➔</span>
+                                          <span className="trade-drafted-slot">#{dp.pickSlot}</span>
+                                          <span className="trade-drafted-name">{dp.playerName}</span>
+                                          <span className="trade-drafted-pos">{dp.position}</span>
+                                          {dp.points > 0 ? (
+                                            <span className="trade-drafted-pts">({dp.points.toFixed(1)} pts)</span>
+                                          ) : (
+                                            <span className="trade-drafted-pts is-zero">0.0 pts</span>
+                                          )}
+                                        </span>
+                                      )}
+                                    </span>
+                                  );
+                                })}
                                 {t.sentFaab > 0 && (
                                   <span className="trade-faab-chip" style={{ opacity: 0.85 }}>
                                     💰 -${t.sentFaab} FAAB
@@ -2413,7 +2447,18 @@ function WaiverWireScreen() {
                             {/* Net return strip */}
                             <div className="trade-net-return-strip">
                               <div>
-                                <span>Post-Trade Yield: <strong>{t.totalPointsReceived.toFixed(1)} pts</strong> ({t.startsReceived} st)</span>
+                                <span>
+                                  {t.totalRealizedPoints !== undefined && t.rookiePointsReceived > 0 ? (
+                                    <>Realized Yield: <strong>{t.totalRealizedPoints.toFixed(1)} pts</strong> ({t.totalRealizedStarts} st)</>
+                                  ) : (
+                                    <>Post-Trade Yield: <strong>{t.totalPointsReceived.toFixed(1)} pts</strong> ({t.startsReceived} st)</>
+                                  )}
+                                </span>
+                                {t.rookiePointsReceived > 0 && (
+                                  <span className="trade-rookie-yield-sub">
+                                    {" "}(+{t.rookiePointsReceived.toFixed(1)} pts from rookies)
+                                  </span>
+                                )}
                                 {t.strategicRole && (
                                   <div style={{ fontSize: "0.74rem", color: "var(--ink-soft)", marginTop: 2, fontWeight: 600 }}>
                                     {t.strategicRole}

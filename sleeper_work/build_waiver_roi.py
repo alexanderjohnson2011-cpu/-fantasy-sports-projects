@@ -102,11 +102,13 @@ def classify_pick(pick_str):
         return {"round": 4, "tier": "Tier 4", "tierName": "Roster Flier", "equityScore": 15}
 
 
-def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, players_map, current_week):
+def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, players_map, current_week, draft_selections=None, roster_to_slot=None):
     trade_evaluations = []
     total_players_traded = set()
     total_picks_traded = 0
     total_faab_traded = 0
+    draft_selections = draft_selections or {}
+    roster_to_slot = roster_to_slot or {}
 
     sorted_trades = sorted(trade_transactions, key=lambda x: x.get("created") or 0, reverse=True)
 
@@ -196,19 +198,41 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
 
             # Picks received
             rec_picks = []
+            rec_picks_details = []
             for pick in draft_picks:
                 if pick.get("owner_id") == rid:
                     orig_r = pick.get("roster_id")
                     via_note = f" (via {roster_info.get(orig_r, {}).get('teamName')})" if orig_r != pick.get("previous_owner_id") and orig_r in roster_info else ""
-                    rec_picks.append(f"{pick.get('season')} Round {pick.get('round')}{via_note}")
+                    pick_str = f"{pick.get('season')} Round {pick.get('round')}{via_note}"
+                    rec_picks.append(pick_str)
+
+                    p_class = classify_pick(pick_str)
+                    if str(pick.get("season")) == "2026":
+                        slot = roster_to_slot.get(orig_r)
+                        rnd = int(pick.get("round") or 1)
+                        sel = draft_selections.get((rnd, slot))
+                        if sel:
+                            p_class["draftedPlayer"] = sel
+                    rec_picks_details.append(p_class)
 
             # Picks sent
             sent_picks = []
+            sent_picks_details = []
             for pick in draft_picks:
                 if pick.get("previous_owner_id") == rid:
                     orig_r = pick.get("roster_id")
                     via_note = f" (via {roster_info.get(orig_r, {}).get('teamName')})" if orig_r != rid and orig_r in roster_info else ""
-                    sent_picks.append(f"{pick.get('season')} Round {pick.get('round')}{via_note}")
+                    pick_str = f"{pick.get('season')} Round {pick.get('round')}{via_note}"
+                    sent_picks.append(pick_str)
+
+                    p_class = classify_pick(pick_str)
+                    if str(pick.get("season")) == "2026":
+                        slot = roster_to_slot.get(orig_r)
+                        rnd = int(pick.get("round") or 1)
+                        sel = draft_selections.get((rnd, slot))
+                        if sel:
+                            p_class["draftedPlayer"] = sel
+                    sent_picks_details.append(p_class)
 
             # FAAB
             rec_faab = sum(wb.get("amount", 0) for wb in waiver_budget if wb.get("receiver") == rid)
@@ -218,9 +242,19 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
             net_pts = round(pts_rec - pts_sent, 1)
             net_starts = starts_rec - starts_sent
 
-            # Classify draft picks and dynasty capital
-            rec_picks_details = [classify_pick(p) for p in rec_picks]
-            sent_picks_details = [classify_pick(p) for p in sent_picks]
+            # Realized rookie production from traded picks
+            rec_rookie_pts = sum(p.get("draftedPlayer", {}).get("points", 0.0) for p in rec_picks_details)
+            rec_rookie_starts = sum(p.get("draftedPlayer", {}).get("starts", 0) for p in rec_picks_details)
+            sent_rookie_pts = sum(p.get("draftedPlayer", {}).get("points", 0.0) for p in sent_picks_details)
+            sent_rookie_starts = sum(p.get("draftedPlayer", {}).get("starts", 0) for p in sent_picks_details)
+
+            total_realized_pts = round(pts_rec + rec_rookie_pts, 1)
+            total_realized_starts = starts_rec + rec_rookie_starts
+            total_realized_sent_pts = round(pts_sent + sent_rookie_pts, 1)
+            total_realized_sent_starts = starts_sent + sent_rookie_starts
+            realized_net_pts = round(total_realized_pts - total_realized_sent_pts, 1)
+            realized_net_starts = total_realized_starts - total_realized_sent_starts
+
             has_major_picks_rec = any(p["round"] in [1, 2] for p in rec_picks_details)
             has_major_picks_sent = any(p["round"] in [1, 2] for p in sent_picks_details)
 
@@ -229,7 +263,11 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                 role = "Future Capital Haul"
                 badge = "Capital Stockpile 📦"
                 top_rnd = min(p["round"] for p in rec_picks_details)
-                status_text = f"+{len(rec_picks_details)} Pick{'s' if len(rec_picks_details) > 1 else ''} (Rd {top_rnd})"
+                drafted_names = [p["draftedPlayer"]["playerName"] for p in rec_picks_details if p.get("draftedPlayer")]
+                if rec_rookie_pts > 0 and drafted_names:
+                    status_text = f"+{rec_rookie_pts:.1f} pts via {drafted_names[0]}"
+                else:
+                    status_text = f"+{len(rec_picks_details)} Pick{'s' if len(rec_picks_details) > 1 else ''} (Rd {top_rnd})"
                 status_type = "capital"
             elif has_major_picks_sent and not has_major_picks_rec and (pts_rec >= pts_sent or starts_rec >= 1):
                 role = "Win-Now Contender Push"
@@ -271,6 +309,11 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                 "sentFaab": sent_faab,
                 "totalPointsReceived": round(pts_rec, 1),
                 "totalPointsSent": round(pts_sent, 1),
+                "rookiePointsReceived": round(rec_rookie_pts, 1),
+                "rookieStartsReceived": rec_rookie_starts,
+                "totalRealizedPoints": total_realized_pts,
+                "totalRealizedStarts": total_realized_starts,
+                "realizedNetPoints": realized_net_pts,
                 "startsReceived": starts_rec,
                 "startsSent": starts_sent,
                 "netPoints": net_pts,
@@ -286,66 +329,99 @@ def process_trade_evaluations(trade_transactions, roster_info, weekly_matchups, 
                 roster_info[rid].setdefault("tradesCount", 0)
                 roster_info[rid]["tradesCount"] += 1
 
-        # Determine Deal Verdict and Expressive Editorial Analysis
+        # Determine Deal Verdict and Expressive Editorial Analysis with Drafted Rookies Incorporated
         if len(teams_evaluation) >= 2:
             t1, t2 = teams_evaluation[0], teams_evaluation[1]
             diff = t1["netPoints"]
+            r_diff = t1.get("realizedNetPoints", diff)
 
             if tx_id == "1394813522348609536":  # Olave deal
-                verdict = "Win-Now WR1 Acquisition vs Rebuild Pick Haul"
+                verdict = "Win-Now WR1 vs Rookie Draft Haul (Jadarian Price)"
                 verdict_class = "badge-win-now"
-                headline = "Ertz & Krafts Powers Up Title Defense With Chris Olave"
-                analysis = "Ertz & Krafts paid a premium future toll—parting with both a 2026 1st and 2026 2nd round pick—to acquire WR1 anchor Chris Olave (+23.2 pts in 2 starts) for an aggressive win-now title run. Terry Tate’s Pain Train accepted an early on-field scoring deficit (-19.8 pts) in exchange for two high-leverage draft picks to accelerate a foundational franchise rebuild."
+                headline = "Olave Powers Up Title Run; Terry Tate Capitalizes with Jadarian Price"
+                analysis = (
+                    "Ertz & Krafts surrendered both the 1.04 pick (which became Seahawks starting RB Jadarian Price, +6.8 pts, 2 starts) "
+                    "and the 2.12 pick (Raiders RB Mike Washington, +4.1 pts) to land WR1 anchor Chris Olave (+23.2 pts in 2 starts) for an "
+                    "aggressive title defense. By converting future picks into Seattle's starting running back in Price and RB depth in Washington, "
+                    "Terry Tate’s Pain Train has already realized 14.3 total points from the package, narrowing the on-field scoring margin to "
+                    "-8.9 points while securing a franchise rookie cornerstone."
+                )
             elif tx_id == "1394733669339377664":  # Tucker Kraft for 2026 1st
-                verdict = "Dynasty Capital Haul vs Win-Now TE Fill"
+                verdict = "Tucker Kraft Flipped for 1.04 Pick (Jadarian Price)"
                 verdict_class = "badge-capital"
-                headline = "Ertz & Krafts Flips Tucker Kraft for 2026 1st Round Pick"
-                analysis = "A masterclass in dynasty asset capitalization: Final Boss surrendered a coveted 2026 1st round pick to lock down starting tight end production in Tucker Kraft (+8.0 pts in 2 starts), while Ertz & Krafts seized surplus depth value to bank premier future draft equity without denting active starting lineup strength."
+                headline = "Ertz & Krafts Leverages Tucker Kraft into 1.04 Draft Asset"
+                analysis = (
+                    "A high-stakes asset conversion: Final Boss parted with the 1.04 draft pick (subsequently used to select Seahawks starting "
+                    "RB Jadarian Price) to immediately stabilize tight end with Tucker Kraft (+8.0 pts in 2 starts). Ertz & Krafts capitalized "
+                    "on peak depth value, taking the 1.04 asset and parlaying it hours later into Chris Olave."
+                )
             elif tx_id == "1394086707485212672":  # Coker for 2027 2nd
-                verdict = "Breakout Wideout Yields 2nd Round Capital"
+                verdict = "Breakout Wideout Yields 2027 2nd Round Capital"
                 verdict_class = "badge-capital"
                 headline = "Final Boss Bets on Jalen Coker; Ertz & Krafts Banks Future 2nd"
-                analysis = "Final Boss struck gold on immediate offensive firepower, acquiring Jalen Coker as he exploded for 29.8 fantasy points and a starting nod. Ertz & Krafts surrendered the early production margin (-29.8 pts) in exchange for an impactful 2027 2nd round draft asset."
+                analysis = (
+                    "Final Boss struck gold on immediate offensive firepower, acquiring Jalen Coker as he exploded for 29.8 fantasy points and "
+                    "a starting nod. Ertz & Krafts surrendered the early production margin (-29.8 pts) in exchange for an impactful 2027 2nd round draft asset."
+                )
             elif tx_id == "1392291944566108160":  # Monty/Marks for 1st & 3rd
-                verdict = "Backfield Firepower for Premier Draft Capital"
+                verdict = "Backfield Firepower for Pick 1.12 (Ja'Kobi Lane)"
                 verdict_class = "badge-capital"
-                headline = "arkinsjt Fortifies Backfield; The Ape Harvests 1st Round Pick"
-                analysis = "arkinsjt invested future draft capital (including a 2026 1st round pick) to bring in David Montgomery and Woody Marks, securing +31.9 fantasy points and early backfield stability. The Ape strategically offloaded veteran production to stockpile future high-round picks for an ongoing roster refresh."
+                headline = "arkinsjt Unleashes Veteran Thunder; The Ape Drafts Ja'Kobi Lane at 1.12"
+                analysis = (
+                    "arkinsjt dealt the 1.12 rookie draft selection (Ravens WR Ja'Kobi Lane, +1.6 pts) and a 2027 3rd rounder to acquire starting "
+                    "workhorses David Montgomery and Woody Marks (+31.9 pts in 2 starts). The trade provided arkinsjt an immediate +30.3 point scoring surge, "
+                    "while The Ape brought in Lane as developmental wideout depth."
+                )
             elif tx_id == "1357798524346978304":  # Dart/Likely blockbuster
                 verdict = "Massive Production Advantage: Bronco Stampede (+43.9 pts)"
                 verdict_class = "badge-win"
                 headline = "Dart & Likely Eruption Hands Bronco Stampede Early Triumph"
-                analysis = "A blockbuster pre-season swap that has heavily rewarded Bronco Stampede: Jaxson Dart and Isaiah Likely have combined for 50.4 starting points, creating a dominant +43.9 net scoring advantage over The Ape’s multi-player return (6.5 pts)."
+                analysis = (
+                    "A blockbuster pre-season swap that has heavily rewarded Bronco Stampede: Jaxson Dart and Isaiah Likely have combined for 50.4 starting points, "
+                    "creating a dominant +43.9 net scoring advantage over The Ape’s multi-player return (6.5 pts)."
+                )
             elif tx_id == "1400517332358463488":  # Slayton/Najee/Thornton for Bateman/Wicks/pick
                 verdict = "Multi-Player Depth Realignment"
                 verdict_class = "badge-rebuild"
                 headline = "Final Boss Capitalizes on Wicks Spark; The Ape Refreshes Depth"
-                analysis = "Final Boss gained early on-field production (+14.3 pts from Dontayvion Wicks) and a future 4th round pick, while The Ape restructured roster depth across multiple skill positions ahead of Week 1."
+                analysis = (
+                    "Final Boss gained early on-field production (+14.3 pts from Dontayvion Wicks) and a future 4th round pick, while The Ape restructured roster "
+                    "depth across multiple skill positions ahead of Week 1."
+                )
             elif tx_id == "1395984359407755264":  # Dulcich for Helm + 4th + FAAB
-                verdict = "Balanced Win-Win Production Swap"
+                verdict = "Starting TE Helm for Pick 4.09 (Cade Klubnik) & FAAB"
                 verdict_class = "badge-even"
-                headline = "Bronco Stampede Gains Starting TE; Bub’s Club Accumulates Assets"
-                analysis = "Bronco Stampede secured immediate tight end contributions (+4.8 pts from Gunnar Helm), while Bub’s Club acquired Greg Dulcich, a future 4th round pick, and $11 in FAAB budget flexibility."
+                headline = "Bronco Stampede Gains Starting TE; Bub's Club Drafts Cade Klubnik"
+                analysis = (
+                    "Bronco Stampede secured immediate starting tight end production from Gunnar Helm (+4.8 pts), while Bub’s Club acquired Greg Dulcich, "
+                    "drafted Jets rookie QB Cade Klubnik at Pick 4.09, and banked $11 in FAAB budget flexibility."
+                )
             elif tx_id == "1395641577333882880":  # TeSlaa for $5 FAAB
                 verdict = "Strategic Asset Re-allocation"
                 verdict_class = "badge-flier"
                 headline = "My Nabers Tetties Acquires TeSlaa for $5 FAAB"
                 analysis = "A clean waiver budget transaction: My Nabers Tetties added depth wideout Isaac TeSlaa to their developmental bench, sending $5 FAAB to Bub’s Club."
             elif tx_id == "1393999371669864448":  # Daniel Jones deal
-                verdict = "Quarterback Solution for Future Pick Upgrades"
+                verdict = "Daniel Jones & Pick 3.05 (Kaytron Allen) for Pick 2.09 (Adam Randall)"
                 verdict_class = "badge-capital"
-                headline = "Final Boss Secures QB Daniel Jones; The Ape Jumps into 2nd Round"
-                analysis = "Final Boss filled a critical quarterback need with Daniel Jones (+10.0 pts), while The Ape successfully upgraded draft capital by swapping a 3rd round pick for a 2026 2nd and 2027 3rd."
+                headline = "Final Boss Secures QB Daniel Jones; Both Franchises Add Rookie Backs"
+                analysis = (
+                    "Final Boss filled a critical quarterback opening with Daniel Jones (+10.0 pts) and drafted Commanders rookie RB Kaytron Allen at Pick 3.05 (+1.6 pts). "
+                    "The Ape parlayed the deal into Pick 2.09 (drafting Ravens RB Adam Randall) alongside an upgraded 2027 3rd round selection."
+                )
             elif tx_id == "1393837664196657152":  # Daniel Jones for JJ McCarthy + 4th
                 verdict = "Young Signal-Caller Exchange"
                 verdict_class = "badge-even"
                 headline = "The Ape & Bub’s Club Swap Developmental Quarterbacks"
                 analysis = "The Ape and Bub’s Club exchanged quarterback depth, with Bub’s Club acquiring rookie J.J. McCarthy and a future 4th round pick in return for Daniel Jones."
             elif tx_id == "1389706078471598080":  # Pick swap
-                verdict = "Dynasty Draft Pick Arbitrage"
+                verdict = "Pick 2.02 (Germie Bernard) for Pick 3.11 (Malik Benson) & 2027 2nd"
                 verdict_class = "badge-even"
-                headline = "Bub’s Club & Gridiron geezers Execute Pure Draft Pick Swap"
-                analysis = "A pure dynasty draft asset re-balancing deal: Bub’s Club parlayed a 2026 2nd round pick into multiple future selections (2026 3rd and 2027 2nd) to expand future draft volume."
+                headline = "Gridiron geezers Drafts Germie Bernard; Bub’s Club Adds Benson & Future 2nd"
+                analysis = (
+                    "A pure rookie draft selection exchange: Gridiron geezers moved up into the 2nd round to draft Steelers WR Germie Bernard (Pick 2.02), while "
+                    "Bub’s Club accumulated Pick 3.11 (Raiders WR Malik Benson, +0.3 pts) and a 2027 2nd round selection to bolster future draft inventory."
+                )
             else:
                 # Dynamic fallback for future trades
                 if (t1["statusType"] == "capital" and t2["statusType"] == "win-now") or (t2["statusType"] == "capital" and t1["statusType"] == "win-now"):
@@ -639,9 +715,63 @@ def build_waiver_roi(league_id=AMS_LEAGUE_ID, season="2026"):
     # Sort ledger by totalPoints descending
     roi_ledger.sort(key=lambda x: x["totalPoints"], reverse=True)
 
+    # Fetch drafts and draft picks for rookie pick tracing
+    draft_selections = {}
+    roster_to_slot = {}
+    try:
+        drafts = fetch_sleeper(f"league/{league_id}/drafts")
+        if isinstance(drafts, list) and len(drafts) > 0:
+            draft = drafts[0]
+            draft_id = draft.get("draft_id")
+            draft_order = draft.get("draft_order") or {}
+            uid_to_roster = {r["owner_id"]: r["roster_id"] for r in rosters if "owner_id" in r}
+            slot_to_roster = {slot: uid_to_roster[uid] for uid, slot in draft_order.items() if uid in uid_to_roster}
+            roster_to_slot = {rid: slot for slot, rid in slot_to_roster.items()}
+
+            d_picks = fetch_sleeper(f"draft/{draft_id}/picks")
+            if isinstance(d_picks, list):
+                for p in d_picks:
+                    rnd = p.get("round")
+                    slot = p.get("draft_slot")
+                    pid = str(p.get("player_id"))
+                    meta = p.get("metadata") or {}
+                    first = meta.get("first_name", "")
+                    last = meta.get("last_name", "")
+                    pos = meta.get("position", "")
+                    team = meta.get("team", "")
+
+                    # Calculate regular season points scored by this drafted player on the picked roster
+                    p_pts = 0.0
+                    p_starts = 0
+                    picked_rid = p.get("roster_id")
+                    for wk, m_by_r in weekly_matchups.items():
+                        m = m_by_r.get(picked_rid)
+                        if m:
+                            pts = float((m.get("players_points") or {}).get(pid) or 0.0)
+                            p_pts += pts
+                            if pid in (m.get("starters") or []):
+                                p_starts += 1
+
+                    draft_selections[(rnd, slot)] = {
+                        "pickNo": p.get("pick_no"),
+                        "pickSlot": f"{rnd}.{slot:02d}",
+                        "round": rnd,
+                        "slot": slot,
+                        "playerId": pid,
+                        "playerName": f"{first} {last}".strip(),
+                        "position": pos,
+                        "nflTeam": team,
+                        "pickedByRosterId": picked_rid,
+                        "points": round(p_pts, 1),
+                        "starts": p_starts,
+                    }
+    except Exception as e:
+        print(f"  Warning fetching draft information: {e}")
+
     # Process trade evaluations separately with dedicated two-sided comparative logic
     trade_evaluations, trade_summary = process_trade_evaluations(
-        trade_transactions, roster_info, weekly_matchups, players_map, current_week
+        trade_transactions, roster_info, weekly_matchups, players_map, current_week,
+        draft_selections=draft_selections, roster_to_slot=roster_to_slot
     )
 
     # Compile manager profiles

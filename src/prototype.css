@@ -6608,6 +6608,70 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   margin-left: 2px;
 }
 
+.trade-drafted-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 4px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(180, 83, 9, 0.3);
+  font-size: 0.76rem;
+}
+
+.trade-pick-chip.is-surrendered .trade-drafted-player {
+  border-left-color: rgba(11, 51, 41, 0.2);
+}
+
+.trade-drafted-arrow {
+  opacity: 0.7;
+  font-size: 0.7rem;
+}
+
+.trade-drafted-slot {
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(180, 83, 9, 0.15);
+  color: #78350f;
+  font-size: 0.68rem;
+}
+
+.trade-pick-chip.is-surrendered .trade-drafted-slot {
+  background: rgba(11, 51, 41, 0.08);
+  color: var(--ink-soft);
+}
+
+.trade-drafted-name {
+  font-weight: 700;
+  color: var(--ink, #0b3329);
+}
+
+.trade-drafted-pos {
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: var(--ink, #0b3329);
+  color: var(--paper, #fbf7ee);
+  padding: 1px 3px;
+  border-radius: 2px;
+}
+
+.trade-drafted-pts {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1b5e20;
+}
+
+.trade-drafted-pts.is-zero {
+  color: var(--ink-soft, rgba(11, 51, 41, 0.5));
+  font-weight: 500;
+}
+
+.trade-rookie-yield-sub {
+  font-size: 0.74rem;
+  color: #1b5e20;
+  font-weight: 600;
+}
+
 .trade-faab-chip {
   display: inline-flex;
   align-items: center;
