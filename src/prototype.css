@@ -6426,6 +6426,13 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   text-transform: uppercase;
 }
 
+.trade-audit-meta .trade-week-pill.is-preseason {
+  background: rgba(11, 51, 41, 0.12);
+  color: var(--ink, #0b3329);
+  border: 1px solid rgba(11, 51, 41, 0.25);
+  font-weight: 800;
+}
+
 .trade-verdict-badge {
   display: inline-flex;
   align-items: center;
@@ -6443,6 +6450,18 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   background: rgba(46, 125, 50, 0.15);
   color: #1b5e20;
   border: 1px solid rgba(46, 125, 50, 0.35);
+}
+
+.trade-verdict-badge.badge-capital {
+  background: rgba(109, 40, 217, 0.1);
+  color: #6d28d9;
+  border: 1px solid rgba(109, 40, 217, 0.28);
+}
+
+.trade-verdict-badge.badge-win-now {
+  background: rgba(217, 119, 6, 0.12);
+  color: #b45309;
+  border: 1px solid rgba(217, 119, 6, 0.35);
 }
 
 .trade-verdict-badge.badge-even {
@@ -6562,13 +6581,31 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   align-items: center;
   gap: 5px;
   padding: 4px 9px;
-  background: rgba(196, 67, 34, 0.08);
-  border: 1px solid rgba(196, 67, 34, 0.25);
+  background: rgba(180, 83, 9, 0.09);
+  border: 1px solid rgba(180, 83, 9, 0.28);
   border-radius: 5px;
   font-family: var(--sans, "IBM Plex Sans Condensed", sans-serif);
   font-size: 0.8rem;
   font-weight: 700;
-  color: #c44322;
+  color: #92400e;
+}
+
+.trade-pick-chip.is-surrendered {
+  background: rgba(11, 51, 41, 0.05);
+  border-color: rgba(11, 51, 41, 0.15);
+  color: var(--ink-soft, rgba(11, 51, 41, 0.7));
+  opacity: 0.85;
+}
+
+.trade-pick-tier-badge {
+  display: inline-block;
+  padding: 0 4px;
+  border-radius: 3px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: rgba(180, 83, 9, 0.18);
+  color: #78350f;
+  margin-left: 2px;
 }
 
 .trade-faab-chip {
@@ -6600,11 +6637,25 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   font-weight: 800;
   padding: 2px 7px;
   border-radius: 4px;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
 }
 
 .trade-net-delta.is-positive {
   background: rgba(46, 125, 50, 0.15);
   color: #1b5e20;
+}
+
+.trade-net-delta.is-capital {
+  background: rgba(109, 40, 217, 0.12);
+  color: #6d28d9;
+  border: 1px solid rgba(109, 40, 217, 0.25);
+}
+
+.trade-net-delta.is-win-now {
+  background: rgba(217, 119, 6, 0.14);
+  color: #b45309;
+  border: 1px solid rgba(217, 119, 6, 0.25);
 }
 
 .trade-net-delta.is-negative {
@@ -6901,26 +6952,42 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
 }
 
 .forecast-narrative-box {
-  margin-top: 12px;
-  padding: 10px 12px;
+  margin-top: 14px;
+  padding: 12px 14px;
   background: rgba(11, 51, 41, 0.03);
   border: 1px solid var(--hairline, rgba(11, 51, 41, 0.1));
-  border-radius: 4px;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .forecast-narrative-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 8px;
+  width: 100%;
+}
+
+.forecast-narrative-headline {
+  display: block;
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink, #0b3329);
+  margin: 0;
+  word-break: break-word;
 }
 
 .forecast-driver-pill {
   display: inline-block;
-  padding: 1px 6px;
+  padding: 2px 8px;
   background: var(--ink, #0b3329);
   color: var(--paper, #fbf7ee);
   border-radius: 3px;
@@ -6928,33 +6995,37 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .forecast-trend-tag {
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--rust, #c44322);
+  line-height: 1.3;
 }
 
 .forecast-narrative-text {
   font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
-  font-size: 0.93rem;
+  font-size: 0.95rem;
   font-style: italic;
   color: var(--ink-soft, rgba(11, 51, 41, 0.85));
-  line-height: 1.35;
+  line-height: 1.4;
   margin: 0;
+  word-break: break-word;
 }
 
 .forecast-timeline-steps {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-top: 6px;
-  padding-top: 6px;
+  margin-top: 4px;
+  padding-top: 8px;
   border-top: 1px dashed var(--hairline, rgba(11, 51, 41, 0.1));
   font-size: 0.72rem;
   color: var(--ink-soft, rgba(11, 51, 41, 0.7));
   flex-wrap: wrap;
+  line-height: 1.4;
 }
 
 .forecast-timeline-step {

@@ -2337,7 +2337,9 @@ function WaiverWireScreen() {
                   <div key={trade.tradeId} className="trade-audit-card">
                     <div className="trade-audit-header">
                       <div className="trade-audit-meta">
-                        <span className="trade-week-pill">Week {trade.leg}</span>
+                        <span className={`trade-week-pill ${trade.isPreseason ? "is-preseason" : ""}`}>
+                          {trade.period || (trade.isPreseason ? "Preseason" : `Week ${trade.leg}`)}
+                        </span>
                         <span>{trade.date}</span>
                       </div>
                       <span className={`trade-verdict-badge ${trade.verdictClass}`}>
@@ -2396,7 +2398,7 @@ function WaiverWireScreen() {
                                   </span>
                                 ))}
                                 {t.sentPicks.map((pick: string, pidx: number) => (
-                                  <span key={pidx} className="trade-pick-chip" style={{ opacity: 0.85 }}>
+                                  <span key={pidx} className="trade-pick-chip is-surrendered">
                                     🎟️ {pick}
                                   </span>
                                 ))}
@@ -2410,10 +2412,23 @@ function WaiverWireScreen() {
 
                             {/* Net return strip */}
                             <div className="trade-net-return-strip">
-                              <span>Post-Trade Yield: <strong>{t.totalPointsReceived.toFixed(1)} pts</strong> ({t.startsReceived} st)</span>
-                              <span className={`trade-net-delta ${isPos ? "is-positive" : isNeg ? "is-negative" : "is-even"}`}>
-                                Net: {netDiff > 0 ? `+${netDiff.toFixed(1)}` : netDiff.toFixed(1)} pts
-                              </span>
+                              <div>
+                                <span>Post-Trade Yield: <strong>{t.totalPointsReceived.toFixed(1)} pts</strong> ({t.startsReceived} st)</span>
+                                {t.strategicRole && (
+                                  <div style={{ fontSize: "0.74rem", color: "var(--ink-soft)", marginTop: 2, fontWeight: 600 }}>
+                                    {t.strategicRole}
+                                  </div>
+                                )}
+                              </div>
+                              {t.statusBadge ? (
+                                <span className={`trade-net-delta is-${t.statusType || (isPos ? "positive" : isNeg ? "negative" : "even")}`}>
+                                  {t.statusBadge}
+                                </span>
+                              ) : (
+                                <span className={`trade-net-delta ${isPos ? "is-positive" : isNeg ? "is-negative" : "is-even"}`}>
+                                  Net: {netDiff > 0 ? `+${netDiff.toFixed(1)}` : netDiff.toFixed(1)} pts
+                                </span>
+                              )}
                             </div>
                           </div>
                         );
@@ -3018,7 +3033,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                         </span>
                       </div>
                     </div>
-                    <div style={{ display: "flex", gap: 6, alignItems: "center", margin: "4px 0" }}>
+                    <div style={{ display: "flex", gap: 6, alignItems: "center", margin: "4px 0", flexWrap: "wrap" }}>
                       <span className="forecast-driver-pill">{fn.primaryDriver || "SIMULATION_SURGE"}</span>
                       <span className="forecast-trend-tag">{fn.trend}</span>
                     </div>
@@ -3051,7 +3066,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                         </span>
                       </div>
                     </div>
-                    <div style={{ display: "flex", gap: 6, alignItems: "center", margin: "4px 0" }}>
+                    <div style={{ display: "flex", gap: 6, alignItems: "center", margin: "4px 0", flexWrap: "wrap" }}>
                       <span className="forecast-driver-pill">{fn.primaryDriver || "VOLATILITY_RISK"}</span>
                       <span className="forecast-trend-tag">{fn.trend}</span>
                     </div>
@@ -3254,12 +3269,12 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                 {/* Why the Forecast Changed: Narrative & Trajectory Milestones */}
                 <div className="forecast-narrative-box">
                   <div className="forecast-narrative-header">
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <span className="forecast-driver-pill">{fn.primaryDriver || "SIMULATION_MODEL"}</span>
-                      <strong style={{ fontSize: "0.88rem", color: "var(--ink)" }}>{fn.headline || "Season Trajectory Analysis"}</strong>
-                    </div>
-                    <span className="forecast-trend-tag">{fn.trend}</span>
+                    <span className="forecast-driver-pill">{fn.primaryDriver || "SIMULATION_MODEL"}</span>
+                    {fn.trend && <span className="forecast-trend-tag">{fn.trend}</span>}
                   </div>
+                  {fn.headline && (
+                    <strong className="forecast-narrative-headline">{fn.headline}</strong>
+                  )}
                   <p className="forecast-narrative-text">{fn.analysis}</p>
                   {hNotes.length > 0 && (
                     <div className="forecast-timeline-steps">
