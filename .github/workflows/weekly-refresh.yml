@@ -99,6 +99,10 @@ jobs:
         working-directory: sleeper_work
         run: python build_weekly_recap.py --season "${{ github.event.inputs.season || '2026' }}"
 
+      - name: Verify and refresh NFL schedule & broadcast fixtures
+        working-directory: sleeper_work
+        run: python nfl_schedule_provider.py
+
       - name: Rebuild next week matchups forecast (Ape's Mac Salad)
         working-directory: sleeper_work
         run: python build_current_matchups.py

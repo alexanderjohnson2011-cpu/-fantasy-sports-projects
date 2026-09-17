@@ -78,6 +78,10 @@ def refresh_all(week=None, season="2026"):
 
     steps = [
         (
+            "NFL TV Broadcast Schedule & Kickoff Slate Verification",
+            ["-m", "sleeper_work.nfl_schedule_provider"],
+        ),
+        (
             "Ape's Mac Salad: Weekly Matchup Recaps & Deep Dive Suite",
             ["-m", "sleeper_work.build_weekly_recap", "--league", AMS_LEAGUE_ID, "--season", detected_season],
         ),

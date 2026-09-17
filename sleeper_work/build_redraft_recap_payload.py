@@ -181,9 +181,19 @@ def load_week_matchups(week):
 def load_nfl_schedule(week):
     schedule_file = FIXTURES_DIR / f"nfl_schedule_{SEASON}_week_{week}.json"
     if schedule_file.exists():
-        with open(schedule_file, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {"season": SEASON, "week": week, "games": [], "source": {}}
+        try:
+            with open(schedule_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if data.get("games") and len(data["games"]) > 0:
+                    return data
+        except Exception:
+            pass
+    try:
+        from .nfl_schedule_provider import ensure_nfl_schedule_fixture
+        return ensure_nfl_schedule_fixture(SEASON, week)
+    except Exception as e:
+        print(f"  Warning loading NFL schedule via provider: {e}")
+        return {"season": SEASON, "week": week, "games": [], "source": {}}
 
 
 def clamp(value, minimum, maximum):

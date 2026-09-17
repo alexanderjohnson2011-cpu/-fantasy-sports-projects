@@ -15,13 +15,18 @@ This document outlines the standard operating procedures, maintenance cadences, 
   - Check GCP Cloud Run execution logs for `Exit Code 0`.
 
 ### Weekly In-Season Tasks (Tuesday 08:00 UTC)
-1. **Scoring Reconciliation**:
-   - Run `python sleeper_work/scoring_reconciliation.py` to audit finished week matchup points against official Sleeper totals.
-2. **Lineup Lens & Timeline Generation**:
-   - Run `python sleeper_work/lineup_optimizer.py` and `python sleeper_work/matchup_timeline.py` to generate hindsight-optimal lineups and decisive swing plays.
-3. **Forecast Run & BigQuery Analytics Update**:
-   - Run `python sleeper_work/monte_carlo_forecast.py` to generate updated weekly playoff odds and championship projections.
-4. **Site Deployment**:
+1. **Master Weekly Refresh**:
+   - Run `python sleeper_work/refresh_all_weekly.py` to execute the full automated Tuesday update sequence across both leagues.
+2. **NFL Television Broadcast Schedule & Kickoff Windows**:
+   - Run `python -m sleeper_work.nfl_schedule_provider` to ensure the 16-game NFL kickoff and television fixture is verified and populated (kickoff timestamps, network broadcasters: CBS, FOX, NBC, ESPN, Prime Video).
+   - Guarantees upcoming weekly matchup deep dives always feature live viewing windows, leverage analysis, and fantasy points at stake without ever falling back to "TV guide pending".
+3. **Scoring Reconciliation & Weekly Recaps**:
+   - Run `python -m sleeper_work.build_weekly_recap` to audit finished week matchup points against official Sleeper totals, generate letter grades, and compile expanded Yahoo-style recaps.
+4. **Waiver Wire ROI & Trade Evaluation Desk**:
+   - Run `python -m sleeper_work.build_waiver_roi` to refresh letter grades, forensic commentary, VORP, dynasty market equity, and interactive team transaction dossiers.
+5. **Forecast Run & BigQuery Analytics Update**:
+   - Run `python -m sleeper_work.monte_carlo_forecast` and `python -m sleeper_work.build_redraft_recap_payload` to generate updated weekly playoff odds, power rankings, and championship projections.
+6. **Site Deployment**:
    - Git push updates to `main` triggering Netlify live deployment at [https://apesmacsalad.netlify.app](https://apesmacsalad.netlify.app).
 
 ### End-of-Season Tasks (Post-Week 17 / Championship)

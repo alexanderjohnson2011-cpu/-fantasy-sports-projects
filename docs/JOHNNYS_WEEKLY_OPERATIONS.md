@@ -32,13 +32,11 @@ The following values are still pregame snapshots and intentionally do not change
 A defensible in-game probability needs each team's current score plus conditional remaining-player distributions, player game status, and correlations. The existing GCP implementation plan already specifies this richer live layer; do not relabel the opening model as live until it is implemented and calibrated.
 
 ## Schedule and TV data
-
+ 
 - Sleeper is authoritative for fantasy pairings, current week, rosters, starters, and fantasy scoring.
-- The full Weeks 1–14 fantasy schedule is captured in `sleeper_work/fixtures/sleeper_schedule_1401673232670539776_2026.json` one directory above this repository.
-- Sleeper does not provide NFL broadcast networks. Week 1 currently uses a captured official NFL schedule.
-- nflverse can automate NFL game teams and kickoff times, but its schedule file does not include the television-network field. Weekly broadcast automation therefore needs an approved official or commercial broadcast feed.
-
-If no trusted NFL schedule fixture exists for the current week, the UI should show that the TV guide is pending instead of inventing networks or kickoff windows.
+- The full Weeks 1–14 fantasy schedule is captured in `sleeper_work/fixtures/sleeper_schedule_1401673232670539776_2026.json`.
+- NFL broadcast networks and kickoff times are provided by `sleeper_work/nfl_schedule_provider.py` and stored as canonical week fixtures in `sleeper_work/fixtures/nfl_schedule_{season}_week_{week}.json`.
+- **Tuesday Morning Update Requirement**: The NFL television schedule, viewing windows, and broadcast network mapping are refreshed every Tuesday morning as part of `python sleeper_work/refresh_all_weekly.py`. This ensures every matchup deep dive has live viewing windows, leverage levels, and fantasy points at stake available throughout the week without ever displaying "TV guide pending".
 
 ## Cloud automation status
 
