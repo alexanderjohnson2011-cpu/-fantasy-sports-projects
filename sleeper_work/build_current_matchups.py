@@ -128,14 +128,15 @@ def build_current_matchups():
         6: ("2 Dagos and A Dream vs. Bub’s Club", "Clash of 1-0 Contenders", "Both squads enter after gritty Week 1 wins, looking to stake an early 2-0 claim atop the conference standings."),
     }
 
-    tv_templates = [
-        {"window": "Thursday Night Football", "kickoff": "Thu 8:15 PM ET", "network": "Prime Video", "game": "MIA @ BUF"},
-        {"window": "Sunday Early Window", "kickoff": "Sun 1:00 PM ET", "network": "CBS", "game": "KC @ CIN"},
-        {"window": "Sunday Early Window", "kickoff": "Sun 1:00 PM ET", "network": "FOX", "game": "PHI @ ATL"},
-        {"window": "Sunday Late Window", "kickoff": "Sun 4:25 PM ET", "network": "CBS", "game": "BAL @ CLE"},
-        {"window": "Sunday Night Football", "kickoff": "Sun 8:20 PM ET", "network": "NBC", "game": "CHI @ HOU"},
-        {"window": "Monday Night Football", "kickoff": "Mon 8:15 PM ET", "network": "ESPN", "game": "SF @ MIN"},
-    ]
+    from .nfl_schedule_provider import ensure_nfl_schedule_fixture
+    nfl_schedule = ensure_nfl_schedule_fixture(int(SEASON), current_week)
+    aliases = {"JAC": "JAX", "WSH": "WAS", "LA": "LAR", "OAK": "LV"}
+    games_by_team = {}
+    for game in nfl_schedule.get("games", []):
+        for t in (game.get("away"), game.get("home")):
+            if t:
+                norm = aliases.get(t.strip().upper(), t.strip().upper())
+                games_by_team[norm] = game
 
     slots_order = ["QB", "RB1", "RB2", "WR1", "WR2", "TE", "FLEX1", "FLEX2", "FLEX3", "K", "DEF"]
 
@@ -156,14 +157,23 @@ def build_current_matchups():
             pos = pm.get("position", "FLEX")
             base = pos_proj.get(pos, 10.0)
             proj_sum1 += base
+            nfl_team = aliases.get((pm.get("team") or "").strip().upper(), (pm.get("team") or "").strip().upper())
+            game = games_by_team.get(nfl_team)
+            if game:
+                opp = game["home"] if nfl_team == game["away"] else game["away"]
+                prefix = "@" if nfl_team == game["away"] else "vs"
+                matchup_vs = f"{prefix} {opp} ({game['timeLabel']})"
+            else:
+                matchup_vs = "Bye / TBD"
+
             starters1.append({
                 "slot": slot_label,
                 "player": pm.get("name", f"Player {pid}"),
                 "position": pos,
-                "nflTeam": pm.get("team", "FA"),
+                "nflTeam": nfl_team or "FA",
                 "projectedPoints": round(base, 1),
                 "tier": "Tier 1" if base >= 15.0 else ("Tier 2" if base >= 12.0 else "Tier 3"),
-                "matchupVs": f"{tv_templates[idx % len(tv_templates)]['game']} ({tv_templates[idx % len(tv_templates)]['kickoff']})",
+                "matchupVs": matchup_vs,
                 "news": f"Projected starter in Week {current_week} tactical rotation.",
             })
 
@@ -175,14 +185,23 @@ def build_current_matchups():
             pos = pm.get("position", "FLEX")
             base = pos_proj.get(pos, 10.0)
             proj_sum2 += base
+            nfl_team = aliases.get((pm.get("team") or "").strip().upper(), (pm.get("team") or "").strip().upper())
+            game = games_by_team.get(nfl_team)
+            if game:
+                opp = game["home"] if nfl_team == game["away"] else game["away"]
+                prefix = "@" if nfl_team == game["away"] else "vs"
+                matchup_vs = f"{prefix} {opp} ({game['timeLabel']})"
+            else:
+                matchup_vs = "Bye / TBD"
+
             starters2.append({
                 "slot": slot_label,
                 "player": pm.get("name", f"Player {pid}"),
                 "position": pos,
-                "nflTeam": pm.get("team", "FA"),
+                "nflTeam": nfl_team or "FA",
                 "projectedPoints": round(base, 1),
                 "tier": "Tier 1" if base >= 15.0 else ("Tier 2" if base >= 12.0 else "Tier 3"),
-                "matchupVs": f"{tv_templates[(idx + 2) % len(tv_templates)]['game']} ({tv_templates[(idx + 2) % len(tv_templates)]['kickoff']})",
+                "matchupVs": matchup_vs,
                 "news": f"Projected starter in Week {current_week} tactical rotation.",
             })
 
@@ -243,25 +262,72 @@ def build_current_matchups():
             },
         ]
 
-        tv_sched = [
-            {
-                "timeSlot": f"{tv['window']} ({tv['kickoff']})",
-                "window": tv["window"],
-                "kickoff": tv["kickoff"],
-                "network": tv["network"],
-                "gameMatchup": tv["game"],
-                "game": tv["game"],
-                "leverageLevel": "CRITICAL" if i in (0, 4) else ("HIGH" if i in (1, 3) else "MEDIUM"),
-                "leverage": "High Leverage" if i in (0, 4, 5) else "Standard Slate",
-                "fantasyPointsAtStake": f"{round(pts1 * 0.18 + pts2 * 0.18, 1)} pts",
-                "teamAStarters": [starters1[i % len(starters1)]["player"]] if starters1 else ["Starter A"],
-                "teamBStarters": [starters2[i % len(starters2)]["player"]] if starters2 else ["Starter B"],
-                "keyPlayerA": starters1[i % len(starters1)]["player"] if starters1 else "Starter A",
-                "keyPlayerB": starters2[i % len(starters2)]["player"] if starters2 else "Starter B",
-                "windowAnalysis": f"Crucial viewing window featuring {starters1[i % len(starters1)]['player'] if starters1 else 'Starter A'} and {starters2[i % len(starters2)]['player'] if starters2 else 'Starter B'} in {tv['game']} on {tv['network']}.",
-            }
-            for i, tv in enumerate(tv_templates)
-        ]
+        # Dynamic TV Schedule based on real NFL games where starters play
+        viewing_games = {}
+        for s in starters1:
+            t_code = aliases.get(s.get("nflTeam", "").strip().upper(), s.get("nflTeam", "").strip().upper())
+            game = games_by_team.get(t_code)
+            if game:
+                g_key = f"{game['away']} @ {game['home']}"
+                if g_key not in viewing_games:
+                    viewing_games[g_key] = {
+                        "game": game,
+                        "teamAStarters": [],
+                        "teamBStarters": [],
+                        "pointsA": 0.0,
+                        "pointsB": 0.0,
+                    }
+                viewing_games[g_key]["teamAStarters"].append(f"{s['player']} ({s['position']})")
+                viewing_games[g_key]["pointsA"] += s["projectedPoints"]
+
+        for s in starters2:
+            t_code = aliases.get(s.get("nflTeam", "").strip().upper(), s.get("nflTeam", "").strip().upper())
+            game = games_by_team.get(t_code)
+            if game:
+                g_key = f"{game['away']} @ {game['home']}"
+                if g_key not in viewing_games:
+                    viewing_games[g_key] = {
+                        "game": game,
+                        "teamAStarters": [],
+                        "teamBStarters": [],
+                        "pointsA": 0.0,
+                        "pointsB": 0.0,
+                    }
+                viewing_games[g_key]["teamBStarters"].append(f"{s['player']} ({s['position']})")
+                viewing_games[g_key]["pointsB"] += s["projectedPoints"]
+
+        tv_sched = []
+        for g_key, vg in sorted(viewing_games.items(), key=lambda item: item[1]["game"]["kickoffAt"]):
+            game = vg["game"]
+            stake = round(vg["pointsA"] + vg["pointsB"], 1)
+            leverage_level = "CRITICAL" if stake >= 35.0 else ("HIGH" if stake >= 22.0 else ("MEDIUM" if stake >= 12.0 else "LOW"))
+            leverage = "High Leverage" if leverage_level in ("CRITICAL", "HIGH") else "Standard Slate"
+            window = game["timeLabel"].split("·")[0].strip()
+            cA = len(vg["teamAStarters"])
+            cB = len(vg["teamBStarters"])
+            lead_team = info1.get("teamName") if cA > cB else (info2.get("teamName") if cB > cA else None)
+            analysis = (
+                f"{lead_team} carries the larger starter footprint in {g_key} on {game['network']} with {stake:.1f} fantasy points at stake."
+                if lead_team
+                else f"Equal starter exposure for both squads in {g_key} on {game['network']} with {stake:.1f} fantasy points at stake."
+            )
+
+            tv_sched.append({
+                "timeSlot": f"{game['timeLabel']} · {g_key}",
+                "window": window,
+                "kickoff": game["timeLabel"],
+                "network": game["network"],
+                "gameMatchup": g_key,
+                "game": g_key,
+                "leverageLevel": leverage_level,
+                "leverage": leverage,
+                "fantasyPointsAtStake": f"{stake:.1f} pts",
+                "teamAStarters": vg["teamAStarters"],
+                "teamBStarters": vg["teamBStarters"],
+                "keyPlayerA": vg["teamAStarters"][0].split(" (")[0] if vg["teamAStarters"] else "",
+                "keyPlayerB": vg["teamBStarters"][0].split(" (")[0] if vg["teamBStarters"] else "",
+                "windowAnalysis": analysis,
+            })
 
         card = {
             "matchupId": mid,
