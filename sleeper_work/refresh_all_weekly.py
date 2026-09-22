@@ -78,6 +78,10 @@ def refresh_all(week=None, season="2026"):
 
     steps = [
         (
+            "Johnny's Jerks: Ingest Live Sleeper Matchups & Fixtures",
+            ["-m", "sleeper_work.capture_craig_redraft"],
+        ),
+        (
             "NFL TV Broadcast Schedule & Kickoff Slate Verification",
             ["-m", "sleeper_work.nfl_schedule_provider"],
         ),
@@ -90,14 +94,6 @@ def refresh_all(week=None, season="2026"):
             ["-m", "sleeper_work.build_weekly_recap", "--league", JOHNNYS_LEAGUE_ID, "--season", detected_season],
         ),
         (
-            "Ape's Mac Salad: Waiver Wire ROI & Trade Evaluation Desk",
-            ["-m", "sleeper_work.build_waiver_roi", "--league", AMS_LEAGUE_ID, "--season", detected_season, "--week", str(active_week)],
-        ),
-        (
-            "Johnny's Jerks: Waiver Wire ROI & Trade Evaluation Desk",
-            ["-m", "sleeper_work.build_waiver_roi", "--league", JOHNNYS_LEAGUE_ID, "--season", detected_season, "--week", str(active_week)],
-        ),
-        (
             "Ape's Mac Salad: Upcoming Matchups & TV Kickoff Slate",
             ["-m", "sleeper_work.build_current_matchups"],
         ),
@@ -105,14 +101,19 @@ def refresh_all(week=None, season="2026"):
             "Ape's Mac Salad: Bayesian Monte Carlo Season Forecast",
             ["-m", "sleeper_work.monte_carlo_forecast"],
         ),
-    ]
-
-    # If Johnny's redraft payload builder exists, refresh that too
-    if os.path.exists(os.path.join(HERE, "build_redraft_recap_payload.py")):
-        steps.append((
+        (
             "Johnny's Jerks: Redraft Matchup Forecast & Odds",
             ["-m", "sleeper_work.build_redraft_recap_payload"],
-        ))
+        ),
+        (
+            "Ape's Mac Salad: Waiver Wire ROI & Trade Evaluation Desk",
+            ["-m", "sleeper_work.build_waiver_roi", "--league", AMS_LEAGUE_ID, "--season", detected_season, "--week", str(active_week)],
+        ),
+        (
+            "Johnny's Jerks: Waiver Wire ROI & Trade Evaluation Desk",
+            ["-m", "sleeper_work.build_waiver_roi", "--league", JOHNNYS_LEAGUE_ID, "--season", detected_season, "--week", str(active_week)],
+        ),
+    ]
 
     successes = 0
     for name, cmd in steps:

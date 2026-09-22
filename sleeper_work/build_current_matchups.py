@@ -63,11 +63,27 @@ def load_players_map():
     return {}
 
 
-def build_current_matchups():
+def build_current_matchups(target_week=None):
     print(f"=== Generating Current Matchups for League {LEAGUE_ID} ({SEASON}) ===")
+    try:
+        nfl_state = fetch_sleeper("state/nfl")
+        nfl_week = int(nfl_state.get("week") or 0)
+    except Exception:
+        nfl_week = 0
+
     league = fetch_sleeper(f"league/{LEAGUE_ID}")
-    current_week = int((league.get("settings") or {}).get("leg") or 2)
-    print(f"  Detected Active League Week: {current_week}")
+    league_leg = int((league.get("settings") or {}).get("leg") or 1)
+    last_scored_leg = int((league.get("settings") or {}).get("last_scored_leg") or 0)
+
+    if target_week:
+        current_week = int(target_week)
+    elif nfl_week > 0:
+        current_week = nfl_week
+    elif last_scored_leg > 0:
+        current_week = last_scored_leg + 1
+    else:
+        current_week = league_leg
+    print(f"  Target Matchup Preview Week: {current_week} (NFL State: {nfl_week}, League Leg: {league_leg}, Last Scored: {last_scored_leg})")
 
     users = fetch_sleeper(f"league/{LEAGUE_ID}/users")
     rosters = fetch_sleeper(f"league/{LEAGUE_ID}/rosters")
@@ -128,7 +144,10 @@ def build_current_matchups():
         6: ("2 Dagos and A Dream vs. Bub’s Club", "Clash of 1-0 Contenders", "Both squads enter after gritty Week 1 wins, looking to stake an early 2-0 claim atop the conference standings."),
     }
 
-    from .nfl_schedule_provider import ensure_nfl_schedule_fixture
+    try:
+        from .nfl_schedule_provider import ensure_nfl_schedule_fixture
+    except (ImportError, ValueError):
+        from nfl_schedule_provider import ensure_nfl_schedule_fixture
     nfl_schedule = ensure_nfl_schedule_fixture(int(SEASON), current_week)
     aliases = {"JAC": "JAX", "WSH": "WAS", "LA": "LAR", "OAK": "LV"}
     games_by_team = {}
@@ -220,7 +239,15 @@ def build_current_matchups():
         spread_val = round(abs(diff), 1)
         spread_label = f"{info1.get('teamName')} -{spread_val}" if diff >= 0 else f"{info2.get('teamName')} -{spread_val}"
 
-        n_meta = matchup_narratives.get(mid, (f"Matchup {mid}", "Head-to-Head Clash", "Crucial conference matchup with early playoff positioning on the line."))
+        t1 = info1.get('teamName', f"Team {rid1}")
+        t2 = info2.get('teamName', f"Team {rid2}")
+        n_meta = matchup_narratives.get(mid) if current_week == 2 else None
+        if not n_meta:
+            n_meta = (
+                f"{t1} vs. {t2}",
+                f"Week {current_week} Showdown",
+                f"Crucial conference matchup between {t1} and {t2} with decisive regular season positioning on the line.",
+            )
         is_marquee = (mid == 2) or (p_rank1 + p_rank2 <= 7)
 
         tactical_breakdown = (
@@ -397,4 +424,8 @@ def build_current_matchups():
 
 
 if __name__ == "__main__":
-    build_current_matchups()
+    import argparse
+    parser = argparse.ArgumentParser(description="Generate current/upcoming matchup intelligence")
+    parser.add_argument("--week", type=int, default=None, help="Target week to generate")
+    args = parser.parse_args()
+    build_current_matchups(target_week=args.week)

@@ -24,7 +24,10 @@ import random
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from .johnnys_jerks_config import LEAGUE_ID, DRAFT_ID, SEASON, LEAGUE_NAME, AWARDS
+try:
+    from .johnnys_jerks_config import LEAGUE_ID, DRAFT_ID, SEASON, LEAGUE_NAME, AWARDS
+except (ImportError, ValueError):
+    from johnnys_jerks_config import LEAGUE_ID, DRAFT_ID, SEASON, LEAGUE_NAME, AWARDS
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -189,7 +192,10 @@ def load_nfl_schedule(week):
         except Exception:
             pass
     try:
-        from .nfl_schedule_provider import ensure_nfl_schedule_fixture
+        try:
+            from .nfl_schedule_provider import ensure_nfl_schedule_fixture
+        except (ImportError, ValueError):
+            from nfl_schedule_provider import ensure_nfl_schedule_fixture
         return ensure_nfl_schedule_fixture(SEASON, week)
     except Exception as e:
         print(f"  Warning loading NFL schedule via provider: {e}")
@@ -938,6 +944,21 @@ def build_redraft_recap():
 
     sleeper_schedule = load_sleeper_schedule()
     current_week = int(sleeper_schedule.get("currentWeek") or 1)
+    try:
+        from .nfl_schedule_provider import fetch_sleeper_json
+    except (ImportError, ValueError):
+        try:
+            from nfl_schedule_provider import fetch_sleeper_json
+        except Exception:
+            fetch_sleeper_json = None
+    if fetch_sleeper_json:
+        try:
+            nfl_st = fetch_sleeper_json("state/nfl")
+            st_week = int(nfl_st.get("week") or 0)
+            if st_week > current_week:
+                current_week = st_week
+        except Exception:
+            pass
 
     # Build current matchups using official Sleeper pairs for the live league week.
     matchup_payload = build_redraft_matchups(team_data, power_rankings, current_week)
@@ -1643,8 +1664,6 @@ def build_redraft_forecast(team_data, power_rankings, sleeper_schedule, current_
     team_by_roster = {team["rosterId"]: team for team in team_data}
 
     for w_idx, weekly_pairs in enumerate(schedule, start=1):
-        if w_idx >= current_week:
-            continue
         m_list = load_week_matchups(w_idx)
         scores_by_rid = {}
         for m in m_list:

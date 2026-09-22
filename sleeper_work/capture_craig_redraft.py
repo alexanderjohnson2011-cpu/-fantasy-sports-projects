@@ -11,7 +11,10 @@ import json
 from pathlib import Path
 import urllib.request
 
-from .johnnys_jerks_config import DRAFT_ID, LEAGUE_ID, SEASON
+try:
+    from .johnnys_jerks_config import DRAFT_ID, LEAGUE_ID, SEASON
+except (ImportError, ValueError):
+    from johnnys_jerks_config import DRAFT_ID, LEAGUE_ID, SEASON
 
 
 SLEEPER_BASE_URL = "https://api.sleeper.app/v1"
@@ -77,6 +80,15 @@ def capture(start_week=1, end_week=None):
         })
         print(f"  Week {week:02d}: {len(pairings)} pairings, {len(rows)} rosters")
 
+    try:
+        nfl_state, _ = fetch_json("state/nfl")
+        nfl_week = int(nfl_state.get("week") or 0)
+    except Exception:
+        nfl_week = 0
+    league_leg = int((league.get("settings") or {}).get("leg") or 1)
+    last_scored = int((league.get("settings") or {}).get("last_scored_leg") or 0)
+    effective_week = max(league_leg, nfl_week, (last_scored + 1) if last_scored > 0 else 1)
+
     schedule = {
         "schemaVersion": "1.0.0",
         "publicationId": "johnnys-jerks",
@@ -85,7 +97,9 @@ def capture(start_week=1, end_week=None):
         "capturedAt": captured_at,
         "source": {"provider": "Sleeper", "leagueUrl": league_url},
         "leagueStatus": league.get("status"),
-        "currentWeek": int((league.get("settings") or {}).get("leg") or 1),
+        "currentWeek": effective_week,
+        "lastScoredLeg": last_scored,
+        "leagueLeg": league_leg,
         "playoffWeekStart": playoff_week_start,
         "regularSeasonWeeks": last_regular_week,
         "weeks": weeks,

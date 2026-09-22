@@ -46,6 +46,7 @@ jobs:
       GCP_PROJECT: apes-mac-salad
       OUTPUT_BUCKET: apes-mac-salad-raw-prod
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      PYTHONPATH: .
 
     steps:
       - name: Check out repository
@@ -63,13 +64,16 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
-          workload_identity_provider: "projects/1097821806660/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider"
           service_account: "ams-pipeline@apes-mac-salad.iam.gserviceaccount.com"
         continue-on-error: true
 
       - name: Fetch fresh live Sleeper captures (current week)
         working-directory: sleeper_work
         run: python capture_sleeper_data.py --force
+        continue-on-error: true
+
+      - name: Fetch fresh Johnny's Jerks captures (current week)
+        run: python -m sleeper_work.capture_craig_redraft
         continue-on-error: true
 
       - name: Load raw captures into canonical
@@ -96,31 +100,27 @@ jobs:
         continue-on-error: true
 
       - name: Rebuild the weekly recap payload (Ape's Mac Salad)
-        working-directory: sleeper_work
-        run: python build_weekly_recap.py --season "${{ github.event.inputs.season || '2026' }}"
+        run: python -m sleeper_work.build_weekly_recap --season "${{ github.event.inputs.season || '2026' }}"
 
       - name: Verify and refresh NFL schedule & broadcast fixtures
-        working-directory: sleeper_work
-        run: python nfl_schedule_provider.py
+        run: python -m sleeper_work.nfl_schedule_provider
 
       - name: Rebuild next week matchups forecast (Ape's Mac Salad)
-        working-directory: sleeper_work
-        run: python build_current_matchups.py
+        run: python -m sleeper_work.build_current_matchups
 
       - name: Refresh Bayesian Monte Carlo season forecast (Ape's Mac Salad)
-        working-directory: sleeper_work
-        run: python monte_carlo_forecast.py
+        run: python -m sleeper_work.monte_carlo_forecast
 
       - name: Refresh Johnny's Jerks payload & recaps
         run: |
           python -m sleeper_work.capture_craig_redraft
           python -m sleeper_work.build_redraft_recap_payload
-          python sleeper_work/build_weekly_recap.py --league 1401673232670539776
+          python -m sleeper_work.build_weekly_recap --league 1401673232670539776
 
       - name: Rebuild Waiver Wire ROI & Transaction Intelligence (Both Leagues)
         run: |
-          python sleeper_work/build_waiver_roi.py --league 1312209616372772864
-          python sleeper_work/build_waiver_roi.py --league 1401673232670539776
+          python -m sleeper_work.build_waiver_roi --league 1312209616372772864
+          python -m sleeper_work.build_waiver_roi --league 1401673232670539776
 
       # A payload that does not compile is worse than a stale one, so the build
       # gates the commit rather than running after it.
