@@ -1,3 +1,4 @@
+import { publishedPowerProfile, championshipFavorite } from "./analytics-contract";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { QueryClient, QueryClientProvider, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -537,31 +538,6 @@ function draftCycleGrade(team: Team) {
   return team.cycleGrade.replace("-", "−");
 }
 
-function rankComponentScore(rank: number) {
-  return 100 - (rank - 1) * 5;
-}
-
-function viabilityGrade(score: number) {
-  if (score >= 92) return "A";
-  if (score >= 87) return "A−";
-  if (score >= 80) return "B+";
-  if (score >= 75) return "B";
-  if (score >= 70) return "B−";
-  if (score >= 65) return "C+";
-  if (score >= 60) return "C";
-  if (score >= 55) return "C−";
-  return "D";
-}
-
-function competitionTier(rank: number) {
-  if (rank === 1) return "Title favorite";
-  if (rank <= 3) return "Championship tier";
-  if (rank === 4) return "Contender";
-  if (rank <= 7) return "Playoff bubble";
-  if (rank <= 10) return "Outside looking in";
-  return "Development year";
-}
-
 function median(values: number[]) {
   const ordered = [...values].sort((a, b) => a - b);
   const middle = Math.floor(ordered.length / 2);
@@ -575,6 +551,8 @@ type PowerProfile = {
   tier: string;
   score: number;
   lineupScore: number;
+  lineupRank: number;
+  depthRank: number;
   depthScore: number;
   balanceScore: number;
   scoringScore: number;
@@ -606,32 +584,16 @@ const powerProfiles: PowerProfile[] = teams
     const history = insight.previousSeason;
     const games = history ? history.wins + history.losses + history.ties : 0;
     const scoringRank = priorScoringRanks.get(team.rosterId) ?? 12;
-    const lineupScore = rankComponentScore(metrics.redraftLineupRank);
-    const depthScore = rankComponentScore(metrics.depthRank);
-    const balanceScore =
-      rankComponentScore(metrics.qbRoomRank) * 0.1 +
-      rankComponentScore(metrics.rbRoomRank) * 0.3 +
-      rankComponentScore(metrics.wrRoomRank) * 0.45 +
-      rankComponentScore(metrics.teRoomRank) * 0.15;
-    const scoringScore = rankComponentScore(scoringRank);
-    const score = lineupScore * 0.55 + depthScore * 0.25 + balanceScore * 0.1 + scoringScore * 0.1;
+    const published = publishedPowerProfile(powerRankingsJson.teams, team.rosterId);
     const relevantPlayers = insight.redraftBoard.filter((player) => player.redraftValue > 0).slice(0, 10);
     const relevantValue = relevantPlayers.reduce((total, player) => total + player.redraftValue, 0) || 1;
     const topThreeShare = relevantPlayers.slice(0, 3).reduce((total, player) => total + player.redraftValue, 0) / relevantValue;
     const rbShare = relevantPlayers.filter((player) => player.position === "RB").reduce((total, player) => total + player.redraftValue, 0) / relevantValue;
     const concentrationRisk = Math.max(0, Math.min(100, ((topThreeShare - 0.35) / 0.3) * 100));
-    const depthRisk = ((metrics.depthRank - 1) / 11) * 100;
+    const depthRisk = ((published.depthRank - 1) / 11) * 100;
     const volatilityScore = concentrationRisk * 0.4 + depthRisk * 0.35 + rbShare * 100 * 0.25;
     return {
-      rosterId: team.rosterId,
-      rank: 0,
-      grade: "—",
-      tier: "",
-      score: Number(score.toFixed(1)),
-      lineupScore,
-      depthScore,
-      balanceScore: Number(balanceScore.toFixed(1)),
-      scoringScore,
+      ...published,
       scoringRank,
       pointsPerGame: games ? Number((history!.pointsFor / games).toFixed(1)) : 0,
       potentialPointsPerGame: games ? Number((history!.potentialPoints / games).toFixed(1)) : 0,
@@ -646,13 +608,7 @@ const powerProfiles: PowerProfile[] = teams
       volatilityLabel: volatilityScore <= 35 ? "Stable" : volatilityScore <= 55 ? "Balanced" : volatilityScore <= 70 ? "Volatile" : "High variance",
     };
   })
-  .sort((a, b) => b.score - a.score)
-  .map((profile, index) => ({
-    ...profile,
-    rank: index + 1,
-    grade: viabilityGrade(profile.score),
-    tier: competitionTier(index + 1),
-  }));
+  .sort((a, b) => a.rank - b.rank);
 
 function powerProfileFor(team: Team) {
   return powerProfiles.find((profile) => profile.rosterId === team.rosterId)!;
@@ -1053,6 +1009,7 @@ function PowerTeamScreen({ team }: { team: Team }) {
   const metrics = insight.metrics;
   const profile = powerProfileFor(team);
   const powerRead = powerEditorial[team.rosterId];
+  const published = powerRankingsJson.teams.find((row) => row.rosterId === team.rosterId)!;
   const history = insight.previousSeason;
   const featuredRedraft = insight.redraftBoard.slice(0, 10);
   const volatilityPlayers = volatilePlayersFor(team);
@@ -1065,10 +1022,10 @@ function PowerTeamScreen({ team }: { team: Team }) {
   const strongestRoom = [...rooms].sort((a, b) => a.rank - b.rank)[0];
   const weakestRoom = [...rooms].sort((a, b) => b.rank - a.rank)[0];
   const gradeComponents = [
-    { label: "Optimal lineup", weight: "55%", score: profile.lineupScore, detail: `#${metrics.redraftLineupRank}` },
-    { label: "Usable depth", weight: "25%", score: profile.depthScore, detail: `#${metrics.depthRank}` },
+    { label: "Optimal lineup", weight: "55%", score: profile.lineupScore, detail: `${profile.lineupScore.toFixed(1)}` },
+    { label: "Usable depth", weight: "25%", score: profile.depthScore, detail: `${profile.depthScore.toFixed(1)}` },
     { label: "Position balance", weight: "10%", score: profile.balanceScore, detail: `${profile.balanceScore.toFixed(0)}` },
-    { label: "2025 scoring", weight: "10%", score: profile.scoringScore, detail: `#${profile.scoringRank}` },
+    { label: "2025 scoring", weight: "10%", score: profile.scoringScore, detail: `${profile.scoringScore.toFixed(1)}` },
   ];
 
   return (
@@ -1078,8 +1035,9 @@ function PowerTeamScreen({ team }: { team: Team }) {
           <p className="eyebrow">{team.manager} · {profile.tier}</p>
           <span className="team-hero__label">2026 viability grade</span>
           <div className="team-hero__grade">{profile.grade}</div>
-          <h1>{powerRead.headline}</h1>
-          <p>{powerRead.now}</p>
+          <h1>{team.name}</h1>
+          <p>{published.commentary}</p>
+          <p className="source-note">Power Index updated {new Date(powerRankingsJson.generatedAtUtc).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}</p>
           <div className="power-rank-stamp"><span>League rank</span><strong>#{profile.rank}</strong><em>{profile.score.toFixed(1)} / 100</em></div>
         </section>
 
@@ -1089,8 +1047,8 @@ function PowerTeamScreen({ team }: { team: Team }) {
           <div className="power-metric-grid viability-summary">
             <div><span>2026 rank</span><strong>#{profile.rank}</strong><small>{profile.tier}</small></div>
             <div><span>Roster grade</span><strong>{profile.grade}</strong><small>{profile.score.toFixed(1)} / 100</small></div>
-            <div><span>Lineup</span><strong>#{metrics.redraftLineupRank}</strong><small>current market</small></div>
-            <div><span>Depth</span><strong>#{metrics.depthRank}</strong><small>bench value</small></div>
+            <div><span>Lineup</span><strong>#{profile.lineupRank}</strong><small>published index</small></div>
+            <div><span>Depth</span><strong>#{profile.depthRank}</strong><small>published index</small></div>
           </div>
           <div className="viability-formula">
             {gradeComponents.map((component) => (
@@ -1101,11 +1059,12 @@ function PowerTeamScreen({ team }: { team: Team }) {
               </div>
             ))}
           </div>
-          <p className="source-note">The formula deliberately excludes 2026 draft execution. It uses 55% optimal-lineup strength, 25% depth, 10% league-adjusted positional balance, and 10% 2025 points scored.</p>
+          <p className="source-note">The Power Index uses 55% optimal-lineup value, 25% top-six bench value, 10% positional balance, and 10% prior-season points scored. Components are scaled across this league to 0–100; the grade is relative roster strength, not a win probability. Draft execution is separate.</p>
         </section>
 
         <section className="detail-block scoring-profile">
           <div className="detail-title"><span>02</span><h2>Scoring profile</h2></div>
+          <p className="source-note">Historical roster analysis as of {new Date(leagueInsights.generatedAt).toLocaleDateString("en-US", { timeZone: "UTC" })}; separate from the weekly Power Index.</p>
           <div className="scoring-grid">
             <div><span>2025 PPG</span><strong>{profile.pointsPerGame.toFixed(1)}</strong><small>#{profile.scoringRank} in league</small></div>
             <div><span>Potential PPG</span><strong>{profile.potentialPointsPerGame.toFixed(1)}</strong><small>best-ball output</small></div>
@@ -1143,9 +1102,9 @@ function PowerTeamScreen({ team }: { team: Team }) {
           <div className="volatility-factors">
             <div><span>Top-three share</span><strong>{profile.topThreeShare.toFixed(1)}%</strong></div>
             <div><span>RB exposure</span><strong>{profile.rbShare.toFixed(1)}%</strong></div>
-            <div><span>Depth rank</span><strong>#{metrics.depthRank}</strong></div>
+            <div><span>Depth rank</span><strong>#{profile.depthRank}</strong></div>
           </div>
-          <p className="detail-explainer">{profile.topThreeShare.toFixed(1)}% of the relevant redraft value sits in the top three players, while RBs account for {profile.rbShare.toFixed(1)}%. Combined with depth rank #{metrics.depthRank}, that produces a {profile.volatilityLabel.toLowerCase()} roster profile.</p>
+          <p className="detail-explainer">{profile.topThreeShare.toFixed(1)}% of the relevant redraft value sits in the top three players, while RBs account for {profile.rbShare.toFixed(1)}%. Combined with published depth rank #{profile.depthRank}, that produces a {profile.volatilityLabel.toLowerCase()} roster profile.</p>
           <div className="volatility-list">
             <span>Player watchlist</span>
             {volatilityPlayers.map((player) => {
@@ -1186,14 +1145,14 @@ function PowerTeamScreen({ team }: { team: Team }) {
             <div><span>2027 firsts</span><strong>{metrics.futureFirsts}</strong><small>liquidity</small></div>
             <div><span>2027–29</span><strong>{metrics.futurePicksThreeYear}</strong><small>total picks</small></div>
           </div>
-          <div className="horizon-read"><article><span>Win in 2026</span><p>{powerRead.now}</p></article><article><span>Build through 2028</span><p>{powerRead.future}</p></article></div>
+          <div className="horizon-read"><article><span>Published roster strength</span><p>Lineup #{profile.lineupRank} · Depth #{profile.depthRank} · Power Index #{profile.rank}.</p></article><article><span>Preseason dynasty outlook · {new Date(leagueInsights.generatedAt).toLocaleDateString("en-US", { timeZone: "UTC" })}</span><p>{powerRead.future}</p></article></div>
           <div className="asset-list"><span>Dynasty foundation</span>{insight.topAssets.map((asset, index) => <div key={asset.player}><small>{String(index + 1).padStart(2, "0")}</small><strong>{asset.player}</strong><em>{asset.position} · {asset.nflTeam}</em></div>)}</div>
         </section>
 
         <section className="verdict-block power-verdict">
           <p className="eyebrow">2026 bottom line</p>
           <h2>{profile.tier}</h2>
-          <p>{powerRead.headline} The clearest path to moving up is improving the {weakestRoom.position} room without weakening the current scoring spine.</p>
+          <p>{published.commentary} The historical roster analysis identifies the {weakestRoom.position} room as an area to review.</p>
           <div><span>Ranking swing factor</span><strong>{profile.volatilityLabel} risk · {weakestRoom.position} room #{weakestRoom.rank}</strong></div>
         </section>
       </main>
@@ -1227,7 +1186,7 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
           Who can actually win this year—graded on current starting lineup strength, usable depth, roster balance, and prior-season scoring receipts.
         </p>
         <div className="issue-rule">
-          <span>Week {currentWeek} Snapshot · {dynamicTeams.length} Franchises</span>
+          <span>Week {currentWeek} · Updated {new Date(powerData.generatedAtUtc).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })} · {dynamicTeams.length} Franchises</span>
           <span>55% Lineup · 25% Depth · 10% Balance · 10% Receipts</span>
         </div>
 
@@ -1336,7 +1295,7 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
         <div className="power-list">
           {dynamicTeams.map((dynamicTeam: any) => {
             const team = teams.find((candidate) => candidate.rosterId === dynamicTeam.rosterId)!;
-            const profile = powerProfiles.find((p) => p.rosterId === dynamicTeam.rosterId) || powerProfiles[0];
+            const profile = powerProfileFor(team);
             const insight = insightFor(team);
             const history = insight.previousSeason;
             const editorial = powerEditorial[team.rosterId];
@@ -1363,11 +1322,11 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
                   <div><strong>{team.name}</strong><small>{team.manager} · {profile.tier}</small></div>
                   <ArrowRight size={22} aria-hidden="true" />
                 </div>
-                <p>{editorial?.headline || dynamicTeam.commentary}</p>
+                <p>{dynamicTeam.commentary}</p>
                 <div className="power-card__metrics">
                   <div><span>Grade</span><strong>{profile.grade}</strong><small>{dynamicTeam.score.toFixed(1)}</small></div>
-                  <div><span>Lineup</span><strong>#{insight.metrics.redraftLineupRank}</strong></div>
-                  <div><span>Depth</span><strong>#{insight.metrics.depthRank}</strong></div>
+                  <div><span>Lineup</span><strong>#{profile.lineupRank}</strong></div>
+                  <div><span>Depth</span><strong>#{profile.depthRank}</strong></div>
                   <div><span>Volatility</span><strong>{profile.volatilityScore.toFixed(0)}</strong><small>{profile.volatilityLabel}</small></div>
                 </div>
                 <div className="power-card__horizon" aria-label="Current-year versus dynasty rank">
@@ -1562,7 +1521,7 @@ function RecapsScreen() {
         <p className="eyebrow">Official Weekly Matchup Audit & AI Highlights</p>
         <h1>Matchup Recaps</h1>
         <p className="section-deck">
-          Game-by-game breakdowns, AI tactical commentary, box scores with lineup efficiency, and weekly superlatives modeled directly on RosterAudit™.
+          Final game breakdowns, commentary, box scores and weekly superlatives. Live weeks stay in Matchups until every scheduled NFL game is final.
         </p>
 
         {/* Week Selector */}
@@ -1579,6 +1538,8 @@ function RecapsScreen() {
             </button>
           ))}
         </div>
+
+        {!currentWeekRecap && <p className="source-note">No final recap is available yet. Follow the current week in Matchups.</p>}
 
         {/* Lead Editorial Card */}
         {currentWeekRecap ? (
@@ -1667,6 +1628,7 @@ function RecapsScreen() {
           <div className="recap-matchups-grid">
             {currentWeekRecap?.matchups?.map((m: any) => {
               const isWinnerA = m.winnerRosterId === m.teamA.rosterId;
+              const isWinnerB = m.winnerRosterId === m.teamB.rosterId;
               const isExpanded = expandedMatchup === m.matchupId;
               return (
                 <div key={m.matchupId} className="recap-matchup-card">
@@ -1696,11 +1658,11 @@ function RecapsScreen() {
                     {/* VS */}
                     <div className="recap-vs-divider">
                       <span className="recap-vs-badge">VS</span>
-                      <span className="recap-margin-badge">{isWinnerA ? `+${m.margin.toFixed(2)}` : `-${m.margin.toFixed(2)}`}</span>
+                      <span className="recap-margin-badge">{m.winnerRosterId == null ? "Tie" : isWinnerA ? `+${m.margin.toFixed(2)}` : `-${m.margin.toFixed(2)}`}</span>
                     </div>
 
                     {/* Team B */}
-                    <div className={`recap-team-box ${!isWinnerA ? "winner" : ""}`}>
+                    <div className={`recap-team-box ${isWinnerB ? "winner" : ""}`}>
                       <div className="recap-team-top">
                         <span className="recap-team-name">{m.teamB.teamName}</span>
                         <span className="recap-team-score">{m.teamB.points.toFixed(2)}</span>
@@ -1737,7 +1699,7 @@ function RecapsScreen() {
                             </div>
                           </div>
                           <div className="grade-vs-divider">VS</div>
-                          <div className={`grade-team-card ${!isWinnerA ? "winner" : ""}`}>
+                          <div className={`grade-team-card ${isWinnerB ? "winner" : ""}`}>
                             <div className="grade-pill-badge">{m.deepDive.teamBGrade || "B"}</div>
                             <div className="grade-team-info">
                               <strong>{m.teamB.teamName}</strong>
@@ -2044,15 +2006,16 @@ function FrontPageDashboard({
   const marqueeMatchup = matchupsList.find((m) => m.isMarquee) || matchupsList[0];
   const waiverData = waiverAnalysisJson;
   const recapData = weeklyRecapJson;
-  const week1Recap = recapData.weeks?.find((w: any) => w.week === 1) || recapData.weeks?.[0];
-  const superlatives = week1Recap?.superlatives;
+  const latestRecap = recapData.weeks?.find((w: any) => w.week === recapData.activeWeek);
+  const superlatives = latestRecap?.superlatives;
   const forecast = forecastInsightsJson;
+  const titleFavorite = championshipFavorite(Object.values(forecast.teams));
 
   const marqueeCrucialTV = marqueeMatchup?.tvSchedule?.find((s: any) => s.isCrucial) || marqueeMatchup?.tvSchedule?.[0];
-  const standingsRows = recapData.standings || [];
-  const avgLeagueScore = standingsRows.length
-    ? (standingsRows.reduce((acc: number, r: any) => acc + (r.pointsFor || 0), 0) / standingsRows.length).toFixed(1)
-    : "118.4";
+  const finalTeams = latestRecap?.matchups.flatMap((m) => [m.teamA, m.teamB]) || [];
+  const avgLeagueScore = finalTeams.length
+    ? (finalTeams.reduce((total, team) => total + team.points, 0) / finalTeams.length).toFixed(1)
+    : "—";
 
   return (
     <div className="app-screen section-screen web-screen frontpage-dashboard-container">
@@ -2074,7 +2037,7 @@ function FrontPageDashboard({
             </div>
             <div style={{ textAlign: "right" }}>
               <span style={{ fontSize: "0.85rem", color: "var(--ink-soft)", display: "block" }}>12 Dynasties · Half-PPR · 3-FLEX · Daily Sync</span>
-              <span style={{ fontSize: "0.75rem", color: "#2e7d32", fontWeight: 700 }}>● Automated Tuesday Refresh Active</span>
+              <span style={{ fontSize: "0.75rem", color: "#2e7d32", fontWeight: 700 }}>Results updated {new Date(recapData.generatedAtUtc).toLocaleDateString("en-US", { timeZone: "UTC" })}</span>
             </div>
           </div>
         </header>
@@ -2082,9 +2045,9 @@ function FrontPageDashboard({
         {/* 1. Macro Trends Strip */}
         <div className="macro-trends-strip">
           <div className="macro-trend-card accent-green">
-            <span className="macro-trend-label">Week 01 Scoring Pace</span>
+            <span className="macro-trend-label">Week {latestRecap?.week ?? "—"} Scoring Pace</span>
             <div className="macro-trend-value">{avgLeagueScore} pts</div>
-            <p className="macro-trend-desc">League average team output in season opener; {superlatives?.highRoller?.teamName || "OldManBacala"} paced the slate.</p>
+            <p className="macro-trend-desc">League average team output in the latest final week; {superlatives?.highRoller?.teamName || "OldManBacala"} paced the slate.</p>
           </div>
           <div className="macro-trend-card accent-rust">
             <span className="macro-trend-label">Week {currentWeek} Marquee Spread</span>
@@ -2098,8 +2061,8 @@ function FrontPageDashboard({
           </div>
           <div className="macro-trend-card">
             <span className="macro-trend-label">Championship Favorite</span>
-            <div className="macro-trend-value">{Object.values(forecast.teams || {})[0]?.teamName || "Title Favorite"}</div>
-            <p className="macro-trend-desc">Paces the field with {Object.values(forecast.teams || {})[0]?.expectedWins || 9.5}W median simulated regular season wins.</p>
+            <div className="macro-trend-value">{titleFavorite?.teamName || "Title Favorite"}</div>
+            <p className="macro-trend-desc">{titleFavorite?.championshipProbability ?? 0}% championship probability · {titleFavorite?.expectedWins ?? 0} expected regular-season wins.</p>
           </div>
         </div>
 
@@ -2201,12 +2164,12 @@ function FrontPageDashboard({
                   <ClockCounterClockwise size={14} style={{ verticalAlign: "text-bottom" }} /> Weekly Recap & Standings
                 </span>
                 <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--ink-soft)" }}>
-                  Week 01 Official Audit
+                  Week {latestRecap?.week ?? "—"} Final Audit
                 </span>
               </div>
-              <h3>{week1Recap?.headline || "Week 1 Matchup Audit"}</h3>
+              <h3>{latestRecap?.headline || "No final recap yet"}</h3>
               <p>
-                {week1Recap?.aiEditorialSummary?.slice(0, 160) || "The opening week featured stunning performances, tight nailbiters, and major lineup efficiency swings."}...
+                {latestRecap?.aiEditorialSummary?.slice(0, 160) || "The opening week featured stunning performances, tight nailbiters, and major lineup efficiency swings."}...
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", margin: "12px 0 0" }}>
                 {superlatives?.nailbiter && (
@@ -3189,7 +3152,7 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
                 </div>
               </div>
             </section>
-            {weeklyRecap.status === "scored" ? (
+            {weeklyRecap.status === "final" ? (
               <section className="weekly-table" aria-labelledby="weekly-title">
                 <h2 id="weekly-title">Season to date</h2>
                 <StandingsTable rows={weeklyRecap.standings} />
@@ -3529,7 +3492,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
     (a, b) => (a.projectedRank ?? 1) - (b.projectedRank ?? 1) || b.championshipProbability - a.championshipProbability
   );
 
-  const topTitleFavorite = sortedForecasts[0];
+  const topTitleFavorite = championshipFavorite(sortedForecasts)!;
 
   // Compute Forecast Movers & Shakers against baseline
   const enrichedForecasts = sortedForecasts.map((fc: any) => {
@@ -3544,11 +3507,13 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
 
   const forecastSurgeTeams = enrichedForecasts
     .slice()
+    .filter((fc) => fc.winDelta > 0 || (fc.winDelta === 0 && fc.playoffDelta > 0))
     .sort((a, b) => b.winDelta - a.winDelta || b.playoffDelta - a.playoffDelta)
     .slice(0, 3);
 
   const forecastSlipTeams = enrichedForecasts
     .slice()
+    .filter((fc) => fc.winDelta < 0 || (fc.winDelta === 0 && fc.playoffDelta < 0))
     .sort((a, b) => a.winDelta - b.winDelta || a.playoffDelta - b.playoffDelta)
     .slice(0, 3);
 
@@ -3562,18 +3527,18 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
         </p>
         <div className="issue-rule">
           <span>{forecastInsights.simulationsCount.toLocaleString()} Simulations (Seed {forecastInsights.randomSeed})</span>
-          <span>Brier: 0.071 · LogLoss: 0.286</span>
+          <span>Updated {new Date(forecastInsightsJson.generatedAt).toLocaleDateString("en-US", { timeZone: "UTC" })}</span>
         </div>
 
         {/* 1. Forecast Movers & Shakers Showcase Banner */}
         <div className="movers-shakers-showcase" style={{ marginTop: "24px" }}>
           <div className="movers-header">
             <span className="eyebrow" style={{ color: "var(--rust)" }}>
-              Monte Carlo Trajectory Audit · Post-Week 1 Re-Convergence
+              Monte Carlo Forecast · Published Snapshot Comparison
             </span>
             <h2>Forecast Movers & Shakers</h2>
             <p>
-              Auditing 10,000-simulation win and playoff shifts against the post-draft baseline. Explaining the statistical models, scoring volatility, and strategic reasons behind every projection change.
+              Comparing simulations from the same model version. A new model starts a new baseline; a difference in projections does not by itself establish its cause.
             </p>
           </div>
 
@@ -3584,6 +3549,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                 <TrendUp size={16} weight="bold" />
                 <span>Surging Playoff Contenders</span>
               </div>
+              {!forecastSurgeTeams.length && <p>No measured increases against a comparable snapshot yet.</p>}
               {forecastSurgeTeams.map((fc: any) => {
                 const fn = fc.fluctuationNarrative || {};
                 return (
@@ -3617,6 +3583,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                 <TrendDown size={16} weight="bold" />
                 <span>Playoff Path Contractions</span>
               </div>
+              {!forecastSlipTeams.length && <p>No measured decreases against a comparable snapshot yet.</p>}
               {forecastSlipTeams.map((fc: any) => {
                 const fn = fc.fluctuationNarrative || {};
                 return (
@@ -3646,99 +3613,21 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
           </div>
         </div>
 
-        {/* Expandable Statistical Viability & Methodology Breakdown */}
         <section className="forecast-methodology-container" style={{ margin: "24px 0 28px" }}>
           <details className="forecast-methodology-accordion">
             <summary>
               <div className="summary-title-wrap">
-                <span className="eyebrow">Institutional Verification</span>
-                <h3>Statistical Viability & Calibration Proof</h3>
-                <p>Click to inspect the mathematical foundations, probability conservation guarantees, and calibration benchmarks proving model validity.</p>
+                <span className="eyebrow">Model assumptions</span>
+                <h3>How the forecast works</h3>
+                <p>Inspect the inputs, completed results and limits behind these estimates.</p>
               </div>
               <span className="summary-toggle-pill">Explore Methodology</span>
             </summary>
-
             <div className="methodology-details-content">
-              {/* Metric Verification Badges */}
-              <div className="method-benchmarks-grid">
-                <div className="benchmark-card">
-                  <span className="bench-metric">Brier Score</span>
-                  <strong>0.071</strong>
-                  <small>Target &lt; 0.20 · Gold Standard Calibration</small>
-                  <p>Measures mean squared error of predicted probabilities. Lower is better; random guessing is 0.25.</p>
-                </div>
-                <div className="benchmark-card">
-                  <span className="bench-metric">Log-Loss / Cross-Entropy</span>
-                  <strong>0.2865</strong>
-                  <small>Target &lt; 0.50 · Information Theoretic Bound</small>
-                  <p>Heavily penalizes overconfidence. Scores below 0.30 reflect well-calibrated odds.</p>
-                </div>
-                <div className="benchmark-card">
-                  <span className="bench-metric">Probability Conservation</span>
-                  <strong>100.0%</strong>
-                  <small>Title: 100% · Playoffs: 600% · Byes: 200%</small>
-                  <p>Mathematical proof that all simulated seeds sum to exact physical bracket constraints.</p>
-                </div>
-                <div className="benchmark-card">
-                  <span className="bench-metric">Covariance Matrix PSD</span>
-                  <strong>+0.5456</strong>
-                  <small>Min Eigenvalue &gt; 0 · Valid Positive Semi-Definite</small>
-                  <p>Guarantees realistic position-level scoring correlations without mathematical divergence.</p>
-                </div>
-              </div>
-
-              {/* 5 Core Pillars of Statistical Viability */}
-              <div className="method-principles-list">
-                <article className="method-principle-item">
-                  <span className="principle-num">01</span>
-                  <div>
-                    <h4>Law of Large Numbers & Convergence (10,000 Iterations)</h4>
-                    <p>
-                      Simulating 10,000 full 14-week regular seasons and 6-team playoff brackets compresses standard error to within ±0.4% on playoff probabilities and ±0.08 wins on expected records. This eliminates the random variance noise seen in smaller 500-to-1,000 run simulators.
-                    </p>
-                  </div>
-                </article>
-
-                <article className="method-principle-item">
-                  <span className="principle-num">02</span>
-                  <div>
-                    <h4>Bitemporal Point-in-Time Integrity & Leakage Prevention</h4>
-                    <p>
-                      All feature stores and model inputs are strictly bounded by observation timestamp cutoffs (T_obs). Automated CI guards mathematically prevent lookahead bias or future-state contamination, ensuring past forecasts remain strictly uncorrupted.
-                    </p>
-                  </div>
-                </article>
-
-                <article className="method-principle-item">
-                  <span className="principle-num">03</span>
-                  <div>
-                    <h4>Heteroskedastic Scoring Distributions (Team-Specific Variance σ)</h4>
-                    <p>
-                      Rather than assuming an unrealistic static standard deviation across all 12 teams, each roster receives an individualized weekly scoring variance (σ ∈ [11.5, 18.0] pts). This captures the real distinction between concentrated boom-or-bust stars and high-floor balanced depth.
-                    </p>
-                  </div>
-                </article>
-
-                <article className="method-principle-item">
-                  <span className="principle-num">04</span>
-                  <div>
-                    <h4>Official Schedule Matrix & Tiebreaker Execution</h4>
-                    <p>
-                      The simulation executes the authentic 12-team Sleeper round-robin schedule and head-to-head match draws. Standings tiebreakers strictly apply official league rules: Wins → Total Points For → Head-to-Head → Potential Points, directly mirroring Sleeper's playoff qualification rules.
-                    </p>
-                  </div>
-                </article>
-
-                <article className="method-principle-item">
-                  <span className="principle-num">05</span>
-                  <div>
-                    <h4>Deterministic Reproducibility & Bayesian In-Season Updating</h4>
-                    <p>
-                      Fixed-seed execution (Seed=42) produces bit-identical outputs across Python, TypeScript, and BigQuery analytics tables. Every Tuesday throughout the season, completed real-world results lock into place, and the remaining schedule re-converges dynamically.
-                    </p>
-                  </div>
-                </article>
-              </div>
+              <p>{forecastInsightsJson.methodology}</p>
+              <p>The model uses the same published Power Index as the rankings, dated {new Date(powerRankingsJson.generatedAtUtc).toLocaleDateString("en-US", { timeZone: "UTC" })}. Historical roster inputs are dated {new Date(leagueInsights.generatedAt).toLocaleDateString("en-US", { timeZone: "UTC" })}.</p>
+              <p>Only verified final weeks are locked. Remaining games use simulated scores; standings are ordered by wins, then points scored. The scoring mean is 108 + 0.28 × Power Index, with roster-dependent variance.</p>
+              <p>These probabilities depend on modeling assumptions. More simulations reduce sampling noise; they do not establish predictive accuracy. Calibration against held-out results has not been established for this model version.</p>
             </div>
           </details>
         </section>

@@ -10,6 +10,7 @@ Outputs to:
 
 import os
 import json
+from sleeper_work.publication_contract import canonical_power_rows
 import datetime
 import urllib.request
 
@@ -110,17 +111,12 @@ def build_current_matchups(target_week=None):
             "settings": r.get("settings") or {},
         }
 
-    # Load power rankings if available
-    power_ranks = {}
+    # Use the same required snapshot as rankings and the season forecast.
     power_file = os.path.join(OUT_DIR, "power-rankings.json")
-    if os.path.exists(power_file):
-        try:
-            with open(power_file, "r", encoding="utf-8") as f:
-                p_data = json.load(f)
-                for item in p_data.get("rankings", []):
-                    power_ranks[item["rosterId"]] = item["rank"]
-        except Exception:
-            pass
+    with open(power_file, "r", encoding="utf-8") as f:
+        power_payload = json.load(f)
+    power_rows = canonical_power_rows(power_payload, roster_info)
+    power_ranks = {rid: row["rank"] for rid, row in power_rows.items()}
 
     # Baseline projected points by position
     pos_proj = {"QB": 17.5, "RB": 13.5, "WR": 13.0, "TE": 10.5, "FLEX": 10.5, "K": 8.0, "DEF": 7.0}
@@ -406,6 +402,7 @@ def build_current_matchups(target_week=None):
     payload = {
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "week": current_week,
+        "powerSnapshotAt": power_payload["generatedAtUtc"],
         "totalMatchups": len(matchup_cards),
         "totalProjectedPoints": round(total_proj, 1),
         "matchups": matchup_cards,

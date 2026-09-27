@@ -7,7 +7,7 @@
     "currentWeek": 3
   },
   "generatedAtUtc": "2026-09-22T14:53:37.076349+00:00",
-  "status": "scored",
+  "status": "final",
   "activeWeek": 2,
   "availableWeeks": [
     1,
@@ -223,8 +223,8 @@
     {
       "week": 1,
       "label": "Week 1 Recap",
-      "headline": "Week 1 Recap: 346-Point Heavyweight Clashes & Statement Wins",
-      "aiEditorialSummary": "Week 1 launched the 2026 campaign with unforgettable high-stakes drama and wild scoring separation across the board. Headlining the action was a breathless 346-point shootout where Bijan And The Maye-ssiah and Bronco Stampede pushed each other to the absolute limit. Bronco Stampede claimed the high-water mark with an electric 177.16-point eruption, while Bijan And The Maye-ssiah absorbed the ultimate bad beat after posting 169.32 points in defeat. With managerial efficiency separating early contenders from the pack, Week 2 promises immediate tactical recalibration.",
+      "headline": "Week 1 Final: Bronco Stampede Leads the Scoring",
+      "aiEditorialSummary": "All Week 1 games are final. Bronco Stampede led the league with 177.16 points. The highest-scoring matchup paired Bijan And The Maye-ssiah and Bronco Stampede for 346.48 combined points.",
       "leagueMedian": 142.58,
       "superlatives": {
         "nailbiter": {
@@ -1067,7 +1067,8 @@
                 "margin": 76.64
               }
             ]
-          }
+          },
+          "status": "final"
         },
         {
           "matchupId": 2,
@@ -1854,7 +1855,8 @@
                 "margin": 36.54
               }
             ]
-          }
+          },
+          "status": "final"
         },
         {
           "matchupId": 3,
@@ -2661,7 +2663,8 @@
                 "margin": 7.84
               }
             ]
-          }
+          },
+          "status": "final"
         },
         {
           "matchupId": 4,
@@ -3458,7 +3461,8 @@
                 "margin": 89.6
               }
             ]
-          }
+          },
+          "status": "final"
         },
         {
           "matchupId": 5,
@@ -4265,7 +4269,8 @@
                 "margin": 4.02
               }
             ]
-          }
+          },
+          "status": "final"
         },
         {
           "matchupId": 6,
@@ -5062,15 +5067,156 @@
                 "margin": 16.04
               }
             ]
-          }
+          },
+          "status": "final"
         }
-      ]
+      ],
+      "status": "final",
+      "completion": {
+        "season": "2026",
+        "week": 1,
+        "provider": "ESPN scoreboard",
+        "checkedAtUtc": "2026-09-27T16:12:17.040240+00:00",
+        "expectedGames": 16,
+        "games": [
+          {
+            "eventId": "401872656",
+            "teams": [
+              "NE",
+              "SEA"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872657",
+            "teams": [
+              "LAR",
+              "SF"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872925",
+            "teams": [
+              "CIN",
+              "TB"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872923",
+            "teams": [
+              "DET",
+              "NO"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872924",
+            "teams": [
+              "NYJ",
+              "TEN"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872659",
+            "teams": [
+              "BAL",
+              "IND"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872658",
+            "teams": [
+              "ATL",
+              "PIT"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872661",
+            "teams": [
+              "CAR",
+              "CHI"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872922",
+            "teams": [
+              "CLE",
+              "JAX"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872660",
+            "teams": [
+              "BUF",
+              "HOU"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872928",
+            "teams": [
+              "LV",
+              "MIA"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872927",
+            "teams": [
+              "GB",
+              "MIN"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872929",
+            "teams": [
+              "PHI",
+              "WAS"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872926",
+            "teams": [
+              "ARI",
+              "LAC"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872930",
+            "teams": [
+              "DAL",
+              "NYG"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872931",
+            "teams": [
+              "DEN",
+              "KC"
+            ],
+            "final": true
+          }
+        ],
+        "status": "final",
+        "sourceUrl": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2026&seasontype=2&week=1&limit=1000"
+      }
     },
     {
       "week": 2,
       "label": "Week 2 Recap",
-      "headline": "Week 2 Recap: 309-Point Heavyweight Clashes & Statement Wins",
-      "aiEditorialSummary": "Week 2 launched the 2026 campaign with unforgettable high-stakes drama and wild scoring separation across the board. Headlining the action was a breathless 309-point shootout where Ertz & Krafts \ud83c\udfc6 and Bronco Stampede pushed each other to the absolute limit. Bronco Stampede claimed the high-water mark with an electric 190.02-point eruption, while Ertz & Krafts \ud83c\udfc6 absorbed the ultimate bad beat after posting 118.56 points in defeat. With managerial efficiency separating early contenders from the pack, Week 3 promises immediate tactical recalibration.",
+      "headline": "Week 2 Final: Bronco Stampede Leads the Scoring",
+      "aiEditorialSummary": "All Week 2 games are final. Bronco Stampede led the league with 190.02 points. The highest-scoring matchup paired Ertz & Krafts \ud83c\udfc6 and Bronco Stampede for 308.58 combined points.",
       "leagueMedian": 115.92,
       "superlatives": {
         "nailbiter": {
@@ -5903,7 +6049,8 @@
                 "margin": 23.64
               }
             ]
-          }
+          },
+          "status": "final"
         },
         {
           "matchupId": 2,
@@ -6700,7 +6847,8 @@
                 "margin": 71.46
               }
             ]
-          }
+          },
+          "status": "final"
         },
         {
           "matchupId": 3,
@@ -7487,7 +7635,8 @@
                 "margin": 9.02
               }
             ]
-          }
+          },
+          "status": "final"
         },
         {
           "matchupId": 4,
@@ -8274,7 +8423,8 @@
                 "margin": 6.1
               }
             ]
-          }
+          },
+          "status": "final"
         },
         {
           "matchupId": 5,
@@ -9061,7 +9211,8 @@
                 "margin": 53.16
               }
             ]
-          }
+          },
+          "status": "final"
         },
         {
           "matchupId": 6,
@@ -9858,9 +10009,150 @@
                 "margin": 24.92
               }
             ]
-          }
+          },
+          "status": "final"
         }
-      ]
+      ],
+      "status": "final",
+      "completion": {
+        "season": "2026",
+        "week": 2,
+        "provider": "ESPN scoreboard",
+        "checkedAtUtc": "2026-09-27T16:12:16.902933+00:00",
+        "expectedGames": 16,
+        "games": [
+          {
+            "eventId": "401872932",
+            "teams": [
+              "BUF",
+              "DET"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872933",
+            "teams": [
+              "ATL",
+              "CAR"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872937",
+            "teams": [
+              "CHI",
+              "MIN"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872939",
+            "teams": [
+              "PHI",
+              "TEN"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872946",
+            "teams": [
+              "NE",
+              "PIT"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872936",
+            "teams": [
+              "GB",
+              "NYJ"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872935",
+            "teams": [
+              "CLE",
+              "TB"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872938",
+            "teams": [
+              "BAL",
+              "NO"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872934",
+            "teams": [
+              "CIN",
+              "HOU"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872940",
+            "teams": [
+              "DEN",
+              "JAX"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872941",
+            "teams": [
+              "LAC",
+              "LV"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872944",
+            "teams": [
+              "DAL",
+              "WAS"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872943",
+            "teams": [
+              "ARI",
+              "SEA"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872942",
+            "teams": [
+              "MIA",
+              "SF"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872945",
+            "teams": [
+              "IND",
+              "KC"
+            ],
+            "final": true
+          },
+          {
+            "eventId": "401872947",
+            "teams": [
+              "LAR",
+              "NYG"
+            ],
+            "final": true
+          }
+        ],
+        "status": "final",
+        "sourceUrl": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2026&seasontype=2&week=2&limit=1000"
+      }
     }
   ],
   "priorSeason": {

@@ -412,6 +412,7 @@ function RecapsScreen() {
           <div className="recap-matchups-grid">
             {currentWeekRecap?.matchups?.map((m: any) => {
               const isWinnerA = m.winnerRosterId === m.teamA.rosterId;
+              const isWinnerB = m.winnerRosterId === m.teamB.rosterId;
               const isExpanded = expandedMatchup === m.matchupId;
               return (
                 <div key={m.matchupId} className="recap-matchup-card">
@@ -441,11 +442,11 @@ function RecapsScreen() {
                     {/* VS */}
                     <div className="recap-vs-divider">
                       <span className="recap-vs-badge">VS</span>
-                      <span className="recap-margin-badge">{isWinnerA ? `+${m.margin.toFixed(2)}` : `-${m.margin.toFixed(2)}`}</span>
+                      <span className="recap-margin-badge">{m.winnerRosterId == null ? "Tie" : isWinnerA ? `+${m.margin.toFixed(2)}` : `-${m.margin.toFixed(2)}`}</span>
                     </div>
 
                     {/* Team B */}
-                    <div className={`recap-team-box ${!isWinnerA ? "winner" : ""}`}>
+                    <div className={`recap-team-box ${isWinnerB ? "winner" : ""}`}>
                       <div className="recap-team-top">
                         <span className="recap-team-name">{m.teamB.teamName}</span>
                         <span className="recap-team-score">{m.teamB.points.toFixed(2)}</span>
@@ -482,7 +483,7 @@ function RecapsScreen() {
                             </div>
                           </div>
                           <div className="grade-vs-divider">VS</div>
-                          <div className={`grade-team-card ${!isWinnerA ? "winner" : ""}`}>
+                          <div className={`grade-team-card ${isWinnerB ? "winner" : ""}`}>
                             <div className="grade-pill-badge">{m.deepDive.teamBGrade || "B"}</div>
                             <div className="grade-team-info">
                               <strong>{m.teamB.teamName}</strong>
