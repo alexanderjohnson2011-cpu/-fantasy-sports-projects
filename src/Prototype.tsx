@@ -1538,14 +1538,21 @@ function useLiveMatchupScores(currentWeek: number) {
 function RecapsScreen({ onWeek }: { onWeek?: (week: number) => void }) {
   const recapData = weeklyRecapJson;
   const [selectedWeek, setSelectedWeek] = useState<number>(() => {
-    const requested = Number(window.location.hash.match(/^#recaps\/week-(\d+)$/)?.[1]);
+    const requested = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/matchup-\d+)?$/)?.[1]);
     return recapData.availableWeeks?.includes(requested) ? requested : recapData.activeWeek || 1;
   });
-  const [expandedMatchup, setExpandedMatchup] = useState<number | null>(null);
+  const [expandedMatchup, setExpandedMatchup] = useState<number | null>(() => {
+    const match = window.location.hash.match(/^#recaps\/week-\d+\/matchup-(\d+)$/);
+    return match ? Number(match[1]) : null;
+  });
   useEffect(() => {
     const syncWeek = () => {
-      const requested = Number(window.location.hash.match(/^#recaps\/week-(\d+)$/)?.[1]);
-      if (recapData.availableWeeks?.includes(requested)) setSelectedWeek(requested);
+      const match = window.location.hash.match(/^#recaps\/week-(\d+)(?:\/matchup-(\d+))?$/);
+      const requested = Number(match?.[1]);
+      if (recapData.availableWeeks?.includes(requested)) {
+        setSelectedWeek(requested);
+        setExpandedMatchup(match?.[2] ? Number(match[2]) : null);
+      }
     };
     window.addEventListener("hashchange", syncWeek);
     return () => window.removeEventListener("hashchange", syncWeek);
@@ -1718,7 +1725,10 @@ function RecapsScreen({ onWeek }: { onWeek?: (week: number) => void }) {
                   <button
                     type="button"
                     className="recap-boxscore-toggle"
-                    onClick={() => setExpandedMatchup(isExpanded ? null : m.matchupId)}
+                    onClick={() => {
+                      setExpandedMatchup(isExpanded ? null : m.matchupId);
+                      window.location.hash = isExpanded ? `#recaps/week-${selectedWeek}` : `#recaps/week-${selectedWeek}/matchup-${m.matchupId}`;
+                    }}
                   >
                     <BookOpenText size={14} />
                     <span>{isExpanded ? "Collapse Matchup Deep Dive" : "Inside the Matchup · Deep Dive, Stats & Full Box Score"}</span>
@@ -3002,8 +3012,8 @@ function MatchupsScreen({ onMatchup, initialTab = "slate" }: { onMatchup?: (matc
               const marqueeCrucialTV = [...marqueeMatchup.tvSchedule].sort((a, b) => (parseFloat(b.fantasyPointsAtStake) || 0) - (parseFloat(a.fantasyPointsAtStake) || 0))[0];
               const liveA = liveScores[String(marqueeMatchup.teamA.rosterId)];
               const liveB = liveScores[String(marqueeMatchup.teamB.rosterId)];
-              const scoreA = liveA && liveA.points > 0 ? `${liveA.points.toFixed(1)} live` : `${marqueeMatchup.teamA.projectedScore} projected`;
-              const scoreB = liveB && liveB.points > 0 ? `${liveB.points.toFixed(1)} live` : `${marqueeMatchup.teamB.projectedScore} projected`;
+              const scoreA = isLiveAction && liveA ? `${liveA.points.toFixed(1)} live` : `${marqueeMatchup.teamA.projectedScore} projected`;
+              const scoreB = isLiveAction && liveB ? `${liveB.points.toFixed(1)} live` : `${marqueeMatchup.teamB.projectedScore} projected`;
               const probA = liveA && liveA.liveWinProb !== undefined ? liveA.liveWinProb : marqueeMatchup.teamA.winProbability;
               const probB = liveB && liveB.liveWinProb !== undefined ? liveB.liveWinProb : marqueeMatchup.teamB.winProbability;
 
@@ -3030,6 +3040,7 @@ function MatchupsScreen({ onMatchup, initialTab = "slate" }: { onMatchup?: (matc
                       </div>
                       <div className="team-score-proj">
                         <strong>{scoreA}</strong>
+                        {isLiveAction && liveA?.liveProjectedTotal != null ? <span>Rough final estimate {liveA.liveProjectedTotal.toFixed(1)} · {Math.max(0, marqueeMatchup.teamA.starters.length - liveA.startersPlayed)} starters without positive points</span> : null}
                         <span>{probA}% Win Prob</span>
                       </div>
                     </div>
@@ -3044,6 +3055,7 @@ function MatchupsScreen({ onMatchup, initialTab = "slate" }: { onMatchup?: (matc
                     <div className="team-col team-b">
                       <div className="team-score-proj">
                         <strong>{scoreB}</strong>
+                        {isLiveAction && liveB?.liveProjectedTotal != null ? <span>Rough final estimate {liveB.liveProjectedTotal.toFixed(1)} · {Math.max(0, marqueeMatchup.teamB.starters.length - liveB.startersPlayed)} starters without positive points</span> : null}
                         <span>{probB}% Win Prob</span>
                       </div>
                       <div className="team-meta-info">
@@ -3068,6 +3080,8 @@ function MatchupsScreen({ onMatchup, initialTab = "slate" }: { onMatchup?: (matc
               );
             })() : null}
 
+            {isLiveAction ? <p className="source-note">Live scores are observed; rough final estimates are illustrative. A starter without positive points may already have played, so the count is not verified players remaining.</p> : null}
+
             {/* All 6 Matchup Cards Grid */}
             <div className="matchup-list-grid">
               {matchupsList.map((m) => {
@@ -3076,8 +3090,8 @@ function MatchupsScreen({ onMatchup, initialTab = "slate" }: { onMatchup?: (matc
                 const crucialTV = [...m.tvSchedule].sort((a, b) => (parseFloat(b.fantasyPointsAtStake) || 0) - (parseFloat(a.fantasyPointsAtStake) || 0))[0];
                 const liveA = liveScores[String(teamA.rosterId)];
                 const liveB = liveScores[String(teamB.rosterId)];
-                const scoreA = liveA && liveA.points > 0 ? `${liveA.points.toFixed(1)} live` : `${teamA.projectedScore} projected`;
-                const scoreB = liveB && liveB.points > 0 ? `${liveB.points.toFixed(1)} live` : `${teamB.projectedScore} projected`;
+                const scoreA = isLiveAction && liveA ? `${liveA.points.toFixed(1)} live` : `${teamA.projectedScore} projected`;
+                const scoreB = isLiveAction && liveB ? `${liveB.points.toFixed(1)} live` : `${teamB.projectedScore} projected`;
                 const probA = liveA && liveA.liveWinProb !== undefined ? liveA.liveWinProb : teamA.winProbability;
                 const probB = liveB && liveB.liveWinProb !== undefined ? liveB.liveWinProb : teamB.winProbability;
 
@@ -4640,7 +4654,7 @@ function routeFromHash(): Route {
   if (value === "recaps" || value === "recap") {
     return { kind: "nav", id: "recaps" };
   }
-  if (/^recaps\/week-\d+$/.test(value)) return { kind: "nav", id: "recaps" };
+  if (/^recaps\/week-\d+(?:\/matchup-\d+)?$/.test(value)) return { kind: "nav", id: "recaps" };
   if (value === "hall-of-mac" || value === "league/hall") return { kind: "nav", id: "hall" };
   if (value === "standings" || value === "league/standings") return { kind: "nav", id: "standings" };
   if (value === "transactions/trades" || value === "trades") return { kind: "nav", id: "trades" };
@@ -4679,7 +4693,7 @@ export default function Prototype() {
     return teams.some((team) => team.rosterId === stored) ? stored : null;
   });
   const [contextWeek, setContextWeek] = useState<number>(() => {
-    const linked = Number(window.location.hash.match(/^#recaps\/week-(\d+)$/)?.[1]);
+    const linked = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/matchup-\d+)?$/)?.[1]);
     const stored = Number(window.localStorage.getItem("apes-week"));
     return [linked, stored].find((week) => [...weeklyRecapJson.availableWeeks, matchupsCurrentJson.week].includes(week)) ?? matchupsCurrentJson.week;
   });
@@ -4697,7 +4711,7 @@ export default function Prototype() {
     const handleHash = () => {
       const next = routeFromHash();
       setRoute(next);
-      const linkedWeek = Number(window.location.hash.match(/^#recaps\/week-(\d+)$/)?.[1]);
+      const linkedWeek = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/matchup-\d+)?$/)?.[1]);
       if (weeklyRecapJson.availableWeeks.includes(linkedWeek)) {
         setContextWeek(linkedWeek);
         window.localStorage.setItem("apes-week", String(linkedWeek));
