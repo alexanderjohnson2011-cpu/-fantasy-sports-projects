@@ -20,7 +20,10 @@ import json
 import uuid
 import datetime
 import numpy as np
-from sleeper_work.publication_contract import canonical_power_rows, validate_final_week
+try:
+    from sleeper_work.publication_contract import canonical_power_rows, validate_final_week
+except ModuleNotFoundError:
+    from publication_contract import canonical_power_rows, validate_final_week
 
 try:
     from google.cloud import bigquery

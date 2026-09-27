@@ -10,7 +10,10 @@ Outputs to:
 
 import os
 import json
-from sleeper_work.publication_contract import canonical_power_rows
+try:
+    from sleeper_work.publication_contract import canonical_power_rows
+except ModuleNotFoundError:
+    from publication_contract import canonical_power_rows
 import datetime
 import urllib.request
 

@@ -17,7 +17,10 @@ import random
 from collections import defaultdict
 from datetime import datetime, timezone
 import urllib.request
-from sleeper_work.publication_contract import fetch_week_completion, validate_final_week, winner_id
+try:
+    from sleeper_work.publication_contract import fetch_week_completion, validate_final_week, winner_id
+except ModuleNotFoundError:
+    from publication_contract import fetch_week_completion, validate_final_week, winner_id
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 # Check root directories
