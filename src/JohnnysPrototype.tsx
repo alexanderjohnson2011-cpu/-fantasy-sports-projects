@@ -1801,6 +1801,10 @@ export default function JohnnysPrototype() {
 
       {/* Main Content Viewport */}
       <div className="site-content">
+        <div className="publication-context"><div className="publication-context__scope">
+          <span>Johnny’s Jerks · 2026 redraft league</span>
+          <a href={window.location.pathname.startsWith("/johnny") ? "/" : "https://apesmacsalad.netlify.app/"}>← Ape’s Mac Salad</a>
+        </div></div>
         {route.kind === "powerTeam" && selectedPowerTeam ? (
           <>
             <DetailHeader onBack={goBack} title={selectedPowerTeam.teamName} context="Power Rankings" grade={selectedPowerTeam.grade} />
