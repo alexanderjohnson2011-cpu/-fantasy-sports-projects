@@ -49,7 +49,7 @@ class CompletionTests(unittest.TestCase):
     def generate(self, final, points=(0, 0)):
         with tempfile.TemporaryDirectory() as tmp, ExitStack() as stack:
             stack.enter_context(patch.dict('os.environ', {'GEMINI_API_KEY': '', 'GOOGLE_API_KEY': ''}))
-            for name, value in {'load_players_map': {}, 'fetch_league_metadata': {1: {'teamName': 'A', 'manager': 'a'}, 2: {'teamName': 'B', 'manager': 'b'}}, 'fetch_week_completion': evidence(final), 'fetch_nfl_stats': {}, 'fetch_nfl_projections': {}, 'load_nfl_window_map': {}, 'fetch_next_week_pairings': {}, 'generate_matchup_commentary': 'placeholder'}.items():
+            for name, value in {'load_players_map': {}, 'fetch_league_metadata': {1: {'teamName': 'A', 'manager': 'a'}, 2: {'teamName': 'B', 'manager': 'b'}}, 'fetch_week_completion': evidence(final), 'fetch_nfl_stats': {}, 'fetch_nfl_projections': {}, 'load_nfl_window_map': {}, 'fetch_next_week_pairings': {}, 'generate_matchup_commentary': 'placeholder', 'generate_yahoo_deep_dive_story': {'headline': 'placeholder', 'story': 'placeholder'}}.items():
                 stack.enter_context(patch.object(builder, name, return_value=value))
             stack.enter_context(patch.object(builder, 'HERE', tmp))
             stack.enter_context(patch.object(builder, 'OUT', str(Path(tmp) / 'weekly-recap.json')))
@@ -73,6 +73,12 @@ class CompletionTests(unittest.TestCase):
         self.assertTrue(all(r['ties'] == 1 and r['wins'] == 0 for r in result['standings']))
         self.assertIsNone(week['superlatives']['managerOfTheWeek'])
         validate_final_week(week, [1, 2], '2026')
+
+    def test_recap_headline_scores_follow_named_winner(self):
+        result, _ = self.generate(True, points=(99.7, 123.34))
+        card = result['weeks'][0]['matchups'][0]
+        self.assertEqual(card['winnerRosterId'], 2)
+        self.assertEqual(card['title'], 'B Defeats A (123.3 – 99.7)')
 
 
 class SnapshotTests(unittest.TestCase):

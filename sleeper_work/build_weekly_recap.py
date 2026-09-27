@@ -899,7 +899,8 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             elif is_blowout:
                 title = f"{winner_name} Crushes {loser_name} in {margin:.1f}-Point Rout"
             else:
-                title = f"{winner_name} Defeats {loser_name} ({pts1:.1f} – {pts2:.1f})"
+                winner_points, loser_points = (pts1, pts2) if winning_roster == rid1 else (pts2, pts1)
+                title = f"{winner_name} Defeats {loser_name} ({winner_points:.1f} – {loser_points:.1f})"
 
             matchup_cards.append({
                 "matchupId": mid,

@@ -389,7 +389,7 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42, stream_to_bigq
             "worst_seed": worst_seed
         }
         
-    # Sort all 12 teams to establish canonical Projected League Rank (1..12)
+    # Sort all 12 teams to establish canonical title-odds rank (1..12)
     # Ranked by: Championship Odds DESC, Expected Wins DESC, Expected PF DESC, Expected Seed ASC
     sorted_forecast_teams = sorted(
         team_ids,
@@ -506,7 +506,7 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42, stream_to_bigq
             "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
             "historyNotes": history_notes,
         }
-        conn_note = (f"Projected finish #{proj_rank} versus Power Index #{p_rank}. "
+        conn_note = (f"Title odds rank #{proj_rank} versus Power Index #{p_rank}. "
                      "The forecast also includes completed results, schedule and simulated weekly scoring variance. "
                      "The difference alone does not identify a causal driver.")
 

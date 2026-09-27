@@ -4,7 +4,9 @@
 
 The shipped product is a responsive website, not a device simulator. Never wrap the public experience in `MobileRuntime`, `PhoneFrame`, a phone bezel, a fake status bar, or a device picker. Mobile should use the full browser viewport, while tablet and desktop should progressively expand into purpose-built layouts.
 
-The public editorial brand is **Ape's Mac Salad**. The draft product is called **Draft Analysis**, never Draft Almanac. Ape's Mac Salad is also the league's recurring weekly honor: the top draft grade earns the inaugural bowl, and a new manager earns it from the Tuesday matchup review each week.
+The public editorial brand is **Ape's Mac Salad**. The published draft product is called **Draft Recap**, never Draft Almanac. Ape's Mac Salad is also the league's recurring weekly honor: the top draft grade earns the inaugural bowl, and a new manager earns it from the Tuesday matchup review each week.
+
+The publication's five primary destinations are Front Page, This Week, League, Transactions, and Draft. Keep final recaps under This Week; Power Rankings, Forecast, Standings, and Hall of Mac under League; Waivers and Trades under Transactions. Preserve the editorial newspaper identity. The persistent context bar provides a week jump, My Team, and a league switch. Week, team, matchup, and transaction subview links should survive reload and browser Back. Current-year Power Index is shown as rank and numeric relative score; draft and dynasty letter grades remain separate.
 
 Treat supporting copy and data labels as readable content, never decorative microprint. Keep visible UI text at 12px or larger, with longer editorial copy at 14px or larger, on both desktop and mobile. The Mac Salad trophy must use a genuinely transparent asset and show a clear plastic to-go container of extra-creamy, mayonnaise-forward elbow macaroni salad with no red or green ingredients or garnish.
 

@@ -477,7 +477,7 @@ const draftSuperlatives = draftRecap.superlatives.map(
   (s) => [s.label, s.displayWinner, s.note] as const,
 );
 
-type NavId = "dashboard" | "recaps" | "matchups" | "waivers" | "power" | "forecast" | "analysis";
+type NavId = "dashboard" | "recaps" | "matchups" | "hall" | "standings" | "waivers" | "trades" | "power" | "forecast" | "analysis";
 
 type Route =
   | { kind: "nav"; id: NavId }
@@ -490,13 +490,25 @@ type Route =
 
 const navItems: Array<{ id: NavId; label: string; icon: typeof BookOpenText }> = [
   { id: "dashboard", label: "Front Page", icon: Newspaper },
-  { id: "recaps", label: "Recaps", icon: ClockCounterClockwise },
-  { id: "matchups", label: "Matchups", icon: Football },
-  { id: "waivers", label: "Waivers & ROI", icon: CurrencyDollar },
-  { id: "power", label: "Power Rankings", icon: UsersThree },
-  { id: "forecast", label: "Forecast", icon: ChartLineUp },
-  { id: "analysis", label: "Draft Analysis", icon: BookOpenText },
+  { id: "matchups", label: "This Week", icon: Football },
+  { id: "power", label: "League", icon: UsersThree },
+  { id: "waivers", label: "Transactions", icon: CurrencyDollar },
+  { id: "analysis", label: "Draft", icon: BookOpenText },
 ];
+
+const sectionLinks: Record<string, Array<[NavId, string]>> = {
+  dashboard: [["dashboard", "Front Page"]],
+  matchups: [["matchups", "Matchups"], ["recaps", "Final Recaps"]],
+  power: [["power", "Power Rankings"], ["forecast", "Forecast"], ["standings", "Standings"], ["hall", "Hall of Mac"]],
+  waivers: [["waivers", "Waivers & ROI"], ["trades", "Trades"]],
+  analysis: [["analysis", "Draft Recap"]],
+};
+function navGroup(id: NavId): string {
+  if (id === "recaps") return "matchups";
+  if (id === "forecast" || id === "standings" || id === "hall") return "power";
+  if (id === "trades") return "waivers";
+  return id;
+}
 
 function padRank(rank: number) {
   return String(rank).padStart(2, "0");
@@ -547,7 +559,6 @@ function median(values: number[]) {
 type PowerProfile = {
   rosterId: number;
   rank: number;
-  grade: string;
   tier: string;
   score: number;
   lineupScore: number;
@@ -714,6 +725,7 @@ function pickAnalysis(team: Team, pick: Pick) {
 }
 
 function SiteNav({ active, onNavigate }: { active: NavId; onNavigate: (id: NavId) => void }) {
+  const group = navGroup(active);
   return (
     <nav className="bottom-nav" aria-label="Primary">
       <div className="site-nav__brand" onClick={() => onNavigate("dashboard")} style={{ cursor: "pointer" }} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && onNavigate("dashboard")}>
@@ -726,18 +738,51 @@ function SiteNav({ active, onNavigate }: { active: NavId; onNavigate: (id: NavId
         return (
           <button
             type="button"
-            className={active === item.id ? "bottom-nav__item is-active" : "bottom-nav__item"}
+            className={group === item.id ? "bottom-nav__item is-active" : "bottom-nav__item"}
             key={item.id}
-            aria-current={active === item.id ? "page" : undefined}
+            aria-current={group === item.id ? "page" : undefined}
             onClick={() => onNavigate(item.id)}
           >
-            <Icon size={25} weight={active === item.id ? "duotone" : "regular"} aria-hidden="true" />
+            <Icon size={25} weight={group === item.id ? "duotone" : "regular"} aria-hidden="true" />
             <span>{item.label}</span>
           </button>
         );
       })}
       </div>
     </nav>
+  );
+}
+
+function PublicationContext({ active, myTeam, week, onTeam, onWeek, onNavigate }: {
+  active: NavId; myTeam: number | null; week: number; onTeam: (rosterId: number) => void;
+  onWeek: (week: number) => void; onNavigate: (id: NavId) => void;
+}) {
+  const group = navGroup(active);
+  const currentWeek = matchupsCurrentJson.week;
+  return (
+    <div className="publication-context">
+      <div className="publication-context__scope">
+        <span>2026 season · Week {currentWeek} matchups · Week {weeklyRecapJson.activeWeek} final</span>
+        <label>Jump to week
+          <select aria-label="Jump to week" value={week} onChange={(event) => onWeek(Number(event.target.value))}>
+            {[...new Set([...(weeklyRecapJson.availableWeeks || []), currentWeek])].sort((a, b) => b - a).map((number) =>
+              <option key={number} value={number}>Week {number}{number === currentWeek ? " · current" : " · final"}</option>)}
+          </select>
+        </label>
+        <label>My Team
+          <select aria-label="My Team" value={myTeam ?? ""} onChange={(event) => onTeam(Number(event.target.value))}>
+            <option value="" disabled>Select team</option>
+            {teams.map((team) => <option value={team.rosterId} key={team.rosterId}>{team.name}</option>)}
+          </select>
+        </label>
+        <a href="/johnny" aria-label="Switch to Johnny’s Jerks league">Johnny’s Jerks ↗</a>
+      </div>
+      <nav className="publication-context__links" aria-label={`${navItems.find((item) => item.id === group)?.label} sections`}>
+        {sectionLinks[group].map(([id, label]) => (
+          <button key={id} type="button" className={active === id ? "is-active" : ""} aria-current={active === id ? "page" : undefined} onClick={() => onNavigate(id)}>{label}</button>
+        ))}
+      </nav>
+    </div>
   );
 }
 
@@ -765,23 +810,6 @@ function AppHeader({ onMenu }: { onMenu: () => void }) {
           }}
         >
           🧃 Johnny’s Jerks
-        </a>
-        <a
-          href="#draft-room"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "6px",
-            padding: "5px 12px",
-            background: "#00ceb8",
-            color: "#0c1514",
-            fontWeight: 700,
-            fontSize: "0.85rem",
-            borderRadius: "6px",
-            textDecoration: "none",
-          }}
-        >
-          <Lightning size={16} weight="fill" /> Moosey’s Mommy Draft Desk
         </a>
       </div>
       <button className="icon-button" type="button" aria-label="Open methodology" onClick={onMenu}>
@@ -1033,8 +1061,8 @@ function PowerTeamScreen({ team }: { team: Team }) {
       <main className="detail-page power-detail-page" data-testid={`power-team-${team.rosterId}`}>
         <section className="team-hero power-team-hero">
           <p className="eyebrow">{team.manager} · {profile.tier}</p>
-          <span className="team-hero__label">2026 viability grade</span>
-          <div className="team-hero__grade">{profile.grade}</div>
+          <span className="team-hero__label">2026 Power Index · rank #{profile.rank}</span>
+          <div className="team-hero__grade">{profile.score.toFixed(1)}</div>
           <h1>{team.name}</h1>
           <p>{published.commentary}</p>
           <p className="source-note">Power Index updated {new Date(powerRankingsJson.generatedAtUtc).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}</p>
@@ -1042,24 +1070,24 @@ function PowerTeamScreen({ team }: { team: Team }) {
         </section>
 
         <section className="detail-block viability-build">
-          <div className="detail-title"><span>01</span><h2>Why this grade</h2></div>
-          <p className="detail-explainer">This is a current-year roster grade—not the team’s draft grade. It measures the lineup that can score now, the bench that can survive attrition, positional balance in this league, and last season’s scoring baseline.</p>
+          <div className="detail-title"><span>01</span><h2>How the index is built</h2></div>
+          <p className="detail-explainer">This current-year roster index measures the lineup that can score now, the bench that can survive attrition, positional balance in this league, and last season’s scoring baseline.</p>
           <div className="power-metric-grid viability-summary">
             <div><span>2026 rank</span><strong>#{profile.rank}</strong><small>{profile.tier}</small></div>
-            <div><span>Roster grade</span><strong>{profile.grade}</strong><small>{profile.score.toFixed(1)} / 100</small></div>
+            <div><span>Power Index</span><strong>{profile.score.toFixed(1)}</strong><small>relative league scale / 100</small></div>
             <div><span>Lineup</span><strong>#{profile.lineupRank}</strong><small>published index</small></div>
             <div><span>Depth</span><strong>#{profile.depthRank}</strong><small>published index</small></div>
           </div>
           <div className="viability-formula">
             {gradeComponents.map((component) => (
               <div key={component.label}>
-                <span><strong>{component.label}</strong><small>{component.weight} of grade</small></span>
+                <span><strong>{component.label}</strong><small>{component.weight} of index</small></span>
                 <i><b style={{ width: `${component.score}%` }} /></i>
                 <em>{component.detail}</em>
               </div>
             ))}
           </div>
-          <p className="source-note">The Power Index uses 55% optimal-lineup value, 25% top-six bench value, 10% positional balance, and 10% prior-season points scored. Components are scaled across this league to 0–100; the grade is relative roster strength, not a win probability. Draft execution is separate.</p>
+          <p className="source-note">The Power Index uses 55% optimal-lineup value, 25% top-six bench value, 10% positional balance, and 10% prior-season points scored. Components are scaled across this league to 0–100; the index measures relative roster strength, not a win probability. Draft execution is separate.</p>
         </section>
 
         <section className="detail-block scoring-profile">
@@ -1183,7 +1211,7 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
         <p className="eyebrow">2026 NFL Week {currentWeek} · Official Power Index</p>
         <h1>Power Rankings</h1>
         <p className="section-deck">
-          Who can actually win this year—graded on current starting lineup strength, usable depth, roster balance, and prior-season scoring receipts.
+          Current-year roster strength ranked by current starting lineup strength, usable depth, roster balance, and prior-season scoring receipts.
         </p>
         <div className="issue-rule">
           <span>Week {currentWeek} · Updated {new Date(powerData.generatedAtUtc).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })} · {dynamicTeams.length} Franchises</span>
@@ -1324,7 +1352,7 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
                 </div>
                 <p>{dynamicTeam.commentary}</p>
                 <div className="power-card__metrics">
-                  <div><span>Grade</span><strong>{profile.grade}</strong><small>{dynamicTeam.score.toFixed(1)}</small></div>
+                  <div><span>Power Index</span><strong>{dynamicTeam.score.toFixed(1)}</strong><small>#{dynamicTeam.rank} in league</small></div>
                   <div><span>Lineup</span><strong>#{profile.lineupRank}</strong></div>
                   <div><span>Depth</span><strong>#{profile.depthRank}</strong></div>
                   <div><span>Volatility</span><strong>{profile.volatilityScore.toFixed(0)}</strong><small>{profile.volatilityLabel}</small></div>
@@ -1356,7 +1384,7 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
                 {forecastInsights.teams[String(team.rosterId)] ? (
                   <div className="power-card__sim-badge">
                     <span>Sim Outlook</span>
-                    <strong>Proj Finish #{forecastInsights.teams[String(team.rosterId)].projectedRank ?? forecastInsights.teams[String(team.rosterId)].medianSeed}</strong>
+                    <strong>Title Odds Rank #{forecastInsights.teams[String(team.rosterId)].projectedRank ?? forecastInsights.teams[String(team.rosterId)].medianSeed}</strong>
                     <em>{forecastInsights.teams[String(team.rosterId)].playoffProbability}% Playoffs · {forecastInsights.teams[String(team.rosterId)].expectedWins}W</em>
                   </div>
                 ) : null}
@@ -1364,7 +1392,7 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
             );
           })}
         </div>
-        <p className="method-note">The 2026 ranking is 55% current optimal-lineup strength, 25% usable depth, 10% positional balance calibrated to this three-FLEX format, and 10% prior-season scoring. Letters come from the resulting score—not a forced league distribution. Dynasty grade and three-year rank are reported separately and cannot inflate the current-year grade.</p>
+        <p className="method-note">The 2026 Power Index is 55% current optimal-lineup strength, 25% usable depth, 10% positional balance calibrated to this three-FLEX format, and 10% prior-season scoring. Scores are scaled within this league; they are not win probabilities or school grades. Dynasty grade and three-year rank are reported separately.</p>
       </main>
     </div>
   );
@@ -1507,10 +1535,21 @@ function useLiveMatchupScores(currentWeek: number) {
   return { liveScores, isLiveAction };
 }
 
-function RecapsScreen() {
+function RecapsScreen({ onWeek }: { onWeek?: (week: number) => void }) {
   const recapData = weeklyRecapJson;
-  const [selectedWeek, setSelectedWeek] = useState<number>(recapData.activeWeek || 1);
+  const [selectedWeek, setSelectedWeek] = useState<number>(() => {
+    const requested = Number(window.location.hash.match(/^#recaps\/week-(\d+)$/)?.[1]);
+    return recapData.availableWeeks?.includes(requested) ? requested : recapData.activeWeek || 1;
+  });
   const [expandedMatchup, setExpandedMatchup] = useState<number | null>(null);
+  useEffect(() => {
+    const syncWeek = () => {
+      const requested = Number(window.location.hash.match(/^#recaps\/week-(\d+)$/)?.[1]);
+      if (recapData.availableWeeks?.includes(requested)) setSelectedWeek(requested);
+    };
+    window.addEventListener("hashchange", syncWeek);
+    return () => window.removeEventListener("hashchange", syncWeek);
+  }, [recapData.availableWeeks]);
 
   const currentWeekRecap = recapData.weeks?.find((w: any) => w.week === selectedWeek) || recapData.weeks?.[0];
   const superlatives = currentWeekRecap?.superlatives;
@@ -1532,7 +1571,7 @@ function RecapsScreen() {
               key={wk}
               type="button"
               className={`week-btn ${selectedWeek === wk ? "active" : ""}`}
-              onClick={() => setSelectedWeek(wk)}
+              onClick={() => { setSelectedWeek(wk); setExpandedMatchup(null); onWeek?.(wk); window.location.hash = `#recaps/week-${wk}`; }}
             >
               Week 0{wk}
             </button>
@@ -1993,6 +2032,20 @@ function RecapsScreen() {
   );
 }
 
+function LeagueStandingsScreen() {
+  const latest = weeklyRecapJson.weeks?.find((week) => week.week === weeklyRecapJson.activeWeek);
+  return (
+    <div className="app-screen section-screen web-screen">
+      <main className="section-page">
+        <p className="eyebrow">League table · latest final week</p>
+        <h1>Standings</h1>
+        <p className="section-deck">Final through Week {latest?.week ?? "—"}. Live scores remain in This Week until the full NFL slate is complete.</p>
+        {latest ? <StandingsTable rows={weeklyRecapJson.standings} /> : <p>No final standings are available yet.</p>}
+      </main>
+    </div>
+  );
+}
+
 function FrontPageDashboard({
   onNavigate,
   onMatchup,
@@ -2036,7 +2089,7 @@ function FrontPageDashboard({
               <h1 style={{ font: "600 clamp(2.4rem, 6vw, 3.8rem)/0.95 var(--serif)", margin: "4px 0 0" }}>Ape’s Mac Salad</h1>
             </div>
             <div style={{ textAlign: "right" }}>
-              <span style={{ fontSize: "0.85rem", color: "var(--ink-soft)", display: "block" }}>12 Dynasties · Half-PPR · 3-FLEX · Daily Sync</span>
+              <span style={{ fontSize: "0.85rem", color: "var(--ink-soft)", display: "block" }}>12 Dynasties · Half-PPR · 3-FLEX</span>
               <span style={{ fontSize: "0.75rem", color: "#2e7d32", fontWeight: 700 }}>Results updated {new Date(recapData.generatedAtUtc).toLocaleDateString("en-US", { timeZone: "UTC" })}</span>
             </div>
           </div>
@@ -2199,36 +2252,36 @@ function FrontPageDashboard({
             <BookOpenText size={16} weight="fill" /> Full Publication Directory
           </div>
           <div className="portal-nav-grid">
-            <div className="portal-card" onClick={() => onNavigate("recaps")}>
+            <button type="button" className="portal-card" onClick={() => onNavigate("recaps")}>
               <div className="portal-card-top"><ClockCounterClockwise size={22} weight="duotone" /><ArrowRight size={16} /></div>
               <h4>Matchup Recaps</h4>
               <p>RosterAudit™ superlatives, AI game commentary, box scores, and standings.</p>
-            </div>
-            <div className="portal-card" onClick={() => onNavigate("matchups")}>
+            </button>
+            <button type="button" className="portal-card" onClick={() => onNavigate("matchups")}>
               <div className="portal-card-top"><Football size={22} weight="duotone" /><ArrowRight size={16} /></div>
               <h4>Week {currentWeek} Matchups</h4>
               <p>Head-to-head tactical previews, projected spreads, and NFL broadcast schedule.</p>
-            </div>
-            <div className="portal-card" onClick={() => onNavigate("waivers")}>
+            </button>
+            <button type="button" className="portal-card" onClick={() => onNavigate("waivers")}>
               <div className="portal-card-top"><CurrencyDollar size={22} weight="duotone" /><ArrowRight size={16} /></div>
               <h4>Waivers & Move ROI</h4>
               <p>FAAB velocity, manager bidding archetypes, immediate Sunday debuts, and season ROI.</p>
-            </div>
-            <div className="portal-card" onClick={() => onNavigate("power")}>
+            </button>
+            <button type="button" className="portal-card" onClick={() => onNavigate("power")}>
               <div className="portal-card-top"><UsersThree size={22} weight="duotone" /><ArrowRight size={16} /></div>
               <h4>Power Rankings</h4>
-              <p>In-season roster viability graded on starters, depth, and star ceiling.</p>
-            </div>
-            <div className="portal-card" onClick={() => onNavigate("forecast")}>
+              <p>Current-year roster strength from lineup, depth, balance, and scoring history.</p>
+            </button>
+            <button type="button" className="portal-card" onClick={() => onNavigate("forecast")}>
               <div className="portal-card-top"><ChartLineUp size={22} weight="duotone" /><ArrowRight size={16} /></div>
               <h4>Season Forecast</h4>
               <p>10,000-run Bayesian Monte Carlo simulation updating playoff & title odds.</p>
-            </div>
-            <div className="portal-card" onClick={() => onNavigate("analysis")}>
+            </button>
+            <button type="button" className="portal-card" onClick={() => onNavigate("analysis")}>
               <div className="portal-card-top"><BookOpenText size={22} weight="duotone" /><ArrowRight size={16} /></div>
-              <h4>Draft Almanac</h4>
+              <h4>Draft Recap</h4>
               <p>16-round draft ledger, pick value surplus benchmarks, and draft grades.</p>
-            </div>
+            </button>
           </div>
         </div>
       </main>
@@ -2236,9 +2289,10 @@ function FrontPageDashboard({
   );
 }
 
-function WaiverWireScreen() {
+function WaiverWireScreen({ initialTab = "waivers" }: { initialTab?: "waivers" | "trades" }) {
   const waiverData = waiverAnalysisJson;
-  const [activeSubTab, setActiveSubTab] = useState<"waivers" | "trades">("waivers");
+  const [activeSubTab, setActiveSubTab] = useState<"waivers" | "trades">(initialTab);
+  useEffect(() => setActiveSubTab(initialTab), [initialTab]);
   const [posFilter, setPosFilter] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedPickupId, setExpandedPickupId] = useState<string | null>(null);
@@ -2273,7 +2327,7 @@ function WaiverWireScreen() {
           <button
             type="button"
             className={`transaction-subnav-btn ${activeSubTab === "waivers" ? "is-active" : ""}`}
-            onClick={() => setActiveSubTab("waivers")}
+            onClick={() => { setActiveSubTab("waivers"); window.location.hash = "#waivers"; }}
           >
             <CurrencyDollar size={18} weight={activeSubTab === "waivers" ? "bold" : "regular"} />
             <span>Waiver Wire & FAAB</span>
@@ -2282,7 +2336,7 @@ function WaiverWireScreen() {
           <button
             type="button"
             className={`transaction-subnav-btn ${activeSubTab === "trades" ? "is-active" : ""}`}
-            onClick={() => setActiveSubTab("trades")}
+            onClick={() => { setActiveSubTab("trades"); window.location.hash = "#transactions/trades"; }}
           >
             <ArrowsLeftRight size={18} weight={activeSubTab === "trades" ? "bold" : "regular"} />
             <span>Trade Evaluations & Deal Audits</span>
@@ -2897,8 +2951,9 @@ function WaiverWireScreen() {
   );
 }
 
-function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => void }) {
-  const [matchupTab, setMatchupTab] = useState<"slate" | "hall">("slate");
+function MatchupsScreen({ onMatchup, initialTab = "slate" }: { onMatchup?: (matchup: Week1Matchup) => void; initialTab?: "slate" | "hall" }) {
+  const [matchupTab, setMatchupTab] = useState<"slate" | "hall">(initialTab);
+  useEffect(() => setMatchupTab(initialTab), [initialTab]);
   const matchupsData = matchupsCurrentJson;
   const currentWeekNum = matchupsData.week || 2;
   const matchupsList = (matchupsData.matchups as unknown as Week1Matchup[]) || [];
@@ -2910,25 +2965,21 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
   return (
     <div className="app-screen section-screen web-screen matchups-screen-container">
       <main className="section-page">
-        <p className="eyebrow">NFL Week {currentWeekNum} Matchup Intelligence & TV Schedule</p>
-        <h1>Week {currentWeekNum} Matchups</h1>
+        <p className="eyebrow">{matchupTab === "hall" ? "Permanent league honor ledger" : `NFL Week ${currentWeekNum} Matchup Intelligence & TV Schedule`}</p>
+        <h1>{matchupTab === "hall" ? "Hall of Mac" : `Week ${currentWeekNum} Matchups`}</h1>
         <p className="section-deck">
-          Head-to-head tactical previews, starting lineup clashes, real-world scheme commentary, and the crucial broadcast TV viewing schedule.
+          {matchupTab === "hall" ? "Every dated serving and the current Kong Mac Salad Award race." : "Head-to-head tactical previews, starting lineup clashes, real-world scheme commentary, and the crucial broadcast TV viewing schedule."}
         </p>
-        <div className="issue-rule">
+        {matchupTab === "slate" && <div className="issue-rule">
           <span>6 Matchups · {matchupsData.totalProjectedPoints.toFixed(0)} Projected Points</span>
-          {isLiveAction ? (
-            <span style={{ color: "#b91c1c", fontWeight: 800 }}>● Live Game Action</span>
-          ) : (
-            <span>Kickoff: Thursday 8:15 PM ET (NBC)</span>
-          )}
-        </div>
+          {isLiveAction ? <span style={{ color: "#b91c1c", fontWeight: 800 }}>● Live scores · final results pending</span> : <span>Scheduled · projected scores</span>}
+        </div>}
 
         {/* View Switcher Tabs */}
         <div className="matchup-view-switcher">
           <button
             className={`tab-pill ${matchupTab === "slate" ? "active" : ""}`}
-            onClick={() => setMatchupTab("slate")}
+            onClick={() => { setMatchupTab("slate"); window.location.hash = "#matchups"; }}
             type="button"
           >
             <Football size={18} weight="duotone" />
@@ -2936,7 +2987,7 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
           </button>
           <button
             className={`tab-pill ${matchupTab === "hall" ? "active" : ""}`}
-            onClick={() => setMatchupTab("hall")}
+            onClick={() => { setMatchupTab("hall"); window.location.hash = "#league/hall"; }}
             type="button"
           >
             <Trophy size={18} weight="duotone" />
@@ -2951,8 +3002,8 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
               const marqueeCrucialTV = [...marqueeMatchup.tvSchedule].sort((a, b) => (parseFloat(b.fantasyPointsAtStake) || 0) - (parseFloat(a.fantasyPointsAtStake) || 0))[0];
               const liveA = liveScores[String(marqueeMatchup.teamA.rosterId)];
               const liveB = liveScores[String(marqueeMatchup.teamB.rosterId)];
-              const scoreA = liveA && liveA.points > 0 ? `${liveA.points.toFixed(1)} live` : `${marqueeMatchup.teamA.projectedScore}`;
-              const scoreB = liveB && liveB.points > 0 ? `${liveB.points.toFixed(1)} live` : `${marqueeMatchup.teamB.projectedScore}`;
+              const scoreA = liveA && liveA.points > 0 ? `${liveA.points.toFixed(1)} live` : `${marqueeMatchup.teamA.projectedScore} projected`;
+              const scoreB = liveB && liveB.points > 0 ? `${liveB.points.toFixed(1)} live` : `${marqueeMatchup.teamB.projectedScore} projected`;
               const probA = liveA && liveA.liveWinProb !== undefined ? liveA.liveWinProb : marqueeMatchup.teamA.winProbability;
               const probB = liveB && liveB.liveWinProb !== undefined ? liveB.liveWinProb : marqueeMatchup.teamB.winProbability;
 
@@ -2972,7 +3023,7 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
 
                   <div className="marquee-teams-clash">
                     <div className="team-col team-a">
-                      <span className="rank-badge">#{marqueeMatchup.teamA.projectedRank}</span>
+                      <span className="rank-badge">Power #{marqueeMatchup.teamA.powerRank}</span>
                       <div className="team-meta-info">
                         <strong>{marqueeMatchup.teamA.teamName}</strong>
                         <small>{marqueeMatchup.teamA.manager}</small>
@@ -2999,7 +3050,7 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
                         <strong>{marqueeMatchup.teamB.teamName}</strong>
                         <small>{marqueeMatchup.teamB.manager}</small>
                       </div>
-                      <span className="rank-badge">#{marqueeMatchup.teamB.projectedRank}</span>
+                      <span className="rank-badge">Power #{marqueeMatchup.teamB.powerRank}</span>
                     </div>
                   </div>
 
@@ -3025,8 +3076,8 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
                 const crucialTV = [...m.tvSchedule].sort((a, b) => (parseFloat(b.fantasyPointsAtStake) || 0) - (parseFloat(a.fantasyPointsAtStake) || 0))[0];
                 const liveA = liveScores[String(teamA.rosterId)];
                 const liveB = liveScores[String(teamB.rosterId)];
-                const scoreA = liveA && liveA.points > 0 ? `${liveA.points.toFixed(1)} live` : `${teamA.projectedScore} pts`;
-                const scoreB = liveB && liveB.points > 0 ? `${liveB.points.toFixed(1)} live` : `${teamB.projectedScore} pts`;
+                const scoreA = liveA && liveA.points > 0 ? `${liveA.points.toFixed(1)} live` : `${teamA.projectedScore} projected`;
+                const scoreB = liveB && liveB.points > 0 ? `${liveB.points.toFixed(1)} live` : `${teamB.projectedScore} projected`;
                 const probA = liveA && liveA.liveWinProb !== undefined ? liveA.liveWinProb : teamA.winProbability;
                 const probB = liveB && liveB.liveWinProb !== undefined ? liveB.liveWinProb : teamB.winProbability;
 
@@ -3053,7 +3104,7 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
                     <div className="matchup-card-teams">
                       <div className="card-team-row">
                         <div className="team-id-cell">
-                          <span className="card-rank-num">#{teamA.projectedRank}</span>
+                          <span className="card-rank-num">Power #{teamA.powerRank}</span>
                           <div>
                             <strong>{teamA.teamName}</strong>
                             <small>{teamA.manager}</small>
@@ -3071,7 +3122,7 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
 
                       <div className="card-team-row">
                         <div className="team-id-cell">
-                          <span className="card-rank-num">#{teamB.projectedRank}</span>
+                          <span className="card-rank-num">Power #{teamB.powerRank}</span>
                           <div>
                             <strong>{teamB.teamName}</strong>
                             <small>{teamB.manager}</small>
@@ -3148,7 +3199,7 @@ function MatchupsScreen({ onMatchup }: { onMatchup?: (matchup: Week1Matchup) => 
                       </section>
                     );
                   })}
-                  <p className="hall-ledger__next">Weekly servings begin after Week 1. Every Tuesday winner will be added here.</p>
+                  <p className="hall-ledger__next">Weekly winners appear after they are verified and awarded.</p>
                 </div>
               </div>
             </section>
@@ -3277,7 +3328,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: any; onBack: () =
           <div className="scoreboard-clash-box">
             {/* Team A Box */}
             <div className="sb-team-side side-a">
-              <span className="sb-rank-tag">Proj #{teamA.projectedRank ?? teamA.powerRank ?? 1}</span>
+              <span className="sb-rank-tag">Power #{teamA.powerRank}</span>
               <h2>{teamA.teamName}</h2>
               <p className="sb-manager-label">{teamA.manager} · 0–0</p>
               <div className="sb-score-callout">
@@ -3298,7 +3349,7 @@ function MatchupDeepDiveScreen({ matchup, onBack }: { matchup: any; onBack: () =
 
             {/* Team B Box */}
             <div className="sb-team-side side-b">
-              <span className="sb-rank-tag">Proj #{teamB.projectedRank ?? teamB.powerRank ?? 2}</span>
+              <span className="sb-rank-tag">Power #{teamB.powerRank}</span>
               <h2>{teamB.teamName}</h2>
               <p className="sb-manager-label">{teamB.manager} · 0–0</p>
               <div className="sb-score-callout">
@@ -3557,7 +3608,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                     <div className="mover-card-top">
                       <div>
                         <strong className="mover-card-title">{fc.teamName}</strong>
-                        <small className="mover-card-manager" style={{ display: "block" }}>Projected Finish #{fc.projectedRank ?? 1}</small>
+                        <small className="mover-card-manager" style={{ display: "block" }}>Title Odds Rank #{fc.projectedRank ?? 1}</small>
                       </div>
                       <div className="mover-rank-strip">
                         <span className="forecast-shift-badge pos">
@@ -3591,7 +3642,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                     <div className="mover-card-top">
                       <div>
                         <strong className="mover-card-title">{fc.teamName}</strong>
-                        <small className="mover-card-manager" style={{ display: "block" }}>Projected Finish #{fc.projectedRank ?? 12}</small>
+                        <small className="mover-card-manager" style={{ display: "block" }}>Title Odds Rank #{fc.projectedRank ?? 12}</small>
                       </div>
                       <div className="mover-rank-strip">
                         <span className="forecast-shift-badge neg">
@@ -3638,7 +3689,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
             <span>
               <small>Title Favorite · {topTitleFavorite.championshipProbability}% Championship Odds</small>
               <strong>{topTitleFavorite.teamName}</strong>
-              <em>Projected Finish #{topTitleFavorite.projectedRank ?? 1} · {topTitleFavorite.expectedWins}–{topTitleFavorite.expectedLosses} · {topTitleFavorite.playoffProbability}% Playoff Odds</em>
+              <em>Title Odds Rank #{topTitleFavorite.projectedRank ?? 1} · {topTitleFavorite.expectedWins}–{topTitleFavorite.expectedLosses} · {topTitleFavorite.playoffProbability}% Playoff Odds</em>
             </span>
           </div>
         ) : null}
@@ -3670,7 +3721,7 @@ function ForecastScreen({ onTeam }: { onTeam?: (team: Team) => void }) {
                   </div>
                   <div>
                     <strong>{fc.teamName}</strong>
-                    <small>{team ? team.manager : `Team ${fc.rosterId}`} · Projected Finish #{rankNumber} (Exp Seed {fc.expectedSeed?.toFixed(1) ?? fc.medianSeed})</small>
+                    <small>{team ? team.manager : `Team ${fc.rosterId}`} · Title Odds Rank #{rankNumber} (Exp Seed {fc.expectedSeed?.toFixed(1) ?? fc.medianSeed})</small>
                     <div className="power-connection-pill">
                       <span>Power Rank #{fc.powerRank ?? rankNumber}</span>
                       <b style={{ color: (fc.powerRankDelta ?? 0) > 0 ? "var(--ink)" : (fc.powerRankDelta ?? 0) < 0 ? "var(--rust)" : "var(--ink-soft)" }}>
@@ -3789,7 +3840,7 @@ function ForecastTeamScreen({ team }: { team: Team }) {
         <section className="forecast-hero-card">
           <div className="forecast-hero-top">
             <div>
-              <span className="forecast-seed-badge">Projected Finish #{fc.projectedRank ?? fc.medianSeed} · Exp Seed {fc.expectedSeed?.toFixed(1) ?? fc.medianSeed}</span>
+              <span className="forecast-seed-badge">Title Odds Rank #{fc.projectedRank ?? fc.medianSeed} · Exp Seed {fc.expectedSeed?.toFixed(1) ?? fc.medianSeed}</span>
               <p className="eyebrow">{team.manager} · Roster #{team.rosterId}</p>
               <h1>{fc.teamName}</h1>
             </div>
@@ -3840,7 +3891,7 @@ function ForecastTeamScreen({ team }: { team: Team }) {
         <section className="forecast-power-connection-section">
           <div className="forecast-section-header">
             <p className="eyebrow">Model Methodology Bridge</p>
-            <h2>Power Ranking Baseline vs. Simulation Finish</h2>
+            <h2>Power Index vs. Title Odds Rank</h2>
           </div>
 
           <div className="power-connection-card">
@@ -3854,8 +3905,8 @@ function ForecastTeamScreen({ team }: { team: Team }) {
               <span>VS</span>
             </div>
             <div className="power-conn-col">
-              <span className="conn-label">Simulated Finish</span>
-              <strong className="conn-rank">Proj #{fc.projectedRank ?? fc.medianSeed}</strong>
+              <span className="conn-label">Title Odds Rank</span>
+              <strong className="conn-rank">Title Odds #{fc.projectedRank ?? fc.medianSeed}</strong>
               <small>{fc.expectedWins}–{fc.expectedLosses} Exp Record (Exp Seed {fc.expectedSeed?.toFixed(1) ?? fc.medianSeed})</small>
               <p>{fc.powerConnectionNarrative}</p>
             </div>
@@ -4172,8 +4223,8 @@ function MethodologyScreen() {
           <p>The app follows Sleeper's previous_league_id into the 2025 league, then combines regular-season roster records and points with the winners and consolation brackets to reconstruct final finish.</p>
         </div>
         <div className="rules-box power-method">
-          <h2>Power Rankings are a separate grade</h2>
-          <p>The 2026 viability score is 55% current optimal-lineup strength, 25% usable depth, 10% positional balance calibrated to three FLEX spots, and 10% 2025 scoring. Letter grades come from score thresholds rather than a forced curve. Draft grades do not enter the calculation; dynasty strength and the three-year runway are shown alongside the grade, but cannot inflate it.</p>
+          <h2>Power Rankings measure current-year strength</h2>
+          <p>The 2026 Power Index is 55% current optimal-lineup strength, 25% usable depth, 10% positional balance calibrated to three FLEX spots, and 10% 2025 scoring. Components are scaled within this league to 0–100. Draft grades do not enter the calculation; dynasty strength and the three-year runway are shown separately.</p>
         </div>
         <p className="source-note">Sources: Sleeper league, roster, matchup, bracket, draft, and transaction data; FantasyCalc dynasty and redraft values; FantasyPros ECR; RotoBaller; Justin Boone; and DraftSharks. Snapshot: Aug 20, 2026.</p>
       </main>
@@ -4365,7 +4416,8 @@ function DraftRoomScreen() {
       <div className="draft-room draft-room--center">
         <Warning size={38} weight="duotone" />
         <h1>The board is ready; the local service is not connected.</h1>
-        <p>Start the draft API, then retry. The public Ape’s Mac Salad site remains unaffected.</p>
+        <p>The live draft service is unavailable here. You can return to the league publication or retry when the service is connected.</p>
+        <a href="#analysis">Back to Draft Recap</a>
         <button className="draft-button draft-button--primary" onClick={() => stateQuery.refetch()} type="button"><ArrowClockwise size={18} /> Retry connection</button>
       </div>
     );
@@ -4588,6 +4640,10 @@ function routeFromHash(): Route {
   if (value === "recaps" || value === "recap") {
     return { kind: "nav", id: "recaps" };
   }
+  if (/^recaps\/week-\d+$/.test(value)) return { kind: "nav", id: "recaps" };
+  if (value === "hall-of-mac" || value === "league/hall") return { kind: "nav", id: "hall" };
+  if (value === "standings" || value === "league/standings") return { kind: "nav", id: "standings" };
+  if (value === "transactions/trades" || value === "trades") return { kind: "nav", id: "trades" };
   if (value === "waivers" || value === "waiver" || value === "roi") {
     return { kind: "nav", id: "waivers" };
   }
@@ -4607,6 +4663,9 @@ function routeHash(route: Route) {
   if (route.kind === "matchup") return `#matchup-${route.matchupId}`;
   if (route.kind === "methodology") return "#methodology";
   if (route.id === "dashboard") return "#dashboard";
+  if (route.id === "hall") return "#league/hall";
+  if (route.id === "standings") return "#league/standings";
+  if (route.id === "trades") return "#transactions/trades";
   if (route.id === "waivers") return "#waivers";
   if (route.id === "power") return "#power-rankings";
   if (route.id === "recaps") return "#recaps";
@@ -4615,6 +4674,15 @@ function routeHash(route: Route) {
 
 export default function Prototype() {
   const [route, setRoute] = useState<Route>(() => routeFromHash());
+  const [myTeam, setMyTeam] = useState<number | null>(() => {
+    const stored = Number(window.localStorage.getItem("apes-my-team"));
+    return teams.some((team) => team.rosterId === stored) ? stored : null;
+  });
+  const [contextWeek, setContextWeek] = useState<number>(() => {
+    const linked = Number(window.location.hash.match(/^#recaps\/week-(\d+)$/)?.[1]);
+    const stored = Number(window.localStorage.getItem("apes-week"));
+    return [linked, stored].find((week) => [...weeklyRecapJson.availableWeeks, matchupsCurrentJson.week].includes(week)) ?? matchupsCurrentJson.week;
+  });
   const [activeNav, setActiveNav] = useState<NavId>(() => {
     const initial = routeFromHash();
     if (initial.kind === "nav") return initial.id;
@@ -4629,6 +4697,11 @@ export default function Prototype() {
     const handleHash = () => {
       const next = routeFromHash();
       setRoute(next);
+      const linkedWeek = Number(window.location.hash.match(/^#recaps\/week-(\d+)$/)?.[1]);
+      if (weeklyRecapJson.availableWeeks.includes(linkedWeek)) {
+        setContextWeek(linkedWeek);
+        window.localStorage.setItem("apes-week", String(linkedWeek));
+      }
       if (next.kind === "nav") setActiveNav(next.id);
       if (next.kind === "powerTeam") setActiveNav("power");
       if (next.kind === "matchup") setActiveNav("matchups");
@@ -4662,6 +4735,20 @@ export default function Prototype() {
     if (window.history.length > 1) window.history.back();
     else go({ kind: "nav", id: activeNav });
   };
+  const openMyTeam = (rosterId: number) => {
+    setMyTeam(rosterId);
+    window.localStorage.setItem("apes-my-team", String(rosterId));
+    if (activeNav === "forecast") go({ kind: "forecastTeam", rosterId });
+    else if (activeNav === "analysis") {
+      const draftTeam = teams.find((team) => team.rosterId === rosterId);
+      if (draftTeam) go({ kind: "team", rank: draftTeam.rank });
+    } else go({ kind: "powerTeam", rosterId });
+  };
+  const selectWeek = (week: number) => {
+    setContextWeek(week);
+    window.localStorage.setItem("apes-week", String(week));
+    window.location.hash = week === matchupsCurrentJson.week ? "#matchups" : `#recaps/week-${week}`;
+  };
 
   const selectedTeam = route.kind === "team" ? teams.find((team) => team.rank === route.rank) : undefined;
   const selectedPowerTeam = route.kind === "powerTeam" ? teams.find((team) => team.rosterId === route.rosterId) : undefined;
@@ -4680,6 +4767,7 @@ export default function Prototype() {
     <div className="site-shell">
       <SiteNav active={activeNav} onNavigate={(id) => go({ kind: "nav", id })} />
       <div className="site-content">
+        <PublicationContext active={activeNav} myTeam={myTeam} week={contextWeek} onTeam={openMyTeam} onWeek={selectWeek} onNavigate={(id) => go({ kind: "nav", id })} />
         {route.kind === "matchup" ? (
           selectedMatchup ? (
             <MatchupDeepDiveScreen
@@ -4701,7 +4789,7 @@ export default function Prototype() {
         ) : route.kind === "powerTeam" ? (
           selectedPowerTeam ? (
             <>
-              <DetailHeader onBack={goBack} team={selectedPowerTeam} context="Power Rankings" grade={powerProfileFor(selectedPowerTeam).grade} />
+              <DetailHeader onBack={goBack} team={selectedPowerTeam} context="Power Rankings" grade={`#${powerProfileFor(selectedPowerTeam).rank} · ${powerProfileFor(selectedPowerTeam).score.toFixed(1)}`} />
               <PowerTeamScreen team={selectedPowerTeam} />
             </>
           ) : (
@@ -4732,8 +4820,14 @@ export default function Prototype() {
           <FrontPageDashboard onNavigate={(id) => go({ kind: "nav", id })} onMatchup={(matchupId) => go({ kind: "matchup", matchupId })} />
         ) : route.id === "waivers" ? (
           <WaiverWireScreen />
+        ) : route.id === "trades" ? (
+          <WaiverWireScreen initialTab="trades" />
         ) : route.id === "recaps" ? (
-          <RecapsScreen />
+          <RecapsScreen onWeek={(week) => { setContextWeek(week); window.localStorage.setItem("apes-week", String(week)); }} />
+        ) : route.id === "standings" ? (
+          <LeagueStandingsScreen />
+        ) : route.id === "hall" ? (
+          <MatchupsScreen initialTab="hall" onMatchup={(matchup) => go({ kind: "matchup", matchupId: matchup.matchupId })} />
         ) : route.id === "power" ? (
           <PowerRankingsScreen onTeam={(team) => go({ kind: "powerTeam", rosterId: team.rosterId })} />
         ) : route.id === "matchups" ? (
