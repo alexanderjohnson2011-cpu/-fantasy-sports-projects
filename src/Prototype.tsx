@@ -1214,6 +1214,10 @@ function PowerRankingsScreen({ onTeam }: { onTeam: (team: Team) => void }) {
         <p className="section-deck">
           Current-year roster strength ranked by current starting lineup strength, usable depth, roster balance, and prior-season scoring receipts.
         </p>
+        <aside className="power-index-explainer" aria-label="How to read the Power Index">
+          <strong>How to read the Power Index</strong>
+          <p>A 0–100 score comparing current-season roster strength within this league. It combines 55% projected optimal lineup, 25% usable depth, 10% balance for three FLEX spots, and 10% prior-season scoring. Rank shows the team’s place among 12; the score is neither a win probability nor a draft grade.</p>
+        </aside>
         <div className="issue-rule">
           <span>Week {currentWeek} · Updated {new Date(powerData.generatedAtUtc).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })} · {dynamicTeams.length} Franchises</span>
           <span>55% Lineup · 25% Depth · 10% Balance · 10% Receipts</span>
@@ -1408,7 +1412,7 @@ type StandingRow = {
 
 function StandingsTable({ rows }: { rows: StandingRow[] }) {
   return (
-    <div className="standings-scroll">
+    <div className="standings-scroll" role="region" aria-label="League standings table" tabIndex={0}>
       <table className="standings">
         <thead>
           <tr>

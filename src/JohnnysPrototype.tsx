@@ -60,7 +60,7 @@ type SleeperLiveSnapshot = {
   isLiveAction?: boolean;
 };
 
-type NavId = "dashboard" | "recaps" | "matchups" | "waivers" | "power" | "forecast" | "hall" | "analysis";
+type NavId = "dashboard" | "recaps" | "matchups" | "waivers" | "power" | "forecast" | "standings" | "hall" | "analysis";
 
 type Route =
   | { kind: "nav"; id: NavId }
@@ -81,14 +81,14 @@ const navItems: Array<{ id: NavId; label: string; icon: typeof BookOpenText }> =
 const sectionLinks: Record<string, Array<[NavId, string]>> = {
   dashboard: [["dashboard", "Front Page"]],
   matchups: [["matchups", "Matchups"], ["recaps", "Final Recaps"]],
-  power: [["power", "Power Rankings"], ["forecast", "Season Forecast"], ["hall", "The Cooler 🏆"]],
+  power: [["power", "Power Rankings"], ["forecast", "Season Forecast"], ["standings", "Standings"], ["hall", "The Cooler 🏆"]],
   waivers: [["waivers", "Waivers & ROI"]],
   analysis: [["analysis", "Draft Recap"]],
 };
 
 function navGroup(id: NavId): string {
   if (id === "recaps") return "matchups";
-  if (id === "forecast" || id === "hall") return "power";
+  if (id === "forecast" || id === "standings" || id === "hall") return "power";
   return id;
 }
 
@@ -272,7 +272,7 @@ type StandingRow = {
 
 function StandingsTable({ rows }: { rows: StandingRow[] }) {
   return (
-    <div className="standings-scroll">
+    <div className="standings-scroll" role="region" aria-label="League standings table" tabIndex={0}>
       <table className="standings">
         <thead>
           <tr>
@@ -301,6 +301,20 @@ function StandingsTable({ rows }: { rows: StandingRow[] }) {
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+function LeagueStandingsScreen() {
+  const latest = weeklyRecapJson.weeks?.find((week: any) => week.week === weeklyRecapJson.activeWeek);
+  return (
+    <div className="app-screen section-screen web-screen">
+      <main className="section-page">
+        <p className="eyebrow">Johnny’s Jerks · latest final week</p>
+        <h1>Standings</h1>
+        <p className="section-deck">Official results through Week {latest?.week ?? "—"}. Live Week {matchupsCurrentJson.week} scores stay in Matchups until the full slate is final.</p>
+        {latest ? <StandingsTable rows={weeklyRecapJson.standings as StandingRow[]} /> : <p>No final standings are available yet.</p>}
+      </main>
     </div>
   );
 }
@@ -2060,6 +2074,8 @@ export default function JohnnysPrototype() {
           <WaiverWireScreen />
         ) : route.kind === "nav" && route.id === "recaps" ? (
           <RecapsScreen />
+        ) : route.kind === "nav" && route.id === "standings" ? (
+          <LeagueStandingsScreen />
         ) : route.kind === "nav" && route.id === "power" ? (
           <div className="app-screen section-screen web-screen">
             <main className="section-page">
@@ -2068,6 +2084,10 @@ export default function JohnnysPrototype() {
               <p className="section-deck">
                 Current-season roster strength based on projected starters, usable depth, positional balance, and top-five VORP. Draft execution is separate.
               </p>
+              <aside className="power-index-explainer" aria-label="How to read the Power Index">
+                <strong>How to read the Power Index</strong>
+                <p>A 0–100 score comparing current-season rosters in Johnny’s Jerks. It combines 50% projected optimal lineup, 25% usable bench, 15% top-five VORP ceiling, and 10% balance. Rank shows the team’s place among 12; the score is neither a win probability nor a draft grade.</p>
+              </aside>
 
               <div className="issue-rule" style={{ margin: "20px 0 28px" }}>
                 <span>12 Rosters · Current-season model</span>
@@ -3169,6 +3189,7 @@ function routeFromHash(): Route {
   if (value === "power" || value === "power-rankings") return { kind: "nav", id: "power" };
   if (value === "matchups") return { kind: "nav", id: "matchups" };
   if (value === "forecast") return { kind: "nav", id: "forecast" };
+  if (value === "standings" || value === "league/standings") return { kind: "nav", id: "standings" };
   if (value === "hall" || value === "cooler") return { kind: "nav", id: "hall" };
   if (value === "analysis" || value === "draft" || value === "almanac" || value === "draft-analysis") return { kind: "nav", id: "analysis" };
   if (value === "dashboard" || value === "front" || value === "home") return { kind: "nav", id: "dashboard" };
@@ -3183,5 +3204,6 @@ function routeHash(route: Route) {
   if (route.kind === "methodology") return "#methodology";
   if (route.id === "dashboard") return "#dashboard";
   if (route.id === "waivers") return "#waivers";
+  if (route.id === "standings") return "#league/standings";
   return route.id === "analysis" ? "#analysis" : `#${route.id}`;
 }
