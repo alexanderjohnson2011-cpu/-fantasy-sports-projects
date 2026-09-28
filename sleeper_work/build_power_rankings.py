@@ -362,9 +362,6 @@ def main():
         client = bigquery.Client(project=PROJECT)
     except Exception as e:
         print("  [WARN] BigQuery client init failed: %s" % e)
-        if os.path.exists(OUT):
-            print("  Keeping existing power-rankings.json payload.")
-            return 0
         raise
 
     rosters, values, positions, prior = load_inputs(client)

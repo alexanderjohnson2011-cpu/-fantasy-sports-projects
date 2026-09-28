@@ -17,6 +17,10 @@ import random
 from collections import defaultdict
 from datetime import datetime, timezone
 import urllib.request
+try:
+    from sleeper_work.publication_contract import fetch_week_completion, validate_final_week, winner_id
+except ModuleNotFoundError:
+    from publication_contract import fetch_week_completion, validate_final_week, winner_id
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 # Check root directories
@@ -126,7 +130,7 @@ def fetch_matchups_for_week(league_id, week, season="2026"):
     # First attempt Sleeper public API for live freshest data
     try:
         data = fetch_sleeper_json(f"league/{league_id}/matchups/{week}")
-        if data and isinstance(data, list) and any((m.get("points") or 0) > 0 for m in data):
+        if data and isinstance(data, list):
             return data
     except Exception as e:
         print(f"  [info] Sleeper direct fetch for week {week}: {e}")
@@ -727,23 +731,29 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
         "weeksAboveMedian": 0, "totalLineupMiss": 0.0,
     })
 
-    try:
-        nfl_state = fetch_sleeper_json("state/nfl")
-        active_nfl_week = int(nfl_state.get("week") or 1)
-    except Exception:
-        active_nfl_week = 1
-
+    nfl_state = fetch_sleeper_json("state/nfl")
+    if str(nfl_state.get("season")) != str(season):
+        raise ValueError("NFL state season does not match recap season")
+    active_nfl_week = int(nfl_state.get("week") or 1)
     max_check_week = min(14, max(1, active_nfl_week))
     for w in range(1, max_check_week + 1):
-        raw_m = fetch_matchups_for_week(league_id, w, season)
-        if not raw_m or not any((m.get("points") or 0) > 0 for m in raw_m):
-            continue
+        completion = fetch_week_completion(season, w)
+        if completion["status"] != "final":
+            print(f"  Week {w} is not final; leaving it in live matchups.")
+            break
+        # Fetch scores only after finality has been established. A zero score
+        # is legal; it must never stand in for missing data.
+        raw_m = fetch_sleeper_json(f"league/{league_id}/matchups/{w}")
+        if not isinstance(raw_m, list) or {m.get("roster_id") for m in raw_m} != set(team_info):
+            raise ValueError(f"Incomplete final Sleeper scores for Week {w}")
+        if any(m.get("points") is None for m in raw_m):
+            raise ValueError(f"Missing final score for Week {w}")
 
         nfl_stats = fetch_nfl_stats(season, w)
         projections = fetch_nfl_projections(season, w)
         window_map = load_nfl_window_map(season, w)
         next_pairings = fetch_next_week_pairings(league_id, w, season)
-        print(f"  Processing scored Week {w} ({len(raw_m)} roster entries, {len(nfl_stats)} NFL stats, {len(projections)} projections)...")
+        print(f"  Processing final Week {w} ({len(raw_m)} roster entries, {len(nfl_stats)} NFL stats, {len(projections)} projections)...")
 
         # Group into pairs by matchup_id
         pairs = {}
@@ -864,34 +874,40 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             }
 
             margin = round(abs(pts1 - pts2), 2)
-            winner_id = rid1 if pts1 >= pts2 else rid2
-            winner_name = team_a_obj["teamName"] if winner_id == rid1 else team_b_obj["teamName"]
-            loser_name = team_b_obj["teamName"] if winner_id == rid1 else team_a_obj["teamName"]
+            winning_roster = winner_id(team_a_obj, team_b_obj)
+            winner_name = team_a_obj["teamName"] if winning_roster == rid1 else team_b_obj["teamName"]
+            loser_name = team_b_obj["teamName"] if winning_roster == rid1 else team_a_obj["teamName"]
 
             is_nailbiter = margin <= 5.0
             is_blowout = margin >= 35.0
             is_shootout = (pts1 + pts2) >= 300.0
 
-            commentary = generate_matchup_commentary(
-                team_a_obj, team_b_obj, margin, False, is_shootout, is_nailbiter, is_blowout,
-                week=w, nfl_stats=nfl_stats, players_map=players_map
-            )
-
+            if winning_roster is None:
+                commentary = f"{team_a_obj['teamName']} and {team_b_obj['teamName']} tied at {pts1:.2f} points. Both teams receive a tie in the standings."
+            else:
+                commentary = generate_matchup_commentary(
+                    team_a_obj, team_b_obj, margin, False, is_shootout, is_nailbiter, is_blowout,
+                    week=w, nfl_stats=nfl_stats, players_map=players_map
+                )
             # Titles
-            if is_shootout:
+            if winning_roster is None:
+                title = f"{team_a_obj['teamName']} and {team_b_obj['teamName']} Tie at {pts1:.2f}"
+            elif is_shootout:
                 title = f"{winner_name} Outlasts {loser_name} in {pts1 + pts2:.0f}-Point Shootout"
             elif is_nailbiter:
                 title = f"{winner_name} Survives Nailbiter vs. {loser_name} by {margin:.2f} Pts"
             elif is_blowout:
                 title = f"{winner_name} Crushes {loser_name} in {margin:.1f}-Point Rout"
             else:
-                title = f"{winner_name} Defeats {loser_name} ({pts1:.1f} – {pts2:.1f})"
+                winner_points, loser_points = (pts1, pts2) if winning_roster == rid1 else (pts2, pts1)
+                title = f"{winner_name} Defeats {loser_name} ({winner_points:.1f} – {loser_points:.1f})"
 
             matchup_cards.append({
                 "matchupId": mid,
                 "title": title,
                 "isMarquee": is_shootout or is_nailbiter,
-                "winnerRosterId": winner_id,
+                "winnerRosterId": winning_roster,
+                "status": "final",
                 "margin": margin,
                 "combinedPoints": round(pts1 + pts2, 2),
                 "teamA": team_a_obj,
@@ -954,7 +970,10 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             proj2 = t_b.get("projectedPoints", pts2)
             grade1 = t_a.get("weeklyGrade", "B")
             grade2 = t_b.get("weeklyGrade", "B")
-            is_win_a = pts1 >= pts2
+            if card["winnerRosterId"] is None:
+                card["deepDive"] = None
+                continue
+            is_win_a = pts1 > pts2
             w_id = rid1 if is_win_a else rid2
             l_id = rid2 if is_win_a else rid1
             w_name = t_a["teamName"] if is_win_a else t_b["teamName"]
@@ -1112,6 +1131,8 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
         # Tough break: highest scoring loser
         losers = []
         for m in matchup_cards:
+            if m["winnerRosterId"] is None:
+                continue
             loser = m["teamA"] if m["teamA"]["rosterId"] != m["winnerRosterId"] else m["teamB"]
             losers.append(loser)
         tough_break_team = max(losers, key=lambda t: t["points"]) if losers else None
@@ -1119,6 +1140,8 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
         # Manager of the week: best lineup efficiency with a win
         winners = []
         for m in matchup_cards:
+            if m["winnerRosterId"] is None:
+                continue
             win_team = m["teamA"] if m["teamA"]["rosterId"] == m["winnerRosterId"] else m["teamB"]
             winners.append(win_team)
         mgr_of_week = max(winners, key=lambda t: t["lineupEfficiency"]) if winners else None
@@ -1127,7 +1150,7 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             "nailbiter": {
                 "title": "Game of the Week / Nailbiter",
                 "matchupId": nailbiter_card["matchupId"] if nailbiter_card else 1,
-                "winner": (nailbiter_card["teamA"]["teamName"] if nailbiter_card["winnerRosterId"] == nailbiter_card["teamA"]["rosterId"] else nailbiter_card["teamB"]["teamName"]) if nailbiter_card else "",
+                "winner": (nailbiter_card["teamA"]["teamName"] if nailbiter_card["winnerRosterId"] == nailbiter_card["teamA"]["rosterId"] else nailbiter_card["teamB"]["teamName"]) if nailbiter_card and nailbiter_card["winnerRosterId"] is not None else "Tie",
                 "score": f"{nailbiter_card['teamA']['points']:.2f} vs. {nailbiter_card['teamB']['points']:.2f}" if nailbiter_card else "",
                 "margin": nailbiter_card["margin"] if nailbiter_card else 0.0,
                 "narrative": f"Separated by just {nailbiter_card['margin']:.2f} points, every single snap counted.",
@@ -1135,7 +1158,7 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             "blowout": {
                 "title": "Blowout of the Week",
                 "matchupId": blowout_card["matchupId"] if blowout_card else 1,
-                "winner": (blowout_card["teamA"]["teamName"] if blowout_card["winnerRosterId"] == blowout_card["teamA"]["rosterId"] else blowout_card["teamB"]["teamName"]) if blowout_card else "",
+                "winner": (blowout_card["teamA"]["teamName"] if blowout_card["winnerRosterId"] == blowout_card["teamA"]["rosterId"] else blowout_card["teamB"]["teamName"]) if blowout_card and blowout_card["winnerRosterId"] is not None else "Tie",
                 "score": f"{blowout_card['teamA']['points']:.2f} vs. {blowout_card['teamB']['points']:.2f}" if blowout_card else "",
                 "margin": blowout_card["margin"] if blowout_card else 0.0,
                 "narrative": f"A commanding {blowout_card['margin']:.2f}-point demolition.",
@@ -1158,21 +1181,26 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
                 "rosterId": tough_break_team["rosterId"] if tough_break_team else 1,
                 "teamName": tough_break_team["teamName"] if tough_break_team else "",
                 "score": tough_break_team["points"] if tough_break_team else 0.0,
-                "narrative": f"Scored a massive {tough_break_team['points']:.2f} points but ran into the week's highest buzzsaw.",
+                "narrative": f"Scored {tough_break_team['points']:.2f} points in a loss." if tough_break_team else "No losing teams this week.",
             },
             "managerOfTheWeek": {
                 "title": "Manager of the Week",
                 "rosterId": mgr_of_week["rosterId"] if mgr_of_week else 1,
                 "teamName": mgr_of_week["teamName"] if mgr_of_week else "",
                 "efficiency": mgr_of_week["lineupEfficiency"] if mgr_of_week else 100.0,
-                "narrative": f"Maximized starting equity with a sterling {mgr_of_week['lineupEfficiency']:.1f}% optimal lineup execution.",
+                "narrative": f"Maximized starting equity with {mgr_of_week['lineupEfficiency']:.1f}% optimal lineup execution." if mgr_of_week else "No winning teams this week.",
             },
         }
+
+        if not tough_break_team:
+            superlatives["toughBreak"] = None
+        if not mgr_of_week:
+            superlatives["managerOfTheWeek"] = None
 
         # Week editorial summary (Gemini or Expressive Engine)
         gemini_sum = None
         key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-        if key:
+        if key and tough_break_team and mgr_of_week:
             sum_prompt = (
                 f"You are the senior editorial analyst for a premier fantasy football league.\n"
                 f"Write an insightful, expressive headline (under 12 words) and a 3-4 sentence recap of Week {w}.\n"
@@ -1196,18 +1224,18 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             headline = gemini_sum["headline"]
             ai_summary = gemini_sum["summary"]
         else:
-            headline = f"Week {w} Recap: {shootout_card['combinedPoints']:.0f}-Point Heavyweight Clashes & Statement Wins"
+            headline = f"Week {w} Final: {high_roller_team['teamName']} Leads the Scoring"
             ai_summary = (
-                f"Week {w} launched the 2026 campaign with unforgettable high-stakes drama and wild scoring separation across the board. "
-                f"Headlining the action was a breathless {shootout_card['combinedPoints']:.0f}-point shootout where {shootout_card['teamA']['teamName']} and "
-                f"{shootout_card['teamB']['teamName']} pushed each other to the absolute limit. "
-                f"{high_roller_team['teamName']} claimed the high-water mark with an electric {high_roller_team['points']:.2f}-point eruption, "
-                f"while {tough_break_team['teamName']} absorbed the ultimate bad beat after posting {tough_break_team['points']:.2f} points in defeat. "
-                f"With managerial efficiency separating early contenders from the pack, Week {w+1} promises immediate tactical recalibration."
+                f"All Week {w} games are final. {high_roller_team['teamName']} led the league with "
+                f"{high_roller_team['points']:.2f} points. The highest-scoring matchup paired "
+                f"{shootout_card['teamA']['teamName']} and {shootout_card['teamB']['teamName']} "
+                f"for {shootout_card['combinedPoints']:.2f} combined points."
             )
 
         scored_weeks_data.append({
             "week": w,
+            "status": "final",
+            "completion": completion,
             "label": f"Week {w} Recap",
             "headline": headline,
             "aiEditorialSummary": ai_summary,
@@ -1215,6 +1243,9 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             "superlatives": superlatives,
             "matchups": matchup_cards,
         })
+
+    for final_week in scored_weeks_data:
+        validate_final_week(final_week, team_info, season)
 
     # Build Standings Table
     standings_table = []
@@ -1272,10 +1303,10 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
         "league": {
             "leagueId": str(league_id),
             "season": str(season),
-            "currentWeek": active_week + 1,
+            "currentWeek": active_nfl_week,
         },
         "generatedAtUtc": datetime.now(timezone.utc).isoformat(),
-        "status": "scored" if scored_weeks_data else "no_scored_weeks",
+        "status": "final" if scored_weeks_data else "no_final_weeks",
         "activeWeek": active_week,
         "availableWeeks": [w["week"] for w in scored_weeks_data],
         "standings": standings_table,

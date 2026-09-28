@@ -52,44 +52,47 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Record refresh start
+        run: echo "REFRESH_STARTED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install pipeline dependencies
-        run: pip install --quiet "google-cloud-bigquery>=3,<4" "google-cloud-storage>=2.14,<4"
+        run: pip install --quiet -r requirements-pipeline.txt
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
           service_account: "ams-pipeline@apes-mac-salad.iam.gserviceaccount.com"
-        continue-on-error: true
 
       - name: Fetch fresh live Sleeper captures (current week)
         working-directory: sleeper_work
         run: python capture_sleeper_data.py --force
-        continue-on-error: true
 
       - name: Fetch fresh Johnny's Jerks captures (current week)
         run: python -m sleeper_work.capture_craig_redraft
-        continue-on-error: true
 
       - name: Load raw captures into canonical
         working-directory: sleeper_work
         run: python load_weekly_canonical.py
-        continue-on-error: true
 
       - name: Refresh control plane and coverage catalog
         working-directory: sleeper_work
         run: python load_control_plane.py
-        continue-on-error: true
 
       - name: Load reference data into canonical
         working-directory: sleeper_work
         run: python load_reference_canonical.py
-        continue-on-error: true
 
       # Power rankings are stored per week, so this must run before the payload
       # is rebuilt: the movement column compares against the snapshot the
@@ -97,13 +100,12 @@ jobs:
       - name: Rebuild power rankings
         working-directory: sleeper_work
         run: python build_power_rankings.py
-        continue-on-error: true
-
-      - name: Rebuild the weekly recap payload (Ape's Mac Salad)
-        run: python -m sleeper_work.build_weekly_recap --season "${{ github.event.inputs.season || '2026' }}"
 
       - name: Verify and refresh NFL schedule & broadcast fixtures
         run: python -m sleeper_work.nfl_schedule_provider
+
+      - name: Rebuild the weekly recap payload (Ape's Mac Salad)
+        run: python -m sleeper_work.build_weekly_recap --season "${{ github.event.inputs.season || '2026' }}"
 
       - name: Rebuild next week matchups forecast (Ape's Mac Salad)
         run: python -m sleeper_work.build_current_matchups
@@ -122,11 +124,17 @@ jobs:
           python -m sleeper_work.build_waiver_roi --league 1312209616372772864
           python -m sleeper_work.build_waiver_roi --league 1401673232670539776
 
+      - name: Validate final results and snapshot consistency
+        run: |
+          python -m unittest discover -s tests -p "test_publication*.py"
+          python -m sleeper_work.validate_publication --fresh-since "$REFRESH_STARTED_AT"
+
       # A payload that does not compile is worse than a stale one, so the build
       # gates the commit rather than running after it.
       - name: Verify the site still builds
         run: |
           npm ci --no-audit --no-fund
+          npm run test:analytics
           npm run check:runtime
           npm run build
           npm run build:johnny

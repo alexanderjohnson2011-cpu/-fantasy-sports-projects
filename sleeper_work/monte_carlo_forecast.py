@@ -20,6 +20,10 @@ import json
 import uuid
 import datetime
 import numpy as np
+try:
+    from sleeper_work.publication_contract import canonical_power_rows, validate_final_week
+except ModuleNotFoundError:
+    from publication_contract import canonical_power_rows, validate_final_week
 
 try:
     from google.cloud import bigquery
@@ -62,165 +66,13 @@ TEAM_NAMES = {
     12: "Bronco Stampede"
 }
 
-# Fluctuation & Injury Narrative Archetypes per Team
-FLUCTUATION_NARRATIVES = {
-    12: {
-        "headline": "Elite lineup floor creates the league's highest regular season ceiling",
-        "trend": "Up +1.4 wins since post-draft baseline",
-        "primaryDriver": "STARTING_STRENGTH",
-        "analysis": "Bronco Stampede boasts the No. 1 redraft starting lineup. Even with zero 2027 firsts, their weekly scoring consistency insulates them from major matchup variance across 14 weeks.",
-        "keyRisk": "Tight end room lacks top-tier insurance; an injury to starter would force backup FLEX adjustments.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 8.4, "playoffOdds": 84.0, "titleOdds": 22.5, "rank": 3, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 9.2, "playoffOdds": 91.5, "titleOdds": 28.0, "rank": 2, "event": "Preseason Camp Depth Polish"},
-            {"date": "2026-08-22", "expectedWins": 9.8, "playoffOdds": 95.6, "titleOdds": 33.4, "rank": 1, "event": "Current Model Convergence"}
-        ]
-    },
-    10: {
-        "headline": "Deepest roster in the league provides supreme injury insulation",
-        "trend": "Up +0.5 wins from acquisition trades",
-        "primaryDriver": "ROSTER_DEPTH",
-        "analysis": "Bijan Robinson and Amon-Ra St. Brown pair with the No. 2 QB room. Having top-ranked depth means substitute starters suffer almost no degradation during bye weeks.",
-        "keyRisk": "WR depth is concentrated in middle tiers; needs one receiver to hit high-end WR1 ceiling in playoff weeks.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 7.4, "playoffOdds": 68.0, "titleOdds": 9.5, "rank": 5, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 7.7, "playoffOdds": 71.2, "titleOdds": 10.4, "rank": 4, "event": "Roster Additions"},
-            {"date": "2026-08-22", "expectedWins": 8.3, "playoffOdds": 82.4, "titleOdds": 15.2, "rank": 3, "event": "Current Model Convergence"}
-        ]
-    },
-    1: {
-        "headline": "Defending champion brings elite veteran floor and balanced scoring depth",
-        "trend": "Up +0.7 wins after rookie draft consolidation",
-        "primaryDriver": "VETERAN_CONSISTENCY",
-        "analysis": "McBride and a deep veteran running back stable keep the weekly projection at 124+ points. The model projects them to secure a first-round bye in 38.5% of simulations.",
-        "keyRisk": "Age profile ranks 12th; late-season veteran wear could introduce variance in playoff rounds.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 8.2, "playoffOdds": 81.0, "titleOdds": 14.0, "rank": 4, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 8.6, "playoffOdds": 85.2, "titleOdds": 15.5, "rank": 3, "event": "Trade Consolidation"},
-            {"date": "2026-08-22", "expectedWins": 8.9, "playoffOdds": 88.2, "titleOdds": 16.8, "rank": 2, "event": "Current Model Convergence"}
-        ]
-    },
-    3: {
-        "headline": "High-powered core carries top-two upside, but bench cushion is razor-thin",
-        "trend": "Stable within top 4 contenders",
-        "primaryDriver": "STAR_POWER_CONCENTRATION",
-        "analysis": "Justin Jefferson, Brock Bowers, and Lamar Jackson produce explosive single-week scoring spikes, giving them high shootout win probability despite thin depth.",
-        "keyRisk": "Depth ranks 10th league-wide. If injuries hit during Weeks 9-11 bye clusters, win rate drops by 24%.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 9.6, "playoffOdds": 93.0, "titleOdds": 24.0, "rank": 1, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 9.1, "playoffOdds": 88.5, "titleOdds": 19.8, "rank": 3, "event": "Training Camp Adjustments"},
-            {"date": "2026-08-22", "expectedWins": 8.6, "playoffOdds": 85.0, "titleOdds": 16.2, "rank": 4, "event": "Current Model Convergence"}
-        ]
-    },
-    7: {
-        "headline": "Elite backfield power balanced by league's most volatile receiver corps",
-        "trend": "Down -0.8 wins due to WR room uncertainty",
-        "primaryDriver": "POSITIONAL_IMBALANCE",
-        "analysis": "Achane, Hampton, and McCaffrey form a dominant RB room that wins weeks outright, but the bottom-ranked WR room creates volatility against top-scoring opponents.",
-        "keyRisk": "With three FLEX spots, any missed games from top RBs drastically reduces lineup efficiency.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 7.9, "playoffOdds": 72.0, "titleOdds": 11.0, "rank": 4, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 7.4, "playoffOdds": 65.0, "titleOdds": 8.8, "rank": 5, "event": "WR Market Cool-off"},
-            {"date": "2026-08-22", "expectedWins": 7.4, "playoffOdds": 67.2, "titleOdds": 8.6, "rank": 5, "event": "Current Model Convergence"}
-        ]
-    },
-    2: {
-        "headline": "Premier running back trio gives huge weekly ceiling despite concentrated roster",
-        "trend": "Stable in playoff bubble tier",
-        "primaryDriver": "RB_ROOM_DOMINANCE",
-        "analysis": "Gibbs, Jeanty, and Taylor give 2 Dagos the best RB unit in the league. When all three play, win probability against average opponents jumps to 71%.",
-        "keyRisk": "QB and WR rooms rank in the bottom tier, making comebacks difficult if trailing early.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 6.8, "playoffOdds": 54.0, "titleOdds": 4.5, "rank": 7, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 7.0, "playoffOdds": 58.2, "titleOdds": 5.4, "rank": 6, "event": "Rookie Camp Reports"},
-            {"date": "2026-08-22", "expectedWins": 7.1, "playoffOdds": 61.5, "titleOdds": 6.2, "rank": 6, "event": "Current Model Convergence"}
-        ]
-    },
-    8: {
-        "headline": "Balanced middle-class profile without glaring weaknesses or elite separation",
-        "trend": "Stable within 6–8 win median band",
-        "primaryDriver": "BALANCED_LINEUP",
-        "analysis": "CeeDee Lamb and A.J. Brown supply WR ceiling, while tight end remains the limiting factor. The simulator projects a tight 5th–8th seed outcome in 64% of runs.",
-        "keyRisk": "Lack of high-end RB depth leaves little room for scoring explosions against top-3 contenders.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 6.5, "playoffOdds": 48.0, "titleOdds": 3.0, "rank": 8, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 6.6, "playoffOdds": 50.5, "titleOdds": 3.2, "rank": 7, "event": "Preseason Steady"},
-            {"date": "2026-08-22", "expectedWins": 6.7, "playoffOdds": 53.4, "titleOdds": 4.0, "rank": 7, "event": "Current Model Convergence"}
-        ]
-    },
-    9: {
-        "headline": "Superstar wideouts provide explosive spikes alongside a thinner baseline",
-        "trend": "Down -0.4 wins from preseason baseline",
-        "primaryDriver": "SPIKE_WEEK_VOLATILITY",
-        "analysis": "Ja'Marr Chase and Garrett Wilson create massive weekly variance. In high-scoring shootout weeks, Max’s Shadynasty wins 68% of simulated games.",
-        "keyRisk": "Low-ranked tight end and depth value limit floor in standard weekly grinds.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 6.8, "playoffOdds": 52.0, "titleOdds": 3.8, "rank": 7, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 6.5, "playoffOdds": 47.0, "titleOdds": 2.9, "rank": 8, "event": "TE Room Downgrade"},
-            {"date": "2026-08-22", "expectedWins": 6.4, "playoffOdds": 46.5, "titleOdds": 2.8, "rank": 8, "event": "Current Model Convergence"}
-        ]
-    },
-    5: {
-        "headline": "High-upside youth movement primed for rapid ascent as young receivers mature",
-        "trend": "Up +0.6 wins from draft acquisitions",
-        "primaryDriver": "YOUTH_ASCENT",
-        "analysis": "Nabers and McMillan supply dynamic WR upside. The simulator shows a wide range of outcomes (3 to 9 wins), reflecting the youth and developmental volatility.",
-        "keyRisk": "RB room ranks 12th in starter scoring, making weekly floor vulnerable against power rushing teams.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 5.2, "playoffOdds": 28.0, "titleOdds": 0.8, "rank": 10, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 5.7, "playoffOdds": 34.0, "titleOdds": 1.2, "rank": 9, "event": "Camp Buzz for Nabers"},
-            {"date": "2026-08-22", "expectedWins": 5.8, "playoffOdds": 36.2, "titleOdds": 1.5, "rank": 9, "event": "Current Model Convergence"}
-        ]
-    },
-    11: {
-        "headline": "Retooling roster with solid depth building toward next consolidation window",
-        "trend": "Stable retool profile",
-        "primaryDriver": "RETOOL_PHASE",
-        "analysis": "Terry Tate's Pain Train has the 5th ranked depth, but lacks the elite top-5 difference makers needed to reliably beat the top 3 contenders in the simulation.",
-        "keyRisk": "Low starting lineup ceiling results in a projected 32% playoff rate.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 5.0, "playoffOdds": 26.0, "titleOdds": 0.7, "rank": 11, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 5.3, "playoffOdds": 30.0, "titleOdds": 0.9, "rank": 10, "event": "Rookie Pick Integration"},
-            {"date": "2026-08-22", "expectedWins": 5.4, "playoffOdds": 31.8, "titleOdds": 1.0, "rank": 10, "event": "Current Model Convergence"}
-        ]
-    },
-    4: {
-        "headline": "Youngest roster in the league with elite pick capital; QB bottleneck holds back 2026",
-        "trend": "Building long-term runway",
-        "primaryDriver": "FUTURE_CAPITAL_ALLOCATION",
-        "analysis": "Breece Hall and Jeremiyah Love supply an outstanding RB foundation. However, quarterback uncertainty and youth concentration keep the 2026 projection at 4.9 wins.",
-        "keyRisk": "Low immediate win-now scoring; simulator places them in seeds 9–12 in 74% of runs.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 4.5, "playoffOdds": 18.0, "titleOdds": 0.3, "rank": 12, "event": "Post-Draft Initial Run"},
-            {"date": "2026-08-15", "expectedWins": 4.8, "playoffOdds": 21.5, "titleOdds": 0.4, "rank": 11, "event": "1.01 Jeremiyah Love Addition"},
-            {"date": "2026-08-22", "expectedWins": 4.9, "playoffOdds": 23.5, "titleOdds": 0.5, "rank": 11, "event": "Current Model Convergence"}
-        ]
-    },
-    6: {
-        "headline": "Rebuild has an exciting new anchor, but full weekly offense remains uphill",
-        "trend": "Up +0.8 wins after drafting Carnell Tate",
-        "primaryDriver": "REBUILD_FOUNDATION",
-        "analysis": "Drafting Carnell Tate at 1.03 adds a marquee piece to the rebuild. The redraft lineup still ranks 12th, keeping playoff probability at 14.8%.",
-        "keyRisk": "Severe RB depth shortage limits weekly scoring floor across all 14 matchups.",
-        "historyNotes": [
-            {"date": "2026-08-01", "expectedWins": 3.4, "playoffOdds": 8.0, "titleOdds": 0.1, "rank": 12, "event": "Pre-Draft Baseline"},
-            {"date": "2026-08-15", "expectedWins": 4.0, "playoffOdds": 12.5, "titleOdds": 0.2, "rank": 12, "event": "1.03 Carnell Tate Arrival"},
-            {"date": "2026-08-22", "expectedWins": 4.2, "playoffOdds": 14.8, "titleOdds": 0.3, "rank": 12, "event": "Current Model Convergence"}
-        ]
-    }
-}
-
-def rank_component_score(rank):
-    """Maps rank 1..12 to standard 100..50 score."""
-    return 100.0 - (float(rank) - 1.0) * (50.0 / 11.0)
-
 OFFICIAL_SLEEPER_SCHEDULE = [(1, [(1, 9), (3, 11), (10, 12), (5, 8), (2, 6), (4, 7)]), (2, [(3, 9), (1, 12), (5, 11), (6, 10), (7, 8), (2, 4)]), (3, [(9, 12), (3, 5), (1, 6), (7, 11), (4, 10), (2, 8)]), (4, [(5, 9), (6, 12), (3, 7), (1, 4), (2, 11), (8, 10)]), (5, [(6, 9), (5, 7), (4, 12), (2, 3), (1, 8), (10, 11)]), (6, [(7, 9), (4, 6), (2, 5), (8, 12), (3, 10), (1, 11)]), (7, [(4, 9), (2, 7), (6, 8), (5, 10), (11, 12), (1, 3)]), (8, [(2, 9), (4, 8), (7, 10), (6, 11), (1, 5), (3, 12)]), (9, [(8, 9), (2, 10), (4, 11), (1, 7), (3, 6), (5, 12)]), (10, [(9, 10), (8, 11), (1, 2), (3, 4), (7, 12), (5, 6)]), (11, [(9, 11), (1, 10), (3, 8), (2, 12), (4, 5), (6, 7)]), (12, [(1, 9), (3, 11), (10, 12), (5, 8), (2, 6), (4, 7)]), (13, [(3, 9), (1, 12), (5, 11), (6, 10), (7, 8), (2, 4)]), (14, [(9, 12), (3, 5), (1, 6), (7, 11), (4, 10), (2, 8)])]
 
 def generate_round_robin_schedule(team_ids, weeks=14):
     """Returns the official 14-week schedule directly verified with Sleeper API (League ID 1312209616372772864)."""
     return OFFICIAL_SLEEPER_SCHEDULE[:weeks]
 
-def run_monte_carlo_simulation(simulations=10000, random_seed=42):
+def run_monte_carlo_simulation(simulations=10000, random_seed=42, stream_to_bigquery=True):
     print(f"=== Running {simulations:,} Monte Carlo Season Simulations (Seed={random_seed}) ===")
     np.random.seed(random_seed)
     
@@ -229,16 +81,21 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
     with open(insights_path, "r", encoding="utf-8") as f:
         insights = json.load(f)
         
-    # Find prior scoring ranks
-    prior_scoring_pairs = []
-    for r_id_str, team_data in insights["teams"].items():
-        prev_s = team_data.get("previousSeason")
-        pf = prev_s.get("pointsFor", 0) if prev_s else 0
-        prior_scoring_pairs.append((int(r_id_str), pf))
-    prior_scoring_pairs.sort(key=lambda x: -x[1])
-    prior_scoring_ranks = {r_id: idx + 1 for idx, (r_id, _) in enumerate(prior_scoring_pairs)}
-    
-    power_scores = {}
+    power_path = os.path.join(ALMANAC_DIR, "src", "generated", "power-rankings.json")
+    with open(power_path, encoding="utf-8") as f:
+        power_payload = json.load(f)
+    power_rows = canonical_power_rows(power_payload, [int(r) for r in insights["teams"]])
+    power_ranks = {rid: row["rank"] for rid, row in power_rows.items()}
+    power_scores = {rid: row["score"] for rid, row in power_rows.items()}
+    model_version = "v2.0-canonical-power-final-results"
+    previous_forecast = {}
+    if os.path.exists(OUTPUT_JSON_PATH):
+        with open(OUTPUT_JSON_PATH, encoding="utf-8") as f:
+            previous = json.load(f)
+        # Do not compare simulations across different models as team movement.
+        if previous.get("modelVersion") == model_version:
+            previous_forecast = previous
+
     team_ratings = {}
     team_model_factors = {}
     
@@ -247,29 +104,15 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
         metrics = team_data["metrics"]
         redraft_board = team_data.get("redraftBoard", [])
         
-        # Composite Power Score Formula (MASTER_PLAN / Prototype.tsx):
-        # 55% Lineup, 25% Depth, 10% Balance (QB 10%, RB 30%, WR 45%, TE 15%), 10% Prior Scoring
-        lineup_rank = int(metrics.get("redraftLineupRank", 6))
-        depth_rank = int(metrics.get("depthRank", 6))
-        lineup_score = rank_component_score(lineup_rank)
-        depth_score = rank_component_score(depth_rank)
-        balance_score = (
-            rank_component_score(metrics.get("qbRoomRank", 6)) * 0.10 +
-            rank_component_score(metrics.get("rbRoomRank", 6)) * 0.30 +
-            rank_component_score(metrics.get("wrRoomRank", 6)) * 0.45 +
-            rank_component_score(metrics.get("teRoomRank", 6)) * 0.15
-        )
-        scoring_rank = prior_scoring_ranks.get(r_id, 6)
-        scoring_score = rank_component_score(scoring_rank)
-        
-        composite_power_score = (
-            lineup_score * 0.55 +
-            depth_score * 0.25 +
-            balance_score * 0.10 +
-            scoring_score * 0.10
-        )
-        power_scores[r_id] = composite_power_score
-        
+        power = power_rows[r_id]
+        composite_power_score = power["score"]
+        lineup_score, depth_score = power["lineupScore"], power["depthScore"]
+        balance_score, scoring_score = power["balanceScore"], power["priorScore"]
+        def component_rank(key):
+            return 1 + sum(row[key] > power[key] for row in power_rows.values())
+        lineup_rank, depth_rank = component_rank("lineupScore"), component_rank("depthScore")
+        scoring_rank = component_rank("priorScore")
+
         # 2. Detailed Roster Volatility Model (matches Prototype.tsx volatility math)
         rel_players = [p for p in redraft_board if p.get("redraftValue", 0) > 0][:10]
         rel_val = sum(p.get("redraftValue", 0) for p in rel_players) or 1.0
@@ -318,8 +161,8 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
             "pillars": {
                 "lineup": {"rank": lineup_rank, "score": round(lineup_score, 1), "weight": "55%", "label": "3-FLEX Starter Core"},
                 "depth": {"rank": depth_rank, "score": round(depth_score, 1), "weight": "25%", "label": "Bench Replacement Cushion"},
-                "balance": {"rank": round(12.0 - (balance_score - 50.0)/(50.0/11.0)), "score": round(balance_score, 1), "weight": "10%", "label": "Positional Fit (3 FLEX)"},
-                "history": {"rank": scoring_rank, "score": round(scoring_score, 1), "weight": "10%", "label": "2025 All-Play Receipts"}
+                "balance": {"rank": component_rank("balanceScore"), "score": round(balance_score, 1), "weight": "10%", "label": "Positional Fit (3 FLEX)"},
+                "history": {"rank": scoring_rank, "score": round(scoring_score, 1), "weight": "10%", "label": "2025 Points Scored"}
             },
             "volatilityImpactNarrative": (
                 f"With a {volatility_label.lower()} profile ({volatility_score:.1f}/100), the model applies a weekly scoring standard deviation of ±{std_dev:.1f} pts. "
@@ -327,10 +170,6 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
                 f"In 10,000 simulations, this volatility models an expected weekly floor of {p10_floor:.1f} pts (10th percentile) and a shootout ceiling of {p90_ceiling:.1f} pts (90th percentile)."
             )
         }
-        
-    # Rank teams by power score
-    sorted_by_power = sorted(power_scores.keys(), key=lambda t: -power_scores[t])
-    power_ranks = {t: rank + 1 for rank, t in enumerate(sorted_by_power)}
         
     team_ids = sorted(list(team_ratings.keys()))
     num_teams = len(team_ids)
@@ -357,11 +196,14 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
     actual_pf = {t: 0.0 for t in team_ids}
 
     recap_path = os.path.join(ALMANAC_DIR, "src", "generated", "weekly-recap.json")
+    if not os.path.exists(recap_path):
+        raise ValueError("Verified recap payload is required before forecasting")
     if os.path.exists(recap_path):
         try:
             with open(recap_path, "r", encoding="utf-8") as f:
                 rec_data = json.load(f)
                 for w_obj in rec_data.get("weeks", []):
+                    validate_final_week(w_obj, team_ids, power_payload["league"]["season"])
                     w_num = w_obj.get("week")
                     scores = {}
                     for m_card in w_obj.get("matchups", []):
@@ -418,7 +260,7 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
                         completed_weeks[w_num] = scores
             print(f"  Locked in actual scores for {len(completed_weeks)} completed regular season week(s): {list(completed_weeks.keys())}")
         except Exception as e:
-            print(f"  [warn] Could not load completed weeks: {e}")
+            raise ValueError("Cannot forecast with unverified completed results") from e
 
     # Pre-generate random weekly scores: shape (simulations, weeks, num_teams)
     means = np.array([team_ratings[t][0] for t in team_ids])
@@ -547,7 +389,7 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
             "worst_seed": worst_seed
         }
         
-    # Sort all 12 teams to establish canonical Projected League Rank (1..12)
+    # Sort all 12 teams to establish canonical title-odds rank (1..12)
     # Ranked by: Championship Odds DESC, Expected Wins DESC, Expected PF DESC, Expected Seed ASC
     sorted_forecast_teams = sorted(
         team_ids,
@@ -616,7 +458,7 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
                             "actualScore": round(c_match["actualScore"], 2),
                             "opponentActualScore": round(c_match["opponentActualScore"], 2),
                             "scoreDiff": c_match["scoreDiff"],
-                            "winProbability": 100.0 if res_val == "W" else 0.0,
+                            "winProbability": 100.0 if res_val == "W" else 50.0 if res_val == "T" else 0.0,
                             "projectedScore": round(c_match["actualScore"], 1),
                             "opponentProjectedScore": round(c_match["opponentActualScore"], 1),
                             "spread": spread,
@@ -641,7 +483,6 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
                     
         team_name = TEAM_NAMES.get(t, f"Team {t}")
         p_rank = power_ranks.get(t, proj_rank)
-        p_score = round(power_scores.get(t, 75.0), 1)
         rank_delta = p_rank - proj_rank
         delta_label = (
             f"+{rank_delta} vs Power Rank" if rank_delta > 0
@@ -649,22 +490,25 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
             else "Even with Power Rank"
         )
         
-        narrative_info = FLUCTUATION_NARRATIVES.get(t, {
-            "headline": "Solid projections aligned with baseline team strength",
-            "trend": "Stable",
-            "primaryDriver": "BASELINE",
-            "analysis": "Model projects steady weekly scoring with normal distribution bounds.",
-            "keyRisk": "Standard bye week depth vulnerabilities.",
-            "historyNotes": []
-        })
-        
-        # Explanatory connection text
-        if rank_delta > 0:
-            conn_note = f"Simulated finish (#{proj_rank}, Exp Seed {exp_seed}) outperforms static Power Rank (#{p_rank}) because high starting star variance and favorable schedule sequence convert into extra head-to-head wins in shootout weeks."
-        elif rank_delta < 0:
-            conn_note = f"Simulated finish (#{proj_rank}, Exp Seed {exp_seed}) trails static Power Rank (#{p_rank}) because although roster depth is strong on paper, regular-season schedule clusters and weekly score variance produce occasional tight losses."
-        else:
-            conn_note = f"Simulated finish (#{proj_rank}, Exp Seed {exp_seed}) perfectly matches static Power Rank (#{p_rank}), indicating high correlation between composite roster viability and 14-week schedule outcomes."
+        prior_team = previous_forecast.get("teams", {}).get(str(t))
+        history_notes = []
+        if prior_team:
+            history_notes.append({"date": previous_forecast["generatedAt"], "event": "Previous published simulation",
+                                  "expectedWins": prior_team["expectedWins"], "playoffOdds": prior_team["playoffProbability"], "titleOdds": prior_team["championshipProbability"], "rank": prior_team["projectedRank"]})
+        history_notes.append({"date": now_iso, "event": "Current simulation",
+                              "expectedWins": exp_wins, "playoffOdds": playoff_pct, "titleOdds": title_pct, "rank": proj_rank})
+        win_delta = round(exp_wins - prior_team["expectedWins"], 1) if prior_team else 0
+        narrative_info = {
+            "headline": f"{exp_wins:.1f} expected wins · {title_pct:.1f}% title probability",
+            "trend": "Rising" if win_delta > 0 else "Falling" if win_delta < 0 else "Stable" if prior_team else "New baseline",
+            "primaryDriver": "SIMULATION_UPDATE" if prior_team else "BASELINE",
+            "analysis": f"The current simulation projects {exp_wins:.1f} wins, a {playoff_pct:.1f}% playoff chance and a {title_pct:.1f}% title chance, with {len(completed_weeks)} completed weeks locked.",
+            "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
+            "historyNotes": history_notes,
+        }
+        conn_note = (f"Title odds rank #{proj_rank} versus Power Index #{p_rank}. "
+                     "The forecast also includes completed results, schedule and simulated weekly scoring variance. "
+                     "The difference alone does not identify a causal driver.")
 
         act_w = actual_wins[t]
         act_l = actual_losses[t]
@@ -680,13 +524,14 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
             "expectedSeed": exp_seed,
             "medianSeed": median_seed,
             "powerRank": p_rank,
-            "powerScore": p_score,
+            "powerScore": power_scores[t],
             "powerRankDelta": rank_delta,
             "powerDeltaLabel": delta_label,
             "powerConnectionNarrative": conn_note,
             "modelFactors": team_model_factors[t],
-            "actualWins": int(act_w) if act_w.is_integer() else act_w,
-            "actualLosses": int(act_l) if act_l.is_integer() else act_l,
+            "actualWins": int(act_w - actual_ties[t] * .5),
+            "actualLosses": int(act_l - actual_ties[t] * .5),
+            "actualTies": int(actual_ties[t]),
             "actualPoints": round(actual_pf[t], 2),
             "rosExpectedWins": ros_w,
             "rosExpectedLosses": ros_l,
@@ -731,8 +576,11 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
         "generatedAt": now_iso,
         "simulationsCount": simulations,
         "randomSeed": random_seed,
-        "modelVersion": "v1.0-monte-carlo",
-        "methodology": "10,000-run Monte Carlo simulation directly calibrated to Composite Power Viability Scores over full 14-week schedule & 6-team playoff bracket.",
+        "modelVersion": model_version,
+        "powerSnapshotAt": power_payload["generatedAtUtc"],
+        "rosterInsightsAt": insights["generatedAt"],
+        "recapSnapshotAt": rec_data["generatedAtUtc"],
+        "methodology": "Monte Carlo estimates using the weekly Power Index, verified final results, a 14-week schedule and a 6-team playoff bracket. The mapping from roster value to scoring distributions is a modeling assumption, not an empirically calibrated guarantee.",
         "teams": projections
     }
     
@@ -743,7 +591,7 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
     print(f"Generated forecast JSON with projectedRank (1..12), expectedSeed & detailed model factors at {OUTPUT_JSON_PATH}")
     
     # Stream to BigQuery
-    if BQ_AVAILABLE:
+    if BQ_AVAILABLE and stream_to_bigquery:
         try:
             client = bigquery.Client(project=PROJECT_ID)
             run_meta_row = [{
@@ -754,7 +602,7 @@ def run_monte_carlo_simulation(simulations=10000, random_seed=42):
                 "input_cutoff_utc": now_iso,
                 "simulations_count": simulations,
                 "random_seed": random_seed,
-                "model_version": "v1.0-monte-carlo",
+                "model_version": model_version,
                 "convergence_status": "CONVERGED",
                 "brier_score": 0.071,
                 "log_loss": 0.286

@@ -21,7 +21,8 @@
     "refresh:all": "python sleeper_work/refresh_all_weekly.py",
     "draft:api": "python -m draft_assistant",
     "draft:web": "vite --host 127.0.0.1 --port 4173",
-    "draft:check": "python -m unittest discover -s tests -p test_draft_assistant.py"
+    "draft:check": "python -m unittest discover -s tests -p test_draft_assistant.py",
+    "test:analytics": "node --test tests/analytics-contract.test.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",

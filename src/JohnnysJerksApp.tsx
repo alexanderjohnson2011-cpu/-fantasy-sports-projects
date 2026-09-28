@@ -84,7 +84,7 @@ export default function JohnnysJerksApp() {
               Sources & Methodology 📖
             </button>
             <a
-              href="#"
+              href={window.location.pathname.startsWith("/johnny") ? "/" : window.location.hash.startsWith("#johnny") ? "#dashboard" : "https://apesmacsalad.netlify.app/"}
               className="jj-nav-btn"
               style={{
                 textDecoration: "none",
