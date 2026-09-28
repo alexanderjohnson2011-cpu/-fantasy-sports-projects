@@ -1542,13 +1542,19 @@ function RecapsScreen({ onWeek }: { onWeek?: (week: number) => void }) {
     const requested = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/(?:matchup-\d+|roundup))?$/)?.[1]);
     return recapData.availableWeeks?.includes(requested) ? requested : recapData.activeWeek || 1;
   });
-  const [roundupOnly, setRoundupOnly] = useState(() => /^#recaps\/week-\d+\/roundup$/.test(window.location.hash));
+  const [roundupOnly, setRoundupOnly] = useState(() => /^(?:#recaps?|#recaps\/week-\d+\/roundup)$/.test(window.location.hash));
   const [expandedMatchup, setExpandedMatchup] = useState<number | null>(() => {
     const match = window.location.hash.match(/^#recaps\/week-\d+\/matchup-(\d+)$/);
     return match ? Number(match[1]) : null;
   });
   useEffect(() => {
     const syncWeek = () => {
+      if (/^#recaps?$/.test(window.location.hash)) {
+        setSelectedWeek(recapData.activeWeek || 1);
+        setExpandedMatchup(null);
+        setRoundupOnly(true);
+        return;
+      }
       const match = window.location.hash.match(/^#recaps\/week-(\d+)(?:\/(?:matchup-(\d+)|(roundup)))?$/);
       const requested = Number(match?.[1]);
       if (recapData.availableWeeks?.includes(requested)) {
