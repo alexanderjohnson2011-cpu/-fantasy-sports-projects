@@ -42,6 +42,7 @@ import forecastInsightsJson from "./generated/johnnys-jerks/forecast-insights.js
 import TrajectoryChart from "./components/johnny/TrajectoryChart";
 import PowerTrajectoryChart from "./components/johnny/PowerTrajectoryChart";
 import TeamTransactionDossier from "./components/TeamTransactionDossier";
+import RecapRoundup from "./RecapRoundup";
 
 const JOHNNYS_LEAGUE_ID = "1401673232670539776";
 
@@ -295,8 +296,37 @@ function StandingsTable({ rows }: { rows: StandingRow[] }) {
 
 function RecapsScreen() {
   const recapData = weeklyRecapJson;
-  const [selectedWeek, setSelectedWeek] = useState<number>(recapData.activeWeek || 1);
-  const [expandedMatchup, setExpandedMatchup] = useState<number | null>(null);
+  const [selectedWeek, setSelectedWeek] = useState<number>(() => {
+    const requested = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/(?:matchup-\d+|roundup))?$/)?.[1]);
+    return recapData.availableWeeks?.includes(requested) ? requested : recapData.activeWeek || 1;
+  });
+  const [expandedMatchup, setExpandedMatchup] = useState<number | null>(() => {
+    const match = window.location.hash.match(/^#recaps\/week-\d+\/matchup-(\d+)$/);
+    return match ? Number(match[1]) : null;
+  });
+  const [roundupOnly, setRoundupOnly] = useState(() => /^#recaps\/week-\d+\/roundup$/.test(window.location.hash));
+
+  useEffect(() => {
+    const sync = () => {
+      const match = window.location.hash.match(/^#recaps\/week-(\d+)(?:\/(?:matchup-(\d+)|(roundup)))?$/);
+      const requested = Number(match?.[1]);
+      if (recapData.availableWeeks?.includes(requested)) {
+        setSelectedWeek(requested);
+        setExpandedMatchup(match?.[2] ? Number(match[2]) : null);
+        setRoundupOnly(Boolean(match?.[3]));
+      }
+    };
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, [recapData.availableWeeks]);
+
+  useEffect(() => {
+    if (expandedMatchup == null) return;
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(`recap-matchup-${expandedMatchup}`)?.scrollIntoView({ block: "start", behavior: "smooth" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [expandedMatchup, selectedWeek]);
 
   const currentWeekRecap = recapData.weeks?.find((w: any) => w.week === selectedWeek) || recapData.weeks?.[0];
   const superlatives = currentWeekRecap?.superlatives;
@@ -307,7 +337,7 @@ function RecapsScreen() {
         <p className="eyebrow">Official Weekly Matchup Audit & AI Highlights</p>
         <h1>Matchup Recaps</h1>
         <p className="section-deck">
-          Game-by-game breakdowns, AI tactical commentary, box scores with lineup efficiency, and weekly superlatives modeled directly on RosterAudit™.
+          Shareable league roundup, game-by-game commentary, box scores and weekly superlatives. Final recaps publish after the full slate.
         </p>
 
         {/* Week Selector */}
@@ -318,12 +348,16 @@ function RecapsScreen() {
               key={wk}
               type="button"
               className={`week-btn ${selectedWeek === wk ? "active" : ""}`}
-              onClick={() => setSelectedWeek(wk)}
+              onClick={() => { setSelectedWeek(wk); setExpandedMatchup(null); window.location.hash = `#recaps/week-${wk}${roundupOnly ? "/roundup" : ""}`; }}
             >
               Week 0{wk}
             </button>
           ))}
         </div>
+
+        {currentWeekRecap?.matchups?.length ? <RecapRoundup week={selectedWeek} matchups={currentWeekRecap.matchups} publication="Johnny's Jerks" roundupOnly={roundupOnly} onDeepDive={setExpandedMatchup} /> : null}
+
+        {!roundupOnly && <>
 
         {/* Lead Editorial Card */}
         {currentWeekRecap ? (
@@ -415,7 +449,7 @@ function RecapsScreen() {
               const isWinnerB = m.winnerRosterId === m.teamB.rosterId;
               const isExpanded = expandedMatchup === m.matchupId;
               return (
-                <div key={m.matchupId} className="recap-matchup-card">
+                <div key={m.matchupId} id={`recap-matchup-${m.matchupId}`} className="recap-matchup-card">
                   <div className="recap-matchup-header">
                     <div>
                       <span className="superlative-tag" style={{ color: "var(--ink-soft)" }}>
@@ -463,7 +497,10 @@ function RecapsScreen() {
                   <button
                     type="button"
                     className="recap-boxscore-toggle"
-                    onClick={() => setExpandedMatchup(isExpanded ? null : m.matchupId)}
+                    onClick={() => {
+                      setExpandedMatchup(isExpanded ? null : m.matchupId);
+                      window.location.hash = isExpanded ? `#recaps/week-${selectedWeek}` : `#recaps/week-${selectedWeek}/matchup-${m.matchupId}`;
+                    }}
                   >
                     <BookOpenText size={14} />
                     <span>{isExpanded ? "Collapse Matchup Deep Dive" : "Inside the Matchup · Deep Dive, Stats & Full Box Score"}</span>
@@ -772,6 +809,7 @@ function RecapsScreen() {
           </div>
           <StandingsTable rows={recapData.standings as any} />
         </div>
+        </>}
       </main>
     </div>
   );
@@ -3088,6 +3126,7 @@ function routeFromHash(): Route {
     return { kind: "forecastTeam", rosterId };
   }
   if (value === "recaps" || value === "recap") return { kind: "nav", id: "recaps" };
+  if (/^recaps\/week-\d+(?:\/(?:matchup-\d+|roundup))?$/.test(value)) return { kind: "nav", id: "recaps" };
   if (value === "waivers" || value === "waiver" || value === "roi") return { kind: "nav", id: "waivers" };
   if (value === "power" || value === "power-rankings") return { kind: "nav", id: "power" };
   if (value === "matchups") return { kind: "nav", id: "matchups" };

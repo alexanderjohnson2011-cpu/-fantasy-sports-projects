@@ -53,6 +53,7 @@ import { TurnDecisionMatrix } from "./TurnDecisionMatrix";
 import { askAiStrategist } from "./ai-strategist";
 import JohnnysJerksApp from "./JohnnysJerksApp";
 import TeamTransactionDossier from "./components/TeamTransactionDossier";
+import RecapRoundup from "./RecapRoundup";
 
 type WeeklyMatchup = {
   week: number;
@@ -1442,40 +1443,6 @@ function StandingsTable({ rows }: { rows: StandingRow[] }) {
 
 const weeklyRecap = weeklyRecapJson;
 
-function matchupQuip(matchup: any): string {
-  const a = matchup.teamA;
-  const b = matchup.teamB;
-  if (matchup.winnerRosterId == null) {
-    return `${a.teamName} and ${b.teamName} finished level at ${a.points.toFixed(2)} apiece; even the scoreboard refused to pick a side. The league gets a tie and two managers get a whole week to argue about decimals.`;
-  }
-  const winner = matchup.winnerRosterId === a.rosterId ? a : b;
-  const loser = winner === a ? b : a;
-  const star = [...(winner.starters || [])].sort((left: any, right: any) => Number(right.points || 0) - Number(left.points || 0))[0];
-  const margin = Math.abs(winner.points - loser.points);
-  const flavor = Number(matchup.matchupId || 0) % 3;
-  const first = margin <= 5
-    ? `${winner.teamName} escaped ${loser.teamName} by ${margin.toFixed(2)} points; somebody check the league chat for a recount request.`
-    : margin >= 35
-      ? (flavor === 2
-        ? `${winner.teamName} served ${loser.teamName} a ${margin.toFixed(2)}-point loss; the mercy rule apparently missed the group text.`
-        : `${winner.teamName} flattened ${loser.teamName} by ${margin.toFixed(2)} points; the box score may need a content warning.`)
-      : winner.points + loser.points >= 300
-        ? `${winner.teamName} won a ${Math.round(winner.points + loser.points)}-point shootout over ${loser.teamName}; defense was an optional accessory.`
-        : [
-          `${winner.teamName} took down ${loser.teamName}, ${winner.points.toFixed(2)}–${loser.points.toFixed(2)}; the salad bowl has spoken.`,
-          `${winner.teamName} beat ${loser.teamName} by ${margin.toFixed(2)}; ${loser.teamName} can file its appeal with the scoreboard.`,
-          `${winner.teamName} handed ${loser.teamName} a ${margin.toFixed(2)}-point loss; no extra dressing could cover that up.`,
-        ][flavor];
-  const second = star
-    ? [
-      `${star.name} dropped ${Number(star.points || 0).toFixed(2)} for the winners, leaving the rest of the roster to sign the thank-you card.`,
-      `${star.name} supplied ${Number(star.points || 0).toFixed(2)} points, which is one way to make the postgame explanation shorter.`,
-      `${star.name} brought ${Number(star.points || 0).toFixed(2)} points to the potluck; ${loser.teamName} brought an appetite for next week.`,
-    ][flavor]
-    : `${loser.teamName} gets another shot next week, once the scoreboard stops staring back.`;
-  return `${first} ${second}`;
-}
-
 function useLiveMatchupScores(currentWeek: number) {
   const [liveScores, setLiveScores] = useState<Record<string, { points: number; startersPlayed: number; liveProjectedTotal?: number; liveWinProb?: number }>>({});
   const [isLiveAction, setIsLiveAction] = useState(false);
@@ -1571,22 +1538,23 @@ function useLiveMatchupScores(currentWeek: number) {
 
 function RecapsScreen({ onWeek }: { onWeek?: (week: number) => void }) {
   const recapData = weeklyRecapJson;
-  const [copiedRoundup, setCopiedRoundup] = useState(false);
   const [selectedWeek, setSelectedWeek] = useState<number>(() => {
-    const requested = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/matchup-\d+)?$/)?.[1]);
+    const requested = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/(?:matchup-\d+|roundup))?$/)?.[1]);
     return recapData.availableWeeks?.includes(requested) ? requested : recapData.activeWeek || 1;
   });
+  const [roundupOnly, setRoundupOnly] = useState(() => /^#recaps\/week-\d+\/roundup$/.test(window.location.hash));
   const [expandedMatchup, setExpandedMatchup] = useState<number | null>(() => {
     const match = window.location.hash.match(/^#recaps\/week-\d+\/matchup-(\d+)$/);
     return match ? Number(match[1]) : null;
   });
   useEffect(() => {
     const syncWeek = () => {
-      const match = window.location.hash.match(/^#recaps\/week-(\d+)(?:\/matchup-(\d+))?$/);
+      const match = window.location.hash.match(/^#recaps\/week-(\d+)(?:\/(?:matchup-(\d+)|(roundup)))?$/);
       const requested = Number(match?.[1]);
       if (recapData.availableWeeks?.includes(requested)) {
         setSelectedWeek(requested);
         setExpandedMatchup(match?.[2] ? Number(match[2]) : null);
+        setRoundupOnly(Boolean(match?.[3]));
       }
     };
     window.addEventListener("hashchange", syncWeek);
@@ -1603,32 +1571,6 @@ function RecapsScreen({ onWeek }: { onWeek?: (week: number) => void }) {
     });
     return () => window.cancelAnimationFrame(frame);
   }, [expandedMatchup, selectedWeek]);
-
-  const copyRoundup = async () => {
-    if (!currentWeekRecap?.matchups?.length) return;
-    const base = `${window.location.origin}${window.location.pathname}${window.location.search}`;
-    const lines = currentWeekRecap.matchups.map((matchup: any) =>
-      `• ${matchupQuip(matchup)}\n  Deep dive: ${base}#recaps/week-${selectedWeek}/matchup-${matchup.matchupId}`
-    );
-    const text = `APE'S MAC SALAD · WEEK ${selectedWeek} MATCHUP RECAPS\n\n${lines.join("\n\n")}`;
-    try {
-      if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
-      await navigator.clipboard.writeText(text);
-      setCopiedRoundup(true);
-      window.setTimeout(() => setCopiedRoundup(false), 2500);
-    } catch {
-      const field = document.createElement("textarea");
-      field.value = text;
-      field.style.position = "fixed";
-      field.style.opacity = "0";
-      document.body.appendChild(field);
-      field.select();
-      const copied = document.execCommand("copy");
-      field.remove();
-      setCopiedRoundup(copied);
-      if (copied) window.setTimeout(() => setCopiedRoundup(false), 2500);
-    }
-  };
 
   return (
     <div className="app-screen section-screen web-screen recaps-screen-container">
@@ -1647,7 +1589,7 @@ function RecapsScreen({ onWeek }: { onWeek?: (week: number) => void }) {
               key={wk}
               type="button"
               className={`week-btn ${selectedWeek === wk ? "active" : ""}`}
-              onClick={() => { setSelectedWeek(wk); setExpandedMatchup(null); onWeek?.(wk); window.location.hash = `#recaps/week-${wk}`; }}
+              onClick={() => { setSelectedWeek(wk); setExpandedMatchup(null); onWeek?.(wk); window.location.hash = `#recaps/week-${wk}${roundupOnly ? "/roundup" : ""}`; }}
             >
               Week 0{wk}
             </button>
@@ -1656,33 +1598,9 @@ function RecapsScreen({ onWeek }: { onWeek?: (week: number) => void }) {
 
         {!currentWeekRecap && <p className="source-note">No final recap is available yet. Follow the current week in Matchups.</p>}
 
-        {currentWeekRecap?.matchups?.length ? (
-          <section className="recap-roundup" aria-labelledby="recap-roundup-title">
-            <div className="recap-roundup-heading">
-              <div>
-                <p className="eyebrow">The league text · Week {selectedWeek}</p>
-                <h2 id="recap-roundup-title">Every matchup in two sentences</h2>
-                <p>Quick hits for the group chat. Open any deep dive for the full story and box score.</p>
-              </div>
-              <button type="button" className="recap-roundup-copy" onClick={() => void copyRoundup()}>
-                {copiedRoundup ? "Copied league text" : "Copy all for league text"}
-              </button>
-            </div>
-            <ol className="recap-roundup-list">
-              {currentWeekRecap.matchups.map((matchup: any) => (
-                <li key={matchup.matchupId}>
-                  <span className="recap-roundup-number">{String(matchup.matchupId).padStart(2, "0")}</span>
-                  <div>
-                    <p>{matchupQuip(matchup)}</p>
-                    <a href={`#recaps/week-${selectedWeek}/matchup-${matchup.matchupId}`} onClick={() => setExpandedMatchup(matchup.matchupId)}>
-                      Read deep dive &amp; box score <ArrowRight size={14} aria-hidden="true" />
-                    </a>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
-        ) : null}
+        {currentWeekRecap?.matchups?.length ? <RecapRoundup week={selectedWeek} matchups={currentWeekRecap.matchups} publication="Ape's Mac Salad" roundupOnly={roundupOnly} onDeepDive={setExpandedMatchup} /> : null}
+
+        {!roundupOnly && <>
 
         {/* Lead Editorial Card */}
         {currentWeekRecap ? (
@@ -2134,6 +2052,7 @@ function RecapsScreen({ onWeek }: { onWeek?: (week: number) => void }) {
           </div>
           <StandingsTable rows={recapData.standings} />
         </div>
+        </>}
       </main>
     </div>
   );
@@ -4751,7 +4670,7 @@ function routeFromHash(): Route {
   if (value === "recaps" || value === "recap") {
     return { kind: "nav", id: "recaps" };
   }
-  if (/^recaps\/week-\d+(?:\/matchup-\d+)?$/.test(value)) return { kind: "nav", id: "recaps" };
+  if (/^recaps\/week-\d+(?:\/(?:matchup-\d+|roundup))?$/.test(value)) return { kind: "nav", id: "recaps" };
   if (value === "hall-of-mac" || value === "league/hall") return { kind: "nav", id: "hall" };
   if (value === "standings" || value === "league/standings") return { kind: "nav", id: "standings" };
   if (value === "transactions/trades" || value === "trades") return { kind: "nav", id: "trades" };
@@ -4790,7 +4709,7 @@ export default function Prototype() {
     return teams.some((team) => team.rosterId === stored) ? stored : null;
   });
   const [contextWeek, setContextWeek] = useState<number>(() => {
-    const linked = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/matchup-\d+)?$/)?.[1]);
+    const linked = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/(?:matchup-\d+|roundup))?$/)?.[1]);
     const stored = Number(window.localStorage.getItem("apes-week"));
     return [linked, stored].find((week) => [...weeklyRecapJson.availableWeeks, matchupsCurrentJson.week].includes(week)) ?? matchupsCurrentJson.week;
   });
@@ -4808,7 +4727,7 @@ export default function Prototype() {
     const handleHash = () => {
       const next = routeFromHash();
       setRoute(next);
-      const linkedWeek = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/matchup-\d+)?$/)?.[1]);
+      const linkedWeek = Number(window.location.hash.match(/^#recaps\/week-(\d+)(?:\/(?:matchup-\d+|roundup))?$/)?.[1]);
       if (weeklyRecapJson.availableWeeks.includes(linkedWeek)) {
         setContextWeek(linkedWeek);
         window.localStorage.setItem("apes-week", String(linkedWeek));
