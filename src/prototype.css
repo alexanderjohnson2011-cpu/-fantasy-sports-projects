@@ -5428,6 +5428,79 @@ table.standings td.move-note { font-size: 13px; color: rgba(11, 51, 41, 0.78); m
   border-color: var(--ink, #0b3329);
 }
 
+.recap-roundup {
+  margin: 12px 0 32px;
+  padding: clamp(18px, 3vw, 32px);
+  background: var(--paper, #f6f2e9);
+  border: 1px solid var(--hairline, rgba(11, 51, 41, 0.2));
+  border-top: 5px solid var(--rust, #c44322);
+}
+
+.recap-roundup-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--hairline, rgba(11, 51, 41, 0.2));
+}
+
+.recap-roundup-heading h2 {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1.1;
+  margin: 4px 0 8px;
+}
+
+.recap-roundup-heading p:last-child {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.recap-roundup-copy {
+  flex: none;
+  cursor: pointer;
+  border: 1px solid var(--ink, #0b3329);
+  background: var(--ink, #0b3329);
+  color: white;
+  border-radius: 3px;
+  padding: 10px 14px;
+  font: 700 0.9rem var(--sans, "IBM Plex Sans Condensed", sans-serif);
+}
+
+.recap-roundup-copy:focus-visible,
+.recap-roundup-list a:focus-visible {
+  outline: 3px solid var(--rust, #c44322);
+  outline-offset: 3px;
+}
+
+.recap-roundup-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.recap-roundup-list li {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 14px;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--hairline, rgba(11, 51, 41, 0.2));
+}
+
+.recap-roundup-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.recap-roundup-number { color: var(--rust, #c44322); font: 800 0.9rem var(--sans, sans-serif); padding-top: 3px; }
+.recap-roundup-list p { font-size: 1rem; line-height: 1.55; margin: 0 0 9px; }
+.recap-roundup-list a { display: inline-flex; align-items: center; gap: 5px; color: var(--rust, #c44322); font: 700 0.9rem var(--sans, sans-serif); text-decoration: underline; text-underline-offset: 3px; }
+.recap-matchup-card { scroll-margin-top: 120px; }
+
+@media (max-width: 650px) {
+  .recap-roundup-heading { flex-direction: column; }
+  .recap-roundup-copy { width: 100%; }
+  .recaps-week-picker { flex-wrap: wrap; }
+}
+
 .recaps-editorial-card {
   background: #fff;
   border: 1px solid var(--hairline, rgba(11, 51, 41, 0.16));

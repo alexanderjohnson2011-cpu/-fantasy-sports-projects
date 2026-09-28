@@ -8,6 +8,8 @@ The public editorial brand is **Ape's Mac Salad**. The published draft product i
 
 The publication's five primary destinations are Front Page, This Week, League, Transactions, and Draft. Keep final recaps under This Week; Power Rankings, Forecast, Standings, and Hall of Mac under League; Waivers and Trades under Transactions. Preserve the editorial newspaper identity. The persistent context bar provides a week jump, My Team, and a league switch. Week, team, matchup, and transaction subview links should survive reload and browser Back. Current-year Power Index is shown as rank and numeric relative score; draft and dynasty letter grades remain separate.
 
+Final Matchup Recaps lead with a league-text roundup: two short, funny, fact-grounded sentences for every final matchup, a one-click copy-all action for group chat, and a direct link from each quip to its full matchup deep dive and box score. Keep the long analysis available below the roundup and preserve week-specific shareable links.
+
 Treat supporting copy and data labels as readable content, never decorative microprint. Keep visible UI text at 12px or larger, with longer editorial copy at 14px or larger, on both desktop and mobile. The Mac Salad trophy must use a genuinely transparent asset and show a clear plastic to-go container of extra-creamy, mayonnaise-forward elbow macaroni salad with no red or green ingredients or garnish.
 
 The Matchups destination owns the **Hall of Mac**, a permanent dated ledger of every draft and weekly Ape's Mac Salad recipient. Never fabricate winners. Each serving counts once toward that season's standings, and the manager with the most servings earns the annual **Kong Mac Salad Award**. Until a season-ending tie rule is chosen, tied managers remain co-leaders.
