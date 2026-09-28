@@ -4,10 +4,11 @@ export function recapHonors(matchups: any[]) {
     const loser = winner === m.teamA ? m.teamB : m.teamA;
     return { id: m.matchupId, winner, loser, margin: Math.abs(winner.points - loser.points) };
   });
-  const epic = [...results].sort((a, b) => b.winner.points - a.winner.points)[0];
-  const skine = [...results].sort((a, b) => a.loser.points - b.loser.points)[0];
-  const gitty = results.filter((r) => r.loser.optimalPoints - r.loser.points >= 20 && r.loser.optimalPoints - r.loser.points > r.margin)
+  const epic = [...results].sort((a, b) => b.margin - a.margin)[0];
+  const gitty = results.filter((r) => r.loser.optimalPoints - r.loser.points >= 25 && r.loser.optimalPoints - r.loser.points > r.margin && r.loser.lineupEfficiency < 85)
     .sort((a, b) => (b.loser.optimalPoints - b.loser.points) - (a.loser.optimalPoints - a.loser.points))[0];
+  const skine = results.filter((r) => r.id !== gitty?.id && r.loser.optimalPoints - r.loser.points >= 15)
+    .sort((a, b) => a.loser.lineupEfficiency - b.loser.lineupEfficiency)[0];
   const sniff = [...results].filter((r) => r.winner.lineupEfficiency >= 95)
     .sort((a, b) => b.winner.lineupEfficiency - a.winner.lineupEfficiency)[0];
   return { epic: epic?.id, skine: skine?.id, gitty: gitty?.id, sniff: sniff?.id };
@@ -41,11 +42,11 @@ export function matchupQuip(matchup: any, honors: ReturnType<typeof recapHonors>
   const second = honors.gitty === matchup.matchupId
     ? `Gitty Gat: ${loser.teamName} finished ${missed.toFixed(1)} points shy of its optimal lineup in a ${margin.toFixed(2)}-point loss; the alternate lineup had enough to win.`
     : honors.skine === matchup.matchupId
-      ? `SKINE of the Week goes to ${loser.teamName} for a league-low ${loser.points.toFixed(2)} points; even the box score wants some privacy.`
+      ? `SKINE of the Week goes to ${loser.teamName}: ${missed.toFixed(1)} points shy of its optimal lineup and a loss to show for it; the lineup card is seeking privacy.`
       : honors.epic === matchup.matchupId && honors.sniff === matchup.matchupId
-        ? `Epic Jerks honors go to ${winner.teamName} for a league-high ${winner.points.toFixed(2)} points, and *Sniff* for converting ${winner.lineupEfficiency}% of its optimal lineup.`
+        ? `Epic Jerks honors go to ${winner.teamName} for the week's biggest win at +${margin.toFixed(2)}, and *Sniff* for converting ${winner.lineupEfficiency}% of its optimal lineup.`
         : honors.epic === matchup.matchupId
-          ? `Epic Jerks honors go to ${winner.teamName} at ${winner.points.toFixed(2)} points; ${star?.name || "the lineup"} supplied the loudest receipt.`
+          ? `Epic Jerks honors go to ${winner.teamName} for the week's biggest win at +${margin.toFixed(2)}; ${star?.name || "the lineup"} supplied the loudest receipt.`
           : honors.sniff === matchup.matchupId
             ? `*Sniff*: ${winner.teamName} squeezed ${winner.lineupEfficiency}% out of its optimal lineup; ${star?.name || "the starters"} made the decision look very smart.`
             : star
