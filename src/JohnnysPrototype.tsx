@@ -72,14 +72,25 @@ type Route =
 
 const navItems: Array<{ id: NavId; label: string; icon: typeof BookOpenText }> = [
   { id: "dashboard", label: "Front Page", icon: Newspaper },
-  { id: "recaps", label: "Recaps", icon: ClockCounterClockwise },
-  { id: "matchups", label: "Matchups", icon: Football },
-  { id: "waivers", label: "Waivers & ROI", icon: CurrencyDollar },
-  { id: "power", label: "Power Rankings", icon: ChartLineUp },
-  { id: "forecast", label: "Season Forecast", icon: Lightning },
-  { id: "hall", label: "The Cooler 🏆", icon: Trophy },
-  { id: "analysis", label: "Draft Analysis", icon: BookOpenText },
+  { id: "matchups", label: "This Week", icon: Football },
+  { id: "power", label: "League", icon: UsersThree },
+  { id: "waivers", label: "Transactions", icon: CurrencyDollar },
+  { id: "analysis", label: "Draft", icon: BookOpenText },
 ];
+
+const sectionLinks: Record<string, Array<[NavId, string]>> = {
+  dashboard: [["dashboard", "Front Page"]],
+  matchups: [["matchups", "Matchups"], ["recaps", "Final Recaps"]],
+  power: [["power", "Power Rankings"], ["forecast", "Season Forecast"], ["hall", "The Cooler 🏆"]],
+  waivers: [["waivers", "Waivers & ROI"]],
+  analysis: [["analysis", "Draft Recap"]],
+};
+
+function navGroup(id: NavId): string {
+  if (id === "recaps") return "matchups";
+  if (id === "forecast" || id === "hall") return "power";
+  return id;
+}
 
 function draftCycleGrade(team: any) {
   return (team.cycleGrade || "B").replace("-", "−");
@@ -1818,7 +1829,7 @@ export default function JohnnysPrototype() {
           overflow: visible !important;
         }
       `}</style>
-      {/* Site Navigation Sidebar / Topbar */}
+      {/* Five primary destinations with contextual section links below. */}
       <nav className="bottom-nav" aria-label="Primary">
         <div className="site-nav__brand" onClick={() => go({ kind: "nav", id: "dashboard" })} style={{ cursor: "pointer" }}>
           <img src="./assets/johnny/capri_sun_lifesaver.jpg" alt="Johnny's Jerks emblem" style={{ width: 32, height: 32, borderRadius: 6, objectFit: "cover" }} />
@@ -1830,12 +1841,12 @@ export default function JohnnysPrototype() {
             return (
               <button
                 type="button"
-                className={activeNav === item.id ? "bottom-nav__item is-active" : "bottom-nav__item"}
+                className={navGroup(activeNav) === item.id ? "bottom-nav__item is-active" : "bottom-nav__item"}
                 key={item.id}
                 onClick={() => go({ kind: "nav", id: item.id })}
-                aria-current={activeNav === item.id ? "page" : undefined}
+                aria-current={navGroup(activeNav) === item.id ? "page" : undefined}
               >
-                <Icon size={20} weight={activeNav === item.id ? "fill" : "regular"} />
+                <Icon size={20} weight={navGroup(activeNav) === item.id ? "fill" : "regular"} />
                 <span>{item.label}</span>
               </button>
             );
@@ -1845,13 +1856,34 @@ export default function JohnnysPrototype() {
 
       {/* Main Content Viewport */}
       <div className="site-content">
-        <div className="publication-context"><div className="publication-context__scope">
-          <span>Johnny’s Jerks · 2026 redraft league</span>
-          <a href={window.location.pathname.startsWith("/johnny") ? "/" : "https://apesmacsalad.netlify.app/"}>← Ape’s Mac Salad</a>
-        </div></div>
+        <div className="publication-context">
+          <div className="publication-context__scope">
+            <span>Johnny’s Jerks · 2026 redraft · Week {matchupsCurrentJson.week} matchups · Week {weeklyRecapJson.activeWeek} final</span>
+            <label>Jump to week
+              <select aria-label="Jump to week" value={activeNav === "recaps" ? (Number(window.location.hash.match(/week-(\d+)/)?.[1]) || weeklyRecapJson.activeWeek) : matchupsCurrentJson.week} onChange={(event) => {
+                const week = Number(event.target.value);
+                if (week === matchupsCurrentJson.week) go({ kind: "nav", id: "matchups" });
+                else window.location.hash = `#recaps/week-${week}/roundup`;
+              }}>
+                {[...new Set([...(weeklyRecapJson.availableWeeks || []), matchupsCurrentJson.week])].sort((a, b) => b - a).map((week) =>
+                  <option key={week} value={week}>Week {week}{week === matchupsCurrentJson.week ? " · current" : " · final"}</option>)}
+              </select>
+            </label>
+            <label>My Team
+              <select aria-label="My Team" value={route.kind === "powerTeam" ? route.rosterId : ""} onChange={(event) => go({ kind: "powerTeam", rosterId: Number(event.target.value) })}>
+                <option value="" disabled>Select team</option>
+                {power.map((team: any) => <option key={team.rosterId} value={team.rosterId}>{team.teamName}</option>)}
+              </select>
+            </label>
+            <a href={window.location.pathname.startsWith("/johnny") ? "/" : "https://apesmacsalad.netlify.app/"}>← Ape’s Mac Salad</a>
+          </div>
+          <nav className="publication-context__links" aria-label={`${navItems.find((item) => item.id === navGroup(activeNav))?.label} sections`}>
+            {sectionLinks[navGroup(activeNav)].map(([id, label]) => <button key={id} type="button" className={activeNav === id ? "is-active" : ""} aria-current={activeNav === id ? "page" : undefined} onClick={() => go({ kind: "nav", id })}>{label}</button>)}
+          </nav>
+        </div>
         {route.kind === "powerTeam" && selectedPowerTeam ? (
           <>
-            <DetailHeader onBack={goBack} title={selectedPowerTeam.teamName} context="Power Rankings" grade={selectedPowerTeam.grade} />
+            <DetailHeader onBack={goBack} title={selectedPowerTeam.teamName} context="Power Rankings" grade={selectedPowerTeam.powerScore.toFixed(1)} />
             <PowerTeamScreen team={selectedPowerTeam} />
           </>
         ) : route.kind === "matchup" && selectedMatchup ? (
@@ -2034,7 +2066,7 @@ export default function JohnnysPrototype() {
               <p className="eyebrow">League-wide Redraft Viability</p>
               <h1>Power Rankings</h1>
               <p className="section-deck">
-                Who can win this year—graded on projected starters, usable depth, positional balance, and top-five VORP. Draft execution is deliberately excluded.
+                Current-season roster strength based on projected starters, usable depth, positional balance, and top-five VORP. Draft execution is separate.
               </p>
 
               <div className="issue-rule" style={{ margin: "20px 0 28px" }}>
@@ -2163,13 +2195,13 @@ export default function JohnnysPrototype() {
                       </div>
                       <p>{team.headline}</p>
                       <div className="power-card__metrics">
-                        <div><span>Grade</span><strong>{team.grade}</strong><small>{team.powerScore.toFixed(1)}</small></div>
+                        <div><span>Power Index</span><strong>{team.powerScore.toFixed(1)}</strong><small>#{team.rank} in league</small></div>
                         <div><span>Lineup</span><strong>#{team.components.lineup.rank}</strong><small>{team.weeklyProjection.toFixed(1)} / wk</small></div>
                         <div><span>Depth</span><strong>#{team.components.depth.rank}</strong></div>
                         <div><span>Volatility</span><strong>{team.volatilityScore.toFixed(0)}</strong><small>{team.volatilityLabel}</small></div>
                       </div>
-                      <div className="power-card__horizon" aria-label="Power-score component strength">
-                        <div><span>Viability</span><i><b style={{ width: `${team.powerScore}%` }} /></i><strong>{team.powerScore.toFixed(0)}</strong></div>
+                      <div className="power-card__horizon" aria-label="Power Index component strength">
+                        <div><span>Power Index</span><i><b style={{ width: `${team.powerScore}%` }} /></i><strong>{team.powerScore.toFixed(0)}</strong></div>
                         <div><span>Star ceiling</span><i><b style={{ width: `${team.components.star.score}%` }} /></i><strong>#{team.components.star.rank}</strong></div>
                       </div>
 
@@ -2189,7 +2221,7 @@ export default function JohnnysPrototype() {
                       {sim ? (
                         <div className="power-card__sim-badge">
                           <span>Simulation outlook</span>
-                          <strong>Median seed #{sim.medianSeed}</strong>
+                          <strong>Median finish #{sim.medianSeed}</strong>
                           <em>
                             {sim.playoffProbability}% playoffs · {team.projectedWins ?? sim.expectedWins}W
                             {team.winDelta !== undefined && team.winDelta !== 0 ? ` (${team.winDelta > 0 ? "+" : ""}${team.winDelta}W)` : ""}
@@ -2200,7 +2232,7 @@ export default function JohnnysPrototype() {
                   );
                 })}
               </div>
-              <p className="method-note">{powerRankingsJson.methodology} Open any team for the scoring profile, room-by-room construction, volatility watch, and projected scoring spine.</p>
+              <p className="method-note">{powerRankingsJson.methodology} The 0–100 Power Index measures relative current-season roster strength, not a win probability or a draft grade. Open any team for its scoring profile, roster construction, volatility watch, and projected scoring spine.</p>
             </main>
           </div>
         ) : route.kind === "nav" && route.id === "matchups" ? (
@@ -2679,8 +2711,8 @@ function PowerTeamScreen({ team }: { team: any }) {
       <main className="detail-page">
         <section className="team-hero">
           <p className="eyebrow">Current-season power rank #{team.rank} · {team.managerName}</p>
-          <span className="team-hero__label">Redraft Viability</span>
-          <div className="team-hero__grade">{team.grade}</div>
+          <span className="team-hero__label">2026 Power Index · rank #{team.rank}</span>
+          <div className="team-hero__grade">{team.powerScore.toFixed(1)}</div>
           <h1>{team.headline}</h1>
           <p>{team.currentCase}</p>
         </section>
@@ -2696,15 +2728,15 @@ function PowerTeamScreen({ team }: { team: any }) {
         )}
 
         <section className="detail-block grade-build">
-          <div className="detail-title"><span>01</span><h2>Why this power grade</h2></div>
-          <p className="detail-explainer">This is a forward-looking redraft grade. Draft-day value is intentionally excluded.</p>
+          <div className="detail-title"><span>01</span><h2>How the index is built</h2></div>
+          <p className="detail-explainer">This relative current-season roster score weights projected starters, usable bench depth, top-five VORP ceiling, and positional balance. Draft-day value is separate; the index is not a win probability.</p>
           <ScoreBar label={`Projected starting lineup · ${team.components.lineup.weight}`} value={team.components.lineup.score} />
           <ScoreBar label={`Usable bench depth · ${team.components.depth.weight}`} value={team.components.depth.score} />
           <ScoreBar label={`Top-five VORP ceiling · ${team.components.star.weight}`} value={team.components.star.score} />
           <ScoreBar label={`Positional balance · ${team.components.balance.weight}`} value={team.components.balance.score} />
           <div className="grade-compare">
             <div><span>Weekly projection</span><strong>{team.weeklyProjection.toFixed(1)} pts</strong><small>Lineup rank #{team.components.lineup.rank}</small></div>
-            <div><span>Composite score</span><strong>{team.powerScore.toFixed(1)}</strong><small>{team.tier}</small></div>
+            <div><span>Power Index</span><strong>{team.powerScore.toFixed(1)}</strong><small>{team.tier} · relative scale / 100</small></div>
           </div>
         </section>
 
@@ -3018,7 +3050,7 @@ function ForecastTeamScreen({ team }: { team: any }) {
               {forecastInsightsJson.scheduleBasis}
             </p>
           </div>
-          <p className="method-note">Power score {team.powerScore.toFixed(1)} · Simulation seed {forecastInsightsJson.randomSeed}. Forecasts are decision support, not guarantees.</p>
+          <p className="method-note">Power Index {team.powerScore.toFixed(1)} · Simulation seed {forecastInsightsJson.randomSeed}. The index measures relative roster strength; forecast probabilities come from simulated seasons.</p>
         </section>
         {team.weeklySchedule && team.weeklySchedule.length > 0 && (
           <section className="detail-block">
