@@ -9,7 +9,7 @@ name: Weekly data refresh
 # rebuild the payloads, commit only if something actually changed, and let the
 # push trigger Netlify.
 #
-# Workflow-file changes run immediately to verify pipeline fixes.
+# Pipeline changes can be verified immediately through this workflow-file trigger.
 # Runs daily rather than only on Tuesday. The load is cheap, it keeps the
 # coverage catalog current, and the commit step is a no-op when nothing moved,
 # so a daily cadence costs nothing and means a missed Tuesday self-heals.
