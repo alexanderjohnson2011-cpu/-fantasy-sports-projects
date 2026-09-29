@@ -47,7 +47,7 @@ def completion_from_scoreboard(board, fixture, season, week):
 
 def fetch_week_completion(season, week):
     fixture = json.loads((FIXTURES / f"nfl_schedule_{season}_week_{week}.json").read_text())
-    url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates={season}&seasontype=2&week={week}&limit=1000"
+    url = f"https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates={season}&seasontype=2&week={week}&limit=1000"
     request = urllib.request.Request(url, headers={"User-Agent": "ApesMacSalad/3.0"})
     with urllib.request.urlopen(request, timeout=30) as response:
         board = json.load(response)
