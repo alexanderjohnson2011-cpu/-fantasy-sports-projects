@@ -99,22 +99,23 @@ def audit_league(label, league_id, path, week, players, stats):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--week", type=int, default=3)
+    parser.add_argument("--week", type=int, help="Final week to audit (defaults to the latest published week)")
     args = parser.parse_args()
+    week = args.week or json.loads((ROOT / "weekly-recap.json").read_text())["activeWeek"]
     players = load_players_map()
     if not players:
         raise RuntimeError("Player metadata unavailable; cannot verify optimal lineups")
-    stats = fetch_sleeper_json(f"stats/nfl/regular/2026/{args.week}")
+    stats = fetch_sleeper_json(f"stats/nfl/regular/2026/{week}")
     if not isinstance(stats, dict) or not stats:
         raise RuntimeError("Sleeper NFL stat feed unavailable; cannot verify box lines")
     errors = []
     for label, (league_id, path) in LEAGUES.items():
-        errors.extend(audit_league(label, league_id, path, args.week, players, stats))
+        errors.extend(audit_league(label, league_id, path, week, players, stats))
     for error in errors:
         print("DISCREPANCY:", error)
     if errors:
         raise SystemExit(f"Live recap audit failed: {len(errors)} discrepancies")
-    print("Live Sleeper audit passed for both Week 3 recap payloads.")
+    print(f"Live Sleeper audit passed for both Week {week} recap payloads.")
 
 
 if __name__ == "__main__":
