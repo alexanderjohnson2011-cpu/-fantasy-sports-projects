@@ -1,31 +1,31 @@
 {
-  "forecastRunId": "fc_202609271615_42",
-  "generatedAt": "2026-09-27T16:15:13.386367+00:00",
+  "forecastRunId": "fc_202609290449_42",
+  "generatedAt": "2026-09-29T04:49:36.563351+00:00",
   "simulationsCount": 10000,
   "randomSeed": 42,
   "modelVersion": "v2.0-canonical-power-final-results",
-  "powerSnapshotAt": "2026-09-16T22:47:41.368594+00:00",
+  "powerSnapshotAt": "2026-09-29T04:49:27.463477+00:00",
   "rosterInsightsAt": "2026-08-20T15:03:38.112470+00:00",
-  "recapSnapshotAt": "2026-09-22T14:53:37.076349+00:00",
+  "recapSnapshotAt": "2026-09-29T04:49:35.083044+00:00",
   "methodology": "Monte Carlo estimates using the weekly Power Index, verified final results, a 14-week schedule and a 6-team playoff bracket. The mapping from roster value to scoring distributions is a modeling assumption, not an empirically calibrated guarantee.",
   "teams": {
     "1": {
       "rosterId": 1,
       "teamName": "Ertz & Krafts \ud83c\udfc6",
-      "projectedRank": 1,
-      "expectedSeed": 2.5,
+      "projectedRank": 2,
+      "expectedSeed": 2.7,
       "medianSeed": 2,
-      "powerRank": 1,
-      "powerScore": 91.36,
+      "powerRank": 2,
+      "powerScore": 84.6,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Title odds rank #1 versus Power Index #1. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
+      "powerConnectionNarrative": "Title odds rank #2 versus Power Index #2. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 91.4,
-        "projectedMeanScore": 133.6,
+        "compositePowerScore": 84.6,
+        "projectedMeanScore": 131.7,
         "weeklyStdDev": 12.9,
-        "p10WeeklyFloor": 117.0,
-        "p90WeeklyCeiling": 150.2,
+        "p10WeeklyFloor": 115.1,
+        "p90WeeklyCeiling": 148.3,
         "volatilityScore": 22.1,
         "volatilityLabel": "Stable",
         "topThreeShare": 42.8,
@@ -35,7 +35,7 @@
         "pillars": {
           "lineup": {
             "rank": 2,
-            "score": 87.3,
+            "score": 74.1,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
@@ -46,8 +46,8 @@
             "label": "Bench Replacement Cushion"
           },
           "balance": {
-            "rank": 3,
-            "score": 83.4,
+            "rank": 4,
+            "score": 88.2,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -58,68 +58,69 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a stable profile (22.1/100), the model applies a weekly scoring standard deviation of \u00b112.9 pts. The top 3 starters account for 42.8% of starting redraft value and RBs represent 46.7%. In 10,000 simulations, this volatility models an expected weekly floor of 117.0 pts (10th percentile) and a shootout ceiling of 150.2 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a stable profile (22.1/100), the model applies a weekly scoring standard deviation of \u00b112.9 pts. The top 3 starters account for 42.8% of starting redraft value and RBs represent 46.7%. In 10,000 simulations, this volatility models an expected weekly floor of 115.1 pts (10th percentile) and a shootout ceiling of 148.3 pts (90th percentile)."
       },
-      "actualWins": 1,
+      "actualWins": 2,
       "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 288.2,
-      "rosExpectedWins": 8.9,
-      "rosExpectedLosses": 3.1,
+      "actualPoints": 415.94,
+      "rosExpectedWins": 7.7,
+      "rosExpectedLosses": 3.3,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 9.9,
-      "expectedLosses": 4.1,
-      "expectedPointsFor": 1890.9,
-      "playoffProbability": 97.9,
-      "byeProbability": 60.8,
-      "championshipProbability": 32.9,
+      "remainingWeeks": 11,
+      "expectedWins": 9.7,
+      "expectedLosses": 4.3,
+      "expectedPointsFor": 1864.2,
+      "playoffProbability": 96.2,
+      "byeProbability": 56.5,
+      "championshipProbability": 29.3,
       "lastPlaceProbability": 0.0,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 27.6
+          "probability": 28.7
         },
         {
           "seed": 2,
-          "probability": 33.2
+          "probability": 27.9
         },
         {
           "seed": 3,
-          "probability": 18.4
+          "probability": 17.3
         },
         {
           "seed": 4,
-          "probability": 10.4
+          "probability": 11.2
         },
         {
           "seed": 5,
-          "probability": 5.4
+          "probability": 7.0
         },
         {
           "seed": 6,
-          "probability": 2.8
+          "probability": 4.1
         },
         {
           "seed": 7,
-          "probability": 1.3
+          "probability": 2.4
         },
         {
           "seed": 8,
-          "probability": 0.5
+          "probability": 0.9
         },
         {
           "seed": 9,
-          "probability": 0.2
+          "probability": 0.4
         },
         {
           "seed": 10,
-          "probability": 0.0
+          "probability": 0.1
         },
         {
           "seed": 11,
@@ -143,7 +144,7 @@
           "winProbability": 100.0,
           "projectedScore": 169.6,
           "opponentProjectedScore": 93.0,
-          "spread": 12.0,
+          "spread": 10.6,
           "spreadLabel": "FINAL"
         },
         {
@@ -158,23 +159,23 @@
           "winProbability": 0.0,
           "projectedScore": 118.6,
           "opponentProjectedScore": 190.0,
-          "spread": 1.6,
+          "spread": -0.9,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 6,
           "opponentName": "Final Boss",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 87.2,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 110.3,
-          "spread": 23.3,
-          "spreadLabel": "+23.3 pts"
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 127.74,
+          "opponentActualScore": 98.24,
+          "scoreDiff": 29.5,
+          "winProbability": 100.0,
+          "projectedScore": 127.7,
+          "opponentProjectedScore": 98.2,
+          "spread": 20.2,
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -185,11 +186,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 84.1,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 112.8,
-          "spread": 20.8,
-          "spreadLabel": "+20.8 pts"
+          "winProbability": 79.4,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 115.0,
+          "spread": 16.7,
+          "spreadLabel": "+16.7 pts"
         },
         {
           "week": 5,
@@ -200,11 +201,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 70.6,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 123.0,
-          "spread": 10.6,
-          "spreadLabel": "+10.6 pts"
+          "winProbability": 67.2,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 122.7,
+          "spread": 9.0,
+          "spreadLabel": "+9.0 pts"
         },
         {
           "week": 6,
@@ -215,11 +216,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 79.1,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 117.6,
-          "spread": 16.0,
-          "spreadLabel": "+16.0 pts"
+          "winProbability": 76.3,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 117.4,
+          "spread": 14.3,
+          "spreadLabel": "+14.3 pts"
         },
         {
           "week": 7,
@@ -230,11 +231,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 64.9,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 126.1,
-          "spread": 7.5,
-          "spreadLabel": "+7.5 pts"
+          "winProbability": 61.3,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 126.2,
+          "spread": 5.5,
+          "spreadLabel": "+5.5 pts"
         },
         {
           "week": 8,
@@ -245,11 +246,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 87.5,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 110.2,
-          "spread": 23.4,
-          "spreadLabel": "+23.4 pts"
+          "winProbability": 84.8,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 111.0,
+          "spread": 20.7,
+          "spreadLabel": "+20.7 pts"
         },
         {
           "week": 9,
@@ -260,11 +261,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 71.9,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 121.5,
-          "spread": 12.1,
-          "spreadLabel": "+12.1 pts"
+          "winProbability": 64.1,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 124.3,
+          "spread": 7.4,
+          "spreadLabel": "+7.4 pts"
         },
         {
           "week": 10,
@@ -275,11 +276,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 73.5,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 119.8,
-          "spread": 13.8,
-          "spreadLabel": "+13.8 pts"
+          "winProbability": 70.9,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 119.5,
+          "spread": 12.2,
+          "spreadLabel": "+12.2 pts"
         },
         {
           "week": 11,
@@ -290,11 +291,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 56.3,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 130.3,
-          "spread": 3.3,
-          "spreadLabel": "+3.3 pts"
+          "winProbability": 59.8,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 126.6,
+          "spread": 5.1,
+          "spreadLabel": "+5.1 pts"
         },
         {
           "week": 12,
@@ -305,11 +306,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 73.4,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 121.6,
-          "spread": 12.0,
-          "spreadLabel": "+12.0 pts"
+          "winProbability": 70.5,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 121.1,
+          "spread": 10.6,
+          "spreadLabel": "+10.6 pts"
         },
         {
           "week": 13,
@@ -320,11 +321,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 53.1,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 132.0,
-          "spread": 1.6,
-          "spreadLabel": "+1.6 pts"
+          "winProbability": 48.1,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 132.6,
+          "spread": -0.9,
+          "spreadLabel": "-0.9 pts"
         },
         {
           "week": 14,
@@ -335,27 +336,35 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 86.7,
-          "projectedScore": 133.6,
-          "opponentProjectedScore": 110.3,
-          "spread": 23.3,
-          "spreadLabel": "+23.3 pts"
+          "winProbability": 83.2,
+          "projectedScore": 131.7,
+          "opponentProjectedScore": 111.5,
+          "spread": 20.2,
+          "spreadLabel": "+20.2 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "9.9 expected wins \u00b7 32.9% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 9.9 wins, a 97.9% playoff chance and a 32.9% title chance, with 2 completed weeks locked.",
+        "headline": "9.7 expected wins \u00b7 29.3% title probability",
+        "trend": "Falling",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 9.7 wins, a 96.2% playoff chance and a 29.3% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 9.9,
             "playoffOdds": 97.9,
             "titleOdds": 32.9,
             "rank": 1
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 9.7,
+            "playoffOdds": 96.2,
+            "titleOdds": 29.3,
+            "rank": 2
           }
         ]
       }
@@ -363,36 +372,36 @@
     "2": {
       "rosterId": 2,
       "teamName": "2 Dagos and A Dream",
-      "projectedRank": 6,
-      "expectedSeed": 5.9,
+      "projectedRank": 8,
+      "expectedSeed": 6.6,
       "medianSeed": 7,
       "powerRank": 8,
-      "powerScore": 42.04,
-      "powerRankDelta": 2,
-      "powerDeltaLabel": "+2 vs Power Rank",
-      "powerConnectionNarrative": "Title odds rank #6 versus Power Index #8. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
+      "powerScore": 41.21,
+      "powerRankDelta": 0,
+      "powerDeltaLabel": "Even with Power Rank",
+      "powerConnectionNarrative": "Title odds rank #8 versus Power Index #8. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 42.0,
-        "projectedMeanScore": 119.8,
-        "weeklyStdDev": 17.1,
-        "p10WeeklyFloor": 97.8,
-        "p90WeeklyCeiling": 141.7,
-        "volatilityScore": 86.6,
+        "compositePowerScore": 41.2,
+        "projectedMeanScore": 119.5,
+        "weeklyStdDev": 17.5,
+        "p10WeeklyFloor": 97.0,
+        "p90WeeklyCeiling": 142.0,
+        "volatilityScore": 93.0,
         "volatilityLabel": "High variance",
         "topThreeShare": 80.7,
         "rbShare": 84.7,
-        "depthRisk": 72.7,
+        "depthRisk": 90.9,
         "concentrationRisk": 100.0,
         "pillars": {
           "lineup": {
             "rank": 5,
-            "score": 56.1,
+            "score": 56.9,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
           "depth": {
-            "rank": 9,
-            "score": 19.3,
+            "rank": 11,
+            "score": 14.3,
             "weight": "25%",
             "label": "Bench Replacement Cushion"
           },
@@ -409,76 +418,77 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a high variance profile (86.6/100), the model applies a weekly scoring standard deviation of \u00b117.1 pts. The top 3 starters account for 80.7% of starting redraft value and RBs represent 84.7%. In 10,000 simulations, this volatility models an expected weekly floor of 97.8 pts (10th percentile) and a shootout ceiling of 141.7 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a high variance profile (93.0/100), the model applies a weekly scoring standard deviation of \u00b117.5 pts. The top 3 starters account for 80.7% of starting redraft value and RBs represent 84.7%. In 10,000 simulations, this volatility models an expected weekly floor of 97.0 pts (10th percentile) and a shootout ceiling of 142.0 pts (90th percentile)."
       },
       "actualWins": 2,
-      "actualLosses": 0,
+      "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 267.88,
-      "rosExpectedWins": 5.6,
-      "rosExpectedLosses": 6.4,
+      "actualPoints": 395.76,
+      "rosExpectedWins": 5.1,
+      "rosExpectedLosses": 5.9,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 7.6,
-      "expectedLosses": 6.4,
-      "expectedPointsFor": 1703.8,
-      "playoffProbability": 60.4,
-      "byeProbability": 6.4,
-      "championshipProbability": 2.8,
-      "lastPlaceProbability": 0.5,
+      "remainingWeeks": 11,
+      "expectedWins": 7.1,
+      "expectedLosses": 6.9,
+      "expectedPointsFor": 1709.6,
+      "playoffProbability": 43.6,
+      "byeProbability": 4.3,
+      "championshipProbability": 2.1,
+      "lastPlaceProbability": 0.7,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 1.8
+          "probability": 1.3
         },
         {
           "seed": 2,
-          "probability": 4.6
+          "probability": 3.0
         },
         {
           "seed": 3,
-          "probability": 8.7
+          "probability": 5.4
         },
         {
           "seed": 4,
-          "probability": 12.8
+          "probability": 8.1
         },
         {
           "seed": 5,
-          "probability": 16.4
+          "probability": 10.7
         },
         {
           "seed": 6,
-          "probability": 16.1
+          "probability": 15.1
         },
         {
           "seed": 7,
-          "probability": 14.7
+          "probability": 18.6
         },
         {
           "seed": 8,
-          "probability": 11.7
+          "probability": 19.1
         },
         {
           "seed": 9,
-          "probability": 7.4
+          "probability": 10.2
         },
         {
           "seed": 10,
-          "probability": 3.9
+          "probability": 5.6
         },
         {
           "seed": 11,
-          "probability": 1.4
+          "probability": 2.2
         },
         {
           "seed": 12,
-          "probability": 0.5
+          "probability": 0.7
         }
       ],
       "weeklySchedule": [
@@ -494,7 +504,7 @@
           "winProbability": 100.0,
           "projectedScore": 142.6,
           "opponentProjectedScore": 138.6,
-          "spread": 9.5,
+          "spread": 8.0,
           "spreadLabel": "FINAL"
         },
         {
@@ -509,23 +519,23 @@
           "winProbability": 100.0,
           "projectedScore": 125.3,
           "opponentProjectedScore": 100.4,
-          "spread": 7.0,
+          "spread": 4.5,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 8,
           "opponentName": "arkinsjt",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 43.9,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 123.0,
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 127.88,
+          "opponentActualScore": 134.42,
+          "scoreDiff": -6.54,
+          "winProbability": 0.0,
+          "projectedScore": 127.9,
+          "opponentProjectedScore": 134.4,
           "spread": -3.2,
-          "spreadLabel": "-3.2 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -536,11 +546,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 54.6,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 117.6,
-          "spread": 2.2,
-          "spreadLabel": "+2.2 pts"
+          "winProbability": 54.5,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 117.4,
+          "spread": 2.1,
+          "spreadLabel": "+2.1 pts"
         },
         {
           "week": 5,
@@ -551,11 +561,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 38.6,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 126.1,
-          "spread": -6.3,
-          "spreadLabel": "-6.3 pts"
+          "winProbability": 38.0,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 126.2,
+          "spread": -6.7,
+          "spreadLabel": "-6.7 pts"
         },
         {
           "week": 6,
@@ -566,11 +576,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 65.5,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 110.2,
-          "spread": 9.6,
-          "spreadLabel": "+9.6 pts"
+          "winProbability": 63.9,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 111.0,
+          "spread": 8.5,
+          "spreadLabel": "+8.5 pts"
         },
         {
           "week": 7,
@@ -581,11 +591,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 46.9,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 121.5,
-          "spread": -1.7,
-          "spreadLabel": "-1.7 pts"
+          "winProbability": 41.9,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 124.3,
+          "spread": -4.8,
+          "spreadLabel": "-4.8 pts"
         },
         {
           "week": 8,
@@ -596,11 +606,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 46.4,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 121.6,
-          "spread": -1.8,
-          "spreadLabel": "-1.8 pts"
+          "winProbability": 47.2,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 121.1,
+          "spread": -1.6,
+          "spreadLabel": "-1.6 pts"
         },
         {
           "week": 9,
@@ -611,11 +621,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 32.0,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 130.3,
-          "spread": -10.5,
-          "spreadLabel": "-10.5 pts"
+          "winProbability": 37.9,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 126.6,
+          "spread": -7.1,
+          "spreadLabel": "-7.1 pts"
         },
         {
           "week": 10,
@@ -626,11 +636,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 26.5,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 133.6,
-          "spread": -13.8,
-          "spreadLabel": "-13.8 pts"
+          "winProbability": 29.1,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 131.7,
+          "spread": -12.2,
+          "spreadLabel": "-12.2 pts"
         },
         {
           "week": 11,
@@ -641,11 +651,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 28.8,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 132.0,
-          "spread": -12.2,
-          "spreadLabel": "-12.2 pts"
+          "winProbability": 27.7,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 132.6,
+          "spread": -13.1,
+          "spreadLabel": "-13.1 pts"
         },
         {
           "week": 12,
@@ -656,11 +666,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 65.7,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 110.3,
-          "spread": 9.5,
-          "spreadLabel": "+9.5 pts"
+          "winProbability": 63.4,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 111.5,
+          "spread": 8.0,
+          "spreadLabel": "+8.0 pts"
         },
         {
           "week": 13,
@@ -671,11 +681,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 62.3,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 112.8,
-          "spread": 7.0,
-          "spreadLabel": "+7.0 pts"
+          "winProbability": 58.5,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 115.0,
+          "spread": 4.5,
+          "spreadLabel": "+4.5 pts"
         },
         {
           "week": 14,
@@ -686,27 +696,35 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 43.9,
-          "projectedScore": 119.8,
-          "opponentProjectedScore": 123.0,
+          "winProbability": 44.1,
+          "projectedScore": 119.5,
+          "opponentProjectedScore": 122.7,
           "spread": -3.2,
           "spreadLabel": "-3.2 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "7.6 expected wins \u00b7 2.8% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 7.6 wins, a 60.4% playoff chance and a 2.8% title chance, with 2 completed weeks locked.",
+        "headline": "7.1 expected wins \u00b7 2.1% title probability",
+        "trend": "Falling",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 7.1 wins, a 43.6% playoff chance and a 2.1% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 7.6,
             "playoffOdds": 60.4,
             "titleOdds": 2.8,
             "rank": 6
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 7.1,
+            "playoffOdds": 43.6,
+            "titleOdds": 2.1,
+            "rank": 8
           }
         ]
       }
@@ -715,41 +733,41 @@
       "rosterId": 3,
       "teamName": "The Ape",
       "projectedRank": 4,
-      "expectedSeed": 4.9,
-      "medianSeed": 5,
+      "expectedSeed": 4.6,
+      "medianSeed": 4,
       "powerRank": 4,
-      "powerScore": 64.66,
+      "powerScore": 65.17,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
       "powerConnectionNarrative": "Title odds rank #4 versus Power Index #4. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 64.7,
-        "projectedMeanScore": 126.1,
-        "weeklyStdDev": 14.9,
-        "p10WeeklyFloor": 107.0,
-        "p90WeeklyCeiling": 145.2,
-        "volatilityScore": 52.2,
+        "compositePowerScore": 65.2,
+        "projectedMeanScore": 126.2,
+        "weeklyStdDev": 14.7,
+        "p10WeeklyFloor": 107.4,
+        "p90WeeklyCeiling": 145.1,
+        "volatilityScore": 49.0,
         "volatilityLabel": "Balanced",
         "topThreeShare": 51.9,
         "rbShare": 29.3,
-        "depthRisk": 63.6,
+        "depthRisk": 54.5,
         "concentrationRisk": 56.5,
         "pillars": {
           "lineup": {
             "rank": 3,
-            "score": 79.9,
+            "score": 73.5,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
           "depth": {
-            "rank": 8,
-            "score": 25.0,
+            "rank": 7,
+            "score": 41.8,
             "weight": "25%",
             "label": "Bench Replacement Cushion"
           },
           "balance": {
-            "rank": 1,
-            "score": 100.0,
+            "rank": 2,
+            "score": 98.1,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -760,52 +778,53 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a balanced profile (52.2/100), the model applies a weekly scoring standard deviation of \u00b114.9 pts. The top 3 starters account for 51.9% of starting redraft value and RBs represent 29.3%. In 10,000 simulations, this volatility models an expected weekly floor of 107.0 pts (10th percentile) and a shootout ceiling of 145.2 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a balanced profile (49.0/100), the model applies a weekly scoring standard deviation of \u00b114.7 pts. The top 3 starters account for 51.9% of starting redraft value and RBs represent 29.3%. In 10,000 simulations, this volatility models an expected weekly floor of 107.4 pts (10th percentile) and a shootout ceiling of 145.1 pts (90th percentile)."
       },
-      "actualWins": 1,
+      "actualWins": 2,
       "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 251.96,
-      "rosExpectedWins": 7.2,
-      "rosExpectedLosses": 4.8,
+      "actualPoints": 385.1,
+      "rosExpectedWins": 6.4,
+      "rosExpectedLosses": 4.6,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 8.2,
-      "expectedLosses": 5.8,
-      "expectedPointsFor": 1764.5,
-      "playoffProbability": 78.0,
-      "byeProbability": 12.9,
-      "championshipProbability": 8.3,
-      "lastPlaceProbability": 0.2,
+      "remainingWeeks": 11,
+      "expectedWins": 8.4,
+      "expectedLosses": 5.6,
+      "expectedPointsFor": 1773.2,
+      "playoffProbability": 79.6,
+      "byeProbability": 18.9,
+      "championshipProbability": 9.9,
+      "lastPlaceProbability": 0.1,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 4.0
+          "probability": 7.3
         },
         {
           "seed": 2,
-          "probability": 8.9
+          "probability": 11.6
         },
         {
           "seed": 3,
-          "probability": 15.4
+          "probability": 16.2
         },
         {
           "seed": 4,
-          "probability": 19.1
+          "probability": 16.4
         },
         {
           "seed": 5,
-          "probability": 16.8
+          "probability": 14.7
         },
         {
           "seed": 6,
-          "probability": 13.8
+          "probability": 13.4
         },
         {
           "seed": 7,
@@ -813,23 +832,23 @@
         },
         {
           "seed": 8,
-          "probability": 6.5
+          "probability": 6.2
         },
         {
           "seed": 9,
-          "probability": 3.1
+          "probability": 2.8
         },
         {
           "seed": 10,
-          "probability": 1.7
+          "probability": 1.0
         },
         {
           "seed": 11,
-          "probability": 0.6
+          "probability": 0.3
         },
         {
           "seed": 12,
-          "probability": 0.2
+          "probability": 0.1
         }
       ],
       "weeklySchedule": [
@@ -845,7 +864,7 @@
           "winProbability": 100.0,
           "projectedScore": 152.3,
           "opponentProjectedScore": 115.7,
-          "spread": 8.5,
+          "spread": 8.8,
           "spreadLabel": "FINAL"
         },
         {
@@ -860,23 +879,23 @@
           "winProbability": 0.0,
           "projectedScore": 99.7,
           "opponentProjectedScore": 123.3,
-          "spread": 4.5,
+          "spread": 5.1,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 5,
           "opponentName": "My Nabers Tetties",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 76.3,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 110.2,
-          "spread": 15.9,
-          "spreadLabel": "+15.9 pts"
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 133.14,
+          "opponentActualScore": 62.98,
+          "scoreDiff": 70.16,
+          "winProbability": 100.0,
+          "projectedScore": 133.1,
+          "opponentProjectedScore": 63.0,
+          "spread": 15.2,
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -887,11 +906,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 57.6,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 121.5,
-          "spread": 4.6,
-          "spreadLabel": "+4.6 pts"
+          "winProbability": 53.6,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 124.3,
+          "spread": 1.9,
+          "spreadLabel": "+1.9 pts"
         },
         {
           "week": 5,
@@ -902,11 +921,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 61.4,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 119.8,
-          "spread": 6.3,
-          "spreadLabel": "+6.3 pts"
+          "winProbability": 62.0,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 119.5,
+          "spread": 6.7,
+          "spreadLabel": "+6.7 pts"
         },
         {
           "week": 6,
@@ -917,11 +936,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 41.6,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 130.3,
-          "spread": -4.2,
-          "spreadLabel": "-4.2 pts"
+          "winProbability": 48.6,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 126.6,
+          "spread": -0.4,
+          "spreadLabel": "-0.4 pts"
         },
         {
           "week": 7,
@@ -932,11 +951,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 35.1,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 133.6,
-          "spread": -7.5,
-          "spreadLabel": "-7.5 pts"
+          "winProbability": 38.7,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 131.7,
+          "spread": -5.5,
+          "spreadLabel": "-5.5 pts"
         },
         {
           "week": 8,
@@ -947,11 +966,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 38.0,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 132.0,
-          "spread": -5.9,
-          "spreadLabel": "-5.9 pts"
+          "winProbability": 37.0,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 132.6,
+          "spread": -6.4,
+          "spreadLabel": "-6.4 pts"
         },
         {
           "week": 9,
@@ -962,11 +981,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 76.5,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 110.3,
-          "spread": 15.8,
-          "spreadLabel": "+15.8 pts"
+          "winProbability": 75.1,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 111.5,
+          "spread": 14.7,
+          "spreadLabel": "+14.7 pts"
         },
         {
           "week": 10,
@@ -977,11 +996,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 72.9,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 112.8,
-          "spread": 13.3,
-          "spreadLabel": "+13.3 pts"
+          "winProbability": 70.3,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 115.0,
+          "spread": 11.2,
+          "spreadLabel": "+11.2 pts"
         },
         {
           "week": 11,
@@ -992,11 +1011,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 55.9,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 123.0,
-          "spread": 3.1,
-          "spreadLabel": "+3.1 pts"
+          "winProbability": 56.6,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 122.7,
+          "spread": 3.5,
+          "spreadLabel": "+3.5 pts"
         },
         {
           "week": 12,
@@ -1007,11 +1026,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 65.9,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 117.6,
-          "spread": 8.5,
-          "spreadLabel": "+8.5 pts"
+          "winProbability": 66.5,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 117.4,
+          "spread": 8.8,
+          "spreadLabel": "+8.8 pts"
         },
         {
           "week": 13,
@@ -1022,11 +1041,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 58.1,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 121.6,
-          "spread": 4.5,
-          "spreadLabel": "+4.5 pts"
+          "winProbability": 59.5,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 121.1,
+          "spread": 5.1,
+          "spreadLabel": "+5.1 pts"
         },
         {
           "week": 14,
@@ -1037,26 +1056,34 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 76.0,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 110.2,
-          "spread": 15.9,
-          "spreadLabel": "+15.9 pts"
+          "winProbability": 75.5,
+          "projectedScore": 126.2,
+          "opponentProjectedScore": 111.0,
+          "spread": 15.2,
+          "spreadLabel": "+15.2 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "8.2 expected wins \u00b7 8.3% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 8.2 wins, a 78.0% playoff chance and a 8.3% title chance, with 2 completed weeks locked.",
+        "headline": "8.4 expected wins \u00b7 9.9% title probability",
+        "trend": "Rising",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 8.4 wins, a 79.6% playoff chance and a 9.9% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 8.2,
             "playoffOdds": 78.0,
             "titleOdds": 8.3,
+            "rank": 4
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 8.4,
+            "playoffOdds": 79.6,
+            "titleOdds": 9.9,
             "rank": 4
           }
         ]
@@ -1065,42 +1092,42 @@
     "4": {
       "rosterId": 4,
       "teamName": "Bub\u2019s Club",
-      "projectedRank": 10,
-      "expectedSeed": 9.5,
-      "medianSeed": 10,
+      "projectedRank": 9,
+      "expectedSeed": 9.3,
+      "medianSeed": 9,
       "powerRank": 10,
-      "powerScore": 17.18,
-      "powerRankDelta": 0,
-      "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Title odds rank #10 versus Power Index #10. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
+      "powerScore": 24.94,
+      "powerRankDelta": 1,
+      "powerDeltaLabel": "+1 vs Power Rank",
+      "powerConnectionNarrative": "Title odds rank #9 versus Power Index #10. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 17.2,
-        "projectedMeanScore": 112.8,
-        "weeklyStdDev": 16.8,
-        "p10WeeklyFloor": 91.2,
-        "p90WeeklyCeiling": 134.4,
-        "volatilityScore": 82.1,
+        "compositePowerScore": 24.9,
+        "projectedMeanScore": 115.0,
+        "weeklyStdDev": 16.4,
+        "p10WeeklyFloor": 93.9,
+        "p90WeeklyCeiling": 136.0,
+        "volatilityScore": 75.8,
         "volatilityLabel": "High variance",
         "topThreeShare": 64.3,
         "rbShare": 57.6,
-        "depthRisk": 81.8,
+        "depthRisk": 63.6,
         "concentrationRisk": 97.8,
         "pillars": {
           "lineup": {
-            "rank": 10,
-            "score": 4.3,
+            "rank": 11,
+            "score": 6.7,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
           "depth": {
-            "rank": 10,
-            "score": 18.1,
+            "rank": 8,
+            "score": 39.3,
             "weight": "25%",
             "label": "Bench Replacement Cushion"
           },
           "balance": {
-            "rank": 4,
-            "score": 83.2,
+            "rank": 3,
+            "score": 94.5,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -1111,26 +1138,27 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a high variance profile (82.1/100), the model applies a weekly scoring standard deviation of \u00b116.8 pts. The top 3 starters account for 64.3% of starting redraft value and RBs represent 57.6%. In 10,000 simulations, this volatility models an expected weekly floor of 91.2 pts (10th percentile) and a shootout ceiling of 134.4 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a high variance profile (75.8/100), the model applies a weekly scoring standard deviation of \u00b116.4 pts. The top 3 starters account for 64.3% of starting redraft value and RBs represent 57.6%. In 10,000 simulations, this volatility models an expected weekly floor of 93.9 pts (10th percentile) and a shootout ceiling of 136.0 pts (90th percentile)."
       },
       "actualWins": 1,
-      "actualLosses": 1,
+      "actualLosses": 2,
       "actualTies": 0,
-      "actualPoints": 221.82,
-      "rosExpectedWins": 4.0,
-      "rosExpectedLosses": 8.0,
+      "actualPoints": 328.58,
+      "rosExpectedWins": 4.1,
+      "rosExpectedLosses": 6.9,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 5.0,
-      "expectedLosses": 9.0,
-      "expectedPointsFor": 1575.7,
-      "playoffProbability": 7.8,
-      "byeProbability": 0.2,
+      "remainingWeeks": 11,
+      "expectedWins": 5.1,
+      "expectedLosses": 8.9,
+      "expectedPointsFor": 1593.4,
+      "playoffProbability": 7.2,
+      "byeProbability": 0.3,
       "championshipProbability": 0.1,
-      "lastPlaceProbability": 13.1,
+      "lastPlaceProbability": 9.4,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
@@ -1144,19 +1172,19 @@
         },
         {
           "seed": 3,
-          "probability": 0.5
+          "probability": 0.3
         },
         {
           "seed": 4,
-          "probability": 1.0
+          "probability": 0.9
         },
         {
           "seed": 5,
-          "probability": 2.0
+          "probability": 1.9
         },
         {
           "seed": 6,
-          "probability": 4.1
+          "probability": 3.8
         },
         {
           "seed": 7,
@@ -1164,23 +1192,23 @@
         },
         {
           "seed": 8,
-          "probability": 11.3
+          "probability": 12.6
         },
         {
           "seed": 9,
-          "probability": 19.4
+          "probability": 25.5
         },
         {
           "seed": 10,
-          "probability": 22.6
+          "probability": 22.8
         },
         {
           "seed": 11,
-          "probability": 19.2
+          "probability": 15.9
         },
         {
           "seed": 12,
-          "probability": 13.1
+          "probability": 9.4
         }
       ],
       "weeklySchedule": [
@@ -1196,7 +1224,7 @@
           "winProbability": 100.0,
           "projectedScore": 121.4,
           "opponentProjectedScore": 105.4,
-          "spread": -8.7,
+          "spread": -9.3,
           "spreadLabel": "FINAL"
         },
         {
@@ -1211,23 +1239,23 @@
           "winProbability": 0.0,
           "projectedScore": 100.4,
           "opponentProjectedScore": 125.3,
-          "spread": -7.0,
+          "spread": -4.5,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 10,
           "opponentName": "Bijan And The Maye-ssiah",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 22.5,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 130.3,
-          "spread": -17.5,
-          "spreadLabel": "-17.5 pts"
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 106.76,
+          "opponentActualScore": 135.44,
+          "scoreDiff": -28.68,
+          "winProbability": 0.0,
+          "projectedScore": 106.8,
+          "opponentProjectedScore": 135.4,
+          "spread": -11.6,
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -1238,11 +1266,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 15.9,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 133.6,
-          "spread": -20.8,
-          "spreadLabel": "-20.8 pts"
+          "winProbability": 20.6,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 131.7,
+          "spread": -16.7,
+          "spreadLabel": "-16.7 pts"
         },
         {
           "week": 5,
@@ -1253,11 +1281,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 19.3,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 132.0,
-          "spread": -19.2,
-          "spreadLabel": "-19.2 pts"
+          "winProbability": 20.6,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 132.6,
+          "spread": -17.6,
+          "spreadLabel": "-17.6 pts"
         },
         {
           "week": 6,
@@ -1268,11 +1296,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 55.2,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 110.3,
-          "spread": 2.5,
-          "spreadLabel": "+2.5 pts"
+          "winProbability": 56.8,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 111.5,
+          "spread": 3.5,
+          "spreadLabel": "+3.5 pts"
         },
         {
           "week": 7,
@@ -1283,11 +1311,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 34.5,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 121.6,
-          "spread": -8.8,
-          "spreadLabel": "-8.8 pts"
+          "winProbability": 39.0,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 121.1,
+          "spread": -6.1,
+          "spreadLabel": "-6.1 pts"
         },
         {
           "week": 8,
@@ -1298,11 +1326,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 32.5,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 123.0,
-          "spread": -10.2,
-          "spreadLabel": "-10.2 pts"
+          "winProbability": 36.6,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 122.7,
+          "spread": -7.7,
+          "spreadLabel": "-7.7 pts"
         },
         {
           "week": 9,
@@ -1313,11 +1341,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 41.1,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 117.6,
-          "spread": -4.8,
-          "spreadLabel": "-4.8 pts"
+          "winProbability": 45.5,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 117.4,
+          "spread": -2.4,
+          "spreadLabel": "-2.4 pts"
         },
         {
           "week": 10,
@@ -1328,11 +1356,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 27.1,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 126.1,
-          "spread": -13.3,
-          "spreadLabel": "-13.3 pts"
+          "winProbability": 29.7,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 126.2,
+          "spread": -11.2,
+          "spreadLabel": "-11.2 pts"
         },
         {
           "week": 11,
@@ -1343,11 +1371,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 55.0,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 110.2,
-          "spread": 2.6,
-          "spreadLabel": "+2.6 pts"
+          "winProbability": 57.7,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 111.0,
+          "spread": 4.0,
+          "spreadLabel": "+4.0 pts"
         },
         {
           "week": 12,
@@ -1358,11 +1386,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 36.2,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 121.5,
-          "spread": -8.7,
-          "spreadLabel": "-8.7 pts"
+          "winProbability": 34.8,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 124.3,
+          "spread": -9.3,
+          "spreadLabel": "-9.3 pts"
         },
         {
           "week": 13,
@@ -1373,11 +1401,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 37.7,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 119.8,
-          "spread": -7.0,
-          "spreadLabel": "-7.0 pts"
+          "winProbability": 41.5,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 119.5,
+          "spread": -4.5,
+          "spreadLabel": "-4.5 pts"
         },
         {
           "week": 14,
@@ -1388,27 +1416,35 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 22.1,
-          "projectedScore": 112.8,
-          "opponentProjectedScore": 130.3,
-          "spread": -17.5,
-          "spreadLabel": "-17.5 pts"
+          "winProbability": 30.8,
+          "projectedScore": 115.0,
+          "opponentProjectedScore": 126.6,
+          "spread": -11.6,
+          "spreadLabel": "-11.6 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "5.0 expected wins \u00b7 0.1% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 5.0 wins, a 7.8% playoff chance and a 0.1% title chance, with 2 completed weeks locked.",
+        "headline": "5.1 expected wins \u00b7 0.1% title probability",
+        "trend": "Rising",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 5.1 wins, a 7.2% playoff chance and a 0.1% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 5.0,
             "playoffOdds": 7.8,
             "titleOdds": 0.1,
             "rank": 10
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 5.1,
+            "playoffOdds": 7.2,
+            "titleOdds": 0.1,
+            "rank": 9
           }
         ]
       }
@@ -1417,41 +1453,41 @@
       "rosterId": 5,
       "teamName": "My Nabers Tetties",
       "projectedRank": 11,
-      "expectedSeed": 10.3,
+      "expectedSeed": 10.5,
       "medianSeed": 11,
       "powerRank": 12,
-      "powerScore": 7.9,
+      "powerScore": 10.57,
       "powerRankDelta": 1,
       "powerDeltaLabel": "+1 vs Power Rank",
       "powerConnectionNarrative": "Title odds rank #11 versus Power Index #12. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 7.9,
-        "projectedMeanScore": 110.2,
-        "weeklyStdDev": 15.9,
-        "p10WeeklyFloor": 89.8,
-        "p90WeeklyCeiling": 130.6,
-        "volatilityScore": 67.5,
+        "compositePowerScore": 10.6,
+        "projectedMeanScore": 111.0,
+        "weeklyStdDev": 15.7,
+        "p10WeeklyFloor": 90.9,
+        "p90WeeklyCeiling": 131.1,
+        "volatilityScore": 64.3,
         "volatilityLabel": "Volatile",
         "topThreeShare": 61.8,
         "rbShare": 0.0,
-        "depthRisk": 90.9,
+        "depthRisk": 81.8,
         "concentrationRisk": 89.2,
         "pillars": {
           "lineup": {
-            "rank": 11,
-            "score": 1.9,
+            "rank": 12,
+            "score": 0.0,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
           "depth": {
-            "rank": 11,
-            "score": 6.4,
+            "rank": 10,
+            "score": 26.0,
             "weight": "25%",
             "label": "Bench Replacement Cushion"
           },
           "balance": {
-            "rank": 10,
-            "score": 48.6,
+            "rank": 11,
+            "score": 36.6,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -1462,27 +1498,28 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a volatile profile (67.5/100), the model applies a weekly scoring standard deviation of \u00b115.9 pts. The top 3 starters account for 61.8% of starting redraft value and RBs represent 0.0%. In 10,000 simulations, this volatility models an expected weekly floor of 89.8 pts (10th percentile) and a shootout ceiling of 130.6 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a volatile profile (64.3/100), the model applies a weekly scoring standard deviation of \u00b115.7 pts. The top 3 starters account for 61.8% of starting redraft value and RBs represent 0.0%. In 10,000 simulations, this volatility models an expected weekly floor of 90.9 pts (10th percentile) and a shootout ceiling of 131.1 pts (90th percentile)."
       },
       "actualWins": 1,
-      "actualLosses": 1,
+      "actualLosses": 2,
       "actualTies": 0,
-      "actualPoints": 155.64,
-      "rosExpectedWins": 3.5,
-      "rosExpectedLosses": 8.5,
+      "actualPoints": 218.62,
+      "rosExpectedWins": 3.3,
+      "rosExpectedLosses": 7.7,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 4.5,
-      "expectedLosses": 9.5,
-      "expectedPointsFor": 1477.6,
-      "playoffProbability": 3.4,
-      "byeProbability": 0.1,
+      "remainingWeeks": 11,
+      "expectedWins": 4.3,
+      "expectedLosses": 9.7,
+      "expectedPointsFor": 1438.3,
+      "playoffProbability": 1.9,
+      "byeProbability": 0.0,
       "championshipProbability": 0.0,
-      "lastPlaceProbability": 27.9,
-      "bestCaseSeed": 2,
+      "lastPlaceProbability": 31.6,
+      "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
@@ -1491,47 +1528,47 @@
         },
         {
           "seed": 2,
-          "probability": 0.1
+          "probability": 0.0
         },
         {
           "seed": 3,
-          "probability": 0.2
+          "probability": 0.1
         },
         {
           "seed": 4,
-          "probability": 0.4
+          "probability": 0.2
         },
         {
           "seed": 5,
-          "probability": 0.9
+          "probability": 0.6
         },
         {
           "seed": 6,
-          "probability": 1.8
+          "probability": 0.9
         },
         {
           "seed": 7,
-          "probability": 3.4
+          "probability": 2.4
         },
         {
           "seed": 8,
-          "probability": 6.5
+          "probability": 5.5
         },
         {
           "seed": 9,
-          "probability": 12.5
+          "probability": 11.2
         },
         {
           "seed": 10,
-          "probability": 19.2
+          "probability": 19.6
         },
         {
           "seed": 11,
-          "probability": 27.2
+          "probability": 27.9
         },
         {
           "seed": 12,
-          "probability": 27.9
+          "probability": 31.6
         }
       ],
       "weeklySchedule": [
@@ -1547,7 +1584,7 @@
           "winProbability": 0.0,
           "projectedScore": 67.9,
           "opponentProjectedScore": 157.5,
-          "spread": -12.8,
+          "spread": -11.7,
           "spreadLabel": "FINAL"
         },
         {
@@ -1562,23 +1599,23 @@
           "winProbability": 100.0,
           "projectedScore": 87.8,
           "opponentProjectedScore": 78.8,
-          "spread": -7.4,
+          "spread": -6.4,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 3,
           "opponentName": "The Ape",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 23.7,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 126.1,
-          "spread": -15.9,
-          "spreadLabel": "-15.9 pts"
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 62.98,
+          "opponentActualScore": 133.14,
+          "scoreDiff": -70.16,
+          "winProbability": 0.0,
+          "projectedScore": 63.0,
+          "opponentProjectedScore": 133.1,
+          "spread": -15.2,
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -1589,11 +1626,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 30.0,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 121.6,
-          "spread": -11.4,
-          "spreadLabel": "-11.4 pts"
+          "winProbability": 32.1,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 121.1,
+          "spread": -10.1,
+          "spreadLabel": "-10.1 pts"
         },
         {
           "week": 5,
@@ -1604,11 +1641,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 30.4,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 121.5,
-          "spread": -11.3,
-          "spreadLabel": "-11.3 pts"
+          "winProbability": 26.7,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 124.3,
+          "spread": -13.3,
+          "spreadLabel": "-13.3 pts"
         },
         {
           "week": 6,
@@ -1619,11 +1656,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 34.5,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 119.8,
-          "spread": -9.6,
-          "spreadLabel": "-9.6 pts"
+          "winProbability": 36.1,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 119.5,
+          "spread": -8.5,
+          "spreadLabel": "-8.5 pts"
         },
         {
           "week": 7,
@@ -1634,11 +1671,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 17.9,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 130.3,
-          "spread": -20.1,
-          "spreadLabel": "-20.1 pts"
+          "winProbability": 23.8,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 126.6,
+          "spread": -15.6,
+          "spreadLabel": "-15.6 pts"
         },
         {
           "week": 8,
@@ -1649,11 +1686,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 12.5,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 133.6,
-          "spread": -23.4,
-          "spreadLabel": "-23.4 pts"
+          "winProbability": 15.2,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 131.7,
+          "spread": -20.7,
+          "spreadLabel": "-20.7 pts"
         },
         {
           "week": 9,
@@ -1664,11 +1701,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 15.2,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 132.0,
-          "spread": -21.8,
-          "spreadLabel": "-21.8 pts"
+          "winProbability": 14.9,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 132.6,
+          "spread": -21.6,
+          "spreadLabel": "-21.6 pts"
         },
         {
           "week": 10,
@@ -1679,11 +1716,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 48.9,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 110.3,
-          "spread": -0.1,
-          "spreadLabel": "-0.1 pts"
+          "winProbability": 48.0,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 111.5,
+          "spread": -0.5,
+          "spreadLabel": "-0.5 pts"
         },
         {
           "week": 11,
@@ -1694,11 +1731,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 45.0,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 112.8,
-          "spread": -2.6,
-          "spreadLabel": "-2.6 pts"
+          "winProbability": 42.3,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 115.0,
+          "spread": -4.0,
+          "spreadLabel": "-4.0 pts"
         },
         {
           "week": 12,
@@ -1709,11 +1746,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 26.9,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 123.0,
-          "spread": -12.8,
-          "spreadLabel": "-12.8 pts"
+          "winProbability": 28.3,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 122.7,
+          "spread": -11.7,
+          "spreadLabel": "-11.7 pts"
         },
         {
           "week": 13,
@@ -1724,11 +1761,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 36.9,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 117.6,
-          "spread": -7.4,
-          "spreadLabel": "-7.4 pts"
+          "winProbability": 38.8,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 117.4,
+          "spread": -6.4,
+          "spreadLabel": "-6.4 pts"
         },
         {
           "week": 14,
@@ -1739,25 +1776,33 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 23.9,
-          "projectedScore": 110.2,
-          "opponentProjectedScore": 126.1,
-          "spread": -15.9,
-          "spreadLabel": "-15.9 pts"
+          "winProbability": 24.5,
+          "projectedScore": 111.0,
+          "opponentProjectedScore": 126.2,
+          "spread": -15.2,
+          "spreadLabel": "-15.2 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "4.5 expected wins \u00b7 0.0% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 4.5 wins, a 3.4% playoff chance and a 0.0% title chance, with 2 completed weeks locked.",
+        "headline": "4.3 expected wins \u00b7 0.0% title probability",
+        "trend": "Falling",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 4.3 wins, a 1.9% playoff chance and a 0.0% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 4.5,
             "playoffOdds": 3.4,
+            "titleOdds": 0.0,
+            "rank": 11
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 4.3,
+            "playoffOdds": 1.9,
             "titleOdds": 0.0,
             "rank": 11
           }
@@ -1771,16 +1816,16 @@
       "expectedSeed": 10.9,
       "medianSeed": 11,
       "powerRank": 11,
-      "powerScore": 8.15,
+      "powerScore": 12.46,
       "powerRankDelta": -1,
       "powerDeltaLabel": "-1 vs Power Rank",
       "powerConnectionNarrative": "Title odds rank #12 versus Power Index #11. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 8.2,
-        "projectedMeanScore": 110.3,
+        "compositePowerScore": 12.5,
+        "projectedMeanScore": 111.5,
         "weeklyStdDev": 16.1,
-        "p10WeeklyFloor": 89.6,
-        "p90WeeklyCeiling": 130.9,
+        "p10WeeklyFloor": 90.9,
+        "p90WeeklyCeiling": 132.1,
         "volatilityScore": 70.7,
         "volatilityLabel": "High variance",
         "topThreeShare": 58.7,
@@ -1789,8 +1834,8 @@
         "concentrationRisk": 79.2,
         "pillars": {
           "lineup": {
-            "rank": 12,
-            "score": 0.0,
+            "rank": 10,
+            "score": 7.1,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
@@ -1802,7 +1847,7 @@
           },
           "balance": {
             "rank": 5,
-            "score": 81.5,
+            "score": 85.3,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -1813,26 +1858,27 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a high variance profile (70.7/100), the model applies a weekly scoring standard deviation of \u00b116.1 pts. The top 3 starters account for 58.7% of starting redraft value and RBs represent 16.2%. In 10,000 simulations, this volatility models an expected weekly floor of 89.6 pts (10th percentile) and a shootout ceiling of 130.9 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a high variance profile (70.7/100), the model applies a weekly scoring standard deviation of \u00b116.1 pts. The top 3 starters account for 58.7% of starting redraft value and RBs represent 16.2%. In 10,000 simulations, this volatility models an expected weekly floor of 90.9 pts (10th percentile) and a shootout ceiling of 132.1 pts (90th percentile)."
       },
       "actualWins": 0,
-      "actualLosses": 2,
+      "actualLosses": 3,
       "actualTies": 0,
-      "actualPoints": 239.14,
+      "actualPoints": 337.38,
       "rosExpectedWins": 3.4,
-      "rosExpectedLosses": 8.6,
+      "rosExpectedLosses": 7.6,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
+      "remainingWeeks": 11,
       "expectedWins": 3.4,
       "expectedLosses": 10.6,
-      "expectedPointsFor": 1562.3,
-      "playoffProbability": 0.9,
+      "expectedPointsFor": 1563.8,
+      "playoffProbability": 0.8,
       "byeProbability": 0.0,
       "championshipProbability": 0.0,
-      "lastPlaceProbability": 45.2,
+      "lastPlaceProbability": 40.3,
       "bestCaseSeed": 2,
       "worstCaseSeed": 12,
       "seedDistribution": [
@@ -1854,35 +1900,35 @@
         },
         {
           "seed": 5,
-          "probability": 0.2
+          "probability": 0.3
         },
         {
           "seed": 6,
-          "probability": 0.5
+          "probability": 0.4
         },
         {
           "seed": 7,
-          "probability": 1.4
+          "probability": 1.2
         },
         {
           "seed": 8,
-          "probability": 4.0
+          "probability": 3.1
         },
         {
           "seed": 9,
-          "probability": 8.0
+          "probability": 9.4
         },
         {
           "seed": 10,
-          "probability": 14.7
+          "probability": 17.2
         },
         {
           "seed": 11,
-          "probability": 25.8
+          "probability": 28.0
         },
         {
           "seed": 12,
-          "probability": 45.2
+          "probability": 40.3
         }
       ],
       "weeklySchedule": [
@@ -1898,7 +1944,7 @@
           "winProbability": 0.0,
           "projectedScore": 138.6,
           "opponentProjectedScore": 142.6,
-          "spread": -9.5,
+          "spread": -8.0,
           "spreadLabel": "FINAL"
         },
         {
@@ -1913,23 +1959,23 @@
           "winProbability": 0.0,
           "projectedScore": 100.6,
           "opponentProjectedScore": 106.7,
-          "spread": -20.0,
+          "spread": -15.1,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 1,
           "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 12.8,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 133.6,
-          "spread": -23.3,
-          "spreadLabel": "-23.3 pts"
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 98.24,
+          "opponentActualScore": 127.74,
+          "scoreDiff": -29.5,
+          "winProbability": 0.0,
+          "projectedScore": 98.2,
+          "opponentProjectedScore": 127.7,
+          "spread": -20.2,
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -1940,11 +1986,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 14.8,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 132.0,
-          "spread": -21.7,
-          "spreadLabel": "-21.7 pts"
+          "winProbability": 15.3,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 132.6,
+          "spread": -21.1,
+          "spreadLabel": "-21.1 pts"
         },
         {
           "week": 5,
@@ -1955,11 +2001,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 29.8,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 121.6,
-          "spread": -11.3,
-          "spreadLabel": "-11.3 pts"
+          "winProbability": 32.9,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 121.1,
+          "spread": -9.6,
+          "spreadLabel": "-9.6 pts"
         },
         {
           "week": 6,
@@ -1970,11 +2016,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 44.8,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 112.8,
-          "spread": -2.5,
-          "spreadLabel": "-2.5 pts"
+          "winProbability": 43.2,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 115.0,
+          "spread": -3.5,
+          "spreadLabel": "-3.5 pts"
         },
         {
           "week": 7,
@@ -1985,11 +2031,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 27.9,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 123.0,
-          "spread": -12.7,
-          "spreadLabel": "-12.7 pts"
+          "winProbability": 30.2,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 122.7,
+          "spread": -11.2,
+          "spreadLabel": "-11.2 pts"
         },
         {
           "week": 8,
@@ -2000,11 +2046,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 37.1,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 117.6,
-          "spread": -7.3,
-          "spreadLabel": "-7.3 pts"
+          "winProbability": 39.8,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 117.4,
+          "spread": -5.9,
+          "spreadLabel": "-5.9 pts"
         },
         {
           "week": 9,
@@ -2015,11 +2061,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 23.5,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 126.1,
-          "spread": -15.8,
-          "spreadLabel": "-15.8 pts"
+          "winProbability": 24.9,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 126.2,
+          "spread": -14.7,
+          "spreadLabel": "-14.7 pts"
         },
         {
           "week": 10,
@@ -2030,11 +2076,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 51.1,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 110.2,
-          "spread": 0.1,
-          "spreadLabel": "+0.1 pts"
+          "winProbability": 52.0,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 111.0,
+          "spread": 0.5,
+          "spreadLabel": "+0.5 pts"
         },
         {
           "week": 11,
@@ -2045,11 +2091,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 31.1,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 121.5,
-          "spread": -11.2,
-          "spreadLabel": "-11.2 pts"
+          "winProbability": 28.5,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 124.3,
+          "spread": -12.8,
+          "spreadLabel": "-12.8 pts"
         },
         {
           "week": 12,
@@ -2060,11 +2106,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 34.3,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 119.8,
-          "spread": -9.5,
-          "spreadLabel": "-9.5 pts"
+          "winProbability": 36.6,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 119.5,
+          "spread": -8.0,
+          "spreadLabel": "-8.0 pts"
         },
         {
           "week": 13,
@@ -2075,11 +2121,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 18.1,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 130.3,
-          "spread": -20.0,
-          "spreadLabel": "-20.0 pts"
+          "winProbability": 24.7,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 126.6,
+          "spread": -15.1,
+          "spreadLabel": "-15.1 pts"
         },
         {
           "week": 14,
@@ -2090,25 +2136,33 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 13.4,
-          "projectedScore": 110.3,
-          "opponentProjectedScore": 133.6,
-          "spread": -23.3,
-          "spreadLabel": "-23.3 pts"
+          "winProbability": 16.8,
+          "projectedScore": 111.5,
+          "opponentProjectedScore": 131.7,
+          "spread": -20.2,
+          "spreadLabel": "-20.2 pts"
         }
       ],
       "fluctuationNarrative": {
         "headline": "3.4 expected wins \u00b7 0.0% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 3.4 wins, a 0.9% playoff chance and a 0.0% title chance, with 2 completed weeks locked.",
+        "trend": "Stable",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 3.4 wins, a 0.8% playoff chance and a 0.0% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 3.4,
             "playoffOdds": 0.9,
+            "titleOdds": 0.0,
+            "rank": 12
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 3.4,
+            "playoffOdds": 0.8,
             "titleOdds": 0.0,
             "rank": 12
           }
@@ -2118,42 +2172,42 @@
     "7": {
       "rosterId": 7,
       "teamName": "Gridiron geezers",
-      "projectedRank": 7,
-      "expectedSeed": 6.4,
-      "medianSeed": 7,
-      "powerRank": 7,
-      "powerScore": 48.05,
+      "projectedRank": 5,
+      "expectedSeed": 5.0,
+      "medianSeed": 5,
+      "powerRank": 5,
+      "powerScore": 58.15,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Title odds rank #7 versus Power Index #7. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
+      "powerConnectionNarrative": "Title odds rank #5 versus Power Index #5. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 48.0,
-        "projectedMeanScore": 121.5,
-        "weeklyStdDev": 16.4,
-        "p10WeeklyFloor": 100.4,
-        "p90WeeklyCeiling": 142.5,
-        "volatilityScore": 75.3,
-        "volatilityLabel": "High variance",
+        "compositePowerScore": 58.1,
+        "projectedMeanScore": 124.3,
+        "weeklyStdDev": 15.8,
+        "p10WeeklyFloor": 104.1,
+        "p90WeeklyCeiling": 144.5,
+        "volatilityScore": 65.8,
+        "volatilityLabel": "Volatile",
         "topThreeShare": 69.9,
         "rbShare": 77.8,
-        "depthRisk": 45.5,
+        "depthRisk": 18.2,
         "concentrationRisk": 100.0,
         "pillars": {
           "lineup": {
-            "rank": 7,
-            "score": 47.6,
+            "rank": 6,
+            "score": 51.5,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
           "depth": {
-            "rank": 6,
-            "score": 38.7,
+            "rank": 3,
+            "score": 65.0,
             "weight": "25%",
             "label": "Bench Replacement Cushion"
           },
           "balance": {
-            "rank": 11,
-            "score": 33.4,
+            "rank": 9,
+            "score": 47.3,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -2164,76 +2218,77 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a high variance profile (75.3/100), the model applies a weekly scoring standard deviation of \u00b116.4 pts. The top 3 starters account for 69.9% of starting redraft value and RBs represent 77.8%. In 10,000 simulations, this volatility models an expected weekly floor of 100.4 pts (10th percentile) and a shootout ceiling of 142.5 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a volatile profile (65.8/100), the model applies a weekly scoring standard deviation of \u00b115.8 pts. The top 3 starters account for 69.9% of starting redraft value and RBs represent 77.8%. In 10,000 simulations, this volatility models an expected weekly floor of 104.1 pts (10th percentile) and a shootout ceiling of 144.5 pts (90th percentile)."
       },
-      "actualWins": 1,
+      "actualWins": 2,
       "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 274.48,
+      "actualPoints": 426.26,
       "rosExpectedWins": 6.0,
-      "rosExpectedLosses": 6.0,
+      "rosExpectedLosses": 5.0,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 7.0,
-      "expectedLosses": 7.0,
-      "expectedPointsFor": 1732.0,
-      "playoffProbability": 51.6,
-      "byeProbability": 4.0,
-      "championshipProbability": 2.4,
-      "lastPlaceProbability": 0.9,
+      "remainingWeeks": 11,
+      "expectedWins": 8.0,
+      "expectedLosses": 6.0,
+      "expectedPointsFor": 1793.4,
+      "playoffProbability": 74.1,
+      "byeProbability": 14.7,
+      "championshipProbability": 7.0,
+      "lastPlaceProbability": 0.1,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 0.8
+          "probability": 4.9
         },
         {
           "seed": 2,
-          "probability": 3.2
+          "probability": 9.9
         },
         {
           "seed": 3,
-          "probability": 6.2
+          "probability": 14.1
         },
         {
           "seed": 4,
-          "probability": 10.9
+          "probability": 15.3
         },
         {
           "seed": 5,
-          "probability": 14.3
+          "probability": 15.5
         },
         {
           "seed": 6,
-          "probability": 16.2
+          "probability": 14.4
         },
         {
           "seed": 7,
-          "probability": 16.6
+          "probability": 11.8
         },
         {
           "seed": 8,
-          "probability": 13.5
+          "probability": 8.0
         },
         {
           "seed": 9,
-          "probability": 9.5
+          "probability": 4.1
         },
         {
           "seed": 10,
-          "probability": 5.4
+          "probability": 1.5
         },
         {
           "seed": 11,
-          "probability": 2.5
+          "probability": 0.5
         },
         {
           "seed": 12,
-          "probability": 0.9
+          "probability": 0.1
         }
       ],
       "weeklySchedule": [
@@ -2249,7 +2304,7 @@
           "winProbability": 0.0,
           "projectedScore": 105.4,
           "opponentProjectedScore": 121.4,
-          "spread": 8.7,
+          "spread": 9.3,
           "spreadLabel": "FINAL"
         },
         {
@@ -2264,23 +2319,23 @@
           "winProbability": 100.0,
           "projectedScore": 169.1,
           "opponentProjectedScore": 115.9,
-          "spread": -1.5,
+          "spread": 1.6,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 11,
           "opponentName": "Terry Tate\u2019s Pain Train",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 56.0,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 117.6,
-          "spread": 3.9,
-          "spreadLabel": "+3.9 pts"
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 151.78,
+          "opponentActualScore": 83.42,
+          "scoreDiff": 68.36,
+          "winProbability": 100.0,
+          "projectedScore": 151.8,
+          "opponentProjectedScore": 83.4,
+          "spread": 6.9,
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -2291,11 +2346,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 42.4,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 126.1,
-          "spread": -4.6,
-          "spreadLabel": "-4.6 pts"
+          "winProbability": 46.4,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 126.2,
+          "spread": -1.9,
+          "spreadLabel": "-1.9 pts"
         },
         {
           "week": 5,
@@ -2306,11 +2361,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 69.5,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 110.2,
-          "spread": 11.3,
-          "spreadLabel": "+11.3 pts"
+          "winProbability": 73.4,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 111.0,
+          "spread": 13.3,
+          "spreadLabel": "+13.3 pts"
         },
         {
           "week": 6,
@@ -2321,11 +2376,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 49.5,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 121.6,
-          "spread": -0.1,
-          "spreadLabel": "-0.1 pts"
+          "winProbability": 55.7,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 121.1,
+          "spread": 3.2,
+          "spreadLabel": "+3.2 pts"
         },
         {
           "week": 7,
@@ -2336,11 +2391,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 53.1,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 119.8,
-          "spread": 1.7,
-          "spreadLabel": "+1.7 pts"
+          "winProbability": 58.1,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 119.5,
+          "spread": 4.8,
+          "spreadLabel": "+4.8 pts"
         },
         {
           "week": 8,
@@ -2351,11 +2406,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 34.1,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 130.3,
-          "spread": -8.8,
-          "spreadLabel": "-8.8 pts"
+          "winProbability": 45.7,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 126.6,
+          "spread": -2.3,
+          "spreadLabel": "-2.3 pts"
         },
         {
           "week": 9,
@@ -2366,11 +2421,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 28.1,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 133.6,
-          "spread": -12.1,
-          "spreadLabel": "-12.1 pts"
+          "winProbability": 35.9,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 131.7,
+          "spread": -7.4,
+          "spreadLabel": "-7.4 pts"
         },
         {
           "week": 10,
@@ -2381,11 +2436,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 30.9,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 132.0,
-          "spread": -10.5,
-          "spreadLabel": "-10.5 pts"
+          "winProbability": 34.4,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 132.6,
+          "spread": -8.3,
+          "spreadLabel": "-8.3 pts"
         },
         {
           "week": 11,
@@ -2396,11 +2451,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 68.9,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 110.3,
-          "spread": 11.2,
-          "spreadLabel": "+11.2 pts"
+          "winProbability": 71.5,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 111.5,
+          "spread": 12.8,
+          "spreadLabel": "+12.8 pts"
         },
         {
           "week": 12,
@@ -2411,11 +2466,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 63.8,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 112.8,
-          "spread": 8.7,
-          "spreadLabel": "+8.7 pts"
+          "winProbability": 65.2,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 115.0,
+          "spread": 9.3,
+          "spreadLabel": "+9.3 pts"
         },
         {
           "week": 13,
@@ -2426,11 +2481,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 47.4,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 123.0,
-          "spread": -1.5,
-          "spreadLabel": "-1.5 pts"
+          "winProbability": 52.7,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 122.7,
+          "spread": 1.6,
+          "spreadLabel": "+1.6 pts"
         },
         {
           "week": 14,
@@ -2441,27 +2496,35 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 57.1,
-          "projectedScore": 121.5,
-          "opponentProjectedScore": 117.6,
-          "spread": 3.9,
-          "spreadLabel": "+3.9 pts"
+          "winProbability": 62.3,
+          "projectedScore": 124.3,
+          "opponentProjectedScore": 117.4,
+          "spread": 6.9,
+          "spreadLabel": "+6.9 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "7.0 expected wins \u00b7 2.4% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 7.0 wins, a 51.6% playoff chance and a 2.4% title chance, with 2 completed weeks locked.",
+        "headline": "8.0 expected wins \u00b7 7.0% title probability",
+        "trend": "Rising",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 8.0 wins, a 74.1% playoff chance and a 7.0% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 7.0,
             "playoffOdds": 51.6,
             "titleOdds": 2.4,
             "rank": 7
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 8.0,
+            "playoffOdds": 74.1,
+            "titleOdds": 7.0,
+            "rank": 5
           }
         ]
       }
@@ -2469,20 +2532,20 @@
     "8": {
       "rosterId": 8,
       "teamName": "arkinsjt",
-      "projectedRank": 5,
-      "expectedSeed": 5.9,
+      "projectedRank": 6,
+      "expectedSeed": 5.6,
       "medianSeed": 7,
-      "powerRank": 5,
-      "powerScore": 53.56,
+      "powerRank": 6,
+      "powerScore": 52.52,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Title odds rank #5 versus Power Index #5. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
+      "powerConnectionNarrative": "Title odds rank #6 versus Power Index #6. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 53.6,
-        "projectedMeanScore": 123.0,
+        "compositePowerScore": 52.5,
+        "projectedMeanScore": 122.7,
         "weeklyStdDev": 14.2,
-        "p10WeeklyFloor": 104.8,
-        "p90WeeklyCeiling": 141.2,
+        "p10WeeklyFloor": 104.5,
+        "p90WeeklyCeiling": 140.9,
         "volatilityScore": 41.2,
         "volatilityLabel": "Balanced",
         "topThreeShare": 52.8,
@@ -2491,20 +2554,20 @@
         "concentrationRisk": 59.5,
         "pillars": {
           "lineup": {
-            "rank": 6,
-            "score": 52.2,
+            "rank": 7,
+            "score": 48.2,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
           "depth": {
             "rank": 5,
-            "score": 45.0,
+            "score": 54.9,
             "weight": "25%",
             "label": "Bench Replacement Cushion"
           },
           "balance": {
-            "rank": 6,
-            "score": 81.4,
+            "rank": 8,
+            "score": 68.4,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -2515,56 +2578,57 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a balanced profile (41.2/100), the model applies a weekly scoring standard deviation of \u00b114.2 pts. The top 3 starters account for 52.8% of starting redraft value and RBs represent 18.8%. In 10,000 simulations, this volatility models an expected weekly floor of 104.8 pts (10th percentile) and a shootout ceiling of 141.2 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a balanced profile (41.2/100), the model applies a weekly scoring standard deviation of \u00b114.2 pts. The top 3 starters account for 52.8% of starting redraft value and RBs represent 18.8%. In 10,000 simulations, this volatility models an expected weekly floor of 104.5 pts (10th percentile) and a shootout ceiling of 140.9 pts (90th percentile)."
       },
-      "actualWins": 1,
+      "actualWins": 2,
       "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 273.38,
-      "rosExpectedWins": 6.3,
-      "rosExpectedLosses": 5.7,
+      "actualPoints": 407.8,
+      "rosExpectedWins": 5.7,
+      "rosExpectedLosses": 5.3,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 7.3,
-      "expectedLosses": 6.7,
-      "expectedPointsFor": 1749.8,
-      "playoffProbability": 60.0,
-      "byeProbability": 5.5,
-      "championshipProbability": 3.5,
-      "lastPlaceProbability": 0.6,
+      "remainingWeeks": 11,
+      "expectedWins": 7.7,
+      "expectedLosses": 6.3,
+      "expectedPointsFor": 1757.9,
+      "playoffProbability": 64.3,
+      "byeProbability": 9.5,
+      "championshipProbability": 4.2,
+      "lastPlaceProbability": 0.2,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 1.5
+          "probability": 3.1
         },
         {
           "seed": 2,
-          "probability": 4.0
+          "probability": 6.3
         },
         {
           "seed": 3,
-          "probability": 8.7
+          "probability": 9.6
         },
         {
           "seed": 4,
-          "probability": 13.2
+          "probability": 13.3
         },
         {
           "seed": 5,
-          "probability": 16.2
+          "probability": 15.8
         },
         {
           "seed": 6,
-          "probability": 16.3
+          "probability": 16.1
         },
         {
           "seed": 7,
-          "probability": 15.2
+          "probability": 15.0
         },
         {
           "seed": 8,
@@ -2572,19 +2636,19 @@
         },
         {
           "seed": 9,
-          "probability": 7.0
+          "probability": 5.5
         },
         {
           "seed": 10,
-          "probability": 3.8
+          "probability": 2.3
         },
         {
           "seed": 11,
-          "probability": 1.6
+          "probability": 0.9
         },
         {
           "seed": 12,
-          "probability": 0.6
+          "probability": 0.2
         }
       ],
       "weeklySchedule": [
@@ -2600,7 +2664,7 @@
           "winProbability": 100.0,
           "projectedScore": 157.5,
           "opponentProjectedScore": 67.9,
-          "spread": 12.8,
+          "spread": 11.7,
           "spreadLabel": "FINAL"
         },
         {
@@ -2615,23 +2679,23 @@
           "winProbability": 0.0,
           "projectedScore": 115.9,
           "opponentProjectedScore": 169.1,
-          "spread": 1.5,
+          "spread": -1.6,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 2,
           "opponentName": "2 Dagos and A Dream",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 56.1,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 119.8,
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 134.42,
+          "opponentActualScore": 127.88,
+          "scoreDiff": 6.54,
+          "winProbability": 100.0,
+          "projectedScore": 134.4,
+          "opponentProjectedScore": 127.9,
           "spread": 3.2,
-          "spreadLabel": "+3.2 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -2642,11 +2706,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 36.4,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 130.3,
-          "spread": -7.3,
-          "spreadLabel": "-7.3 pts"
+          "winProbability": 43.0,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 126.6,
+          "spread": -3.9,
+          "spreadLabel": "-3.9 pts"
         },
         {
           "week": 5,
@@ -2657,11 +2721,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 29.4,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 133.6,
-          "spread": -10.6,
-          "spreadLabel": "-10.6 pts"
+          "winProbability": 32.8,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 131.7,
+          "spread": -9.0,
+          "spreadLabel": "-9.0 pts"
         },
         {
           "week": 6,
@@ -2672,11 +2736,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 31.9,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 132.0,
-          "spread": -9.0,
-          "spreadLabel": "-9.0 pts"
+          "winProbability": 30.1,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 132.6,
+          "spread": -9.9,
+          "spreadLabel": "-9.9 pts"
         },
         {
           "week": 7,
@@ -2687,11 +2751,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 72.1,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 110.3,
-          "spread": 12.7,
-          "spreadLabel": "+12.7 pts"
+          "winProbability": 69.8,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 111.5,
+          "spread": 11.2,
+          "spreadLabel": "+11.2 pts"
         },
         {
           "week": 8,
@@ -2702,11 +2766,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 67.5,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 112.8,
-          "spread": 10.2,
-          "spreadLabel": "+10.2 pts"
+          "winProbability": 63.4,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 115.0,
+          "spread": 7.7,
+          "spreadLabel": "+7.7 pts"
         },
         {
           "week": 9,
@@ -2717,11 +2781,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 52.9,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 121.6,
-          "spread": 1.4,
-          "spreadLabel": "+1.4 pts"
+          "winProbability": 53.4,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 121.1,
+          "spread": 1.6,
+          "spreadLabel": "+1.6 pts"
         },
         {
           "week": 10,
@@ -2732,11 +2796,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 59.3,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 117.6,
-          "spread": 5.4,
-          "spreadLabel": "+5.4 pts"
+          "winProbability": 59.0,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 117.4,
+          "spread": 5.3,
+          "spreadLabel": "+5.3 pts"
         },
         {
           "week": 11,
@@ -2747,11 +2811,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 44.1,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 126.1,
-          "spread": -3.1,
-          "spreadLabel": "-3.1 pts"
+          "winProbability": 43.4,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 126.2,
+          "spread": -3.5,
+          "spreadLabel": "-3.5 pts"
         },
         {
           "week": 12,
@@ -2762,11 +2826,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 73.1,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 110.2,
-          "spread": 12.8,
-          "spreadLabel": "+12.8 pts"
+          "winProbability": 71.7,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 111.0,
+          "spread": 11.7,
+          "spreadLabel": "+11.7 pts"
         },
         {
           "week": 13,
@@ -2777,11 +2841,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 52.6,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 121.5,
-          "spread": 1.5,
-          "spreadLabel": "+1.5 pts"
+          "winProbability": 47.3,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 124.3,
+          "spread": -1.6,
+          "spreadLabel": "-1.6 pts"
         },
         {
           "week": 14,
@@ -2792,27 +2856,35 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 56.1,
-          "projectedScore": 123.0,
-          "opponentProjectedScore": 119.8,
+          "winProbability": 55.9,
+          "projectedScore": 122.7,
+          "opponentProjectedScore": 119.5,
           "spread": 3.2,
           "spreadLabel": "+3.2 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "7.3 expected wins \u00b7 3.5% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 7.3 wins, a 60.0% playoff chance and a 3.5% title chance, with 2 completed weeks locked.",
+        "headline": "7.7 expected wins \u00b7 4.2% title probability",
+        "trend": "Rising",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 7.7 wins, a 64.3% playoff chance and a 4.2% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 7.3,
             "playoffOdds": 60.0,
             "titleOdds": 3.5,
             "rank": 5
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 7.7,
+            "playoffOdds": 64.3,
+            "titleOdds": 4.2,
+            "rank": 6
           }
         ]
       }
@@ -2820,42 +2892,42 @@
     "9": {
       "rosterId": 9,
       "teamName": "Max\u2019s Shadynasty",
-      "projectedRank": 8,
-      "expectedSeed": 7.0,
+      "projectedRank": 7,
+      "expectedSeed": 6.4,
       "medianSeed": 7,
-      "powerRank": 6,
-      "powerScore": 48.69,
-      "powerRankDelta": -2,
-      "powerDeltaLabel": "-2 vs Power Rank",
-      "powerConnectionNarrative": "Title odds rank #8 versus Power Index #6. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
+      "powerRank": 7,
+      "powerScore": 46.82,
+      "powerRankDelta": 0,
+      "powerDeltaLabel": "Even with Power Rank",
+      "powerConnectionNarrative": "Title odds rank #7 versus Power Index #7. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 48.7,
-        "projectedMeanScore": 121.6,
-        "weeklyStdDev": 13.9,
-        "p10WeeklyFloor": 103.8,
+        "compositePowerScore": 46.8,
+        "projectedMeanScore": 121.1,
+        "weeklyStdDev": 14.3,
+        "p10WeeklyFloor": 102.7,
         "p90WeeklyCeiling": 139.5,
-        "volatilityScore": 37.4,
+        "volatilityScore": 43.7,
         "volatilityLabel": "Balanced",
         "topThreeShare": 49.1,
         "rbShare": 36.1,
-        "depthRisk": 27.3,
+        "depthRisk": 45.5,
         "concentrationRisk": 47.0,
         "pillars": {
           "lineup": {
             "rank": 8,
-            "score": 41.7,
+            "score": 43.2,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
           "depth": {
-            "rank": 4,
-            "score": 54.2,
+            "rank": 6,
+            "score": 46.8,
             "weight": "25%",
             "label": "Bench Replacement Cushion"
           },
           "balance": {
-            "rank": 9,
-            "score": 52.7,
+            "rank": 10,
+            "score": 43.9,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -2866,56 +2938,57 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a balanced profile (37.4/100), the model applies a weekly scoring standard deviation of \u00b113.9 pts. The top 3 starters account for 49.1% of starting redraft value and RBs represent 36.1%. In 10,000 simulations, this volatility models an expected weekly floor of 103.8 pts (10th percentile) and a shootout ceiling of 139.5 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a balanced profile (43.7/100), the model applies a weekly scoring standard deviation of \u00b114.3 pts. The top 3 starters account for 49.1% of starting redraft value and RBs represent 36.1%. In 10,000 simulations, this volatility models an expected weekly floor of 102.7 pts (10th percentile) and a shootout ceiling of 139.5 pts (90th percentile)."
       },
-      "actualWins": 1,
+      "actualWins": 2,
       "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 216.34,
-      "rosExpectedWins": 5.8,
-      "rosExpectedLosses": 6.2,
+      "actualPoints": 359.12,
+      "rosExpectedWins": 5.3,
+      "rosExpectedLosses": 5.7,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 6.8,
-      "expectedLosses": 7.2,
-      "expectedPointsFor": 1676.0,
-      "playoffProbability": 39.7,
-      "byeProbability": 2.5,
-      "championshipProbability": 1.8,
-      "lastPlaceProbability": 1.2,
+      "remainingWeeks": 11,
+      "expectedWins": 7.3,
+      "expectedLosses": 6.7,
+      "expectedPointsFor": 1691.5,
+      "playoffProbability": 48.3,
+      "byeProbability": 5.3,
+      "championshipProbability": 2.6,
+      "lastPlaceProbability": 0.4,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 0.6
+          "probability": 1.6
         },
         {
           "seed": 2,
-          "probability": 1.9
+          "probability": 3.6
         },
         {
           "seed": 3,
-          "probability": 3.9
+          "probability": 6.2
         },
         {
           "seed": 4,
-          "probability": 7.5
+          "probability": 8.7
         },
         {
           "seed": 5,
-          "probability": 11.2
+          "probability": 12.4
         },
         {
           "seed": 6,
-          "probability": 14.7
+          "probability": 15.7
         },
         {
           "seed": 7,
-          "probability": 17.8
+          "probability": 18.1
         },
         {
           "seed": 8,
@@ -2923,19 +2996,19 @@
         },
         {
           "seed": 9,
-          "probability": 11.8
+          "probability": 9.6
         },
         {
           "seed": 10,
-          "probability": 7.7
+          "probability": 4.2
         },
         {
           "seed": 11,
-          "probability": 3.6
+          "probability": 1.4
         },
         {
           "seed": 12,
-          "probability": 1.2
+          "probability": 0.4
         }
       ],
       "weeklySchedule": [
@@ -2951,7 +3024,7 @@
           "winProbability": 0.0,
           "projectedScore": 93.0,
           "opponentProjectedScore": 169.6,
-          "spread": -12.0,
+          "spread": -10.6,
           "spreadLabel": "FINAL"
         },
         {
@@ -2966,23 +3039,23 @@
           "winProbability": 100.0,
           "projectedScore": 123.3,
           "opponentProjectedScore": 99.7,
-          "spread": -4.5,
+          "spread": -5.1,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 12,
           "opponentName": "Bronco Stampede",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 29.8,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 132.0,
-          "spread": -10.4,
-          "spreadLabel": "-10.4 pts"
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 142.78,
+          "opponentActualScore": 128.62,
+          "scoreDiff": 14.16,
+          "winProbability": 100.0,
+          "projectedScore": 142.8,
+          "opponentProjectedScore": 128.6,
+          "spread": -11.5,
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -2993,11 +3066,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 70.0,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 110.2,
-          "spread": 11.4,
-          "spreadLabel": "+11.4 pts"
+          "winProbability": 67.9,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 111.0,
+          "spread": 10.1,
+          "spreadLabel": "+10.1 pts"
         },
         {
           "week": 5,
@@ -3008,11 +3081,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 70.2,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 110.3,
-          "spread": 11.3,
-          "spreadLabel": "+11.3 pts"
+          "winProbability": 67.1,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 111.5,
+          "spread": 9.6,
+          "spreadLabel": "+9.6 pts"
         },
         {
           "week": 6,
@@ -3023,11 +3096,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 50.5,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 121.5,
-          "spread": 0.1,
-          "spreadLabel": "+0.1 pts"
+          "winProbability": 44.3,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 124.3,
+          "spread": -3.2,
+          "spreadLabel": "-3.2 pts"
         },
         {
           "week": 7,
@@ -3038,11 +3111,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 65.5,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 112.8,
-          "spread": 8.8,
-          "spreadLabel": "+8.8 pts"
+          "winProbability": 61.0,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 115.0,
+          "spread": 6.1,
+          "spreadLabel": "+6.1 pts"
         },
         {
           "week": 8,
@@ -3053,11 +3126,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 53.6,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 119.8,
-          "spread": 1.8,
-          "spreadLabel": "+1.8 pts"
+          "winProbability": 52.8,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 119.5,
+          "spread": 1.6,
+          "spreadLabel": "+1.6 pts"
         },
         {
           "week": 9,
@@ -3068,11 +3141,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 47.1,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 123.0,
-          "spread": -1.4,
-          "spreadLabel": "-1.4 pts"
+          "winProbability": 46.6,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 122.7,
+          "spread": -1.6,
+          "spreadLabel": "-1.6 pts"
         },
         {
           "week": 10,
@@ -3083,11 +3156,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 33.5,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 130.3,
-          "spread": -8.7,
-          "spreadLabel": "-8.7 pts"
+          "winProbability": 39.9,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 126.6,
+          "spread": -5.5,
+          "spreadLabel": "-5.5 pts"
         },
         {
           "week": 11,
@@ -3098,11 +3171,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 58.1,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 117.6,
-          "spread": 4.0,
-          "spreadLabel": "+4.0 pts"
+          "winProbability": 57.3,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 117.4,
+          "spread": 3.7,
+          "spreadLabel": "+3.7 pts"
         },
         {
           "week": 12,
@@ -3113,11 +3186,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 26.7,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 133.6,
-          "spread": -12.0,
-          "spreadLabel": "-12.0 pts"
+          "winProbability": 29.5,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 131.7,
+          "spread": -10.6,
+          "spreadLabel": "-10.6 pts"
         },
         {
           "week": 13,
@@ -3128,11 +3201,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 41.9,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 126.1,
-          "spread": -4.5,
-          "spreadLabel": "-4.5 pts"
+          "winProbability": 40.5,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 126.2,
+          "spread": -5.1,
+          "spreadLabel": "-5.1 pts"
         },
         {
           "week": 14,
@@ -3143,27 +3216,35 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 29.5,
-          "projectedScore": 121.6,
-          "opponentProjectedScore": 132.0,
-          "spread": -10.4,
-          "spreadLabel": "-10.4 pts"
+          "winProbability": 27.7,
+          "projectedScore": 121.1,
+          "opponentProjectedScore": 132.6,
+          "spread": -11.5,
+          "spreadLabel": "-11.5 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "6.8 expected wins \u00b7 1.8% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 6.8 wins, a 39.7% playoff chance and a 1.8% title chance, with 2 completed weeks locked.",
+        "headline": "7.3 expected wins \u00b7 2.6% title probability",
+        "trend": "Rising",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 7.3 wins, a 48.3% playoff chance and a 2.6% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 6.8,
             "playoffOdds": 39.7,
             "titleOdds": 1.8,
             "rank": 8
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 7.3,
+            "playoffOdds": 48.3,
+            "titleOdds": 2.6,
+            "rank": 7
           }
         ]
       }
@@ -3172,41 +3253,41 @@
       "rosterId": 10,
       "teamName": "Bijan And The Maye-ssiah",
       "projectedRank": 3,
-      "expectedSeed": 3.5,
-      "medianSeed": 3,
+      "expectedSeed": 4.3,
+      "medianSeed": 4,
       "powerRank": 3,
-      "powerScore": 79.72,
+      "powerScore": 66.32,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
       "powerConnectionNarrative": "Title odds rank #3 versus Power Index #3. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 79.7,
-        "projectedMeanScore": 130.3,
-        "weeklyStdDev": 14.9,
-        "p10WeeklyFloor": 111.3,
-        "p90WeeklyCeiling": 149.4,
-        "volatilityScore": 51.9,
-        "volatilityLabel": "Balanced",
+        "compositePowerScore": 66.3,
+        "projectedMeanScore": 126.6,
+        "weeklyStdDev": 15.3,
+        "p10WeeklyFloor": 107.0,
+        "p90WeeklyCeiling": 146.2,
+        "volatilityScore": 58.3,
+        "volatilityLabel": "Volatile",
         "topThreeShare": 62.4,
         "rbShare": 48.8,
-        "depthRisk": 9.1,
+        "depthRisk": 27.3,
         "concentrationRisk": 91.3,
         "pillars": {
           "lineup": {
             "rank": 4,
-            "score": 77.4,
+            "score": 61.6,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
           "depth": {
-            "rank": 2,
-            "score": 83.4,
+            "rank": 4,
+            "score": 64.7,
             "weight": "25%",
             "label": "Bench Replacement Cushion"
           },
           "balance": {
-            "rank": 8,
-            "score": 70.7,
+            "rank": 7,
+            "score": 70.4,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -3217,76 +3298,77 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a balanced profile (51.9/100), the model applies a weekly scoring standard deviation of \u00b114.9 pts. The top 3 starters account for 62.4% of starting redraft value and RBs represent 48.8%. In 10,000 simulations, this volatility models an expected weekly floor of 111.3 pts (10th percentile) and a shootout ceiling of 149.4 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a volatile profile (58.3/100), the model applies a weekly scoring standard deviation of \u00b115.3 pts. The top 3 starters account for 62.4% of starting redraft value and RBs represent 48.8%. In 10,000 simulations, this volatility models an expected weekly floor of 107.0 pts (10th percentile) and a shootout ceiling of 146.2 pts (90th percentile)."
       },
-      "actualWins": 1,
+      "actualWins": 2,
       "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 276.0,
-      "rosExpectedWins": 8.0,
-      "rosExpectedLosses": 4.0,
+      "actualPoints": 411.44,
+      "rosExpectedWins": 6.5,
+      "rosExpectedLosses": 4.5,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 9.0,
-      "expectedLosses": 5.0,
-      "expectedPointsFor": 1839.6,
-      "playoffProbability": 92.5,
-      "byeProbability": 31.9,
-      "championshipProbability": 18.4,
-      "lastPlaceProbability": 0.0,
+      "remainingWeeks": 11,
+      "expectedWins": 8.5,
+      "expectedLosses": 5.5,
+      "expectedPointsFor": 1803.6,
+      "playoffProbability": 83.4,
+      "byeProbability": 22.0,
+      "championshipProbability": 11.1,
+      "lastPlaceProbability": 0.1,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 11.7
+          "probability": 8.3
         },
         {
           "seed": 2,
-          "probability": 20.2
+          "probability": 13.7
         },
         {
           "seed": 3,
-          "probability": 25.2
+          "probability": 17.8
         },
         {
           "seed": 4,
-          "probability": 17.6
+          "probability": 16.7
         },
         {
           "seed": 5,
-          "probability": 10.7
+          "probability": 15.4
         },
         {
           "seed": 6,
-          "probability": 7.1
+          "probability": 11.5
         },
         {
           "seed": 7,
-          "probability": 4.2
+          "probability": 8.2
         },
         {
           "seed": 8,
-          "probability": 2.1
+          "probability": 5.1
         },
         {
           "seed": 9,
-          "probability": 0.8
+          "probability": 2.2
         },
         {
           "seed": 10,
-          "probability": 0.3
+          "probability": 0.8
         },
         {
           "seed": 11,
-          "probability": 0.1
+          "probability": 0.2
         },
         {
           "seed": 12,
-          "probability": 0.0
+          "probability": 0.1
         }
       ],
       "weeklySchedule": [
@@ -3302,7 +3384,7 @@
           "winProbability": 0.0,
           "projectedScore": 169.3,
           "opponentProjectedScore": 177.2,
-          "spread": -1.7,
+          "spread": -6.0,
           "spreadLabel": "FINAL"
         },
         {
@@ -3317,23 +3399,23 @@
           "winProbability": 100.0,
           "projectedScore": 106.7,
           "opponentProjectedScore": 100.6,
-          "spread": 20.0,
+          "spread": 15.1,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 4,
           "opponentName": "Bub\u2019s Club",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 77.5,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 112.8,
-          "spread": 17.5,
-          "spreadLabel": "+17.5 pts"
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 135.44,
+          "opponentActualScore": 106.76,
+          "scoreDiff": 28.68,
+          "winProbability": 100.0,
+          "projectedScore": 135.4,
+          "opponentProjectedScore": 106.8,
+          "spread": 11.6,
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -3344,11 +3426,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 63.6,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 123.0,
-          "spread": 7.3,
-          "spreadLabel": "+7.3 pts"
+          "winProbability": 57.0,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 122.7,
+          "spread": 3.9,
+          "spreadLabel": "+3.9 pts"
         },
         {
           "week": 5,
@@ -3359,11 +3441,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 72.3,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 117.6,
-          "spread": 12.7,
-          "spreadLabel": "+12.7 pts"
+          "winProbability": 66.2,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 117.4,
+          "spread": 9.2,
+          "spreadLabel": "+9.2 pts"
         },
         {
           "week": 6,
@@ -3374,11 +3456,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 58.4,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 126.1,
-          "spread": 4.2,
-          "spreadLabel": "+4.2 pts"
+          "winProbability": 51.4,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 126.2,
+          "spread": 0.4,
+          "spreadLabel": "+0.4 pts"
         },
         {
           "week": 7,
@@ -3389,11 +3471,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 82.1,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 110.2,
-          "spread": 20.1,
-          "spreadLabel": "+20.1 pts"
+          "winProbability": 76.2,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 111.0,
+          "spread": 15.6,
+          "spreadLabel": "+15.6 pts"
         },
         {
           "week": 8,
@@ -3404,11 +3486,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 65.9,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 121.5,
-          "spread": 8.8,
-          "spreadLabel": "+8.8 pts"
+          "winProbability": 54.3,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 124.3,
+          "spread": 2.3,
+          "spreadLabel": "+2.3 pts"
         },
         {
           "week": 9,
@@ -3419,11 +3501,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 68.0,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 119.8,
-          "spread": 10.5,
-          "spreadLabel": "+10.5 pts"
+          "winProbability": 62.1,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 119.5,
+          "spread": 7.1,
+          "spreadLabel": "+7.1 pts"
         },
         {
           "week": 10,
@@ -3434,11 +3516,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 66.5,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 121.6,
-          "spread": 8.7,
-          "spreadLabel": "+8.7 pts"
+          "winProbability": 60.1,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 121.1,
+          "spread": 5.5,
+          "spreadLabel": "+5.5 pts"
         },
         {
           "week": 11,
@@ -3449,11 +3531,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 43.7,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 133.6,
-          "spread": -3.3,
-          "spreadLabel": "-3.3 pts"
+          "winProbability": 40.2,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 131.7,
+          "spread": -5.1,
+          "spreadLabel": "-5.1 pts"
         },
         {
           "week": 12,
@@ -3464,11 +3546,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 45.9,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 132.0,
-          "spread": -1.7,
-          "spreadLabel": "-1.7 pts"
+          "winProbability": 37.8,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 132.6,
+          "spread": -6.0,
+          "spreadLabel": "-6.0 pts"
         },
         {
           "week": 13,
@@ -3479,11 +3561,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 81.9,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 110.3,
-          "spread": 20.0,
-          "spreadLabel": "+20.0 pts"
+          "winProbability": 75.3,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 111.5,
+          "spread": 15.1,
+          "spreadLabel": "+15.1 pts"
         },
         {
           "week": 14,
@@ -3494,26 +3576,34 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 77.9,
-          "projectedScore": 130.3,
-          "opponentProjectedScore": 112.8,
-          "spread": 17.5,
-          "spreadLabel": "+17.5 pts"
+          "winProbability": 69.2,
+          "projectedScore": 126.6,
+          "opponentProjectedScore": 115.0,
+          "spread": 11.6,
+          "spreadLabel": "+11.6 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "9.0 expected wins \u00b7 18.4% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 9.0 wins, a 92.5% playoff chance and a 18.4% title chance, with 2 completed weeks locked.",
+        "headline": "8.5 expected wins \u00b7 11.1% title probability",
+        "trend": "Falling",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 8.5 wins, a 83.4% playoff chance and a 11.1% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 9.0,
             "playoffOdds": 92.5,
             "titleOdds": 18.4,
+            "rank": 3
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 8.5,
+            "playoffOdds": 83.4,
+            "titleOdds": 11.1,
             "rank": 3
           }
         ]
@@ -3522,42 +3612,42 @@
     "11": {
       "rosterId": 11,
       "teamName": "Terry Tate\u2019s Pain Train",
-      "projectedRank": 9,
-      "expectedSeed": 9.2,
-      "medianSeed": 9,
+      "projectedRank": 10,
+      "expectedSeed": 9.9,
+      "medianSeed": 10,
       "powerRank": 9,
-      "powerScore": 34.42,
-      "powerRankDelta": 0,
-      "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Title odds rank #9 versus Power Index #9. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
+      "powerScore": 33.51,
+      "powerRankDelta": -1,
+      "powerDeltaLabel": "-1 vs Power Rank",
+      "powerConnectionNarrative": "Title odds rank #10 versus Power Index #9. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 34.4,
-        "projectedMeanScore": 117.6,
-        "weeklyStdDev": 14.7,
-        "p10WeeklyFloor": 98.8,
-        "p90WeeklyCeiling": 136.5,
-        "volatilityScore": 49.5,
-        "volatilityLabel": "Balanced",
+        "compositePowerScore": 33.5,
+        "projectedMeanScore": 117.4,
+        "weeklyStdDev": 15.1,
+        "p10WeeklyFloor": 98.0,
+        "p90WeeklyCeiling": 136.8,
+        "volatilityScore": 55.8,
+        "volatilityLabel": "Volatile",
         "topThreeShare": 51.7,
         "rbShare": 32.6,
-        "depthRisk": 54.5,
+        "depthRisk": 72.7,
         "concentrationRisk": 55.5,
         "pillars": {
           "lineup": {
             "rank": 9,
-            "score": 20.9,
+            "score": 16.1,
             "weight": "55%",
             "label": "3-FLEX Starter Core"
           },
           "depth": {
-            "rank": 7,
-            "score": 27.9,
+            "rank": 9,
+            "score": 34.1,
             "weight": "25%",
             "label": "Bench Replacement Cushion"
           },
           "balance": {
-            "rank": 2,
-            "score": 98.2,
+            "rank": 1,
+            "score": 100.0,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -3568,26 +3658,27 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a balanced profile (49.5/100), the model applies a weekly scoring standard deviation of \u00b114.7 pts. The top 3 starters account for 51.7% of starting redraft value and RBs represent 32.6%. In 10,000 simulations, this volatility models an expected weekly floor of 98.8 pts (10th percentile) and a shootout ceiling of 136.5 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a volatile profile (55.8/100), the model applies a weekly scoring standard deviation of \u00b115.1 pts. The top 3 starters account for 51.7% of starting redraft value and RBs represent 32.6%. In 10,000 simulations, this volatility models an expected weekly floor of 98.0 pts (10th percentile) and a shootout ceiling of 136.8 pts (90th percentile)."
       },
       "actualWins": 0,
-      "actualLosses": 2,
+      "actualLosses": 3,
       "actualTies": 0,
-      "actualPoints": 194.48,
-      "rosExpectedWins": 5.1,
-      "rosExpectedLosses": 6.9,
+      "actualPoints": 277.9,
+      "rosExpectedWins": 4.6,
+      "rosExpectedLosses": 6.4,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 5.1,
-      "expectedLosses": 8.9,
-      "expectedPointsFor": 1606.1,
-      "playoffProbability": 9.2,
-      "byeProbability": 0.2,
-      "championshipProbability": 0.3,
-      "lastPlaceProbability": 10.4,
+      "remainingWeeks": 11,
+      "expectedWins": 4.6,
+      "expectedLosses": 9.4,
+      "expectedPointsFor": 1569.1,
+      "playoffProbability": 3.5,
+      "byeProbability": 0.1,
+      "championshipProbability": 0.1,
+      "lastPlaceProbability": 17.2,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
@@ -3597,47 +3688,47 @@
         },
         {
           "seed": 2,
-          "probability": 0.2
+          "probability": 0.1
         },
         {
           "seed": 3,
-          "probability": 0.5
+          "probability": 0.2
         },
         {
           "seed": 4,
-          "probability": 1.3
+          "probability": 0.6
         },
         {
           "seed": 5,
-          "probability": 2.3
+          "probability": 0.9
         },
         {
           "seed": 6,
-          "probability": 4.8
+          "probability": 1.7
         },
         {
           "seed": 7,
-          "probability": 8.1
+          "probability": 4.2
         },
         {
           "seed": 8,
-          "probability": 13.8
+          "probability": 8.8
         },
         {
           "seed": 9,
-          "probability": 20.0
+          "probability": 18.8
         },
         {
           "seed": 10,
-          "probability": 20.5
+          "probability": 24.9
         },
         {
           "seed": 11,
-          "probability": 17.9
+          "probability": 22.6
         },
         {
           "seed": 12,
-          "probability": 10.4
+          "probability": 17.2
         }
       ],
       "weeklySchedule": [
@@ -3653,7 +3744,7 @@
           "winProbability": 0.0,
           "projectedScore": 115.7,
           "opponentProjectedScore": 152.3,
-          "spread": -8.5,
+          "spread": -8.8,
           "spreadLabel": "FINAL"
         },
         {
@@ -3668,23 +3759,23 @@
           "winProbability": 0.0,
           "projectedScore": 78.8,
           "opponentProjectedScore": 87.8,
-          "spread": 7.4,
+          "spread": 6.4,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 7,
           "opponentName": "Gridiron geezers",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 44.0,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 121.5,
-          "spread": -3.9,
-          "spreadLabel": "-3.9 pts"
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 83.42,
+          "opponentActualScore": 151.78,
+          "scoreDiff": -68.36,
+          "winProbability": 0.0,
+          "projectedScore": 83.4,
+          "opponentProjectedScore": 151.8,
+          "spread": -6.9,
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -3695,11 +3786,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 45.4,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 119.8,
-          "spread": -2.2,
-          "spreadLabel": "-2.2 pts"
+          "winProbability": 45.5,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 119.5,
+          "spread": -2.1,
+          "spreadLabel": "-2.1 pts"
         },
         {
           "week": 5,
@@ -3710,11 +3801,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 27.7,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 130.3,
-          "spread": -12.7,
-          "spreadLabel": "-12.7 pts"
+          "winProbability": 33.8,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 126.6,
+          "spread": -9.2,
+          "spreadLabel": "-9.2 pts"
         },
         {
           "week": 6,
@@ -3725,11 +3816,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 20.9,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 133.6,
-          "spread": -16.0,
-          "spreadLabel": "-16.0 pts"
+          "winProbability": 23.6,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 131.7,
+          "spread": -14.3,
+          "spreadLabel": "-14.3 pts"
         },
         {
           "week": 7,
@@ -3740,11 +3831,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 23.7,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 132.0,
-          "spread": -14.4,
-          "spreadLabel": "-14.4 pts"
+          "winProbability": 22.4,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 132.6,
+          "spread": -15.2,
+          "spreadLabel": "-15.2 pts"
         },
         {
           "week": 8,
@@ -3755,11 +3846,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 62.9,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 110.3,
-          "spread": 7.3,
-          "spreadLabel": "+7.3 pts"
+          "winProbability": 60.2,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 111.5,
+          "spread": 5.9,
+          "spreadLabel": "+5.9 pts"
         },
         {
           "week": 9,
@@ -3770,11 +3861,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 58.9,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 112.8,
-          "spread": 4.8,
-          "spreadLabel": "+4.8 pts"
+          "winProbability": 54.5,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 115.0,
+          "spread": 2.4,
+          "spreadLabel": "+2.4 pts"
         },
         {
           "week": 10,
@@ -3785,11 +3876,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 40.7,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 123.0,
-          "spread": -5.4,
-          "spreadLabel": "-5.4 pts"
+          "winProbability": 41.0,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 122.7,
+          "spread": -5.3,
+          "spreadLabel": "-5.3 pts"
         },
         {
           "week": 11,
@@ -3800,11 +3891,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 41.9,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 121.6,
-          "spread": -4.0,
-          "spreadLabel": "-4.0 pts"
+          "winProbability": 42.7,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 121.1,
+          "spread": -3.7,
+          "spreadLabel": "-3.7 pts"
         },
         {
           "week": 12,
@@ -3815,11 +3906,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 34.1,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 126.1,
-          "spread": -8.5,
-          "spreadLabel": "-8.5 pts"
+          "winProbability": 33.5,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 126.2,
+          "spread": -8.8,
+          "spreadLabel": "-8.8 pts"
         },
         {
           "week": 13,
@@ -3830,11 +3921,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 63.1,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 110.2,
-          "spread": 7.4,
-          "spreadLabel": "+7.4 pts"
+          "winProbability": 61.2,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 111.0,
+          "spread": 6.4,
+          "spreadLabel": "+6.4 pts"
         },
         {
           "week": 14,
@@ -3845,27 +3936,35 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 42.9,
-          "projectedScore": 117.6,
-          "opponentProjectedScore": 121.5,
-          "spread": -3.9,
-          "spreadLabel": "-3.9 pts"
+          "winProbability": 37.7,
+          "projectedScore": 117.4,
+          "opponentProjectedScore": 124.3,
+          "spread": -6.9,
+          "spreadLabel": "-6.9 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "5.1 expected wins \u00b7 0.3% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 5.1 wins, a 9.2% playoff chance and a 0.3% title chance, with 2 completed weeks locked.",
+        "headline": "4.6 expected wins \u00b7 0.1% title probability",
+        "trend": "Falling",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 4.6 wins, a 3.5% playoff chance and a 0.1% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 5.1,
             "playoffOdds": 9.2,
             "titleOdds": 0.3,
             "rank": 9
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 4.6,
+            "playoffOdds": 3.5,
+            "titleOdds": 0.1,
+            "rank": 10
           }
         ]
       }
@@ -3873,25 +3972,25 @@
     "12": {
       "rosterId": 12,
       "teamName": "Bronco Stampede",
-      "projectedRank": 2,
-      "expectedSeed": 2.0,
-      "medianSeed": 1,
-      "powerRank": 2,
-      "powerScore": 85.67,
+      "projectedRank": 1,
+      "expectedSeed": 2.3,
+      "medianSeed": 2,
+      "powerRank": 1,
+      "powerScore": 87.9,
       "powerRankDelta": 0,
       "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Title odds rank #2 versus Power Index #2. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
+      "powerConnectionNarrative": "Title odds rank #1 versus Power Index #1. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
-        "compositePowerScore": 85.7,
-        "projectedMeanScore": 132.0,
-        "weeklyStdDev": 13.7,
-        "p10WeeklyFloor": 114.4,
-        "p90WeeklyCeiling": 149.5,
-        "volatilityScore": 33.7,
+        "compositePowerScore": 87.9,
+        "projectedMeanScore": 132.6,
+        "weeklyStdDev": 13.5,
+        "p10WeeklyFloor": 115.3,
+        "p90WeeklyCeiling": 149.9,
+        "volatilityScore": 30.5,
         "volatilityLabel": "Stable",
         "topThreeShare": 50.7,
         "rbShare": 25.5,
-        "depthRisk": 18.2,
+        "depthRisk": 9.1,
         "concentrationRisk": 52.4,
         "pillars": {
           "lineup": {
@@ -3901,14 +4000,14 @@
             "label": "3-FLEX Starter Core"
           },
           "depth": {
-            "rank": 3,
-            "score": 61.2,
+            "rank": 2,
+            "score": 67.5,
             "weight": "25%",
             "label": "Bench Replacement Cushion"
           },
           "balance": {
-            "rank": 7,
-            "score": 78.3,
+            "rank": 6,
+            "score": 84.9,
             "weight": "10%",
             "label": "Positional Fit (3 FLEX)"
           },
@@ -3919,64 +4018,65 @@
             "label": "2025 Points Scored"
           }
         },
-        "volatilityImpactNarrative": "With a stable profile (33.7/100), the model applies a weekly scoring standard deviation of \u00b113.7 pts. The top 3 starters account for 50.7% of starting redraft value and RBs represent 25.5%. In 10,000 simulations, this volatility models an expected weekly floor of 114.4 pts (10th percentile) and a shootout ceiling of 149.5 pts (90th percentile)."
+        "volatilityImpactNarrative": "With a stable profile (30.5/100), the model applies a weekly scoring standard deviation of \u00b113.5 pts. The top 3 starters account for 50.7% of starting redraft value and RBs represent 25.5%. In 10,000 simulations, this volatility models an expected weekly floor of 115.3 pts (10th percentile) and a shootout ceiling of 149.9 pts (90th percentile)."
       },
       "actualWins": 2,
-      "actualLosses": 0,
+      "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 367.18,
-      "rosExpectedWins": 8.4,
-      "rosExpectedLosses": 3.6,
+      "actualPoints": 495.8,
+      "rosExpectedWins": 7.8,
+      "rosExpectedLosses": 3.2,
       "completedWeeks": [
         1,
-        2
+        2,
+        3
       ],
-      "remainingWeeks": 12,
-      "expectedWins": 10.4,
-      "expectedLosses": 3.6,
-      "expectedPointsFor": 1951.4,
-      "playoffProbability": 98.7,
-      "byeProbability": 75.3,
-      "championshipProbability": 29.5,
+      "remainingWeeks": 11,
+      "expectedWins": 9.8,
+      "expectedLosses": 4.2,
+      "expectedPointsFor": 1954.9,
+      "playoffProbability": 97.2,
+      "byeProbability": 68.4,
+      "championshipProbability": 33.5,
       "lastPlaceProbability": 0.0,
       "bestCaseSeed": 1,
       "worstCaseSeed": 11,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 51.9
+          "probability": 44.8
         },
         {
           "seed": 2,
-          "probability": 23.5
+          "probability": 23.6
         },
         {
           "seed": 3,
-          "probability": 12.2
+          "probability": 12.7
         },
         {
           "seed": 4,
-          "probability": 5.9
+          "probability": 8.5
         },
         {
           "seed": 5,
-          "probability": 3.5
+          "probability": 4.8
         },
         {
           "seed": 6,
-          "probability": 1.7
+          "probability": 2.8
         },
         {
           "seed": 7,
-          "probability": 0.8
+          "probability": 1.5
         },
         {
           "seed": 8,
-          "probability": 0.3
+          "probability": 0.9
         },
         {
           "seed": 9,
-          "probability": 0.1
+          "probability": 0.3
         },
         {
           "seed": 10,
@@ -4004,7 +4104,7 @@
           "winProbability": 100.0,
           "projectedScore": 177.2,
           "opponentProjectedScore": 169.3,
-          "spread": 1.7,
+          "spread": 6.0,
           "spreadLabel": "FINAL"
         },
         {
@@ -4019,23 +4119,23 @@
           "winProbability": 100.0,
           "projectedScore": 190.0,
           "opponentProjectedScore": 118.6,
-          "spread": -1.6,
+          "spread": 0.9,
           "spreadLabel": "FINAL"
         },
         {
           "week": 3,
           "opponentRosterId": 9,
           "opponentName": "Max\u2019s Shadynasty",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 70.2,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 121.6,
-          "spread": 10.4,
-          "spreadLabel": "+10.4 pts"
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 128.62,
+          "opponentActualScore": 142.78,
+          "scoreDiff": -14.16,
+          "winProbability": 0.0,
+          "projectedScore": 128.6,
+          "opponentProjectedScore": 142.8,
+          "spread": 11.5,
+          "spreadLabel": "FINAL"
         },
         {
           "week": 4,
@@ -4046,11 +4146,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 85.2,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 110.3,
-          "spread": 21.7,
-          "spreadLabel": "+21.7 pts"
+          "winProbability": 84.7,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 111.5,
+          "spread": 21.1,
+          "spreadLabel": "+21.1 pts"
         },
         {
           "week": 5,
@@ -4061,11 +4161,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 80.7,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 112.8,
-          "spread": 19.2,
-          "spreadLabel": "+19.2 pts"
+          "winProbability": 79.4,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 115.0,
+          "spread": 17.6,
+          "spreadLabel": "+17.6 pts"
         },
         {
           "week": 6,
@@ -4076,11 +4176,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 68.1,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 123.0,
-          "spread": 9.0,
-          "spreadLabel": "+9.0 pts"
+          "winProbability": 69.9,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 122.7,
+          "spread": 9.9,
+          "spreadLabel": "+9.9 pts"
         },
         {
           "week": 7,
@@ -4091,11 +4191,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 76.3,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 117.6,
-          "spread": 14.4,
-          "spreadLabel": "+14.4 pts"
+          "winProbability": 77.5,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 117.4,
+          "spread": 15.2,
+          "spreadLabel": "+15.2 pts"
         },
         {
           "week": 8,
@@ -4106,11 +4206,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 62.0,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 126.1,
-          "spread": 5.9,
-          "spreadLabel": "+5.9 pts"
+          "winProbability": 63.0,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 126.2,
+          "spread": 6.4,
+          "spreadLabel": "+6.4 pts"
         },
         {
           "week": 9,
@@ -4121,11 +4221,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 84.8,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 110.2,
-          "spread": 21.8,
-          "spreadLabel": "+21.8 pts"
+          "winProbability": 85.1,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 111.0,
+          "spread": 21.6,
+          "spreadLabel": "+21.6 pts"
         },
         {
           "week": 10,
@@ -4136,11 +4236,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 69.1,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 121.5,
-          "spread": 10.5,
-          "spreadLabel": "+10.5 pts"
+          "winProbability": 65.6,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 124.3,
+          "spread": 8.3,
+          "spreadLabel": "+8.3 pts"
         },
         {
           "week": 11,
@@ -4151,11 +4251,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 71.2,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 119.8,
-          "spread": 12.2,
-          "spreadLabel": "+12.2 pts"
+          "winProbability": 72.3,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 119.5,
+          "spread": 13.1,
+          "spreadLabel": "+13.1 pts"
         },
         {
           "week": 12,
@@ -4166,11 +4266,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 54.1,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 130.3,
-          "spread": 1.7,
-          "spreadLabel": "+1.7 pts"
+          "winProbability": 62.2,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 126.6,
+          "spread": 6.0,
+          "spreadLabel": "+6.0 pts"
         },
         {
           "week": 13,
@@ -4181,11 +4281,11 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 46.9,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 133.6,
-          "spread": -1.6,
-          "spreadLabel": "-1.6 pts"
+          "winProbability": 51.9,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 131.7,
+          "spread": 0.9,
+          "spreadLabel": "+0.9 pts"
         },
         {
           "week": 14,
@@ -4196,27 +4296,35 @@
           "actualScore": null,
           "opponentActualScore": null,
           "scoreDiff": null,
-          "winProbability": 70.5,
-          "projectedScore": 132.0,
-          "opponentProjectedScore": 121.6,
-          "spread": 10.4,
-          "spreadLabel": "+10.4 pts"
+          "winProbability": 72.3,
+          "projectedScore": 132.6,
+          "opponentProjectedScore": 121.1,
+          "spread": 11.5,
+          "spreadLabel": "+11.5 pts"
         }
       ],
       "fluctuationNarrative": {
-        "headline": "10.4 expected wins \u00b7 29.5% title probability",
-        "trend": "New baseline",
-        "primaryDriver": "BASELINE",
-        "analysis": "The current simulation projects 10.4 wins, a 98.7% playoff chance and a 29.5% title chance, with 2 completed weeks locked.",
+        "headline": "9.8 expected wins \u00b7 33.5% title probability",
+        "trend": "Falling",
+        "primaryDriver": "SIMULATION_UPDATE",
+        "analysis": "The current simulation projects 9.8 wins, a 97.2% playoff chance and a 33.5% title chance, with 3 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
             "date": "2026-09-27T16:15:13.386367+00:00",
-            "event": "Current simulation",
+            "event": "Previous published simulation",
             "expectedWins": 10.4,
             "playoffOdds": 98.7,
             "titleOdds": 29.5,
             "rank": 2
+          },
+          {
+            "date": "2026-09-29T04:49:36.563351+00:00",
+            "event": "Current simulation",
+            "expectedWins": 9.8,
+            "playoffOdds": 97.2,
+            "titleOdds": 33.5,
+            "rank": 1
           }
         ]
       }
