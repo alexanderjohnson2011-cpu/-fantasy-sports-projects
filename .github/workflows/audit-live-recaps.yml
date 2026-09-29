@@ -1,0 +1,23 @@
+name: Audit live Week 3 recaps
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/audit-live-recaps.yml
+      - sleeper_work/audit_live_week.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compare both published recaps with live Sleeper scores and stats
+        run: python -m sleeper_work.audit_live_week --week 3
