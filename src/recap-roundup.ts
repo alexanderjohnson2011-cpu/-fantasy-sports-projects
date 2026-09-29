@@ -36,7 +36,7 @@ export function matchupQuip(matchup: any, honors: ReturnType<typeof recapHonors>
         : [
           `${winner.teamName} took down ${loser.teamName}, ${winner.points.toFixed(2)}–${loser.points.toFixed(2)}; the scoreboard has already filed the paperwork.`,
           `${winner.teamName} beat ${loser.teamName} by ${margin.toFixed(2)}; ${loser.teamName} can file its appeal with the scoreboard, which has already declined comment.`,
-          `${winner.teamName} handed ${loser.teamName} a ${margin.toFixed(2)}-point loss; that's a receipt nobody asked to see.`,
+          `${winner.teamName} handed ${loser.teamName} a loss by ${margin.toFixed(2)} points; that's a receipt nobody asked to see.`,
         ][flavor];
   const missed = Number(loser.optimalPoints || loser.points) - loser.points;
   const second = honors.gitty === matchup.matchupId
