@@ -999,6 +999,7 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             mvp_player = max(all_starters, key=lambda p: p["points"]) if all_starters else (t_a["starters"][0] if t_a["starters"] else None)
 
             # Winner dud & loser dud
+            w_star = max(w_starters, key=lambda p: p["points"]) if w_starters else None
             w_dud_cands = [p for p in w_starters if p.get("projectedPoints", 0) >= 5.0]
             w_dud = min(w_dud_cands, key=lambda p: p["points"]) if w_dud_cands else (min(w_starters, key=lambda p: p["points"]) if w_starters else None)
             l_star = max(l_starters, key=lambda p: p["points"]) if l_starters else None
@@ -1066,7 +1067,7 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
                 loser_rank=rank_by_roster.get(l_id, 12),
                 next_opp_winner=next_opp_winner,
                 next_opp_loser=next_opp_loser,
-                w_mvp=mvp_player,
+                w_mvp=w_star,
                 w_dud=w_dud,
                 l_star=l_star,
                 l_dud=l_dud,
