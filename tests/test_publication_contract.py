@@ -54,7 +54,7 @@ class CompletionTests(unittest.TestCase):
             stack.enter_context(patch.object(builder, 'HERE', tmp))
             stack.enter_context(patch.object(builder, 'OUT', str(Path(tmp) / 'weekly-recap.json')))
             rows = [{'roster_id': i, 'matchup_id': 1, 'points': point, 'starters': []} for i, point in zip((1, 2), points)]
-            fetch = stack.enter_context(patch.object(builder, 'fetch_sleeper_json', side_effect=lambda path: {'season': '2026', 'week': 1} if path == 'state/nfl' else rows))
+            fetch = stack.enter_context(patch.object(builder, 'fetch_sleeper_json', side_effect=lambda path: {'season': '2026', 'week': 1} if path == 'state/nfl' else {'roster_positions': ['QB', 'RB', 'RB', 'WR', 'WR', 'TE', 'FLEX', 'FLEX', 'FLEX', 'K', 'DEF']} if path == f'league/{builder.LEAGUE_ID}' else rows))
             result = builder.build_weekly_recap_payload()
             return result, fetch.call_count
 
