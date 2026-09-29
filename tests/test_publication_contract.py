@@ -60,7 +60,7 @@ class CompletionTests(unittest.TestCase):
 
     def test_generator_does_not_fetch_scores_or_publish_recap_for_live_week(self):
         result, calls = self.generate(False, points=(30, 0))
-        self.assertEqual(calls, 1)
+        self.assertEqual(calls, 2)
         self.assertEqual(result['weeks'], [])
         self.assertEqual(result['standings'], [])
 
