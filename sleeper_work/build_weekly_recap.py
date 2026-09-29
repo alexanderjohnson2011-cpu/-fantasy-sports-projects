@@ -706,6 +706,13 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
     print(f"  Loaded {len(players_map)} player profiles.")
 
     team_info = fetch_league_metadata(league_id)
+    league_settings = fetch_sleeper_json(f"league/{league_id}")
+    roster_positions = league_settings.get("roster_positions") or []
+    supported = {"QB", "RB", "WR", "TE", "FLEX", "K", "DEF", "BN", "IR", "TAXI"}
+    if not roster_positions or set(roster_positions) - supported:
+        raise ValueError(f"Unsupported or missing Sleeper roster positions for league {league_id}")
+    lineup_slots = {position: roster_positions.count(position)
+                    for position in ("QB", "RB", "WR", "TE", "FLEX", "K", "DEF")}
     if not team_info:
         # Fallback names
         team_info = {
@@ -839,8 +846,8 @@ def build_weekly_recap_payload(season="2026", league_id=LEAGUE_ID):
             bench_pts1 = sum(float(v or 0.0) for k, v in pp1.items() if str(k) not in st_set1)
             bench_pts2 = sum(float(v or 0.0) for k, v in pp2.items() if str(k) not in st_set2)
 
-            opt1, _ = optimal_lineup(pp1, players_map, SLOTS)
-            opt2, _ = optimal_lineup(pp2, players_map, SLOTS)
+            opt1, _ = optimal_lineup(pp1, players_map, lineup_slots)
+            opt2, _ = optimal_lineup(pp2, players_map, lineup_slots)
 
             proj1 = round(sum(p["projectedPoints"] for p in starters1), 2)
             proj2 = round(sum(p["projectedPoints"] for p in starters2), 2)
