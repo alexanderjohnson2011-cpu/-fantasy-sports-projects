@@ -134,6 +134,9 @@ jobs:
           python -m unittest discover -s tests -p "test_publication*.py"
           python -m sleeper_work.validate_publication --fresh-since "$REFRESH_STARTED_AT"
 
+      - name: Audit latest final recaps against live Sleeper scores and stats
+        run: python -m sleeper_work.audit_live_week
+
       # A payload that does not compile is worse than a stale one, so the build
       # gates the commit rather than running after it.
       - name: Verify the site still builds
