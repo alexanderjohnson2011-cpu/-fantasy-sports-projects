@@ -93,7 +93,7 @@ class SnapshotTests(unittest.TestCase):
             validate_snapshot(*self.inputs, fresh_since='2099-01-01T00:00:00+00:00')
 
     def test_conflicting_rank_score_and_snapshot_are_rejected(self):
-        for key, value in [('powerRank', 99), ('powerScore', 99), ('completedWeeks', [1, 2, 3])]:
+        for key, value in [('powerRank', 99), ('powerScore', 99), ('completedWeeks', [99])]:
             data = copy.deepcopy(self.inputs); data[2]['teams']['1'][key] = value
             with self.assertRaises(ValueError): validate_snapshot(*data)
         data = copy.deepcopy(self.inputs); data[2]['powerSnapshotAt'] = 'old'
