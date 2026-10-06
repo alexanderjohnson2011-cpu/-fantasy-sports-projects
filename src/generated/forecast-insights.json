@@ -1,20 +1,20 @@
 {
-  "forecastRunId": "fc_202610052348_42",
-  "generatedAt": "2026-10-05T23:48:54.778485+00:00",
+  "forecastRunId": "fc_202610061101_42",
+  "generatedAt": "2026-10-06T11:01:57.904053+00:00",
   "simulationsCount": 10000,
   "randomSeed": 42,
   "modelVersion": "v2.0-canonical-power-final-results",
-  "powerSnapshotAt": "2026-10-05T23:48:46.938475+00:00",
+  "powerSnapshotAt": "2026-10-06T11:01:49.578841+00:00",
   "rosterInsightsAt": "2026-08-20T15:03:38.112470+00:00",
-  "recapSnapshotAt": "2026-10-05T23:48:52.988016+00:00",
+  "recapSnapshotAt": "2026-10-06T11:01:56.089283+00:00",
   "methodology": "Monte Carlo estimates using the weekly Power Index, verified final results, a 14-week schedule and a 6-team playoff bracket. The mapping from roster value to scoring distributions is a modeling assumption, not an empirically calibrated guarantee.",
   "teams": {
     "1": {
       "rosterId": 1,
       "teamName": "Ertz & Krafts \ud83c\udfc6",
       "projectedRank": 2,
-      "expectedSeed": 3.1,
-      "medianSeed": 3,
+      "expectedSeed": 4.0,
+      "medianSeed": 4,
       "powerRank": 2,
       "powerScore": 85.05,
       "powerRankDelta": 0,
@@ -61,70 +61,71 @@
         "volatilityImpactNarrative": "With a stable profile (22.1/100), the model applies a weekly scoring standard deviation of \u00b112.9 pts. The top 3 starters account for 42.8% of starting redraft value and RBs represent 46.7%. In 10,000 simulations, this volatility models an expected weekly floor of 115.2 pts (10th percentile) and a shootout ceiling of 148.4 pts (90th percentile)."
       },
       "actualWins": 2,
-      "actualLosses": 1,
+      "actualLosses": 2,
       "actualTies": 0,
-      "actualPoints": 415.94,
-      "rosExpectedWins": 7.4,
-      "rosExpectedLosses": 3.6,
+      "actualPoints": 521.44,
+      "rosExpectedWins": 6.6,
+      "rosExpectedLosses": 3.4,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 9.4,
-      "expectedLosses": 4.6,
-      "expectedPointsFor": 1865.5,
-      "playoffProbability": 94.5,
-      "byeProbability": 46.6,
-      "championshipProbability": 23.1,
+      "remainingWeeks": 10,
+      "expectedWins": 8.6,
+      "expectedLosses": 5.4,
+      "expectedPointsFor": 1839.2,
+      "playoffProbability": 88.6,
+      "byeProbability": 25.9,
+      "championshipProbability": 18.9,
       "lastPlaceProbability": 0.0,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 21.1
+          "probability": 8.8
         },
         {
           "seed": 2,
-          "probability": 25.5
+          "probability": 17.1
         },
         {
           "seed": 3,
-          "probability": 19.2
+          "probability": 20.1
         },
         {
           "seed": 4,
-          "probability": 13.7
+          "probability": 18.2
         },
         {
           "seed": 5,
-          "probability": 9.3
+          "probability": 14.6
         },
         {
           "seed": 6,
-          "probability": 5.7
+          "probability": 9.8
         },
         {
           "seed": 7,
-          "probability": 3.5
+          "probability": 6.2
         },
         {
           "seed": 8,
-          "probability": 1.3
+          "probability": 3.3
         },
         {
           "seed": 9,
-          "probability": 0.5
+          "probability": 1.4
         },
         {
           "seed": 10,
-          "probability": 0.1
+          "probability": 0.5
         },
         {
           "seed": 11,
-          "probability": 0.0
+          "probability": 0.1
         },
         {
           "seed": 12,
@@ -181,16 +182,16 @@
           "week": 4,
           "opponentRosterId": 4,
           "opponentName": "Bub\u2019s Club",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 80.4,
-          "projectedScore": 131.8,
-          "opponentProjectedScore": 114.0,
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 105.5,
+          "opponentActualScore": 111.76,
+          "scoreDiff": -6.26,
+          "winProbability": 0.0,
+          "projectedScore": 105.5,
+          "opponentProjectedScore": 111.8,
           "spread": 17.8,
-          "spreadLabel": "+17.8 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -344,14 +345,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "9.4 expected wins \u00b7 23.1% title probability",
-        "trend": "Stable",
+        "headline": "8.6 expected wins \u00b7 18.9% title probability",
+        "trend": "Falling",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 9.4 wins, a 94.5% playoff chance and a 23.1% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 8.6 wins, a 88.6% playoff chance and a 18.9% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 9.4,
             "playoffOdds": 94.5,
@@ -359,11 +360,11 @@
             "rank": 2
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 9.4,
-            "playoffOdds": 94.5,
-            "titleOdds": 23.1,
+            "expectedWins": 8.6,
+            "playoffOdds": 88.6,
+            "titleOdds": 18.9,
             "rank": 2
           }
         ]
@@ -372,14 +373,14 @@
     "2": {
       "rosterId": 2,
       "teamName": "2 Dagos and A Dream",
-      "projectedRank": 8,
-      "expectedSeed": 6.9,
+      "projectedRank": 7,
+      "expectedSeed": 6.3,
       "medianSeed": 7,
       "powerRank": 8,
       "powerScore": 41.42,
-      "powerRankDelta": 0,
-      "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Title odds rank #8 versus Power Index #8. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
+      "powerRankDelta": 1,
+      "powerDeltaLabel": "+1 vs Power Rank",
+      "powerConnectionNarrative": "Title odds rank #7 versus Power Index #8. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
         "compositePowerScore": 41.4,
         "projectedMeanScore": 119.6,
@@ -420,75 +421,76 @@
         },
         "volatilityImpactNarrative": "With a high variance profile (93.0/100), the model applies a weekly scoring standard deviation of \u00b117.5 pts. The top 3 starters account for 80.7% of starting redraft value and RBs represent 84.7%. In 10,000 simulations, this volatility models an expected weekly floor of 97.1 pts (10th percentile) and a shootout ceiling of 142.1 pts (90th percentile)."
       },
-      "actualWins": 2,
+      "actualWins": 3,
       "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 395.76,
-      "rosExpectedWins": 4.9,
-      "rosExpectedLosses": 6.1,
+      "actualPoints": 525.14,
+      "rosExpectedWins": 4.3,
+      "rosExpectedLosses": 5.7,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 6.9,
-      "expectedLosses": 7.1,
-      "expectedPointsFor": 1710.3,
-      "playoffProbability": 36.3,
-      "byeProbability": 2.9,
-      "championshipProbability": 1.5,
-      "lastPlaceProbability": 0.7,
+      "remainingWeeks": 10,
+      "expectedWins": 7.3,
+      "expectedLosses": 6.7,
+      "expectedPointsFor": 1720.1,
+      "playoffProbability": 50.4,
+      "byeProbability": 4.9,
+      "championshipProbability": 2.1,
+      "lastPlaceProbability": 0.2,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 1.0
+          "probability": 1.5
         },
         {
           "seed": 2,
-          "probability": 1.9
+          "probability": 3.3
         },
         {
           "seed": 3,
-          "probability": 3.8
+          "probability": 6.1
         },
         {
           "seed": 4,
-          "probability": 6.3
+          "probability": 9.2
         },
         {
           "seed": 5,
-          "probability": 9.1
+          "probability": 13.1
         },
         {
           "seed": 6,
-          "probability": 14.2
+          "probability": 17.1
         },
         {
           "seed": 7,
-          "probability": 19.5
+          "probability": 19.7
         },
         {
           "seed": 8,
-          "probability": 23.8
+          "probability": 15.9
         },
         {
           "seed": 9,
-          "probability": 11.8
+          "probability": 9.1
         },
         {
           "seed": 10,
-          "probability": 5.7
+          "probability": 3.7
         },
         {
           "seed": 11,
-          "probability": 2.3
+          "probability": 1.1
         },
         {
           "seed": 12,
-          "probability": 0.7
+          "probability": 0.2
         }
       ],
       "weeklySchedule": [
@@ -541,16 +543,16 @@
           "week": 4,
           "opponentRosterId": 11,
           "opponentName": "Terry Tate\u2019s Pain Train",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 53.4,
-          "projectedScore": 119.6,
-          "opponentProjectedScore": 118.0,
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 129.38,
+          "opponentActualScore": 108.92,
+          "scoreDiff": 20.46,
+          "winProbability": 100.0,
+          "projectedScore": 129.4,
+          "opponentProjectedScore": 108.9,
           "spread": 1.6,
-          "spreadLabel": "+1.6 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -704,14 +706,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "6.9 expected wins \u00b7 1.5% title probability",
-        "trend": "Stable",
+        "headline": "7.3 expected wins \u00b7 2.1% title probability",
+        "trend": "Rising",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 6.9 wins, a 36.3% playoff chance and a 1.5% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 7.3 wins, a 50.4% playoff chance and a 2.1% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 6.9,
             "playoffOdds": 36.3,
@@ -719,12 +721,12 @@
             "rank": 8
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 6.9,
-            "playoffOdds": 36.3,
-            "titleOdds": 1.5,
-            "rank": 8
+            "expectedWins": 7.3,
+            "playoffOdds": 50.4,
+            "titleOdds": 2.1,
+            "rank": 7
           }
         ]
       }
@@ -733,8 +735,8 @@
       "rosterId": 3,
       "teamName": "The Ape",
       "projectedRank": 4,
-      "expectedSeed": 4.4,
-      "medianSeed": 4,
+      "expectedSeed": 3.6,
+      "medianSeed": 3,
       "powerRank": 4,
       "powerScore": 72.55,
       "powerRankDelta": 0,
@@ -780,71 +782,72 @@
         },
         "volatilityImpactNarrative": "With a balanced profile (49.0/100), the model applies a weekly scoring standard deviation of \u00b114.7 pts. The top 3 starters account for 51.9% of starting redraft value and RBs represent 29.3%. In 10,000 simulations, this volatility models an expected weekly floor of 109.5 pts (10th percentile) and a shootout ceiling of 147.1 pts (90th percentile)."
       },
-      "actualWins": 2,
+      "actualWins": 3,
       "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 385.1,
-      "rosExpectedWins": 6.6,
-      "rosExpectedLosses": 4.4,
+      "actualPoints": 529.08,
+      "rosExpectedWins": 6.1,
+      "rosExpectedLosses": 3.9,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 8.6,
-      "expectedLosses": 5.4,
-      "expectedPointsFor": 1795.9,
-      "playoffProbability": 82.7,
-      "byeProbability": 21.1,
-      "championshipProbability": 10.9,
+      "remainingWeeks": 10,
+      "expectedWins": 9.1,
+      "expectedLosses": 4.9,
+      "expectedPointsFor": 1811.7,
+      "playoffProbability": 91.3,
+      "byeProbability": 32.4,
+      "championshipProbability": 13.4,
       "lastPlaceProbability": 0.0,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 8.5
+          "probability": 13.2
         },
         {
           "seed": 2,
-          "probability": 12.5
+          "probability": 19.2
         },
         {
           "seed": 3,
-          "probability": 16.8
+          "probability": 20.6
         },
         {
           "seed": 4,
-          "probability": 16.1
+          "probability": 17.0
         },
         {
           "seed": 5,
-          "probability": 15.7
+          "probability": 12.7
         },
         {
           "seed": 6,
-          "probability": 13.1
+          "probability": 8.5
         },
         {
           "seed": 7,
-          "probability": 9.1
+          "probability": 4.7
         },
         {
           "seed": 8,
-          "probability": 5.5
+          "probability": 2.5
         },
         {
           "seed": 9,
-          "probability": 1.9
+          "probability": 1.0
         },
         {
           "seed": 10,
-          "probability": 0.6
+          "probability": 0.3
         },
         {
           "seed": 11,
-          "probability": 0.2
+          "probability": 0.1
         },
         {
           "seed": 12,
@@ -901,16 +904,16 @@
           "week": 4,
           "opponentRosterId": 7,
           "opponentName": "Gridiron geezers",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 54.0,
-          "projectedScore": 128.3,
-          "opponentProjectedScore": 126.1,
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 143.98,
+          "opponentActualScore": 120.92,
+          "scoreDiff": 23.06,
+          "winProbability": 100.0,
+          "projectedScore": 144.0,
+          "opponentProjectedScore": 120.9,
           "spread": 2.2,
-          "spreadLabel": "+2.2 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -1064,14 +1067,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "8.6 expected wins \u00b7 10.9% title probability",
-        "trend": "Stable",
+        "headline": "9.1 expected wins \u00b7 13.4% title probability",
+        "trend": "Rising",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 8.6 wins, a 82.7% playoff chance and a 10.9% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 9.1 wins, a 91.3% playoff chance and a 13.4% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 8.6,
             "playoffOdds": 82.7,
@@ -1079,11 +1082,11 @@
             "rank": 4
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 8.6,
-            "playoffOdds": 82.7,
-            "titleOdds": 10.9,
+            "expectedWins": 9.1,
+            "playoffOdds": 91.3,
+            "titleOdds": 13.4,
             "rank": 4
           }
         ]
@@ -1093,8 +1096,8 @@
       "rosterId": 4,
       "teamName": "Bub\u2019s Club",
       "projectedRank": 9,
-      "expectedSeed": 9.6,
-      "medianSeed": 10,
+      "expectedSeed": 9.0,
+      "medianSeed": 9,
       "powerRank": 10,
       "powerScore": 21.3,
       "powerRankDelta": 1,
@@ -1140,25 +1143,26 @@
         },
         "volatilityImpactNarrative": "With a high variance profile (82.1/100), the model applies a weekly scoring standard deviation of \u00b116.8 pts. The top 3 starters account for 64.3% of starting redraft value and RBs represent 57.6%. In 10,000 simulations, this volatility models an expected weekly floor of 92.4 pts (10th percentile) and a shootout ceiling of 135.6 pts (90th percentile)."
       },
-      "actualWins": 1,
+      "actualWins": 2,
       "actualLosses": 2,
       "actualTies": 0,
-      "actualPoints": 328.58,
-      "rosExpectedWins": 3.8,
-      "rosExpectedLosses": 7.2,
+      "actualPoints": 440.34,
+      "rosExpectedWins": 3.6,
+      "rosExpectedLosses": 6.4,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 4.8,
-      "expectedLosses": 9.2,
-      "expectedPointsFor": 1582.1,
-      "playoffProbability": 4.2,
-      "byeProbability": 0.1,
+      "remainingWeeks": 10,
+      "expectedWins": 5.6,
+      "expectedLosses": 8.4,
+      "expectedPointsFor": 1579.9,
+      "playoffProbability": 9.6,
+      "byeProbability": 0.2,
       "championshipProbability": 0.1,
-      "lastPlaceProbability": 11.6,
+      "lastPlaceProbability": 5.8,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
@@ -1168,47 +1172,47 @@
         },
         {
           "seed": 2,
-          "probability": 0.1
+          "probability": 0.2
         },
         {
           "seed": 3,
-          "probability": 0.1
-        },
-        {
-          "seed": 4,
           "probability": 0.5
         },
         {
+          "seed": 4,
+          "probability": 1.4
+        },
+        {
           "seed": 5,
-          "probability": 1.0
+          "probability": 2.7
         },
         {
           "seed": 6,
-          "probability": 2.5
+          "probability": 4.9
         },
         {
           "seed": 7,
-          "probability": 4.8
+          "probability": 8.6
         },
         {
           "seed": 8,
-          "probability": 10.4
+          "probability": 15.9
         },
         {
           "seed": 9,
-          "probability": 25.3
+          "probability": 25.1
         },
         {
           "seed": 10,
-          "probability": 24.5
+          "probability": 21.4
         },
         {
           "seed": 11,
-          "probability": 19.2
+          "probability": 13.6
         },
         {
           "seed": 12,
-          "probability": 11.6
+          "probability": 5.8
         }
       ],
       "weeklySchedule": [
@@ -1261,16 +1265,16 @@
           "week": 4,
           "opponentRosterId": 1,
           "opponentName": "Ertz & Krafts \ud83c\udfc6",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 19.6,
-          "projectedScore": 114.0,
-          "opponentProjectedScore": 131.8,
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 111.76,
+          "opponentActualScore": 105.5,
+          "scoreDiff": 6.26,
+          "winProbability": 100.0,
+          "projectedScore": 111.8,
+          "opponentProjectedScore": 105.5,
           "spread": -17.8,
-          "spreadLabel": "-17.8 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -1424,14 +1428,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "4.8 expected wins \u00b7 0.1% title probability",
-        "trend": "Stable",
+        "headline": "5.6 expected wins \u00b7 0.1% title probability",
+        "trend": "Rising",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 4.8 wins, a 4.2% playoff chance and a 0.1% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 5.6 wins, a 9.6% playoff chance and a 0.1% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 4.8,
             "playoffOdds": 4.2,
@@ -1439,10 +1443,10 @@
             "rank": 9
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 4.8,
-            "playoffOdds": 4.2,
+            "expectedWins": 5.6,
+            "playoffOdds": 9.6,
             "titleOdds": 0.1,
             "rank": 9
           }
@@ -1453,8 +1457,8 @@
       "rosterId": 5,
       "teamName": "My Nabers Tetties",
       "projectedRank": 11,
-      "expectedSeed": 10.4,
-      "medianSeed": 11,
+      "expectedSeed": 9.9,
+      "medianSeed": 10,
       "powerRank": 11,
       "powerScore": 14.52,
       "powerRankDelta": 0,
@@ -1500,25 +1504,26 @@
         },
         "volatilityImpactNarrative": "With a volatile profile (61.1/100), the model applies a weekly scoring standard deviation of \u00b115.5 pts. The top 3 starters account for 61.8% of starting redraft value and RBs represent 0.0%. In 10,000 simulations, this volatility models an expected weekly floor of 92.2 pts (10th percentile) and a shootout ceiling of 131.9 pts (90th percentile)."
       },
-      "actualWins": 1,
+      "actualWins": 2,
       "actualLosses": 2,
       "actualTies": 0,
-      "actualPoints": 218.62,
-      "rosExpectedWins": 3.3,
-      "rosExpectedLosses": 7.7,
+      "actualPoints": 368.66,
+      "rosExpectedWins": 3.0,
+      "rosExpectedLosses": 7.0,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 4.3,
-      "expectedLosses": 9.7,
-      "expectedPointsFor": 1450.5,
-      "playoffProbability": 1.8,
+      "remainingWeeks": 10,
+      "expectedWins": 5.0,
+      "expectedLosses": 9.0,
+      "expectedPointsFor": 1488.2,
+      "playoffProbability": 4.0,
       "byeProbability": 0.1,
       "championshipProbability": 0.0,
-      "lastPlaceProbability": 27.3,
+      "lastPlaceProbability": 14.4,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
@@ -1532,43 +1537,43 @@
         },
         {
           "seed": 3,
-          "probability": 0.0
-        },
-        {
-          "seed": 4,
           "probability": 0.2
         },
         {
+          "seed": 4,
+          "probability": 0.5
+        },
+        {
           "seed": 5,
-          "probability": 0.4
+          "probability": 1.0
         },
         {
           "seed": 6,
-          "probability": 1.1
+          "probability": 2.2
         },
         {
           "seed": 7,
-          "probability": 2.8
+          "probability": 4.6
         },
         {
           "seed": 8,
-          "probability": 5.9
+          "probability": 9.1
         },
         {
           "seed": 9,
-          "probability": 13.3
+          "probability": 16.8
         },
         {
           "seed": 10,
-          "probability": 21.3
+          "probability": 26.0
         },
         {
           "seed": 11,
-          "probability": 27.7
+          "probability": 25.1
         },
         {
           "seed": 12,
-          "probability": 27.3
+          "probability": 14.4
         }
       ],
       "weeklySchedule": [
@@ -1621,16 +1626,16 @@
           "week": 4,
           "opponentRosterId": 9,
           "opponentName": "Max\u2019s Shadynasty",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 31.1,
-          "projectedScore": 112.1,
-          "opponentProjectedScore": 122.8,
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 150.04,
+          "opponentActualScore": 81.88,
+          "scoreDiff": 68.16,
+          "winProbability": 100.0,
+          "projectedScore": 150.0,
+          "opponentProjectedScore": 81.9,
           "spread": -10.7,
-          "spreadLabel": "-10.7 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -1784,14 +1789,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "4.3 expected wins \u00b7 0.0% title probability",
-        "trend": "Stable",
+        "headline": "5.0 expected wins \u00b7 0.0% title probability",
+        "trend": "Rising",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 4.3 wins, a 1.8% playoff chance and a 0.0% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 5.0 wins, a 4.0% playoff chance and a 0.0% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 4.3,
             "playoffOdds": 1.8,
@@ -1799,10 +1804,10 @@
             "rank": 11
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 4.3,
-            "playoffOdds": 1.8,
+            "expectedWins": 5.0,
+            "playoffOdds": 4.0,
             "titleOdds": 0.0,
             "rank": 11
           }
@@ -1813,8 +1818,8 @@
       "rosterId": 6,
       "teamName": "Final Boss",
       "projectedRank": 12,
-      "expectedSeed": 11.0,
-      "medianSeed": 11,
+      "expectedSeed": 11.2,
+      "medianSeed": 12,
       "powerRank": 12,
       "powerScore": 10.75,
       "powerRankDelta": 0,
@@ -1861,25 +1866,26 @@
         "volatilityImpactNarrative": "With a high variance profile (70.7/100), the model applies a weekly scoring standard deviation of \u00b116.1 pts. The top 3 starters account for 58.7% of starting redraft value and RBs represent 16.2%. In 10,000 simulations, this volatility models an expected weekly floor of 90.4 pts (10th percentile) and a shootout ceiling of 131.6 pts (90th percentile)."
       },
       "actualWins": 0,
-      "actualLosses": 3,
+      "actualLosses": 4,
       "actualTies": 0,
-      "actualPoints": 337.38,
-      "rosExpectedWins": 3.2,
-      "rosExpectedLosses": 7.8,
+      "actualPoints": 453.08,
+      "rosExpectedWins": 3.1,
+      "rosExpectedLosses": 6.9,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 3.2,
-      "expectedLosses": 10.8,
-      "expectedPointsFor": 1558.5,
-      "playoffProbability": 0.5,
+      "remainingWeeks": 10,
+      "expectedWins": 3.1,
+      "expectedLosses": 10.9,
+      "expectedPointsFor": 1563.1,
+      "playoffProbability": 0.4,
       "byeProbability": 0.0,
       "championshipProbability": 0.0,
-      "lastPlaceProbability": 44.6,
-      "bestCaseSeed": 2,
+      "lastPlaceProbability": 52.1,
+      "bestCaseSeed": 5,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
@@ -1908,27 +1914,27 @@
         },
         {
           "seed": 7,
-          "probability": 0.8
+          "probability": 0.7
         },
         {
           "seed": 8,
-          "probability": 2.4
+          "probability": 2.0
         },
         {
           "seed": 9,
-          "probability": 8.9
+          "probability": 5.9
         },
         {
           "seed": 10,
-          "probability": 16.2
+          "probability": 13.1
         },
         {
           "seed": 11,
-          "probability": 26.6
+          "probability": 25.8
         },
         {
           "seed": 12,
-          "probability": 44.6
+          "probability": 52.1
         }
       ],
       "weeklySchedule": [
@@ -1981,16 +1987,16 @@
           "week": 4,
           "opponentRosterId": 12,
           "opponentName": "Bronco Stampede",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 12.8,
-          "projectedScore": 111.0,
-          "opponentProjectedScore": 134.6,
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 115.7,
+          "opponentActualScore": 147.62,
+          "scoreDiff": -31.92,
+          "winProbability": 0.0,
+          "projectedScore": 115.7,
+          "opponentProjectedScore": 147.6,
           "spread": -23.6,
-          "spreadLabel": "-23.6 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -2144,14 +2150,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "3.2 expected wins \u00b7 0.0% title probability",
-        "trend": "Stable",
+        "headline": "3.1 expected wins \u00b7 0.0% title probability",
+        "trend": "Falling",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 3.2 wins, a 0.5% playoff chance and a 0.0% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 3.1 wins, a 0.4% playoff chance and a 0.0% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 3.2,
             "playoffOdds": 0.5,
@@ -2159,10 +2165,10 @@
             "rank": 12
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 3.2,
-            "playoffOdds": 0.5,
+            "expectedWins": 3.1,
+            "playoffOdds": 0.4,
             "titleOdds": 0.0,
             "rank": 12
           }
@@ -2173,7 +2179,7 @@
       "rosterId": 7,
       "teamName": "Gridiron geezers",
       "projectedRank": 5,
-      "expectedSeed": 4.9,
+      "expectedSeed": 5.4,
       "medianSeed": 5,
       "powerRank": 5,
       "powerScore": 64.55,
@@ -2221,70 +2227,71 @@
         "volatilityImpactNarrative": "With a high variance profile (72.2/100), the model applies a weekly scoring standard deviation of \u00b116.2 pts. The top 3 starters account for 69.9% of starting redraft value and RBs represent 77.8%. In 10,000 simulations, this volatility models an expected weekly floor of 105.3 pts (10th percentile) and a shootout ceiling of 146.8 pts (90th percentile)."
       },
       "actualWins": 2,
-      "actualLosses": 1,
+      "actualLosses": 2,
       "actualTies": 0,
-      "actualPoints": 426.26,
-      "rosExpectedWins": 6.2,
-      "rosExpectedLosses": 4.8,
+      "actualPoints": 547.18,
+      "rosExpectedWins": 5.7,
+      "rosExpectedLosses": 4.3,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 8.2,
-      "expectedLosses": 5.8,
-      "expectedPointsFor": 1813.2,
-      "playoffProbability": 75.8,
-      "byeProbability": 15.8,
-      "championshipProbability": 7.7,
+      "remainingWeeks": 10,
+      "expectedWins": 7.7,
+      "expectedLosses": 6.3,
+      "expectedPointsFor": 1808.0,
+      "playoffProbability": 69.8,
+      "byeProbability": 9.9,
+      "championshipProbability": 6.5,
       "lastPlaceProbability": 0.1,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 5.5
+          "probability": 2.7
         },
         {
           "seed": 2,
-          "probability": 10.3
+          "probability": 7.2
         },
         {
           "seed": 3,
-          "probability": 14.0
+          "probability": 11.3
         },
         {
           "seed": 4,
-          "probability": 15.5
+          "probability": 14.8
         },
         {
           "seed": 5,
-          "probability": 16.3
+          "probability": 17.6
         },
         {
           "seed": 6,
-          "probability": 14.2
+          "probability": 16.1
         },
         {
           "seed": 7,
-          "probability": 11.8
+          "probability": 12.9
         },
         {
           "seed": 8,
-          "probability": 7.7
+          "probability": 9.1
         },
         {
           "seed": 9,
-          "probability": 3.3
+          "probability": 5.3
         },
         {
           "seed": 10,
-          "probability": 1.0
+          "probability": 2.3
         },
         {
           "seed": 11,
-          "probability": 0.3
+          "probability": 0.5
         },
         {
           "seed": 12,
@@ -2341,16 +2348,16 @@
           "week": 4,
           "opponentRosterId": 3,
           "opponentName": "The Ape",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 46.0,
-          "projectedScore": 126.1,
-          "opponentProjectedScore": 128.3,
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 120.92,
+          "opponentActualScore": 143.98,
+          "scoreDiff": -23.06,
+          "winProbability": 0.0,
+          "projectedScore": 120.9,
+          "opponentProjectedScore": 144.0,
           "spread": -2.2,
-          "spreadLabel": "-2.2 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -2504,14 +2511,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "8.2 expected wins \u00b7 7.7% title probability",
-        "trend": "Stable",
+        "headline": "7.7 expected wins \u00b7 6.5% title probability",
+        "trend": "Falling",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 8.2 wins, a 75.8% playoff chance and a 7.7% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 7.7 wins, a 69.8% playoff chance and a 6.5% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 8.2,
             "playoffOdds": 75.8,
@@ -2519,11 +2526,11 @@
             "rank": 5
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 8.2,
-            "playoffOdds": 75.8,
-            "titleOdds": 7.7,
+            "expectedWins": 7.7,
+            "playoffOdds": 69.8,
+            "titleOdds": 6.5,
             "rank": 5
           }
         ]
@@ -2533,7 +2540,7 @@
       "rosterId": 8,
       "teamName": "arkinsjt",
       "projectedRank": 6,
-      "expectedSeed": 5.5,
+      "expectedSeed": 6.0,
       "medianSeed": 7,
       "powerRank": 6,
       "powerScore": 58.56,
@@ -2581,74 +2588,75 @@
         "volatilityImpactNarrative": "With a balanced profile (38.0/100), the model applies a weekly scoring standard deviation of \u00b114.0 pts. The top 3 starters account for 52.8% of starting redraft value and RBs represent 18.8%. In 10,000 simulations, this volatility models an expected weekly floor of 106.5 pts (10th percentile) and a shootout ceiling of 142.3 pts (90th percentile)."
       },
       "actualWins": 2,
-      "actualLosses": 1,
+      "actualLosses": 2,
       "actualTies": 0,
-      "actualPoints": 407.8,
-      "rosExpectedWins": 5.8,
-      "rosExpectedLosses": 5.2,
+      "actualPoints": 522.08,
+      "rosExpectedWins": 5.4,
+      "rosExpectedLosses": 4.6,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 7.8,
-      "expectedLosses": 6.2,
-      "expectedPointsFor": 1776.5,
-      "playoffProbability": 66.3,
-      "byeProbability": 9.8,
-      "championshipProbability": 4.5,
-      "lastPlaceProbability": 0.1,
+      "remainingWeeks": 10,
+      "expectedWins": 7.4,
+      "expectedLosses": 6.6,
+      "expectedPointsFor": 1766.2,
+      "playoffProbability": 59.2,
+      "byeProbability": 5.8,
+      "championshipProbability": 3.9,
+      "lastPlaceProbability": 0.2,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 3.2
+          "probability": 1.5
         },
         {
           "seed": 2,
-          "probability": 6.5
+          "probability": 4.3
         },
         {
           "seed": 3,
-          "probability": 9.7
+          "probability": 7.3
         },
         {
           "seed": 4,
-          "probability": 13.5
+          "probability": 12.0
         },
         {
           "seed": 5,
-          "probability": 16.0
+          "probability": 15.6
         },
         {
           "seed": 6,
-          "probability": 17.3
+          "probability": 18.5
         },
         {
           "seed": 7,
-          "probability": 15.7
+          "probability": 17.2
         },
         {
           "seed": 8,
-          "probability": 11.1
+          "probability": 12.3
         },
         {
           "seed": 9,
-          "probability": 4.6
+          "probability": 7.0
         },
         {
           "seed": 10,
-          "probability": 1.6
+          "probability": 3.2
         },
         {
           "seed": 11,
-          "probability": 0.6
+          "probability": 0.9
         },
         {
           "seed": 12,
-          "probability": 0.1
+          "probability": 0.2
         }
       ],
       "weeklySchedule": [
@@ -2701,16 +2709,16 @@
           "week": 4,
           "opponentRosterId": 10,
           "opponentName": "Bijan And The Maye-ssiah",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 41.3,
-          "projectedScore": 124.4,
-          "opponentProjectedScore": 129.1,
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 114.28,
+          "opponentActualScore": 156.16,
+          "scoreDiff": -41.88,
+          "winProbability": 0.0,
+          "projectedScore": 114.3,
+          "opponentProjectedScore": 156.2,
           "spread": -4.7,
-          "spreadLabel": "-4.7 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -2864,14 +2872,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "7.8 expected wins \u00b7 4.5% title probability",
-        "trend": "Stable",
+        "headline": "7.4 expected wins \u00b7 3.9% title probability",
+        "trend": "Falling",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 7.8 wins, a 66.3% playoff chance and a 4.5% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 7.4 wins, a 59.2% playoff chance and a 3.9% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 7.8,
             "playoffOdds": 66.3,
@@ -2879,11 +2887,11 @@
             "rank": 6
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 7.8,
-            "playoffOdds": 66.3,
-            "titleOdds": 4.5,
+            "expectedWins": 7.4,
+            "playoffOdds": 59.2,
+            "titleOdds": 3.9,
             "rank": 6
           }
         ]
@@ -2892,14 +2900,14 @@
     "9": {
       "rosterId": 9,
       "teamName": "Max\u2019s Shadynasty",
-      "projectedRank": 7,
-      "expectedSeed": 6.2,
+      "projectedRank": 8,
+      "expectedSeed": 7.2,
       "medianSeed": 7,
       "powerRank": 7,
       "powerScore": 52.89,
-      "powerRankDelta": 0,
-      "powerDeltaLabel": "Even with Power Rank",
-      "powerConnectionNarrative": "Title odds rank #7 versus Power Index #7. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
+      "powerRankDelta": -1,
+      "powerDeltaLabel": "-1 vs Power Rank",
+      "powerConnectionNarrative": "Title odds rank #8 versus Power Index #7. The forecast also includes completed results, schedule and simulated weekly scoring variance. The difference alone does not identify a causal driver.",
       "modelFactors": {
         "compositePowerScore": 52.9,
         "projectedMeanScore": 122.8,
@@ -2941,74 +2949,75 @@
         "volatilityImpactNarrative": "With a balanced profile (43.7/100), the model applies a weekly scoring standard deviation of \u00b114.3 pts. The top 3 starters account for 49.1% of starting redraft value and RBs represent 36.1%. In 10,000 simulations, this volatility models an expected weekly floor of 104.4 pts (10th percentile) and a shootout ceiling of 141.2 pts (90th percentile)."
       },
       "actualWins": 2,
-      "actualLosses": 1,
+      "actualLosses": 2,
       "actualTies": 0,
-      "actualPoints": 359.12,
-      "rosExpectedWins": 5.5,
-      "rosExpectedLosses": 5.5,
+      "actualPoints": 441.0,
+      "rosExpectedWins": 4.8,
+      "rosExpectedLosses": 5.2,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 7.5,
-      "expectedLosses": 6.5,
-      "expectedPointsFor": 1710.2,
-      "playoffProbability": 50.3,
-      "byeProbability": 5.5,
-      "championshipProbability": 2.7,
-      "lastPlaceProbability": 0.2,
+      "remainingWeeks": 10,
+      "expectedWins": 6.8,
+      "expectedLosses": 7.2,
+      "expectedPointsFor": 1669.3,
+      "playoffProbability": 33.3,
+      "byeProbability": 2.1,
+      "championshipProbability": 1.8,
+      "lastPlaceProbability": 0.6,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 1.7
+          "probability": 0.6
         },
         {
           "seed": 2,
-          "probability": 3.8
+          "probability": 1.5
         },
         {
           "seed": 3,
-          "probability": 6.3
+          "probability": 3.5
         },
         {
           "seed": 4,
-          "probability": 9.0
+          "probability": 5.7
         },
         {
           "seed": 5,
-          "probability": 12.8
+          "probability": 8.6
         },
         {
           "seed": 6,
-          "probability": 16.7
+          "probability": 13.5
         },
         {
           "seed": 7,
-          "probability": 19.3
+          "probability": 18.7
         },
         {
           "seed": 8,
-          "probability": 18.6
+          "probability": 22.5
         },
         {
           "seed": 9,
-          "probability": 7.8
+          "probability": 14.9
         },
         {
           "seed": 10,
-          "probability": 2.9
+          "probability": 7.4
         },
         {
           "seed": 11,
-          "probability": 0.8
+          "probability": 2.5
         },
         {
           "seed": 12,
-          "probability": 0.2
+          "probability": 0.6
         }
       ],
       "weeklySchedule": [
@@ -3061,16 +3070,16 @@
           "week": 4,
           "opponentRosterId": 5,
           "opponentName": "My Nabers Tetties",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 68.9,
-          "projectedScore": 122.8,
-          "opponentProjectedScore": 112.1,
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 81.88,
+          "opponentActualScore": 150.04,
+          "scoreDiff": -68.16,
+          "winProbability": 0.0,
+          "projectedScore": 81.9,
+          "opponentProjectedScore": 150.0,
           "spread": 10.7,
-          "spreadLabel": "+10.7 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -3224,14 +3233,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "7.5 expected wins \u00b7 2.7% title probability",
-        "trend": "Stable",
+        "headline": "6.8 expected wins \u00b7 1.8% title probability",
+        "trend": "Falling",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 7.5 wins, a 50.3% playoff chance and a 2.7% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 6.8 wins, a 33.3% playoff chance and a 1.8% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 7.5,
             "playoffOdds": 50.3,
@@ -3239,12 +3248,12 @@
             "rank": 7
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 7.5,
-            "playoffOdds": 50.3,
-            "titleOdds": 2.7,
-            "rank": 7
+            "expectedWins": 6.8,
+            "playoffOdds": 33.3,
+            "titleOdds": 1.8,
+            "rank": 8
           }
         ]
       }
@@ -3253,8 +3262,8 @@
       "rosterId": 10,
       "teamName": "Bijan And The Maye-ssiah",
       "projectedRank": 3,
-      "expectedSeed": 4.0,
-      "medianSeed": 4,
+      "expectedSeed": 3.3,
+      "medianSeed": 3,
       "powerRank": 3,
       "powerScore": 75.19,
       "powerRankDelta": 0,
@@ -3300,67 +3309,68 @@
         },
         "volatilityImpactNarrative": "With a volatile profile (55.1/100), the model applies a weekly scoring standard deviation of \u00b115.1 pts. The top 3 starters account for 62.4% of starting redraft value and RBs represent 48.8%. In 10,000 simulations, this volatility models an expected weekly floor of 109.7 pts (10th percentile) and a shootout ceiling of 148.4 pts (90th percentile)."
       },
-      "actualWins": 2,
+      "actualWins": 3,
       "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 411.44,
-      "rosExpectedWins": 6.8,
-      "rosExpectedLosses": 4.2,
+      "actualPoints": 567.6,
+      "rosExpectedWins": 6.2,
+      "rosExpectedLosses": 3.8,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 8.8,
-      "expectedLosses": 5.2,
-      "expectedPointsFor": 1830.9,
-      "playoffProbability": 86.8,
-      "byeProbability": 27.3,
-      "championshipProbability": 13.9,
-      "lastPlaceProbability": 0.1,
+      "remainingWeeks": 10,
+      "expectedWins": 9.2,
+      "expectedLosses": 4.8,
+      "expectedPointsFor": 1858.1,
+      "playoffProbability": 93.7,
+      "byeProbability": 41.9,
+      "championshipProbability": 16.4,
+      "lastPlaceProbability": 0.0,
       "bestCaseSeed": 1,
       "worstCaseSeed": 12,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 10.4
-        },
-        {
-          "seed": 2,
           "probability": 16.8
         },
         {
+          "seed": 2,
+          "probability": 25.1
+        },
+        {
           "seed": 3,
-          "probability": 17.8
+          "probability": 19.7
         },
         {
           "seed": 4,
-          "probability": 17.0
+          "probability": 15.2
         },
         {
           "seed": 5,
-          "probability": 13.8
+          "probability": 10.5
         },
         {
           "seed": 6,
-          "probability": 10.9
+          "probability": 6.4
         },
         {
           "seed": 7,
-          "probability": 7.4
+          "probability": 3.5
         },
         {
           "seed": 8,
-          "probability": 3.9
+          "probability": 1.7
         },
         {
           "seed": 9,
-          "probability": 1.4
+          "probability": 0.7
         },
         {
           "seed": 10,
-          "probability": 0.4
+          "probability": 0.3
         },
         {
           "seed": 11,
@@ -3368,7 +3378,7 @@
         },
         {
           "seed": 12,
-          "probability": 0.1
+          "probability": 0.0
         }
       ],
       "weeklySchedule": [
@@ -3421,16 +3431,16 @@
           "week": 4,
           "opponentRosterId": 8,
           "opponentName": "arkinsjt",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 58.7,
-          "projectedScore": 129.1,
-          "opponentProjectedScore": 124.4,
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 156.16,
+          "opponentActualScore": 114.28,
+          "scoreDiff": 41.88,
+          "winProbability": 100.0,
+          "projectedScore": 156.2,
+          "opponentProjectedScore": 114.3,
           "spread": 4.7,
-          "spreadLabel": "+4.7 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -3584,14 +3594,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "8.8 expected wins \u00b7 13.9% title probability",
-        "trend": "Stable",
+        "headline": "9.2 expected wins \u00b7 16.4% title probability",
+        "trend": "Rising",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 8.8 wins, a 86.8% playoff chance and a 13.9% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 9.2 wins, a 93.7% playoff chance and a 16.4% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 8.8,
             "playoffOdds": 86.8,
@@ -3599,11 +3609,11 @@
             "rank": 3
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 8.8,
-            "playoffOdds": 86.8,
-            "titleOdds": 13.9,
+            "expectedWins": 9.2,
+            "playoffOdds": 93.7,
+            "titleOdds": 16.4,
             "rank": 3
           }
         ]
@@ -3613,8 +3623,8 @@
       "rosterId": 11,
       "teamName": "Terry Tate\u2019s Pain Train",
       "projectedRank": 10,
-      "expectedSeed": 9.9,
-      "medianSeed": 10,
+      "expectedSeed": 10.5,
+      "medianSeed": 11,
       "powerRank": 9,
       "powerScore": 35.85,
       "powerRankDelta": -1,
@@ -3661,24 +3671,25 @@
         "volatilityImpactNarrative": "With a balanced profile (52.6/100), the model applies a weekly scoring standard deviation of \u00b114.9 pts. The top 3 starters account for 51.7% of starting redraft value and RBs represent 32.6%. In 10,000 simulations, this volatility models an expected weekly floor of 98.9 pts (10th percentile) and a shootout ceiling of 137.2 pts (90th percentile)."
       },
       "actualWins": 0,
-      "actualLosses": 3,
+      "actualLosses": 4,
       "actualTies": 0,
-      "actualPoints": 277.9,
-      "rosExpectedWins": 4.5,
-      "rosExpectedLosses": 6.5,
+      "actualPoints": 386.82,
+      "rosExpectedWins": 4.0,
+      "rosExpectedLosses": 6.0,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 4.5,
-      "expectedLosses": 9.5,
-      "expectedPointsFor": 1576.3,
-      "playoffProbability": 2.8,
+      "remainingWeeks": 10,
+      "expectedWins": 4.0,
+      "expectedLosses": 10.0,
+      "expectedPointsFor": 1567.1,
+      "playoffProbability": 1.3,
       "byeProbability": 0.0,
       "championshipProbability": 0.1,
-      "lastPlaceProbability": 15.3,
+      "lastPlaceProbability": 26.4,
       "bestCaseSeed": 2,
       "worstCaseSeed": 12,
       "seedDistribution": [
@@ -3692,43 +3703,43 @@
         },
         {
           "seed": 3,
-          "probability": 0.2
+          "probability": 0.1
         },
         {
           "seed": 4,
-          "probability": 0.3
+          "probability": 0.1
         },
         {
           "seed": 5,
-          "probability": 0.7
+          "probability": 0.2
         },
         {
           "seed": 6,
-          "probability": 1.5
+          "probability": 0.9
         },
         {
           "seed": 7,
-          "probability": 4.0
+          "probability": 2.1
         },
         {
           "seed": 8,
-          "probability": 8.9
+          "probability": 5.5
         },
         {
           "seed": 9,
-          "probability": 21.2
+          "probability": 12.7
         },
         {
           "seed": 10,
-          "probability": 25.6
+          "probability": 21.9
         },
         {
           "seed": 11,
-          "probability": 22.3
+          "probability": 30.2
         },
         {
           "seed": 12,
-          "probability": 15.3
+          "probability": 26.4
         }
       ],
       "weeklySchedule": [
@@ -3781,16 +3792,16 @@
           "week": 4,
           "opponentRosterId": 2,
           "opponentName": "2 Dagos and A Dream",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 46.6,
-          "projectedScore": 118.0,
-          "opponentProjectedScore": 119.6,
+          "isCompleted": true,
+          "result": "L",
+          "actualScore": 108.92,
+          "opponentActualScore": 129.38,
+          "scoreDiff": -20.46,
+          "winProbability": 0.0,
+          "projectedScore": 108.9,
+          "opponentProjectedScore": 129.4,
           "spread": -1.6,
-          "spreadLabel": "-1.6 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -3944,14 +3955,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "4.5 expected wins \u00b7 0.1% title probability",
-        "trend": "Stable",
+        "headline": "4.0 expected wins \u00b7 0.1% title probability",
+        "trend": "Falling",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 4.5 wins, a 2.8% playoff chance and a 0.1% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 4.0 wins, a 1.3% playoff chance and a 0.1% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 4.5,
             "playoffOdds": 2.8,
@@ -3959,10 +3970,10 @@
             "rank": 10
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 4.5,
-            "playoffOdds": 2.8,
+            "expectedWins": 4.0,
+            "playoffOdds": 1.3,
             "titleOdds": 0.1,
             "rank": 10
           }
@@ -3973,8 +3984,8 @@
       "rosterId": 12,
       "teamName": "Bronco Stampede",
       "projectedRank": 1,
-      "expectedSeed": 2.2,
-      "medianSeed": 2,
+      "expectedSeed": 1.9,
+      "medianSeed": 1,
       "powerRank": 1,
       "powerScore": 95.17,
       "powerRankDelta": 0,
@@ -4020,59 +4031,60 @@
         },
         "volatilityImpactNarrative": "With a stable profile (30.5/100), the model applies a weekly scoring standard deviation of \u00b113.5 pts. The top 3 starters account for 50.7% of starting redraft value and RBs represent 25.5%. In 10,000 simulations, this volatility models an expected weekly floor of 117.4 pts (10th percentile) and a shootout ceiling of 151.9 pts (90th percentile)."
       },
-      "actualWins": 2,
+      "actualWins": 3,
       "actualLosses": 1,
       "actualTies": 0,
-      "actualPoints": 495.8,
-      "rosExpectedWins": 8.0,
-      "rosExpectedLosses": 3.0,
+      "actualPoints": 643.42,
+      "rosExpectedWins": 7.1,
+      "rosExpectedLosses": 2.9,
       "completedWeeks": [
         1,
         2,
-        3
+        3,
+        4
       ],
-      "remainingWeeks": 11,
-      "expectedWins": 10.0,
-      "expectedLosses": 4.0,
-      "expectedPointsFor": 1977.3,
-      "playoffProbability": 97.8,
-      "byeProbability": 71.0,
-      "championshipProbability": 35.6,
+      "remainingWeeks": 10,
+      "expectedWins": 10.1,
+      "expectedLosses": 3.9,
+      "expectedPointsFor": 1990.2,
+      "playoffProbability": 98.5,
+      "byeProbability": 76.8,
+      "championshipProbability": 36.8,
       "lastPlaceProbability": 0.0,
       "bestCaseSeed": 1,
       "worstCaseSeed": 10,
       "seedDistribution": [
         {
           "seed": 1,
-          "probability": 48.5
+          "probability": 54.8
         },
         {
           "seed": 2,
-          "probability": 22.5
+          "probability": 22.0
         },
         {
           "seed": 3,
-          "probability": 11.9
+          "probability": 10.6
         },
         {
           "seed": 4,
-          "probability": 7.7
+          "probability": 6.0
         },
         {
           "seed": 5,
-          "probability": 4.7
+          "probability": 3.3
         },
         {
           "seed": 6,
-          "probability": 2.6
+          "probability": 1.7
         },
         {
           "seed": 7,
-          "probability": 1.3
+          "probability": 0.9
         },
         {
           "seed": 8,
-          "probability": 0.6
+          "probability": 0.4
         },
         {
           "seed": 9,
@@ -4080,7 +4092,7 @@
         },
         {
           "seed": 10,
-          "probability": 0.1
+          "probability": 0.0
         },
         {
           "seed": 11,
@@ -4141,16 +4153,16 @@
           "week": 4,
           "opponentRosterId": 6,
           "opponentName": "Final Boss",
-          "isCompleted": false,
-          "result": null,
-          "actualScore": null,
-          "opponentActualScore": null,
-          "scoreDiff": null,
-          "winProbability": 87.2,
-          "projectedScore": 134.6,
-          "opponentProjectedScore": 111.0,
+          "isCompleted": true,
+          "result": "W",
+          "actualScore": 147.62,
+          "opponentActualScore": 115.7,
+          "scoreDiff": 31.92,
+          "winProbability": 100.0,
+          "projectedScore": 147.6,
+          "opponentProjectedScore": 115.7,
           "spread": 23.6,
-          "spreadLabel": "+23.6 pts"
+          "spreadLabel": "FINAL"
         },
         {
           "week": 5,
@@ -4304,14 +4316,14 @@
         }
       ],
       "fluctuationNarrative": {
-        "headline": "10.0 expected wins \u00b7 35.6% title probability",
-        "trend": "Stable",
+        "headline": "10.1 expected wins \u00b7 36.8% title probability",
+        "trend": "Rising",
         "primaryDriver": "SIMULATION_UPDATE",
-        "analysis": "The current simulation projects 10.0 wins, a 97.8% playoff chance and a 35.6% title chance, with 3 completed weeks locked.",
+        "analysis": "The current simulation projects 10.1 wins, a 98.5% playoff chance and a 36.8% title chance, with 4 completed weeks locked.",
         "keyRisk": "Probabilities depend on roster-value and scoring-variance assumptions; they are estimates, not guarantees.",
         "historyNotes": [
           {
-            "date": "2026-10-05T21:28:28.965387+00:00",
+            "date": "2026-10-05T23:48:54.778485+00:00",
             "event": "Previous published simulation",
             "expectedWins": 10.0,
             "playoffOdds": 97.8,
@@ -4319,11 +4331,11 @@
             "rank": 1
           },
           {
-            "date": "2026-10-05T23:48:54.778485+00:00",
+            "date": "2026-10-06T11:01:57.904053+00:00",
             "event": "Current simulation",
-            "expectedWins": 10.0,
-            "playoffOdds": 97.8,
-            "titleOdds": 35.6,
+            "expectedWins": 10.1,
+            "playoffOdds": 98.5,
+            "titleOdds": 36.8,
             "rank": 1
           }
         ]
