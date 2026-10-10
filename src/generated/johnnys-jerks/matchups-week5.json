@@ -1,11 +1,11 @@
 {
   "season": "2026",
   "week": 5,
-  "generatedAt": "2026-10-09T19:15:56.614171+00:00",
+  "generatedAt": "2026-10-10T18:12:16.539044+00:00",
   "scheduleSource": {
     "provider": "nflverse / NFL Broadcast Operations",
     "url": "https://www.nfl.com/schedules/2026/reg5",
-    "capturedAt": "2026-10-09T19:15:47.314856+00:00",
+    "capturedAt": "2026-10-10T18:12:08.228111+00:00",
     "note": "Official Week 5 kickoff times, matchups, and broadcast fixtures across Thursday Night Football (Prime Video), Sunday regional windows (CBS/FOX), Sunday Night Football (NBC), and Monday Night Football (ESPN/ABC)."
   },
   "sleeperSource": "https://api.sleeper.app/v1/league/1401673232670539776/matchups/5",
@@ -14,7 +14,7 @@
       "matchupId": 1,
       "week": 5,
       "title": "Gridiron Gorillas vs Team DRockefeller",
-      "subtitle": "Power #12 meets Power #4 in a 25.6-point opening line.",
+      "subtitle": "Power #12 meets Power #4 in a 26.6-point opening line.",
       "isMarquee": false,
       "hasLiveResults": false,
       "team1": {
@@ -262,12 +262,12 @@
         "name": "Team DRockefeller",
         "manager": "DRockefeller",
         "powerRank": 4,
-        "powerScore": 79.7,
+        "powerScore": 79.2,
         "grade": "B",
-        "projected": 110.5,
+        "projected": 111.5,
         "actualScore": 0,
-        "remainingProjected": 110.5,
-        "liveProjectedTotal": 110.5,
+        "remainingProjected": 111.5,
+        "liveProjectedTotal": 111.5,
         "startersPlayedCount": 0,
         "startersRemainingCount": 10,
         "keyPlayer": "Drake Maye",
@@ -365,24 +365,6 @@
           },
           {
             "slot": "WR2",
-            "player": "Wan'Dale Robinson",
-            "playerId": "8126",
-            "position": "WR",
-            "nflTeam": "TEN",
-            "projectedPoints": 7.7,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 7.7 pts",
-            "matchup": "vs HOU",
-            "kickoff": "Sunday \u00b7 1:00 PM ET",
-            "network": "CBS \u00b7 local market",
-            "injuryStatus": "Healthy",
-            "note": "7.7-point model share in this lineup; healthy entering Week 5."
-          },
-          {
-            "slot": "WR3",
             "player": "Romeo Doubs",
             "playerId": "8121",
             "position": "WR",
@@ -398,6 +380,24 @@
             "network": "CBS \u00b7 local market",
             "injuryStatus": "Healthy",
             "note": "6.4-point model share in this lineup; healthy entering Week 5."
+          },
+          {
+            "slot": "TE",
+            "player": "Dallas Goedert",
+            "playerId": "5022",
+            "position": "TE",
+            "nflTeam": "PHI",
+            "projectedPoints": 8.7,
+            "hasPlayed": false,
+            "actualPoints": null,
+            "delta": null,
+            "performance": "upcoming",
+            "statusNote": "Upcoming \u00b7 Projected 8.7 pts",
+            "matchup": "@ JAX",
+            "kickoff": "Sunday \u00b7 9:30 AM ET",
+            "network": "NFL Network \u00b7 NFL+",
+            "injuryStatus": "Healthy",
+            "note": "8.7-point model share in this lineup; healthy entering Week 5."
           },
           {
             "slot": "TE",
@@ -473,20 +473,20 @@
         "winProbability": 82.0,
         "liveWinProbability": 95.0
       },
-      "spread": 25.6,
-      "spreadLabel": "Team DRockefeller -25.6",
-      "openingSpreadLabel": "Team DRockefeller -25.6",
-      "impliedTotal": 195.4,
-      "openingImpliedTotal": 195.4,
+      "spread": 26.6,
+      "spreadLabel": "Team DRockefeller -26.6",
+      "openingSpreadLabel": "Team DRockefeller -26.6",
+      "impliedTotal": 196.4,
+      "openingImpliedTotal": 196.4,
       "flavor": "Team DRockefeller has room for error. Gridiron Gorillas needs an outlier from Quinshon Judkins and a win in the running backs battle.",
       "gameShift": null,
       "tacticalAnalysis": {
         "headline": "Drake Maye sets the pace; Quinshon Judkins carries the counterpunch",
-        "breakdown": "The current-season model separates these teams by 25.6 points, with Team DRockefeller holding its cleanest advantage at running backs (+11.0 pts). Gridiron Gorillas's best answer runs through the TE room. The heaviest viewing window is LV at NE on CBS \u00b7 local market with 49.6 points at stake.",
+        "breakdown": "The current-season model separates these teams by 26.6 points, with Team DRockefeller holding its cleanest advantage at running backs (+11.0 pts). Gridiron Gorillas's best answer runs through the TE room. The heaviest viewing window is LV at NE on CBS \u00b7 local market with 49.6 points at stake.",
         "keyVariables": [
           "Quinshon Judkins (12.9) and Drake Maye (18.9) are the headline scorers.",
           "The largest positional separation is running backs: Team DRockefeller +11.0 pts.",
-          "Gridiron Gorillas needs its TE strength to beat projection to erase a 25.6-point gap.",
+          "Gridiron Gorillas needs its TE strength to beat projection to erase a 26.6-point gap.",
           "Gridiron Gorillas carries 6 active roster health flag(s).",
           "Team DRockefeller carries 2 active roster health flag(s)."
         ]
@@ -507,14 +507,14 @@
         {
           "category": "Wide receivers",
           "advantage": "Team DRockefeller",
-          "margin": "+9.4 pts",
+          "margin": "+1.7 pts",
           "narrative": "The model gives Team DRockefeller the wide receivers edge."
         },
         {
           "category": "Tight end",
-          "advantage": "Gridiron Gorillas",
-          "margin": "+4.9 pts",
-          "narrative": "The model gives Gridiron Gorillas the tight end edge."
+          "advantage": "Team DRockefeller",
+          "margin": "+3.8 pts",
+          "narrative": "The model gives Team DRockefeller the tight end edge."
         },
         {
           "category": "Kicker",
@@ -530,6 +530,19 @@
         }
       ],
       "tvSchedule": [
+        {
+          "kickoffAt": "2026-10-11T09:30:00-04:00",
+          "timeSlot": "Sunday \u00b7 9:30 AM ET",
+          "network": "NFL Network \u00b7 NFL+",
+          "gameMatchup": "PHI at JAX",
+          "team1Starters": [],
+          "team2Starters": [
+            "Dallas Goedert (TE)"
+          ],
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 8.7,
+          "windowAnalysis": "Team DRockefeller has the larger starter footprint in this game; 8.7 fantasy points at stake."
+        },
         {
           "kickoffAt": "2026-10-11T13:00:00-04:00",
           "timeSlot": "Sunday \u00b7 1:00 PM ET",
@@ -630,19 +643,6 @@
           "leverageLevel": "Low",
           "fantasyPointsAtStake": 6.7,
           "windowAnalysis": "Gridiron Gorillas has the larger starter footprint in this game; 6.7 fantasy points at stake."
-        },
-        {
-          "kickoffAt": "2026-10-11T13:00:00-04:00",
-          "timeSlot": "Sunday \u00b7 1:00 PM ET",
-          "network": "CBS \u00b7 local market",
-          "gameMatchup": "HOU at TEN",
-          "team1Starters": [],
-          "team2Starters": [
-            "Wan'Dale Robinson (WR)"
-          ],
-          "leverageLevel": "Low",
-          "fantasyPointsAtStake": 7.7,
-          "windowAnalysis": "Team DRockefeller has the larger starter footprint in this game; 7.7 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-11T16:05:00-04:00",
@@ -2072,7 +2072,7 @@
         "name": "Team jccbraves99",
         "manager": "jccbraves99",
         "powerRank": 8,
-        "powerScore": 76.1,
+        "powerScore": 76.5,
         "grade": "B-",
         "projected": 104.7,
         "actualScore": 0,
@@ -2247,19 +2247,19 @@
           },
           {
             "slot": "DEF",
-            "player": "Player CIN",
-            "playerId": "CIN",
+            "player": "Player JAX",
+            "playerId": "JAX",
             "position": "DEF",
-            "nflTeam": "CIN",
+            "nflTeam": "JAX",
             "projectedPoints": 5.6,
             "hasPlayed": false,
             "actualPoints": null,
             "delta": null,
             "performance": "upcoming",
             "statusNote": "Upcoming \u00b7 Projected 5.6 pts",
-            "matchup": "@ MIA",
-            "kickoff": "Sunday \u00b7 1:00 PM ET",
-            "network": "CBS \u00b7 local market",
+            "matchup": "vs PHI",
+            "kickoff": "Sunday \u00b7 9:30 AM ET",
+            "network": "NFL Network \u00b7 NFL+",
             "injuryStatus": "Healthy",
             "note": "5.6-point model share in this lineup; healthy entering Week 5."
           }
@@ -2526,7 +2526,7 @@
       "gameShift": null,
       "tacticalAnalysis": {
         "headline": "Trevor Lawrence sets the pace; Bijan Robinson carries the counterpunch",
-        "breakdown": "The current-season model separates these teams by 2.7 points, with Team bubberdubber holding its cleanest advantage at wide receivers (+15.4 pts). Team jccbraves99's best answer runs through the RB room. The heaviest viewing window is IND at PIT on CBS \u00b7 local market with 31.5 points at stake.",
+        "breakdown": "The current-season model separates these teams by 2.7 points, with Team bubberdubber holding its cleanest advantage at wide receivers (+15.4 pts). Team jccbraves99's best answer runs through the RB room. The heaviest viewing window is PHI at JAX on NFL Network \u00b7 NFL+ with 33.3 points at stake.",
         "keyVariables": [
           "Bijan Robinson (18.9) and Trevor Lawrence (17.7) are the headline scorers.",
           "The largest positional separation is running backs: Team jccbraves99 +17.1 pts.",
@@ -2580,14 +2580,15 @@
           "network": "NFL Network \u00b7 NFL+",
           "gameMatchup": "PHI at JAX",
           "team1Starters": [
-            "Parker Washington (WR)"
+            "Parker Washington (WR)",
+            "Player JAX (DEF)"
           ],
           "team2Starters": [
             "Trevor Lawrence (QB)"
           ],
           "leverageLevel": "High",
-          "fantasyPointsAtStake": 27.7,
-          "windowAnalysis": "Both sides have equal starter exposure in this game; 27.7 fantasy points at stake."
+          "fantasyPointsAtStake": 33.3,
+          "windowAnalysis": "Team jccbraves99 has the larger starter footprint in this game; 33.3 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-11T13:00:00-04:00",
@@ -2611,16 +2612,14 @@
           "timeSlot": "Sunday \u00b7 1:00 PM ET",
           "network": "CBS \u00b7 local market",
           "gameMatchup": "CIN at MIA",
-          "team1Starters": [
-            "Player CIN (DEF)"
-          ],
+          "team1Starters": [],
           "team2Starters": [
             "Chase Brown (RB)",
             "Dohnte Meyers (WR)"
           ],
-          "leverageLevel": "High",
-          "fantasyPointsAtStake": 25.8,
-          "windowAnalysis": "Team bubberdubber has the larger starter footprint in this game; 25.8 fantasy points at stake."
+          "leverageLevel": "Medium",
+          "fantasyPointsAtStake": 20.2,
+          "windowAnalysis": "Team bubberdubber has the larger starter footprint in this game; 20.2 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-11T13:00:00-04:00",
