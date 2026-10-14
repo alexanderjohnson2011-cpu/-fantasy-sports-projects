@@ -1,11 +1,11 @@
 {
   "season": "2026",
   "week": 6,
-  "generatedAt": "2026-10-13T20:04:42.001315+00:00",
+  "generatedAt": "2026-10-14T18:19:39.945441+00:00",
   "scheduleSource": {
     "provider": "nflverse / NFL Broadcast Operations",
     "url": "https://www.nfl.com/schedules/2026/reg6",
-    "capturedAt": "2026-10-13T20:04:26.431951+00:00",
+    "capturedAt": "2026-10-14T18:19:33.044859+00:00",
     "note": "Official Week 6 kickoff times, matchups, and broadcast fixtures across Thursday Night Football (Prime Video), Sunday regional windows (CBS/FOX), Sunday Night Football (NBC), and Monday Night Football (ESPN/ABC)."
   },
   "sleeperSource": "https://api.sleeper.app/v1/league/1401673232670539776/matchups/6",
@@ -14,20 +14,20 @@
       "matchupId": 1,
       "week": 6,
       "title": "Team DRockefeller vs Team Gnomeington",
-      "subtitle": "Power #4 meets Power #3 in a 12.2-point opening line.",
+      "subtitle": "Power #5 meets Power #3 in a 15.0-point opening line.",
       "isMarquee": true,
       "hasLiveResults": false,
       "team1": {
         "rosterId": 3,
         "name": "Team DRockefeller",
         "manager": "DRockefeller",
-        "powerRank": 4,
-        "powerScore": 79.5,
+        "powerRank": 5,
+        "powerScore": 80.8,
         "grade": "B",
-        "projected": 112.8,
+        "projected": 110.0,
         "actualScore": 0,
-        "remainingProjected": 112.8,
-        "liveProjectedTotal": 112.8,
+        "remainingProjected": 110.0,
+        "liveProjectedTotal": 110.0,
         "startersPlayedCount": 0,
         "startersRemainingCount": 10,
         "keyPlayer": "Drake Maye",
@@ -179,21 +179,21 @@
           },
           {
             "slot": "K",
-            "player": "Jason Myers",
-            "playerId": "2747",
+            "player": "Nick Folk",
+            "playerId": "650",
             "position": "K",
-            "nflTeam": "SEA",
-            "projectedPoints": 9.5,
+            "nflTeam": "ATL",
+            "projectedPoints": 6.7,
             "hasPlayed": false,
             "actualPoints": null,
             "delta": null,
             "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 9.5 pts",
-            "matchup": "@ DEN",
-            "kickoff": "Thursday \u00b7 8:15 PM ET",
-            "network": "Prime Video \u00b7 NFL+",
+            "statusNote": "Upcoming \u00b7 Projected 6.7 pts",
+            "matchup": "vs CHI",
+            "kickoff": "Sunday \u00b7 1:00 PM ET",
+            "network": "FOX \u00b7 local market",
             "injuryStatus": "Healthy",
-            "note": "9.5-point model share in this lineup; healthy entering Week 6."
+            "note": "6.7-point model share in this lineup; healthy entering Week 6."
           },
           {
             "slot": "DEF",
@@ -214,7 +214,7 @@
             "note": "5.6-point model share in this lineup; healthy entering Week 6."
           }
         ],
-        "strongestRoom": "RB",
+        "strongestRoom": "TE",
         "weakestRoom": "QB",
         "injuryFlags": [
           {
@@ -230,8 +230,8 @@
             "starter": false
           }
         ],
-        "winProbability": 20.7,
-        "liveWinProbability": 16.1
+        "winProbability": 18.0,
+        "liveWinProbability": 8.3
       },
       "team2": {
         "rosterId": 6,
@@ -446,23 +446,23 @@
             "starter": true
           }
         ],
-        "winProbability": 79.3,
-        "liveWinProbability": 83.9
+        "winProbability": 82.0,
+        "liveWinProbability": 91.7
       },
-      "spread": 12.2,
-      "spreadLabel": "Team Gnomeington -12.2",
-      "openingSpreadLabel": "Team Gnomeington -12.2",
-      "impliedTotal": 237.8,
-      "openingImpliedTotal": 237.8,
+      "spread": 15.0,
+      "spreadLabel": "Team Gnomeington -15.0",
+      "openingSpreadLabel": "Team Gnomeington -15.0",
+      "impliedTotal": 235.0,
+      "openingImpliedTotal": 235.0,
       "flavor": "Team Gnomeington has room for error. Team DRockefeller needs an outlier from Drake Maye and a win in the wide receivers battle.",
       "gameShift": null,
       "tacticalAnalysis": {
         "headline": "Josh Allen sets the pace; Drake Maye carries the counterpunch",
-        "breakdown": "The current-season model separates these teams by 12.2 points, with Team Gnomeington holding its cleanest advantage at wide receivers (+27.0 pts). Team DRockefeller's best answer runs through the RB room. The heaviest viewing window is PIT at TB on CBS \u00b7 local market with 38.4 points at stake.",
+        "breakdown": "The current-season model separates these teams by 15.0 points, with Team Gnomeington holding its cleanest advantage at wide receivers (+27.0 pts). Team DRockefeller's best answer runs through the TE room. The heaviest viewing window is PIT at TB on CBS \u00b7 local market with 38.4 points at stake.",
         "keyVariables": [
           "Drake Maye (18.9) and Josh Allen (21.6) are the headline scorers.",
           "The largest positional separation is wide receivers: Team Gnomeington +27.0 pts.",
-          "Team DRockefeller needs its RB strength to beat projection to erase a 12.2-point gap.",
+          "Team DRockefeller needs its TE strength to beat projection to erase a 15.0-point gap.",
           "Team DRockefeller carries 2 active roster health flag(s).",
           "Team Gnomeington carries 2 active roster health flag(s)."
         ]
@@ -494,9 +494,9 @@
         },
         {
           "category": "Kicker",
-          "advantage": "Team DRockefeller",
-          "margin": "+0.5 pts",
-          "narrative": "The model gives Team DRockefeller the kicker edge."
+          "advantage": "Team Gnomeington",
+          "margin": "+2.3 pts",
+          "narrative": "The model gives Team Gnomeington the kicker edge."
         },
         {
           "category": "Defense",
@@ -512,13 +512,12 @@
           "network": "Prime Video \u00b7 NFL+",
           "gameMatchup": "SEA at DEN",
           "team1Starters": [
-            "RJ Harvey (RB)",
-            "Jason Myers (K)"
+            "RJ Harvey (RB)"
           ],
           "team2Starters": [],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 19.7,
-          "windowAnalysis": "Team DRockefeller has the larger starter footprint in this game; 19.7 fantasy points at stake."
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 10.2,
+          "windowAnalysis": "Team DRockefeller has the larger starter footprint in this game; 10.2 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T09:30:00-04:00",
@@ -568,12 +567,13 @@
           "network": "FOX \u00b7 local market",
           "gameMatchup": "CHI at ATL",
           "team1Starters": [
-            "Drake London (WR)"
+            "Drake London (WR)",
+            "Nick Folk (K)"
           ],
           "team2Starters": [],
           "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 13.5,
-          "windowAnalysis": "Team DRockefeller has the larger starter footprint in this game; 13.5 fantasy points at stake."
+          "fantasyPointsAtStake": 20.2,
+          "windowAnalysis": "Team DRockefeller has the larger starter footprint in this game; 20.2 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
@@ -677,7 +677,7 @@
       "matchupId": 2,
       "week": 6,
       "title": "Gridiron Gorillas vs Team akwelch3492",
-      "subtitle": "Power #12 meets Power #10 in a 3.4-point opening line.",
+      "subtitle": "Power #12 meets Power #10 in a 7.1-point opening line.",
       "isMarquee": false,
       "hasLiveResults": false,
       "team1": {
@@ -685,12 +685,12 @@
         "name": "Gridiron Gorillas",
         "manager": "sduda351",
         "powerRank": 12,
-        "powerScore": 56.3,
-        "grade": "C-",
-        "projected": 88.1,
+        "powerScore": 62.0,
+        "grade": "C",
+        "projected": 80.8,
         "actualScore": 0,
-        "remainingProjected": 88.2,
-        "liveProjectedTotal": 88.2,
+        "remainingProjected": 80.9,
+        "liveProjectedTotal": 80.9,
         "startersPlayedCount": 0,
         "startersRemainingCount": 10,
         "keyPlayer": "Patrick Mahomes",
@@ -716,24 +716,6 @@
           },
           {
             "slot": "RB1",
-            "player": "Quinshon Judkins",
-            "playerId": "12512",
-            "position": "RB",
-            "nflTeam": "CLE",
-            "projectedPoints": 12.9,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 12.9 pts",
-            "matchup": "vs BAL",
-            "kickoff": "Sunday \u00b7 1:00 PM ET",
-            "network": "CBS \u00b7 local market",
-            "injuryStatus": "Questionable",
-            "note": "12.9-point model share in this lineup; questionable entering Week 6."
-          },
-          {
-            "slot": "RB2",
             "player": "Rhamondre Stevenson",
             "playerId": "7611",
             "position": "RB",
@@ -749,6 +731,24 @@
             "network": "CBS \u00b7 local market",
             "injuryStatus": "Healthy",
             "note": "11.0-point model share in this lineup; healthy entering Week 6."
+          },
+          {
+            "slot": "RB2",
+            "player": "Roschon Johnson",
+            "playerId": "10235",
+            "position": "RB",
+            "nflTeam": "CHI",
+            "projectedPoints": 5.6,
+            "hasPlayed": false,
+            "actualPoints": null,
+            "delta": null,
+            "performance": "upcoming",
+            "statusNote": "Upcoming \u00b7 Projected 5.6 pts",
+            "matchup": "@ ATL",
+            "kickoff": "Sunday \u00b7 1:00 PM ET",
+            "network": "FOX \u00b7 local market",
+            "injuryStatus": "Healthy",
+            "note": "5.6-point model share in this lineup; healthy entering Week 6."
           },
           {
             "slot": "WR1",
@@ -878,13 +878,13 @@
           }
         ],
         "strongestRoom": "TE",
-        "weakestRoom": "WR",
+        "weakestRoom": "QB",
         "injuryFlags": [
           {
             "player": "Quinshon Judkins",
             "status": "Questionable",
             "note": "",
-            "starter": true
+            "starter": false
           },
           {
             "player": "Jordyn Tyson",
@@ -917,20 +917,20 @@
             "starter": false
           }
         ],
-        "winProbability": 41.8,
-        "liveWinProbability": 41.0
+        "winProbability": 33.0,
+        "liveWinProbability": 30.7
       },
       "team2": {
         "rosterId": 10,
         "name": "Team akwelch3492",
         "manager": "akwelch3492",
         "powerRank": 10,
-        "powerScore": 70.6,
-        "grade": "C+",
-        "projected": 91.5,
+        "powerScore": 76.1,
+        "grade": "B-",
+        "projected": 87.9,
         "actualScore": 0,
-        "remainingProjected": 91.4,
-        "liveProjectedTotal": 91.4,
+        "remainingProjected": 87.8,
+        "liveProjectedTotal": 87.8,
         "startersPlayedCount": 0,
         "startersRemainingCount": 10,
         "keyPlayer": "Puka Nacua",
@@ -1064,61 +1064,61 @@
           },
           {
             "slot": "TE",
-            "player": "Sam LaPorta",
-            "playerId": "10859",
+            "player": "Darren Waller",
+            "playerId": "2505",
             "position": "TE",
-            "nflTeam": "DET",
-            "projectedPoints": 8.8,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 8.8 pts",
-            "matchup": "Schedule unavailable",
-            "kickoff": "TBD",
-            "network": "TBD",
-            "injuryStatus": "Healthy",
-            "note": "8.8-point model share in this lineup; healthy entering Week 6."
-          },
-          {
-            "slot": "K",
-            "player": "Harrison Mevis",
-            "playerId": "12015",
-            "position": "K",
-            "nflTeam": "LAR",
-            "projectedPoints": 8.5,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 8.5 pts",
-            "matchup": "vs ARI",
-            "kickoff": "Sunday \u00b7 4:05 PM ET",
-            "network": "FOX \u00b7 local market",
-            "injuryStatus": "Healthy",
-            "note": "8.5-point model share in this lineup; healthy entering Week 6."
-          },
-          {
-            "slot": "DEF",
-            "player": "Player GB",
-            "playerId": "GB",
-            "position": "DEF",
-            "nflTeam": "GB",
+            "nflTeam": "CAR",
             "projectedPoints": 5.6,
             "hasPlayed": false,
             "actualPoints": null,
             "delta": null,
             "performance": "upcoming",
             "statusNote": "Upcoming \u00b7 Projected 5.6 pts",
-            "matchup": "vs DAL",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
-            "network": "NBC \u00b7 Peacock \u00b7 NFL+",
+            "matchup": "@ PHI",
+            "kickoff": "Sunday \u00b7 1:00 PM ET",
+            "network": "FOX \u00b7 local market",
+            "injuryStatus": "Healthy",
+            "note": "5.6-point model share in this lineup; healthy entering Week 6."
+          },
+          {
+            "slot": "K",
+            "player": "Harrison Butker",
+            "playerId": "4227",
+            "position": "K",
+            "nflTeam": "KC",
+            "projectedPoints": 8.1,
+            "hasPlayed": false,
+            "actualPoints": null,
+            "delta": null,
+            "performance": "upcoming",
+            "statusNote": "Upcoming \u00b7 Projected 8.1 pts",
+            "matchup": "vs LAC",
+            "kickoff": "Sunday \u00b7 4:25 PM ET",
+            "network": "CBS \u00b7 local market",
+            "injuryStatus": "Healthy",
+            "note": "8.1-point model share in this lineup; healthy entering Week 6."
+          },
+          {
+            "slot": "DEF",
+            "player": "Player NO",
+            "playerId": "NO",
+            "position": "DEF",
+            "nflTeam": "NO",
+            "projectedPoints": 5.6,
+            "hasPlayed": false,
+            "actualPoints": null,
+            "delta": null,
+            "performance": "upcoming",
+            "statusNote": "Upcoming \u00b7 Projected 5.6 pts",
+            "matchup": "@ NYG",
+            "kickoff": "Sunday \u00b7 1:00 PM ET",
+            "network": "FOX \u00b7 local market",
             "injuryStatus": "Healthy",
             "note": "5.6-point model share in this lineup; healthy entering Week 6."
           }
         ],
-        "strongestRoom": "QB",
-        "weakestRoom": "TE",
+        "strongestRoom": "WR",
+        "weakestRoom": "QB",
         "injuryFlags": [
           {
             "player": "Malik Nabers",
@@ -1127,31 +1127,37 @@
             "starter": true
           },
           {
+            "player": "Dameon Pierce",
+            "status": "Questionable",
+            "note": "",
+            "starter": false
+          },
+          {
             "player": "Puka Nacua",
             "status": "Questionable",
             "note": "",
             "starter": true
           }
         ],
-        "winProbability": 58.2,
-        "liveWinProbability": 59.0
+        "winProbability": 67.0,
+        "liveWinProbability": 69.3
       },
-      "spread": 3.4,
-      "spreadLabel": "Team akwelch3492 -3.4",
-      "openingSpreadLabel": "Team akwelch3492 -3.4",
-      "impliedTotal": 179.6,
-      "openingImpliedTotal": 179.6,
+      "spread": 7.1,
+      "spreadLabel": "Team akwelch3492 -7.1",
+      "openingSpreadLabel": "Team akwelch3492 -7.1",
+      "impliedTotal": 168.7,
+      "openingImpliedTotal": 168.7,
       "flavor": "Team akwelch3492 enters ahead behind Puka Nacua; Gridiron Gorillas can flip it through its tight end advantage.",
       "gameShift": null,
       "tacticalAnalysis": {
         "headline": "Puka Nacua sets the pace; Patrick Mahomes carries the counterpunch",
-        "breakdown": "The current-season model separates these teams by 3.4 points, with Team akwelch3492 holding its cleanest advantage at wide receivers (+22.0 pts). Gridiron Gorillas's best answer runs through the TE room. The heaviest viewing window is ARI at LAR on FOX \u00b7 local market with 34.4 points at stake.",
+        "breakdown": "The current-season model separates these teams by 7.1 points, with Team akwelch3492 holding its cleanest advantage at wide receivers (+22.0 pts). Gridiron Gorillas's best answer runs through the TE room. The heaviest viewing window is NO at NYG on FOX \u00b7 local market with 34.1 points at stake.",
         "keyVariables": [
           "Patrick Mahomes (14.0) and Puka Nacua (15.8) are the headline scorers.",
           "The largest positional separation is wide receivers: Team akwelch3492 +22.0 pts.",
-          "Gridiron Gorillas needs its TE strength to beat projection to erase a 3.4-point gap.",
+          "Gridiron Gorillas needs its TE strength to beat projection to erase a 7.1-point gap.",
           "Gridiron Gorillas carries 6 active roster health flag(s).",
-          "Team akwelch3492 carries 2 active roster health flag(s)."
+          "Team akwelch3492 carries 3 active roster health flag(s)."
         ]
       },
       "positionalEdges": [
@@ -1164,7 +1170,7 @@
         {
           "category": "Running backs",
           "advantage": "Gridiron Gorillas",
-          "margin": "+7.8 pts",
+          "margin": "+0.5 pts",
           "narrative": "The model gives Gridiron Gorillas the running backs edge."
         },
         {
@@ -1176,13 +1182,13 @@
         {
           "category": "Tight end",
           "advantage": "Gridiron Gorillas",
-          "margin": "+11.0 pts",
+          "margin": "+14.2 pts",
           "narrative": "The model gives Gridiron Gorillas the tight end edge."
         },
         {
           "category": "Kicker",
           "advantage": "Team akwelch3492",
-          "margin": "+1.8 pts",
+          "margin": "+1.4 pts",
           "narrative": "The model gives Team akwelch3492 the kicker edge."
         },
         {
@@ -1197,21 +1203,6 @@
           "kickoffAt": "2026-10-18T13:00:00-04:00",
           "timeSlot": "Sunday \u00b7 1:00 PM ET",
           "network": "CBS \u00b7 local market",
-          "gameMatchup": "BAL at CLE",
-          "team1Starters": [
-            "Quinshon Judkins (RB)",
-            "Denzel Boston (WR)",
-            "Player BAL (DEF)"
-          ],
-          "team2Starters": [],
-          "leverageLevel": "High",
-          "fantasyPointsAtStake": 24.4,
-          "windowAnalysis": "Gridiron Gorillas has the larger starter footprint in this game; 24.4 fantasy points at stake."
-        },
-        {
-          "kickoffAt": "2026-10-18T13:00:00-04:00",
-          "timeSlot": "Sunday \u00b7 1:00 PM ET",
-          "network": "CBS \u00b7 local market",
           "gameMatchup": "NYJ at NE",
           "team1Starters": [
             "Rhamondre Stevenson (RB)"
@@ -1220,6 +1211,19 @@
           "leverageLevel": "Low",
           "fantasyPointsAtStake": 11.0,
           "windowAnalysis": "Gridiron Gorillas has the larger starter footprint in this game; 11.0 fantasy points at stake."
+        },
+        {
+          "kickoffAt": "2026-10-18T13:00:00-04:00",
+          "timeSlot": "Sunday \u00b7 1:00 PM ET",
+          "network": "FOX \u00b7 local market",
+          "gameMatchup": "CHI at ATL",
+          "team1Starters": [
+            "Roschon Johnson (RB)"
+          ],
+          "team2Starters": [],
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 5.6,
+          "windowAnalysis": "Gridiron Gorillas has the larger starter footprint in this game; 5.6 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
@@ -1237,6 +1241,20 @@
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
           "timeSlot": "Sunday \u00b7 1:00 PM ET",
+          "network": "CBS \u00b7 local market",
+          "gameMatchup": "BAL at CLE",
+          "team1Starters": [
+            "Denzel Boston (WR)",
+            "Player BAL (DEF)"
+          ],
+          "team2Starters": [],
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 11.5,
+          "windowAnalysis": "Gridiron Gorillas has the larger starter footprint in this game; 11.5 fantasy points at stake."
+        },
+        {
+          "kickoffAt": "2026-10-18T13:00:00-04:00",
+          "timeSlot": "Sunday \u00b7 1:00 PM ET",
           "network": "FOX \u00b7 local market",
           "gameMatchup": "NO at NYG",
           "team1Starters": [
@@ -1245,11 +1263,12 @@
           ],
           "team2Starters": [
             "Kendre Miller (RB)",
-            "Malik Nabers (WR)"
+            "Malik Nabers (WR)",
+            "Player NO (DEF)"
           ],
           "leverageLevel": "High",
-          "fantasyPointsAtStake": 28.5,
-          "windowAnalysis": "Both sides have equal starter exposure in this game; 28.5 fantasy points at stake."
+          "fantasyPointsAtStake": 34.1,
+          "windowAnalysis": "Team akwelch3492 has the larger starter footprint in this game; 34.1 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
@@ -1265,6 +1284,19 @@
           "windowAnalysis": "Team akwelch3492 has the larger starter footprint in this game; 10.3 fantasy points at stake."
         },
         {
+          "kickoffAt": "2026-10-18T13:00:00-04:00",
+          "timeSlot": "Sunday \u00b7 1:00 PM ET",
+          "network": "FOX \u00b7 local market",
+          "gameMatchup": "CAR at PHI",
+          "team1Starters": [],
+          "team2Starters": [
+            "Darren Waller (TE)"
+          ],
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 5.6,
+          "windowAnalysis": "Team akwelch3492 has the larger starter footprint in this game; 5.6 fantasy points at stake."
+        },
+        {
           "kickoffAt": "2026-10-18T16:05:00-04:00",
           "timeSlot": "Sunday \u00b7 4:05 PM ET",
           "network": "FOX \u00b7 local market",
@@ -1272,12 +1304,11 @@
           "team1Starters": [],
           "team2Starters": [
             "Puka Nacua (WR)",
-            "Michael Wilson (WR)",
-            "Harrison Mevis (K)"
+            "Michael Wilson (WR)"
           ],
           "leverageLevel": "High",
-          "fantasyPointsAtStake": 34.4,
-          "windowAnalysis": "Team akwelch3492 has the larger starter footprint in this game; 34.4 fantasy points at stake."
+          "fantasyPointsAtStake": 25.9,
+          "windowAnalysis": "Team akwelch3492 has the larger starter footprint in this game; 25.9 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T16:25:00-04:00",
@@ -1287,10 +1318,12 @@
           "team1Starters": [
             "Patrick Mahomes (QB)"
           ],
-          "team2Starters": [],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 14.0,
-          "windowAnalysis": "Gridiron Gorillas has the larger starter footprint in this game; 14.0 fantasy points at stake."
+          "team2Starters": [
+            "Harrison Butker (K)"
+          ],
+          "leverageLevel": "High",
+          "fantasyPointsAtStake": 22.1,
+          "windowAnalysis": "Both sides have equal starter exposure in this game; 22.1 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T16:25:00-04:00",
@@ -1315,12 +1348,11 @@
           ],
           "team2Starters": [
             "Jordan Love (QB)",
-            "MarShawn Lloyd (RB)",
-            "Player GB (DEF)"
+            "MarShawn Lloyd (RB)"
           ],
           "leverageLevel": "High",
-          "fantasyPointsAtStake": 27.6,
-          "windowAnalysis": "Team akwelch3492 has the larger starter footprint in this game; 27.6 fantasy points at stake."
+          "fantasyPointsAtStake": 22.0,
+          "windowAnalysis": "Team akwelch3492 has the larger starter footprint in this game; 22.0 fantasy points at stake."
         }
       ]
     },
@@ -1328,20 +1360,20 @@
       "matchupId": 3,
       "week": 6,
       "title": "Team kong58 vs Team bubberdubber",
-      "subtitle": "Power #5 meets Power #8 in a 6.8-point opening line.",
+      "subtitle": "Power #4 meets Power #9 in a 13.9-point opening line.",
       "isMarquee": false,
       "hasLiveResults": false,
       "team1": {
         "rosterId": 4,
         "name": "Team kong58",
         "manager": "kong58",
-        "powerRank": 5,
-        "powerScore": 79.0,
+        "powerRank": 4,
+        "powerScore": 80.9,
         "grade": "B",
-        "projected": 112.4,
+        "projected": 119.5,
         "actualScore": 0,
-        "remainingProjected": 112.4,
-        "liveProjectedTotal": 112.4,
+        "remainingProjected": 119.5,
+        "liveProjectedTotal": 119.5,
         "startersPlayedCount": 0,
         "startersRemainingCount": 10,
         "keyPlayer": "Brock Purdy",
@@ -1385,6 +1417,24 @@
           },
           {
             "slot": "RB2",
+            "player": "Breece Hall",
+            "playerId": "8155",
+            "position": "RB",
+            "nflTeam": "NYJ",
+            "projectedPoints": 13.8,
+            "hasPlayed": false,
+            "actualPoints": null,
+            "delta": null,
+            "performance": "upcoming",
+            "statusNote": "Upcoming \u00b7 Projected 13.8 pts",
+            "matchup": "@ NE",
+            "kickoff": "Sunday \u00b7 1:00 PM ET",
+            "network": "CBS \u00b7 local market",
+            "injuryStatus": "Questionable",
+            "note": "13.8-point model share in this lineup; questionable entering Week 6."
+          },
+          {
+            "slot": "RB3",
             "player": "Bhayshul Tuten",
             "playerId": "12490",
             "position": "RB",
@@ -1400,24 +1450,6 @@
             "network": "NFL Network \u00b7 NFL+",
             "injuryStatus": "Healthy",
             "note": "12.2-point model share in this lineup; healthy entering Week 6."
-          },
-          {
-            "slot": "RB3",
-            "player": "Tyler Allgeier",
-            "playerId": "8132",
-            "position": "RB",
-            "nflTeam": "ARI",
-            "projectedPoints": 6.7,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 6.7 pts",
-            "matchup": "@ LAR",
-            "kickoff": "Sunday \u00b7 4:05 PM ET",
-            "network": "FOX \u00b7 local market",
-            "injuryStatus": "Healthy",
-            "note": "6.7-point model share in this lineup; healthy entering Week 6."
           },
           {
             "slot": "WR1",
@@ -1559,19 +1591,19 @@
             "player": "Breece Hall",
             "status": "Questionable",
             "note": "",
-            "starter": false
+            "starter": true
           }
         ],
-        "winProbability": 66.3,
-        "liveWinProbability": 69.0
+        "winProbability": 82.0,
+        "liveWinProbability": 88.9
       },
       "team2": {
         "rosterId": 7,
         "name": "Team bubberdubber",
         "manager": "bubberdubber",
-        "powerRank": 8,
-        "powerScore": 74.7,
-        "grade": "B-",
+        "powerRank": 9,
+        "powerScore": 77.4,
+        "grade": "B",
         "projected": 105.6,
         "actualScore": 0,
         "remainingProjected": 105.6,
@@ -1778,12 +1810,6 @@
             "starter": true
           },
           {
-            "player": "Makai Lemon",
-            "status": "Questionable",
-            "note": "",
-            "starter": false
-          },
-          {
             "player": "Tyreek Hill",
             "status": "Questionable",
             "note": "Surgery",
@@ -1796,25 +1822,25 @@
             "starter": false
           }
         ],
-        "winProbability": 33.7,
-        "liveWinProbability": 31.0
+        "winProbability": 18.0,
+        "liveWinProbability": 11.1
       },
-      "spread": 6.8,
-      "spreadLabel": "Team kong58 -6.8",
-      "openingSpreadLabel": "Team kong58 -6.8",
-      "impliedTotal": 218.0,
-      "openingImpliedTotal": 218.0,
-      "flavor": "Team kong58 enters ahead behind Brock Purdy; Team bubberdubber can flip it through its tight end advantage.",
+      "spread": 13.9,
+      "spreadLabel": "Team kong58 -13.9",
+      "openingSpreadLabel": "Team kong58 -13.9",
+      "impliedTotal": 225.1,
+      "openingImpliedTotal": 225.1,
+      "flavor": "Team kong58 has room for error. Team bubberdubber needs an outlier from Trevor Lawrence and a win in the running backs battle.",
       "gameShift": null,
       "tacticalAnalysis": {
         "headline": "Brock Purdy sets the pace; Trevor Lawrence carries the counterpunch",
-        "breakdown": "The current-season model separates these teams by 6.8 points, with Team kong58 holding its cleanest advantage at running backs (+14.5 pts). Team bubberdubber's best answer runs through the WR room. The heaviest viewing window is WAS at SF on ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+ with 65.5 points at stake.",
+        "breakdown": "The current-season model separates these teams by 13.9 points, with Team kong58 holding its cleanest advantage at running backs (+21.6 pts). Team bubberdubber's best answer runs through the WR room. The heaviest viewing window is WAS at SF on ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+ with 65.5 points at stake.",
         "keyVariables": [
           "Brock Purdy (17.6) and Trevor Lawrence (17.7) are the headline scorers.",
-          "The largest positional separation is running backs: Team kong58 +14.5 pts.",
-          "Team bubberdubber needs its WR strength to beat projection to erase a 6.8-point gap.",
+          "The largest positional separation is running backs: Team kong58 +21.6 pts.",
+          "Team bubberdubber needs its WR strength to beat projection to erase a 13.9-point gap.",
           "Team kong58 carries 5 active roster health flag(s).",
-          "Team bubberdubber carries 5 active roster health flag(s)."
+          "Team bubberdubber carries 4 active roster health flag(s)."
         ]
       },
       "positionalEdges": [
@@ -1827,7 +1853,7 @@
         {
           "category": "Running backs",
           "advantage": "Team kong58",
-          "margin": "+14.5 pts",
+          "margin": "+21.6 pts",
           "narrative": "The model gives Team kong58 the running backs edge."
         },
         {
@@ -1891,14 +1917,16 @@
           "timeSlot": "Sunday \u00b7 1:00 PM ET",
           "network": "CBS \u00b7 local market",
           "gameMatchup": "NYJ at NE",
-          "team1Starters": [],
+          "team1Starters": [
+            "Breece Hall (RB)"
+          ],
           "team2Starters": [
             "Braelon Allen (RB)",
             "Garrett Wilson (WR)"
           ],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 17.1,
-          "windowAnalysis": "Team bubberdubber has the larger starter footprint in this game; 17.1 fantasy points at stake."
+          "leverageLevel": "High",
+          "fantasyPointsAtStake": 30.9,
+          "windowAnalysis": "Team bubberdubber has the larger starter footprint in this game; 30.9 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
@@ -1932,15 +1960,14 @@
           "network": "FOX \u00b7 local market",
           "gameMatchup": "ARI at LAR",
           "team1Starters": [
-            "Tyler Allgeier (RB)",
             "Davante Adams (WR)"
           ],
           "team2Starters": [
             "Trey McBride (TE)"
           ],
           "leverageLevel": "High",
-          "fantasyPointsAtStake": 31.1,
-          "windowAnalysis": "Team kong58 has the larger starter footprint in this game; 31.1 fantasy points at stake."
+          "fantasyPointsAtStake": 24.4,
+          "windowAnalysis": "Both sides have equal starter exposure in this game; 24.4 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T20:20:00-04:00",
@@ -1979,7 +2006,7 @@
       "matchupId": 4,
       "week": 6,
       "title": "Team arkinsjt vs Team mtrebing31",
-      "subtitle": "Power #1 meets Power #6 in a 21.6-point opening line.",
+      "subtitle": "Power #1 meets Power #8 in a 23.6-point opening line.",
       "isMarquee": false,
       "hasLiveResults": false,
       "team1": {
@@ -1987,7 +2014,7 @@
         "name": "Team arkinsjt",
         "manager": "arkinsjt",
         "powerRank": 1,
-        "powerScore": 90.5,
+        "powerScore": 92.6,
         "grade": "A",
         "projected": 117.1,
         "actualScore": 0,
@@ -2202,17 +2229,17 @@
         "rosterId": 9,
         "name": "Team mtrebing31",
         "manager": "mtrebing31",
-        "powerRank": 6,
-        "powerScore": 76.6,
-        "grade": "B-",
-        "projected": 95.5,
+        "powerRank": 8,
+        "powerScore": 77.7,
+        "grade": "B",
+        "projected": 93.5,
         "actualScore": 0,
-        "remainingProjected": 95.6,
-        "liveProjectedTotal": 95.6,
+        "remainingProjected": 93.5,
+        "liveProjectedTotal": 93.5,
         "startersPlayedCount": 0,
-        "startersRemainingCount": 10,
-        "keyPlayer": "Cam Skattebo",
-        "keyPlayerProjection": 14.3,
+        "startersRemainingCount": 8,
+        "keyPlayer": "Saquon Barkley",
+        "keyPlayerProjection": 14.5,
         "starters": [
           {
             "slot": "QB",
@@ -2234,6 +2261,24 @@
           },
           {
             "slot": "RB1",
+            "player": "Saquon Barkley",
+            "playerId": "4866",
+            "position": "RB",
+            "nflTeam": "PHI",
+            "projectedPoints": 14.5,
+            "hasPlayed": false,
+            "actualPoints": null,
+            "delta": null,
+            "performance": "upcoming",
+            "statusNote": "Upcoming \u00b7 Projected 14.5 pts",
+            "matchup": "vs CAR",
+            "kickoff": "Sunday \u00b7 1:00 PM ET",
+            "network": "FOX \u00b7 local market",
+            "injuryStatus": "Healthy",
+            "note": "14.5-point model share in this lineup; healthy entering Week 6."
+          },
+          {
+            "slot": "RB2",
             "player": "Cam Skattebo",
             "playerId": "12481",
             "position": "RB",
@@ -2251,7 +2296,7 @@
             "note": "14.3-point model share in this lineup; healthy entering Week 6."
           },
           {
-            "slot": "RB2",
+            "slot": "RB3",
             "player": "Bucky Irving",
             "playerId": "11584",
             "position": "RB",
@@ -2269,7 +2314,7 @@
             "note": "12.6-point model share in this lineup; healthy entering Week 6."
           },
           {
-            "slot": "RB3",
+            "slot": "RB4",
             "player": "D'Andre Swift",
             "playerId": "6790",
             "position": "RB",
@@ -2323,76 +2368,22 @@
             "note": "6.5-point model share in this lineup; healthy entering Week 6."
           },
           {
-            "slot": "WR3",
-            "player": "Khalil Shakir",
-            "playerId": "8134",
-            "position": "WR",
-            "nflTeam": "BUF",
-            "projectedPoints": 6.0,
+            "slot": "TE",
+            "player": "Travis Kelce",
+            "playerId": "1466",
+            "position": "TE",
+            "nflTeam": "KC",
+            "projectedPoints": 8.5,
             "hasPlayed": false,
             "actualPoints": null,
             "delta": null,
             "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 6.0 pts",
-            "matchup": "@ LV",
+            "statusNote": "Upcoming \u00b7 Projected 8.5 pts",
+            "matchup": "vs LAC",
             "kickoff": "Sunday \u00b7 4:25 PM ET",
             "network": "CBS \u00b7 local market",
             "injuryStatus": "Healthy",
-            "note": "6.0-point model share in this lineup; healthy entering Week 6."
-          },
-          {
-            "slot": "TE",
-            "player": "T.J. Hockenson",
-            "playerId": "5844",
-            "position": "TE",
-            "nflTeam": "MIN",
-            "projectedPoints": 5.9,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 5.9 pts",
-            "matchup": "Schedule unavailable",
-            "kickoff": "TBD",
-            "network": "TBD",
-            "injuryStatus": "Healthy",
-            "note": "5.9-point model share in this lineup; healthy entering Week 6."
-          },
-          {
-            "slot": "K",
-            "player": "Evan McPherson",
-            "playerId": "7839",
-            "position": "K",
-            "nflTeam": "CIN",
-            "projectedPoints": 7.6,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 7.6 pts",
-            "matchup": "Schedule unavailable",
-            "kickoff": "TBD",
-            "network": "TBD",
-            "injuryStatus": "Healthy",
-            "note": "7.6-point model share in this lineup; healthy entering Week 6."
-          },
-          {
-            "slot": "DEF",
-            "player": "Player MIN",
-            "playerId": "MIN",
-            "position": "DEF",
-            "nflTeam": "MIN",
-            "projectedPoints": 5.6,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 5.6 pts",
-            "matchup": "Schedule unavailable",
-            "kickoff": "TBD",
-            "network": "TBD",
-            "injuryStatus": "Healthy",
-            "note": "5.6-point model share in this lineup; healthy entering Week 6."
+            "note": "8.5-point model share in this lineup; healthy entering Week 6."
           }
         ],
         "strongestRoom": "QB",
@@ -2420,20 +2411,20 @@
         "winProbability": 18.0,
         "liveWinProbability": 5.0
       },
-      "spread": 21.6,
-      "spreadLabel": "Team arkinsjt -21.6",
-      "openingSpreadLabel": "Team arkinsjt -21.6",
-      "impliedTotal": 212.6,
-      "openingImpliedTotal": 212.6,
-      "flavor": "Team arkinsjt has room for error. Team mtrebing31 needs an outlier from Cam Skattebo and a win in the wide receivers battle.",
+      "spread": 23.6,
+      "spreadLabel": "Team arkinsjt -23.6",
+      "openingSpreadLabel": "Team arkinsjt -23.6",
+      "impliedTotal": 210.6,
+      "openingImpliedTotal": 210.6,
+      "flavor": "Team arkinsjt has room for error. Team mtrebing31 needs an outlier from Saquon Barkley and a win in the wide receivers battle.",
       "gameShift": null,
       "tacticalAnalysis": {
-        "headline": "Jalen Hurts sets the pace; Cam Skattebo carries the counterpunch",
-        "breakdown": "The current-season model separates these teams by 21.6 points, with Team arkinsjt holding its cleanest advantage at wide receivers (+11.7 pts). Team mtrebing31's best answer runs through the QB room. The heaviest viewing window is LAC at KC on CBS \u00b7 local market with 30.3 points at stake.",
+        "headline": "Jalen Hurts sets the pace; Saquon Barkley carries the counterpunch",
+        "breakdown": "The current-season model separates these teams by 23.6 points, with Team arkinsjt holding its cleanest advantage at wide receivers (+17.7 pts). Team mtrebing31's best answer runs through the QB room. The heaviest viewing window is CAR at PHI on FOX \u00b7 local market with 39.0 points at stake.",
         "keyVariables": [
-          "Jalen Hurts (18.9) and Cam Skattebo (14.3) are the headline scorers.",
-          "The largest positional separation is wide receivers: Team arkinsjt +11.7 pts.",
-          "Team mtrebing31 needs its QB strength to beat projection to erase a 21.6-point gap.",
+          "Jalen Hurts (18.9) and Saquon Barkley (14.5) are the headline scorers.",
+          "The largest positional separation is wide receivers: Team arkinsjt +17.7 pts.",
+          "Team mtrebing31 needs its QB strength to beat projection to erase a 23.6-point gap.",
           "Team arkinsjt carries 2 active roster health flag(s).",
           "Team mtrebing31 carries 3 active roster health flag(s)."
         ]
@@ -2448,32 +2439,32 @@
         {
           "category": "Running backs",
           "advantage": "Team mtrebing31",
-          "margin": "+1.0 pts",
+          "margin": "+15.5 pts",
           "narrative": "The model gives Team mtrebing31 the running backs edge."
         },
         {
           "category": "Wide receivers",
           "advantage": "Team arkinsjt",
-          "margin": "+11.7 pts",
+          "margin": "+17.7 pts",
           "narrative": "The model gives Team arkinsjt the wide receivers edge."
         },
         {
           "category": "Tight end",
-          "advantage": "Team arkinsjt",
-          "margin": "+1.8 pts",
-          "narrative": "The model gives Team arkinsjt the tight end edge."
+          "advantage": "Team mtrebing31",
+          "margin": "+0.8 pts",
+          "narrative": "The model gives Team mtrebing31 the tight end edge."
         },
         {
           "category": "Kicker",
           "advantage": "Team arkinsjt",
-          "margin": "+1.0 pts",
+          "margin": "+8.6 pts",
           "narrative": "The model gives Team arkinsjt the kicker edge."
         },
         {
           "category": "Defense",
-          "advantage": "Even",
-          "margin": "Even",
-          "narrative": "The defense projection is effectively even."
+          "advantage": "Team arkinsjt",
+          "margin": "+5.6 pts",
+          "narrative": "The model gives Team arkinsjt the defense edge."
         }
       ],
       "tvSchedule": [
@@ -2513,10 +2504,12 @@
             "Jalen Hurts (QB)",
             "Player PHI (DEF)"
           ],
-          "team2Starters": [],
-          "leverageLevel": "High",
-          "fantasyPointsAtStake": 24.5,
-          "windowAnalysis": "Team arkinsjt has the larger starter footprint in this game; 24.5 fantasy points at stake."
+          "team2Starters": [
+            "Saquon Barkley (RB)"
+          ],
+          "leverageLevel": "Decisive",
+          "fantasyPointsAtStake": 39.0,
+          "windowAnalysis": "Team arkinsjt has the larger starter footprint in this game; 39.0 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
@@ -2583,11 +2576,12 @@
             "Omarion Hampton (RB)"
           ],
           "team2Starters": [
-            "Ladd McConkey (WR)"
+            "Ladd McConkey (WR)",
+            "Travis Kelce (TE)"
           ],
-          "leverageLevel": "High",
-          "fantasyPointsAtStake": 30.3,
-          "windowAnalysis": "Both sides have equal starter exposure in this game; 30.3 fantasy points at stake."
+          "leverageLevel": "Decisive",
+          "fantasyPointsAtStake": 38.8,
+          "windowAnalysis": "Team mtrebing31 has the larger starter footprint in this game; 38.8 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T16:25:00-04:00",
@@ -2597,12 +2591,10 @@
           "team1Starters": [
             "Dalton Kincaid (TE)"
           ],
-          "team2Starters": [
-            "Khalil Shakir (WR)"
-          ],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 13.7,
-          "windowAnalysis": "Both sides have equal starter exposure in this game; 13.7 fantasy points at stake."
+          "team2Starters": [],
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 7.7,
+          "windowAnalysis": "Team arkinsjt has the larger starter footprint in this game; 7.7 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T20:20:00-04:00",
@@ -2625,20 +2617,20 @@
       "matchupId": 5,
       "week": 6,
       "title": "Team jccbraves99 vs Texas Tunas",
-      "subtitle": "Power #7 meets Power #9 in a 7.6-point opening line.",
+      "subtitle": "Power #6 meets Power #7 in a 11.7-point opening line.",
       "isMarquee": false,
       "hasLiveResults": false,
       "team1": {
         "rosterId": 1,
         "name": "Team jccbraves99",
         "manager": "jccbraves99",
-        "powerRank": 7,
-        "powerScore": 75.6,
-        "grade": "B-",
-        "projected": 99.4,
+        "powerRank": 6,
+        "powerScore": 80.4,
+        "grade": "B",
+        "projected": 95.3,
         "actualScore": 0,
-        "remainingProjected": 99.5,
-        "liveProjectedTotal": 99.5,
+        "remainingProjected": 95.4,
+        "liveProjectedTotal": 95.4,
         "startersPlayedCount": 0,
         "startersRemainingCount": 10,
         "keyPlayer": "Bijan Robinson",
@@ -2736,21 +2728,21 @@
           },
           {
             "slot": "WR3",
-            "player": "Josh Downs",
-            "playerId": "9500",
+            "player": "Tre Tucker",
+            "playerId": "10213",
             "position": "WR",
-            "nflTeam": "IND",
-            "projectedPoints": 8.5,
+            "nflTeam": "LV",
+            "projectedPoints": 4.4,
             "hasPlayed": false,
             "actualPoints": null,
             "delta": null,
             "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 8.5 pts",
-            "matchup": "vs TEN",
-            "kickoff": "Sunday \u00b7 1:00 PM ET",
+            "statusNote": "Upcoming \u00b7 Projected 4.4 pts",
+            "matchup": "vs BUF",
+            "kickoff": "Sunday \u00b7 4:25 PM ET",
             "network": "CBS \u00b7 local market",
             "injuryStatus": "Healthy",
-            "note": "8.5-point model share in this lineup; healthy entering Week 6."
+            "note": "4.4-point model share in this lineup; healthy entering Week 6."
           },
           {
             "slot": "TE",
@@ -2841,16 +2833,16 @@
             "starter": true
           }
         ],
-        "winProbability": 31.8,
-        "liveWinProbability": 29.0
+        "winProbability": 21.9,
+        "liveWinProbability": 17.5
       },
       "team2": {
         "rosterId": 11,
         "name": "Texas Tunas",
         "manager": "mdwelch11",
-        "powerRank": 9,
-        "powerScore": 74.4,
-        "grade": "B-",
+        "powerRank": 7,
+        "powerScore": 78.2,
+        "grade": "B",
         "projected": 107.0,
         "actualScore": 0,
         "remainingProjected": 107.0,
@@ -3069,23 +3061,23 @@
             "starter": true
           }
         ],
-        "winProbability": 68.2,
-        "liveWinProbability": 71.0
+        "winProbability": 78.1,
+        "liveWinProbability": 82.5
       },
-      "spread": 7.6,
-      "spreadLabel": "Texas Tunas -7.6",
-      "openingSpreadLabel": "Texas Tunas -7.6",
-      "impliedTotal": 206.4,
-      "openingImpliedTotal": 206.4,
-      "flavor": "Texas Tunas enters ahead behind Joe Burrow; Team jccbraves99 can flip it through its running backs advantage.",
+      "spread": 11.7,
+      "spreadLabel": "Texas Tunas -11.7",
+      "openingSpreadLabel": "Texas Tunas -11.7",
+      "impliedTotal": 202.3,
+      "openingImpliedTotal": 202.3,
+      "flavor": "Texas Tunas has room for error. Team jccbraves99 needs an outlier from Bijan Robinson and a win in the running backs battle.",
       "gameShift": null,
       "tacticalAnalysis": {
         "headline": "Joe Burrow sets the pace; Bijan Robinson carries the counterpunch",
-        "breakdown": "The current-season model separates these teams by 7.6 points, with Texas Tunas holding its cleanest advantage at quarterback (+9.6 pts). Team jccbraves99's best answer runs through the RB room. The heaviest viewing window is TEN at IND on CBS \u00b7 local market with 28.1 points at stake.",
+        "breakdown": "The current-season model separates these teams by 11.7 points, with Texas Tunas holding its cleanest advantage at quarterback (+9.6 pts). Team jccbraves99's best answer runs through the RB room. The heaviest viewing window is ARI at LAR on FOX \u00b7 local market with 26.6 points at stake.",
         "keyVariables": [
           "Bijan Robinson (18.9) and Joe Burrow (17.8) are the headline scorers.",
           "The largest positional separation is running backs: Team jccbraves99 +13.1 pts.",
-          "Team jccbraves99 needs its RB strength to beat projection to erase a 7.6-point gap.",
+          "Team jccbraves99 needs its RB strength to beat projection to erase a 11.7-point gap.",
           "Team jccbraves99 carries 2 active roster health flag(s).",
           "Texas Tunas carries 4 active roster health flag(s)."
         ]
@@ -3106,7 +3098,7 @@
         {
           "category": "Wide receivers",
           "advantage": "Texas Tunas",
-          "margin": "+2.5 pts",
+          "margin": "+6.6 pts",
           "narrative": "The model gives Texas Tunas the wide receivers edge."
         },
         {
@@ -3175,16 +3167,15 @@
           "network": "CBS \u00b7 local market",
           "gameMatchup": "TEN at IND",
           "team1Starters": [
-            "Josh Downs (WR)",
             "Tyler Warren (TE)",
             "Spencer Shrader (K)"
           ],
           "team2Starters": [
             "Keenan Allen (WR)"
           ],
-          "leverageLevel": "High",
-          "fantasyPointsAtStake": 28.1,
-          "windowAnalysis": "Team jccbraves99 has the larger starter footprint in this game; 28.1 fantasy points at stake."
+          "leverageLevel": "Medium",
+          "fantasyPointsAtStake": 19.6,
+          "windowAnalysis": "Team jccbraves99 has the larger starter footprint in this game; 19.6 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
@@ -3248,12 +3239,13 @@
           "network": "CBS \u00b7 local market",
           "gameMatchup": "BUF at LV",
           "team1Starters": [
-            "Kirk Cousins (QB)"
+            "Kirk Cousins (QB)",
+            "Tre Tucker (WR)"
           ],
           "team2Starters": [],
-          "leverageLevel": "Low",
-          "fantasyPointsAtStake": 8.2,
-          "windowAnalysis": "Team jccbraves99 has the larger starter footprint in this game; 8.2 fantasy points at stake."
+          "leverageLevel": "Medium",
+          "fantasyPointsAtStake": 12.6,
+          "windowAnalysis": "Team jccbraves99 has the larger starter footprint in this game; 12.6 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T20:20:00-04:00",
@@ -3275,7 +3267,7 @@
       "matchupId": 6,
       "week": 6,
       "title": "Team mannyrsox24 vs rLee3D",
-      "subtitle": "Power #2 meets Power #11 in a 25.0-point opening line.",
+      "subtitle": "Power #2 meets Power #11 in a 43.1-point opening line.",
       "isMarquee": false,
       "hasLiveResults": false,
       "team1": {
@@ -3283,12 +3275,12 @@
         "name": "Team mannyrsox24",
         "manager": "mannyrsox24",
         "powerRank": 2,
-        "powerScore": 86.5,
-        "grade": "A-",
-        "projected": 111.1,
+        "powerScore": 90.3,
+        "grade": "A",
+        "projected": 108.6,
         "actualScore": 0,
-        "remainingProjected": 111.3,
-        "liveProjectedTotal": 111.3,
+        "remainingProjected": 108.6,
+        "liveProjectedTotal": 108.6,
         "startersPlayedCount": 0,
         "startersRemainingCount": 10,
         "keyPlayer": "Jayden Daniels",
@@ -3404,57 +3396,57 @@
           },
           {
             "slot": "WR2",
-            "player": "Keon Coleman",
-            "playerId": "11637",
+            "player": "Jalen Coker",
+            "playerId": "11646",
             "position": "WR",
-            "nflTeam": "BUF",
-            "projectedPoints": 3.0,
+            "nflTeam": "CAR",
+            "projectedPoints": 7.0,
             "hasPlayed": false,
             "actualPoints": null,
             "delta": null,
             "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 3.0 pts",
-            "matchup": "@ LV",
-            "kickoff": "Sunday \u00b7 4:25 PM ET",
-            "network": "CBS \u00b7 local market",
-            "injuryStatus": "Questionable",
-            "note": "3.0-point model share in this lineup; questionable entering Week 6."
-          },
-          {
-            "slot": "TE",
-            "player": "Colston Loveland",
-            "playerId": "12517",
-            "position": "TE",
-            "nflTeam": "CHI",
-            "projectedPoints": 10.2,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 10.2 pts",
-            "matchup": "@ ATL",
+            "statusNote": "Upcoming \u00b7 Projected 7.0 pts",
+            "matchup": "@ PHI",
             "kickoff": "Sunday \u00b7 1:00 PM ET",
             "network": "FOX \u00b7 local market",
             "injuryStatus": "Healthy",
-            "note": "10.2-point model share in this lineup; healthy entering Week 6."
+            "note": "7.0-point model share in this lineup; healthy entering Week 6."
           },
           {
-            "slot": "K",
-            "player": "Will Reichard",
-            "playerId": "11792",
-            "position": "K",
-            "nflTeam": "MIN",
-            "projectedPoints": 7.9,
+            "slot": "TE",
+            "player": "Pat Freiermuth",
+            "playerId": "7600",
+            "position": "TE",
+            "nflTeam": "PIT",
+            "projectedPoints": 2.3,
             "hasPlayed": false,
             "actualPoints": null,
             "delta": null,
             "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 7.9 pts",
-            "matchup": "Schedule unavailable",
-            "kickoff": "TBD",
-            "network": "TBD",
+            "statusNote": "Upcoming \u00b7 Projected 2.3 pts",
+            "matchup": "@ TB",
+            "kickoff": "Sunday \u00b7 1:00 PM ET",
+            "network": "CBS \u00b7 local market",
             "injuryStatus": "Healthy",
-            "note": "7.9-point model share in this lineup; healthy entering Week 6."
+            "note": "2.3-point model share in this lineup; healthy entering Week 6."
+          },
+          {
+            "slot": "K",
+            "player": "Ka'imi Fairbairn",
+            "playerId": "3451",
+            "position": "K",
+            "nflTeam": "HOU",
+            "projectedPoints": 9.1,
+            "hasPlayed": false,
+            "actualPoints": null,
+            "delta": null,
+            "performance": "upcoming",
+            "statusNote": "Upcoming \u00b7 Projected 9.1 pts",
+            "matchup": "@ JAX",
+            "kickoff": "Sunday \u00b7 9:30 AM ET",
+            "network": "NFL Network \u00b7 NFL+",
+            "injuryStatus": "Healthy",
+            "note": "9.1-point model share in this lineup; healthy entering Week 6."
           },
           {
             "slot": "DEF",
@@ -3476,13 +3468,13 @@
           }
         ],
         "strongestRoom": "QB",
-        "weakestRoom": "WR",
+        "weakestRoom": "TE",
         "injuryFlags": [
           {
             "player": "Keon Coleman",
             "status": "Questionable",
             "note": "",
-            "starter": true
+            "starter": false
           },
           {
             "player": "Chuba Hubbard",
@@ -3499,16 +3491,16 @@
         "name": "rLee3D",
         "manager": "rLee3D",
         "powerRank": 11,
-        "powerScore": 64.5,
+        "powerScore": 66.9,
         "grade": "C",
-        "projected": 86.1,
+        "projected": 65.5,
         "actualScore": 0,
-        "remainingProjected": 86.2,
-        "liveProjectedTotal": 86.2,
+        "remainingProjected": 65.6,
+        "liveProjectedTotal": 65.6,
         "startersPlayedCount": 0,
-        "startersRemainingCount": 10,
-        "keyPlayer": "David Montgomery",
-        "keyPlayerProjection": 13.4,
+        "startersRemainingCount": 8,
+        "keyPlayer": "Kenneth Walker",
+        "keyPlayerProjection": 16.4,
         "starters": [
           {
             "slot": "QB",
@@ -3530,39 +3522,39 @@
           },
           {
             "slot": "RB1",
-            "player": "David Montgomery",
-            "playerId": "5892",
+            "player": "Kenneth Walker",
+            "playerId": "8151",
             "position": "RB",
-            "nflTeam": "HOU",
-            "projectedPoints": 13.4,
+            "nflTeam": "KC",
+            "projectedPoints": 16.4,
             "hasPlayed": false,
             "actualPoints": null,
             "delta": null,
             "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 13.4 pts",
-            "matchup": "@ JAX",
-            "kickoff": "Sunday \u00b7 9:30 AM ET",
-            "network": "NFL Network \u00b7 NFL+",
+            "statusNote": "Upcoming \u00b7 Projected 16.4 pts",
+            "matchup": "vs LAC",
+            "kickoff": "Sunday \u00b7 4:25 PM ET",
+            "network": "CBS \u00b7 local market",
             "injuryStatus": "Healthy",
-            "note": "13.4-point model share in this lineup; healthy entering Week 6."
+            "note": "16.4-point model share in this lineup; healthy entering Week 6."
           },
           {
             "slot": "RB2",
-            "player": "Will Shipley",
-            "playerId": "11577",
+            "player": "Rachaad White",
+            "playerId": "8136",
             "position": "RB",
-            "nflTeam": "PHI",
-            "projectedPoints": 5.6,
+            "nflTeam": "WAS",
+            "projectedPoints": 7.5,
             "hasPlayed": false,
             "actualPoints": null,
             "delta": null,
             "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 5.6 pts",
-            "matchup": "vs CAR",
-            "kickoff": "Sunday \u00b7 1:00 PM ET",
-            "network": "FOX \u00b7 local market",
-            "injuryStatus": "Healthy",
-            "note": "5.6-point model share in this lineup; healthy entering Week 6."
+            "statusNote": "Upcoming \u00b7 Projected 7.5 pts",
+            "matchup": "@ SF",
+            "kickoff": "Monday \u00b7 8:15 PM ET",
+            "network": "ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+",
+            "injuryStatus": "Questionable",
+            "note": "7.5-point model share in this lineup; questionable entering Week 6."
           },
           {
             "slot": "WR1",
@@ -3584,24 +3576,6 @@
           },
           {
             "slot": "WR2",
-            "player": "Jameson Williams",
-            "playerId": "8148",
-            "position": "WR",
-            "nflTeam": "DET",
-            "projectedPoints": 11.8,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 11.8 pts",
-            "matchup": "Schedule unavailable",
-            "kickoff": "TBD",
-            "network": "TBD",
-            "injuryStatus": "Healthy",
-            "note": "11.8-point model share in this lineup; healthy entering Week 6."
-          },
-          {
-            "slot": "WR3",
             "player": "Christian Watson",
             "playerId": "8167",
             "position": "WR",
@@ -3617,6 +3591,24 @@
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
             "note": "10.9-point model share in this lineup; healthy entering Week 6."
+          },
+          {
+            "slot": "WR3",
+            "player": "Tre' Harris",
+            "playerId": "12509",
+            "position": "WR",
+            "nflTeam": "LAC",
+            "projectedPoints": 3.2,
+            "hasPlayed": false,
+            "actualPoints": null,
+            "delta": null,
+            "performance": "upcoming",
+            "statusNote": "Upcoming \u00b7 Projected 3.2 pts",
+            "matchup": "@ KC",
+            "kickoff": "Sunday \u00b7 4:25 PM ET",
+            "network": "CBS \u00b7 local market",
+            "injuryStatus": "Healthy",
+            "note": "3.2-point model share in this lineup; healthy entering Week 6."
           },
           {
             "slot": "WR4",
@@ -3637,42 +3629,6 @@
             "note": "3.2-point model share in this lineup; healthy entering Week 6."
           },
           {
-            "slot": "TE",
-            "player": "Mark Andrews",
-            "playerId": "5012",
-            "position": "TE",
-            "nflTeam": "BAL",
-            "projectedPoints": 8.5,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 8.5 pts",
-            "matchup": "@ CLE",
-            "kickoff": "Sunday \u00b7 1:00 PM ET",
-            "network": "CBS \u00b7 local market",
-            "injuryStatus": "Healthy",
-            "note": "8.5-point model share in this lineup; healthy entering Week 6."
-          },
-          {
-            "slot": "K",
-            "player": "Chase McLaughlin",
-            "playerId": "6650",
-            "position": "K",
-            "nflTeam": "TB",
-            "projectedPoints": 8.4,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 8.4 pts",
-            "matchup": "vs PIT",
-            "kickoff": "Sunday \u00b7 1:00 PM ET",
-            "network": "CBS \u00b7 local market",
-            "injuryStatus": "Healthy",
-            "note": "8.4-point model share in this lineup; healthy entering Week 6."
-          },
-          {
             "slot": "DEF",
             "player": "Player SEA",
             "playerId": "SEA",
@@ -3691,14 +3647,14 @@
             "note": "5.6-point model share in this lineup; healthy entering Week 6."
           }
         ],
-        "strongestRoom": "RB",
+        "strongestRoom": "QB",
         "weakestRoom": "TE",
         "injuryFlags": [
           {
             "player": "Rachaad White",
             "status": "Questionable",
             "note": "",
-            "starter": false
+            "starter": true
           },
           {
             "player": "Zach Charbonnet",
@@ -3710,20 +3666,20 @@
         "winProbability": 18.0,
         "liveWinProbability": 5.0
       },
-      "spread": 25.0,
-      "spreadLabel": "Team mannyrsox24 -25.0",
-      "openingSpreadLabel": "Team mannyrsox24 -25.0",
-      "impliedTotal": 197.2,
-      "openingImpliedTotal": 197.2,
-      "flavor": "Team mannyrsox24 has room for error. rLee3D needs an outlier from David Montgomery and a win in the running backs battle.",
+      "spread": 43.1,
+      "spreadLabel": "Team mannyrsox24 -43.1",
+      "openingSpreadLabel": "Team mannyrsox24 -43.1",
+      "impliedTotal": 174.1,
+      "openingImpliedTotal": 174.1,
+      "flavor": "Team mannyrsox24 has room for error. rLee3D needs an outlier from Kenneth Walker and a win in the running backs battle.",
       "gameShift": null,
       "tacticalAnalysis": {
-        "headline": "Jayden Daniels sets the pace; David Montgomery carries the counterpunch",
-        "breakdown": "The current-season model separates these teams by 25.0 points, with Team mannyrsox24 holding its cleanest advantage at running backs (+36.5 pts). rLee3D's best answer runs through the RB room. The heaviest viewing window is BUF at LV on CBS \u00b7 local market with 38.0 points at stake.",
+        "headline": "Jayden Daniels sets the pace; Kenneth Walker carries the counterpunch",
+        "breakdown": "The current-season model separates these teams by 43.1 points, with Team mannyrsox24 holding its cleanest advantage at running backs (+31.6 pts). rLee3D's best answer runs through the QB room. The heaviest viewing window is BUF at LV on CBS \u00b7 local market with 35.0 points at stake.",
         "keyVariables": [
-          "Jayden Daniels (18.7) and David Montgomery (13.4) are the headline scorers.",
-          "The largest positional separation is running backs: Team mannyrsox24 +36.5 pts.",
-          "rLee3D needs its RB strength to beat projection to erase a 25.0-point gap.",
+          "Jayden Daniels (18.7) and Kenneth Walker (16.4) are the headline scorers.",
+          "The largest positional separation is running backs: Team mannyrsox24 +31.6 pts.",
+          "rLee3D needs its QB strength to beat projection to erase a 43.1-point gap.",
           "Team mannyrsox24 carries 2 active roster health flag(s).",
           "rLee3D carries 2 active roster health flag(s)."
         ]
@@ -3738,26 +3694,26 @@
         {
           "category": "Running backs",
           "advantage": "Team mannyrsox24",
-          "margin": "+36.5 pts",
+          "margin": "+31.6 pts",
           "narrative": "The model gives Team mannyrsox24 the running backs edge."
         },
         {
           "category": "Wide receivers",
           "advantage": "rLee3D",
-          "margin": "+25.7 pts",
+          "margin": "+13.1 pts",
           "narrative": "The model gives rLee3D the wide receivers edge."
         },
         {
           "category": "Tight end",
           "advantage": "Team mannyrsox24",
-          "margin": "+1.7 pts",
+          "margin": "+2.3 pts",
           "narrative": "The model gives Team mannyrsox24 the tight end edge."
         },
         {
           "category": "Kicker",
-          "advantage": "rLee3D",
-          "margin": "+0.5 pts",
-          "narrative": "The model gives rLee3D the kicker edge."
+          "advantage": "Team mannyrsox24",
+          "margin": "+9.1 pts",
+          "narrative": "The model gives Team mannyrsox24 the kicker edge."
         },
         {
           "category": "Defense",
@@ -3788,13 +3744,13 @@
           "timeSlot": "Sunday \u00b7 9:30 AM ET",
           "network": "NFL Network \u00b7 NFL+",
           "gameMatchup": "HOU at JAX",
-          "team1Starters": [],
-          "team2Starters": [
-            "David Montgomery (RB)"
+          "team1Starters": [
+            "Ka'imi Fairbairn (K)"
           ],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 13.4,
-          "windowAnalysis": "rLee3D has the larger starter footprint in this game; 13.4 fantasy points at stake."
+          "team2Starters": [],
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 9.1,
+          "windowAnalysis": "Team mannyrsox24 has the larger starter footprint in this game; 9.1 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
@@ -3802,15 +3758,15 @@
           "network": "FOX \u00b7 local market",
           "gameMatchup": "CAR at PHI",
           "team1Starters": [
-            "Chuba Hubbard (RB)"
+            "Chuba Hubbard (RB)",
+            "Jalen Coker (WR)"
           ],
           "team2Starters": [
-            "Will Shipley (RB)",
             "Dontayvion Wicks (WR)"
           ],
           "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 19.4,
-          "windowAnalysis": "rLee3D has the larger starter footprint in this game; 19.4 fantasy points at stake."
+          "fantasyPointsAtStake": 20.8,
+          "windowAnalysis": "Team mannyrsox24 has the larger starter footprint in this game; 20.8 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
@@ -3828,15 +3784,15 @@
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
           "timeSlot": "Sunday \u00b7 1:00 PM ET",
-          "network": "FOX \u00b7 local market",
-          "gameMatchup": "CHI at ATL",
+          "network": "CBS \u00b7 local market",
+          "gameMatchup": "PIT at TB",
           "team1Starters": [
-            "Colston Loveland (TE)"
+            "Pat Freiermuth (TE)"
           ],
           "team2Starters": [],
           "leverageLevel": "Low",
-          "fantasyPointsAtStake": 10.2,
-          "windowAnalysis": "Team mannyrsox24 has the larger starter footprint in this game; 10.2 fantasy points at stake."
+          "fantasyPointsAtStake": 2.3,
+          "windowAnalysis": "Team mannyrsox24 has the larger starter footprint in this game; 2.3 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T13:00:00-04:00",
@@ -3852,45 +3808,32 @@
           "windowAnalysis": "rLee3D has the larger starter footprint in this game; 5.6 fantasy points at stake."
         },
         {
-          "kickoffAt": "2026-10-18T13:00:00-04:00",
-          "timeSlot": "Sunday \u00b7 1:00 PM ET",
-          "network": "CBS \u00b7 local market",
-          "gameMatchup": "BAL at CLE",
-          "team1Starters": [],
-          "team2Starters": [
-            "Mark Andrews (TE)"
-          ],
-          "leverageLevel": "Low",
-          "fantasyPointsAtStake": 8.5,
-          "windowAnalysis": "rLee3D has the larger starter footprint in this game; 8.5 fantasy points at stake."
-        },
-        {
-          "kickoffAt": "2026-10-18T13:00:00-04:00",
-          "timeSlot": "Sunday \u00b7 1:00 PM ET",
-          "network": "CBS \u00b7 local market",
-          "gameMatchup": "PIT at TB",
-          "team1Starters": [],
-          "team2Starters": [
-            "Chase McLaughlin (K)"
-          ],
-          "leverageLevel": "Low",
-          "fantasyPointsAtStake": 8.4,
-          "windowAnalysis": "rLee3D has the larger starter footprint in this game; 8.4 fantasy points at stake."
-        },
-        {
           "kickoffAt": "2026-10-18T16:25:00-04:00",
           "timeSlot": "Sunday \u00b7 4:25 PM ET",
           "network": "CBS \u00b7 local market",
           "gameMatchup": "BUF at LV",
           "team1Starters": [
             "James Cook (RB)",
-            "Ashton Jeanty (RB)",
-            "Keon Coleman (WR)"
+            "Ashton Jeanty (RB)"
           ],
           "team2Starters": [],
           "leverageLevel": "Decisive",
-          "fantasyPointsAtStake": 38.0,
-          "windowAnalysis": "Team mannyrsox24 has the larger starter footprint in this game; 38.0 fantasy points at stake."
+          "fantasyPointsAtStake": 35.0,
+          "windowAnalysis": "Team mannyrsox24 has the larger starter footprint in this game; 35.0 fantasy points at stake."
+        },
+        {
+          "kickoffAt": "2026-10-18T16:25:00-04:00",
+          "timeSlot": "Sunday \u00b7 4:25 PM ET",
+          "network": "CBS \u00b7 local market",
+          "gameMatchup": "LAC at KC",
+          "team1Starters": [],
+          "team2Starters": [
+            "Kenneth Walker (RB)",
+            "Tre' Harris (WR)"
+          ],
+          "leverageLevel": "Medium",
+          "fantasyPointsAtStake": 19.6,
+          "windowAnalysis": "rLee3D has the larger starter footprint in this game; 19.6 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-18T20:20:00-04:00",
@@ -3914,10 +3857,12 @@
           "team1Starters": [
             "Jayden Daniels (QB)"
           ],
-          "team2Starters": [],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 18.7,
-          "windowAnalysis": "Team mannyrsox24 has the larger starter footprint in this game; 18.7 fantasy points at stake."
+          "team2Starters": [
+            "Rachaad White (RB)"
+          ],
+          "leverageLevel": "High",
+          "fantasyPointsAtStake": 26.2,
+          "windowAnalysis": "Both sides have equal starter exposure in this game; 26.2 fantasy points at stake."
         }
       ]
     }
