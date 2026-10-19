@@ -1,11 +1,11 @@
 {
   "season": "2026",
   "week": 6,
-  "generatedAt": "2026-10-19T00:01:03.398432+00:00",
+  "generatedAt": "2026-10-19T03:22:53.069573+00:00",
   "scheduleSource": {
     "provider": "nflverse / NFL Broadcast Operations",
     "url": "https://www.nfl.com/schedules/2026/reg6",
-    "capturedAt": "2026-10-19T00:00:56.548534+00:00",
+    "capturedAt": "2026-10-19T03:22:45.558615+00:00",
     "note": "Official Week 6 kickoff times, matchups, and broadcast fixtures across Thursday Night Football (Prime Video), Sunday regional windows (CBS/FOX), Sunday Night Football (NBC), and Monday Night Football (ESPN/ABC)."
   },
   "sleeperSource": "https://api.sleeper.app/v1/league/1401673232670539776/matchups/6",
@@ -14,7 +14,7 @@
       "matchupId": 1,
       "week": 6,
       "title": "Team DRockefeller vs Team Gnomeington",
-      "subtitle": "Live Update: Team DRockefeller -23.2 live line (101.7 vs 69.8 on board)",
+      "subtitle": "Live Update: Team DRockefeller -29.6 live line (101.7 vs 72.1 on board)",
       "isMarquee": false,
       "hasLiveResults": true,
       "team1": {
@@ -241,11 +241,11 @@
         "powerScore": 88.3,
         "grade": "A-",
         "projected": 109.9,
-        "actualScore": 69.8,
-        "remainingProjected": 8.7,
-        "liveProjectedTotal": 78.5,
-        "startersPlayedCount": 9,
-        "startersRemainingCount": 1,
+        "actualScore": 72.1,
+        "remainingProjected": 0,
+        "liveProjectedTotal": 72.1,
+        "startersPlayedCount": 10,
+        "startersRemainingCount": 0,
         "keyPlayer": "Josh Allen",
         "keyPlayerProjection": 21.6,
         "starters": [
@@ -382,16 +382,16 @@
             "position": "TE",
             "nflTeam": "DAL",
             "projectedPoints": 8.7,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 8.7 pts",
+            "hasPlayed": true,
+            "actualPoints": 2.3,
+            "delta": -6.4,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 2.3 pts (-6.4 vs 8.7 proj)",
             "matchup": "@ GB",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "8.7-point model share in this lineup; healthy entering Week 6."
+            "note": "Final \u00b7 2.3 pts (-6.4 vs 8.7 proj)"
           },
           {
             "slot": "K",
@@ -449,20 +449,20 @@
         "winProbability": 69.9,
         "liveWinProbability": 5.0
       },
-      "spread": 23.2,
-      "spreadLabel": "Team DRockefeller -23.2 (Live)",
+      "spread": 29.6,
+      "spreadLabel": "Team DRockefeller -29.6 (Live)",
       "openingSpreadLabel": "Team Gnomeington -8.3",
-      "impliedTotal": 180.2,
+      "impliedTotal": 173.8,
       "openingImpliedTotal": 211.5,
-      "flavor": "Dynamic shift: DJ Moore underperformed (-11.6) while Drake Maye surged (+4.9); dynamic shifted Team DRockefeller -23.2. Current live line stands at Team DRockefeller -23.2.",
+      "flavor": "Dynamic shift: DJ Moore underperformed (-11.6) while Drake Maye surged (+4.9); dynamic shifted Team DRockefeller -29.6. Current live line stands at Team DRockefeller -29.6.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "DJ Moore underperformed (-11.6) while Drake Maye surged (+4.9); dynamic shifted Team DRockefeller -23.2",
-        "shiftSummary": "Early game action shifted the matchup baseline: Team DRockefeller's Drake Maye surged with 23.8 pts (+4.9 vs proj), while Team Gnomeington's DJ Moore underperformed with 0.0 pts (-11.6 vs 11.6 proj). Team DRockefeller has 101.7 pts logged with 0 starters remaining (live projection: 101.7). Team Gnomeington has 69.8 pts with 1 starters remaining (live projection: 78.5).",
+        "headline": "DJ Moore underperformed (-11.6) while Drake Maye surged (+4.9); dynamic shifted Team DRockefeller -29.6",
+        "shiftSummary": "Early game action shifted the matchup baseline: Team DRockefeller's Drake Maye surged with 23.8 pts (+4.9 vs proj), while Team Gnomeington's DJ Moore underperformed with 0.0 pts (-11.6 vs 11.6 proj). Team DRockefeller has 101.7 pts logged with 0 starters remaining (live projection: 101.7). Team Gnomeington has 72.1 pts with 0 starters remaining (live projection: 72.1).",
         "liveFavorite": "Team DRockefeller",
-        "liveSpread": 23.2,
-        "liveSpreadLabel": "Team DRockefeller -23.2 (Live)",
-        "liveImpliedTotal": 180.2,
+        "liveSpread": 29.6,
+        "liveSpreadLabel": "Team DRockefeller -29.6 (Live)",
+        "liveImpliedTotal": 173.8,
         "keyPerformers": [
           {
             "team": "Team DRockefeller",
@@ -619,6 +619,15 @@
           },
           {
             "team": "Team Gnomeington",
+            "player": "Jake Ferguson",
+            "position": "TE",
+            "actualPoints": 2.3,
+            "projectedPoints": 8.7,
+            "delta": -6.4,
+            "performance": "underperformed"
+          },
+          {
+            "team": "Team Gnomeington",
             "player": "Cameron Dicker",
             "position": "K",
             "actualPoints": 6.0,
@@ -638,12 +647,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "DJ Moore underperformed (-11.6) while Drake Maye surged (+4.9); dynamic shifted Team DRockefeller -23.2",
-        "breakdown": "Early game action shifted the matchup baseline: Team DRockefeller's Drake Maye surged with 23.8 pts (+4.9 vs proj), while Team Gnomeington's DJ Moore underperformed with 0.0 pts (-11.6 vs 11.6 proj). Team DRockefeller has 101.7 pts logged with 0 starters remaining (live projection: 101.7). Team Gnomeington has 69.8 pts with 1 starters remaining (live projection: 78.5). The heaviest viewing window is NYJ at NE on CBS \u00b7 local market with 40.5 points at stake.",
+        "headline": "DJ Moore underperformed (-11.6) while Drake Maye surged (+4.9); dynamic shifted Team DRockefeller -29.6",
+        "breakdown": "Early game action shifted the matchup baseline: Team DRockefeller's Drake Maye surged with 23.8 pts (+4.9 vs proj), while Team Gnomeington's DJ Moore underperformed with 0.0 pts (-11.6 vs 11.6 proj). Team DRockefeller has 101.7 pts logged with 0 starters remaining (live projection: 101.7). Team Gnomeington has 72.1 pts with 0 starters remaining (live projection: 72.1). The heaviest viewing window is NYJ at NE on CBS \u00b7 local market with 40.5 points at stake.",
         "keyVariables": [
-          "Live projected totals: Team DRockefeller 101.7 (101.7 logged) vs Team Gnomeington 78.5 (69.8 logged).",
-          "Active line: Team DRockefeller -23.2 (95.0% win probability).",
-          "Remaining starters: Team DRockefeller 0 to play \u00b7 Team Gnomeington 1 to play.",
+          "Live projected totals: Team DRockefeller 101.7 (101.7 logged) vs Team Gnomeington 72.1 (72.1 logged).",
+          "Active line: Team DRockefeller -29.6 (95.0% win probability).",
+          "Remaining starters: Team DRockefeller 0 to play \u00b7 Team Gnomeington 0 to play.",
           "Team DRockefeller carries 2 active roster health flag(s).",
           "Team Gnomeington carries 2 active roster health flag(s)."
         ]
@@ -839,8 +848,8 @@
             "Jake Ferguson (TE)"
           ],
           "leverageLevel": "Low",
-          "fantasyPointsAtStake": 8.7,
-          "windowAnalysis": "Team Gnomeington has the larger starter footprint in this game; 8.7 fantasy points at stake."
+          "fantasyPointsAtStake": 2.3,
+          "windowAnalysis": "Team Gnomeington has the larger starter footprint in this game; 2.3 fantasy points at stake."
         }
       ]
     },
@@ -848,7 +857,7 @@
       "matchupId": 2,
       "week": 6,
       "title": "Gridiron Gorillas vs Team akwelch3492",
-      "subtitle": "Live Update: Team akwelch3492 -0.1 live line (87.2 vs 78.7 on board)",
+      "subtitle": "Live Update: Team akwelch3492 -0.6 live line (99.6 vs 100.2 on board)",
       "isMarquee": false,
       "hasLiveResults": true,
       "team1": {
@@ -859,11 +868,11 @@
         "powerScore": 52.9,
         "grade": "D",
         "projected": 80.8,
-        "actualScore": 87.18,
-        "remainingProjected": 6.7,
-        "liveProjectedTotal": 93.9,
-        "startersPlayedCount": 9,
-        "startersRemainingCount": 1,
+        "actualScore": 99.58,
+        "remainingProjected": 0,
+        "liveProjectedTotal": 99.6,
+        "startersPlayedCount": 10,
+        "startersRemainingCount": 0,
         "keyPlayer": "Patrick Mahomes",
         "keyPlayerProjection": 14.0,
         "starters": [
@@ -1018,16 +1027,16 @@
             "position": "K",
             "nflTeam": "GB",
             "projectedPoints": 6.7,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 6.7 pts",
+            "hasPlayed": true,
+            "actualPoints": 12.4,
+            "delta": 5.7,
+            "performance": "overperformed",
+            "statusNote": "Final \u00b7 12.4 pts (+5.7 vs 6.7 proj)",
             "matchup": "vs DAL",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "6.7-point model share in this lineup; healthy entering Week 6."
+            "note": "Final \u00b7 12.4 pts (+5.7 vs 6.7 proj)"
           },
           {
             "slot": "DEF",
@@ -1089,7 +1098,7 @@
           }
         ],
         "winProbability": 33.0,
-        "liveWinProbability": 49.7
+        "liveWinProbability": 48.3
       },
       "team2": {
         "rosterId": 10,
@@ -1099,11 +1108,11 @@
         "powerScore": 68.5,
         "grade": "C+",
         "projected": 87.9,
-        "actualScore": 78.7,
-        "remainingProjected": 15.3,
-        "liveProjectedTotal": 94.0,
-        "startersPlayedCount": 8,
-        "startersRemainingCount": 2,
+        "actualScore": 100.22,
+        "remainingProjected": 0,
+        "liveProjectedTotal": 100.2,
+        "startersPlayedCount": 10,
+        "startersRemainingCount": 0,
         "keyPlayer": "Puka Nacua",
         "keyPlayerProjection": 15.8,
         "starters": [
@@ -1114,16 +1123,16 @@
             "position": "QB",
             "nflTeam": "GB",
             "projectedPoints": 12.2,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 12.2 pts",
+            "hasPlayed": true,
+            "actualPoints": 21.12,
+            "delta": 8.9,
+            "performance": "overperformed",
+            "statusNote": "Final \u00b7 21.1 pts (+8.9 vs 12.2 proj)",
             "matchup": "vs DAL",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "12.2-point model share in this lineup; healthy entering Week 6."
+            "note": "Final \u00b7 21.1 pts (+8.9 vs 12.2 proj)"
           },
           {
             "slot": "RB1",
@@ -1150,16 +1159,16 @@
             "position": "RB",
             "nflTeam": "GB",
             "projectedPoints": 3.1,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 3.1 pts",
+            "hasPlayed": true,
+            "actualPoints": 0.4,
+            "delta": -2.7,
+            "performance": "met_projection",
+            "statusNote": "Final \u00b7 0.4 pts (on pace)",
             "matchup": "vs DAL",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "3.1-point model share in this lineup; healthy entering Week 6."
+            "note": "Final \u00b7 0.4 pts (on pace)"
           },
           {
             "slot": "RB3",
@@ -1311,22 +1320,22 @@
           }
         ],
         "winProbability": 67.0,
-        "liveWinProbability": 50.3
+        "liveWinProbability": 51.7
       },
-      "spread": 0.1,
-      "spreadLabel": "Team akwelch3492 -0.1 (Live)",
+      "spread": 0.6,
+      "spreadLabel": "Team akwelch3492 -0.6 (Live)",
       "openingSpreadLabel": "Team akwelch3492 -7.1",
-      "impliedTotal": 187.9,
+      "impliedTotal": 199.8,
       "openingImpliedTotal": 168.7,
-      "flavor": "Dynamic shift: Rhamondre Stevenson underperformed (-7.4) while Isaiah Likely surged (+12.6); dynamic shifted Team akwelch3492 -0.1. Current live line stands at Team akwelch3492 -0.1.",
+      "flavor": "Dynamic shift: Rhamondre Stevenson underperformed (-7.4) while Isaiah Likely surged (+12.6); dynamic shifted Team akwelch3492 -0.6. Current live line stands at Team akwelch3492 -0.6.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "Rhamondre Stevenson underperformed (-7.4) while Isaiah Likely surged (+12.6); dynamic shifted Team akwelch3492 -0.1",
-        "shiftSummary": "Early game action shifted the matchup baseline: Gridiron Gorillas's Isaiah Likely surged with 20.9 pts (+12.6 vs proj), while Gridiron Gorillas's Rhamondre Stevenson underperformed with 3.6 pts (-7.4 vs 11.0 proj). Gridiron Gorillas has 87.2 pts logged with 1 starters remaining (live projection: 93.9). Team akwelch3492 has 78.7 pts with 2 starters remaining (live projection: 94.0).",
+        "headline": "Rhamondre Stevenson underperformed (-7.4) while Isaiah Likely surged (+12.6); dynamic shifted Team akwelch3492 -0.6",
+        "shiftSummary": "Early game action shifted the matchup baseline: Gridiron Gorillas's Isaiah Likely surged with 20.9 pts (+12.6 vs proj), while Gridiron Gorillas's Rhamondre Stevenson underperformed with 3.6 pts (-7.4 vs 11.0 proj). Gridiron Gorillas has 99.6 pts logged with 0 starters remaining (live projection: 99.6). Team akwelch3492 has 100.2 pts with 0 starters remaining (live projection: 100.2).",
         "liveFavorite": "Team akwelch3492",
-        "liveSpread": 0.1,
-        "liveSpreadLabel": "Team akwelch3492 -0.1 (Live)",
-        "liveImpliedTotal": 187.9,
+        "liveSpread": 0.6,
+        "liveSpreadLabel": "Team akwelch3492 -0.6 (Live)",
+        "liveImpliedTotal": 199.8,
         "keyPerformers": [
           {
             "team": "Gridiron Gorillas",
@@ -1402,6 +1411,15 @@
           },
           {
             "team": "Gridiron Gorillas",
+            "player": "Trey Smack",
+            "position": "K",
+            "actualPoints": 12.4,
+            "projectedPoints": 6.7,
+            "delta": 5.7,
+            "performance": "overperformed"
+          },
+          {
+            "team": "Gridiron Gorillas",
             "player": "Player BAL",
             "position": "DEF",
             "actualPoints": 9.0,
@@ -1411,10 +1429,28 @@
           },
           {
             "team": "Team akwelch3492",
+            "player": "Jordan Love",
+            "position": "QB",
+            "actualPoints": 21.12,
+            "projectedPoints": 12.2,
+            "delta": 8.9,
+            "performance": "overperformed"
+          },
+          {
+            "team": "Team akwelch3492",
             "player": "Tony Pollard",
             "position": "RB",
             "actualPoints": 7.6,
             "projectedPoints": 10.3,
+            "delta": -2.7,
+            "performance": "met_projection"
+          },
+          {
+            "team": "Team akwelch3492",
+            "player": "MarShawn Lloyd",
+            "position": "RB",
+            "actualPoints": 0.4,
+            "projectedPoints": 3.1,
             "delta": -2.7,
             "performance": "met_projection"
           },
@@ -1484,12 +1520,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "Rhamondre Stevenson underperformed (-7.4) while Isaiah Likely surged (+12.6); dynamic shifted Team akwelch3492 -0.1",
-        "breakdown": "Early game action shifted the matchup baseline: Gridiron Gorillas's Isaiah Likely surged with 20.9 pts (+12.6 vs proj), while Gridiron Gorillas's Rhamondre Stevenson underperformed with 3.6 pts (-7.4 vs 11.0 proj). Gridiron Gorillas has 87.2 pts logged with 1 starters remaining (live projection: 93.9). Team akwelch3492 has 78.7 pts with 2 starters remaining (live projection: 94.0). The heaviest viewing window is NO at NYG on FOX \u00b7 local market with 67.3 points at stake.",
+        "headline": "Rhamondre Stevenson underperformed (-7.4) while Isaiah Likely surged (+12.6); dynamic shifted Team akwelch3492 -0.6",
+        "breakdown": "Early game action shifted the matchup baseline: Gridiron Gorillas's Isaiah Likely surged with 20.9 pts (+12.6 vs proj), while Gridiron Gorillas's Rhamondre Stevenson underperformed with 3.6 pts (-7.4 vs 11.0 proj). Gridiron Gorillas has 99.6 pts logged with 0 starters remaining (live projection: 99.6). Team akwelch3492 has 100.2 pts with 0 starters remaining (live projection: 100.2). The heaviest viewing window is NO at NYG on FOX \u00b7 local market with 67.3 points at stake.",
         "keyVariables": [
-          "Live projected totals: Gridiron Gorillas 93.9 (87.2 logged) vs Team akwelch3492 94.0 (78.7 logged).",
-          "Active line: Team akwelch3492 -0.1 (50.3% win probability).",
-          "Remaining starters: Gridiron Gorillas 1 to play \u00b7 Team akwelch3492 2 to play.",
+          "Live projected totals: Gridiron Gorillas 99.6 (99.6 logged) vs Team akwelch3492 100.2 (100.2 logged).",
+          "Active line: Team akwelch3492 -0.6 (51.7% win probability).",
+          "Remaining starters: Gridiron Gorillas 0 to play \u00b7 Team akwelch3492 0 to play.",
           "Gridiron Gorillas carries 6 active roster health flag(s).",
           "Team akwelch3492 carries 3 active roster health flag(s)."
         ]
@@ -1685,8 +1721,8 @@
             "MarShawn Lloyd (RB)"
           ],
           "leverageLevel": "High",
-          "fantasyPointsAtStake": 22.0,
-          "windowAnalysis": "Team akwelch3492 has the larger starter footprint in this game; 22.0 fantasy points at stake."
+          "fantasyPointsAtStake": 33.9,
+          "windowAnalysis": "Team akwelch3492 has the larger starter footprint in this game; 33.9 fantasy points at stake."
         }
       ]
     },
@@ -1694,7 +1730,7 @@
       "matchupId": 3,
       "week": 6,
       "title": "Team kong58 vs Team bubberdubber",
-      "subtitle": "Live Update: Team bubberdubber -10.1 live line (33.4 vs 124.5 on board)",
+      "subtitle": "Live Update: Team bubberdubber -19.1 live line (39.9 vs 124.5 on board)",
       "isMarquee": false,
       "hasLiveResults": true,
       "team1": {
@@ -1705,11 +1741,11 @@
         "powerScore": 82.9,
         "grade": "B+",
         "projected": 112.4,
-        "actualScore": 33.4,
-        "remainingProjected": 81.0,
-        "liveProjectedTotal": 114.4,
-        "startersPlayedCount": 3,
-        "startersRemainingCount": 7,
+        "actualScore": 39.9,
+        "remainingProjected": 65.5,
+        "liveProjectedTotal": 105.4,
+        "startersPlayedCount": 4,
+        "startersRemainingCount": 6,
         "keyPlayer": "Brock Purdy",
         "keyPlayerProjection": 17.6,
         "starters": [
@@ -1792,16 +1828,16 @@
             "position": "WR",
             "nflTeam": "DAL",
             "projectedPoints": 15.5,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 15.5 pts",
+            "hasPlayed": true,
+            "actualPoints": 6.5,
+            "delta": -9.0,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 6.5 pts (-9.0 vs 15.5 proj)",
             "matchup": "@ GB",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "15.5-point model share in this lineup; healthy entering Week 6."
+            "note": "Final \u00b7 6.5 pts (-9.0 vs 15.5 proj)"
           },
           {
             "slot": "WR2",
@@ -1929,7 +1965,7 @@
           }
         ],
         "winProbability": 68.0,
-        "liveWinProbability": 21.7
+        "liveWinProbability": 5.0
       },
       "team2": {
         "rosterId": 7,
@@ -2157,22 +2193,22 @@
           }
         ],
         "winProbability": 32.0,
-        "liveWinProbability": 78.3
+        "liveWinProbability": 95.0
       },
-      "spread": 10.1,
-      "spreadLabel": "Team bubberdubber -10.1 (Live)",
+      "spread": 19.1,
+      "spreadLabel": "Team bubberdubber -19.1 (Live)",
       "openingSpreadLabel": "Team kong58 -7.5",
-      "impliedTotal": 238.9,
+      "impliedTotal": 229.9,
       "openingImpliedTotal": 217.3,
-      "flavor": "Dynamic shift: Davante Adams underperformed (-7.1) while Trevor Lawrence surged (+10.6); dynamic shifted Team bubberdubber -10.1. Current live line stands at Team bubberdubber -10.1.",
+      "flavor": "Dynamic shift: George Pickens underperformed (-9.0) while Trevor Lawrence surged (+10.6); dynamic shifted Team bubberdubber -19.1. Current live line stands at Team bubberdubber -19.1.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "Davante Adams underperformed (-7.1) while Trevor Lawrence surged (+10.6); dynamic shifted Team bubberdubber -10.1",
-        "shiftSummary": "Early game action shifted the matchup baseline: Team bubberdubber's Trevor Lawrence surged with 28.3 pts (+10.6 vs proj), while Team kong58's Davante Adams underperformed with 5.4 pts (-7.1 vs 12.5 proj). Team kong58 has 33.4 pts logged with 7 starters remaining (live projection: 114.4). Team bubberdubber has 124.5 pts with 0 starters remaining (live projection: 124.5).",
+        "headline": "George Pickens underperformed (-9.0) while Trevor Lawrence surged (+10.6); dynamic shifted Team bubberdubber -19.1",
+        "shiftSummary": "Early game action shifted the matchup baseline: Team bubberdubber's Trevor Lawrence surged with 28.3 pts (+10.6 vs proj), while Team kong58's George Pickens underperformed with 6.5 pts (-9.0 vs 15.5 proj). Team kong58 has 39.9 pts logged with 6 starters remaining (live projection: 105.4). Team bubberdubber has 124.5 pts with 0 starters remaining (live projection: 124.5).",
         "liveFavorite": "Team bubberdubber",
-        "liveSpread": 10.1,
-        "liveSpreadLabel": "Team bubberdubber -10.1 (Live)",
-        "liveImpliedTotal": 238.9,
+        "liveSpread": 19.1,
+        "liveSpreadLabel": "Team bubberdubber -19.1 (Live)",
+        "liveImpliedTotal": 229.9,
         "keyPerformers": [
           {
             "team": "Team kong58",
@@ -2191,6 +2227,15 @@
             "projectedPoints": 6.7,
             "delta": -1.4,
             "performance": "met_projection"
+          },
+          {
+            "team": "Team kong58",
+            "player": "George Pickens",
+            "position": "WR",
+            "actualPoints": 6.5,
+            "projectedPoints": 15.5,
+            "delta": -9.0,
+            "performance": "underperformed"
           },
           {
             "team": "Team kong58",
@@ -2294,12 +2339,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "Davante Adams underperformed (-7.1) while Trevor Lawrence surged (+10.6); dynamic shifted Team bubberdubber -10.1",
-        "breakdown": "Early game action shifted the matchup baseline: Team bubberdubber's Trevor Lawrence surged with 28.3 pts (+10.6 vs proj), while Team kong58's Davante Adams underperformed with 5.4 pts (-7.1 vs 12.5 proj). Team kong58 has 33.4 pts logged with 7 starters remaining (live projection: 114.4). Team bubberdubber has 124.5 pts with 0 starters remaining (live projection: 124.5). The heaviest viewing window is WAS at SF on ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+ with 65.5 points at stake.",
+        "headline": "George Pickens underperformed (-9.0) while Trevor Lawrence surged (+10.6); dynamic shifted Team bubberdubber -19.1",
+        "breakdown": "Early game action shifted the matchup baseline: Team bubberdubber's Trevor Lawrence surged with 28.3 pts (+10.6 vs proj), while Team kong58's George Pickens underperformed with 6.5 pts (-9.0 vs 15.5 proj). Team kong58 has 39.9 pts logged with 6 starters remaining (live projection: 105.4). Team bubberdubber has 124.5 pts with 0 starters remaining (live projection: 124.5). The heaviest viewing window is WAS at SF on ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+ with 65.5 points at stake.",
         "keyVariables": [
-          "Live projected totals: Team kong58 114.4 (33.4 logged) vs Team bubberdubber 124.5 (124.5 logged).",
-          "Active line: Team bubberdubber -10.1 (78.3% win probability).",
-          "Remaining starters: Team kong58 7 to play \u00b7 Team bubberdubber 0 to play.",
+          "Live projected totals: Team kong58 105.4 (39.9 logged) vs Team bubberdubber 124.5 (124.5 logged).",
+          "Active line: Team bubberdubber -19.1 (95.0% win probability).",
+          "Remaining starters: Team kong58 6 to play \u00b7 Team bubberdubber 0 to play.",
           "Team kong58 carries 5 active roster health flag(s).",
           "Team bubberdubber carries 4 active roster health flag(s)."
         ]
@@ -2451,9 +2496,9 @@
             "George Pickens (WR)"
           ],
           "team2Starters": [],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 15.5,
-          "windowAnalysis": "Team kong58 has the larger starter footprint in this game; 15.5 fantasy points at stake."
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 6.5,
+          "windowAnalysis": "Team kong58 has the larger starter footprint in this game; 6.5 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-19T20:15:00-04:00",
@@ -2479,7 +2524,7 @@
       "matchupId": 4,
       "week": 6,
       "title": "Team arkinsjt vs Team mtrebing31",
-      "subtitle": "Live Update: Team arkinsjt -28.1 live line (89.7 vs 70.3 on board)",
+      "subtitle": "Live Update: Team arkinsjt -11.5 live line (101.2 vs 89.7 on board)",
       "isMarquee": true,
       "hasLiveResults": true,
       "team1": {
@@ -2490,11 +2535,11 @@
         "powerScore": 94.4,
         "grade": "A+",
         "projected": 109.9,
-        "actualScore": 89.66,
-        "remainingProjected": 15.2,
-        "liveProjectedTotal": 104.9,
-        "startersPlayedCount": 9,
-        "startersRemainingCount": 1,
+        "actualScore": 101.16,
+        "remainingProjected": 0,
+        "liveProjectedTotal": 101.2,
+        "startersPlayedCount": 10,
+        "startersRemainingCount": 0,
         "keyPlayer": "Omarion Hampton",
         "keyPlayerProjection": 16.6,
         "starters": [
@@ -2541,16 +2586,16 @@
             "position": "RB",
             "nflTeam": "DAL",
             "projectedPoints": 15.2,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 15.2 pts",
+            "hasPlayed": true,
+            "actualPoints": 11.5,
+            "delta": -3.7,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 11.5 pts (-3.7 vs 15.2 proj)",
             "matchup": "@ GB",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "15.2-point model share in this lineup; healthy entering Week 6."
+            "note": "Final \u00b7 11.5 pts (-3.7 vs 15.2 proj)"
           },
           {
             "slot": "RB3",
@@ -2696,7 +2741,7 @@
           }
         ],
         "winProbability": 59.8,
-        "liveWinProbability": 95.0
+        "liveWinProbability": 82.2
       },
       "team2": {
         "rosterId": 9,
@@ -2706,11 +2751,11 @@
         "powerScore": 79.4,
         "grade": "B",
         "projected": 105.8,
-        "actualScore": 70.32,
-        "remainingProjected": 6.5,
-        "liveProjectedTotal": 76.8,
-        "startersPlayedCount": 9,
-        "startersRemainingCount": 1,
+        "actualScore": 89.72,
+        "remainingProjected": 0,
+        "liveProjectedTotal": 89.7,
+        "startersPlayedCount": 10,
+        "startersRemainingCount": 0,
         "keyPlayer": "Saquon Barkley",
         "keyPlayerProjection": 14.5,
         "starters": [
@@ -2829,16 +2874,16 @@
             "position": "WR",
             "nflTeam": "GB",
             "projectedPoints": 6.5,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 6.5 pts",
+            "hasPlayed": true,
+            "actualPoints": 19.4,
+            "delta": 12.9,
+            "performance": "overperformed",
+            "statusNote": "Final \u00b7 19.4 pts (+12.9 vs 6.5 proj)",
             "matchup": "vs DAL",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "6.5-point model share in this lineup; healthy entering Week 6."
+            "note": "Final \u00b7 19.4 pts (+12.9 vs 6.5 proj)"
           },
           {
             "slot": "TE",
@@ -2918,22 +2963,22 @@
           }
         ],
         "winProbability": 40.2,
-        "liveWinProbability": 5.0
+        "liveWinProbability": 17.8
       },
-      "spread": 28.1,
-      "spreadLabel": "Team arkinsjt -28.1 (Live)",
+      "spread": 11.5,
+      "spreadLabel": "Team arkinsjt -11.5 (Live)",
       "openingSpreadLabel": "Team arkinsjt -4.1",
-      "impliedTotal": 181.7,
+      "impliedTotal": 190.9,
       "openingImpliedTotal": 215.7,
-      "flavor": "Dynamic shift: Saquon Barkley underperformed (-14.5) while Tyler Shough surged (+15.3); dynamic shifted Team arkinsjt -28.1. Current live line stands at Team arkinsjt -28.1.",
+      "flavor": "Dynamic shift: Saquon Barkley underperformed (-14.5) while Tyler Shough surged (+15.3); dynamic shifted Team arkinsjt -11.5. Current live line stands at Team arkinsjt -11.5.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "Saquon Barkley underperformed (-14.5) while Tyler Shough surged (+15.3); dynamic shifted Team arkinsjt -28.1",
-        "shiftSummary": "Early game action shifted the matchup baseline: Team arkinsjt's Tyler Shough surged with 27.0 pts (+15.3 vs proj), while Team mtrebing31's Saquon Barkley underperformed with 0.0 pts (-14.5 vs 14.5 proj). Team arkinsjt has 89.7 pts logged with 1 starters remaining (live projection: 104.9). Team mtrebing31 has 70.3 pts with 1 starters remaining (live projection: 76.8).",
+        "headline": "Saquon Barkley underperformed (-14.5) while Tyler Shough surged (+15.3); dynamic shifted Team arkinsjt -11.5",
+        "shiftSummary": "Early game action shifted the matchup baseline: Team arkinsjt's Tyler Shough surged with 27.0 pts (+15.3 vs proj), while Team mtrebing31's Saquon Barkley underperformed with 0.0 pts (-14.5 vs 14.5 proj). Team arkinsjt has 101.2 pts logged with 0 starters remaining (live projection: 101.2). Team mtrebing31 has 89.7 pts with 0 starters remaining (live projection: 89.7).",
         "liveFavorite": "Team arkinsjt",
-        "liveSpread": 28.1,
-        "liveSpreadLabel": "Team arkinsjt -28.1 (Live)",
-        "liveImpliedTotal": 181.7,
+        "liveSpread": 11.5,
+        "liveSpreadLabel": "Team arkinsjt -11.5 (Live)",
+        "liveImpliedTotal": 190.9,
         "keyPerformers": [
           {
             "team": "Team arkinsjt",
@@ -2951,6 +2996,15 @@
             "actualPoints": 5.9,
             "projectedPoints": 16.6,
             "delta": -10.7,
+            "performance": "underperformed"
+          },
+          {
+            "team": "Team arkinsjt",
+            "player": "Javonte Williams",
+            "position": "RB",
+            "actualPoints": 11.5,
+            "projectedPoints": 15.2,
+            "delta": -3.7,
             "performance": "underperformed"
           },
           {
@@ -3072,6 +3126,15 @@
           },
           {
             "team": "Team mtrebing31",
+            "player": "Matthew Golden",
+            "position": "WR",
+            "actualPoints": 19.4,
+            "projectedPoints": 6.5,
+            "delta": 12.9,
+            "performance": "overperformed"
+          },
+          {
+            "team": "Team mtrebing31",
             "player": "Travis Kelce",
             "position": "TE",
             "actualPoints": 7.3,
@@ -3100,12 +3163,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "Saquon Barkley underperformed (-14.5) while Tyler Shough surged (+15.3); dynamic shifted Team arkinsjt -28.1",
-        "breakdown": "Early game action shifted the matchup baseline: Team arkinsjt's Tyler Shough surged with 27.0 pts (+15.3 vs proj), while Team mtrebing31's Saquon Barkley underperformed with 0.0 pts (-14.5 vs 14.5 proj). Team arkinsjt has 89.7 pts logged with 1 starters remaining (live projection: 104.9). Team mtrebing31 has 70.3 pts with 1 starters remaining (live projection: 76.8). The heaviest viewing window is NO at NYG on FOX \u00b7 local market with 41.3 points at stake.",
+        "headline": "Saquon Barkley underperformed (-14.5) while Tyler Shough surged (+15.3); dynamic shifted Team arkinsjt -11.5",
+        "breakdown": "Early game action shifted the matchup baseline: Team arkinsjt's Tyler Shough surged with 27.0 pts (+15.3 vs proj), while Team mtrebing31's Saquon Barkley underperformed with 0.0 pts (-14.5 vs 14.5 proj). Team arkinsjt has 101.2 pts logged with 0 starters remaining (live projection: 101.2). Team mtrebing31 has 89.7 pts with 0 starters remaining (live projection: 89.7). The heaviest viewing window is NO at NYG on FOX \u00b7 local market with 41.3 points at stake.",
         "keyVariables": [
-          "Live projected totals: Team arkinsjt 104.9 (89.7 logged) vs Team mtrebing31 76.8 (70.3 logged).",
-          "Active line: Team arkinsjt -28.1 (95.0% win probability).",
-          "Remaining starters: Team arkinsjt 1 to play \u00b7 Team mtrebing31 1 to play.",
+          "Live projected totals: Team arkinsjt 101.2 (101.2 logged) vs Team mtrebing31 89.7 (89.7 logged).",
+          "Active line: Team arkinsjt -11.5 (82.2% win probability).",
+          "Remaining starters: Team arkinsjt 0 to play \u00b7 Team mtrebing31 0 to play.",
           "Team arkinsjt carries 2 active roster health flag(s).",
           "Team mtrebing31 carries 3 active roster health flag(s)."
         ]
@@ -3291,9 +3354,9 @@
           "team2Starters": [
             "Matthew Golden (WR)"
           ],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 21.7,
-          "windowAnalysis": "Both sides have equal starter exposure in this game; 21.7 fantasy points at stake."
+          "leverageLevel": "High",
+          "fantasyPointsAtStake": 30.9,
+          "windowAnalysis": "Both sides have equal starter exposure in this game; 30.9 fantasy points at stake."
         }
       ]
     },
@@ -3301,7 +3364,7 @@
       "matchupId": 5,
       "week": 6,
       "title": "Team jccbraves99 vs Texas Tunas",
-      "subtitle": "Live Update: Texas Tunas -21.6 live line (70.6 vs 72.8 on board)",
+      "subtitle": "Live Update: Texas Tunas -8.1 live line (70.6 vs 78.7 on board)",
       "isMarquee": false,
       "hasLiveResults": true,
       "team1": {
@@ -3518,7 +3581,7 @@
           }
         ],
         "winProbability": 63.9,
-        "liveWinProbability": 5.0
+        "liveWinProbability": 27.3
       },
       "team2": {
         "rosterId": 11,
@@ -3528,11 +3591,11 @@
         "powerScore": 77.4,
         "grade": "B",
         "projected": 97.2,
-        "actualScore": 72.78,
-        "remainingProjected": 19.4,
-        "liveProjectedTotal": 92.2,
-        "startersPlayedCount": 8,
-        "startersRemainingCount": 2,
+        "actualScore": 78.68,
+        "remainingProjected": 0,
+        "liveProjectedTotal": 78.7,
+        "startersPlayedCount": 10,
+        "startersRemainingCount": 0,
         "keyPlayer": "Derrick Henry",
         "keyPlayerProjection": 15.8,
         "starters": [
@@ -3651,16 +3714,16 @@
             "position": "TE",
             "nflTeam": "GB",
             "projectedPoints": 9.9,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 9.9 pts",
+            "hasPlayed": true,
+            "actualPoints": 4.9,
+            "delta": -5.0,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 4.9 pts (-5.0 vs 9.9 proj)",
             "matchup": "vs DAL",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Questionable",
-            "note": "Surgery"
+            "note": "Final \u00b7 4.9 pts (-5.0 vs 9.9 proj)"
           },
           {
             "slot": "TE",
@@ -3687,16 +3750,16 @@
             "position": "K",
             "nflTeam": "DAL",
             "projectedPoints": 9.5,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 9.5 pts",
+            "hasPlayed": true,
+            "actualPoints": 1.0,
+            "delta": -8.5,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 1.0 pts (-8.5 vs 9.5 proj)",
             "matchup": "@ GB",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "9.5-point model share in this lineup; healthy entering Week 6."
+            "note": "Final \u00b7 1.0 pts (-8.5 vs 9.5 proj)"
           },
           {
             "slot": "DEF",
@@ -3746,22 +3809,22 @@
           }
         ],
         "winProbability": 36.1,
-        "liveWinProbability": 95.0
+        "liveWinProbability": 72.7
       },
-      "spread": 21.6,
-      "spreadLabel": "Texas Tunas -21.6 (Live)",
+      "spread": 8.1,
+      "spreadLabel": "Texas Tunas -8.1 (Live)",
       "openingSpreadLabel": "Team jccbraves99 -5.8",
-      "impliedTotal": 162.8,
+      "impliedTotal": 149.3,
       "openingImpliedTotal": 200.2,
-      "flavor": "Dynamic shift: Bijan Robinson underperformed (-12.6) while Kirk Cousins surged (+11.3); dynamic shifted Texas Tunas -21.6. Current live line stands at Texas Tunas -21.6.",
+      "flavor": "Dynamic shift: Bijan Robinson underperformed (-12.6) while Kirk Cousins surged (+11.3); dynamic shifted Texas Tunas -8.1. Current live line stands at Texas Tunas -8.1.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "Bijan Robinson underperformed (-12.6) while Kirk Cousins surged (+11.3); dynamic shifted Texas Tunas -21.6",
-        "shiftSummary": "Early game action shifted the matchup baseline: Team jccbraves99's Kirk Cousins surged with 19.5 pts (+11.3 vs proj), while Team jccbraves99's Bijan Robinson underperformed with 6.3 pts (-12.6 vs 18.9 proj). Team jccbraves99 has 70.6 pts logged with 0 starters remaining (live projection: 70.6). Texas Tunas has 72.8 pts with 2 starters remaining (live projection: 92.2).",
+        "headline": "Bijan Robinson underperformed (-12.6) while Kirk Cousins surged (+11.3); dynamic shifted Texas Tunas -8.1",
+        "shiftSummary": "Early game action shifted the matchup baseline: Team jccbraves99's Kirk Cousins surged with 19.5 pts (+11.3 vs proj), while Team jccbraves99's Bijan Robinson underperformed with 6.3 pts (-12.6 vs 18.9 proj). Team jccbraves99 has 70.6 pts logged with 0 starters remaining (live projection: 70.6). Texas Tunas has 78.7 pts with 0 starters remaining (live projection: 78.7).",
         "liveFavorite": "Texas Tunas",
-        "liveSpread": 21.6,
-        "liveSpreadLabel": "Texas Tunas -21.6 (Live)",
-        "liveImpliedTotal": 162.8,
+        "liveSpread": 8.1,
+        "liveSpreadLabel": "Texas Tunas -8.1 (Live)",
+        "liveImpliedTotal": 149.3,
         "keyPerformers": [
           {
             "team": "Team jccbraves99",
@@ -3909,11 +3972,29 @@
           },
           {
             "team": "Texas Tunas",
+            "player": "Tucker Kraft",
+            "position": "TE",
+            "actualPoints": 4.9,
+            "projectedPoints": 9.9,
+            "delta": -5.0,
+            "performance": "underperformed"
+          },
+          {
+            "team": "Texas Tunas",
             "player": "Harold Fannin",
             "position": "TE",
             "actualPoints": 1.4,
             "projectedPoints": 9.3,
             "delta": -7.9,
+            "performance": "underperformed"
+          },
+          {
+            "team": "Texas Tunas",
+            "player": "Brandon Aubrey",
+            "position": "K",
+            "actualPoints": 1.0,
+            "projectedPoints": 9.5,
+            "delta": -8.5,
             "performance": "underperformed"
           },
           {
@@ -3928,12 +4009,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "Bijan Robinson underperformed (-12.6) while Kirk Cousins surged (+11.3); dynamic shifted Texas Tunas -21.6",
-        "breakdown": "Early game action shifted the matchup baseline: Team jccbraves99's Kirk Cousins surged with 19.5 pts (+11.3 vs proj), while Team jccbraves99's Bijan Robinson underperformed with 6.3 pts (-12.6 vs 18.9 proj). Team jccbraves99 has 70.6 pts logged with 0 starters remaining (live projection: 70.6). Texas Tunas has 72.8 pts with 2 starters remaining (live projection: 92.2). The heaviest viewing window is ARI at LAR on FOX \u00b7 local market with 31.3 points at stake.",
+        "headline": "Bijan Robinson underperformed (-12.6) while Kirk Cousins surged (+11.3); dynamic shifted Texas Tunas -8.1",
+        "breakdown": "Early game action shifted the matchup baseline: Team jccbraves99's Kirk Cousins surged with 19.5 pts (+11.3 vs proj), while Team jccbraves99's Bijan Robinson underperformed with 6.3 pts (-12.6 vs 18.9 proj). Team jccbraves99 has 70.6 pts logged with 0 starters remaining (live projection: 70.6). Texas Tunas has 78.7 pts with 0 starters remaining (live projection: 78.7). The heaviest viewing window is ARI at LAR on FOX \u00b7 local market with 31.3 points at stake.",
         "keyVariables": [
-          "Live projected totals: Team jccbraves99 70.6 (70.6 logged) vs Texas Tunas 92.2 (72.8 logged).",
-          "Active line: Texas Tunas -21.6 (95.0% win probability).",
-          "Remaining starters: Team jccbraves99 0 to play \u00b7 Texas Tunas 2 to play.",
+          "Live projected totals: Team jccbraves99 70.6 (70.6 logged) vs Texas Tunas 78.7 (78.7 logged).",
+          "Active line: Texas Tunas -8.1 (72.7% win probability).",
+          "Remaining starters: Team jccbraves99 0 to play \u00b7 Texas Tunas 0 to play.",
           "Team jccbraves99 carries 2 active roster health flag(s).",
           "Texas Tunas carries 4 active roster health flag(s)."
         ]
@@ -4139,9 +4220,9 @@
             "Tucker Kraft (TE)",
             "Brandon Aubrey (K)"
           ],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 19.4,
-          "windowAnalysis": "Texas Tunas has the larger starter footprint in this game; 19.4 fantasy points at stake."
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 5.9,
+          "windowAnalysis": "Texas Tunas has the larger starter footprint in this game; 5.9 fantasy points at stake."
         }
       ]
     },
@@ -4149,7 +4230,7 @@
       "matchupId": 6,
       "week": 6,
       "title": "Team mannyrsox24 vs rLee3D",
-      "subtitle": "Live Update: Team mannyrsox24 -55.1 live line (111.9 vs 55.9 on board)",
+      "subtitle": "Live Update: Team mannyrsox24 -62.4 live line (111.9 vs 72.7 on board)",
       "isMarquee": false,
       "hasLiveResults": true,
       "team1": {
@@ -4376,11 +4457,11 @@
         "powerScore": 63.5,
         "grade": "C",
         "projected": 85.0,
-        "actualScore": 55.88,
-        "remainingProjected": 31.6,
-        "liveProjectedTotal": 87.5,
-        "startersPlayedCount": 7,
-        "startersRemainingCount": 3,
+        "actualScore": 72.68,
+        "remainingProjected": 7.5,
+        "liveProjectedTotal": 80.2,
+        "startersPlayedCount": 9,
+        "startersRemainingCount": 1,
         "keyPlayer": "Kenneth Walker",
         "keyPlayerProjection": 16.4,
         "starters": [
@@ -4445,16 +4526,16 @@
             "position": "WR",
             "nflTeam": "DAL",
             "projectedPoints": 13.2,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 13.2 pts",
+            "hasPlayed": true,
+            "actualPoints": 8.9,
+            "delta": -4.3,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 8.9 pts (-4.3 vs 13.2 proj)",
             "matchup": "@ GB",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "13.2-point model share in this lineup; healthy entering Week 6."
+            "note": "Final \u00b7 8.9 pts (-4.3 vs 13.2 proj)"
           },
           {
             "slot": "WR2",
@@ -4463,16 +4544,16 @@
             "position": "WR",
             "nflTeam": "GB",
             "projectedPoints": 10.9,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 10.9 pts",
+            "hasPlayed": true,
+            "actualPoints": 7.9,
+            "delta": -3.0,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 7.9 pts (-3.0 vs 10.9 proj)",
             "matchup": "vs DAL",
-            "kickoff": "Sunday \u00b7 8:20 PM ET",
+            "kickoff": "Final",
             "network": "NBC \u00b7 Peacock \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "10.9-point model share in this lineup; healthy entering Week 6."
+            "note": "Final \u00b7 7.9 pts (-3.0 vs 10.9 proj)"
           },
           {
             "slot": "WR3",
@@ -4584,20 +4665,20 @@
         "winProbability": 18.0,
         "liveWinProbability": 5.0
       },
-      "spread": 55.1,
-      "spreadLabel": "Team mannyrsox24 -55.1 (Live)",
+      "spread": 62.4,
+      "spreadLabel": "Team mannyrsox24 -62.4 (Live)",
       "openingSpreadLabel": "Team mannyrsox24 -25.7",
-      "impliedTotal": 230.1,
+      "impliedTotal": 222.8,
       "openingImpliedTotal": 195.7,
-      "flavor": "Dynamic shift: Efton Chism underperformed (-5.6) while Kenneth Walker surged (+10.5); dynamic shifted Team mannyrsox24 -55.1. Current live line stands at Team mannyrsox24 -55.1.",
+      "flavor": "Dynamic shift: Efton Chism underperformed (-5.6) while Kenneth Walker surged (+10.5); dynamic shifted Team mannyrsox24 -62.4. Current live line stands at Team mannyrsox24 -62.4.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "Efton Chism underperformed (-5.6) while Kenneth Walker surged (+10.5); dynamic shifted Team mannyrsox24 -55.1",
-        "shiftSummary": "Early game action shifted the matchup baseline: rLee3D's Kenneth Walker surged with 26.9 pts (+10.5 vs proj), while rLee3D's Efton Chism underperformed with 0.0 pts (-5.6 vs 5.6 proj). Team mannyrsox24 has 111.9 pts logged with 2 starters remaining (live projection: 142.6). rLee3D has 55.9 pts with 3 starters remaining (live projection: 87.5).",
+        "headline": "Efton Chism underperformed (-5.6) while Kenneth Walker surged (+10.5); dynamic shifted Team mannyrsox24 -62.4",
+        "shiftSummary": "Early game action shifted the matchup baseline: rLee3D's Kenneth Walker surged with 26.9 pts (+10.5 vs proj), while rLee3D's Efton Chism underperformed with 0.0 pts (-5.6 vs 5.6 proj). Team mannyrsox24 has 111.9 pts logged with 2 starters remaining (live projection: 142.6). rLee3D has 72.7 pts with 1 starters remaining (live projection: 80.2).",
         "liveFavorite": "Team mannyrsox24",
-        "liveSpread": 55.1,
-        "liveSpreadLabel": "Team mannyrsox24 -55.1 (Live)",
-        "liveImpliedTotal": 230.1,
+        "liveSpread": 62.4,
+        "liveSpreadLabel": "Team mannyrsox24 -62.4 (Live)",
+        "liveImpliedTotal": 222.8,
         "keyPerformers": [
           {
             "team": "Team mannyrsox24",
@@ -4691,6 +4772,24 @@
           },
           {
             "team": "rLee3D",
+            "player": "CeeDee Lamb",
+            "position": "WR",
+            "actualPoints": 8.9,
+            "projectedPoints": 13.2,
+            "delta": -4.3,
+            "performance": "underperformed"
+          },
+          {
+            "team": "rLee3D",
+            "player": "Christian Watson",
+            "position": "WR",
+            "actualPoints": 7.9,
+            "projectedPoints": 10.9,
+            "delta": -3.0,
+            "performance": "underperformed"
+          },
+          {
+            "team": "rLee3D",
             "player": "Efton Chism",
             "position": "WR",
             "actualPoints": 0.0,
@@ -4737,12 +4836,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "Efton Chism underperformed (-5.6) while Kenneth Walker surged (+10.5); dynamic shifted Team mannyrsox24 -55.1",
-        "breakdown": "Early game action shifted the matchup baseline: rLee3D's Kenneth Walker surged with 26.9 pts (+10.5 vs proj), while rLee3D's Efton Chism underperformed with 0.0 pts (-5.6 vs 5.6 proj). Team mannyrsox24 has 111.9 pts logged with 2 starters remaining (live projection: 142.6). rLee3D has 55.9 pts with 3 starters remaining (live projection: 87.5). The heaviest viewing window is WAS at SF on ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+ with 38.2 points at stake.",
+        "headline": "Efton Chism underperformed (-5.6) while Kenneth Walker surged (+10.5); dynamic shifted Team mannyrsox24 -62.4",
+        "breakdown": "Early game action shifted the matchup baseline: rLee3D's Kenneth Walker surged with 26.9 pts (+10.5 vs proj), while rLee3D's Efton Chism underperformed with 0.0 pts (-5.6 vs 5.6 proj). Team mannyrsox24 has 111.9 pts logged with 2 starters remaining (live projection: 142.6). rLee3D has 72.7 pts with 1 starters remaining (live projection: 80.2). The heaviest viewing window is WAS at SF on ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+ with 38.2 points at stake.",
         "keyVariables": [
-          "Live projected totals: Team mannyrsox24 142.6 (111.9 logged) vs rLee3D 87.5 (55.9 logged).",
-          "Active line: Team mannyrsox24 -55.1 (95.0% win probability).",
-          "Remaining starters: Team mannyrsox24 2 to play \u00b7 rLee3D 3 to play.",
+          "Live projected totals: Team mannyrsox24 142.6 (111.9 logged) vs rLee3D 80.2 (72.7 logged).",
+          "Active line: Team mannyrsox24 -62.4 (95.0% win probability).",
+          "Remaining starters: Team mannyrsox24 2 to play \u00b7 rLee3D 1 to play.",
           "Team mannyrsox24 carries 2 active roster health flag(s).",
           "rLee3D carries 2 active roster health flag(s)."
         ]
@@ -4945,9 +5044,9 @@
             "CeeDee Lamb (WR)",
             "Christian Watson (WR)"
           ],
-          "leverageLevel": "High",
-          "fantasyPointsAtStake": 24.1,
-          "windowAnalysis": "rLee3D has the larger starter footprint in this game; 24.1 fantasy points at stake."
+          "leverageLevel": "Medium",
+          "fantasyPointsAtStake": 16.8,
+          "windowAnalysis": "rLee3D has the larger starter footprint in this game; 16.8 fantasy points at stake."
         },
         {
           "kickoffAt": "2026-10-19T20:15:00-04:00",
