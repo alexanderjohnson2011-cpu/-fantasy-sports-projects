@@ -1,11 +1,11 @@
 {
   "season": "2026",
   "week": 10,
-  "generatedAt": "2026-11-16T23:16:26.566749+00:00",
+  "generatedAt": "2026-11-17T01:44:36.853933+00:00",
   "scheduleSource": {
     "provider": "nflverse / NFL Broadcast Operations",
     "url": "https://www.nfl.com/schedules/2026/reg10",
-    "capturedAt": "2026-11-16T23:16:19.447873+00:00",
+    "capturedAt": "2026-11-17T01:44:28.779276+00:00",
     "note": "Official Week 10 kickoff times, matchups, and broadcast fixtures across Thursday Night Football (Prime Video), Sunday regional windows (CBS/FOX), Sunday Night Football (NBC), and Monday Night Football (ESPN/ABC)."
   },
   "sleeperSource": "https://api.sleeper.app/v1/league/1401673232670539776/matchups/10",
@@ -14,14 +14,14 @@
       "matchupId": 1,
       "week": 10,
       "title": "Team DRockefeller vs Texas Tunas",
-      "subtitle": "Live Update: Texas Tunas -81.5 live line (77.6 vs 143.3 on board)",
+      "subtitle": "Live Update: Texas Tunas -66.4 live line (77.6 vs 144.0 on board)",
       "isMarquee": false,
       "hasLiveResults": true,
       "team1": {
         "rosterId": 3,
         "name": "Team DRockefeller",
         "manager": "DRockefeller",
-        "powerRank": 9,
+        "powerRank": 8,
         "powerScore": 74.6,
         "grade": "B-",
         "projected": 95.6,
@@ -241,11 +241,11 @@
         "powerScore": 82.0,
         "grade": "B+",
         "projected": 110.4,
-        "actualScore": 143.26,
-        "remainingProjected": 15.8,
-        "liveProjectedTotal": 159.1,
-        "startersPlayedCount": 9,
-        "startersRemainingCount": 1,
+        "actualScore": 143.96,
+        "remainingProjected": 0,
+        "liveProjectedTotal": 144.0,
+        "startersPlayedCount": 10,
+        "startersRemainingCount": 0,
         "keyPlayer": "Joe Burrow",
         "keyPlayerProjection": 17.8,
         "starters": [
@@ -274,16 +274,16 @@
             "position": "RB",
             "nflTeam": "BAL",
             "projectedPoints": 15.8,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 15.8 pts",
+            "hasPlayed": true,
+            "actualPoints": 0.7,
+            "delta": -15.1,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 0.7 pts (-15.1 vs 15.8 proj)",
             "matchup": "vs LAC",
-            "kickoff": "Monday \u00b7 8:15 PM ET",
+            "kickoff": "Final",
             "network": "ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "15.8-point model share in this lineup; healthy entering Week 10."
+            "note": "Final \u00b7 0.7 pts (-15.1 vs 15.8 proj)"
           },
           {
             "slot": "RB2",
@@ -461,20 +461,20 @@
         "winProbability": 82.0,
         "liveWinProbability": 95.0
       },
-      "spread": 81.5,
-      "spreadLabel": "Texas Tunas -81.5 (Live)",
+      "spread": 66.4,
+      "spreadLabel": "Texas Tunas -66.4 (Live)",
       "openingSpreadLabel": "Texas Tunas -14.8",
-      "impliedTotal": 236.7,
+      "impliedTotal": 221.6,
       "openingImpliedTotal": 206.0,
-      "flavor": "Dynamic shift: Drake Maye underperformed (-15.9) while Joe Burrow surged (+15.4); dynamic shifted Texas Tunas -81.5. Current live line stands at Texas Tunas -81.5.",
+      "flavor": "Dynamic shift: Drake Maye underperformed (-15.9) while Joe Burrow surged (+15.4); dynamic shifted Texas Tunas -66.4. Current live line stands at Texas Tunas -66.4.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "Drake Maye underperformed (-15.9) while Joe Burrow surged (+15.4); dynamic shifted Texas Tunas -81.5",
-        "shiftSummary": "Early game action shifted the matchup baseline: Texas Tunas's Joe Burrow surged with 33.2 pts (+15.4 vs proj), while Team DRockefeller's Drake Maye underperformed with 3.0 pts (-15.9 vs 18.9 proj). Team DRockefeller has 77.6 pts logged with 0 starters remaining (live projection: 77.6). Texas Tunas has 143.3 pts with 1 starters remaining (live projection: 159.1).",
+        "headline": "Drake Maye underperformed (-15.9) while Joe Burrow surged (+15.4); dynamic shifted Texas Tunas -66.4",
+        "shiftSummary": "Early game action shifted the matchup baseline: Texas Tunas's Joe Burrow surged with 33.2 pts (+15.4 vs proj), while Team DRockefeller's Drake Maye underperformed with 3.0 pts (-15.9 vs 18.9 proj). Team DRockefeller has 77.6 pts logged with 0 starters remaining (live projection: 77.6). Texas Tunas has 144.0 pts with 0 starters remaining (live projection: 144.0).",
         "liveFavorite": "Texas Tunas",
-        "liveSpread": 81.5,
-        "liveSpreadLabel": "Texas Tunas -81.5 (Live)",
-        "liveImpliedTotal": 236.7,
+        "liveSpread": 66.4,
+        "liveSpreadLabel": "Texas Tunas -66.4 (Live)",
+        "liveImpliedTotal": 221.6,
         "keyPerformers": [
           {
             "team": "Team DRockefeller",
@@ -577,6 +577,15 @@
           },
           {
             "team": "Texas Tunas",
+            "player": "Derrick Henry",
+            "position": "RB",
+            "actualPoints": 0.7,
+            "projectedPoints": 15.8,
+            "delta": -15.1,
+            "performance": "underperformed"
+          },
+          {
+            "team": "Texas Tunas",
             "player": "Alvin Kamara",
             "position": "RB",
             "actualPoints": 14.9,
@@ -650,12 +659,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "Drake Maye underperformed (-15.9) while Joe Burrow surged (+15.4); dynamic shifted Texas Tunas -81.5",
-        "breakdown": "Early game action shifted the matchup baseline: Texas Tunas's Joe Burrow surged with 33.2 pts (+15.4 vs proj), while Team DRockefeller's Drake Maye underperformed with 3.0 pts (-15.9 vs 18.9 proj). Team DRockefeller has 77.6 pts logged with 0 starters remaining (live projection: 77.6). Texas Tunas has 143.3 pts with 1 starters remaining (live projection: 159.1). The heaviest viewing window is MIA at IND on CBS \u00b7 local market with 41.0 points at stake.",
+        "headline": "Drake Maye underperformed (-15.9) while Joe Burrow surged (+15.4); dynamic shifted Texas Tunas -66.4",
+        "breakdown": "Early game action shifted the matchup baseline: Texas Tunas's Joe Burrow surged with 33.2 pts (+15.4 vs proj), while Team DRockefeller's Drake Maye underperformed with 3.0 pts (-15.9 vs 18.9 proj). Team DRockefeller has 77.6 pts logged with 0 starters remaining (live projection: 77.6). Texas Tunas has 144.0 pts with 0 starters remaining (live projection: 144.0). The heaviest viewing window is MIA at IND on CBS \u00b7 local market with 41.0 points at stake.",
         "keyVariables": [
-          "Live projected totals: Team DRockefeller 77.6 (77.6 logged) vs Texas Tunas 159.1 (143.3 logged).",
-          "Active line: Texas Tunas -81.5 (95.0% win probability).",
-          "Remaining starters: Team DRockefeller 0 to play \u00b7 Texas Tunas 1 to play.",
+          "Live projected totals: Team DRockefeller 77.6 (77.6 logged) vs Texas Tunas 144.0 (144.0 logged).",
+          "Active line: Texas Tunas -66.4 (95.0% win probability).",
+          "Remaining starters: Team DRockefeller 0 to play \u00b7 Texas Tunas 0 to play.",
           "Team DRockefeller carries 2 active roster health flag(s).",
           "Texas Tunas carries 4 active roster health flag(s)."
         ]
@@ -875,9 +884,9 @@
           "team2Starters": [
             "Derrick Henry (RB)"
           ],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 15.8,
-          "windowAnalysis": "Texas Tunas has the larger starter footprint in this game; 15.8 fantasy points at stake."
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 0.7,
+          "windowAnalysis": "Texas Tunas has the larger starter footprint in this game; 0.7 fantasy points at stake."
         }
       ]
     },
@@ -885,7 +894,7 @@
       "matchupId": 2,
       "week": 10,
       "title": "Team arkinsjt vs rLee3D",
-      "subtitle": "Live Update: Team arkinsjt -34.9 live line (99.1 vs 94.4 on board)",
+      "subtitle": "Live Update: Team arkinsjt -6.6 live line (101.0 vs 94.4 on board)",
       "isMarquee": false,
       "hasLiveResults": true,
       "team1": {
@@ -896,11 +905,11 @@
         "powerScore": 91.8,
         "grade": "A",
         "projected": 114.6,
-        "actualScore": 99.08,
-        "remainingProjected": 30.2,
-        "liveProjectedTotal": 129.3,
-        "startersPlayedCount": 8,
-        "startersRemainingCount": 2,
+        "actualScore": 100.98,
+        "remainingProjected": 0,
+        "liveProjectedTotal": 101.0,
+        "startersPlayedCount": 10,
+        "startersRemainingCount": 0,
         "keyPlayer": "Omarion Hampton",
         "keyPlayerProjection": 16.6,
         "starters": [
@@ -929,16 +938,16 @@
             "position": "RB",
             "nflTeam": "LAC",
             "projectedPoints": 16.6,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 16.6 pts",
+            "hasPlayed": true,
+            "actualPoints": 1.9,
+            "delta": -14.7,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 1.9 pts (-14.7 vs 16.6 proj)",
             "matchup": "@ BAL",
-            "kickoff": "Monday \u00b7 8:15 PM ET",
+            "kickoff": "Final",
             "network": "ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "16.6-point model share in this lineup; healthy entering Week 10."
+            "note": "Final \u00b7 1.9 pts (-14.7 vs 16.6 proj)"
           },
           {
             "slot": "RB2",
@@ -1001,16 +1010,16 @@
             "position": "WR",
             "nflTeam": "BAL",
             "projectedPoints": 13.6,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 13.6 pts",
+            "hasPlayed": true,
+            "actualPoints": 0.0,
+            "delta": -13.6,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 0.0 pts (-13.6 vs 13.6 proj)",
             "matchup": "vs LAC",
-            "kickoff": "Monday \u00b7 8:15 PM ET",
+            "kickoff": "Final",
             "network": "ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "13.6-point model share in this lineup; healthy entering Week 10."
+            "note": "Final \u00b7 0.0 pts (-13.6 vs 13.6 proj)"
           },
           {
             "slot": "WR3",
@@ -1096,14 +1105,14 @@
           }
         ],
         "winProbability": 82.0,
-        "liveWinProbability": 95.0
+        "liveWinProbability": 68.5
       },
       "team2": {
         "rosterId": 12,
         "name": "rLee3D",
         "manager": "rLee3D",
         "powerRank": 11,
-        "powerScore": 69.2,
+        "powerScore": 69.7,
         "grade": "C+",
         "projected": 82.1,
         "actualScore": 94.38,
@@ -1296,7 +1305,7 @@
           }
         ],
         "strongestRoom": "QB",
-        "weakestRoom": "TE",
+        "weakestRoom": "WR",
         "injuryFlags": [
           {
             "player": "Audric Estime",
@@ -1318,22 +1327,22 @@
           }
         ],
         "winProbability": 18.0,
-        "liveWinProbability": 5.0
+        "liveWinProbability": 31.5
       },
-      "spread": 34.9,
-      "spreadLabel": "Team arkinsjt -34.9 (Live)",
+      "spread": 6.6,
+      "spreadLabel": "Team arkinsjt -6.6 (Live)",
       "openingSpreadLabel": "Team arkinsjt -32.5",
-      "impliedTotal": 223.7,
+      "impliedTotal": 195.4,
       "openingImpliedTotal": 196.7,
-      "flavor": "Dynamic shift: Chris Olave underperformed (-8.2) while Player MIN surged (+15.4); dynamic shifted Team arkinsjt -34.9. Current live line stands at Team arkinsjt -34.9.",
+      "flavor": "Dynamic shift: Omarion Hampton underperformed (-14.7) while Player MIN surged (+15.4); dynamic shifted Team arkinsjt -6.6. Current live line stands at Team arkinsjt -6.6.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "Chris Olave underperformed (-8.2) while Player MIN surged (+15.4); dynamic shifted Team arkinsjt -34.9",
-        "shiftSummary": "Early game action shifted the matchup baseline: rLee3D's Player MIN surged with 21.0 pts (+15.4 vs proj), while Team arkinsjt's Chris Olave underperformed with 4.5 pts (-8.2 vs 12.7 proj). Team arkinsjt has 99.1 pts logged with 2 starters remaining (live projection: 129.3). rLee3D has 94.4 pts with 0 starters remaining (live projection: 94.4).",
+        "headline": "Omarion Hampton underperformed (-14.7) while Player MIN surged (+15.4); dynamic shifted Team arkinsjt -6.6",
+        "shiftSummary": "Early game action shifted the matchup baseline: rLee3D's Player MIN surged with 21.0 pts (+15.4 vs proj), while Team arkinsjt's Omarion Hampton underperformed with 1.9 pts (-14.7 vs 16.6 proj). Team arkinsjt has 101.0 pts logged with 0 starters remaining (live projection: 101.0). rLee3D has 94.4 pts with 0 starters remaining (live projection: 94.4).",
         "liveFavorite": "Team arkinsjt",
-        "liveSpread": 34.9,
-        "liveSpreadLabel": "Team arkinsjt -34.9 (Live)",
-        "liveImpliedTotal": 223.7,
+        "liveSpread": 6.6,
+        "liveSpreadLabel": "Team arkinsjt -6.6 (Live)",
+        "liveImpliedTotal": 195.4,
         "keyPerformers": [
           {
             "team": "Team arkinsjt",
@@ -1343,6 +1352,15 @@
             "projectedPoints": 11.7,
             "delta": -0.7,
             "performance": "met_projection"
+          },
+          {
+            "team": "Team arkinsjt",
+            "player": "Omarion Hampton",
+            "position": "RB",
+            "actualPoints": 1.9,
+            "projectedPoints": 16.6,
+            "delta": -14.7,
+            "performance": "underperformed"
           },
           {
             "team": "Team arkinsjt",
@@ -1370,6 +1388,15 @@
             "projectedPoints": 16.3,
             "delta": 12.3,
             "performance": "overperformed"
+          },
+          {
+            "team": "Team arkinsjt",
+            "player": "Zay Flowers",
+            "position": "WR",
+            "actualPoints": 0.0,
+            "projectedPoints": 13.6,
+            "delta": -13.6,
+            "performance": "underperformed"
           },
           {
             "team": "Team arkinsjt",
@@ -1500,12 +1527,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "Chris Olave underperformed (-8.2) while Player MIN surged (+15.4); dynamic shifted Team arkinsjt -34.9",
-        "breakdown": "Early game action shifted the matchup baseline: rLee3D's Player MIN surged with 21.0 pts (+15.4 vs proj), while Team arkinsjt's Chris Olave underperformed with 4.5 pts (-8.2 vs 12.7 proj). Team arkinsjt has 99.1 pts logged with 2 starters remaining (live projection: 129.3). rLee3D has 94.4 pts with 0 starters remaining (live projection: 94.4). The heaviest viewing window is SEA at LV on FOX \u00b7 local market with 34.5 points at stake.",
+        "headline": "Omarion Hampton underperformed (-14.7) while Player MIN surged (+15.4); dynamic shifted Team arkinsjt -6.6",
+        "breakdown": "Early game action shifted the matchup baseline: rLee3D's Player MIN surged with 21.0 pts (+15.4 vs proj), while Team arkinsjt's Omarion Hampton underperformed with 1.9 pts (-14.7 vs 16.6 proj). Team arkinsjt has 101.0 pts logged with 0 starters remaining (live projection: 101.0). rLee3D has 94.4 pts with 0 starters remaining (live projection: 94.4). The heaviest viewing window is SEA at LV on FOX \u00b7 local market with 34.5 points at stake.",
         "keyVariables": [
-          "Live projected totals: Team arkinsjt 129.3 (99.1 logged) vs rLee3D 94.4 (94.4 logged).",
-          "Active line: Team arkinsjt -34.9 (95.0% win probability).",
-          "Remaining starters: Team arkinsjt 2 to play \u00b7 rLee3D 0 to play.",
+          "Live projected totals: Team arkinsjt 101.0 (101.0 logged) vs rLee3D 94.4 (94.4 logged).",
+          "Active line: Team arkinsjt -6.6 (68.5% win probability).",
+          "Remaining starters: Team arkinsjt 0 to play \u00b7 rLee3D 0 to play.",
           "Team arkinsjt carries 1 active roster health flag(s).",
           "rLee3D carries 3 active roster health flag(s)."
         ]
@@ -1699,9 +1726,9 @@
             "Zay Flowers (WR)"
           ],
           "team2Starters": [],
-          "leverageLevel": "High",
-          "fantasyPointsAtStake": 30.2,
-          "windowAnalysis": "Team arkinsjt has the larger starter footprint in this game; 30.2 fantasy points at stake."
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 1.9,
+          "windowAnalysis": "Team arkinsjt has the larger starter footprint in this game; 1.9 fantasy points at stake."
         }
       ]
     },
@@ -1709,7 +1736,7 @@
       "matchupId": 3,
       "week": 10,
       "title": "Team bubberdubber vs Team mannyrsox24",
-      "subtitle": "Live Update: Team bubberdubber -22.7 live line (136.6 vs 121.1 on board)",
+      "subtitle": "Live Update: Team bubberdubber -15.5 live line (136.6 vs 121.1 on board)",
       "isMarquee": true,
       "hasLiveResults": true,
       "team1": {
@@ -1721,10 +1748,10 @@
         "grade": "B+",
         "projected": 116.2,
         "actualScore": 136.58,
-        "remainingProjected": 7.2,
-        "liveProjectedTotal": 143.8,
-        "startersPlayedCount": 9,
-        "startersRemainingCount": 1,
+        "remainingProjected": 0,
+        "liveProjectedTotal": 136.6,
+        "startersPlayedCount": 10,
+        "startersRemainingCount": 0,
         "keyPlayer": "Trevor Lawrence",
         "keyPlayerProjection": 17.7,
         "starters": [
@@ -1843,16 +1870,16 @@
             "position": "WR",
             "nflTeam": "LAC",
             "projectedPoints": 7.2,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 7.2 pts",
+            "hasPlayed": true,
+            "actualPoints": 0.0,
+            "delta": -7.2,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 0.0 pts (-7.2 vs 7.2 proj)",
             "matchup": "@ BAL",
-            "kickoff": "Monday \u00b7 8:15 PM ET",
+            "kickoff": "Final",
             "network": "ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+",
             "injuryStatus": "Questionable",
-            "note": "7.2-point model share in this lineup; questionable entering Week 10."
+            "note": "Final \u00b7 0.0 pts (-7.2 vs 7.2 proj)"
           },
           {
             "slot": "TE",
@@ -1938,7 +1965,7 @@
           }
         ],
         "winProbability": 61.0,
-        "liveWinProbability": 95.0
+        "liveWinProbability": 93.4
       },
       "team2": {
         "rosterId": 8,
@@ -2154,22 +2181,22 @@
           }
         ],
         "winProbability": 39.0,
-        "liveWinProbability": 5.0
+        "liveWinProbability": 6.6
       },
-      "spread": 22.7,
-      "spreadLabel": "Team bubberdubber -22.7 (Live)",
+      "spread": 15.5,
+      "spreadLabel": "Team bubberdubber -15.5 (Live)",
       "openingSpreadLabel": "Team bubberdubber -4.6",
-      "impliedTotal": 264.9,
+      "impliedTotal": 257.7,
       "openingImpliedTotal": 227.8,
-      "flavor": "Dynamic shift: Carnell Tate underperformed (-10.4) while Chuba Hubbard surged (+21.1); dynamic shifted Team bubberdubber -22.7. Current live line stands at Team bubberdubber -22.7.",
+      "flavor": "Dynamic shift: Carnell Tate underperformed (-10.4) while Chuba Hubbard surged (+21.1); dynamic shifted Team bubberdubber -15.5. Current live line stands at Team bubberdubber -15.5.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "Carnell Tate underperformed (-10.4) while Chuba Hubbard surged (+21.1); dynamic shifted Team bubberdubber -22.7",
-        "shiftSummary": "Early game action shifted the matchup baseline: Team mannyrsox24's Chuba Hubbard surged with 31.7 pts (+21.1 vs proj), while Team mannyrsox24's Carnell Tate underperformed with 0.0 pts (-10.4 vs 10.4 proj). Team bubberdubber has 136.6 pts logged with 1 starters remaining (live projection: 143.8). Team mannyrsox24 has 121.1 pts with 0 starters remaining (live projection: 121.1).",
+        "headline": "Carnell Tate underperformed (-10.4) while Chuba Hubbard surged (+21.1); dynamic shifted Team bubberdubber -15.5",
+        "shiftSummary": "Early game action shifted the matchup baseline: Team mannyrsox24's Chuba Hubbard surged with 31.7 pts (+21.1 vs proj), while Team mannyrsox24's Carnell Tate underperformed with 0.0 pts (-10.4 vs 10.4 proj). Team bubberdubber has 136.6 pts logged with 0 starters remaining (live projection: 136.6). Team mannyrsox24 has 121.1 pts with 0 starters remaining (live projection: 121.1).",
         "liveFavorite": "Team bubberdubber",
-        "liveSpread": 22.7,
-        "liveSpreadLabel": "Team bubberdubber -22.7 (Live)",
-        "liveImpliedTotal": 264.9,
+        "liveSpread": 15.5,
+        "liveSpreadLabel": "Team bubberdubber -15.5 (Live)",
+        "liveImpliedTotal": 257.7,
         "keyPerformers": [
           {
             "team": "Team bubberdubber",
@@ -2224,6 +2251,15 @@
             "projectedPoints": 13.3,
             "delta": -1.2,
             "performance": "met_projection"
+          },
+          {
+            "team": "Team bubberdubber",
+            "player": "Quentin Johnston",
+            "position": "WR",
+            "actualPoints": 0.0,
+            "projectedPoints": 7.2,
+            "delta": -7.2,
+            "performance": "underperformed"
           },
           {
             "team": "Team bubberdubber",
@@ -2345,12 +2381,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "Carnell Tate underperformed (-10.4) while Chuba Hubbard surged (+21.1); dynamic shifted Team bubberdubber -22.7",
-        "breakdown": "Early game action shifted the matchup baseline: Team mannyrsox24's Chuba Hubbard surged with 31.7 pts (+21.1 vs proj), while Team mannyrsox24's Carnell Tate underperformed with 0.0 pts (-10.4 vs 10.4 proj). Team bubberdubber has 136.6 pts logged with 1 starters remaining (live projection: 143.8). Team mannyrsox24 has 121.1 pts with 0 starters remaining (live projection: 121.1). The heaviest viewing window is PIT at CIN on NBC \u00b7 Peacock \u00b7 NFL+ with 43.9 points at stake.",
+        "headline": "Carnell Tate underperformed (-10.4) while Chuba Hubbard surged (+21.1); dynamic shifted Team bubberdubber -15.5",
+        "breakdown": "Early game action shifted the matchup baseline: Team mannyrsox24's Chuba Hubbard surged with 31.7 pts (+21.1 vs proj), while Team mannyrsox24's Carnell Tate underperformed with 0.0 pts (-10.4 vs 10.4 proj). Team bubberdubber has 136.6 pts logged with 0 starters remaining (live projection: 136.6). Team mannyrsox24 has 121.1 pts with 0 starters remaining (live projection: 121.1). The heaviest viewing window is PIT at CIN on NBC \u00b7 Peacock \u00b7 NFL+ with 43.9 points at stake.",
         "keyVariables": [
-          "Live projected totals: Team bubberdubber 143.8 (136.6 logged) vs Team mannyrsox24 121.1 (121.1 logged).",
-          "Active line: Team bubberdubber -22.7 (95.0% win probability).",
-          "Remaining starters: Team bubberdubber 1 to play \u00b7 Team mannyrsox24 0 to play.",
+          "Live projected totals: Team bubberdubber 136.6 (136.6 logged) vs Team mannyrsox24 121.1 (121.1 logged).",
+          "Active line: Team bubberdubber -15.5 (93.4% win probability).",
+          "Remaining starters: Team bubberdubber 0 to play \u00b7 Team mannyrsox24 0 to play.",
           "Team bubberdubber carries 4 active roster health flag(s).",
           "Team mannyrsox24 carries 2 active roster health flag(s)."
         ]
@@ -2536,8 +2572,8 @@
           ],
           "team2Starters": [],
           "leverageLevel": "Low",
-          "fantasyPointsAtStake": 7.2,
-          "windowAnalysis": "Team bubberdubber has the larger starter footprint in this game; 7.2 fantasy points at stake."
+          "fantasyPointsAtStake": 0.0,
+          "windowAnalysis": "Team bubberdubber has the larger starter footprint in this game; 0.0 fantasy points at stake."
         }
       ]
     },
@@ -2768,8 +2804,8 @@
         "rosterId": 10,
         "name": "Team akwelch3492",
         "manager": "akwelch3492",
-        "powerRank": 8,
-        "powerScore": 74.7,
+        "powerRank": 9,
+        "powerScore": 74.6,
         "grade": "B-",
         "projected": 94.7,
         "actualScore": 104.5,
@@ -3387,7 +3423,7 @@
       "matchupId": 5,
       "week": 10,
       "title": "Team Gnomeington vs Team mtrebing31",
-      "subtitle": "Live Update: Team Gnomeington -28.8 live line (131.2 vs 88.7 on board)",
+      "subtitle": "Live Update: Team Gnomeington -42.5 live line (131.2 vs 88.7 on board)",
       "isMarquee": false,
       "hasLiveResults": true,
       "team1": {
@@ -3611,14 +3647,14 @@
         "name": "Team mtrebing31",
         "manager": "mtrebing31",
         "powerRank": 10,
-        "powerScore": 70.7,
+        "powerScore": 70.6,
         "grade": "C+",
         "projected": 81.9,
         "actualScore": 88.72,
-        "remainingProjected": 13.7,
-        "liveProjectedTotal": 102.4,
-        "startersPlayedCount": 9,
-        "startersRemainingCount": 1,
+        "remainingProjected": 0,
+        "liveProjectedTotal": 88.7,
+        "startersPlayedCount": 10,
+        "startersRemainingCount": 0,
         "keyPlayer": "Cam Skattebo",
         "keyPlayerProjection": 14.3,
         "starters": [
@@ -3683,16 +3719,16 @@
             "position": "WR",
             "nflTeam": "LAC",
             "projectedPoints": 13.7,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 13.7 pts",
+            "hasPlayed": true,
+            "actualPoints": 0.0,
+            "delta": -13.7,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 0.0 pts (-13.7 vs 13.7 proj)",
             "matchup": "@ BAL",
-            "kickoff": "Monday \u00b7 8:15 PM ET",
+            "kickoff": "Final",
             "network": "ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "13.7-point model share in this lineup; healthy entering Week 10."
+            "note": "Final \u00b7 0.0 pts (-13.7 vs 13.7 proj)"
           },
           {
             "slot": "WR2",
@@ -3828,20 +3864,20 @@
         "winProbability": 18.0,
         "liveWinProbability": 5.0
       },
-      "spread": 28.8,
-      "spreadLabel": "Team Gnomeington -28.8 (Live)",
+      "spread": 42.5,
+      "spreadLabel": "Team Gnomeington -42.5 (Live)",
       "openingSpreadLabel": "Team Gnomeington -29.4",
-      "impliedTotal": 233.6,
+      "impliedTotal": 219.9,
       "openingImpliedTotal": 193.2,
-      "flavor": "Dynamic shift: Jason Myers underperformed (-7.5) while Jahmyr Gibbs surged (+20.4); dynamic shifted Team Gnomeington -28.8. Current live line stands at Team Gnomeington -28.8.",
+      "flavor": "Dynamic shift: Ladd McConkey underperformed (-13.7) while Jahmyr Gibbs surged (+20.4); dynamic shifted Team Gnomeington -42.5. Current live line stands at Team Gnomeington -42.5.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "Jason Myers underperformed (-7.5) while Jahmyr Gibbs surged (+20.4); dynamic shifted Team Gnomeington -28.8",
-        "shiftSummary": "Early game action shifted the matchup baseline: Team Gnomeington's Jahmyr Gibbs surged with 40.7 pts (+20.4 vs proj), while Team Gnomeington's Jason Myers underperformed with 2.0 pts (-7.5 vs 9.5 proj). Team Gnomeington has 131.2 pts logged with 0 starters remaining (live projection: 131.2). Team mtrebing31 has 88.7 pts with 1 starters remaining (live projection: 102.4).",
+        "headline": "Ladd McConkey underperformed (-13.7) while Jahmyr Gibbs surged (+20.4); dynamic shifted Team Gnomeington -42.5",
+        "shiftSummary": "Early game action shifted the matchup baseline: Team Gnomeington's Jahmyr Gibbs surged with 40.7 pts (+20.4 vs proj), while Team mtrebing31's Ladd McConkey underperformed with 0.0 pts (-13.7 vs 13.7 proj). Team Gnomeington has 131.2 pts logged with 0 starters remaining (live projection: 131.2). Team mtrebing31 has 88.7 pts with 0 starters remaining (live projection: 88.7).",
         "liveFavorite": "Team Gnomeington",
-        "liveSpread": 28.8,
-        "liveSpreadLabel": "Team Gnomeington -28.8 (Live)",
-        "liveImpliedTotal": 233.6,
+        "liveSpread": 42.5,
+        "liveSpreadLabel": "Team Gnomeington -42.5 (Live)",
+        "liveImpliedTotal": 219.9,
         "keyPerformers": [
           {
             "team": "Team Gnomeington",
@@ -3962,6 +3998,15 @@
           },
           {
             "team": "Team mtrebing31",
+            "player": "Ladd McConkey",
+            "position": "WR",
+            "actualPoints": 0.0,
+            "projectedPoints": 13.7,
+            "delta": -13.7,
+            "performance": "underperformed"
+          },
+          {
+            "team": "Team mtrebing31",
             "player": "Matthew Golden",
             "position": "WR",
             "actualPoints": 9.5,
@@ -4017,12 +4062,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "Jason Myers underperformed (-7.5) while Jahmyr Gibbs surged (+20.4); dynamic shifted Team Gnomeington -28.8",
-        "breakdown": "Early game action shifted the matchup baseline: Team Gnomeington's Jahmyr Gibbs surged with 40.7 pts (+20.4 vs proj), while Team Gnomeington's Jason Myers underperformed with 2.0 pts (-7.5 vs 9.5 proj). Team Gnomeington has 131.2 pts logged with 0 starters remaining (live projection: 131.2). Team mtrebing31 has 88.7 pts with 1 starters remaining (live projection: 102.4). The heaviest viewing window is BUF at NYJ on CBS \u00b7 local market with 47.2 points at stake.",
+        "headline": "Ladd McConkey underperformed (-13.7) while Jahmyr Gibbs surged (+20.4); dynamic shifted Team Gnomeington -42.5",
+        "breakdown": "Early game action shifted the matchup baseline: Team Gnomeington's Jahmyr Gibbs surged with 40.7 pts (+20.4 vs proj), while Team mtrebing31's Ladd McConkey underperformed with 0.0 pts (-13.7 vs 13.7 proj). Team Gnomeington has 131.2 pts logged with 0 starters remaining (live projection: 131.2). Team mtrebing31 has 88.7 pts with 0 starters remaining (live projection: 88.7). The heaviest viewing window is BUF at NYJ on CBS \u00b7 local market with 47.2 points at stake.",
         "keyVariables": [
-          "Live projected totals: Team Gnomeington 131.2 (131.2 logged) vs Team mtrebing31 102.4 (88.7 logged).",
-          "Active line: Team Gnomeington -28.8 (95.0% win probability).",
-          "Remaining starters: Team Gnomeington 0 to play \u00b7 Team mtrebing31 1 to play.",
+          "Live projected totals: Team Gnomeington 131.2 (131.2 logged) vs Team mtrebing31 88.7 (88.7 logged).",
+          "Active line: Team Gnomeington -42.5 (95.0% win probability).",
+          "Remaining starters: Team Gnomeington 0 to play \u00b7 Team mtrebing31 0 to play.",
           "Team Gnomeington carries 2 active roster health flag(s).",
           "Team mtrebing31 carries 3 active roster health flag(s)."
         ]
@@ -4229,9 +4274,9 @@
           "team2Starters": [
             "Ladd McConkey (WR)"
           ],
-          "leverageLevel": "Medium",
-          "fantasyPointsAtStake": 13.7,
-          "windowAnalysis": "Team mtrebing31 has the larger starter footprint in this game; 13.7 fantasy points at stake."
+          "leverageLevel": "Low",
+          "fantasyPointsAtStake": 0.0,
+          "windowAnalysis": "Team mtrebing31 has the larger starter footprint in this game; 0.0 fantasy points at stake."
         }
       ]
     },
@@ -4239,7 +4284,7 @@
       "matchupId": 6,
       "week": 10,
       "title": "Gridiron Gorillas vs Team kong58",
-      "subtitle": "Live Update: Team kong58 -68.7 live line (92.6 vs 178.8 on board)",
+      "subtitle": "Live Update: Team kong58 -73.9 live line (97.6 vs 178.8 on board)",
       "isMarquee": false,
       "hasLiveResults": true,
       "team1": {
@@ -4250,11 +4295,11 @@
         "powerScore": 57.2,
         "grade": "C-",
         "projected": 86.6,
-        "actualScore": 92.62,
-        "remainingProjected": 17.5,
-        "liveProjectedTotal": 110.1,
-        "startersPlayedCount": 7,
-        "startersRemainingCount": 3,
+        "actualScore": 97.62,
+        "remainingProjected": 7.3,
+        "liveProjectedTotal": 104.9,
+        "startersPlayedCount": 9,
+        "startersRemainingCount": 1,
         "keyPlayer": "Patrick Mahomes",
         "keyPlayerProjection": 14.0,
         "starters": [
@@ -4355,16 +4400,16 @@
             "position": "WR",
             "nflTeam": "BAL",
             "projectedPoints": 4.6,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 4.6 pts",
+            "hasPlayed": true,
+            "actualPoints": 0.0,
+            "delta": -4.6,
+            "performance": "underperformed",
+            "statusNote": "Final \u00b7 0.0 pts (-4.6 vs 4.6 proj)",
             "matchup": "vs LAC",
-            "kickoff": "Monday \u00b7 8:15 PM ET",
+            "kickoff": "Final",
             "network": "ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "4.6-point model share in this lineup; healthy entering Week 10."
+            "note": "Final \u00b7 0.0 pts (-4.6 vs 4.6 proj)"
           },
           {
             "slot": "TE",
@@ -4427,16 +4472,16 @@
             "position": "DEF",
             "nflTeam": "BAL",
             "projectedPoints": 5.6,
-            "hasPlayed": false,
-            "actualPoints": null,
-            "delta": null,
-            "performance": "upcoming",
-            "statusNote": "Upcoming \u00b7 Projected 5.6 pts",
+            "hasPlayed": true,
+            "actualPoints": 5.0,
+            "delta": -0.6,
+            "performance": "met_projection",
+            "statusNote": "Final \u00b7 5.0 pts (on pace)",
             "matchup": "vs LAC",
-            "kickoff": "Monday \u00b7 8:15 PM ET",
+            "kickoff": "Final",
             "network": "ESPN \u00b7 ABC \u00b7 ESPN2 \u00b7 NFL+",
             "injuryStatus": "Healthy",
-            "note": "5.6-point model share in this lineup; healthy entering Week 10."
+            "note": "Final \u00b7 5.0 pts (on pace)"
           }
         ],
         "strongestRoom": "TE",
@@ -4716,20 +4761,20 @@
         "winProbability": 82.0,
         "liveWinProbability": 95.0
       },
-      "spread": 68.7,
-      "spreadLabel": "Team kong58 -68.7 (Live)",
+      "spread": 73.9,
+      "spreadLabel": "Team kong58 -73.9 (Live)",
       "openingSpreadLabel": "Team kong58 -19.0",
-      "impliedTotal": 288.9,
+      "impliedTotal": 283.7,
       "openingImpliedTotal": 192.2,
-      "flavor": "Dynamic shift: Rhamondre Stevenson underperformed (-10.0) while Christian McCaffrey surged (+27.7); dynamic shifted Team kong58 -68.7. Current live line stands at Team kong58 -68.7.",
+      "flavor": "Dynamic shift: Rhamondre Stevenson underperformed (-10.0) while Christian McCaffrey surged (+27.7); dynamic shifted Team kong58 -73.9. Current live line stands at Team kong58 -73.9.",
       "gameShift": {
         "hasLiveResults": true,
-        "headline": "Rhamondre Stevenson underperformed (-10.0) while Christian McCaffrey surged (+27.7); dynamic shifted Team kong58 -68.7",
-        "shiftSummary": "Early game action shifted the matchup baseline: Team kong58's Christian McCaffrey surged with 44.3 pts (+27.7 vs proj), while Gridiron Gorillas's Rhamondre Stevenson underperformed with 1.0 pts (-10.0 vs 11.0 proj). Gridiron Gorillas has 92.6 pts logged with 3 starters remaining (live projection: 110.1). Team kong58 has 178.8 pts with 0 starters remaining (live projection: 178.8).",
+        "headline": "Rhamondre Stevenson underperformed (-10.0) while Christian McCaffrey surged (+27.7); dynamic shifted Team kong58 -73.9",
+        "shiftSummary": "Early game action shifted the matchup baseline: Team kong58's Christian McCaffrey surged with 44.3 pts (+27.7 vs proj), while Gridiron Gorillas's Rhamondre Stevenson underperformed with 1.0 pts (-10.0 vs 11.0 proj). Gridiron Gorillas has 97.6 pts logged with 1 starters remaining (live projection: 104.9). Team kong58 has 178.8 pts with 0 starters remaining (live projection: 178.8).",
         "liveFavorite": "Team kong58",
-        "liveSpread": 68.7,
-        "liveSpreadLabel": "Team kong58 -68.7 (Live)",
-        "liveImpliedTotal": 288.9,
+        "liveSpread": 73.9,
+        "liveSpreadLabel": "Team kong58 -73.9 (Live)",
+        "liveImpliedTotal": 283.7,
         "keyPerformers": [
           {
             "team": "Gridiron Gorillas",
@@ -4778,6 +4823,15 @@
           },
           {
             "team": "Gridiron Gorillas",
+            "player": "Ja'Kobi Lane",
+            "position": "WR",
+            "actualPoints": 0.0,
+            "projectedPoints": 4.6,
+            "delta": -4.6,
+            "performance": "underperformed"
+          },
+          {
+            "team": "Gridiron Gorillas",
             "player": "Brock Bowers",
             "position": "TE",
             "actualPoints": 2.8,
@@ -4793,6 +4847,15 @@
             "projectedPoints": 8.3,
             "delta": 14.9,
             "performance": "overperformed"
+          },
+          {
+            "team": "Gridiron Gorillas",
+            "player": "Player BAL",
+            "position": "DEF",
+            "actualPoints": 5.0,
+            "projectedPoints": 5.6,
+            "delta": -0.6,
+            "performance": "met_projection"
           },
           {
             "team": "Team kong58",
@@ -4887,12 +4950,12 @@
         ]
       },
       "tacticalAnalysis": {
-        "headline": "Rhamondre Stevenson underperformed (-10.0) while Christian McCaffrey surged (+27.7); dynamic shifted Team kong58 -68.7",
-        "breakdown": "Early game action shifted the matchup baseline: Team kong58's Christian McCaffrey surged with 44.3 pts (+27.7 vs proj), while Gridiron Gorillas's Rhamondre Stevenson underperformed with 1.0 pts (-10.0 vs 11.0 proj). Gridiron Gorillas has 92.6 pts logged with 3 starters remaining (live projection: 110.1). Team kong58 has 178.8 pts with 0 starters remaining (live projection: 178.8). The heaviest viewing window is SF at DAL on FOX \u00b7 local market with 128.4 points at stake.",
+        "headline": "Rhamondre Stevenson underperformed (-10.0) while Christian McCaffrey surged (+27.7); dynamic shifted Team kong58 -73.9",
+        "breakdown": "Early game action shifted the matchup baseline: Team kong58's Christian McCaffrey surged with 44.3 pts (+27.7 vs proj), while Gridiron Gorillas's Rhamondre Stevenson underperformed with 1.0 pts (-10.0 vs 11.0 proj). Gridiron Gorillas has 97.6 pts logged with 1 starters remaining (live projection: 104.9). Team kong58 has 178.8 pts with 0 starters remaining (live projection: 178.8). The heaviest viewing window is SF at DAL on FOX \u00b7 local market with 128.4 points at stake.",
         "keyVariables": [
-          "Live projected totals: Gridiron Gorillas 110.1 (92.6 logged) vs Team kong58 178.8 (178.8 logged).",
-          "Active line: Team kong58 -68.7 (95.0% win probability).",
-          "Remaining starters: Gridiron Gorillas 3 to play \u00b7 Team kong58 0 to play.",
+          "Live projected totals: Gridiron Gorillas 104.9 (97.6 logged) vs Team kong58 178.8 (178.8 logged).",
+          "Active line: Team kong58 -73.9 (95.0% win probability).",
+          "Remaining starters: Gridiron Gorillas 1 to play \u00b7 Team kong58 0 to play.",
           "Gridiron Gorillas carries 6 active roster health flag(s).",
           "Team kong58 carries 5 active roster health flag(s)."
         ]
@@ -5096,8 +5159,8 @@
           ],
           "team2Starters": [],
           "leverageLevel": "Low",
-          "fantasyPointsAtStake": 10.2,
-          "windowAnalysis": "Gridiron Gorillas has the larger starter footprint in this game; 10.2 fantasy points at stake."
+          "fantasyPointsAtStake": 5.0,
+          "windowAnalysis": "Gridiron Gorillas has the larger starter footprint in this game; 5.0 fantasy points at stake."
         }
       ]
     }
