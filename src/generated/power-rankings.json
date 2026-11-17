@@ -6,7 +6,7 @@
     "season": "2026"
   },
   "week": 11,
-  "generatedAtUtc": "2026-11-17T12:48:15.232312+00:00",
+  "generatedAtUtc": "2026-11-17T22:03:57.883375+00:00",
   "hasPriorWeek": true,
   "methodology": {
     "lineupWeight": 0.55,
@@ -18,341 +18,343 @@
   "teams": [
     {
       "rosterId": 12,
-      "score": 89.29,
+      "score": 90.72,
       "lineupScore": 100.0,
-      "depthScore": 67.5,
-      "balanceScore": 98.7,
+      "depthScore": 75.1,
+      "balanceScore": 94.1,
       "priorScore": 75.4,
-      "lineupValue": 44014.0,
-      "depthValue": 4594.0,
+      "lineupValue": 44268.0,
+      "depthValue": 4693.0,
       "byPosition": {
-        "QB": 6541.0,
-        "RB": 14223.0,
-        "WR": 14384.0,
-        "TE": 3051.0,
-        "FLEX": 5815.0
+        "QB": 6269.0,
+        "RB": 13478.0,
+        "WR": 15251.0,
+        "TE": 3660.0,
+        "FLEX": 5610.0
       },
       "rank": 1,
       "teamName": "Bronco Stampede",
       "priorRank": 1,
       "rankDelta": 0,
-      "scoreDelta": -0.73,
+      "scoreDelta": 0.7,
       "drivers": [
-        "usable depth -3"
+        "usable depth +5",
+        "positional balance -5"
       ],
-      "commentary": "Bronco Stampede at 1, unchanged. driven by usable depth -3."
+      "commentary": "Bronco Stampede at 1, unchanged. driven by usable depth +5 and positional balance -5."
     },
     {
       "rosterId": 1,
-      "score": 81.21,
-      "lineupScore": 65.9,
+      "score": 76.85,
+      "lineupScore": 59.5,
       "depthScore": 100.0,
-      "balanceScore": 99.6,
+      "balanceScore": 91.2,
       "priorScore": 100.0,
-      "lineupValue": 33708.0,
-      "depthValue": 6722.0,
+      "lineupValue": 32164.0,
+      "depthValue": 6209.0,
       "byPosition": {
-        "QB": 1881.0,
-        "RB": 9541.0,
-        "WR": 8298.0,
-        "TE": 5867.0,
+        "QB": 1690.0,
+        "RB": 9787.0,
+        "WR": 7122.0,
+        "TE": 5521.0,
         "K": 526.0,
         "DEF": 0.0,
-        "FLEX": 7595.0
+        "FLEX": 7518.0
       },
       "rank": 2,
       "teamName": "Ertz & Krafts \ud83c\udfc6",
       "priorRank": 2,
       "rankDelta": 0,
-      "scoreDelta": 1.83,
+      "scoreDelta": -4.88,
       "drivers": [
-        "lineup strength +3",
-        "positional balance +3"
+        "lineup strength -7",
+        "positional balance -8"
       ],
-      "commentary": "Ertz & Krafts \ud83c\udfc6 at 2, unchanged. driven by lineup strength +3 and positional balance +3."
-    },
-    {
-      "rosterId": 10,
-      "score": 71.62,
-      "lineupScore": 80.4,
-      "depthScore": 38.8,
-      "balanceScore": 84.6,
-      "priorScore": 92.4,
-      "lineupValue": 38100.0,
-      "depthValue": 2708.0,
-      "byPosition": {
-        "QB": 2692.0,
-        "RB": 13408.0,
-        "WR": 14330.0,
-        "TE": 2689.0,
-        "K": 590.0,
-        "DEF": 0.0,
-        "FLEX": 4391.0
-      },
-      "rank": 3,
-      "teamName": "Bijan And The Maye-ssiah",
-      "priorRank": 3,
-      "rankDelta": 0,
-      "scoreDelta": 2.22,
-      "drivers": [
-        "lineup strength +4",
-        "positional balance -2"
-      ],
-      "commentary": "Bijan And The Maye-ssiah at 3, unchanged. driven by lineup strength +4 and positional balance -2."
+      "commentary": "Ertz & Krafts \ud83c\udfc6 at 2, unchanged. driven by lineup strength -7 and positional balance -8."
     },
     {
       "rosterId": 3,
-      "score": 67.16,
-      "lineupScore": 83.6,
-      "depthScore": 26.8,
+      "score": 68.69,
+      "lineupScore": 84.5,
+      "depthScore": 31.1,
       "balanceScore": 100.0,
       "priorScore": 44.5,
-      "lineupValue": 39068.0,
-      "depthValue": 1925.0,
+      "lineupValue": 39622.0,
+      "depthValue": 2017.0,
       "byPosition": {
         "QB": 2657.0,
-        "RB": 10376.0,
-        "WR": 11430.0,
-        "TE": 6310.0,
+        "RB": 11060.0,
+        "WR": 11715.0,
+        "TE": 6103.0,
         "K": 576.0,
         "DEF": 0.0,
-        "FLEX": 7719.0
+        "FLEX": 7511.0
       },
-      "rank": 4,
+      "rank": 3,
       "teamName": "The Ape",
       "priorRank": 4,
-      "rankDelta": 0,
-      "scoreDelta": 3.0,
+      "rankDelta": 1,
+      "scoreDelta": 2.03,
       "drivers": [
-        "lineup strength +4",
-        "usable depth +2"
+        "usable depth +5"
       ],
-      "commentary": "The Ape at 4, unchanged. driven by lineup strength +4 and usable depth +2."
+      "commentary": "The Ape at 3, up 1. driven by usable depth +5."
+    },
+    {
+      "rosterId": 10,
+      "score": 67.9,
+      "lineupScore": 71.9,
+      "depthScore": 42.0,
+      "balanceScore": 86.0,
+      "priorScore": 92.4,
+      "lineupValue": 35879.0,
+      "depthValue": 2679.0,
+      "byPosition": {
+        "QB": 2320.0,
+        "RB": 13330.0,
+        "WR": 13170.0,
+        "TE": 2469.0,
+        "K": 590.0,
+        "DEF": 0.0,
+        "FLEX": 4000.0
+      },
+      "rank": 4,
+      "teamName": "Bijan And The Maye-ssiah",
+      "priorRank": 3,
+      "rankDelta": -1,
+      "scoreDelta": -4.98,
+      "drivers": [
+        "lineup strength -9",
+        "positional balance -2"
+      ],
+      "commentary": "Bijan And The Maye-ssiah at 4, down 1. driven by lineup strength -9 and positional balance -2."
     },
     {
       "rosterId": 8,
-      "score": 62.21,
-      "lineupScore": 68.8,
-      "depthScore": 53.6,
-      "balanceScore": 54.8,
+      "score": 60.37,
+      "lineupScore": 64.5,
+      "depthScore": 55.9,
+      "balanceScore": 54.7,
       "priorScore": 54.7,
-      "lineupValue": 34586.0,
-      "depthValue": 3682.0,
+      "lineupValue": 33645.0,
+      "depthValue": 3524.0,
       "byPosition": {
-        "QB": 2426.0,
-        "RB": 7639.0,
-        "WR": 14593.0,
-        "TE": 1831.0,
+        "QB": 2301.0,
+        "RB": 7317.0,
+        "WR": 13935.0,
+        "TE": 1900.0,
         "K": 556.0,
         "DEF": 0.0,
-        "FLEX": 7541.0
+        "FLEX": 7636.0
       },
       "rank": 5,
       "teamName": "arkinsjt",
       "priorRank": 5,
       "rankDelta": 0,
-      "scoreDelta": 0.34,
+      "scoreDelta": -5.13,
       "drivers": [
-        "usable depth -2"
+        "lineup strength -7",
+        "usable depth -5"
       ],
-      "commentary": "arkinsjt at 5, unchanged. driven by usable depth -2."
+      "commentary": "arkinsjt at 5, unchanged. driven by lineup strength -7 and usable depth -5."
     },
     {
       "rosterId": 7,
-      "score": 56.58,
-      "lineupScore": 58.1,
-      "depthScore": 44.9,
-      "balanceScore": 45.2,
+      "score": 58.24,
+      "lineupScore": 59.8,
+      "depthScore": 48.2,
+      "balanceScore": 44.3,
       "priorScore": 88.7,
-      "lineupValue": 31350.0,
-      "depthValue": 3112.0,
+      "lineupValue": 32246.0,
+      "depthValue": 3058.0,
       "byPosition": {
-        "QB": 2674.0,
-        "RB": 13838.0,
-        "WR": 3543.0,
-        "TE": 3431.0,
+        "QB": 2665.0,
+        "RB": 14155.0,
+        "WR": 3903.0,
+        "TE": 3347.0,
         "K": 550.0,
         "DEF": 0.0,
-        "FLEX": 7314.0
+        "FLEX": 7626.0
       },
       "rank": 6,
       "teamName": "Gridiron geezers",
       "priorRank": 6,
       "rankDelta": 0,
-      "scoreDelta": 0.56,
+      "scoreDelta": 1.27,
       "drivers": [
-        "usable depth +8",
-        "positional balance -8"
+        "usable depth +5",
+        "positional balance -7"
       ],
-      "commentary": "Gridiron geezers at 6, unchanged. driven by usable depth +8 and positional balance -8."
+      "commentary": "Gridiron geezers at 6, unchanged. driven by usable depth +5 and positional balance -7."
     },
     {
       "rosterId": 9,
-      "score": 50.42,
-      "lineupScore": 43.3,
-      "depthScore": 58.4,
-      "balanceScore": 50.5,
+      "score": 51.6,
+      "lineupScore": 43.6,
+      "depthScore": 63.8,
+      "balanceScore": 47.1,
       "priorScore": 69.7,
-      "lineupValue": 26860.0,
-      "depthValue": 3996.0,
+      "lineupValue": 27406.0,
+      "depthValue": 4005.0,
       "byPosition": {
-        "QB": 2476.0,
-        "RB": 6851.0,
-        "WR": 12305.0,
+        "QB": 2693.0,
+        "RB": 6891.0,
+        "WR": 13118.0,
         "TE": 33.0,
         "K": 516.0,
         "DEF": 0.0,
-        "FLEX": 4679.0
+        "FLEX": 4155.0
       },
       "rank": 7,
       "teamName": "Max\u2019s Shadynasty",
       "priorRank": 7,
       "rankDelta": 0,
-      "scoreDelta": 2.13,
+      "scoreDelta": 1.23,
       "drivers": [
-        "lineup strength +3"
+        "usable depth +8",
+        "positional balance -4"
       ],
-      "commentary": "Max\u2019s Shadynasty at 7, unchanged. driven by lineup strength +3."
+      "commentary": "Max\u2019s Shadynasty at 7, unchanged. driven by usable depth +8 and positional balance -4."
     },
     {
       "rosterId": 2,
-      "score": 37.63,
-      "lineupScore": 50.7,
-      "depthScore": 13.4,
+      "score": 37.25,
+      "lineupScore": 49.2,
+      "depthScore": 15.3,
       "balanceScore": 0.0,
       "priorScore": 63.6,
-      "lineupValue": 29125.0,
-      "depthValue": 1049.0,
+      "lineupValue": 29090.0,
+      "depthValue": 1051.0,
       "byPosition": {
-        "QB": 2474.0,
-        "RB": 16329.0,
-        "WR": 950.0,
-        "TE": 1485.0,
+        "QB": 2425.0,
+        "RB": 16379.0,
+        "WR": 927.0,
+        "TE": 1817.0,
         "K": 546.0,
         "DEF": 0.0,
-        "FLEX": 7341.0
+        "FLEX": 6996.0
       },
       "rank": 8,
       "teamName": "2 Dagos and A Dream ",
       "priorRank": 8,
       "rankDelta": 0,
-      "scoreDelta": 0.61,
-      "drivers": [],
-      "commentary": "2 Dagos and A Dream  at 8, unchanged. Score +0.61."
+      "scoreDelta": -0.92,
+      "drivers": [
+        "lineup strength -2"
+      ],
+      "commentary": "2 Dagos and A Dream  at 8, unchanged. driven by lineup strength -2."
     },
     {
       "rosterId": 11,
-      "score": 32.78,
-      "lineupScore": 17.3,
-      "depthScore": 33.3,
-      "balanceScore": 88.4,
+      "score": 32.33,
+      "lineupScore": 14.1,
+      "depthScore": 37.5,
+      "balanceScore": 90.6,
       "priorScore": 61.3,
-      "lineupValue": 18999.0,
-      "depthValue": 2349.0,
+      "lineupValue": 18589.0,
+      "depthValue": 2407.0,
       "byPosition": {
-        "QB": 1481.0,
-        "RB": 6662.0,
-        "WR": 5867.0,
-        "TE": 1948.0,
+        "QB": 1467.0,
+        "RB": 6168.0,
+        "WR": 6282.0,
+        "TE": 1483.0,
         "K": 578.0,
         "DEF": 0.0,
-        "FLEX": 2463.0
+        "FLEX": 2611.0
       },
       "rank": 9,
       "teamName": "Terry Tate\u2019s Pain Train",
       "priorRank": 9,
       "rankDelta": 0,
-      "scoreDelta": 1.31,
+      "scoreDelta": -0.96,
       "drivers": [
-        "positional balance +4"
+        "lineup strength -2"
       ],
-      "commentary": "Terry Tate\u2019s Pain Train at 9, unchanged. driven by positional balance +4."
+      "commentary": "Terry Tate\u2019s Pain Train at 9, unchanged. driven by lineup strength -2."
     },
     {
       "rosterId": 5,
-      "score": 20.04,
-      "lineupScore": 22.4,
-      "depthScore": 11.9,
-      "balanceScore": 43.2,
+      "score": 15.93,
+      "lineupScore": 18.0,
+      "depthScore": 5.6,
+      "balanceScore": 42.2,
       "priorScore": 4.0,
-      "lineupValue": 20558.0,
-      "depthValue": 950.0,
+      "lineupValue": 19764.0,
+      "depthValue": 461.0,
       "byPosition": {
-        "QB": 4831.0,
+        "QB": 4879.0,
         "RB": 1026.0,
-        "WR": 9474.0,
-        "TE": 538.0,
+        "WR": 9494.0,
+        "TE": 526.0,
         "K": 608.0,
         "DEF": 0.0,
-        "FLEX": 4081.0
+        "FLEX": 3231.0
       },
       "rank": 10,
       "teamName": "My Nabers Tetties",
       "priorRank": 10,
       "rankDelta": 0,
-      "scoreDelta": -1.59,
+      "scoreDelta": -5.14,
       "drivers": [
-        "lineup strength -3",
-        "positional balance +4"
+        "lineup strength -6",
+        "usable depth -7"
       ],
-      "commentary": "My Nabers Tetties at 10, unchanged. driven by lineup strength -3 and positional balance +4."
+      "commentary": "My Nabers Tetties at 10, unchanged. driven by lineup strength -6 and usable depth -7."
     },
     {
       "rosterId": 4,
-      "score": 16.06,
-      "lineupScore": 7.0,
-      "depthScore": 13.1,
-      "balanceScore": 69.8,
+      "score": 14.03,
+      "lineupScore": 2.1,
+      "depthScore": 14.4,
+      "balanceScore": 73.0,
       "priorScore": 19.7,
-      "lineupValue": 15889.0,
-      "depthValue": 1026.0,
+      "lineupValue": 15001.0,
+      "depthValue": 999.0,
       "byPosition": {
-        "QB": 1292.0,
-        "RB": 4155.0,
-        "WR": 6956.0,
-        "TE": 1750.0,
+        "QB": 1544.0,
+        "RB": 3741.0,
+        "WR": 6237.0,
+        "TE": 1574.0,
         "K": 596.0,
         "DEF": 0.0,
-        "FLEX": 1140.0
+        "FLEX": 1309.0
       },
       "rank": 11,
       "teamName": "Bub\u2019s Club",
       "priorRank": 11,
       "rankDelta": 0,
-      "scoreDelta": -1.11,
+      "scoreDelta": -1.53,
       "drivers": [
-        "usable depth -4",
-        "positional balance -2"
+        "lineup strength -2",
+        "positional balance +2"
       ],
-      "commentary": "Bub\u2019s Club at 11, unchanged. driven by usable depth -4 and positional balance -2."
+      "commentary": "Bub\u2019s Club at 11, unchanged. driven by lineup strength -2 and positional balance +2."
     },
     {
       "rosterId": 6,
-      "score": 8.85,
+      "score": 9.29,
       "lineupScore": 0.0,
       "depthScore": 0.0,
-      "balanceScore": 88.5,
+      "balanceScore": 92.9,
       "priorScore": 0.0,
-      "lineupValue": 13783.0,
-      "depthValue": 168.0,
+      "lineupValue": 14376.0,
+      "depthValue": 121.0,
       "byPosition": {
-        "QB": 1621.0,
-        "RB": 5473.0,
-        "WR": 4457.0,
-        "TE": 1571.0,
+        "QB": 2154.0,
+        "RB": 5457.0,
+        "WR": 4782.0,
+        "TE": 1283.0,
         "K": 484.0,
         "DEF": 0.0,
-        "FLEX": 177.0
+        "FLEX": 216.0
       },
       "rank": 12,
       "teamName": "Final Boss",
       "priorRank": 12,
       "rankDelta": 0,
-      "scoreDelta": 0.24,
-      "drivers": [
-        "positional balance +2"
-      ],
-      "commentary": "Final Boss at 12, unchanged. driven by positional balance +2."
+      "scoreDelta": 0.01,
+      "drivers": [],
+      "commentary": "Final Boss at 12, unchanged. No material change."
     }
   ]
 }
